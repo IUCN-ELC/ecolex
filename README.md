@@ -1,45 +1,42 @@
-ecolex-prototype
+Ecolex Prototype
 ================
 
-..contents ::
+## Project Name
 
-Project Name
-------------
-The Project Name is Ecolex Prototype
+The Project Name is Ecolex Prototype.
 
-SOLRCloud
----------
+## SOLRCloud
 
-Requirements
-~~~~~~~~~~~~
-1. one or multiple servers running your choice of Linux flavor (the steps
-below were tested on CentOS Linux 7).
+### Requirements
+
+1. one or multiple servers running your choice of Linux flavor (the steps below were tested on CentOS Linux 7).
 2. JRE (at least 1.7) on each node.
 
+### Installation
 
-Installation
-~~~~~~~~~~~~
 All the SOLRCloud nodes should be registered using their LAN IP address and not
 localhost.Check the hostname on each node:
+
 	$ hostname
-	node1
+	 node1
 
 If the following entry is present in /etc/hosts:
 
 	$vim /etc/hosts
-	127.0.0.1	node1
+	 127.0.0.1	node1
 
 replace localhost with $LAN_IP:
 	
-	10.0.0.98	node1
+	 10.0.0.98	node1
 
 Download the latest stable versions:
+
 http://zookeeper.apache.org/releases.html
 http://lucene.apache.org/solr/downloads.html
 
 
-ZooKeeper
-~~~~~~~~~
+### ZooKeeper
+
 Install ZK:
 
 	$ cd ~
@@ -57,25 +54,25 @@ Use the zoo.cfg available in ecolex-prototype/configs for starting ZK:
 Test ZK is up and running:
 	
 	$ bin/zkCli.sh -server 127.0.0.1:2181
-	 [zk: 127.0.0.1:2181(CONNECTED) 0] ls /
+	 [zk: 127.0.0.1:2181(CONNECTED) 0]
 
 
-SOLR
-~~~~
-User the start.jar available in the SOLR bundle to boot each SOLR node:
+### SOLR
+
+Use the start.jar available in the SOLR bundle to boot each SOLR node:
 	
 	$ cd ~
 	$ wget http://mirrors.hostingromania.ro/apache.org/lucene/solr/4.10.3/solr-4.10.3.tgz
 	$ cd solr-4.10.3/example
 	$ ls solr-webapp
 
-If there's no solr.war in solr-webapp, run SOLR for a few second to have it generated:
+If there's no solr.war in solr-webapp, run SOLR for a few seconds to have it generated:
 
 	$ java -jar start.jar
 	... (few seconds)
 	CTR+C
 
-Copy collection1 to a new ecolex collection:
+Configure a new collection starting from collection1:
 
 	$ cp -r solr/collection1 solr/ecolex_conf
 	
@@ -102,4 +99,5 @@ ZK will run just on one node, so when installing SOLR on other nodes, use the LA
 	$ java -DzkHost=10.0.0.98:2181 -jar start.jar
 
 You can now check the admin page on any of the SOLR nodes:
+
 	http://127.0.0.1:8983/solr/admin/
