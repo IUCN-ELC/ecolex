@@ -22,7 +22,7 @@ localhost.Check the hostname on each node:
 
 If the following entry is present in /etc/hosts:
 
-	$vim /etc/hosts
+	$ vim /etc/hosts
 	 127.0.0.1	node1
 
 replace localhost with $LAN_IP:
@@ -35,16 +35,16 @@ http://zookeeper.apache.org/releases.html
 http://lucene.apache.org/solr/downloads.html
 
 
-### ZooKeeper
+#### ZooKeeper
 
-Install ZK:
+Install ZK (as superuser) inside `/var/local/zookeeper-x.y.z`:
 
-	$ cd ~
+	$ cd /var/local
 	$ wget http://mirrors.hostingromania.ro/apache.org/zookeeper/stable/zookeeper-3.4.6.tar.gz
 	$ tar xvf zookeeper-3.4.6.tar.gz
-	$ sudo mkdir -p /var/lib/zookeeper
+	$ mkdir -p /var/lib/zookeeper
 
-Use the zoo.cfg available in ecolex-prototype/configs for starting ZK:
+Use the `zoo.cfg` available in `ecolex-prototype/configs` for starting ZK:
 
 	$ git clone https://github.com/eaudeweb/ecolex-prototype.git
 	$ cp ecolex-protoype/configs/zoo.cfg zookeeper-3.4.6/conf/
@@ -57,20 +57,16 @@ Test ZK is up and running:
 	 [zk: 127.0.0.1:2181(CONNECTED) 0]
 
 
-### SOLR
+#### SOLR
 
-Use the start.jar available in the SOLR bundle to boot each SOLR node:
+Download and install (as superuser) solr inside `/var/local/solr-x.y.z`:
 	
-	$ cd ~
+	$ cd /var/local
 	$ wget http://mirrors.hostingromania.ro/apache.org/lucene/solr/4.10.3/solr-4.10.3.tgz
 	$ cd solr-4.10.3/example
-	$ ls solr-webapp
+	$ ls webapps/
 
-If there's no solr.war in solr-webapp, run SOLR for a few seconds to have it generated:
-
-	$ java -jar start.jar
-	... (few seconds)
-	CTR+C
+There should be a `solr.war` file inside the webapps folder.
 
 Configure a new collection starting from collection1:
 
@@ -78,7 +74,7 @@ Configure a new collection starting from collection1:
 	
 Replace the collection's schema with the one from the repo:
 
-	$ cp ~/ecolex-prototype/configs/schema.xml solr/ecolex_conf/conf/
+	$ cp /var/local/ecolex-prototype/configs/schema.xml solr/ecolex_conf/conf/
 
 Upload the configuration to ZK:
 
