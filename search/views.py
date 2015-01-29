@@ -11,7 +11,7 @@ def result(request):
     if 'q' in request.GET:
         solr = pysolr.Solr('http://10.0.0.98:8983/solr/ecolex', timeout=10)
         solr.optimize()
-        responses = solr.search('decBody:' + request.GET['q'])
+        responses = solr.search('text:' + request.GET['q'], rows=10000)
         
         results = []
         for hit in responses:
