@@ -1,0 +1,12 @@
+<p>You searched for: <strong>{{ query }}</strong></p>
+
+{% if results %}
+    <p>Found {{ results|length }} result{{ results|pluralize }}.</p>
+    <ul>
+        {% for result in results %}
+        <li>{{ result }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No documents matched your search criteria.</p>
+{% endif %}
