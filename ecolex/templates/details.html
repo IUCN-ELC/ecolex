@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta charset="utf-8">
+    <title>Ecolex</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/bootstrap.custom.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+</head>
+
+<body>
+
+  <div class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="{{ url home }}" class="navbar-brand">Ecolex</a>
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+          <span class="icon icon-menu"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+          <li><a href="{{ url about }}">About</a></li>
+          <li><a href="{{ url about }}">User Agreement</a></li>
+          <li><a href="{{ url about }}">Privacy</a></li>
+          <li><a href="{{ url about }}">Acknowledgments</a></li>
+        </ul>
+        <div class="navbar-form navbar-right">
+          <label for="language">Language</label>
+          <select class="form-control input-sm" name="" id="language">
+            <option value="">English</option>
+            <option value="">Francais</option>
+            <option value="">Espanol</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="jumbotron text-center">
+    <div class="container">
+      <div class="logo-ecolex">
+        <img src="../static/img/logo-ecolex-inverted.svg" alt="">
+      </div>
+      <div class="slogan">
+        <strong>The gateway to<br>environmental law</strong>
+      </div>
+      <hr>
+      <div class="credits">
+        Joint operation by<br><a href="">FAO</a>, <a href="">IUCN</a>, <a href="">UNEP</a>
+      </div>
+      <div class="logo-credits">
+        <img src="../static/img/logo-credits.svg" alt="">
+      </div>
+    </div>    
+  </div>
+
+  <div class="search-section">
+    <div class="container">
+      <form action="" class="search-form">
+        <label for="search">
+          <span class="sr-only">Search</span>
+          <span class="icon icon-search"></span>
+        </label>
+
+        <input id="search" class="form-control" type="search" autofocus
+               placeholder="Treaties, Legislation, Court decisions, Literature, COP decisions">
+
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <main>
+    <div class="container">
+
+      <article class="">
+        <aside>
+          This article refers to the following subjects:
+          <ul>
+            <li>{{ subject }}</li>
+            <li>{{ subject }}</li>
+          </ul>
+          and the following keywords:
+          <ul>
+            <li>{{ keyword }}</li>
+            <li>{{ keyword }}</li>
+          </ul>
+        </aside>
+        <header class="page-header">
+          <h1>Entry name <small>{{ ?abbr }}</small></h1>
+          <h4 class="h6 text-muted">Also known as:</h4>
+          <ul class="ist-unstyled">
+            <li>Convention sur la diversité biologique <sup>French</sup></li>
+            <li>{{ other language title }} <sup>{{ language }}</sup></li>
+          </ul>
+          <div>
+            <strong>{{ type }}</strong> | {{ region }} | {{ year }}
+          </div>
+        </header>
+
+
+        <section>
+        </section>
+
+        <section>
+          <h2 class="h3">Description</h2>
+          <dl class="dl-horizontal" >
+            <dt>term</dt>
+            <dd>description</dd>
+            
+          </dl>
+        </section>
+
+        <section>
+          <h2 class="h3">Participants</h2>
+        </section>
+
+        <section>
+          <h2 class="h3">References</h2>
+
+          <h4 class="h4">{{ type }}</h3>
+
+          <dl>
+            <dt>{{ relation }}</dt>
+            <dd>
+              <a href="">{{ relation to ... }}</a>
+              <span class="pull-righttext-muted"
+                    title="What happened that year">{{ year }}</span>
+            <dd>
+          </dl>
+
+          <table>
+            <tbody>
+              <tr>
+                <th colspan="3">{{ type }}</th>
+              </tr>
+              <tr>
+                <td>{{ relation }}</td>
+                <td>{{ to|list }}</td>
+                <td>{{ year }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
+            <a href="" class="btn btn-block btn-default">See remaining 788 references to other documents</a>
+          </p>
+        </section>
+
+        <footer>
+          
+        </footer>
+
+      </article>
+
+
+      <div class="alert alert-warning">{{ comment }}</div>
+      <p>{{ abstract }} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, similique? Doloremque unde quasi, corporis consequuntur odio. Quaerat earum, commodi, ducimus consequuntur dolore deserunt pariatur dolorem, vero cum mollitia tempora odit.</p>
+      <div>
+
+        <a href="">Document full text.</a>
+      </div>
+
+
+
+
+      <div class="well">
+        
+      </div>
+
+    </div>
+  </main>
+
+  <div class="footer">
+    <div class="container">
+      <div class="img">
+        <img src="../static/img/logo-ecolex-mono.svg" alt="">
+      </div>
+      <ul class="list-inline">
+        <li><a href="{{ url about }}">About</a></li>
+        <li><a href="{{ url about }}">User Agreement</a></li>
+        <li><a href="{{ url about }}">Privacy</a></li>
+        <li><a href="{{ url about }}">Acknowledgments</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <!-- scripts -->
+  <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/main.js"></script>
+</body>
+
+</html>

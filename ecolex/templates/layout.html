@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta charset="utf-8">
+    <title>Ecolex</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/bootstrap.custom.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+</head>
+
+<body>
+
+  <div class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="{{ url home }}" class="navbar-brand">Ecolex</a>
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+          <span class="icon icon-menu"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+          <li><a href="{{ url about }}">About</a></li>
+          <li><a href="{{ url about }}">User Agreement</a></li>
+          <li><a href="{{ url about }}">Privacy</a></li>
+          <li><a href="{{ url about }}">Acknowledgments</a></li>
+        </ul>
+        <div class="navbar-form navbar-right">
+          <label for="language">Language</label>
+          <select class="form-control input-sm" name="" id="language">
+            <option value="">English</option>
+            <option value="">Francais</option>
+            <option value="">Espanol</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="jumbotron text-center">
+    <div class="container">
+      <div class="logo-ecolex">
+        <img src="../static/img/logo-ecolex-inverted.svg" alt="">
+      </div>
+      <div class="slogan">
+        <strong>The gateway to<br>environmental law</strong>
+      </div>
+      <hr>
+      <div class="credits">
+        Joint operation by<br><a href="">FAO</a>, <a href="">IUCN</a>, <a href="">UNEP</a>
+      </div>
+      <div class="logo-credits">
+        <img src="../static/img/logo-credits.svg" alt="">
+      </div>
+    </div>    
+  </div>
+
+  <div class="search-section">
+    <div class="container">
+      <form action="" class="search-form">
+        <label for="search">
+          <span class="sr-only">Search</span>
+          <span class="icon icon-search"></span>
+        </label>
+
+        <input id="search" class="form-control" type="search" autofocus
+               placeholder="Treaties, Legislation, Court decisions, Literature, COP decisions">
+
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <main>
+    <div class="container">
+      Hello
+    </div>
+  </main>
+
+  <div class="footer">
+    <div class="container">
+      <div class="img">
+        <img src="../static/img/logo-ecolex-mono.svg" alt="">
+      </div>
+      <ul class="list-inline">
+        <li><a href="{{ url about }}">About</a></li>
+        <li><a href="{{ url about }}">User Agreement</a></li>
+        <li><a href="{{ url about }}">Privacy</a></li>
+        <li><a href="{{ url about }}">Acknowledgments</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <!-- scripts -->
+  <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/main.js"></script>
+</body>
+
+</html>
