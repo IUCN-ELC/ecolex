@@ -22,20 +22,38 @@ class SearchViewWithResults(SearchView):
             solr.optimize()
 
             user_query = request.GET['q']
-            solr_query = 'trTitleOfText:' + user_query + ' decBody:' + user_query
-            responses = solr.search(solr_query, rows=15)
+            solr_query = 'text:' + user_query
+            params = {
+                'facet': 'on',
+                'facet.field': ['type'],
+                'rows': '15'
+            }
+            responses = solr.search(solr_query, **params)
 
         results = []
         for hit in responses:
             #FIXME(catalinb): temporary
             if hit.get("decPublishDate"):
-                parse_time = lambda date: datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
-                hit["decPublishDate"] = list(map(parse_time, hit["decPublishDate"]))
-                parse_body = lambda body: body[:250] + "..."
-                hit["decBody"] = list(map(parse_body, hit["decBody"]))
+                if hit.get("decPublishDate"):
+                    parse_time = lambda date: datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
+                    hit["decPublishDate"] = list(map(parse_time, hit["decPublishDate"]))
+
+                if hit.get("decBody"):
+                    parse_body = lambda body: body[:250] + "..."
+                    hit["decBody"] = list(map(parse_body, hit["decBody"]))
             results.append(hit)
 
-        return render(request, 'list_results.html', {'results': results, 'query': request.GET['q']})
+        facets = responses.facets['facet_fields']
+        for k, v in facets.items():
+            facets[k] = dict(zip(v[0::2], v[1::2]))
+
+        context = {
+            'results': results,
+            'query': user_query,
+            'facets': facets
+        }
+
+        return render(request, 'list_results.html', context)
 
 def page(request, slug):
     return HttpResponse("slug=" + slug)

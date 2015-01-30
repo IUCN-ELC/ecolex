@@ -9,7 +9,6 @@
         <div class="col-md-9">
 
           <h4>256&infin; results</h4>
-
           <div class="btn-group btn-group-sm filter-type">
             <!-- Treaty filter -->
             <button type="button"
@@ -18,9 +17,12 @@
                     data-toggle="tooltip"
                     data-placement="bottom"
                     data-container="body"
-                    title="Show Treaties">
+                    title="Show Treaties"
+                    {% if facets.type.treaty == 0 %} disabled {% endif %}>
               <span class="icon icon-treaties"></span>
-              <span class="badge">42</span>
+              {% if facets.type.treaty > 0 %}
+                <span class="badge">{{ facets.type.treaty }}</span>
+               {% endif %}
               <span class="btn-label">Treaties</span>
             </button>
 
@@ -31,9 +33,12 @@
                     data-toggle="tooltip"
                     data-placement="bottom"
                     data-container="body"
-                    title="Show COP Decisions">
+                    title="Show COP Decisions"
+                    {% if facets.type.decision == 0 %} disabled {% endif %}>
               <span class="icon icon-cop-decisions"></span>
-              <span class="badge">42</span>
+              {% if facets.type.decision > 0 %}
+              <span class="badge">{{ facets.type.decision }}</span>
+               {% endif %}
               <span class="btn-label">COP Decisions</span>
             </button>
 
@@ -82,7 +87,7 @@
 
           <ul class="search-results">
           {% for result in results %}
-						{% include "search_result.html" with result=result %}
+            {% include "search_result.html" with result=result %}
           {% endfor %}
           </ul>
 
