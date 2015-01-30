@@ -1,41 +1,42 @@
 """ Import treaties from XMLs exported by Elis
 """
 from bs4 import BeautifulSoup
+import pysolr
 
 SCHEMA_FIELDS = [
     'trAbstract', 'trAbstractOther',
     'trAmendsTreaty', 'trAuthor', 'trAuthorA', 'trAuthorM',
-    'trAuthorWhole', 'trBasin', 'trBasinWhole', 'trCitesTreaty',
+    'trBasin', 'trCitesTreaty',
     'trComment', 'trCommentOther', 'trConfName',
-    'trConfNameWhole', 'trConfPlace', 'trConfPlaceWhole',
+    'trConfPlace',
     'trContributor', 'trCorpAuthor', 'trCorpAuthorA',
-    'trCorpAuthorM', 'trCountry', 'trCountryWhole', 'trCourtName',
-    'trCourtNameWhole', 'trDateOfEntry',
+    'trCorpAuthorM', 'trCountry', 'trCourtName',
+    'trDateOfEntry',
     'trDateOfLastLegalAction', 'trDateOfModification',
-    'trDateOfText', 'trDepository', 'trDepositoryWhole',
+    'trDateOfText', 'trDepository',
     'trDisplayDetails', 'trDisplayTitle', 'trEnabledByTreaty',
     'trEntryIntoForceDate', 'trFieldOfApplication',
-    'trIntoForceTreaty', 'trIntOrg', 'trIntOrgWhole',
-    'trJustices', 'trJusticesWhole', 'trKeyword',
-    'trKeywordWhole', 'trLanguageOfDocument',
-    'trLanguageOfDocumentWhole', 'trLinkToFullText', 'trObsolete',
+    'trIntoForceTreaty', 'trIntOrg',
+    'trJustices', 'trKeyword',
+    'trLanguageOfDocument',
+    'trLinkToFullText', 'trObsolete',
     'trPaperTitleOfText', 'trPaperTitleOfTextOther',
     'trPaperTitleOfTextStatement',
     'trPaperTitleOfTextTransl', 'trPlaceOfAdoption',
-    'trPlaceOfAdoptionWhole', 'trPublisher', 'trPublisherWhole',
+    'trPublisher',
     'trReferenceToCourtDecision', 'trReferenceToEULegislation',
     'trReferenceToFaolex', 'trReferenceToLiterature',
     'trReferenceToNationalLegislation', 'trReferenceToTreaties',
-    'trRegion', 'trRegionWhole', 'trRelevantTextTreaty',
+    'trRegion', 'trRelevantTextTreaty',
     'trScope', 'trSearchDate', 'trSeatOfCourt',
-    'trSeatOfCourtWhole', 'trSerialTitle', 'trSerialTitleWhole',
+    'trSerialTitle',
     'trSortAuthor', 'trSortFieldOfApplication',
-    'trSortTypeOfText', 'trSubject', 'trSubjectWhole',
+    'trSortTypeOfText', 'trSubject',
     'trSupersedesTreaty', 'trTerritorialSubdivision',
-    'trTerritorialSubdivisionWhole', 'trTitleAbbreviation',
+    'trTitleAbbreviation',
     'trTitleOfText', 'trTitleOfTextOther', 'trTitleOfTextShort',
     'trTitleOfTextShortOther',
-    'trTypeOfText', 'trTypeOfTextWhole'
+    'trTypeOfText',
 ]
 
 FIELD_MAP = {
@@ -58,8 +59,8 @@ FIELD_MAP = {
     'keyword': 'trKeyword',
     'abstract': 'trAbstract',
     'comment': 'trComment',
-    'titleoftextshort': 'titleOfTextShort',
-    'titleoftext': 'titleOfText',
+    'titleoftextshort': 'trTitleOfTextShort',
+    'titleoftext': 'trTitleOfText',
     'author': 'trAuthor',
 
 }
@@ -85,14 +86,34 @@ def parse_xml(path):
     return result
 
 
+def find_existing(solr, treaty):
+    """ Search in solr for an existing treaty
+    """
+    query = {
+        'type': 'treaty',
+        'trTitleOfText': treaty['trTitleOfText'],
+    }
+    query = ['{}:"{}"'.format(k, v.replace(" ", "\ ").replace(":", "\:")) for
+             k, v in query.items()]
+    # query = '{!lucene q.op=AND df=text}' + query
+    result = solr.search("*", fq=query)
+    print("*", query, "*")
+    return result.hits#, [hit for hit in result]
+
+
 if __name__ == '__main__':
     import sys
     from pprint import pprint
 
     if len(sys.argv) < 2:
         print("Usage: {} <filename.xml>".format(sys.argv[0]))
-        pprint(missing_fields())
+        mf = missing_fields()
+        pprint(mf)
+        print(len(mf), "values")
         sys.exit(0)
 
+    solr = pysolr.Solr('http://10.0.0.98:8983/solr/ecolex', timeout=10)
     r = parse_xml(sys.argv[1])
-    pprint(r)
+    for treaty in r:
+        print(treaty['trTitleOfText'][:25], "hits:",
+              find_existing(solr, treaty))
