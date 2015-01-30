@@ -1,12 +1,212 @@
-<p>You searched for: <strong>{{ query }}</strong></p>
+{% extends "search.html" %}
 
-{% if results %}
-    <p>Found {{ results|length }} result{{ results|pluralize }}.</p>
-    <ul>
-        {% for result in results %}
-        <li>{{ result }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No documents matched your search criteria.</p>
-{% endif %}
+{% block results %}
+
+<main>
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-9">
+
+          <h4>256&infin; results</h4>
+
+          <div class="btn-group btn-group-sm filter-type">
+            <!-- Treaty filter -->
+            <button type="button"
+                    class="btn btn-default"
+                    data-filter="#treaty-fieldset"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    data-container="body"
+                    title="Show Treaties">
+              <span class="icon icon-treaties"></span>
+              <span class="badge">42</span>
+              <span class="btn-label">Treaties</span>
+            </button>
+
+            <!-- COP decision filter -->
+            <button type="button"
+                    class="btn btn-default"
+                    data-filter="#copdecision-fieldset"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    data-container="body"
+                    title="Show COP Decisions">
+              <span class="icon icon-cop-decisions"></span>
+              <span class="badge">42</span>
+              <span class="btn-label">COP Decisions</span>
+            </button>
+
+            <!-- Legislation filter -->
+            <button type="button"
+                    class="btn btn-default"
+                    data-filter
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    data-container="body"
+                    title="Show Legislation"
+                    disabled>
+              <span class="icon icon-legislation"></span>
+              <span class="badge"></span>
+              <span class="btn-label">Legislation</span>
+            </button>
+
+            <!-- Court decision filter -->
+            <button type="button"
+                    class="btn btn-default"
+                    data-filter
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    data-container="body"
+                    title="Show Court Decisions"
+                    disabled>
+              <span class="icon icon-court-decisions"></span>
+              <span class="badge"></span>
+              <span class="btn-label">Court Decisions</span>
+            </button>
+
+            <!-- Literature filter -->
+            <button type="button"
+                    class="btn btn-default"
+                    data-filter
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    data-container="body"
+                    title="Show Literature"
+                    disabled>
+              <span class="icon icon-literature"></span>
+              <span class="badge"></span>
+              <span class="btn-label">Literature</span>
+            </button>
+          </div>
+
+          <ul class="search-results">
+          {% for result in results %}
+						{% include "search_result.html" with result=result %}
+          {% endfor %}
+          </ul>
+
+          <hr>
+
+          <ul class="pagination">
+            <li class="disabled">
+              <a class="prev" href="">Previous</a>
+            </li>
+            <li class="active">
+              <span>1</span>
+            </li>
+            <li>
+              <a href="">2</a>
+            </li>
+            <li>
+              <a href="">3</a>
+            </li>
+            <li>
+              <a href="">4</a>
+            </li>
+            <li>
+              <a href="">5</a>
+            </li>
+            <li class="disabled">
+              <span>&hellip;</span>
+            </li>
+            <li>
+              <a class="next" href="">Next</a>
+            </li>
+          </ul>
+
+        </div>
+
+        <aside class="col-md-3">
+          <h4>Refine search</h4>
+
+
+
+          <form action="">
+            <fieldset class="special-filter">
+              <h5 data-toggle="collapse" 
+                  data-target="#filter-treaties">Treaty filters</h5>
+
+              <div id="filter-treaties" class="collapse in">
+                <h6>Type of document</h6>
+                <ul>
+                  <li><label for=""><input type="checkbox">Multilateral</label></li>
+                  <li><label for=""><input type="checkbox">Bilateral</label></li>
+                </ul>
+
+                <h6>Field of application</h6>
+                <ul>
+                  <li><label for=""><input type="checkbox">Global</label></li>
+                  <li><label for=""><input type="checkbox">Regional/Restricted</label></li>
+                  <li><label for=""><input type="checkbox">National</label></li>
+                </ul>
+
+                <h6>Participants</h6>
+                <div class="indent">
+                  <select name="" id="">
+                    <option value="">participants</option>
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="special-filter">
+              <h5 data-toggle="collapse" 
+                  data-target="#filter-cop-decisions">COP Decision filters</h5>
+
+              <div id="filter-cop-decisions" class="collapse in">
+                <h6>Type</h6>
+                <ul>
+                  <li><label><input type="checkbox">Type 1</label></li>
+                  <li><label><input type="checkbox">Type &hellip;</label></li>
+                </ul>
+              </div>
+            </fieldset>
+
+            <fieldset class="global-filter">
+              <h5 data-toggle="collapse" 
+                  data-target="#filter-subjects"
+                  class="collapsed">Subjects</h5>
+              <ul id="filter-subjects" class="collapse">
+                <li><label><input type="checkbox">What's up?</label></li>
+                <li><label><input type="checkbox">{{ form.label }}</label></li>
+                <li><label><input type="checkbox">{{ form.label }}</label></li>
+                <li><label><input type="checkbox">{{ form.label }}</label></li>
+              </ul>
+            </fieldset>
+            <fieldset class="global-filter">
+              <h5 data-toggle="collapse" 
+                  data-target="#filter-keywords"
+                  class="collapsed">Keywords</h5>
+              <ul id="filter-keywords" class="collapse">
+                <li><label><input type="checkbox">{{ form.label }}</label></li>
+                <li><label><input type="checkbox">{{ form.label }}</label></li>
+                <li><label><input type="checkbox">{{ form.label }}</label></li>
+              </ul>
+            </fieldset>
+
+            <fieldset class="global-filter">
+              <h5>Years</h5>
+              <div class="indent">
+                <div class="row">
+                  <div class="form-group col-xs-6">
+                    <label for="year-min">From</label>
+                    <input class="form-control" id="year-min" type="number" placeholder="1856">
+                  </div>
+                  <div class="form-group col-xs-6">
+                    <label for="year-max">To</label>
+                    <input class="form-control" id="year-max" type="number" placeholder="2015">
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+
+              
+          </form>
+        </aside>
+
+      </div>
+    </div>
+  </main>
+{% endblock %}

@@ -1,11 +1,25 @@
-<html>
-<head>
-    <title>Search</title>
-</head>
-<body>
-    <form action="/search/result/" method="get">
-        <input type="text" name="q">
-        <input type="submit" value="Search">
-    </form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="search-section">
+    <div class="container">
+      <form action="result" method="get" class="search-form">
+        <label for="search">
+          <span class="sr-only">Search</span>
+          <span class="icon icon-search"></span>
+        </label>
+
+        <input id="search" class="form-control" type="search" autofocus name="q"
+               value={% firstof query '""' %} placeholder="Treaties, Legislation, Court decisions, Literature, COP decisions">
+
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+{%block results %} {% endblock %}
+  <main>
+    <div class="container">
+    </div>
+  </main>
+{% endblock %}
