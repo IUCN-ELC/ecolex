@@ -30,9 +30,9 @@ class SearchViewWithResults(SearchView):
             #FIXME(catalinb): temporary
             if hit.get("decPublishDate"):
                 parse_time = lambda date: datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
-                hit["decPublishDate"] = map(parse_time, hit["decPublishDate"])
+                hit["decPublishDate"] = list(map(parse_time, hit["decPublishDate"]))
                 parse_body = lambda body: body[:250] + "..."
-                hit["decBody"] = map(parse_body, hit["decBody"])
+                hit["decBody"] = list(map(parse_body, hit["decBody"]))
             results.append(hit)
 
         return render(request, 'list_results.html', {'results': results, 'query': request.GET['q']})
