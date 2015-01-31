@@ -1,13 +1,13 @@
-from django import forms
+from datetime import datetime
+import pysolr
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from datetime import datetime
 
-import pysolr, json
 
 class SearchView(TemplateView):
     template_name = "search.html"
+
 
 class SearchViewWithResults(SearchView):
     template_name = "list_results.html"
@@ -35,8 +35,10 @@ class SearchViewWithResults(SearchView):
             #FIXME(catalinb): temporary
             if hit.get("decPublishDate"):
                 if hit.get("decPublishDate"):
-                    parse_time = lambda date: datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
-                    hit["decPublishDate"] = list(map(parse_time, hit["decPublishDate"]))
+                    parse_time = lambda date: datetime.strptime(date,
+                                                                "%Y-%m-%dT%H:%M:%SZ")
+                    hit["decPublishDate"] = list(
+                        map(parse_time, hit["decPublishDate"]))
 
                 if hit.get("decBody"):
                     parse_body = lambda body: body[:250] + "..."
@@ -54,6 +56,7 @@ class SearchViewWithResults(SearchView):
         }
 
         return render(request, 'list_results.html', context)
+
 
 def page(request, slug):
     return HttpResponse("slug=" + slug)
