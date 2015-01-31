@@ -97,3 +97,16 @@ ZK will run just on one node, so when installing SOLR on other nodes, use the LA
 You can now check the admin page on any of the SOLR nodes:
 
 	http://127.0.0.1:8983/solr/admin/
+
+
+## Django application
+
+We are using Python 3 for the web server application. Initialize an environment with:
+
+    $ pyvenv sandbox
+    $ source sanbox/bin/activate
+    $ pip install -r requirements.txt
+
+Run with:
+
+    $ ./manage.py runserver
