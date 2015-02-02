@@ -2,3 +2,4 @@ instance/
 *.pyc
 .idea
 sandbox
+supervisord.conf
