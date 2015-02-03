@@ -1,11 +1,13 @@
 {% if result.type == "decision" %}
 <li class="search-result">
   <h3 class="search-result-title">
-    <a href= "{{ result.url }}" > {{ result.title }} </a>
+    <a href= "{{ result.url }}" > {{ result.number }} {{ result.title }} </a>
   </h3>
   <div class="search-result-details">
     <strong>{{ result.type }}</strong> | <span>{{ result.jurisdiction }} </span> | <time>{{ result.date }}</time>
-    <p class="search-result-description"> {{ result }}</p>
+    <p class="search-result-description"> Status: <span> {{ result.status }} </span> </p>
+    <!-- for debug. FIXME(catalinb): remove -->
+    <p class="search-result-description" hidden> {{ result }}</p>
   </div>
     <p class="search-result-description">{{ result.decBody|first }}</p>
 </li>
@@ -19,7 +21,8 @@
   <div class="search-result-details">
     <strong>{{ result.type }}</strong> | <span>International</span> | <time>{{ result.date }}</time>
   </div>
-    <p class="search-result-description"> {{ result }}</p>
+    <!-- for debug. FIXME(catalinb): remove -->
+    <p class="search-result-description" hidden> {{ result }}</p>
 </li>
 
 {% endif %}

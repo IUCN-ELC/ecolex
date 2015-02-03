@@ -2,6 +2,11 @@ from datetime import datetime
 import pysolr
 from django.conf import settings
 
+def first(obj, default=None):
+    if type(obj) is list and obj:
+        return obj[0]
+    return default
+
 class ObjectNormalizer:
     def __init__(self, solr):
         self.type = solr["type"]
@@ -13,44 +18,40 @@ class ObjectNormalizer:
     def __str__(self):
         return str(self.solr)
 
-    @property
     def jurisdiction(self):
         return "International"
 
 class Treaty(ObjectNormalizer):
-    @property
     def title(self):
         return super(Treaty, self).title("trTitleOfText")
 
-    @property
     def date(self):
         return datetime.strptime(self.solr["trDateOfText"],
                                  "%Y-%m-%dT%H:%M:%SZ").date()
 
-    @property
     def jurisdiction(self):
-        return self.solr["trJustices"][0] if self.solr["trJusices"] else None
+        return first(self.solr["trJustices"])
 
-    @property
     def url(self):
-        return self.solr["trUrlTreatyText"][0] \
-            if self.solr["trUrlTreatyText"] else None
+        return first(self.solr["trUrlTreatyText"])
 
 class Decision(ObjectNormalizer):
-    @property
     def title(self):
         return super(Decision, self).title("decTitleOfText")
 
-    @property
     def date(self):
         if not self.solr["decPublishDate"]:
             return None
         return datetime.strptime(self.solr["decPublishDate"][0],
                                  "%Y-%m-%dT%H:%M:%SZ").date()
-    @property
     def url(self):
-        return self.solr["decLink"][0] \
-            if self.solr["decLink"] else None
+        return first(self.solr["decLink"])
+
+    def status(self):
+        return first(self.solr["decStatus"], "unknown")
+
+    def number(self):
+        return first(self.solr["decNumber"])
 
 def search(user_query):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
