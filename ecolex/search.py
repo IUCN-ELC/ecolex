@@ -30,10 +30,10 @@ class Treaty(ObjectNormalizer):
                                  "%Y-%m-%dT%H:%M:%SZ").date()
 
     def jurisdiction(self):
-        return first(self.solr["trJustices"])
+        return first(self.solr.get("trJustices"))
 
     def url(self):
-        return first(self.solr["trUrlTreatyText"])
+        res = first(self.solr.get("trUrlTreatyText"))
 
 class Decision(ObjectNormalizer):
     def title(self):
@@ -45,13 +45,13 @@ class Decision(ObjectNormalizer):
         return datetime.strptime(self.solr["decPublishDate"][0],
                                  "%Y-%m-%dT%H:%M:%SZ").date()
     def url(self):
-        return first(self.solr["decLink"])
+        return first(self.solr.get("decLink"))
 
     def status(self):
-        return first(self.solr["decStatus"], "unknown")
+        return first(self.solr.get("decStatus"), "unknown")
 
     def number(self):
-        return first(self.solr["decNumber"])
+        return first(self.solr.get("decNumber"))
 
 def search(user_query):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
