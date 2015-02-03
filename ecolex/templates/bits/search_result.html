@@ -1,10 +1,11 @@
 {% if result.type == "decision" %}
 <li class="search-result">
   <h3 class="search-result-title">
-    <a href= {{ result.decMeetingUrl|first }} > {{ result.decShortTitle|first }} </a>
+    <a href= {{ result.url }} > {{ result.title }} </a>
   </h3>
   <div class="search-result-details">
-    <strong>{{ result.type }}</strong> | <span>International</span> | <time>{{ result.decPublishDate|first }}</time>
+    <strong>{{ result.type }}</strong> | <span>{{ result.jurisdiction }} </span> | <time>{{ result.date }}</time>
+    <p class="search-result-description"> {{ result }}</p>
   </div>
     <p class="search-result-description">{{ result.decBody|first }}</p>
 </li>
@@ -13,10 +14,10 @@
 
 <li class="search-result">
   <h3 class="search-result-title">
-    <a href= {{ result.trUrlTreatyText|first }} >{{ result.trTitleOfText|first }} </a>
+    <a href= {{ result.url }} >{{ result.title }} </a>
   </h3>
   <div class="search-result-details">
-    <strong>{{ result.type }}</strong> | <span>International</span> | <time>{{ result.trDateOfText }}</time>
+    <strong>{{ result.type }}</strong> | <span>International</span> | <time>{{ result.date }}</time>
   </div>
     <p class="search-result-description"> {{ result }}</p>
 </li>

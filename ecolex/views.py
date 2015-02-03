@@ -25,6 +25,5 @@ class SearchViewWithResults(SearchView):
 
         return render(request, 'list_results.html', context)
 
-
 def page(request, slug):
     return HttpResponse("slug=" + slug)
