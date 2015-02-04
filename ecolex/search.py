@@ -10,10 +10,7 @@ HIGHLIGHT_PARAMS = {
     'hl.fl': HIGHLIGHT,
     'hl.simple.pre': '<em class="hl">',
 }
-DEFAULT_PARAMS = {
-    'rows': 100,
-    'start': 0,
-}
+PERPAGE = 100
 
 
 def first(obj, default=None):
@@ -76,6 +73,69 @@ class Decision(ObjectNormalizer):
         return first(self.solr.get('decNumber'))
 
 
+class Queryset(object):
+    def __init__(self, query=None, filters=None, highlight=None):
+        self.query = query
+        self.filters = filters
+        self.highlight = highlight
+        self.start = 0
+        self.stop = PERPAGE
+        self._result_cache = None
+        self._hits = None
+        self._facets = {}
+
+    def set_limits(self, start, stop):
+        if start is not None:
+            self.start = start
+        if stop is not None:
+            self.stop = stop
+
+    def run(self):
+        result = _search(self.query, filters=self.filters,
+                         highlight=self.highlight, start=self.start,
+                         rows=self.stop - self.start)
+        self._result_cache = result['results']
+        self._hits = result['hits']
+        self._facets = result['facets']
+        return self._result_cache
+
+    def get_facets(self):
+        if not self._facets:
+            self.run()
+        return self._facets
+
+    def count(self):
+        if not self._hits:
+            self.run()
+        return self._hits
+
+    def __len__(self):
+        if not self._result_cache:
+            self.run()
+        return self._hits
+
+    def __getitem__(self, k):
+        if self._result_cache is not None:
+            return self._result_cache[k]
+
+        if isinstance(k, slice):
+            if k.start is not None:
+                start = int(k.start)
+            else:
+                start = None
+            if k.stop is not None:
+                stop = int(k.stop)
+            else:
+                stop = None
+            self.set_limits(start, stop)
+            qs = self.run()
+            return list(qs)[::k.step] if k.step else qs
+
+        self.set_limits(k, k + 1)
+        qs = self.run()
+        return list(qs)[0]
+
+
 def parse_result(hit, responses):
     hl = responses.highlighting.get(hit['id'])
     if hit['type'] == 'treaty':
@@ -111,6 +171,10 @@ def get_default_filters():
 
 
 def search(user_query, filters=None, highlight=True):
+    return Queryset(user_query, filters=filters, highlight=highlight)
+
+
+def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     solr.optimize()
     if user_query == '*':
@@ -119,7 +183,10 @@ def search(user_query, filters=None, highlight=True):
     else:
         solr_query = 'text:' + escape_query(user_query)
     filters = filters or get_default_filters()
-    params = DEFAULT_PARAMS.copy()
+    params = {
+        'rows': rows,
+        'start': start,
+    }
     params.update({
         'facet': 'on',
         'facet.field': filters.keys(),
