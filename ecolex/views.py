@@ -35,7 +35,7 @@ def page(request, slug):
     return HttpResponse("slug=" + slug)
 
 
-class ResultDetails(TemplateView):
+class ResultDetails(SearchView):
     template_name = 'details.html'
 
     def get_context_data(self, **kwargs):
