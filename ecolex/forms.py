@@ -11,3 +11,5 @@ class SearchForm(Form):
         attrs={'id': 'search', 'class': 'form-control', 'autofocus': True,
                'placeholder': "Treaties, Legislation, Court decisions, Literature, COP decisions"}))
     type = MultipleChoiceField(choices=DOC_TYPE)
+
+    tr_type = MultipleChoiceField()

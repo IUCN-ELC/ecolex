@@ -124,11 +124,15 @@
       <div id="filter-treaties" class="collapse in">
         {% if facets.trTypeOfText %}
         <h6>Type of document</h6>
-        <ul>
+        <ul class="filter-treaty-type">
           {% for type,count in facets.trTypeOfText.items %}
           <li>
             <label for="tr_type_{{ type }}">
-              <input type="checkbox" id="tr_type_{{ type }}" name="tr_type_{{ type }}">
+              <input type="checkbox"
+                     id="tr_type_{{ type }}"
+                     name="tr_type"
+                     value="{{ type }}"
+                    {% if type in form.tr_type.data %}checked{% endif %}>
               {{ type|capfirst }}
             </label>
             <span class="pull-right">{{ count }}</span>

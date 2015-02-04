@@ -27,6 +27,9 @@ class SearchViewWithResults(SearchView):
         ctx = self.get_context_data(**kwargs)
         query = self.form.data['q'].strip() or '*'
         context = search(query, types=self.form.data['type'])
+        tr_types = context['facets'].get('trTypeOfText', [])
+        tr_types = zip(tr_types, tr_types)
+        self.form.fields['tr_type'].choices = tr_types
         ctx.update(context)
         return render(request, 'list_results.html', ctx)
 

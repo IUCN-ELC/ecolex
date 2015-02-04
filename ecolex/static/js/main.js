@@ -48,4 +48,15 @@ $(document).ready(function() {
         // submit now for now
         $('.search-form').submit();
     });
+    // Treaty -> Type of Document filter
+    $('.filter-treaty-type input[type=checkbox]').change(function (e) {
+        var current = [];
+
+        $('.filter-treaty-type input:checked').each(function (){
+            current.push($(this).val());
+        });
+        $('#id_tr_type').val(current);
+        // submit now for now
+        $('.search-form').submit();
+    })
 });
