@@ -69,6 +69,7 @@ def search(user_query):
         'rows': '100'
     }
     responses = solr.search(solr_query, **params)
+    hits = responses.hits
 
     results = []
     for hit in responses:
@@ -85,4 +86,5 @@ def search(user_query):
         'results': results,
         'query': user_query,
         'facets': facets,
+        'hits': hits,
     }
