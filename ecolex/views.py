@@ -7,11 +7,11 @@ from ecolex.search import search, get_document
 
 
 class SearchView(TemplateView):
-    template_name = "search.html"
+    template_name = 'search.html'
 
 
 class SearchViewWithResults(SearchView):
-    template_name = "list_results.html"
+    template_name = 'list_results.html'
 
     def get_context_data(self, **kwargs):
         ctx = super(SearchViewWithResults, self).get_context_data(**kwargs)

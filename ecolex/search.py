@@ -11,7 +11,7 @@ def first(obj, default=None):
 
 class ObjectNormalizer:
     def __init__(self, solr):
-        self.type = solr["type"]
+        self.type = solr['type']
         self.solr = solr
 
     def id(self):
@@ -29,37 +29,37 @@ class ObjectNormalizer:
 
 class Treaty(ObjectNormalizer):
     def title(self):
-        return super(Treaty, self).title("trTitleOfText")
+        return super(Treaty, self).title('trTitleOfText')
 
     def date(self):
-        return datetime.strptime(self.solr["trDateOfText"],
-                                 "%Y-%m-%dT%H:%M:%SZ").date()
+        return datetime.strptime(self.solr['trDateOfText'],
+                                 '%Y-%m-%dT%H:%M:%SZ').date()
 
     def jurisdiction(self):
-        return first(self.solr.get("trJustices"))
+        return first(self.solr.get('trJustices'))
 
     def url(self):
-        res = first(self.solr.get("trUrlTreatyText"))
+        res = first(self.solr.get('trUrlTreatyText'))
 
 
 class Decision(ObjectNormalizer):
     def title(self):
-        return super(Decision, self).title("decTitleOfText")
+        return super(Decision, self).title('decTitleOfText')
 
     def date(self):
-        if not self.solr["decPublishDate"]:
+        if not self.solr['decPublishDate']:
             return None
-        return datetime.strptime(self.solr["decPublishDate"][0],
-                                 "%Y-%m-%dT%H:%M:%SZ").date()
+        return datetime.strptime(self.solr['decPublishDate'][0],
+                                 '%Y-%m-%dT%H:%M:%SZ').date()
 
     def url(self):
-        return first(self.solr.get("decLink"))
+        return first(self.solr.get('decLink'))
 
     def status(self):
-        return first(self.solr.get("decStatus"), "unknown")
+        return first(self.solr.get('decStatus'), "unknown")
 
     def number(self):
-        return first(self.solr.get("decNumber"))
+        return first(self.solr.get('decNumber'))
 
 
 def search(user_query):
@@ -76,7 +76,7 @@ def search(user_query):
 
     results = []
     for hit in responses:
-        if hit["type"] == "treaty":
+        if hit['type'] == "treaty":
             results.append(Treaty(hit))
         else:
             results.append(Decision(hit))
