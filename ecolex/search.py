@@ -112,7 +112,7 @@ def search(user_query, types=None, highlight=True):
         solr_query = 'text:' + escape_query(user_query)
     params = {
         'facet': 'on',
-        'facet.field': ['type'],
+        'facet.field': ['type', 'trTypeOfText'],
         'rows': '100',
     }
     if highlight:
