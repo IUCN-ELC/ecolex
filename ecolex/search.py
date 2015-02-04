@@ -2,10 +2,12 @@ from datetime import datetime
 import pysolr
 from django.conf import settings
 
+
 def first(obj, default=None):
-    if type(obj) is list and obj:
+    if obj and type(obj) is list:
         return obj[0]
     return default
+
 
 class ObjectNormalizer:
     def __init__(self, solr):
@@ -21,6 +23,7 @@ class ObjectNormalizer:
     def jurisdiction(self):
         return "International"
 
+
 class Treaty(ObjectNormalizer):
     def title(self):
         return super(Treaty, self).title("trTitleOfText")
@@ -35,6 +38,7 @@ class Treaty(ObjectNormalizer):
     def url(self):
         res = first(self.solr.get("trUrlTreatyText"))
 
+
 class Decision(ObjectNormalizer):
     def title(self):
         return super(Decision, self).title("decTitleOfText")
@@ -44,6 +48,7 @@ class Decision(ObjectNormalizer):
             return None
         return datetime.strptime(self.solr["decPublishDate"][0],
                                  "%Y-%m-%dT%H:%M:%SZ").date()
+
     def url(self):
         return first(self.solr.get("decLink"))
 
@@ -52,6 +57,7 @@ class Decision(ObjectNormalizer):
 
     def number(self):
         return first(self.solr.get("decNumber"))
+
 
 def search(user_query):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
