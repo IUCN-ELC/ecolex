@@ -2834,13 +2834,13 @@ if (typeof jQuery === 'undefined') {
              */
             buttonText: function(options, select) {
                 if (options.length === 0) {
-                    return this.nonSelectedText + ' <b class="caret"></b>';
+                    return this.nonSelectedText + ' <span class="icon icon-drop-down"></span>';
                 }
                 else if (options.length == $('option', $(select)).length) {
-                    return this.allSelectedText + ' <b class="caret"></b>';
+                    return this.allSelectedText + ' <span class="icon icon-drop-down"></span>';
                 }
                 else if (options.length > this.numberDisplayed) {
-                    return options.length + ' ' + this.nSelectedText + ' <b class="caret"></b>';
+                    return options.length + ' ' + this.nSelectedText + ' <span class="icon icon-drop-down"></span>';
                 }
                 else {
                     var selected = '';
@@ -2850,7 +2850,7 @@ if (typeof jQuery === 'undefined') {
                         selected += label + ', ';
                     });
                     
-                    return selected.substr(0, selected.length - 2) + ' <b class="caret"></b>';
+                    return selected.substr(0, selected.length - 2) + ' <span class="icon icon-drop-down"></span>';
                 }
             },
             /**
