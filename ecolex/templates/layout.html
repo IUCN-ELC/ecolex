@@ -59,7 +59,25 @@
     </div>
   </div>
 
-  {% block content %} {% endblock %}
+  <div class="search-section">
+    <div class="container">
+      <form action="result" method="get" class="search-form">
+        <label for="search">
+          <span class="sr-only">Search</span>
+          <span class="icon icon-search"></span>
+        </label>
+
+        <input id="search" class="form-control" type="search" autofocus name="q"
+               value="{% firstof query "" %}" placeholder="Treaties, Legislation, Court decisions, Literature, COP decisions">
+
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <main>
+    {% block content %} {% endblock %}
+  </main>
 
   <div class="footer">
     <div class="container">
