@@ -1,8 +1,8 @@
 from django.forms import Form, CharField, MultipleChoiceField, TextInput
 
 DOC_TYPE = (
-    ('t', "Treaty"),
-    ('d', "Decision"),
+    ('treaty', "Treaty"),
+    ('decision', "Decision"),
 )
 
 
@@ -10,4 +10,4 @@ class SearchForm(Form):
     q = CharField(initial='', widget=TextInput(
         attrs={'id': 'search', 'class': 'form-control', 'autofocus': True,
                'placeholder': "Treaties, Legislation, Court decisions, Literature, COP decisions"}))
-    type = MultipleChoiceField(choices=DOC_TYPE, initial=['t', 'd'])
+    type = MultipleChoiceField(choices=DOC_TYPE)

@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from ecolex.search import search, get_document
-from ecolex.forms import SearchForm
+from ecolex.forms import SearchForm, DOC_TYPE
 
 
 class SearchView(TemplateView):
@@ -15,7 +15,7 @@ class SearchView(TemplateView):
         data = dict(self.request.GET)
         if 'q' in data:
             data['q'] = data['q'][0]
-        data.setdefault('type', ('t', 'd'))
+        data.setdefault('type', dict(DOC_TYPE).keys())
         ctx['form'] = self.form = SearchForm(data=data)
         return ctx
 
@@ -26,7 +26,7 @@ class SearchViewWithResults(SearchView):
     def get(self, request, **kwargs):
         ctx = self.get_context_data(**kwargs)
         query = self.form.data['q'].strip() or '*'
-        context = search(query)
+        context = search(query, types=self.form.data['type'])
         ctx.update(context)
         return render(request, 'list_results.html', ctx)
 

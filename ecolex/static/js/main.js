@@ -29,4 +29,23 @@ $(document).ready(function() {
 
 	// Multiselect
 	$('select[multiple]').multiselect();
+
+    // Type filter - ugly
+    $('.filter-type button').click(function(e) {
+        var current = $('#id_type').val() || [];
+        var toggle_value = $(this).data('value');
+        if (!current) {
+            current = [toggle_value];
+        } else {
+            if (current.indexOf(toggle_value) == -1) {
+                current.push(toggle_value);
+            } else {
+                current.splice(current.indexOf(toggle_value), 1);
+            }
+        }
+        $('#id_type').val(current);
+        $(this).toggleClass('btn-default');
+        // submit now for now
+        $('.search-form').submit();
+    });
 });

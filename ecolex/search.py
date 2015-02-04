@@ -60,7 +60,7 @@ class Decision(ObjectNormalizer):
         return first(self.solr.get('decNumber'))
 
 
-def search(user_query):
+def search(user_query, types=None):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     solr.optimize()
     solr_query = 'text:' + user_query
@@ -69,7 +69,10 @@ def search(user_query):
         'facet.field': ['type'],
         'rows': '100'
     }
-    responses = solr.search(solr_query, **params)
+    fq = [solr_query]
+    if types:
+        fq.append(' '.join('type:' + t for t in types))
+    responses = solr.search('*', fq=fq, **params)
     hits = responses.hits
 
     results = []
