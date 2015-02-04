@@ -5,6 +5,11 @@ from django.conf import settings
 
 HIGHLIGHT_FIELDS = ('trTitleOfText', 'decTitleOfText')
 HIGHLIGHT = ','.join(HIGHLIGHT_FIELDS)
+HIGHLIGHT_PARAMS = {
+    'hl': 'true',
+    'hl.fl': HIGHLIGHT,
+    'hl.simple.pre': '<em class="hl">',
+}
 
 
 def first(obj, default=None):
@@ -76,21 +81,42 @@ def parse_result(hit, responses):
     return hit
 
 
+def escape_query(query):
+    """ Code from: http://opensourceconnections.com/blog/2013/01/17/escaping-solr-query-characters-in-python/
+    """
+    escapeRules = {
+        '+': r'\+', '-': r'\-', '&': r'\&', '|': r'\|', '!': r'\!', '(': r'\(',
+        ')': r'\)', '{': r'\{', '}': r'\}', '[': r'\[', ']': r'\]', '^': r'\^',
+        '~': r'\~', '*': r'\*', '?': r'\?', ':': r'\:', '"': r'\"', ';': r'\;',
+        ' ': r'\ ',
+    }
+
+    def _esc(term):
+        for char in query:
+            if char in escapeRules.keys():
+                yield escapeRules[char]
+            else:
+                yield char
+
+    query = query.replace('\\', r'\\')
+    return "".join(c for c in _esc(query))
+
+
 def search(user_query, types=None, highlight=True):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     solr.optimize()
-    solr_query = 'text:' + user_query
+    if user_query == '*':
+        solr_query = 'text:*'
+        highlight = False
+    else:
+        solr_query = 'text:' + escape_query(user_query)
     params = {
         'facet': 'on',
         'facet.field': ['type'],
         'rows': '100',
     }
     if highlight:
-        params.update({
-            'hl': 'true',
-            'hl.fl': HIGHLIGHT,
-            'hl.simple.pre': '<em class="hl">',
-        })
+        params.update(HIGHLIGHT_PARAMS)
     fq = []
     if types:
         fq.append(' '.join('type:' + t for t in types))
@@ -98,7 +124,6 @@ def search(user_query, types=None, highlight=True):
     hits = responses.hits
 
     results = [parse_result(hit, responses) for hit in responses]
-    print(responses.highlighting)
 
     facets = responses.facets['facet_fields']
     for k, v in facets.items():
