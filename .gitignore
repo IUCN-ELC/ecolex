@@ -2,4 +2,6 @@ instance/
 *.pyc
 .idea
 sandbox
+env
+db.sqlite3
 supervisord.conf

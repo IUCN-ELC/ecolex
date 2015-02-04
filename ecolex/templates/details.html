@@ -1,59 +1,60 @@
+{% extends 'layout.html' %}
+
 {% block content %}
+<main>
+  <div class="container">
 
-  <main>
-    <div class="container">
-
-      <article class="">
-        <aside>
-          This article refers to the following subjects:
-          <ul>
-            <li>{{ subject }}</li>
-            <li>{{ subject }}</li>
-          </ul>
-          and the following keywords:
-          <ul>
-            <li>{{ keyword }}</li>
-            <li>{{ keyword }}</li>
-          </ul>
-        </aside>
-        <header class="page-header">
-          <h1>Entry name <small>{{ ?abbr }}</small></h1>
-          <h4 class="h6 text-muted">Also known as:</h4>
-          <ul class="ist-unstyled">
-            <li>Convention sur la diversité biologique <sup>French</sup></li>
-            <li>{{ other language title }} <sup>{{ language }}</sup></li>
-          </ul>
-          <div>
-            <strong>{{ type }}</strong> | {{ region }} | {{ year }}
-          </div>
-        </header>
+    <article class="">
+      <aside>
+        This article refers to the following subjects:
+        <ul>
+          <li>{{ subject }}</li>
+          <li>{{ subject }}</li>
+        </ul>
+        and the following keywords:
+        <ul>
+          <li>{{ keyword }}</li>
+          <li>{{ keyword }}</li>
+        </ul>
+      </aside>
+      <header class="page-header">
+        <h1>{{ document.title }}</h1>
+        <h4 class="h6 text-muted">Also known as:</h4>
+        <ul class="ist-unstyled">
+          <li>Convention sur la diversité biologique <sup>French</sup></li>
+          <li>{{ other_language_title }} <sup>{{ language }}</sup></li>
+        </ul>
+        <div>
+          <strong>{{ type }}</strong> | {{ region }} | {{ year }}
+        </div>
+      </header>
 
 
-        <section>
-        </section>
+      <section>
+      </section>
 
-        <section>
-          <h2 class="h3">Description</h2>
-          <dl class="dl-horizontal" >
-            <dt>term</dt>
-            <dd>description</dd>
-            
-          </dl>
-        </section>
+      <section>
+        <h2 class="h3">Description</h2>
+        <dl class="dl-horizontal">
+          <dt>term</dt>
+          <dd>description</dd>
 
-        <section>
-          <h2 class="h3">Participants</h2>
-        </section>
+        </dl>
+      </section>
 
-        <section>
-          <h2 class="h3">References</h2>
+      <section>
+        <h2 class="h3">Participants</h2>
+      </section>
 
-          <h4 class="h4">{{ type }}</h3>
+      <section>
+        <h2 class="h3">References</h2>
+
+        <h4 class="h4">{{ type }}</h3>
 
           <dl>
             <dt>{{ relation }}</dt>
             <dd>
-              <a href="">{{ relation to ... }}</a>
+              <a href="">{{ relation_to }}</a>
               <span class="pull-righttext-muted"
                     title="What happened that year">{{ year }}</span>
             <dd>
@@ -61,43 +62,46 @@
 
           <table>
             <tbody>
-              <tr>
-                <th colspan="3">{{ type }}</th>
-              </tr>
-              <tr>
-                <td>{{ relation }}</td>
-                <td>{{ to|list }}</td>
-                <td>{{ year }}</td>
-              </tr>
+            <tr>
+              <th colspan="3">{{ type }}</th>
+            </tr>
+            <tr>
+              <td>{{ relation }}</td>
+              <td>{{ to }}</td>
+              <td>{{ year }}</td>
+            </tr>
             </tbody>
           </table>
 
           <p>
-            <a href="" class="btn btn-block btn-default">See remaining 788 references to other documents</a>
+            <a href="" class="btn btn-block btn-default">See remaining 788
+              references to other documents</a>
           </p>
-        </section>
+      </section>
 
-        <footer>
-          
-        </footer>
+      <footer>
 
-      </article>
+      </footer>
 
-
-      <div class="alert alert-warning">{{ comment }}</div>
-      <p>{{ abstract }} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, similique? Doloremque unde quasi, corporis consequuntur odio. Quaerat earum, commodi, ducimus consequuntur dolore deserunt pariatur dolorem, vero cum mollitia tempora odit.</p>
-      <div>
-
-        <a href="">Document full text.</a>
-      </div>
+    </article>
 
 
+    <div class="alert alert-warning">{{ comment }}</div>
+    <p>{{ abstract }} Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      Dolorum, similique? Doloremque unde quasi, corporis consequuntur odio.
+      Quaerat earum, commodi, ducimus consequuntur dolore deserunt pariatur
+      dolorem, vero cum mollitia tempora odit.</p>
+
+    <div>
+
+      <a href="">Document full text.</a>
+    </div>
 
 
-      <div class="well">
-        
-      </div>
+    <div class="well">
 
     </div>
-  </main>
+
+  </div>
+</main>
 {% endblock content %}

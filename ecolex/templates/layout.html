@@ -44,7 +44,7 @@
   <div class="jumbotron text-center">
     <div class="container">
       <div class="logo-ecolex">
-        <img src="../static/img/logo-ecolex-inverted.svg" alt="">
+        <img src="/static/img/logo-ecolex-inverted.svg" alt="">
       </div>
       <div class="slogan">
         <strong>The gateway to<br>environmental law</strong>
@@ -54,17 +54,36 @@
         Joint operation by<br><a href="">FAO</a>, <a href="">IUCN</a>, <a href="">UNEP</a>
       </div>
       <div class="logo-credits">
-        <img src="../static/img/logo-credits.svg" alt="">
+        <img src="/static/img/logo-credits.svg" alt="">
       </div>
     </div>
   </div>
 
-  {% block content %} {% endblock %}
+  <div class="search-section">
+    <div class="container">
+      <form action="result" method="get" class="search-form">
+        <label for="search">
+          <span class="sr-only">Search</span>
+          <span class="icon icon-search"></span>
+        </label>
+
+        {{ form.q }}
+
+        <button type="submit">Search</button>
+
+        <div style="display:none" >{{ form.type }}</div>
+      </form>
+    </div>
+  </div>
+
+  <main>
+    {% block content %} {% endblock %}
+  </main>
 
   <div class="footer">
     <div class="container">
       <div class="img">
-        <img src="../static/img/logo-ecolex-mono.svg" alt="">
+        <img src="/static/img/logo-ecolex-mono.svg" alt="">
       </div>
       <ul class="list-inline">
         <li><a href="{% url 'page' slug='about' %}">About</a></li>
