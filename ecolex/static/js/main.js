@@ -26,4 +26,7 @@ $(document).ready(function() {
 			return 'Current value: ' + value;
 		}
 	});
+
+	// Multiselect
+	$('select[multiple]').multiselect();
 });
