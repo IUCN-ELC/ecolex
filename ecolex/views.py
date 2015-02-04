@@ -18,12 +18,15 @@ class SearchViewWithResults(SearchView):
         return ctx
 
     def get(self, request, **kwargs):
-        if 'q' in request.GET:
-            context = search(request.GET['q'])
+        query = request.GET.get('q', '')
+        query = query.strip()
+        if query:
+            context = search(query)
         else:
-            context = {}
+            context = search('*')
 
         return render(request, 'list_results.html', context)
+
 
 def page(request, slug):
     return HttpResponse("slug=" + slug)
