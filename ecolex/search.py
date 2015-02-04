@@ -17,13 +17,15 @@ class ObjectNormalizer:
     def __init__(self, solr, hl):
         self.type = solr['type']
         self.solr = solr
-        self.solr.update(hl)
+        if hl:
+            self.solr.update(hl)
 
     def id(self):
         return self.solr.get('id')
 
     def title(self):
-        return max(self.solr[self.TITLE_FIELD], key=lambda i: len(i))
+        if self.solr.get(self.TITLE_FIELD):
+            return max(self.solr[self.TITLE_FIELD], key=lambda i: len(i))
 
     def __str__(self):
         return str(self.solr)
@@ -117,4 +119,4 @@ def get_document(document_id):
     if not responses.hits:
         return None
     hit = list(responses)[0]
-    return parse_result(hit)
+    return parse_result(hit, responses)
