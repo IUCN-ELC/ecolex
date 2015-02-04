@@ -14,6 +14,9 @@ class ObjectNormalizer:
         self.type = solr["type"]
         self.solr = solr
 
+    def id(self):
+        return self.solr.get('id')
+
     def title(self, field):
         return max(self.solr[field], key=lambda i: len(i))
 
@@ -88,3 +91,17 @@ def search(user_query):
         'facets': facets,
         'hits': hits,
     }
+
+
+def get_document(document_id):
+    solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
+    solr_query = 'id:' + document_id
+    responses = solr.search(solr_query)
+    if not responses.hits:
+        return None
+    hit = list(responses)[0]
+    if hit['type'] == 'treaty':
+        return Treaty(hit)
+    elif hit['type'] == 'decision':
+        return Decision(hit)
+    return hit

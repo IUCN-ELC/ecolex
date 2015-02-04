@@ -3,7 +3,7 @@ import pysolr
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from ecolex.search import search
+from ecolex.search import search, get_document
 
 
 class SearchView(TemplateView):
@@ -30,3 +30,12 @@ class SearchViewWithResults(SearchView):
 
 def page(request, slug):
     return HttpResponse("slug=" + slug)
+
+
+class ResultDetails(TemplateView):
+    template_name = 'details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ResultDetails, self).get_context_data(**kwargs)
+        context['document'] = get_document(kwargs['id'])
+        return context
