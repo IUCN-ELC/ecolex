@@ -12,14 +12,32 @@ class SearchView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super(SearchView, self).get_context_data(**kwargs)
+        # Prepare query
         data = dict(self.request.GET)
         if 'q' in data:
             data['q'] = data['q'][0]
         data.setdefault('type', dict(DOC_TYPE).keys())
         data.setdefault('tr_type', [])
-        self.formdata = data
-        ctx['form'] = self.form = SearchForm(data=self.formdata)
+        ctx['form'] = self.form = SearchForm(data=data)
+        self.query = self.form.data.get('q', '').strip() or '*'
+
+        # Compute filters
+        self.filters = {
+            'type': data['type']
+        }
+        if 'treaty' in data['type']:  # specific filters
+            self.filters['trTypeOfText'] = data['tr_type']
         return ctx
+
+    def update_form_choices(self, facets):
+        """ After a query is run, there are new choices to be set.
+        """
+
+        def _extract(facet):
+            values = (facets.get(facet) or {}).keys()
+            return zip(values, values)
+
+        self.form.fields['tr_type'].choices = _extract('trTypeOfText')
 
 
 class SearchViewWithResults(SearchView):
@@ -27,13 +45,9 @@ class SearchViewWithResults(SearchView):
 
     def get(self, request, **kwargs):
         ctx = self.get_context_data(**kwargs)
-        query = self.formdata.get('q', '').strip() or '*'
-        context = search(query, types=self.formdata['type'],
-                         tr_types=self.formdata['tr_type'])
-        tr_types = context['facets'].get('trTypeOfText', [])
-        tr_types = zip(tr_types, tr_types)
-        self.form.fields['tr_type'].choices = tr_types
+        context = search(self.query, filters=self.filters)
         ctx.update(context)
+        self.update_form_choices(context['facets'])
         return render(request, 'list_results.html', ctx)
 
 

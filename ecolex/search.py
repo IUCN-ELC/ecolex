@@ -10,6 +10,10 @@ HIGHLIGHT_PARAMS = {
     'hl.fl': HIGHLIGHT,
     'hl.simple.pre': '<em class="hl">',
 }
+DEFAULT_PARAMS = {
+    'rows': 100,
+    'start': 0,
+}
 
 
 def first(obj, default=None):
@@ -102,7 +106,11 @@ def escape_query(query):
     return "".join(c for c in _esc(query))
 
 
-def search(user_query, types=None, tr_types=None, highlight=True):
+def get_default_filters():
+    return 'type', 'trTypeOfText'
+
+
+def search(user_query, filters=None, highlight=True):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     solr.optimize()
     if user_query == '*':
@@ -110,19 +118,20 @@ def search(user_query, types=None, tr_types=None, highlight=True):
         highlight = False
     else:
         solr_query = 'text:' + escape_query(user_query)
-    params = {
+    filters = filters or get_default_filters()
+    params = DEFAULT_PARAMS.copy()
+    params.update({
         'facet': 'on',
-        'facet.field': ['type', 'trTypeOfText'],
-        'rows': '100',
-    }
+        'facet.field': filters.keys(),
+    })
+    params['fq'] = [
+        ' '.join(facet + ':' + t for t in values)
+        for facet, values in filters.items()
+    ]
     if highlight:
         params.update(HIGHLIGHT_PARAMS)
-    fq = []
-    if types:
-        fq.append(' '.join('type:' + t for t in types))
-    if tr_types:
-        fq.append(' '.join('trTypeOfText:' + t for t in tr_types))
-    responses = solr.search(solr_query, fq=fq, **params)
+
+    responses = solr.search(solr_query, **params)
     hits = responses.hits
 
     results = [parse_result(hit, responses) for hit in responses]
