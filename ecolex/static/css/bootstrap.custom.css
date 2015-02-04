@@ -5230,10 +5230,18 @@ article dt {
   color: #808080;
 }
 .participants {
+  display: block;
   position: relative;
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
   letter-spacing: -0.03em;
+}
+.participants thead,
+.participants tbody,
+.participants tr,
+.participants td,
+.participants th {
+  display: block;
 }
 .participants strong {
   display: block;
@@ -5261,11 +5269,11 @@ article dt {
     border-right: 1px solid #dddddd;
   }
 }
-.participants .head {
+.participants thead {
   float: left;
   padding: 5px;
 }
-.participants .body {
+.participants tbody {
   box-shadow: inset 2px 0 3px -1px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   overflow-y: hidden;
