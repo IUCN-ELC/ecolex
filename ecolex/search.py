@@ -17,8 +17,8 @@ class ObjectNormalizer:
     def id(self):
         return self.solr.get('id')
 
-    def title(self, field):
-        return max(self.solr[field], key=lambda i: len(i))
+    def title(self):
+        return max(self.solr[self.TITLE_FIELD], key=lambda i: len(i))
 
     def __str__(self):
         return str(self.solr)
@@ -28,8 +28,7 @@ class ObjectNormalizer:
 
 
 class Treaty(ObjectNormalizer):
-    def title(self):
-        return super(Treaty, self).title('trTitleOfText')
+    TITLE_FIELD = 'trTitleOfText'
 
     def date(self):
         return datetime.strptime(self.solr['trDateOfText'],
@@ -39,12 +38,11 @@ class Treaty(ObjectNormalizer):
         return first(self.solr.get('trJustices'))
 
     def url(self):
-        res = first(self.solr.get('trUrlTreatyText'))
+        return first(self.solr.get('trUrlTreatyText'))
 
 
 class Decision(ObjectNormalizer):
-    def title(self):
-        return super(Decision, self).title('decTitleOfText')
+    TITLE_FIELD = 'decTitleOfText'
 
     def date(self):
         if not self.solr['decPublishDate']:
