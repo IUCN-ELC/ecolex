@@ -3,6 +3,10 @@ import pysolr
 from django.conf import settings
 
 
+HIGHLIGHT_FIELDS = ('trTitleOfText', 'decTitleOfText')
+HIGHLIGHT = ','.join(HIGHLIGHT_FIELDS)
+
+
 def first(obj, default=None):
     if obj and type(obj) is list:
         return obj[0]
@@ -10,9 +14,10 @@ def first(obj, default=None):
 
 
 class ObjectNormalizer:
-    def __init__(self, solr):
+    def __init__(self, solr, hl):
         self.type = solr['type']
         self.solr = solr
+        self.solr.update(hl)
 
     def id(self):
         return self.solr.get('id')
@@ -60,27 +65,38 @@ class Decision(ObjectNormalizer):
         return first(self.solr.get('decNumber'))
 
 
-def search(user_query, types=None):
+def parse_result(hit, responses):
+    hl = responses.highlighting.get(hit['id'])
+    if hit['type'] == 'treaty':
+        return Treaty(hit, hl)
+    elif hit['type'] == 'decision':
+        return Decision(hit, hl)
+    return hit
+
+
+def search(user_query, types=None, highlight=True):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     solr.optimize()
     solr_query = 'text:' + user_query
     params = {
         'facet': 'on',
         'facet.field': ['type'],
-        'rows': '100'
+        'rows': '100',
     }
-    fq = [solr_query]
+    if highlight:
+        params.update({
+            'hl': 'true',
+            'hl.fl': HIGHLIGHT,
+            'hl.simple.pre': '<em class="hl">',
+        })
+    fq = []
     if types:
         fq.append(' '.join('type:' + t for t in types))
-    responses = solr.search('*', fq=fq, **params)
+    responses = solr.search(solr_query, fq=fq, **params)
     hits = responses.hits
 
-    results = []
-    for hit in responses:
-        if hit['type'] == "treaty":
-            results.append(Treaty(hit))
-        else:
-            results.append(Decision(hit))
+    results = [parse_result(hit, responses) for hit in responses]
+    print(responses.highlighting)
 
     facets = responses.facets['facet_fields']
     for k, v in facets.items():
@@ -101,8 +117,4 @@ def get_document(document_id):
     if not responses.hits:
         return None
     hit = list(responses)[0]
-    if hit['type'] == 'treaty':
-        return Treaty(hit)
-    elif hit['type'] == 'decision':
-        return Decision(hit)
-    return hit
+    return parse_result(hit)
