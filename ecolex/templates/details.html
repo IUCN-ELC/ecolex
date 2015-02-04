@@ -2,7 +2,7 @@
 
 {% block content %}
     <article class="">
-      <aside>
+      <!-- <aside>
         This article refers to the following subjects:
         <ul>
           <li>{{ subject }}</li>
@@ -13,67 +13,129 @@
           <li>{{ keyword }}</li>
           <li>{{ keyword }}</li>
         </ul>
-      </aside>
-      <header class="page-header">
-        <h1>{{ document.title }}</h1>
-        <h4 class="h6 text-muted">Also known as:</h4>
-        <ul class="ist-unstyled">
-          <li>Convention sur la diversité biologique <sup>French</sup></li>
-          <li>{{ other_language_title }} <sup>{{ language }}</sup></li>
-        </ul>
-        <div>
-          <strong>{{ document.type }}</strong> | {{ document.region }} | {{ document.year }}
-        </div>
+      </aside> -->
+      <header class="page-headr">
+        <h1 class="text-center">
+          <!-- <span class="pull-left text-muted icon icon-cop-decisions" style="font-size: 64px;"></span> -->
+          {{ document.title }}</h1>
+
+        <hr>
+          <div class="text-center">
+            <strong>{{ document.type }}</strong> | document.region | document.year
+          </div>
+        <hr>
       </header>
 
-
       <section>
-      </section>
-
-      <section>
-        <h2 class="h4">Description</h2>
-        <dl class="dl-horizontal">
-          <dt>term</dt>
-          <dd>description</dd>
-
+        <dl class="dl-horizontal with-mobile">
+          <dt>Also known as</dt>
+          <dd>
+            <ul>
+              <li>Convention sur la diversité biologique <sup>French</sup></li>
+              <li>other_language_title <sup>language</sup></li>
+            </ul>
+          </dd>
         </dl>
       </section>
 
       <section>
-        <h2 class="h4">Participants</h2>
+        <h2 class="section-title">Description</h2>
+        <dl class="dl-horizontal with-mobile">
+          <dt>term</dt>
+          <dd>description</dd>
+          <dt>term</dt>
+          <dd>description</dd>
+        </dl>
       </section>
 
       <section>
-        <h2 class="h4">References</h2>
+        <h2 class="section-title">Participants</h2>
 
-        <h4 class="h5">{{ type }}</h3>
+        <div class="participants">
+          
+          <div class="head">
+            <strong>x</strong>
+            <ul>
+              <li>Acceptance</li>
+              <li>Signature</li>
+              <li>Withdrawal</li>
+            </ul>
+          </div>
+
+          <div class="body">
+            <div class="country">
+              <strong>Country 1</strong>
+              <ul>
+                <li>date</li>
+                <li>date</li>
+                <li>date</li>
+              </ul>
+            </div>
+            <div class="country">
+              <strong>Country 1</strong>
+              <ul>
+                <li>date</li>
+                <li>date</li>
+                <li>date</li>
+              </ul>
+            </div>
+            <div class="country">
+              <strong>Country 1</strong>
+              <ul>
+                <li>date</li>
+                <li>date</li>
+                <li>date</li>
+              </ul>
+            </div>
+            <div class="country">
+              <strong>Country 1</strong>
+              <ul>
+                <li>date</li>
+                <li>date</li>
+                <li>date</li>
+              </ul>
+            </div>
+            <div class="country">
+              <strong>Country 1</strong>
+              <ul>
+                <li>date</li>
+                <li>date</li>
+                <li>date</li>
+              </ul>
+            </div>
+          </div>
+
+
+        </div>
+
+      </section>
+
+      <section>
+        <h2 class="section-title">References</h2>
+
+        <h4 class="h5">type</h3>
 
           <dl>
-            <dt>{{ relation }}</dt>
+            <dt>relation</dt>
             <dd>
-              <a href="">{{ relation_to }}</a>
-              <span class="pull-righttext-muted"
-                    title="What happened that year">{{ year }}</span>
+              <a href="">relation_to</a>
+              <span class="pull-right text-muted"
+                    title="What happened that year">year</span>
             <dd>
           </dl>
 
           <table>
             <tbody>
             <tr>
-              <th colspan="3">{{ type }}</th>
+              <th colspan="3">type</th>
             </tr>
             <tr>
-              <td>{{ relation }}</td>
-              <td>{{ to }}</td>
-              <td>{{ year }}</td>
+              <td>relation</td>
+              <td>to</td>
+              <td>year</td>
             </tr>
             </tbody>
           </table>
-
-          <p>
-            <a href="" class="btn btn-block btn-default">See remaining 788
-              references to other documents</a>
-          </p>
       </section>
 
       <footer>
@@ -81,21 +143,5 @@
       </footer>
 
     </article>
-
-
-    <div class="alert alert-warning">{{ comment }}</div>
-    <p>{{ abstract }} Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      Dolorum, similique? Doloremque unde quasi, corporis consequuntur odio.
-      Quaerat earum, commodi, ducimus consequuntur dolore deserunt pariatur
-      dolorem, vero cum mollitia tempora odit.</p>
-
-    <div>
-      <a href="">Document full text.</a>
-    </div>
-
-
-    <div class="well">
-
-    </div>
 
 {% endblock content %}
