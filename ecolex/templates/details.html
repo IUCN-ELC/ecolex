@@ -1,9 +1,6 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<main>
-  <div class="container">
-
     <article class="">
       <aside>
         This article refers to the following subjects:
@@ -25,7 +22,7 @@
           <li>{{ other_language_title }} <sup>{{ language }}</sup></li>
         </ul>
         <div>
-          <strong>{{ type }}</strong> | {{ region }} | {{ year }}
+          <strong>{{ document.type }}</strong> | {{ document.region }} | {{ document.year }}
         </div>
       </header>
 
@@ -34,7 +31,7 @@
       </section>
 
       <section>
-        <h2 class="h3">Description</h2>
+        <h2 class="h4">Description</h2>
         <dl class="dl-horizontal">
           <dt>term</dt>
           <dd>description</dd>
@@ -43,13 +40,13 @@
       </section>
 
       <section>
-        <h2 class="h3">Participants</h2>
+        <h2 class="h4">Participants</h2>
       </section>
 
       <section>
-        <h2 class="h3">References</h2>
+        <h2 class="h4">References</h2>
 
-        <h4 class="h4">{{ type }}</h3>
+        <h4 class="h5">{{ type }}</h3>
 
           <dl>
             <dt>{{ relation }}</dt>
@@ -93,7 +90,6 @@
       dolorem, vero cum mollitia tempora odit.</p>
 
     <div>
-
       <a href="">Document full text.</a>
     </div>
 
@@ -102,6 +98,4 @@
 
     </div>
 
-  </div>
-</main>
 {% endblock content %}
