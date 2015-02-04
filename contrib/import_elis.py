@@ -98,7 +98,32 @@ FIELD_MAP = {
     #'dateofwithdrawal': 'partyDateOfWithdrawal',
 }
 
-PARTICIPANT_FIELDS = [
+PARTICIPANT_FIELDS = {
+    'country': 'partyCountry',
+    #'potentialparty': 'partyPotentialParty',
+    'entryintoforce': 'partyEntryIntoForce',
+    'dateofratification': 'partyDateOfRatification',
+    'dateofaccessionapprobation': 'partyDateOfAccessionApprobation',
+    'dateofacceptanceapproval': 'partyDateOfAcceptanceApproval',
+    'dateofconsenttobebound': 'partyDateOfConsentToBeBound',
+    'dateofsuccession': 'partyDateOfSuccession',
+    'dateofdefinitesignature': 'partyDateOfDefiniteSignature',
+    'dateofsimplesignature': 'partyDateOfSimpleSignature',
+    'dateofprovisionalapplication': 'partyDateOfProvisionalApplication',
+    'dateofparticipation': 'partyDateOfParticipation',
+    'dateofdeclaration': 'partyDateOfDeclaration',
+    'dateofreservation': 'partyDateOfReservation',
+    'dateofwithdrawal': 'partyDateOfWithdrawal',
+}
+
+DATE_FIELDS = [
+    'trDateOfEntry',
+    'trDateOfModification',
+    'trDateOfText',
+    'trSearchDate',
+    'trEntryIntoForceDate',
+    'trDateOfLastLegalAction',
+    'trSearchDate',
     'partyEntryIntoForce',
     'partyDateOfRatification',
     'partyDateOfAccessionApprobation',
@@ -114,29 +139,6 @@ PARTICIPANT_FIELDS = [
     'partyDateOfWithdrawal',
 ]
 
-DATE_FIELDS = [
-    'trDateOfEntry',
-    'trDateOfModification',
-    'trDateOfText',
-    'trSearchDate',
-    'trEntryIntoForceDate',
-    'trDateOfLastLegalAction',
-    'trSearchDate',
-    #'partyEntryIntoForce',
-    #'partyDateOfRatification',
-    #'partyDateOfAccessionApprobation',
-    #'partyDateOfAcceptanceApproval',
-    #'partyDateOfConsentToBeBound',
-    #'partyDateOfSuccession',
-    #'partyDateOfDefiniteSignature',
-    #'partyDateOfSimpleSignature',
-    #'partyDateOfProvisionalApplication',
-    #'partyDateOfParticipation',
-    #'partyDateOfDeclaration',
-    #'partyDateOfReservation',
-    #'partyDateOfWithdrawal',
-]
-
 def clean_text(text):
     return text.strip()
 
@@ -149,7 +151,7 @@ def format_date(date):
     date_fields = date.split('-')
     for i in range(3-len(date_fields)):
         date += "-01"
-    return date + 'T00:00:00Z'
+    return date + "T00:00:00Z"
 
 def parse_xml(path):
     bs = BeautifulSoup(open(path, 'r', encoding='utf-8'))
@@ -163,7 +165,21 @@ def parse_xml(path):
                 data[v] = [clean_text(field.text) for field in field_values] 
                 if v in DATE_FIELDS:
                     data[v] = [format_date(date) for date in data[v]]
-                
+        for party in document.findAll('party'):
+            no_children = 0
+            for child in party.children:
+                no_children += 1
+            if no_children == 1 and getattr(party, "potentialparty"):
+                continue
+            for k, v in PARTICIPANT_FIELDS.items():
+                field = getattr(party, k)
+                if not v in data:
+                    data[v] = []    
+                if field:
+                    clean_field = clean_text(field.text)
+                    data[v].append(format_date(clean_field) if v in DATE_FIELDS else clean_field)
+                else:
+                    data[v].append(format_date("0000-00-00")) 
         result.append(data)
     
     return result
@@ -175,7 +191,7 @@ def add_docs(solr, docs):
 def update_solr_entry(solr, treaty, informea_id):
     result = solr.search('trInformeaId:' + informea_id)
     existing_fields = result.docs[0]
-    existing_fields['source'] += ',elis'
+    existing_fields['source'] += ",elis"
     new_document = dict(list(treaty.items()) + list(existing_fields.items()))   
     solr.delete('trInformeaId:' + informea_id)
     add_docs(solr, [new_document])
@@ -208,7 +224,7 @@ if __name__ == '__main__':
         sys.exit(0)
 
     xml_files = get_xml_abs_paths(sys.argv[1])
-    solr = pysolr.Solr('http://{}:8983/solr/ecolex'.format(sys.argv[2]), timeout=10)
+    solr = pysolr.Solr("http://{}:8983/solr/ecolex".format(sys.argv[2]), timeout=10)
     
     duplicates_mapping = get_duplicate_ids("duplicates") 
    
@@ -218,7 +234,7 @@ if __name__ == '__main__':
  
         for treaty in r:
             if treaty['trElisId'][0] in duplicates_mapping.keys():
-                print('update:' + duplicates_mapping[treaty['trElisId'][0]])
+                print("update:" + duplicates_mapping[treaty['trElisId'][0]])
                 update_solr_entry(solr, treaty, duplicates_mapping[treaty['trElisId'][0]])
             else:
                 treaty['type'] = 'treaty'
