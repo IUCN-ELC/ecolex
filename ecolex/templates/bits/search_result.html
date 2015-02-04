@@ -1,7 +1,7 @@
 {% if result.type == "decision" %}
 <li class="search-result">
   <h3 class="search-result-title">
-    <a href= "{% url 'result' result.id %}" > {{ result.number }} {# result.title #} </a>
+    <a href= "{% url 'result' result.id %}" > {{ result.number }} {{ result.title }} </a>
   </h3>
   <div class="search-result-details">
     <strong>{{ result.type }}</strong> | <span>{{ result.jurisdiction }} </span> | <time>{{ result.date }}</time>
@@ -16,7 +16,7 @@
 
 <li class="search-result">
   <h3 class="search-result-title">
-    <a href= "{% url 'result' result.id %}" >{# result.title #} </a>
+    <a href= "{% url 'result' result.id %}" >{{ result.title }} </a>
   </h3>
   <div class="search-result-details">
     <strong>{{ result.type }}</strong> | <span>International</span> | <time>{{ result.date }}</time>

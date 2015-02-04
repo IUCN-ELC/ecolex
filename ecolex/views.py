@@ -4,28 +4,31 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from ecolex.search import search, get_document
+from ecolex.forms import SearchForm
 
 
 class SearchView(TemplateView):
     template_name = 'search.html'
 
+    def get_context_data(self, **kwargs):
+        ctx = super(SearchView, self).get_context_data(**kwargs)
+        data = dict(self.request.GET)
+        if 'q' in data:
+            data['q'] = data['q'][0]
+        data.setdefault('type', ('t', 'd'))
+        ctx['form'] = self.form = SearchForm(data=data)
+        return ctx
+
 
 class SearchViewWithResults(SearchView):
     template_name = 'list_results.html'
 
-    def get_context_data(self, **kwargs):
-        ctx = super(SearchViewWithResults, self).get_context_data(**kwargs)
-        return ctx
-
     def get(self, request, **kwargs):
-        query = request.GET.get('q', '')
-        query = query.strip()
-        if query:
-            context = search(query)
-        else:
-            context = search('*')
-
-        return render(request, 'list_results.html', context)
+        ctx = self.get_context_data(**kwargs)
+        query = self.form.data['q'].strip() or '*'
+        context = search(query)
+        ctx.update(context)
+        return render(request, 'list_results.html', ctx)
 
 
 def page(request, slug):

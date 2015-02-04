@@ -5,13 +5,12 @@
   <div class="btn-group btn-group-sm filter-type">
     <!-- Treaty filter -->
     <button type="button"
-            class="btn btn-default"
+            class="btn {% if 't' in form.type.data %}btn-default{% endif %}"
             data-filter="#treaty-fieldset"
             data-toggle="tooltip"
             data-placement="bottom"
             data-container="body"
-            title="Show Treaties"
-            {% if facets.type.treaty == 0 %} disabled {% endif %}>
+            title="Show Treaties">
       <span class="icon icon-treaties"></span>
       {% if facets.type.treaty > 0 %}
         <span class="badge">{{ facets.type.treaty }}</span>
@@ -21,13 +20,12 @@
 
     <!-- COP decision filter -->
     <button type="button"
-            class="btn btn-default"
+            class="btn {% if 'd' in form.type.data %}btn-default{% endif %}"
             data-filter="#copdecision-fieldset"
             data-toggle="tooltip"
             data-placement="bottom"
             data-container="body"
-            title="Show COP Decisions"
-            {% if facets.type.decision == 0 %} disabled {% endif %}>
+            title="Show COP Decisions">
       <span class="icon icon-cop-decisions"></span>
       {% if facets.type.decision > 0 %}
       <span class="badge">{{ facets.type.decision }}</span>
