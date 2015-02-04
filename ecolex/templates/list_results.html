@@ -183,7 +183,12 @@
     <fieldset class="global-filter">
       <h5>Years</h5>
       <div class="indent">
-        <div class="row">
+        <input id="filter-years" type="text" 
+               data-slider-min="1896" 
+               data-slider-max="2015" 
+               data-slider-value="[1896,2015]"
+               data-slider-tooltip="hide"/>
+        <!-- <div class="row">
           <div class="form-group col-xs-6">
             <label for="year-min">From</label>
             <input class="form-control" id="year-min" type="number" placeholder="1856">
@@ -192,7 +197,7 @@
             <label for="year-max">To</label>
             <input class="form-control" id="year-max" type="number" placeholder="2015">
           </div>
-        </div>
+        </div> -->
       </div>
     </fieldset>
 
