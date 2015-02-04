@@ -32,6 +32,9 @@
             <field column="body" name="decBody" />
             <field column="display_order" name="decDisplayOrder" />
 	        <field column="is_indexed" name="decIsIndexed" />
+            <entity name="decision_document" query="SELECT url from ai_document WHERE id_decision='${Decisions.id}'">
+                <field column="url" name="decDocUrls" />
+            </entity>
 	    </entity>
 	    <entity name="Meetings" dataSource="sqlSource"  
                 query="SELECT id, id_organization, id_treaty, event_url, title,
