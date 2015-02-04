@@ -102,7 +102,7 @@ def escape_query(query):
     return "".join(c for c in _esc(query))
 
 
-def search(user_query, types=None, highlight=True):
+def search(user_query, types=None, tr_types=None, highlight=True):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     solr.optimize()
     if user_query == '*':
@@ -120,6 +120,8 @@ def search(user_query, types=None, highlight=True):
     fq = []
     if types:
         fq.append(' '.join('type:' + t for t in types))
+    if tr_types:
+        fq.append(' '.join('trTypeOfText:' + t for t in tr_types))
     responses = solr.search(solr_query, fq=fq, **params)
     hits = responses.hits
 

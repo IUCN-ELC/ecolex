@@ -16,7 +16,9 @@ class SearchView(TemplateView):
         if 'q' in data:
             data['q'] = data['q'][0]
         data.setdefault('type', dict(DOC_TYPE).keys())
-        ctx['form'] = self.form = SearchForm(data=data)
+        data.setdefault('tr_type', [])
+        self.formdata = data
+        ctx['form'] = self.form = SearchForm(data=self.formdata)
         return ctx
 
 
@@ -25,8 +27,9 @@ class SearchViewWithResults(SearchView):
 
     def get(self, request, **kwargs):
         ctx = self.get_context_data(**kwargs)
-        query = self.form.data['q'].strip() or '*'
-        context = search(query, types=self.form.data['type'])
+        query = self.formdata.get('q', '').strip() or '*'
+        context = search(query, types=self.formdata['type'],
+                         tr_types=self.formdata['tr_type'])
         tr_types = context['facets'].get('trTypeOfText', [])
         tr_types = zip(tr_types, tr_types)
         self.form.fields['tr_type'].choices = tr_types
