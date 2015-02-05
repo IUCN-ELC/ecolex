@@ -3,7 +3,6 @@ import pysolr
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from django.core.paginator import Paginator
 from ecolex.search import search, get_document, PERPAGE
 from ecolex.forms import SearchForm, DOC_TYPE
 
@@ -44,14 +43,30 @@ class SearchView(TemplateView):
 class SearchViewWithResults(SearchView):
     template_name = 'list_results.html'
 
+    def page_details(self, page, results, request):
+        get_query = request.GET.copy()
+        get_query.pop(page, None)
+
+        def _get_url(page):
+            get_query['page'] = page
+            return get_query.urlencode()
+
+        return {
+            'number': page,
+            'pages': results.pages,
+            'next_url': _get_url(page + 1),
+            'prev_url': _get_url(page - 1),
+        }
+
     def get(self, request, **kwargs):
         page = int(self.request.GET.get('page', 1))
         ctx = self.get_context_data(**kwargs)
         results = search(self.query, filters=self.filters)
-        results.set_limits((page - 1) * PERPAGE, page * PERPAGE)
-        ctx['page'] = Paginator(results, PERPAGE).page(page)
+        results.set_page(page)
+        results.fetch()
         ctx['results'] = results
         ctx['facets'] = results.get_facets()
+        ctx['page'] = self.page_details(page, results, request)
         self.update_form_choices(ctx['facets'])
 
         return render(request, 'list_results.html', ctx)

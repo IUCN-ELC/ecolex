@@ -79,28 +79,30 @@
   </div>
 
   <ul class="search-results">
-  {% for result in page %}
+  {% for result in results %}
     {% include "bits/search_result.html" with result=result %}
   {% endfor %}
   </ul>
 
   <hr>
 
+  {% if page.pages %}
   <div class="pagination">
       <span class="step-links">
-          {% if page.has_previous %}
-              <a href="?page={{ page.previous_page_number }}">previous</a>
+          {% if page.number > 1 %}
+              <a href="?{{ page.prev_url }}">previous</a>
           {% endif %}
 
           <span class="current">
-              Page {{ page.number }} of {{ page.paginator.num_pages }}.
+              Page {{ page.number }} of {{ page.pages }}.
           </span>
 
-          {% if page.has_next %}
-              <a href="?page={{ page.next_page_number }}">next</a>
+          {% if page.number < page.pages %}
+              <a href="?{{ page.next_url }}">next</a>
           {% endif %}
       </span>
   </div>
+  {% endif %}
 {% endblock %}
 
 {% block sidebar %}

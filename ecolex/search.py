@@ -10,7 +10,7 @@ HIGHLIGHT_PARAMS = {
     'hl.fl': HIGHLIGHT,
     'hl.simple.pre': '<em class="hl">',
 }
-PERPAGE = 100
+PERPAGE = 20
 
 
 def first(obj, default=None):
@@ -84,21 +84,19 @@ class Queryset(object):
         self.filters = filters
         self.highlight = highlight
         self.start = 0
-        self.stop = PERPAGE
+        self.perpage = PERPAGE
         self._result_cache = None
         self._hits = None
         self._facets = {}
 
-    def set_limits(self, start, stop):
-        if start is not None:
-            self.start = start
-        if stop is not None:
-            self.stop = stop
+    def set_page(self, page, perpage=None):
+        self.perpage = perpage or PERPAGE
+        self.start = (page - 1) * self.perpage
 
-    def run(self):
+    def fetch(self):
         result = _search(self.query, filters=self.filters,
                          highlight=self.highlight, start=self.start,
-                         rows=self.stop - self.start)
+                         rows=self.perpage)
         self._result_cache = result['results']
         self._hits = result['hits']
         self._facets = result['facets']
@@ -106,39 +104,24 @@ class Queryset(object):
 
     def get_facets(self):
         if not self._facets:
-            self.run()
+            self.fetch()
         return self._facets
 
     def count(self):
         if not self._hits:
-            self.run()
+            self.fetch()
         return self._hits
+
+    def pages(self):
+        return self.perpage and int(len(self) / self.perpage)
 
     def __len__(self):
+        return self.count()
+
+    def __iter__(self):
         if not self._result_cache:
-            self.run()
-        return self._hits
-
-    def __getitem__(self, k):
-        if self._result_cache is not None:
-            return self._result_cache[k]
-
-        if isinstance(k, slice):
-            if k.start is not None:
-                start = int(k.start)
-            else:
-                start = None
-            if k.stop is not None:
-                stop = int(k.stop)
-            else:
-                stop = None
-            self.set_limits(start, stop)
-            qs = self.run()
-            return list(qs)[::k.step] if k.step else qs
-
-        self.set_limits(k, k + 1)
-        qs = self.run()
-        return list(qs)[0]
+            self.fetch()
+        return self._result_cache.__iter__()
 
 
 def parse_result(hit, responses):
