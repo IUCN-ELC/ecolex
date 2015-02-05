@@ -13,3 +13,4 @@ class SearchForm(Form):
     type = MultipleChoiceField(choices=DOC_TYPE)
 
     tr_type = MultipleChoiceField()
+    tr_field = MultipleChoiceField()

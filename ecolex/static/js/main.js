@@ -49,13 +49,15 @@ $(document).ready(function() {
         $('.search-form').submit();
     });
     // Treaty -> Type of Document filter
-    $('.filter-treaty-type input[type=checkbox]').change(function (e) {
+    $('.filter-treaty input[type=checkbox]').change(function (e) {
         var current = [];
+        var ul = $(this).parents('ul');
+        var form_id = ul.data('formid');
 
-        $('.filter-treaty-type input:checked').each(function (){
+        ul.find('input:checked').each(function (){
             current.push($(this).val());
         });
-        $('#id_tr_type').val(current);
+        $(form_id).val(current);
         // submit now for now
         $('.search-form').submit();
     })

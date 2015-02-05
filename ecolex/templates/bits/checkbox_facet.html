@@ -1,0 +1,13 @@
+{% for type,count in facet.items %}
+  <li>
+    <label for="tr_type_{{ type }}">
+      <input type="checkbox"
+             id="tr_type_{{ type }}"
+             name="tr_type"
+             value="{{ type }}"
+             {% if type in form.tr_type.data %}checked{% endif %}>
+      {{ type|capfirst }}
+    </label>
+    <span class="pull-right">{{ count }}</span>
+  </li>
+{% endfor %}

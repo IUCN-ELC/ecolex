@@ -18,6 +18,7 @@ class SearchView(TemplateView):
             data['q'] = data['q'][0]
         data.setdefault('type', dict(DOC_TYPE).keys())
         data.setdefault('tr_type', [])
+        data.setdefault('tr_field', [])
         ctx['form'] = self.form = SearchForm(data=data)
         self.query = self.form.data.get('q', '').strip() or '*'
 
@@ -27,6 +28,7 @@ class SearchView(TemplateView):
         }
         if 'treaty' in data['type']:  # specific filters
             self.filters['trTypeOfText'] = data['tr_type']
+            self.filters['trFieldOfApplication'] = data['tr_field']
         return ctx
 
     def update_form_choices(self, facets):
@@ -38,6 +40,7 @@ class SearchView(TemplateView):
             return zip(values, values)
 
         self.form.fields['tr_type'].choices = _extract('trTypeOfText')
+        self.form.fields['tr_field'].choices = _extract('trFieldOfApplication')
 
 
 class SearchViewWithResults(SearchView):

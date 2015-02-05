@@ -116,28 +116,14 @@
       <div id="filter-treaties" class="collapse in">
         {% if facets.trTypeOfText %}
         <h6>Type of document</h6>
-        <ul class="filter-treaty-type">
-          {% for type,count in facets.trTypeOfText.items %}
-          <li>
-            <label for="tr_type_{{ type }}">
-              <input type="checkbox"
-                     id="tr_type_{{ type }}"
-                     name="tr_type"
-                     value="{{ type }}"
-                    {% if type in form.tr_type.data %}checked{% endif %}>
-              {{ type|capfirst }}
-            </label>
-            <span class="pull-right">{{ count }}</span>
-          </li>
-          {% endfor %}
+        <ul class="filter-treaty" data-formid="#id_tr_type">
+          {% include 'bits/checkbox_facet.html' with facet=facets.trTypeOfText %}
         </ul>
         {% endif %}
 
         <h6>Field of application</h6>
-        <ul>
-          <li><label for=""><input type="checkbox">Global</label></li>
-          <li><label for=""><input type="checkbox">Regional/Restricted</label></li>
-          <li><label for=""><input type="checkbox">National</label></li>
+        <ul class="filter-treaty" data-formid="#id_tr_field">
+          {% include 'bits/checkbox_facet.html' with facet=facets.trFieldOfApplication %}
         </ul>
 
         <h6>Participants</h6>
