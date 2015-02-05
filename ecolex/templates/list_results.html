@@ -128,10 +128,12 @@
 
         <h6>Participants</h6>
         <div class="indent">
-          <select id="example-getting-started" multiple="multiple">
-            <option value="participant 1">Participant 1</option>
-            <option value="participant 2">Participant 2</option>
-            <option value="participant 3">Participant 3</option>
+          <select id="tr_party" multiple="multiple">
+          {% for type,count in facets.partyCountry.items %}
+            <option value="{{ type }}" {% if type in form.tr_party.data %}selected{% endif %}>
+              {{ type|capfirst }} ({{ count }})
+            </option>
+          {% endfor %}
           </select>
         </div>
       </div>
@@ -140,7 +142,7 @@
 
     {% if 'decision' in form.type.data and facets.type.decision > 0 %}
     <fieldset class="special-filter">
-      <h5 data-toggle="collapse" 
+      <h5 data-toggle="collapse"
           data-target="#filter-cop-decisions">COP Decision filters</h5>
 
       <div id="filter-cop-decisions" class="collapse in">
@@ -154,7 +156,7 @@
     {% endif %}
 
     <fieldset class="global-filter">
-      <h5 data-toggle="collapse" 
+      <h5 data-toggle="collapse"
           data-target="#filter-subjects"
           class="collapsed">Subjects</h5>
       <ul id="filter-subjects" class="collapse">
@@ -165,7 +167,7 @@
       </ul>
     </fieldset>
     <fieldset class="global-filter">
-      <h5 data-toggle="collapse" 
+      <h5 data-toggle="collapse"
           data-target="#filter-keywords"
           class="collapsed">Keywords</h5>
       <ul id="filter-keywords" class="collapse">
@@ -178,9 +180,9 @@
     <fieldset class="global-filter">
       <h5>Years</h5>
       <div class="indent">
-        <input id="filter-years" type="text" 
-               data-slider-min="1896" 
-               data-slider-max="2015" 
+        <input id="filter-years" type="text"
+               data-slider-min="1896"
+               data-slider-max="2015"
                data-slider-value="[1896,2015]"
                data-slider-tooltip="hide"/>
         <!-- <div class="row">

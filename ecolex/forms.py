@@ -14,3 +14,4 @@ class SearchForm(Form):
 
     tr_type = MultipleChoiceField()
     tr_field = MultipleChoiceField()
+    tr_party = MultipleChoiceField()
