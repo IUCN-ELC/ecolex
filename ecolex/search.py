@@ -192,6 +192,45 @@ def get_default_filters():
     return 'type', 'trTypeOfText', 'decType'
 
 
+def get_fq(filters):
+    FACETS_MAP = {
+        'trTypeOfText': 'treaty',
+        'trFieldOfApplication': 'treaty',
+        'partyCountry': 'treaty',
+        'trSubject': 'treaty',
+        'decType': 'decision',
+        'decStatus': 'decision',
+        'decTreatyId': 'decision',
+    }
+
+    def multi_filter(filter, values):
+        return filter + ':(' + ' OR '.join(t for t in values) + ')'
+
+    def type_filter(type, filters):
+        if filters:
+            return 'type:' + type + ' AND (' + ' AND '.join(filters) + ')'
+        else:
+            return 'type:' + type
+
+    enabled_types = filters.get('type', []) or ['treaty', 'decision']
+    type_filters = {f: [] for f in enabled_types}
+    global_filters = []
+    for filter, values in filters.items():
+        if not values or filter is enabled_types:
+            continue
+        if filter in FACETS_MAP:
+            if FACETS_MAP[filter] in enabled_types:
+                type_filters[FACETS_MAP[filter]].append(
+                    multi_filter(filter, values)
+                )
+        else:
+            global_filters.append(multi_filter(filter, values))
+    global_filters.append(' OR '.join(
+        '(' + type_filter(t, v) + ')' for t, v in type_filters.items())
+    )
+    return global_filters
+
+
 def search(user_query, filters=None, highlight=True):
     return Queryset(user_query, filters=filters, highlight=highlight)
 
@@ -213,10 +252,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
         'facet': 'on',
         'facet.field': filters.keys(),
     })
-    params['fq'] = [
-        ' '.join(facet + ':' + t for t in values)
-        for facet, values in filters.items()
-    ]
+    params['fq'] = get_fq(filters)
     if highlight:
         params.update(HIGHLIGHT_PARAMS)
 
