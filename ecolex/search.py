@@ -56,7 +56,7 @@ class Treaty(ObjectNormalizer):
         return first(self.solr.get('trUrlTreatyText'))
 
     def summary(self):
-        return first(self.solr.get('trIntroText'))
+        return first(self.solr.get('trIntroText'), "")
 
 
 class Decision(ObjectNormalizer):
