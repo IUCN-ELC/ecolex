@@ -21,12 +21,14 @@ class SearchView(TemplateView):
         data.setdefault('tr_field', [])
         data.setdefault('tr_party', [])
         data.setdefault('tr_subject', [])
+        data.setdefault('keyword', [])
         ctx['form'] = self.form = SearchForm(data=data)
         self.query = self.form.data.get('q', '').strip() or '*'
 
         # Compute filters
         self.filters = {
-            'type': data['type']
+            'type': data['type'],
+            'trKeyword': data['keyword'],
         }
         if 'treaty' in data['type']:  # specific filters
             self.filters['trTypeOfText'] = data['tr_type']
@@ -47,6 +49,7 @@ class SearchView(TemplateView):
         self.form.fields['tr_field'].choices = _extract('trFieldOfApplication')
         self.form.fields['tr_party'].choices = _extract('partyCountry')
         self.form.fields['tr_subject'].choices = _extract('trSubject')
+        self.form.fields['keyword'].choices = _extract('trKeyword')
 
 
 class SearchViewWithResults(SearchView):

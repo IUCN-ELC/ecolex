@@ -162,11 +162,11 @@
       <h5 data-toggle="collapse"
           data-target="#filter-keywords"
           class="collapsed">Keywords</h5>
-      <ul id="filter-keywords" class="collapse">
-        <li><label><input type="checkbox">{{ form.label }}</label></li>
-        <li><label><input type="checkbox">{{ form.label }}</label></li>
-        <li><label><input type="checkbox">{{ form.label }}</label></li>
-      </ul>
+      <div class="indent">
+          <select id="keyword" multiple="multiple" data-formid="#id_keyword">
+            {% include 'bits/select_facet.html' with facet=facets.trKeyword form_field=form.keyword %}
+          </select>
+        </div>
     </fieldset>
 
     <fieldset class="global-filter">

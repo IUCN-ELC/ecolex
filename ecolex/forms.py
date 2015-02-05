@@ -16,3 +16,5 @@ class SearchForm(Form):
     tr_field = MultipleChoiceField()
     tr_party = MultipleChoiceField()
     tr_subject = MultipleChoiceField()
+
+    keyword = MultipleChoiceField()
