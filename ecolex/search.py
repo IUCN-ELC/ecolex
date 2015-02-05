@@ -3,7 +3,7 @@ import pysolr
 from django.conf import settings
 
 
-HIGHLIGHT_FIELDS = ('trTitleOfText', 'decTitleOfText')
+HIGHLIGHT_FIELDS = ('trTitleOfText', 'decTitleOfText', 'decBody', 'trIntroText')
 HIGHLIGHT = ','.join(HIGHLIGHT_FIELDS)
 HIGHLIGHT_PARAMS = {
     'hl': 'true',

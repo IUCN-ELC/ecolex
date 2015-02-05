@@ -13,7 +13,7 @@
       <!-- for debug. FIXME(catalinb): remove -->
       <p class="search-result-description" hidden> {{ result }}</p>
     </div>
-    <p class="search-result-description">{{ result.decBody|first }}</p>
+    <p class="search-result-description">{{ result.decBody|safe }}</p>
   </li>
 
 {% else %}
@@ -27,7 +27,7 @@
       <strong>{{ result.type }}</strong> | <span>International</span> |
       <time>{{ result.date }}</time>
     </div>
-    <p class="search-result-description">{{ result.summary }}</p>
+    <p class="search-result-description">{{ result.summary|safe }}</p>
     <!-- for debug. FIXME(catalinb): remove -->
     <p class="search-result-description" hidden> {{ result }}</p>
   </li>
