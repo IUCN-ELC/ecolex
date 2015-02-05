@@ -18,7 +18,7 @@ PERPAGE = 20
 def first(obj, default=None):
     if obj and type(obj) is list:
         return obj[0]
-    return default
+    return obj if obj else default
 
 
 class ObjectNormalizer:
@@ -32,8 +32,20 @@ class ObjectNormalizer:
         return self.solr.get('id')
 
     def title(self):
-        if self.solr.get(self.TITLE_FIELD):
-            return max(self.solr[self.TITLE_FIELD], key=lambda i: len(i))
+        for title_field in self.TITLE_FIELDS:
+            if not self.solr.get(title_field):
+                continue
+            return max(self.solr.get(title_field), key=lambda i: len(i))
+
+    def date(self):
+        for date_field in self.DATE_FIELDS:
+            try:
+                return datetime.strptime(first(self.solr.get(date_field)),
+                                        '%Y-%m-%dT%H:%M:%SZ').date()
+            except:
+                continue
+        return ""
+
 
     def __str__(self):
         return str(self.solr)
@@ -43,13 +55,9 @@ class ObjectNormalizer:
 
 
 class Treaty(ObjectNormalizer):
-    TITLE_FIELD = 'trTitleOfText'
-
-    def date(self):
-        if not self.solr.get('trDateOfText'):
-            return ""
-        return datetime.strptime(self.solr['trDateOfText'],
-                                 '%Y-%m-%dT%H:%M:%SZ').date()
+    TITLE_FIELDS = ['trPaperTitleOfText', 'trPaperTitleOfTextFr',
+                    'trPaperTitleOfTextSp']
+    DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
 
     def jurisdiction(self):
         return first(self.solr.get('trJurisdiction'))
@@ -91,13 +99,8 @@ class Treaty(ObjectNormalizer):
 
 
 class Decision(ObjectNormalizer):
-    TITLE_FIELD = 'decTitleOfText'
-
-    def date(self):
-        if not self.solr['decPublishDate']:
-            return None
-        return datetime.strptime(self.solr['decPublishDate'][0],
-                                 '%Y-%m-%dT%H:%M:%SZ').date()
+    TITLE_FIELDS = ['decTitleOfText']
+    DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
 
     def url(self):
         return first(self.solr.get('decLink'))
