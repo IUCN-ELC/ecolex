@@ -3,7 +3,8 @@ import pysolr
 from django.conf import settings
 
 
-HIGHLIGHT_FIELDS = ('trTitleOfText', 'decTitleOfText', 'decBody', 'trIntroText')
+HIGHLIGHT_FIELDS = (
+    'trTitleOfText', 'decTitleOfText', 'decBody', 'trIntroText')
 HIGHLIGHT = ','.join(HIGHLIGHT_FIELDS)
 HIGHLIGHT_PARAMS = {
     'hl': 'true',
@@ -57,6 +58,35 @@ class Treaty(ObjectNormalizer):
 
     def summary(self):
         return first(self.solr.get('trIntroText'), "")
+
+    def participants(self):
+        PARTY_MAP = {
+            'partyCountry': 'country',
+            # 'partyPotentialParty': 'partyPotentialParty',
+            # 'partyEntryIntoForce': 'partyEntryIntoForce',
+            'partyDateOfRatification': 'ratification',
+            'partyDateOfAccessionApprobation': 'accessionapprobation',
+            'partyDateOfAcceptanceApproval': 'acceptanceapproval',
+            'partyDateOfConsentToBeBound': 'consenttobebound',
+            'partyDateOfSuccession': 'succession',
+            'partyDateOfDefiniteSignature': 'definitesignature',
+            'partyDateOfSimpleSignature': 'simplesignature',
+            'partyDateOfProvisionalApplication': 'provisionalapplication',
+            'partyDateOfParticipation': 'participation',
+            'partyDateOfDeclaration': 'declaration',
+            'partyDateOfReservation': 'reservation',
+            'partyDateOfWithdrawal': 'withdrawal',
+        }
+        clean = lambda d: d if d != '0002-11-30T00:00:00Z' else '-'
+        data = {}
+        for k, v in PARTY_MAP.items():
+            data[v] = self.solr.get(k, [])
+        results = []
+        for i, country in enumerate(data['country']):
+            results.append(
+                {v: clean(data[v][i]) for v in PARTY_MAP.values()}
+            )
+        return results
 
 
 class Decision(ObjectNormalizer):

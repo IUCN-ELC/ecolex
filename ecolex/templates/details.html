@@ -57,44 +57,21 @@
             <tr>
               <th>x</th>
               <th>Acceptance</th>
-              <th>Signature</th>
+              <th>Ratification</th>
               <th>Withdrawal</th>
             </tr>
           </thead>
 
           <tbody class="body">
+            {% for country in document.participants %}
             <tr class="country">
-              <th>Country 1</th>
-              <td>date</td>
-              <td>date</td>
-              <td>date</td>
+              <th>{{ country.country }}</th>
+              <td>{{ country.acceptanceapproval }}</td>
+              <td>{{ country.ratification }}</td>
+              <td>{{ country.withdrawal }}</td>
             </tr>
-            <tr class="country">
-              <th>Country 1</th>
-              <td>date</td>
-              <td>date</td>
-              <td>date</td>
-            </tr>
-            <tr class="country">
-              <th>Country 1</th>
-              <td>date</td>
-              <td>date</td>
-              <td>date</td>
-            </tr>
-            <tr class="country">
-              <th>Country 1</th>
-              <td>date</td>
-              <td>date</td>
-              <td>date</td>
-            </tr>
-            <tr class="country">
-              <th>Country 1</th>
-              <td>date</td>
-              <td>date</td>
-              <td>date</td>
-            </tr>
+            {% endfor %}
           </tbody>
-
 
         </table>
 
