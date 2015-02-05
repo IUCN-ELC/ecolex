@@ -100,7 +100,8 @@ class SearchViewWithResults(SearchView):
 
 
 class PageView(SearchView):
-    def get(self, request, slug, **kwargs):
+    def get(self, request, **kwargs):
+        slug = kwargs.pop('slug', '')
         PAGES = ('about', 'privacy', 'agreement', 'acknowledgements')
         if slug not in PAGES:
             raise Http404()
