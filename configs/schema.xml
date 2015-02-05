@@ -61,6 +61,9 @@
     <field name="trTitleAbbreviation" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trTitleOfTextShort" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trPaperTitleOfText" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trPaperTitleOfTextSp" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trPaperTitleOfTextFr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trPaperTitleOfTextOther" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trPaperTitleOfTextStatement" type="text" indexed="true" stored="true" multiValued="true"/>
     
     <field name="trIntroText" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -101,6 +104,9 @@
     
     
     <field name="trLinkToFullText" type="string" indexed="false" stored="true" multiValued="true"/>
+    <field name="trLinkToFullTextSp" type="string" indexed="false" stored="true" multiValued="true"/>
+    <field name="trLinkToFullTextFr" type="string" indexed="false" stored="true" multiValued="true"/>
+    <field name="trLinkToFullTextOther" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="trLinkToAbstract" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="trCountry" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trRegion" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -117,9 +123,6 @@
     <field name="trReferenceToLiterature" type="string" indexed="true" stored="true" multiValued="true"/>
     
     <field name="trObsolete" type="string" indexed="true" stored="false"/>
-        
-    <!-- Full text content -->
-    <field name="trContent" type="text_general" indexed="false" stored="true" multiValued="true"/>
     
     <!-- Field that holds all searchable data -->
     <field name="globalText" type="text_general" indexed="true" stored="false" multiValued="true"/>
@@ -127,7 +130,6 @@
     
     <!-- Participant -->
     <field name="partyCountry" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="partyPotentialParty" type="boolean" indexed="true" stored="true" multiValued="true"/>
     <field name="partyEntryIntoForce" type="tdate" indexed="true" stored="true" multiValued="true"/>
     <field name="partyDateOfRatification" type="tdate" indexed="true" stored="true" multiValued="true"/>
     <field name="partyDateOfAccessionApprobation" type="tdate" indexed="true" stored="true" multiValued="true"/>
@@ -152,7 +154,6 @@
     <field name="trUrlWikipedia" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trUrlElearning" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trNumberOfParties" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trTheme" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trThemeSecondary" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trEnabled" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="trOrder" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -166,6 +167,7 @@
     <field name="decLink" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="decShortTitle" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="decLongTitle" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="decKeyword" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="decSummary" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="decType" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="decStatus" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -221,6 +223,8 @@
     <field name="evRecUpdatedAuthor" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="evIsIndexed" type="boolean" indexed="true" stored="true" multiValued="true"/>
     
+    <!-- Document text field -->
+    <field name="doc_content" type="text_general" indexed="false" stored="true" multiValued="true"/>
     
     <uniqueKey>id</uniqueKey>
     
@@ -231,6 +235,9 @@
     <copyField source="trTitleAbbreviation" dest="trTitleOfText"/>
     <copyField source="trTitleOfTextShort" dest="trTitleOfText"/>
     <copyField source="trPaperTitleOfText" dest="trTitleOfText"/>
+    <copyField source="trPaperTitleOfTextSp" dest="trTitleOfText"/>
+    <copyField source="trPaperTitleOfTextFr" dest="trTitleOfText"/>
+    <copyField source="trPaperTitleOfTextOther" dest="trTitleOfText"/>
     <copyField source="trPaperTitleOfTextStatement" dest="trTitleOfText"/>
     
     <copyField source="trComment" dest="trIntroText"/>
@@ -253,9 +260,11 @@
     
     <copyField source="decShortTitle" dest="text"/>
     <copyField source="decLongTitle" dest="text"/>
+    <copyField source="decSummary" dest="text"/>
+    <copyField source="decBody" dest="text"/>
     
     <copyField source="trSubject" dest="text"/>
     <copyField source="trKeyword" dest="text"/>
-    <copyField source="trContent" dest="text"/>
-    <copyField source="trTheme" dest="text"/>
+    <copyField source="doc_content" dest="text"/>
+    
 </schema>
