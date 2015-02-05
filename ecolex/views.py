@@ -1,6 +1,6 @@
 from datetime import datetime
 import pysolr
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from ecolex.search import search, get_document, PERPAGE
@@ -79,6 +79,15 @@ class SearchViewWithResults(SearchView):
         self.update_form_choices(ctx['facets'])
 
         return render(request, 'list_results.html', ctx)
+
+
+class PageView(SearchView):
+    def get(self, request, slug, **kwargs):
+        PAGES = ('about', 'privacy', 'agreement', 'acknowledgements')
+        if slug not in PAGES:
+            raise Http404()
+        return render(request, 'pages/' + slug + '.html',
+                      self.get_context_data())
 
 
 def page(request, slug):
