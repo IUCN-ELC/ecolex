@@ -3,6 +3,8 @@
 from bs4 import BeautifulSoup
 import pysolr
 import os
+import requests
+import socket, sys
 
 SCHEMA_FIELDS = [
     'trAbstract',
@@ -46,6 +48,9 @@ FIELD_MAP = {
     'dateoftext': 'trDateOfText',
     'searchdate': 'trSearchDate',
     'titleoftext': 'trPaperTitleOfText',
+    'titleoftextsp': 'trPaperTitleOfTextSp',
+    'titleoftextfr': 'trPaperTitleOfTextFr',
+    'titleoftextother': 'trPaperTitleOfTextOther',
     'typeoftext': 'trTypeOfText',
     'jurisdiction': 'trJurisdiction',
     'fieldofapplication': 'trFieldOfApplication',
@@ -139,6 +144,29 @@ DATE_FIELDS = [
     'partyDateOfWithdrawal',
 ]
 
+RICH_TEXT_DOCS = {}
+BROKEN_DOCS_IDS = [
+    'TRE-000077',
+    'TRE-001214',
+    'TRE-001953',
+    'TRE-000155',
+    'TRE-149568',
+    'TRE-149655',
+    'TRE-149799',
+    'TRE-000565',
+    'TRE-000566',
+    'TRE-000567',
+    'TRE-000569',
+    'TRE-000570',
+    'TRE-000887',
+    'TRE-153643',
+    'TRE-153648',
+    'TRE-000781',
+    'TRE-000733',
+]
+
+TEXT_UPLOAD_ENABLED = 1
+
 def clean_text(text):
     return text.strip()
 
@@ -153,8 +181,42 @@ def format_date(date):
         date += "-01"
     return date + "T00:00:00Z"
 
-def parse_xml(path):
-    bs = BeautifulSoup(open(path, 'r', encoding='utf-8'))
+def add_docs(solr, docs):
+    solr.add(docs)
+    solr.optimize()
+
+def update_solr_entry(solr, treaty, informea_id):
+    result = solr.search('trInformeaId:' + informea_id)
+    existing_fields = result.docs[0]
+    existing_fields['source'] += ",elis"
+    new_document = dict(list(treaty.items()) + list(existing_fields.items()))
+    solr.delete('trInformeaId:' + informea_id)
+    add_docs(solr, [new_document])
+
+def get_text_tika(file_path):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(('127.0.0.1',1234))    
+    f = open(file_path, 'rb')
+
+    while True:
+        chunk = f.read(65536)
+        if not chunk:
+            break
+        s.sendall(chunk)
+
+    s.shutdown(socket.SHUT_WR)
+    
+    file_content = ''
+    while True:
+        chunk = s.recv(65536)
+        if not chunk:
+            break
+        file_content += chunk.decode('utf-8')
+    
+    return file_content
+    
+def parse_xml(xml_path):
+    bs = BeautifulSoup(open(xml_path, 'r', encoding='utf-8'))
     result = []
     
     for document in bs.findAll('document'):
@@ -179,23 +241,19 @@ def parse_xml(path):
                     clean_field = clean_text(field.text)
                     data[v].append(format_date(clean_field) if v in DATE_FIELDS else clean_field)
                 else:
-                    data[v].append(format_date("0000-00-00")) 
+                    data[v].append(format_date("0000-00-00"))
+        elis_id = data['trElisId'][0]
+        if elis_id in RICH_TEXT_DOCS and TEXT_UPLOAD_ENABLED:
+            data['doc_content'] = get_text_tika(RICH_TEXT_DOCS[elis_id])
         result.append(data)
     
     return result
 
-def add_docs(solr, docs):
-    solr.add(docs)
-    solr.optimize()
-
-def update_solr_entry(solr, treaty, informea_id):
-    result = solr.search('trInformeaId:' + informea_id)
-    existing_fields = result.docs[0]
-    existing_fields['source'] += ",elis"
-    new_document = dict(list(treaty.items()) + list(existing_fields.items()))   
-    solr.delete('trInformeaId:' + informea_id)
-    add_docs(solr, [new_document])
- 
+def generate_rich_text_mapping(root_directory):
+    for root, dirs, files in os.walk(root_directory, topdown=False):
+        for doc in files:
+            RICH_TEXT_DOCS[doc.split('.')[0]] = os.path.join(root, doc)
+     
 def get_duplicate_ids(config_file):
     duplicates_mapping = {}
     with open(config_file) as f:
@@ -227,7 +285,8 @@ if __name__ == '__main__':
     solr = pysolr.Solr("http://{}:8983/solr/ecolex".format(sys.argv[2]), timeout=10)
     
     duplicates_mapping = get_duplicate_ids("duplicates") 
-   
+    generate_rich_text_mapping("/home/anaion/nas/ecolex/xml_export_tools/files/treaties")
+    
     new_solr_docs = [] 
     for xml_file in xml_files:
         r = parse_xml(xml_file)
@@ -241,4 +300,4 @@ if __name__ == '__main__':
                 treaty['source'] = 'elis'
                 new_solr_docs.append(treaty)
     
-    add_docs(solr, new_solr_docs) 
+    add_docs(solr, new_solr_docs)
