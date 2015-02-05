@@ -44,6 +44,8 @@ class Treaty(ObjectNormalizer):
     TITLE_FIELD = 'trTitleOfText'
 
     def date(self):
+        if not self.solr.get('trDateOfText'):
+            return ""
         return datetime.strptime(self.solr['trDateOfText'],
                                  '%Y-%m-%dT%H:%M:%SZ').date()
 
@@ -52,6 +54,9 @@ class Treaty(ObjectNormalizer):
 
     def url(self):
         return first(self.solr.get('trUrlTreatyText'))
+
+    def summary(self):
+        return first(self.solr.get('trIntroText'))
 
 
 class Decision(ObjectNormalizer):

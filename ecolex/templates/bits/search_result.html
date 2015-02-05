@@ -4,7 +4,7 @@
     <a href= "{% url 'result' result.id %}" > {{ result.number }} {{ result.title|safe }} </a>
   </h3>
   <div class="search-result-details">
-    <strong>{{ result.type }}</strong> | <span>{{ result.jurisdiction }} </span> | <time>{{ result.date }}</time>
+    <strong>{{ result.type }}</strong> | <span>{{ result.jurisdiction }} </span> | <time> {{ result.date }}</time>
     <p class="search-result-description"> Status: <span> {{ result.status }} </span> </p>
     <!-- for debug. FIXME(catalinb): remove -->
     <p class="search-result-description" hidden> {{ result }}</p>
@@ -21,6 +21,7 @@
   <div class="search-result-details">
     <strong>{{ result.type }}</strong> | <span>International</span> | <time>{{ result.date }}</time>
   </div>
+    <p class="search-result-description">{{ result.summary }}</p>
     <!-- for debug. FIXME(catalinb): remove -->
     <p class="search-result-description" hidden> {{ result }}</p>
 </li>
