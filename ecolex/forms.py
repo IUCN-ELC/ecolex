@@ -18,3 +18,7 @@ class SearchForm(Form):
     tr_subject = MultipleChoiceField()
 
     keyword = MultipleChoiceField()
+
+    dec_type = MultipleChoiceField()
+    dec_status = MultipleChoiceField()
+    dec_treaty = MultipleChoiceField()

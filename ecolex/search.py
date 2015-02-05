@@ -189,7 +189,7 @@ def escape_query(query):
 
 
 def get_default_filters():
-    return 'type', 'trTypeOfText'
+    return 'type', 'trTypeOfText', 'decType'
 
 
 def search(user_query, filters=None, highlight=True):

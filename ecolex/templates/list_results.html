@@ -149,11 +149,24 @@
           data-target="#filter-cop-decisions">COP Decision filters</h5>
 
       <div id="filter-cop-decisions" class="collapse in">
-        <h6>Type</h6>
-        <ul>
-          <li><label><input type="checkbox">Type 1</label></li>
-          <li><label><input type="checkbox">Type &hellip;</label></li>
+        {% if facets.decType %}
+          <h6>Type of document</h6>
+          <ul class="filter-decision" data-formid="#id_dec_type">
+            {% include 'bits/checkbox_facet.html' with facet=facets.decType form_field=form.dec_type %}
+          </ul>
+        {% endif %}
+
+        <h6>Decision status</h6>
+        <ul class="filter-decision" data-formid="#id_dec_status">
+          {% include 'bits/checkbox_facet.html' with facet=facets.decStatus form_field=form.dec_status %}
         </ul>
+
+        <h6>Treaty</h6>
+        <div class="indent">
+          <select id="dec_treaty" multiple="multiple" data-formid="#id_dec_treaty">
+            {% include 'bits/select_facet.html' with facet=facets.decTreatyId form_field=form.dec_treaty %}
+          </select>
+        </div>
       </div>
     </fieldset>
     {% endif %}

@@ -22,6 +22,11 @@ class SearchView(TemplateView):
         data.setdefault('tr_party', [])
         data.setdefault('tr_subject', [])
         data.setdefault('keyword', [])
+
+        data.setdefault('dec_type', [])
+        data.setdefault('dec_status', [])
+        data.setdefault('dec_treaty', [])
+
         ctx['form'] = self.form = SearchForm(data=data)
         self.query = self.form.data.get('q', '').strip() or '*'
 
@@ -35,6 +40,11 @@ class SearchView(TemplateView):
             self.filters['trFieldOfApplication'] = data['tr_field']
             self.filters['partyCountry'] = data['tr_party']
             self.filters['trSubject'] = data['tr_subject']
+
+        if 'decision' in data['type']:
+            self.filters['decType'] = data['dec_type']
+            self.filters['decStatus'] = data['dec_status']
+            self.filters['decTreatyId'] = data['dec_treaty']
         return ctx
 
     def update_form_choices(self, facets):
@@ -50,6 +60,11 @@ class SearchView(TemplateView):
         self.form.fields['tr_party'].choices = _extract('partyCountry')
         self.form.fields['tr_subject'].choices = _extract('trSubject')
         self.form.fields['keyword'].choices = _extract('trKeyword')
+
+        self.form.fields['dec_type'].choices = _extract('decType')
+        self.form.fields['dec_status'].choices = _extract('decStatus')
+        self.form.fields['dec_treaty'].choices = _extract('decTreatyId')
+
 
 
 class SearchViewWithResults(SearchView):
