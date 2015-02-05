@@ -108,7 +108,7 @@
 {% block sidebar %}
   <h4>Refine search</h4>
 
-    {% if 'treaty' in form.type.data %}
+    {% if 'treaty' in form.type.data and facets.type.treaty > 0 %}
     <fieldset class="special-filter">
       <h5 data-toggle="collapse"
           data-target="#filter-treaties">Treaty filters</h5>
@@ -152,7 +152,7 @@
     </fieldset>
     {% endif %}
 
-    {% if 'decision' in form.type.data %}
+    {% if 'decision' in form.type.data and facets.type.decision > 0 %}
     <fieldset class="special-filter">
       <h5 data-toggle="collapse" 
           data-target="#filter-cop-decisions">COP Decision filters</h5>
