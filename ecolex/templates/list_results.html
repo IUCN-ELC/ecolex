@@ -117,13 +117,13 @@
         {% if facets.trTypeOfText %}
         <h6>Type of document</h6>
         <ul class="filter-treaty" data-formid="#id_tr_type">
-          {% include 'bits/checkbox_facet.html' with facet=facets.trTypeOfText %}
+          {% include 'bits/checkbox_facet.html' with facet=facets.trTypeOfText form_field=form.tr_type %}
         </ul>
         {% endif %}
 
         <h6>Field of application</h6>
         <ul class="filter-treaty" data-formid="#id_tr_field">
-          {% include 'bits/checkbox_facet.html' with facet=facets.trFieldOfApplication %}
+          {% include 'bits/checkbox_facet.html' with facet=facets.trFieldOfApplication form_field=form.tr_field  %}
         </ul>
 
         <h6>Participants</h6>
