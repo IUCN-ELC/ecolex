@@ -86,12 +86,9 @@ class PageView(SearchView):
         PAGES = ('about', 'privacy', 'agreement', 'acknowledgements')
         if slug not in PAGES:
             raise Http404()
-        return render(request, 'pages/' + slug + '.html',
-                      self.get_context_data())
-
-
-def page(request, slug):
-    return HttpResponse("slug=" + slug)
+        ctx = self.get_context_data()
+        ctx['page_slug'] = slug
+        return render(request, 'pages/' + slug + '.html', ctx)
 
 
 class ResultDetails(SearchView):

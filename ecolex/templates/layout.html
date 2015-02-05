@@ -23,10 +23,10 @@
     </div>
     <div class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
-        <li><a href="{% url 'page' slug='about' %}">About</a></li>
-        <li><a href="{% url 'page' slug='agreement' %}">User Agreement</a></li>
-        <li><a href="{% url 'page' slug='privacy' %}">Privacy</a></li>
-        <li><a href="{% url 'page' slug='acknowledgements' %}">Acknowledgments</a></li>
+        <li {% if page_slug == 'about' %}class="active"{% endif %}><a href="{% url 'page' slug='about' %}">About</a></li>
+        <li {% if page_slug == 'agreement' %}class="active"{% endif %}><a href="{% url 'page' slug='agreement' %}">User Agreement</a></li>
+        <li {% if page_slug == 'privacy' %}class="active"{% endif %}><a href="{% url 'page' slug='privacy' %}">Privacy</a></li>
+        <li {% if page_slug == 'acknowledgements' %}class="active"{% endif %}><a href="{% url 'page' slug='acknowledgements' %}">Acknowledgments</a></li>
       </ul>
       <div class="navbar-form navbar-right">
         <label for="language">Language</label>
