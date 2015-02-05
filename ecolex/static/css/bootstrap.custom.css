@@ -413,7 +413,7 @@ h6,
   font-family: inherit;
   font-weight: 400;
   line-height: 1.2;
-  color: #333333;
+  color: #212121;
 }
 h1 small,
 h2 small,
@@ -493,17 +493,41 @@ h1,
 .h1 {
   font-size: 36px;
 }
+@media (max-width: 767px) {
+  h1,
+  .h1 {
+    font-size: 32px;
+  }
+}
 h2,
 .h2 {
   font-size: 32px;
+}
+@media (max-width: 767px) {
+  h2,
+  .h2 {
+    font-size: 28px;
+  }
 }
 h3,
 .h3 {
   font-size: 28px;
 }
+@media (max-width: 767px) {
+  h3,
+  .h3 {
+    font-size: 24px;
+  }
+}
 h4,
 .h4 {
   font-size: 24px;
+}
+@media (max-width: 767px) {
+  h4,
+  .h4 {
+    font-size: 21px;
+  }
 }
 h5,
 .h5 {
@@ -514,7 +538,7 @@ h6,
   font-size: 15px;
 }
 p {
-  margin: 0 0 11px;
+  margin: 0 0 22px;
 }
 .lead {
   margin-bottom: 22px;
@@ -625,14 +649,53 @@ a.bg-danger:hover {
   background-color: #e4b9b9;
 }
 .page-header {
+  margin-bottom: 22px;
   padding-bottom: 10px;
-  margin: 44px 0 22px;
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid #dddddd;
+}
+@media (max-width: 767px) {
+  .page-header {
+    margin-left: -30px;
+    margin-right: -30px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+.page-header h1,
+.page-header .h1 {
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #212121;
+  margin-top: 11px;
+  margin-bottom: 11px;
+  font-size: 24px;
+  margin-top: 0;
+}
+.page-header h1 small,
+.page-header .h1 small,
+.page-header h1 .small,
+.page-header .h1 .small {
+  font-weight: normal;
+  line-height: 1;
+  color: #cccccc;
+}
+.page-header h1 small,
+.page-header .h1 small,
+.page-header h1 .small,
+.page-header .h1 .small {
+  font-size: 75%;
+}
+@media (max-width: 767px) {
+  .page-header h1,
+  .page-header .h1 {
+    font-size: 21px;
+  }
 }
 ul,
 ol {
   margin-top: 0;
-  margin-bottom: 11px;
+  margin-bottom: 22px;
   padding-left: 32px;
 }
 ul ul,
@@ -669,33 +732,25 @@ dt {
 dd {
   margin-left: 0;
 }
-@media (max-width: 767px) {
-  .dl-horizontal.with-mobile dt {
+@media (min-width: 768px) {
+  .dl-horizontal dt,
+  .record-details dl dt {
     float: left;
-    width: 160px;
+    width: 165px;
     clear: left;
     text-align: right;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .dl-horizontal.with-mobile dd {
+  .dl-horizontal dd,
+  .record-details dl dd {
     margin-left: 180px;
   }
 }
-@media (min-width: 768px) {
-  .dl-horizontal dt {
-    float: left;
-    width: 160px;
-    clear: left;
-    text-align: right;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .dl-horizontal dd {
-    margin-left: 180px;
-  }
+dt,
+strong {
+  color: #212121;
 }
 abbr[title],
 abbr[data-original-title] {
@@ -4515,7 +4570,9 @@ button.close {
 .navbar-collapse:before,
 .navbar-collapse:after,
 .modal-footer:before,
-.modal-footer:after {
+.modal-footer:after,
+.record-details dl dd:before,
+.record-details dl dd:after {
   content: " ";
   display: table;
 }
@@ -4531,7 +4588,8 @@ button.close {
 .navbar:after,
 .navbar-header:after,
 .navbar-collapse:after,
-.modal-footer:after {
+.modal-footer:after,
+.record-details dl dd:after {
   clear: both;
 }
 .center-block {
@@ -5110,28 +5168,166 @@ main {
 fieldset[disabled] {
   display: none;
 }
-.page-header {
-  margin-top: 22px;
+.record-details header {
+  margin-bottom: 22px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: -1px;
 }
-.page-header h1 {
+@media (max-width: 767px) {
+  .record-details header {
+    margin-left: -30px;
+    margin-right: -30px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+.record-details header h1,
+.record-details header .h1 {
   font-family: inherit;
   font-weight: 400;
   line-height: 1.2;
-  color: #333333;
-  margin-top: 22px;
+  color: #212121;
+  margin-top: 11px;
   margin-bottom: 11px;
-  font-size: 28px;
+  font-size: 24px;
   margin-top: 0;
 }
-.page-header h1 small,
-.page-header h1 .small {
+.record-details header h1 small,
+.record-details header .h1 small,
+.record-details header h1 .small,
+.record-details header .h1 .small {
   font-weight: normal;
   line-height: 1;
   color: #cccccc;
 }
-.page-header h1 small,
-.page-header h1 .small {
-  font-size: 65%;
+.record-details header h1 small,
+.record-details header .h1 small,
+.record-details header h1 .small,
+.record-details header .h1 .small {
+  font-size: 75%;
+}
+@media (max-width: 767px) {
+  .record-details header h1,
+  .record-details header .h1 {
+    font-size: 21px;
+  }
+}
+.record-details section {
+  padding-top: 22px;
+  border-top: 1px solid #dddddd;
+}
+.record-details .section-title {
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #212121;
+  margin-top: 11px;
+  margin-bottom: 11px;
+  font-size: 18px;
+  margin-top: 0;
+}
+.record-details .section-title small,
+.record-details .section-title .small {
+  font-weight: normal;
+  line-height: 1;
+  color: #cccccc;
+}
+.record-details .section-title small,
+.record-details .section-title .small {
+  font-size: 75%;
+}
+@media (min-width: 768px) {
+  .record-details .section-title {
+    text-align: right;
+    width: 165px;
+  }
+}
+.record-details dl dt {
+  color: #212121;
+  font-size: 14px;
+  line-height: 22px;
+}
+.record-details dl dd {
+  margin-bottom: 11px;
+}
+@media (max-width: 767px) {
+  .record-details .indent {
+    clear: both;
+  }
+}
+@media (min-width: 768px) {
+  .record-details .indent {
+    margin-left: 180px;
+  }
+}
+.participants {
+  margin-bottom: 22px;
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  box-shadow: 0 1px 5px -2px rgba(0, 0, 0, 0.4);
+  letter-spacing: -0.03em;
+}
+.participants,
+.participants thead,
+.participants tbody,
+.participants tr,
+.participants td,
+.participants th {
+  display: block;
+}
+.participants th {
+  color: #212121;
+  font-size: 14px;
+  line-height: 22px;
+}
+.participants thead {
+  float: left;
+  padding: 6px 12px;
+  padding-right: 9px;
+  border-right: 3px solid #dddddd;
+  position: relative;
+  z-index: 2;
+}
+.participants tbody {
+  overflow: auto;
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.participants tbody tr {
+  display: inline-block;
+  border-left: 1px solid #dddddd;
+  white-space: nowrap;
+  padding: 6px 12px;
+}
+@media (max-width: 767px) {
+  .participants {
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .participants thead {
+    padding-left: 0;
+  }
+}
+@media (min-width: 768px) {
+  .participants {
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    border-radius: 3px;
+  }
+  .participants thead {
+    width: 168px;
+  }
+  .participants thead th {
+    text-align: right;
+  }
+}
+.references time {
+  font-size: 14px;
+  color: #808080;
 }
 aside {
   font-size: 14px;
@@ -5216,74 +5412,5 @@ fieldset h6 {
 }
 fieldset .indent {
   margin-left: 22px;
-}
-.section-title {
-  background: #fff;
-  text-align: right;
-  width: 160px;
-  font-size: 15px;
-  text-transform: uppercase;
-  color: #808080;
-}
-article dt {
-  font-weight: normal;
-  color: #808080;
-}
-.participants {
-  display: block;
-  position: relative;
-  border-top: 1px solid #dddddd;
-  border-bottom: 1px solid #dddddd;
-  letter-spacing: -0.03em;
-}
-.participants thead,
-.participants tbody,
-.participants tr,
-.participants td,
-.participants th {
-  display: block;
-}
-.participants strong {
-  display: block;
-  font-weight: normal;
-  margin-left: -5px;
-  padding-left: 5px;
-  border-bottom: 1px solid #dddddd;
-}
-.participants ul {
-  padding-left: 0;
-  list-style: none;
-  margin-bottom: 0;
-}
-@media (max-width: 767px) {
-  .participants {
-    margin-left: -15px;
-    margin-right: -15px;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
-@media (min-width: 768px) {
-  .participants {
-    border-left: 1px solid #dddddd;
-    border-right: 1px solid #dddddd;
-  }
-}
-.participants thead {
-  float: left;
-  padding: 5px;
-}
-.participants tbody {
-  box-shadow: inset 2px 0 3px -1px rgba(0, 0, 0, 0.4);
-  overflow: hidden;
-  overflow-y: hidden;
-  overflow-x: auto;
-  white-space: nowrap;
-}
-.participants .country {
-  display: inline-block;
-  border-left: 1px solid #cccccc;
-  white-space: nowrap;
-  padding: 5px;
 }
 /*# sourceMappingURL=bootstrap.custom.css.map */

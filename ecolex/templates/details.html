@@ -1,114 +1,131 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <article class="">
-      <!-- <aside>
-        This article refers to the following subjects:
+<article class="record-details">
+
+  <header>
+    <h1>{{ document.title }}</h1>
+
+    <p>
+      <strong>{{ document.type }}</strong>
+    </p>
+        
+    <dl>
+      <dt>Doc. type</dt>
+      <dd>multilateral</dd>
+      <dt>Field of application</dt>
+      <dd>International</dd>
+      <dt>Year</dt>
+      <dd>1942</dd>
+    </dl>
+  </header>
+
+  <section id="aka">
+    <dl>
+      <dt>Also known as</dt>
+      <dd>
         <ul>
-          <li>{{ subject }}</li>
-          <li>{{ subject }}</li>
+          <li>Convention sur la diversité biologique <sup>French</sup></li>
+          <li>other_language_title <sup>language</sup></li>
         </ul>
-        and the following keywords:
-        <ul>
-          <li>{{ keyword }}</li>
-          <li>{{ keyword }}</li>
-        </ul>
-      </aside> -->
-      <header class="page-headr">
-        <h1 class="text-center">
-          <!-- <span class="pull-left text-muted icon icon-cop-decisions" style="font-size: 64px;"></span> -->
-          {{ document.title }}</h1>
+      </dd>
+    </dl>
+  </section>
 
-        <hr>
-          <div class="text-center">
-            <strong>{{ document.type }}</strong> | document.region | document.year
-          </div>
-        <hr>
-      </header>
+  <section id="details">
+    <h2 class="section-title">Details</h2>
+    <dl>
+      <dt>term</dt>
+      <dd>description</dd>
+      <dt>term</dt>
+      <dd>description</dd>
+    </dl>
+  </section>
 
-      <section>
-        <dl class="dl-horizontal with-mobile">
-          <dt>Also known as</dt>
-          <dd>
-            <ul>
-              <li>Convention sur la diversité biologique <sup>French</sup></li>
-              <li>other_language_title <sup>language</sup></li>
-            </ul>
-          </dd>
-        </dl>
-      </section>
+  <section id="participants">
+    <h2 class="section-title">Participants</h2>
 
-      <section>
-        <h2 class="section-title">Description</h2>
-        <dl class="dl-horizontal with-mobile">
-          <dt>term</dt>
-          <dd>description</dd>
-          <dt>term</dt>
-          <dd>description</dd>
-        </dl>
-      </section>
+    <table class="participants">
+      <thead>
+        <tr>
+          <th>Participant</th>
+          <th>Acceptance</th>
+          <th>Signature</th>
+          <th>Withdrawal</th>
+        </tr>
+      </thead>
 
-      <section>
-        <h2 class="section-title">Participants</h2>
+      <tbody class="body">
+        {% for country in document.participants %}
+        <tr class="country">
+          <th>{{ country.country }}</th>
+          <td>{{ country.acceptanceapproval }}</td>
+          <td>{{ country.ratification }}</td>
+          <td>{{ country.withdrawal }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
-        <table class="participants">
-          
-          <thead class="head">
-            <tr>
-              <th>x</th>
-              <th>Acceptance</th>
-              <th>Ratification</th>
-              <th>Withdrawal</th>
-            </tr>
-          </thead>
+  </section>
 
-          <tbody class="body">
-            {% for country in document.participants %}
-            <tr class="country">
-              <th>{{ country.country }}</th>
-              <td>{{ country.acceptanceapproval }}</td>
-              <td>{{ country.ratification }}</td>
-              <td>{{ country.withdrawal }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
+  <section id="treaty-references">
+    <h2 class="section-title">Treaty references</h2>
 
-        </table>
+    <dl class="dl-horizontal references">
+      <dt>relation</dt>
+      <dd>
+        <a href="">relation_to</a> -
+        <time title="What happened that year">year</time>
+      </dd>
+      <dt>Ammeds</dt>
+      <dd>
+        <a href="">Agreement between the European Community and the Swiss Confederation on trade in agricultural products</a> -
+        <time title="What happened that year">year</time>
+      </dd>
+      <dd>
+        <a href="">This other treaty</a> -
+        <time title="What happened that year">year</time>
+      </dd>
+    </dl>
+  </section>
 
-      </section>
+  <section id="other-references">
+    <h2 class="section-title pull-left">Other references</h2>
 
-      <section>
-        <h2 class="section-title">References</h2>
+    <div class="indent">
+      <a href="">215 in total</a>
+      <ul>
+        <li><a href="">45 to literature</a></li>
+        <li><a href="">124 to court decisions</a></li>
+        <li><a href="">56 to legislation</a></li>
+      </ul>
+    </div>
+  </section>
 
-        <h4 class="h5">type</h3>
+  <section id="subjects">
+    <h2 class="section-title pull-left">Subjects</h2>
+    <div class="indent">
+      <ul>
+        <li>Subject</li>
+        <li>Subject</li>
+        <li>Subject</li>
+        <li>Subject</li>
+      </ul>
+    </div>
+  </section>
 
-          <dl>
-            <dt>relation</dt>
-            <dd>
-              <a href="">relation_to</a>
-              <span class="pull-right text-muted"
-                    title="What happened that year">year</span>
-            <dd>
-          </dl>
+  <section id="keywords">
+    <h2 class="section-title pull-left">Keywords</h2>
+    <div class="indent">
+      <ul class="list-inline">
+        <li>Some keyword</li>
+        <li>Some keyword</li>
+        <li>Some keyword</li>
+        <li>Some keyword</li>
+      </ul>
+    </div>
+  </section>
 
-          <table>
-            <tbody>
-            <tr>
-              <th colspan="3">type</th>
-            </tr>
-            <tr>
-              <td>relation</td>
-              <td>to</td>
-              <td>year</td>
-            </tr>
-            </tbody>
-          </table>
-      </section>
-
-      <footer>
-
-      </footer>
-
-    </article>
-
+</article>
 {% endblock content %}
