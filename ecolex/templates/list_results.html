@@ -129,11 +129,14 @@
         <h6>Participants</h6>
         <div class="indent">
           <select id="tr_party" multiple="multiple" data-formid="#id_tr_party">
-          {% for type,count in facets.partyCountry.items %}
-            <option value="{{ type }}" {% if type in form.tr_party.data %}selected{% endif %}>
-              {{ type|capfirst }} ({{ count }})
-            </option>
-          {% endfor %}
+            {% include 'bits/select_facet.html' with facet=facets.partyCountry form_field=form.tr_party %}
+          </select>
+        </div>
+
+        <h6>Subject</h6>
+        <div class="indent">
+          <select id="tr_subject" multiple="multiple" data-formid="#id_tr_subject">
+            {% include 'bits/select_facet.html' with facet=facets.trSubject form_field=form.tr_subject %}
           </select>
         </div>
       </div>

@@ -20,6 +20,7 @@ class SearchView(TemplateView):
         data.setdefault('tr_type', [])
         data.setdefault('tr_field', [])
         data.setdefault('tr_party', [])
+        data.setdefault('tr_subject', [])
         ctx['form'] = self.form = SearchForm(data=data)
         self.query = self.form.data.get('q', '').strip() or '*'
 
@@ -31,6 +32,7 @@ class SearchView(TemplateView):
             self.filters['trTypeOfText'] = data['tr_type']
             self.filters['trFieldOfApplication'] = data['tr_field']
             self.filters['partyCountry'] = data['tr_party']
+            self.filters['trSubject'] = data['tr_subject']
         return ctx
 
     def update_form_choices(self, facets):
@@ -44,6 +46,7 @@ class SearchView(TemplateView):
         self.form.fields['tr_type'].choices = _extract('trTypeOfText')
         self.form.fields['tr_field'].choices = _extract('trFieldOfApplication')
         self.form.fields['tr_party'].choices = _extract('partyCountry')
+        self.form.fields['tr_subject'].choices = _extract('trSubject')
 
 
 class SearchViewWithResults(SearchView):

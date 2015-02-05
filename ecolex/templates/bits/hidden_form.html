@@ -1,6 +1,7 @@
 <div style="display:none">
-  {{ form.type }}
-  {{ form.tr_type }}
-  {{ form.tr_field }}
-  {{ form.tr_party }}
+  {% for field in form %}
+    {% if field.name != 'q' %}
+      {{ field }}
+    {% endif %}
+  {% endfor %}
 </div>

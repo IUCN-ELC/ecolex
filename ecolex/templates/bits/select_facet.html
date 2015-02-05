@@ -1,0 +1,6 @@
+{% for type,count in facet.items %}
+  <option value="{{ type }}"
+          {% if type in form_field.data %}selected{% endif %}>
+    {{ type|capfirst }} ({{ count }})
+  </option>
+{% endfor %}
