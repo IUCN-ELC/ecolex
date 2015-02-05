@@ -28,7 +28,16 @@ $(document).ready(function() {
 	});
 
 	// Multiselect
-	$('select[multiple]').multiselect();
+	$('select[multiple]').multiselect({
+        onDropdownHidden: function(e) {
+            var select = $(this.$select);
+            var formid = select.data('formid');
+
+            $(formid).val(select.val());
+            // submit now for now
+            $('.search-form').submit();
+        }
+    });
 
     // Type filter - ugly
     $('.filter-type button').click(function(e) {
@@ -48,7 +57,7 @@ $(document).ready(function() {
         // submit now for now
         $('.search-form').submit();
     });
-    // Treaty -> Type of Document filter
+    // Treaty -> Type of Document/Field of application filter
     $('.filter-treaty input[type=checkbox]').change(function (e) {
         var current = [];
         var ul = $(this).parents('ul');

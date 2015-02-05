@@ -128,7 +128,7 @@
 
         <h6>Participants</h6>
         <div class="indent">
-          <select id="tr_party" multiple="multiple">
+          <select id="tr_party" multiple="multiple" data-formid="#id_tr_party">
           {% for type,count in facets.partyCountry.items %}
             <option value="{{ type }}" {% if type in form.tr_party.data %}selected{% endif %}>
               {{ type|capfirst }} ({{ count }})
