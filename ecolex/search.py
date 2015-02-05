@@ -52,7 +52,7 @@ class Treaty(ObjectNormalizer):
                                  '%Y-%m-%dT%H:%M:%SZ').date()
 
     def jurisdiction(self):
-        return first(self.solr.get('trJustices'))
+        return first(self.solr.get('trJurisdiction'))
 
     def url(self):
         return first(self.solr.get('trUrlTreatyText'))
