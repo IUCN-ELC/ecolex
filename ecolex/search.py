@@ -1,4 +1,5 @@
 from datetime import datetime
+from collections import OrderedDict
 import pysolr
 from django.conf import settings
 
@@ -135,7 +136,10 @@ class Queryset(object):
     def get_facets(self):
         if not self._facets:
             self.fetch()
-        return self._facets
+        return {
+            k: OrderedDict(sorted(tuple(v.items()), key=lambda v: v[0]))
+            for k, v in self._facets.items()
+        }
 
     def count(self):
         if not self._hits:
