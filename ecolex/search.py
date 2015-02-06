@@ -14,6 +14,7 @@ HIGHLIGHT_PARAMS = {
 }
 PERPAGE = 20
 
+
 def first(obj, default=None):
     if obj and type(obj) is list:
         return obj[0]
@@ -43,7 +44,7 @@ class ObjectNormalizer:
         for date_field in self.DATE_FIELDS:
             try:
                 return datetime.strptime(first(self.solr.get(date_field)),
-                                        '%Y-%m-%dT%H:%M:%SZ').date()
+                                         '%Y-%m-%dT%H:%M:%SZ').date()
             except:
                 continue
         return ""
@@ -155,7 +156,8 @@ class Queryset(object):
             return {}
 
         results = get_treaties_by_id(facets['decTreatyId'].keys())
-        return dict((r.solr.get("trInformeaId", -1), r.title()) for r in results)
+        return dict(
+            (r.solr.get("trInformeaId", -1), r.title()) for r in results)
 
     def count(self):
         if not self._hits:
@@ -288,6 +290,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
         'hits': hits,
     }
 
+
 def get_treaties_by_id(treaty_ids):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     solr_query = "trInformeaId:(" + " ".join(treaty_ids) + ")"
@@ -295,6 +298,7 @@ def get_treaties_by_id(treaty_ids):
     if not responses.hits:
         return None
     return [parse_result(hit, responses) for hit in responses]
+
 
 def get_document(document_id):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
