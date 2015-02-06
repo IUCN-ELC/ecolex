@@ -1,10 +1,12 @@
 """ Import treaties from XMLs exported by Elis
 """
+import os
+
 from bs4 import BeautifulSoup
 import pysolr
-import os
-import requests
-import socket, sys
+
+from contrib.utils import get_text_tika
+
 
 SCHEMA_FIELDS = [
     'trAbstract',
@@ -195,28 +197,6 @@ def update_solr_entry(solr, treaty, informea_id):
     new_document = dict(list(treaty.items()) + list(existing_fields.items()))
     solr.delete('trInformeaId:' + informea_id)
     add_docs(solr, [new_document])
-
-def get_text_tika(file_path):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect(('127.0.0.1',1234))    
-    f = open(file_path, 'rb')
-
-    while True:
-        chunk = f.read(65536)
-        if not chunk:
-            break
-        s.sendall(chunk)
-
-    s.shutdown(socket.SHUT_WR)
-    
-    file_content = ''
-    while True:
-        chunk = s.recv(65536)
-        if not chunk:
-            break
-        file_content += chunk.decode('utf-8')
-    
-    return file_content
     
 def parse_xml(xml_path):
     bs = BeautifulSoup(open(xml_path, 'r', encoding='utf-8'))
@@ -275,7 +255,6 @@ def get_xml_abs_paths(root_directory):
 
 if __name__ == '__main__':
     import sys
-    from pprint import pprint
 
     if len(sys.argv) < 4:
         print("Usage: {} <xml_root_directory> <solr_adress> <collection_name>".format(sys.argv[0]))
