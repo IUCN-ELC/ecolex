@@ -1,7 +1,8 @@
 {% if result.type == "decision" %}
   <li class="search-result">
     <h3 class="search-result-title">
-      <a href="{% url 'result' result.id %}"> {{ result.number }} {{ result.title|safe }} </a>
+      <a href="{% url 'result' result.id %}"
+         title="{{ result.title|safe }}">{{ result.title|safe }}</a>
     </h3>
 
     <div class="search-result-details">
@@ -10,7 +11,7 @@
       {% if result.date %}
         | <time>{{ result.date }}</time>
       {% endif %}
-
+      
       <!-- for debug. FIXME(catalinb): remove -->
       <p class="search-result-description" hidden> {{ result }}</p>
     </div>
@@ -21,7 +22,8 @@
 
   <li class="search-result">
     <h3 class="search-result-title">
-      <a href="{% url 'result' result.id %}">{{ result.title|safe }} </a>
+      <a href="{% url 'result' result.id %}"
+         title="{{ result.title|safe }}">{{ result.title|safe }}</a>
     </h3>
 
     <div class="search-result-details">

@@ -1,37 +1,45 @@
 {% extends "search.html" %}
 
 {% block main %}
-  <h4>{{ results.count }} results</h4>
+  <h4>Total of {{ results.count }} results</h4>
   <div class="btn-group btn-group-sm filter-type">
     <!-- Treaty filter -->
     <button type="button"
-            class="btn {% if 'treaty' in form.type.data %}btn-default{% endif %}"
+            class="btn btn-default {% if 'treaty' in form.type.data and form.type.data|length != 2 %}active{% endif %}"
             data-filter="#treaty-fieldset"
             data-toggle="tooltip"
             data-placement="bottom"
             data-container="body"
             data-value="treaty"
-            title="Show Treaties">
-      <span class="icon icon-treaties"></span>
+            {% if not 'treaty' in form.type.data %}
+            title="Show Treaty"
+            {% else %}
+            title="Hide Treaty"
+            {% endif %}>
+      <span class="icon icon-treaty"></span>
       {% if facets.type.treaty > 0 %}
         <span class="badge">{{ facets.type.treaty }}</span>
-       {% endif %}
+      {% endif %}
       <span class="btn-label">Treaties</span>
     </button>
 
     <!-- COP decision filter -->
     <button type="button"
-            class="btn {% if 'decision' in form.type.data %}btn-default{% endif %}"
+            class="btn btn-default {% if 'decision' in form.type.data and form.type.data|length != 2 %}active{% endif %}"
             data-filter="#copdecision-fieldset"
             data-toggle="tooltip"
             data-placement="bottom"
             data-container="body"
             data-value="decision"
-            title="Show COP Decisions">
-      <span class="icon icon-cop-decisions"></span>
+            {% if not 'decision' in form.type.data %}
+            title="Show COP Decisions"
+            {% else %}
+            title="Hide COP Decisions"
+            {% endif %}>
+      <span class="icon icon-cop-decision"></span>
       {% if facets.type.decision > 0 %}
       <span class="badge">{{ facets.type.decision }}</span>
-       {% endif %}
+      {% endif %}
       <span class="btn-label">COP Decisions</span>
     </button>
 
@@ -42,7 +50,7 @@
             data-toggle="tooltip"
             data-placement="bottom"
             data-container="body"
-            title="Show Legislation"
+            title="Hide Legislation"
             disabled>
       <span class="icon icon-legislation"></span>
       <span class="badge"></span>
@@ -56,9 +64,9 @@
             data-toggle="tooltip"
             data-placement="bottom"
             data-container="body"
-            title="Show Court Decisions"
+            title="Hide Court Decisions"
             disabled>
-      <span class="icon icon-court-decisions"></span>
+      <span class="icon icon-court-decision"></span>
       <span class="badge"></span>
       <span class="btn-label">Court Decisions</span>
     </button>
@@ -70,13 +78,16 @@
             data-toggle="tooltip"
             data-placement="bottom"
             data-container="body"
-            title="Show Literature"
+            title="Hide Literature"
             disabled>
       <span class="icon icon-literature"></span>
       <span class="badge"></span>
       <span class="btn-label">Literature</span>
     </button>
   </div>
+
+  <!-- To do -->
+  <!-- <button data-toggle="offcanvas" data-target="#filters" data-canvas="body"></button> -->
 
   <ul class="search-results">
   {% for result in results %}
@@ -127,18 +138,14 @@
         </ul>
 
         <h6>Participants</h6>
-        <div class="indent">
-          <select id="tr_party" multiple="multiple" data-formid="#id_tr_party">
-            {% include 'bits/select_facet.html' with facet=facets.partyCountry form_field=form.tr_party %}
-          </select>
-        </div>
+        <select id="tr_party" multiple="multiple" data-formid="#id_tr_party">
+          {% include 'bits/select_facet.html' with facet=facets.partyCountry form_field=form.tr_party %}
+        </select>
 
         <h6>Subject</h6>
-        <div class="indent">
-          <select id="tr_subject" multiple="multiple" data-formid="#id_tr_subject">
-            {% include 'bits/select_facet.html' with facet=facets.trSubject form_field=form.tr_subject %}
-          </select>
-        </div>
+        <select id="tr_subject" multiple="multiple" data-formid="#id_tr_subject">
+          {% include 'bits/select_facet.html' with facet=facets.trSubject form_field=form.tr_subject %}
+        </select>
       </div>
     </fieldset>
     {% endif %}
@@ -172,17 +179,13 @@
     {% endif %}
 
     <fieldset class="global-filter">
-      <h5 data-toggle="collapse"
-          data-target="#filter-keywords"
-          class="collapsed">Keywords</h5>
-      <div class="indent">
-          <select id="keyword" multiple="multiple" data-formid="#id_keyword">
-            {% include 'bits/select_facet.html' with facet=facets.docKeyword form_field=form.keyword %}
-          </select>
-        </div>
+      <h5>Keywords</h5>
+      <select id="keyword" multiple="multiple" data-formid="#id_keyword">
+        {% include 'bits/select_facet.html' with facet=facets.docKeyword form_field=form.keyword %}
+      </select>
     </fieldset>
 
-    <fieldset class="global-filter">
+    <fieldset class="global-filter hidden">
       <h5>Years</h5>
       <div class="indent">
         <input id="filter-years" type="text"

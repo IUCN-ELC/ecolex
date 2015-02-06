@@ -25,10 +25,20 @@ $(document).ready(function() {
 		formatter: function(value) {
 			return 'Current value: ' + value;
 		}
-	});
+    });
 
-	// Multiselect
-	$('select[multiple]').multiselect({
+    // Multiselect
+    $('select[multiple]').multiselect({
+        buttonClass: '',
+        buttonContainer: '<div class="multiselect-wrapper" />', // '<div class="btn-group multiselect-wrapper" />',
+        disableIfEmpty: true,
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
+        filterBehavior: 'value',
+        numberDisplayed: 1,
+        nonSelectedText: 'Nothing selected',
+        // filterPlaceholder: "porn",
+        maxHeight: 240,
         onDropdownHidden: function(e) {
             var select = $(this.$select);
             var formid = select.data('formid');
@@ -36,6 +46,7 @@ $(document).ready(function() {
             $(formid).val(select.val());
             // submit now for now
             $('.search-form').submit();
+            // check if actual changes
         }
     });
 
@@ -43,7 +54,7 @@ $(document).ready(function() {
     $('.filter-type button').click(function(e) {
         var current = $('#id_type').val() || [];
         var toggle_value = $(this).data('value');
-        if (!current) {
+        if (current.length == 2) {
             current = [toggle_value];
         } else {
             if (current.indexOf(toggle_value) == -1) {
@@ -53,7 +64,6 @@ $(document).ready(function() {
             }
         }
         $('#id_type').val(current);
-        $(this).toggleClass('btn-default');
         // submit now for now
         $('.search-form').submit();
     });

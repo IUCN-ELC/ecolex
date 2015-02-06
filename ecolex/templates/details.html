@@ -6,11 +6,9 @@
   <header>
     <h1>{{ document.title }}</h1>
 
-    <p>
-      <strong>{{ document.type }}</strong>
-    </p>
-        
     <dl>
+      <dt>{{ document.type }}</dt>
+      <dd>{{ document.id }}</dd>
       <dt>Doc. type</dt>
       <dd>multilateral</dd>
       <dt>Field of application</dt>
@@ -20,6 +18,7 @@
     </dl>
   </header>
 
+  {% if document.also or true %} {# check for alternative titles #}
   <section id="aka">
     <dl>
       <dt>Also known as</dt>
@@ -31,6 +30,7 @@
       </dd>
     </dl>
   </section>
+  {% endif %}
 
   <section id="details">
     <h2 class="section-title">Details</h2>
@@ -42,6 +42,7 @@
     </dl>
   </section>
 
+  {% if document.type == 'treaty' and document.participants %}
   <section id="participants">
     <h2 class="section-title">Participants</h2>
 
@@ -68,7 +69,9 @@
     </table>
 
   </section>
+  {% endif %}
 
+  {% if document.references or true %}
   <section id="treaty-references">
     <h2 class="section-title">Treaty references</h2>
 
@@ -89,7 +92,9 @@
       </dd>
     </dl>
   </section>
+  {% endif %}
 
+  {% if document.other_references or true %}
   <section id="other-references">
     <h2 class="section-title pull-left">Other references</h2>
 
@@ -102,7 +107,9 @@
       </ul>
     </div>
   </section>
+  {% endif %}
 
+  {% if document.subjects %}
   <section id="subjects">
     <h2 class="section-title pull-left">Subjects</h2>
     <div class="indent">
@@ -114,7 +121,9 @@
       </ul>
     </div>
   </section>
+  {% endif %}
 
+  {% if document.keywords %}
   <section id="keywords">
     <h2 class="section-title pull-left">Keywords</h2>
     <div class="indent">
@@ -126,6 +135,7 @@
       </ul>
     </div>
   </section>
+  {% endif %}
 
     {% if debug %}
     <section id="debug">
