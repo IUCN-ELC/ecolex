@@ -11,8 +11,8 @@
         <entity name="Decisions" dataSource="sqlSource" 
                 query="SELECT id, id_organization, link, short_title, long_title, 
 			            summary, type, status, number, id_treaty, published,
-						updated, id_meeting, meeting_title, meeting_url, body,
-						display_order, is_indexed, 'decision' as data_type FROM ai_decision">  
+						updated, id_meeting, meeting_title, meeting_url, body, `text`,
+						display_order, is_indexed, 'decision' as data_type FROM ai_decision">
             <field column="data_type" name="type" />
 	        <field column="id" name="decId" />
             <field column="id_organization" name="decOrganizationId" />
@@ -30,6 +30,7 @@
             <field column="meeting_title" name="decMeetingTitle" />
             <field column="meeting_url" name="decMeetingUrl" />
             <field column="body" name="decBody" />
+            <field column="text" name="doc_content" />
             <field column="display_order" name="decDisplayOrder" />
 	        <field column="is_indexed" name="decIsIndexed" />
             <entity name="Decision_Document" query="SELECT url FROM ai_document WHERE id_decision='${Decisions.id}'">
@@ -41,12 +42,12 @@
                 </entity>
             </entity>
 	    </entity>
-	    <entity name="Meetings" dataSource="sqlSource"  
+	    <entity name="Meetings" dataSource="sqlSource"
                 query="SELECT id, id_organization, id_treaty, event_url, title,
-                        abbreviation, description, start, end, repetition, 
+                        abbreviation, description, start, end, repetition,
                         id_event_previous, kind, type, access, status, image,
                         image_copyright, location, city, id_country, latitude,
-                        longitude, id_person, use_informea, is_indexed, 
+                        longitude, id_person, use_informea, is_indexed,
 						'meeting' as data_type FROM ai_event">
              <field column="data_type" name="type" />
              <field column="id" name="evId" />
