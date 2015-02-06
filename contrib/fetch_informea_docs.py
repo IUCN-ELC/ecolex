@@ -23,6 +23,7 @@ def update_dec(id_dec, full_text):
 
 def get_path(path, basepath=None):
     basepath = basepath or ''
+    path = path.replace('uploads/', '')
     file_path = os.path.abspath(os.path.join(basepath, path))
     if not os.path.exists(file_path):
         print("Error: {} does not exist".format(file_path))
