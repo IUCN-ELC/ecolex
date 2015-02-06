@@ -1,8 +1,9 @@
 from datetime import datetime
 import pysolr
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.conf import settings
 from ecolex.search import search, get_document, PERPAGE
 from ecolex.forms import SearchForm, DOC_TYPE
 
@@ -66,7 +67,6 @@ class SearchView(TemplateView):
         self.form.fields['dec_treaty'].choices = _extract('decTreatyId')
 
 
-
 class SearchViewWithResults(SearchView):
     template_name = 'list_results.html'
 
@@ -117,3 +117,20 @@ class ResultDetails(SearchView):
         context = super(ResultDetails, self).get_context_data(**kwargs)
         context['document'] = get_document(kwargs['id'])
         return context
+
+
+def debug(request):
+    import json, subprocess
+
+    last_update = subprocess.check_output(
+        ['git', 'show', '--pretty=medium', '--format="%aD %cn"']).decode()
+    last_update = last_update and last_update.split('\n')[0]
+    last_update = last_update.replace('\"', '')
+
+    data = {
+        'debug': settings.DEBUG,
+        'endpoint': settings.SOLR_URI,
+        'last_update': last_update,
+
+    }
+    return JsonResponse(data)
