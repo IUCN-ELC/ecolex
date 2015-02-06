@@ -55,7 +55,7 @@ class ObjectNormalizer:
 
 class Treaty(ObjectNormalizer):
     TITLE_FIELDS = ['trPaperTitleOfText', 'trPaperTitleOfTextFr',
-                    'trPaperTitleOfTextSp']
+                    'trPaperTitleOfTextSp', 'trPaperTitleOfTextOther']
     DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
 
     def jurisdiction(self):
