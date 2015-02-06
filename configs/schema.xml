@@ -78,7 +78,7 @@
     
     <field name="trDepository" type="text" indexed="true" stored="true" multiValued="true"/>
     
-    <field name="trSubject" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trSubject" type="string" indexed="true" stored="true" multiValued="true"/>
     
     <field name="trKeyword" type="text" indexed="true" stored="true" multiValued="true"/>
     
