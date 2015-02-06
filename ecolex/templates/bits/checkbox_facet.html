@@ -1,5 +1,5 @@
 {% for type,count in facet.items %}
-  {% if count > 0 %}
+  {% if show_empty or count > 0 %}
   <li>
     <label for="{{ form_field.name }}_{{ type }}">
       <input type="checkbox"
