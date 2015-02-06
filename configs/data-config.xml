@@ -32,8 +32,13 @@
             <field column="body" name="decBody" />
             <field column="display_order" name="decDisplayOrder" />
 	        <field column="is_indexed" name="decIsIndexed" />
-            <entity name="decision_document" query="SELECT url from ai_document WHERE id_decision='${Decisions.id}'">
+            <entity name="Decision_Document" query="SELECT url FROM ai_document WHERE id_decision='${Decisions.id}'">
                 <field column="url" name="decDocUrls" />
+            </entity>
+            <entity name="Decision_Vocabulary" query="SELECT id_concept FROM ai_decision_vocabulary WHERE id_decision='${Decisions.id}'">
+                <entity name="Vocabulary_Concept" query="SELECT term FROM voc_concept WHERE id='${Decision_Vocabulary.id_concept}'">
+                    <field column="term" name="decKeyword" />
+                </entity>
             </entity>
 	    </entity>
 	    <entity name="Meetings" dataSource="sqlSource"  
@@ -75,7 +80,7 @@
                         long_title, abstract, `primary`, start, url, url_treaty_text,
                         url_parties, url_wikipedia, url_elearning, number_of_parties,
                         theme, theme_secondary, enabled, `order`, is_protocol, 
-                        regional, 'treaty' as data_type FROM ai_treaty">
+                        'treaty' as data_type FROM ai_treaty">
              <field column="data_type" name="type" />
              <field column="id" name="trInformeaId" />
              <field column="id_organization" name="trDepository" />
@@ -92,12 +97,16 @@
              <field column="url_wikipedia" name="trUrlWikipedia" />
              <field column="url_elearning" name="trUrlElearning" />
              <field column="number_of_parties" name="trNumberOfParties" />
-             <field column="theme" name="trTheme" />
+             <field column="theme" name="trSubject" />
              <field column="theme_secondary" name="trThemeSecondary" />
              <field column="enabled" name="trEnabled" />
              <field column="order" name="trOrder" />
              <field column="is_protocol" name="trIsProtocol" />
-             <field column="regional" name="trFieldOfApplication" />
+             <entity name="Treaty_Vocabulary" query="SELECT id_concept FROM ai_treaty_vocabulary WHERE id_treaty='${Treaties.id}'">
+                 <entity name="Vocabulary_Concept" query="SELECT term FROM voc_concept WHERE id='${Treaty_Vocabulary.id_concept}'">
+                     <field column="term" name="trKeyword" />
+                 </entity>
+             </entity>
         </entity>
     </document>
 </dataConfig>
