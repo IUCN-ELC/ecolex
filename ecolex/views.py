@@ -1,8 +1,9 @@
 from datetime import datetime
 import pysolr
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.conf import settings
 from ecolex.search import search, get_document, PERPAGE
 from ecolex.forms import SearchForm, DOC_TYPE
 from django.conf import settings
@@ -34,7 +35,7 @@ class SearchView(TemplateView):
         # Compute filters
         self.filters = {
             'type': data['type'],
-            'trKeyword': data['keyword'],
+            'docKeyword': data['keyword'],
         }
         if 'treaty' in data['type']:  # specific filters
             self.filters['trTypeOfText'] = data['tr_type']
@@ -60,12 +61,11 @@ class SearchView(TemplateView):
         self.form.fields['tr_field'].choices = _extract('trFieldOfApplication')
         self.form.fields['tr_party'].choices = _extract('partyCountry')
         self.form.fields['tr_subject'].choices = _extract('trSubject')
-        self.form.fields['keyword'].choices = _extract('trKeyword')
+        self.form.fields['keyword'].choices = _extract('docKeyword')
 
         self.form.fields['dec_type'].choices = _extract('decType')
         self.form.fields['dec_status'].choices = _extract('decStatus')
         self.form.fields['dec_treaty'].choices = _extract('decTreatyId')
-
 
 
 class SearchViewWithResults(SearchView):
@@ -94,6 +94,11 @@ class SearchViewWithResults(SearchView):
         results.fetch()
         ctx['results'] = results
         ctx['facets'] = results.get_facets()
+
+        # a map of (treatyId -> treatyNames) for treaties which are referenced
+        # by decisions in the current result set
+        ctx['dec_treaty_names'] = results.get_treaty_names()
+
         ctx['page'] = self.page_details(page, results, request)
         self.update_form_choices(ctx['facets'])
 
@@ -119,3 +124,20 @@ class ResultDetails(SearchView):
         context['document'] = get_document(kwargs['id'])
         context['debug'] = settings.DEBUG
         return context
+
+
+def debug(request):
+    import json, subprocess
+
+    last_update = subprocess.check_output(
+        ['git', 'show', '--pretty=medium', '--format="%aD %cn"']).decode()
+    last_update = last_update and last_update.split('\n')[0]
+    last_update = last_update.replace('\"', '')
+
+    data = {
+        'debug': settings.DEBUG,
+        'endpoint': settings.SOLR_URI,
+        'last_update': last_update,
+
+    }
+    return JsonResponse(data)

@@ -277,15 +277,15 @@ if __name__ == '__main__':
     import sys
     from pprint import pprint
 
-    if len(sys.argv) < 3:
-        print("Usage: {} <xml_root_directory> <solr_adress>".format(sys.argv[0]))
-        mf = missing_fields()
-        pprint(mf)
-        print(len(mf), "values")
+    if len(sys.argv) < 4:
+        print("Usage: {} <xml_root_directory> <solr_adress> <collection_name>".format(sys.argv[0]))
+        #mf = missing_fields()
+        #pprint(mf)
+        #print(len(mf), "values")
         sys.exit(0)
 
     xml_files = get_xml_abs_paths(sys.argv[1])
-    solr = pysolr.Solr("http://{}:8983/solr/ecolex".format(sys.argv[2]), timeout=10)
+    solr = pysolr.Solr("http://{}:8983/solr/{}".format(sys.argv[2], sys.argv[3]), timeout=10)
     
     duplicates_mapping = get_duplicate_ids("duplicates") 
     generate_rich_text_mapping("/home/anaion/nas/ecolex/xml_export_tools/files/treaties")

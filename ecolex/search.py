@@ -14,7 +14,6 @@ HIGHLIGHT_PARAMS = {
 }
 PERPAGE = 20
 
-
 def first(obj, default=None):
     if obj and type(obj) is list:
         return obj[0]
@@ -35,7 +34,10 @@ class ObjectNormalizer:
         for title_field in self.TITLE_FIELDS:
             if not self.solr.get(title_field):
                 continue
-            return max(self.solr.get(title_field), key=lambda i: len(i))
+            t = max(self.solr.get(title_field), key=lambda i: len(i))
+            if len(t):
+                return t
+        return "Unknown Document"
 
     def date(self):
         for date_field in self.DATE_FIELDS:
@@ -56,7 +58,8 @@ class ObjectNormalizer:
 
 class Treaty(ObjectNormalizer):
     TITLE_FIELDS = ['trPaperTitleOfText', 'trPaperTitleOfTextFr',
-                    'trPaperTitleOfTextSp']
+                    'trPaperTitleOfTextSp', 'trPaperTitleOfTextOther',
+                    'trTitleOfTextShort']
     DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
 
     def jurisdiction(self):
@@ -143,6 +146,16 @@ class Queryset(object):
             k: OrderedDict(sorted(tuple(v.items()), key=lambda v: v[0]))
             for k, v in self._facets.items()
         }
+
+    def get_treaty_names(self):
+        """ Returns map of names for treaties returned by the decTreaty facet.
+        """
+        facets = self.get_facets()
+        if not facets.get('decTreatyId'):
+            return {}
+
+        results = get_treaties_by_id(facets['decTreatyId'].keys())
+        return dict((r.solr.get("trInformeaId", -1), r.title()) for r in results)
 
     def count(self):
         if not self._hits:
@@ -275,6 +288,13 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
         'hits': hits,
     }
 
+def get_treaties_by_id(treaty_ids):
+    solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
+    solr_query = "trInformeaId:(" + " ".join(treaty_ids) + ")"
+    responses = solr.search(solr_query, rows=len(treaty_ids))
+    if not responses.hits:
+        return None
+    return [parse_result(hit, responses) for hit in responses]
 
 def get_document(document_id):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)

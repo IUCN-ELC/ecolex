@@ -7,7 +7,9 @@
     <div class="search-result-details">
       <strong>{{ result.type }}</strong> |
       <span>{{ result.status }} </span> |
-      <time> {{ result.date }}</time>
+      {% if result.date %}
+        | <time>{{ result.date }}</time>
+      {% endif %}
 
       <!-- for debug. FIXME(catalinb): remove -->
       <p class="search-result-description" hidden> {{ result }}</p>
@@ -23,8 +25,10 @@
     </h3>
 
     <div class="search-result-details">
-      <strong>{{ result.type }}</strong> | <span>International</span> |
-      <time>{{ result.date }}</time>
+      <strong>{{ result.type }}</strong> | <span>International</span>
+      {% if result.date %}
+        | <time>{{ result.date }}</time>
+      {% endif %}
     </div>
     <p class="search-result-description">{{ result.summary|safe }}</p>
     <!-- for debug. FIXME(catalinb): remove -->

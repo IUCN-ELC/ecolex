@@ -164,7 +164,7 @@
         <h6>Treaty</h6>
         <div class="indent">
           <select id="dec_treaty" multiple="multiple" data-formid="#id_dec_treaty">
-            {% include 'bits/select_facet.html' with facet=facets.decTreatyId form_field=form.dec_treaty %}
+            {% include 'bits/select_facet.html' with facet=facets.decTreatyId type_map=dec_treaty_names form_field=form.dec_treaty %}
           </select>
         </div>
       </div>
@@ -177,7 +177,7 @@
           class="collapsed">Keywords</h5>
       <div class="indent">
           <select id="keyword" multiple="multiple" data-formid="#id_keyword">
-            {% include 'bits/select_facet.html' with facet=facets.trKeyword form_field=form.keyword %}
+            {% include 'bits/select_facet.html' with facet=facets.docKeyword form_field=form.keyword %}
           </select>
         </div>
     </fieldset>
