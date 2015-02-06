@@ -93,6 +93,11 @@ class SearchViewWithResults(SearchView):
         results.fetch()
         ctx['results'] = results
         ctx['facets'] = results.get_facets()
+
+        # a map of (treatyId -> treatyNames) for treaties which are referenced
+        # by decisions in the current result set
+        ctx['dec_treaty_names'] = results.get_treaty_names()
+
         ctx['page'] = self.page_details(page, results, request)
         self.update_form_choices(ctx['facets'])
 
