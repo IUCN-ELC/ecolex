@@ -127,5 +127,13 @@
     </div>
   </section>
 
+    {% if debug %}
+    <section id="debug">
+        <pre>
+        {{ document.solr }}
+        </pre>
+    </section>
+    {% endif %}
+
 </article>
 {% endblock content %}

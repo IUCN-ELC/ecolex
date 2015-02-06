@@ -88,6 +88,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Solr
 SOLR_URI = 'http://10.0.0.98:8983/solr/ecolex'
 
+# Debug
+DEBUG = True
+
 # Local settings
 try:
     from local_settings import *

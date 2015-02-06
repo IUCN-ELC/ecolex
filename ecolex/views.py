@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from ecolex.search import search, get_document, PERPAGE
 from ecolex.forms import SearchForm, DOC_TYPE
+from django.conf import settings
 
 
 class SearchView(TemplateView):
@@ -116,4 +117,5 @@ class ResultDetails(SearchView):
     def get_context_data(self, **kwargs):
         context = super(ResultDetails, self).get_context_data(**kwargs)
         context['document'] = get_document(kwargs['id'])
+        context['debug'] = settings.DEBUG
         return context
