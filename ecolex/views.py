@@ -127,7 +127,7 @@ class ResultDetails(SearchView):
 
 
 def debug(request):
-    import json, subprocess
+    import subprocess
 
     last_update = subprocess.check_output(
         ['git', 'show', '--pretty=medium', '--format="%aD %cn"']).decode()
