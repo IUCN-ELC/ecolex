@@ -72,7 +72,7 @@
     
     <field name="trTypeOfText" type="text" indexed="true" stored="true" multiValued="true"/>
     
-    <field name="trFieldOfApplication" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trFieldOfApplication" type="string" indexed="true" stored="true" multiValued="true"/>
     
     <field name="trPlaceOfAdoption" type="text" indexed="true" stored="true" multiValued="true"/>
     
