@@ -234,6 +234,7 @@ def get_fq(filters):
     type_filters = {f: [] for f in enabled_types}
     global_filters = []
     for filter, values in filters.items():
+        values = [v for v in values if v]
         if not values or filter is enabled_types:
             continue
         if filter in FACETS_MAP:
