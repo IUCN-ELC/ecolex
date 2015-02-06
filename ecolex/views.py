@@ -34,7 +34,7 @@ class SearchView(TemplateView):
         # Compute filters
         self.filters = {
             'type': data['type'],
-            'trKeyword': data['keyword'],
+            'docKeyword': data['keyword'],
         }
         if 'treaty' in data['type']:  # specific filters
             self.filters['trTypeOfText'] = data['tr_type']
@@ -60,7 +60,7 @@ class SearchView(TemplateView):
         self.form.fields['tr_field'].choices = _extract('trFieldOfApplication')
         self.form.fields['tr_party'].choices = _extract('partyCountry')
         self.form.fields['tr_subject'].choices = _extract('trSubject')
-        self.form.fields['keyword'].choices = _extract('trKeyword')
+        self.form.fields['keyword'].choices = _extract('docKeyword')
 
         self.form.fields['dec_type'].choices = _extract('decType')
         self.form.fields['dec_status'].choices = _extract('decStatus')

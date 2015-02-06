@@ -225,7 +225,11 @@
     
     <!-- Document text field -->
     <field name="doc_content" type="text_general" indexed="false" stored="true" multiValued="true"/>
-    
+
+    <!-- Keyword field -->
+    <copyField source="trKeyword" dest="docKeyword"/>
+    <copyFIeld source="decKeyword" dest="docKeyword"/>
+
     <uniqueKey>id</uniqueKey>
     
     <copyField source="trAuthorA" dest="trAuthor"/>
