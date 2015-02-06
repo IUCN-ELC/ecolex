@@ -227,6 +227,7 @@
     <field name="doc_content" type="text_general" indexed="false" stored="true" multiValued="true"/>
 
     <!-- Keyword field -->
+    <field name="docKeyword" type="text" indexed="true" stored="true" multiValued="true"/>
     <copyField source="trKeyword" dest="docKeyword"/>
     <copyFIeld source="decKeyword" dest="docKeyword"/>
 
