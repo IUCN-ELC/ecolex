@@ -34,7 +34,10 @@ class ObjectNormalizer:
         for title_field in self.TITLE_FIELDS:
             if not self.solr.get(title_field):
                 continue
-            return max(self.solr.get(title_field), key=lambda i: len(i))
+            t = max(self.solr.get(title_field), key=lambda i: len(i))
+            if len(t):
+                return t
+        return "Unknown Document"
 
     def date(self):
         for date_field in self.DATE_FIELDS:
@@ -55,7 +58,8 @@ class ObjectNormalizer:
 
 class Treaty(ObjectNormalizer):
     TITLE_FIELDS = ['trPaperTitleOfText', 'trPaperTitleOfTextFr',
-                    'trPaperTitleOfTextSp', 'trPaperTitleOfTextOther']
+                    'trPaperTitleOfTextSp', 'trPaperTitleOfTextOther',
+                    'trTitleOfTextShort']
     DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
 
     def jurisdiction(self):
