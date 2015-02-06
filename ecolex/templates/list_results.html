@@ -12,9 +12,11 @@
             data-container="body"
             data-value="treaty"
             {% if not 'treaty' in form.type.data %}
-            title="Show Treaty"
+            title="Show Treaties"
+            {% elif form.type.data|length == 2 %}
+              title="Show only Treaties"
             {% else %}
-            title="Hide Treaty"
+              title="Showing only Treaties"
             {% endif %}>
       <span class="icon icon-treaty"></span>
       {% if facets.type.treaty > 0 %}
@@ -32,9 +34,11 @@
             data-container="body"
             data-value="decision"
             {% if not 'decision' in form.type.data %}
-            title="Show COP Decisions"
+            title="Show COP decisions"
+            {% elif form.type.data|length == 2 %}
+              title="Show only COP decisions"
             {% else %}
-            title="Hide COP Decisions"
+              title="Showing only COP decisions"
             {% endif %}>
       <span class="icon icon-cop-decision"></span>
       {% if facets.type.decision > 0 %}
@@ -169,11 +173,9 @@
         </ul>
 
         <h6>Treaty</h6>
-        <div class="indent">
-          <select id="dec_treaty" multiple="multiple" data-formid="#id_dec_treaty">
-            {% include 'bits/select_facet.html' with facet=facets.decTreatyId type_map=dec_treaty_names form_field=form.dec_treaty %}
-          </select>
-        </div>
+        <select id="dec_treaty" multiple="multiple" data-formid="#id_dec_treaty">
+          {% include 'bits/select_facet.html' with facet=facets.decTreatyId type_map=dec_treaty_names form_field=form.dec_treaty %}
+        </select>
       </div>
     </fieldset>
     {% endif %}
