@@ -50,6 +50,17 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "ecolex.global_config",
+)
+
 ROOT_URLCONF = 'ecolex.urls'
 
 WSGI_APPLICATION = 'ecolex.wsgi.application'
@@ -59,10 +70,10 @@ WSGI_APPLICATION = 'ecolex.wsgi.application'
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+'default': {
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+}
 }
 
 # Internationalization
@@ -87,6 +98,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Solr
 SOLR_URI = 'http://10.0.0.98:8983/solr/ecolex'
+
+GA_CODE = ''
 
 # Debug
 DEBUG = True
