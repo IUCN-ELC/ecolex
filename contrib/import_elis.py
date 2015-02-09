@@ -5,7 +5,7 @@ import os
 from bs4 import BeautifulSoup
 import pysolr
 
-from contrib.utils import get_text_tika
+from utils import get_text_tika
 
 
 SCHEMA_FIELDS = [
@@ -91,6 +91,7 @@ FIELD_MAP = {
     'seatofcourt': 'trSeatOfCourt',
     'supersedestreaty': 'trSupersedesTreaty', 
     'amendstreaty': 'trAmendsTreaty',
+    'citesTreaty': 'trCitesTreaty',
     #'country': 'partyCountry',
     #'potentialparty': 'partyPotentialParty',
     #'entryintoforce': 'partyEntryIntoForce',
@@ -211,9 +212,7 @@ def parse_xml(xml_path):
                 if v in DATE_FIELDS:
                     data[v] = [format_date(date) for date in data[v]]
         for party in document.findAll('party'):
-            no_children = 0
-            for child in party.children:
-                no_children += 1
+            no_children = len(list(party.children))
             if no_children == 1 and getattr(party, "potentialparty"):
                 continue
             for k, v in PARTICIPANT_FIELDS.items():
@@ -226,6 +225,9 @@ def parse_xml(xml_path):
                 else:
                     data[v].append(format_date("0000-00-00"))
         elis_id = data['trElisId'][0]
+        if elis_id == "TRE-146817":
+            data['trFieldOfApplication'] = ["Global", "Regional/restricted"]
+            
         if elis_id in RICH_TEXT_DOCS and TEXT_UPLOAD_ENABLED:
             data['doc_content'] = get_text_tika(RICH_TEXT_DOCS[elis_id])
         result.append(data)
