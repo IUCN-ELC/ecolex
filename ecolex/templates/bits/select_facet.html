@@ -7,7 +7,7 @@
     {% if type_map %}
       {{ type_map|lookup:type|capfirst }} ({{ count }})
     {% else %}
-      {{ type|capfirst }} ({{ count }})
+      {{ type|capfirst|safe }} ({{ count }})
     {% endif %}
   </option>
   {% endif %}
