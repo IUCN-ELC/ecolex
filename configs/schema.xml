@@ -80,7 +80,7 @@
     
     <field name="trSubject" type="string" indexed="true" stored="true" multiValued="true"/>
     
-    <field name="trKeyword" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trKeyword" type="string" indexed="true" stored="true" multiValued="true"/>
     
     <field name="trLanguageOfDocument" type="text" indexed="true" stored="true" multiValued="true"/>
     
@@ -167,7 +167,7 @@
     <field name="decLink" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="decShortTitle" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="decLongTitle" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="decKeyword" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="decKeyword" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="decSummary" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="decType" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="decStatus" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -228,8 +228,7 @@
 
     <!-- Keyword field -->
     <field name="docKeyword" type="text" indexed="true" stored="true" multiValued="true"/>
-    <copyField source="trKeyword" dest="docKeyword"/>
-    <copyFIeld source="decKeyword" dest="docKeyword"/>
+    <field name="docDate" type="tdate" indexed="true" stored="true" multiValued="true"/>
 
     <uniqueKey>id</uniqueKey>
     
@@ -254,10 +253,19 @@
     <copyField source="decSummary" dest="decText"/>
     <copyField source="decBody" dest="decText"/>
     
+    <copyField source="trKeyword" dest="docKeyword"/>
+    <copyField source="decKeyword" dest="docKeyword"/>
+    
+    <copyField source="trDateOfDate" dest="docDate"/>
+    <copyField source="decPublishDate" dest="docDate"/>
+    
     <!-- Full search field -->
     <copyField source="trTitleAbbreviation" dest="text"/>
     <copyField source="trTitleOfTextShort" dest="text"/>
     <copyField source="trPaperTitleOfText" dest="text"/>
+    <copyField source="trPaperTitleOfTextSp" dest="text"/>
+    <copyField source="trPaperTitleOfTextFr" dest="text"/>
+    <copyField source="trPaperTitleOfTextOther" dest="text"/>
     <copyField source="trPaperTitleOfTextStatement" dest="text"/>
     
     <copyField source="trComment" dest="text"/>
