@@ -99,6 +99,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Solr
 SOLR_URI = 'http://10.0.0.98:8983/solr/ecolex'
 
+# For default sorting, set SOLR_SORTING to ''
+SOLR_SORTING = 'docDate desc'
+
 GA_CODE = ''
 
 # Debug

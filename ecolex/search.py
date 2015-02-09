@@ -274,6 +274,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
     params['fq'] = get_fq(filters)
     if highlight:
         params.update(HIGHLIGHT_PARAMS)
+    params['sort'] = settings.SOLR_SORTING
 
     responses = solr.search(solr_query, **params)
     hits = responses.hits
