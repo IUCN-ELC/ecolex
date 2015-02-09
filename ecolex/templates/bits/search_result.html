@@ -2,12 +2,12 @@
   <li class="search-result">
     <h3 class="search-result-title">
       <a href="{% url 'result' result.id %}"
-         title="{{ result.title|safe }}">{{ result.title|safe }}</a>
+         title="{{ result.title|safe|striptags }}">{{ result.title|safe }}</a>
     </h3>
 
     <div class="search-result-details">
       <strong>{{ result.type }}</strong> |
-      <span>{{ result.status }} </span> |
+      <span>{{ result.status }} </span>
       {% if result.date %}
         | <time>{{ result.date }}</time>
       {% endif %}
@@ -15,7 +15,7 @@
       <!-- for debug. FIXME(catalinb): remove -->
       <p class="search-result-description" hidden> {{ result }}</p>
     </div>
-    <p class="search-result-description">{{ result.decBody|safe }}</p>
+    <p class="search-result-description">{{ result.summary|safe }}</p>
   </li>
 
 {% else %}
@@ -23,18 +23,19 @@
   <li class="search-result">
     <h3 class="search-result-title">
       <a href="{% url 'result' result.id %}"
-         title="{{ result.title|safe }}">{{ result.title|safe }}</a>
+         title="{{ result.title|safe|striptags }}">{{ result.title|safe }}</a>
     </h3>
 
     <div class="search-result-details">
-      <strong>{{ result.type }}</strong> | <span>International</span>
+      <strong>{{ result.type }}</strong> | <span>{{ result.jurisdiction }}</span>
       {% if result.date %}
         | <time>{{ result.date }}</time>
       {% endif %}
+
+      <!-- for debug. FIXME(catalinb): remove -->
+      <p class="search-result-description" hidden> {{ result }}</p>
     </div>
     <p class="search-result-description">{{ result.summary|safe }}</p>
-    <!-- for debug. FIXME(catalinb): remove -->
-    <p class="search-result-description" hidden> {{ result }}</p>
   </li>
 
 {% endif %}

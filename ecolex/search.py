@@ -4,21 +4,13 @@ import pysolr
 from django.conf import settings
 
 
-HIGHLIGHT_FIELDS = (
-    'trTitleOfText', 'decTitleOfText', 'decBody', 'trIntroText')
-HIGHLIGHT = ','.join(HIGHLIGHT_FIELDS)
+HIGHLIGHT_FIELDS = []
 HIGHLIGHT_PARAMS = {
     'hl': 'true',
-    'hl.fl': HIGHLIGHT,
     'hl.simple.pre': '<em class="hl">',
+    'hl.fragsize': '0',
 }
 PERPAGE = 20
-
-
-def first(obj, default=None):
-    if obj and type(obj) is list:
-        return obj[0]
-    return obj if obj else default
 
 
 class ObjectNormalizer:
@@ -49,18 +41,22 @@ class ObjectNormalizer:
                 continue
         return ""
 
-
     def __str__(self):
         return str(self.solr)
 
     def jurisdiction(self):
         return "International"
 
+    def summary(self):
+        return first(self.solr.get(self.SUMMARY_FIELD), "")
+
 
 class Treaty(ObjectNormalizer):
-    TITLE_FIELDS = ['trPaperTitleOfText', 'trPaperTitleOfTextFr',
-                    'trPaperTitleOfTextSp', 'trPaperTitleOfTextOther',
-                    'trTitleOfTextShort']
+    SUMMARY_FIELD = 'trIntroText'
+    TITLE_FIELDS = [
+        'trPaperTitleOfText', 'trPaperTitleOfTextFr', 'trPaperTitleOfTextSp',
+        'trPaperTitleOfTextOther', 'trTitleOfTextShort',
+    ]
     DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
 
     def jurisdiction(self):
@@ -68,9 +64,6 @@ class Treaty(ObjectNormalizer):
 
     def url(self):
         return first(self.solr.get('trUrlTreatyText'))
-
-    def summary(self):
-        return first(self.solr.get('trIntroText'), "")
 
     def participants(self):
         PARTY_MAP = {
@@ -103,6 +96,7 @@ class Treaty(ObjectNormalizer):
 
 
 class Decision(ObjectNormalizer):
+    SUMMARY_FIELD = 'decBody'
     TITLE_FIELDS = ['decTitleOfText']
     DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
 
@@ -176,6 +170,12 @@ class Queryset(object):
         return self._result_cache.__iter__()
 
 
+def first(obj, default=None):
+    if obj and type(obj) is list:
+        return obj[0]
+    return obj if obj else default
+
+
 def parse_result(hit, responses):
     hl = responses.highlighting.get(hit['id'])
     if hit['type'] == 'treaty':
@@ -207,6 +207,15 @@ def escape_query(query):
 
 def get_default_filters():
     return 'type', 'trTypeOfText', 'decType'
+
+
+def get_hl():
+    fields = HIGHLIGHT_FIELDS
+    for t in Decision, Treaty:
+        fields += [t.SUMMARY_FIELD] + t.TITLE_FIELDS
+    fields = set(fields)
+    HIGHLIGHT_PARAMS['hl.fl'] = ','.join(fields)
+    return HIGHLIGHT_PARAMS
 
 
 def get_fq(filters):
@@ -272,7 +281,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
     })
     params['fq'] = get_fq(filters)
     if highlight:
-        params.update(HIGHLIGHT_PARAMS)
+        params.update(get_hl())
     params['sort'] = settings.SOLR_SORTING
 
     responses = solr.search(solr_query, **params)
