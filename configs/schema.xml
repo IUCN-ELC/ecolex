@@ -256,7 +256,7 @@
     <copyField source="trKeyword" dest="docKeyword"/>
     <copyField source="decKeyword" dest="docKeyword"/>
     
-    <copyField source="trDateOfDate" dest="docDate"/>
+    <copyField source="trDateOfText" dest="docDate"/>
     <copyField source="decPublishDate" dest="docDate"/>
     
     <!-- Full search field -->
