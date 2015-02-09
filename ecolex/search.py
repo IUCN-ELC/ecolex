@@ -192,7 +192,6 @@ def escape_query(query):
         '+': r'\+', '-': r'\-', '&': r'\&', '|': r'\|', '!': r'\!', '(': r'\(',
         ')': r'\)', '{': r'\{', '}': r'\}', '[': r'\[', ']': r'\]', '^': r'\^',
         '~': r'\~', '*': r'\*', '?': r'\?', ':': r'\:', '"': r'\"', ';': r'\;',
-        ' ': r'\ ',
     }
 
     def _esc(term):
@@ -261,7 +260,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
         solr_query = 'text:*'
         highlight = False
     else:
-        solr_query = 'text:' + escape_query(user_query)
+        solr_query = 'text:(' + escape_query(user_query) + ')'
     filters = filters or get_default_filters()
     params = {
         'rows': rows,
@@ -277,6 +276,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
     params['sort'] = settings.SOLR_SORTING
 
     responses = solr.search(solr_query, **params)
+
     hits = responses.hits
 
     results = [parse_result(hit, responses) for hit in responses]
