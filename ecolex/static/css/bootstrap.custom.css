@@ -5090,39 +5090,6 @@ button.close {
   letter-spacing: -0.03em;
   color: #0066cc;
 }
-.search-result-title a {
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
-  max-width: 100%;
-  margin-left: -12px;
-  padding-left: 12px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.search-result-title a:before {
-  content: "";
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 0;
-  height: 0;
-  margin-top: -4px;
-  border: 4px solid transparent;
-  border-left: 8px solid;
-}
-.search-result-title a:focus {
-  text-decoration: none;
-  outline: none;
-}
-.search-result-title a:focus:before {
-  display: block;
-}
-.search-result-title a:hover {
-  text-decoration: underline;
-}
 .search-result-details {
   margin: 1px 0;
 }
@@ -5253,9 +5220,6 @@ label:hover {
 }
 .special-filter {
   margin-bottom: 11px;
-}
-.special-filter + .special-filter {
-  margin-top: 22px;
 }
 .global-filter {
   border: 1px solid #eeeeee;
