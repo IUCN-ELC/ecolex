@@ -9,7 +9,7 @@
              {% if type in form_field.data %}checked{% endif %}>
       {{ type|capfirst }}
     </label>
-    <span class="pull-right">{{ count }}</span>
+    <span class="facet-counter">{{ count }}</span>
   </li>
   {% endif %}
 {% endfor %}

@@ -46,11 +46,50 @@ $(document).ready(function () {
         });
 
         // Slider
-        $('#filter-years').slider({
-            formatter: function (value) {
-                return 'Current value: ' + value;
-            }
-        });
+        $("#slider-years")
+          .slider()
+          .on('slide', function(event) {
+              var min = $('#year-min'),
+                  max = $('#year-max');
+
+              min.val(event.value[0]);
+              max.val(event.value[1]);
+          })
+          .on('slideStop', function(event) {
+            var min = $('#year-min'),
+                max = $('#year-max');
+
+            min.val(event.value[0]);
+            max.val(event.value[1]);
+
+            var form_id = $(min).data('formid');
+            $(form_id).val($(min).val());
+
+            var form_id = $(max).data('formid');
+            $(form_id).val($(max).val());
+
+            submit();
+          });
+
+        // Year inputs
+        updateYear = function(e) {
+          minEl = $('#year-min');
+          maxEl = $('#year-max');
+
+          min = $(minEl).val();
+          max = $(maxEl).val();
+
+          if (min == '' || typeof min == 'undefined')
+            min = $(minEl).attr('min');
+          if (max == '' || typeof max == 'undefined')
+            max = $(maxEl).attr('max');
+
+          console.log([min, max]);
+
+          $("#slider-years").slider('setValue', [min, null]);
+        }
+
+        $('#year-min, #year-max').on('change', updateYear);
 
         // Multiselect
         $('select[multiple]').multiselect({

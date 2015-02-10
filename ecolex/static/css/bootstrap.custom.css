@@ -4562,6 +4562,8 @@ button.close {
 .navbar-collapse:after,
 .modal-footer:before,
 .modal-footer:after,
+.slider-years:before,
+.slider-years:after,
 .record-details dl dd:before,
 .record-details dl dd:after {
   content: " ";
@@ -4580,6 +4582,7 @@ button.close {
 .navbar-header:after,
 .navbar-collapse:after,
 .modal-footer:after,
+.slider-years:after,
 .record-details dl dd:after {
   clear: both;
 }
@@ -4836,12 +4839,15 @@ button.close {
  *
  */
 .slider {
-  display: inline-block;
+  display: block;
   vertical-align: middle;
   position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .slider.slider-horizontal {
-  width: 210px;
   height: 8px;
   padding: 0 10px;
 }
@@ -4884,7 +4890,13 @@ button.close {
   width: 10px;
   height: 15px;
   border: 1px solid #dddddd;
+  border-radius: 2px;
   background-color: #fff;
+}
+.slider-handle:hover,
+.slider-handle:focus,
+.slider-handle:active {
+  cursor: w-resize;
 }
 .slider-handle:hover {
   border-color: #0066cc;
@@ -4892,9 +4904,6 @@ button.close {
 .slider-handle:active {
   background-color: #0066cc;
   border-color: #0066cc;
-}
-.slider-handle.round {
-  border-radius: 2px;
 }
 /**
  * Bootstrap Multiselect v0.9.8 (https://github.com/davidstutz/bootstrap-multiselect)
@@ -5252,6 +5261,51 @@ label:hover {
   border: 1px solid #eeeeee;
   background-color: transparent;
 }
+.global-filter hr {
+  border-top-color: #eeeeee;
+  margin: 10px 0 6px;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.slider-years {
+  position: relative;
+}
+.slider-years .slider-min,
+.slider-years .slider-max {
+  float: left;
+  width: 50%;
+}
+.slider-years .slider-min {
+  border-right: 1px solid #eeeeee;
+}
+.slider-years input {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: 6px 0;
+  text-align: center;
+}
+.slider-years input:focus {
+  outline: none;
+  box-shadow: none;
+  border-bottom-color: #1c5479;
+}
+.global-filter,
+.special-filter {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+.facet-counter {
+  float: right;
+  margin-right: -22px;
+}
+.slider {
+  margin: 6px 0 11px;
+}
 fieldset {
   min-height: 20px;
   padding: 19px;
@@ -5270,17 +5324,20 @@ fieldset ul {
   margin-top: auto;
   margin-bottom: 6px;
 }
+fieldset ul label {
+  margin-left: -22px;
+}
 fieldset ul label input {
   float: left;
   width: 22px;
   text-align: center;
 }
 fieldset h5 {
-  margin: 0 0 0 22px;
+  margin: 0;
   line-height: 2;
 }
 fieldset h5[data-toggle="collapse"] {
-  margin-left: 0;
+  margin-left: -22px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -5308,19 +5365,16 @@ fieldset h5[data-toggle="collapse"]:hover {
   cursor: pointer;
 }
 fieldset h6 {
-  margin-left: 22px;
   color: #212121;
   font-size: 14px;
   font-weight: bold;
   line-height: 22px;
   margin-bottom: 6px;
 }
-fieldset .indent {
-  margin-left: 22px;
-}
 .multiselect-wrapper {
   position: relative;
   margin-bottom: 6px;
+  margin-left: -22px;
 }
 .multiselect-wrapper .button-text-item {
   display: block;

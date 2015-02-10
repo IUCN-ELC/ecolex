@@ -63,34 +63,32 @@
   <select id="keyword" multiple="multiple" data-formid="#id_keyword">
     {% include 'bits/select_facet.html' with facet=facets.docKeyword form_field=form.keyword %}
   </select>
-</fieldset>
 
-{% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
-  <fieldset class="global-filter">
+  {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
     <h5>Years</h5>
-
-    <div class="indent">
-      <!--<input id="filter-years" type="text"
-               data-slider-min="{{ stats_fields.docDate.min|just_year }}"
-               data-slider-max="{{ stats_fields.docDate.max|just_year }}"
-               data-slider-value="[1896,2015]"
-               data-slider-tooltip="show"/>-->
-      <div class="row">
-        <div class="form-group col-xs-6">
-          <label for="year-min">From</label>
-          <input class="form-control" id="year-min" type="number"
-                 value="{{ form.yearmin.data }}"
-                 placeholder="{{ stats_fields.docDate.min|just_year }}"
-                 data-formid="#id_yearmin"/>
-        </div>
-        <div class="form-group col-xs-6">
-          <label for="year-max">To</label>
-          <input class="form-control" id="year-max" type="number"
-                 value="{{ form.yearmax.data }}"
-                 placeholder="{{ stats_fields.docDate.max|just_year }}"
-                 data-formid="#id_yearmax"/>
-        </div>
+    <input id="slider-years" type="text"
+           data-slider-min="1860"
+           data-slider-max="2015"
+           data-slider-value="[{{ form.yearmin.data|default:1860 }},{{ form.yearmax.data|default:2015 }}]"
+           data-slider-tooltip="hide"/>
+    <div class="slider-years">
+      <div class="slider-min">
+        <!-- <label for="year-min">From</label> -->
+        <input id="year-min" type="number"
+               data-formid="#id_yearmin" 
+               value="{{ form.yearmin.data }}"
+               min="1860" 
+               placeholder="First ({{ stats_fields.docDate.min|just_year }})">
+      </div>
+      <div class="slider-max">
+        <!-- <label for="year-max">To</label> -->
+        <input id="year-max" type="number" 
+               data-formid="#id_yearmax"
+               value="{{ form.yearmax.data }}"
+               max="2015" 
+               placeholder="Last ({{ stats_fields.docDate.max|just_year }})">
       </div>
     </div>
-  </fieldset>
-{% endif %}
+  {% endif %}
+</fieldset>
+
