@@ -120,6 +120,7 @@ class Queryset(object):
         self._result_cache = None
         self._hits = None
         self._facets = {}
+        self._stats = {}
 
     def set_page(self, page, perpage=None):
         self.perpage = perpage or PERPAGE
@@ -132,6 +133,7 @@ class Queryset(object):
         self._result_cache = result['results']
         self._hits = result['hits']
         self._facets = result['facets']
+        self._stats = result['stats']
         return self._result_cache
 
     def get_facets(self):
@@ -141,6 +143,11 @@ class Queryset(object):
             k: OrderedDict(sorted(tuple(v.items()), key=lambda v: v[0]))
             for k, v in self._facets.items()
         }
+
+    def get_field_stats(self):
+        if not self._stats:
+            self.fetch()
+        return self._stats.get('stats_fields')
 
     def get_treaty_names(self):
         """ Returns map of names for treaties returned by the decTreaty facet.
@@ -231,6 +238,11 @@ def get_fq(filters):
     }
 
     def multi_filter(filter, values):
+        if filter == 'docDate':
+            start, end = values
+            start = start + '-01-01T00:00:00Z' if start else '*'
+            end = end + '-12-31T23:59:00Z' if end else '*'
+            return filter + ':[' + start + ' TO ' + end + ']'
         return filter + ':(' + ' OR '.join(t for t in values) + ')'
 
     def type_filter(type, filters):
@@ -243,8 +255,8 @@ def get_fq(filters):
     type_filters = {f: [] for f in enabled_types}
     global_filters = []
     for filter, values in filters.items():
-        values = [v for v in values if v]
-        if not values or filter is enabled_types:
+        values = [v for v in values if v or filter == 'docDate']
+        if not values or filter is enabled_types or not any(values):
             continue
         if filter in FACETS_MAP:
             if FACETS_MAP[filter] in enabled_types:
@@ -275,6 +287,8 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
     params = {
         'rows': rows,
         'start': start,
+        'stats': 'true',
+        'stats.field': 'docDate',
     }
     params.update({
         'facet': 'on',
@@ -288,6 +302,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
     responses = solr.search(solr_query, **params)
 
     hits = responses.hits
+    stats = responses.stats
 
     results = [parse_result(hit, responses) for hit in responses]
 
@@ -296,10 +311,8 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
         facets[k] = dict(zip(v[0::2], v[1::2]))
 
     return {
-        'results': results,
-        'query': user_query,
-        'facets': facets,
-        'hits': hits,
+        'results': results, 'query': user_query, 'facets': facets,
+        'hits': hits, 'stats': stats,
     }
 
 

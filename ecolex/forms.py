@@ -18,6 +18,8 @@ class SearchForm(Form):
     tr_subject = MultipleChoiceField()
 
     keyword = MultipleChoiceField()
+    yearmin = CharField()
+    yearmax = CharField()
 
     dec_type = MultipleChoiceField()
     dec_status = MultipleChoiceField()

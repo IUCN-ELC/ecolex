@@ -82,5 +82,13 @@ $(document).ready(function() {
         $(form_id).val(current);
         // submit now for now
         $('.search-form').submit();
-    })
+    });
+
+    // Year controls
+    $('.global-filter input[type=number]').change(function (e){
+       var form_id = $(this).data('formid');
+       $(form_id).val($(this).val());
+       // submit le form
+       $('.search-form').submit();
+    });
 });

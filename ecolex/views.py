@@ -24,6 +24,8 @@ class SearchView(TemplateView):
         data.setdefault('tr_party', [])
         data.setdefault('tr_subject', [])
         data.setdefault('keyword', [])
+        for y in ('yearmin', 'yearmax'):
+            data[y] = data[y][0] if y in data else None
 
         data.setdefault('dec_type', [])
         data.setdefault('dec_status', [])
@@ -36,6 +38,7 @@ class SearchView(TemplateView):
         self.filters = {
             'type': data['type'],
             'docKeyword': data['keyword'],
+            'docDate': (data['yearmin'], data['yearmax']),
         }
         if 'treaty' in data['type']:  # specific filters
             self.filters['trTypeOfText'] = data['tr_type']
@@ -94,6 +97,7 @@ class SearchViewWithResults(SearchView):
         results.fetch()
         ctx['results'] = results
         ctx['facets'] = results.get_facets()
+        ctx['stats_fields'] = results.get_field_stats()
 
         # a map of (treatyId -> treatyNames) for treaties which are referenced
         # by decisions in the current result set
