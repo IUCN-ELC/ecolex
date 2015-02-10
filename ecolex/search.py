@@ -116,29 +116,29 @@ class Treaty(ObjectNormalizer):
     def optional_fields(self):
         OPTIONAL_INFO_FIELDS = [
             # (solr field, display text, type=text)
-            ('trTitleAbbreviation', 'Title Abbreviation'),
+            ('trTitleAbbreviation', 'Title Abbreviation', ''),
             ('trEntryIntoForceDate', 'Entry into force', 'date'),
-            ('trPlaceOfAdoption', 'Place of adoption'),
-            ('TODO', 'Available in'),
-            ('TODO', 'Geographical area'),
-            ('trDepository', 'Depository'),
+            ('trPlaceOfAdoption', 'Place of adoption', ''),
+            ('TODO', 'Available in', ''),
+            ('TODO', 'Geographical area', ''),
+            ('trDepository', 'Depository', ''),
             ('trUrl', 'Available web site', 'url'), #???
             ('trUrlTreatyText', 'Link to full text', 'url'),
-            ('trLanguageOfDocument', 'Language of Document'),
-            ('TODO', 'Translation of Document'), #??
-            ('trAbstract', 'Abstract'),
-            ('trComment', 'Comment'),
-            ('trSubject', 'Subject'),
-            ('trKeyword', 'Keywords'),
-            ('TODO', 'Number of pages'), #??
-            ('TODO', 'Official publication'), #?
-            ('TODO', 'Internet Reference'),
+            ('trLanguageOfDocument', 'Language of Document', ''),
+            ('TODO', 'Translation of Document', ''), #??
+            ('trAbstract', 'Abstract', ''),
+            ('trComment', 'Comment', ''),
+            ('trSubject', 'Subject', ''),
+            ('trKeyword', 'Keywords', ''),
+            ('TODO', 'Number of pages', ''), #??
+            ('TODO', 'Official publication', ''), #?
+            ('TODO', 'Internet Reference', ''),
             ('trDateOfEntry', 'Date of Entry', 'date'),
             ('TODO', 'Consolidation Date', 'date') #?
         ]
 
         res = []
-        for field, label, *type in OPTIONAL_INFO_FIELDS:
+        for field, label, type in OPTIONAL_INFO_FIELDS:
             if not self.solr.get(field):
                 continue
             entry = {}
