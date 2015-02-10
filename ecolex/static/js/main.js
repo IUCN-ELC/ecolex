@@ -1,3 +1,5 @@
+var _form_data = null;
+
 $(document).ready(function() {
 	// $('[data-filter]').on('click', function() {
 	// 	target = $(this).data('filter')
@@ -11,6 +13,14 @@ $(document).ready(function() {
 	// 	}
 	// });
 
+    // initial form value
+    var _initial_form_data = $('.search-form').serialize();
+
+    function submit() {
+        var data = $('.search-form').serialize();
+        if (data != _initial_form_data)
+            $('.search-form').submit();
+    }
 	// initialize tooltips
 	// bootstrap tooltips are opt-in
 	$('[data-toggle="tooltip"]').tooltip();
@@ -45,8 +55,7 @@ $(document).ready(function() {
 
             $(formid).val(select.val());
             // submit now for now
-            $('.search-form').submit();
-            // check if actual changes
+            submit();
         }
     });
 
@@ -65,7 +74,7 @@ $(document).ready(function() {
         }
         $('#id_type').val(current);
         // submit now for now
-        $('.search-form').submit();
+        submit();
     });
 
     // Treaty -> Type of Document/Field of application filter
@@ -81,7 +90,7 @@ $(document).ready(function() {
         });
         $(form_id).val(current);
         // submit now for now
-        $('.search-form').submit();
+        submit();
     });
 
     // Year controls
@@ -89,6 +98,6 @@ $(document).ready(function() {
        var form_id = $(this).data('formid');
        $(form_id).val($(this).val());
        // submit le form
-       $('.search-form').submit();
+       submit();
     });
 });
