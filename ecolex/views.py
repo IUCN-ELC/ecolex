@@ -2,6 +2,7 @@ from datetime import datetime
 import pysolr
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render
+from django.template.loader import render_to_string
 from django.views.generic import TemplateView
 from django.conf import settings
 from ecolex.search import search, get_document, PERPAGE
@@ -71,11 +72,11 @@ class SearchView(TemplateView):
         self.form.fields['dec_treaty'].choices = _extract('decTreatyId')
 
 
-class SearchViewWithResults(SearchView):
+class SearchResults(SearchView):
     template_name = 'list_results.html'
 
-    def page_details(self, page, results, request):
-        get_query = request.GET.copy()
+    def page_details(self, page, results):
+        get_query = self.request.GET.copy()
         get_query.pop(page, None)
 
         def _get_url(page):
@@ -89,9 +90,9 @@ class SearchViewWithResults(SearchView):
             'prev_url': _get_url(page - 1),
         }
 
-    def get(self, request, **kwargs):
+    def get_context_data(self, **kwargs):
+        ctx = super(SearchResults, self).get_context_data(**kwargs)
         page = int(self.request.GET.get('page', 1))
-        ctx = self.get_context_data(**kwargs)
         results = search(self.query, filters=self.filters)
         results.set_page(page)
         results.fetch()
@@ -103,10 +104,21 @@ class SearchViewWithResults(SearchView):
         # by decisions in the current result set
         ctx['dec_treaty_names'] = results.get_treaty_names()
 
-        ctx['page'] = self.page_details(page, results, request)
+        ctx['page'] = self.page_details(page, results)
         self.update_form_choices(ctx['facets'])
+        return ctx
 
+    def get(self, request, **kwargs):
+        ctx = self.get_context_data(**kwargs)
         return render(request, 'list_results.html', ctx)
+
+
+class SearchResultsAjax(SearchResults):
+    def get(self, request, **kwargs):
+        ctx = self.get_context_data(**kwargs)
+        main = render_to_string('results_main.html', ctx)
+        sidebar = render_to_string('results_sidebar.html', ctx)
+        return JsonResponse(dict(main=main, sidebar=sidebar))
 
 
 class PageView(SearchView):
