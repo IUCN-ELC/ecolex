@@ -7,11 +7,12 @@
 
     <div class="search-result-details">
       <strong>{{ result.type }}</strong> |
-      <span>{{ result.status }} </span>
+      <span>{{ result.status }} </span> |
+      <span> {{ result.number }} </span>
       {% if result.date %}
         | <time>{{ result.date }}</time>
       {% endif %}
-      
+
       <!-- for debug. FIXME(catalinb): remove -->
       <p class="search-result-description" hidden> {{ result }}</p>
     </div>
