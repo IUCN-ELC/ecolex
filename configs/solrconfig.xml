@@ -1626,7 +1626,7 @@
   <requestHandler name="/dataimport" class="solr.DataImportHandler">
 	<lst name="defaults">
       	    <str name="config">data-config.xml</str>
-    	</lst>
+    </lst>
   </requestHandler>  
 
   <!-- Highlighting Component
@@ -1811,6 +1811,8 @@
     <processor class="solr.UUIDUpdateProcessorFactory">
       <str name="fieldName">id</str>
     </processor>
+    <processor class="TrimFieldUpdateProcessorFactory" /> <!--  Get rid of leading/trailing spaces. Also empties all-spaces fields for next filter-->
+    <processor class="RemoveBlankFieldUpdateProcessorFactory" /> <!--  Delete fields with no content. More efficient and allows to query for presence/absence of field -->
     <processor class="solr.LogUpdateProcessorFactory" />
     <processor class="solr.RunUpdateProcessorFactory" />
   </updateRequestProcessorChain> 
