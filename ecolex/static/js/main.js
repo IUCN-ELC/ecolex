@@ -86,7 +86,7 @@ $(document).ready(function () {
 
           console.log([min, max]);
 
-          $("#slider-years").slider('setValue', [min, null]);
+          $("#slider-years").slider('setValue', [min, max]);
         }
 
         $('#year-min, #year-max').on('change', updateYear);
