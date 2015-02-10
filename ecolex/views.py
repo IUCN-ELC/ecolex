@@ -88,6 +88,8 @@ class SearchResults(SearchView):
             'pages': results.pages,
             'next_url': _get_url(page + 1),
             'prev_url': _get_url(page - 1),
+            'first_url': _get_url(1),
+            'last_url': _get_url(results.pages()),
         }
 
     def get_context_data(self, **kwargs):
