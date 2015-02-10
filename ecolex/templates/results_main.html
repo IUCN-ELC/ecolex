@@ -101,21 +101,26 @@
 <hr>
 
 {% if page.pages %}
-  <div class="pagination">
-      <span class="step-links">
-          {% if page.number > 1 %}
-            <a href="?{{ page.first_url }}" class="btn">&laquo; first</a>
-            <a href="?{{ page.prev_url }}" class="btn">&lt; previous</a>
-          {% endif %}
-
-        <span class="current">
-              Page {{ page.number }} of {{ page.pages }}.
-          </span>
-
-        {% if page.number < page.pages %}
-          <a href="?{{ page.next_url }}" class="btn">next &gt;</a>
-          <a href="?{{ page.last_url }}" class="btn">last &raquo;</a>
-        {% endif %}
-      </span>
-  </div>
+  <ul class="pagination">
+    {% if page.number > 1 %}
+      <li>
+        <a href="?{{ page.first_url }}" class="prev">&laquo; first</a>
+      </li>
+      <li>
+        <a href="?{{ page.prev_url }}" class="prev">&lt; previous</a>
+      </li>
+    {% endif %}
+    <li class="active">
+      <span>Page {{ page.number }} of {{ page.pages }}.</span>
+    </li>
+    {% if page.number < page.pages %}
+      <li>
+        <a href="?{{ page.next_url }}" class="next">next &gt;</a>
+      </li>
+      <li>
+        <a href="?{{ page.last_url }}" class="next">last &raquo;</a>
+      </li>
+    {% endif %}
+    </li>
+  </ul>
 {% endif %}
