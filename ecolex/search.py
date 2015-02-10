@@ -71,28 +71,34 @@ class Treaty(ObjectNormalizer):
             # 'partyPotentialParty': 'partyPotentialParty',
             # 'partyEntryIntoForce': 'partyEntryIntoForce',
             'partyDateOfRatification': 'ratification',
-            'partyDateOfAccessionApprobation': 'accessionapprobation',
-            'partyDateOfAcceptanceApproval': 'acceptanceapproval',
-            'partyDateOfConsentToBeBound': 'consenttobebound',
+            'partyDateOfAccessionApprobation': 'accession approbation',
+            'partyDateOfAcceptanceApproval': 'acceptance approval',
+            'partyDateOfConsentToBeBound': 'consent to be bound',
             'partyDateOfSuccession': 'succession',
-            'partyDateOfDefiniteSignature': 'definitesignature',
-            'partyDateOfSimpleSignature': 'simplesignature',
-            'partyDateOfProvisionalApplication': 'provisionalapplication',
+            'partyDateOfDefiniteSignature': 'definite signature',
+            'partyDateOfSimpleSignature': 'simple signature',
+            'partyDateOfProvisionalApplication': 'provisional application',
             'partyDateOfParticipation': 'participation',
             'partyDateOfDeclaration': 'declaration',
             'partyDateOfReservation': 'reservation',
             'partyDateOfWithdrawal': 'withdrawal',
         }
-        clean = lambda d: d if d != '0002-11-30T00:00:00Z' else '-'
+        clean = lambda d: d if d != '0002-11-30T00:00:00Z' else None
         data = {}
-        for k, v in PARTY_MAP.items():
-            data[v] = self.solr.get(k, [])
+        for field, event in PARTY_MAP.items():
+            values = [clean(v) for v in self.solr.get(field, [])]
+            if values and any(values):
+                data[event] = values
         results = []
         for i, country in enumerate(data['country']):
             results.append(
-                {v: clean(data[v][i]) for v in PARTY_MAP.values()}
+                {v: data[v][i] for v in data.keys()}
             )
-        return results
+        ret = {
+            'countries': results,
+            'events': [c for c in sorted(data.keys()) if c != 'country'],
+        }
+        return ret
 
 
 class Decision(ObjectNormalizer):

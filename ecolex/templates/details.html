@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% load tags %}
 
 {% block content %}
 <article class="record-details">
@@ -49,20 +50,20 @@
     <table class="participants">
       <thead>
         <tr>
-          <th>Participant</th>
-          <th>Acceptance</th>
-          <th>Signature</th>
-          <th>Withdrawal</th>
+          <th>&nbsp;</th>
+          {% for event in document.participants.events %}
+          <th nowrap="nowrap">{{ event|capfirst }}</th>
+          {% endfor %}
         </tr>
       </thead>
 
       <tbody class="body">
-        {% for country in document.participants %}
+        {% for country in document.participants.countries %}
         <tr class="country">
           <th>{{ country.country }}</th>
-          <td>{{ country.acceptanceapproval }}</td>
-          <td>{{ country.ratification }}</td>
-          <td>{{ country.withdrawal }}</td>
+          {% for event in document.participants.events %}
+          <td>{{ country|lookup:event|default:"-"}}</td>
+          {% endfor %}
         </tr>
         {% endfor %}
       </tbody>
