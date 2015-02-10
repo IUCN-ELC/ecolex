@@ -73,7 +73,7 @@ FIELD_MAP = {
     'placeofadoption': 'trPlaceOfAdoption',
     'basin': 'trBasin',
     'citiestreaty': 'trCitiesTreaty',
-    'confname':'trConfName',
+    'confname': 'trConfName',
     'contributor': 'trContributor',
     'country': 'trCountry',
     'courtname': 'trCourtName',
@@ -82,14 +82,14 @@ FIELD_MAP = {
     'linktofulltextsp': 'trLinkToFullTextSp',
     'linktofulltextfr': 'trLinkToFullTextFr',
     'linktofulltextother': 'trLinkToFullTextOther',
-    'linktoabstract': 'trLinkToAbstract', 
+    'linktoabstract': 'trLinkToAbstract',
     'obsolete': 'trObsolete',
     'region': 'trRegion',
     'relevanttexttreaty': 'trRelevantTextTreaty',
     'scope': 'trScope',
     'searchdate': 'trSearchDate',
     'seatofcourt': 'trSeatOfCourt',
-    'supersedestreaty': 'trSupersedesTreaty', 
+    'supersedestreaty': 'trSupersedesTreaty',
     'amendstreaty': 'trAmendsTreaty',
     'citesTreaty': 'trCitesTreaty',
     #'country': 'partyCountry',
@@ -173,23 +173,28 @@ BROKEN_DOCS_IDS = [
 
 TEXT_UPLOAD_ENABLED = 1
 
+
 def clean_text(text):
     return text.strip()
 
+
 def missing_fields():
     return [f for f in SCHEMA_FIELDS if f not in FIELD_MAP.values()]
+
 
 def format_date(date):
     if date == '':
         return date
     date_fields = date.split('-')
-    for i in range(3-len(date_fields)):
+    for i in range(3 - len(date_fields)):
         date += "-01"
     return date + "T00:00:00Z"
+
 
 def add_docs(solr, docs):
     solr.add(docs)
     solr.optimize()
+
 
 def update_solr_entry(solr, treaty, informea_id):
     result = solr.search('trInformeaId:' + informea_id)
@@ -198,17 +203,18 @@ def update_solr_entry(solr, treaty, informea_id):
     new_document = dict(list(treaty.items()) + list(existing_fields.items()))
     solr.delete('trInformeaId:' + informea_id)
     add_docs(solr, [new_document])
-    
+
+
 def parse_xml(xml_path):
     bs = BeautifulSoup(open(xml_path, 'r', encoding='utf-8'))
     result = []
-    
+
     for document in bs.findAll('document'):
         data = {}
         for k, v in FIELD_MAP.items():
             field_values = document.findAll(k)
             if field_values:
-                data[v] = [clean_text(field.text) for field in field_values] 
+                data[v] = [clean_text(field.text) for field in field_values]
                 if v in DATE_FIELDS:
                     data[v] = [format_date(date) for date in data[v]]
         for party in document.findAll('party'):
@@ -218,70 +224,80 @@ def parse_xml(xml_path):
             for k, v in PARTICIPANT_FIELDS.items():
                 field = getattr(party, k)
                 if not v in data:
-                    data[v] = []    
+                    data[v] = []
                 if field:
                     clean_field = clean_text(field.text)
-                    data[v].append(format_date(clean_field) if v in DATE_FIELDS else clean_field)
+                    data[v].append(format_date(
+                        clean_field) if v in DATE_FIELDS else clean_field)
                 else:
                     data[v].append(format_date("0000-00-00"))
         elis_id = data['trElisId'][0]
         if elis_id == "TRE-146817":
             data['trFieldOfApplication'] = ["Global", "Regional/restricted"]
-            
+
         if elis_id in RICH_TEXT_DOCS and TEXT_UPLOAD_ENABLED:
             data['doc_content'] = get_text_tika(RICH_TEXT_DOCS[elis_id])
         result.append(data)
-    
+
     return result
+
 
 def generate_rich_text_mapping(root_directory):
     for root, dirs, files in os.walk(root_directory, topdown=False):
         for doc in files:
             RICH_TEXT_DOCS[doc.split('.')[0]] = os.path.join(root, doc)
-     
+
+
 def get_duplicate_ids(config_file):
     duplicates_mapping = {}
     with open(config_file) as f:
         for line in f:
             elis_id, informea_id = line.split()
             duplicates_mapping[elis_id] = informea_id
-    
+
     return duplicates_mapping
+
 
 def get_xml_abs_paths(root_directory):
     file_paths = []
     for root, dirs, files in os.walk(root_directory, topdown=False):
         for xml_file in files:
-            file_paths.append(os.path.join(root, xml_file)) 
+            file_paths.append(os.path.join(root, xml_file))
     return file_paths
+
 
 if __name__ == '__main__':
     import sys
 
     if len(sys.argv) < 4:
-        print("Usage: {} <xml_root_directory> <solr_adress> <collection_name>".format(sys.argv[0]))
+        print(
+            "Usage: {} <xml_root_directory> <solr_adress> <collection_name>".format(
+                sys.argv[0]))
         #mf = missing_fields()
         #pprint(mf)
         #print(len(mf), "values")
         sys.exit(0)
 
     xml_files = get_xml_abs_paths(sys.argv[1])
-    solr = pysolr.Solr("http://{}:8983/solr/{}".format(sys.argv[2], sys.argv[3]), timeout=10)
-    
-    duplicates_mapping = get_duplicate_ids("duplicates") 
-    generate_rich_text_mapping("/home/anaion/nas/ecolex/xml_export_tools/files/treaties")
-    
-    new_solr_docs = [] 
+    solr = pysolr.Solr(
+        "http://{}:8983/solr/{}".format(sys.argv[2], sys.argv[3]), timeout=10)
+
+    duplicates_mapping = get_duplicate_ids("duplicates")
+    generate_rich_text_mapping(
+        "/home/anaion/nas/ecolex/xml_export_tools/files/treaties")
+
+    new_solr_docs = []
     for xml_file in xml_files:
         r = parse_xml(xml_file)
- 
+
         for treaty in r:
             if treaty['trElisId'][0] in duplicates_mapping.keys():
                 print("update:" + duplicates_mapping[treaty['trElisId'][0]])
-                update_solr_entry(solr, treaty, duplicates_mapping[treaty['trElisId'][0]])
+                update_solr_entry(solr, treaty,
+                                  duplicates_mapping[treaty['trElisId'][0]])
             else:
                 treaty['type'] = 'treaty'
                 treaty['source'] = 'elis'
                 new_solr_docs.append(treaty)
-    
+
     add_docs(solr, new_solr_docs)
