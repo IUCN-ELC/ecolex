@@ -231,9 +231,12 @@ def parse_xml(xml_path):
                         clean_field) if v in DATE_FIELDS else clean_field)
                 else:
                     data[v].append(format_date("0000-00-00"))
+        # Special cases
         elis_id = data['trElisId'][0]
         if elis_id == "TRE-146817":
             data['trFieldOfApplication'] = ["Global", "Regional/restricted"]
+        if elis_id == "TRE-149349":
+            data['trDateOfText'] = format_date("2009-10-02")
 
         if elis_id in RICH_TEXT_DOCS and TEXT_UPLOAD_ENABLED:
             data['doc_content'] = get_text_tika(RICH_TEXT_DOCS[elis_id])
