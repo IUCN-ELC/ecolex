@@ -256,7 +256,7 @@ def get_fq(filters):
     global_filters = []
     for filter, values in filters.items():
         values = [v for v in values if v or filter == 'docDate']
-        if not values or filter is enabled_types or not any(values):
+        if not values or filter == 'type' or not any(values):
             continue
         if filter in FACETS_MAP:
             if FACETS_MAP[filter] in enabled_types:
