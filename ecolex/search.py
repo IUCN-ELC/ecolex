@@ -20,6 +20,13 @@ class ObjectNormalizer:
         if hl:
             self.solr.update(hl)
 
+    def type_of_document(self):
+        if self.solr.get('trTypeOfText'):
+            return first(self.solr.get('trTypeOfText'))
+        if self.solr.get('decType'):
+            return first(self.solr.get('decType'))
+        return "Unknown type of document"
+
     def id(self):
         return self.solr.get('id')
 
@@ -62,6 +69,9 @@ class Treaty(ObjectNormalizer):
     def jurisdiction(self):
         return first(self.solr.get('trJurisdiction'))
 
+    def field_of_application(self):
+        return first(self.solr.get('trFieldOfApplication'))
+
     def url(self):
         return first(self.solr.get('trUrlTreatyText'))
 
@@ -100,6 +110,48 @@ class Treaty(ObjectNormalizer):
         }
         return ret
 
+    def treaty_id(self):
+        return self.solr.get('trElisId')
+
+    def optional_fields(self):
+        OPTIONAL_INFO_FIELDS = [
+            # (solr field, display text, type=text)
+            ('trTitleAbbreviation', 'Title Abbreviation'),
+            ('trEntryIntoForceDate', 'Entry into force', 'date'),
+            ('trPlaceOfAdoption', 'Place of adoption'),
+            ('TODO', 'Available in'),
+            ('TODO', 'Geographical area'),
+            ('trDepository', 'Depository'),
+            ('trUrl', 'Available web site', 'url'), #???
+            ('trUrlTreatyText', 'Link to full text', 'url'),
+            ('trLanguageOfDocument', 'Language of Document'),
+            ('TODO', 'Translation of Document'), #??
+            ('trAbstract', 'Abstract'),
+            ('trComment', 'Comment'),
+            ('trSubject', 'Subject'),
+            ('trKeyword', 'Keywords'),
+            ('TODO', 'Number of pages'), #??
+            ('TODO', 'Official publication'), #?
+            ('TODO', 'Internet Reference'),
+            ('trDateOfEntry', 'Date of Entry', 'date'),
+            ('TODO', 'Consolidation Date', 'date') #?
+        ]
+
+        res = []
+        for field, label, *type in OPTIONAL_INFO_FIELDS:
+            if not self.solr.get(field):
+                continue
+            entry = {}
+            entry['type'] = first(type, 'text')
+            entry['label'] = label
+            value = self.solr.get(field)
+
+            if 'date' in type:
+                value = datetime.strptime(first(value),
+                                         '%Y-%m-%dT%H:%M:%SZ').date()
+            entry['value'] = value
+            res.append(entry)
+        return res
 
 class Decision(ObjectNormalizer):
     SUMMARY_FIELD = 'decBody'
@@ -187,7 +239,6 @@ def first(obj, default=None):
     if obj and type(obj) is list:
         return obj[0]
     return obj if obj else default
-
 
 def parse_result(hit, responses):
     hl = responses.highlighting.get(hit['id'])

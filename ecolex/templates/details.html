@@ -8,14 +8,10 @@
     <h1>{{ document.title }}</h1>
 
     <dl>
-      <dt>{{ document.type }}</dt>
-      <dd>{{ document.id }}</dd>
-      <dt>Doc. type</dt>
-      <dd>multilateral</dd>
-      <dt>Field of application</dt>
-      <dd>International</dd>
-      <dt>Year</dt>
-      <dd>1942</dd>
+      <dt>{{ document.type }}</dt> <dd>{{ document.treaty_id }}</dd> <!-- TODO(catalinb): add id field for documents. -->
+      <dt>Doc. type</dt> <dd>{{ document.type_of_document }}</dd>
+      <dt>Field of application</dt> <dd>{{ document.field_of_application }}</dd>
+      <dt>Date of document</dt> <dd>{{ document.date }}</dd>
     </dl>
   </header>
 
@@ -36,10 +32,18 @@
   <section id="details">
     <h2 class="section-title">Details</h2>
     <dl>
-      <dt>term</dt>
-      <dd>description</dd>
-      <dt>term</dt>
-      <dd>description</dd>
+      {% for entry in document.optional_fields %}
+        <dt> {{ entry.label }} </dt>
+        {% if entry.type == "url" %}
+          <dd>
+            {% for url in entry.value %}
+            <a target="_blank" href="{{ url }}">{{ url }}</a><br>
+            {% endfor %}
+          </dd>
+        {% else %}
+          <dd>{{ entry.value | join_by:", " }}</dd>
+        {% endif %}
+      {% endfor %}
     </dl>
   </section>
 
