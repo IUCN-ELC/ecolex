@@ -102,6 +102,8 @@ SOLR_URI = 'http://10.0.0.98:8983/solr/ecolex'
 # For default sorting, set SOLR_SORTING to ''
 SOLR_SORTING = 'docDate desc'
 
+SEARCH_PROXIMITY = '100'
+
 GA_CODE = ''
 
 # Debug
