@@ -124,6 +124,13 @@
     
     <field name="trObsolete" type="string" indexed="true" stored="false"/>
     
+    <field name="trAvailableIn" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trLanguageOfTranslation" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trNumberOfPages" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trOfficialPublication" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trInternetReference" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trDateOfConsolidation" type="string" indexed="true" stored="true" multiValued="true"/>
+    
     <!-- Field that holds all searchable data -->
     <field name="globalText" type="text_general" indexed="true" stored="false" multiValued="true"/>
     <field name="text" type="text_general" indexed="true" stored="false" multiValued="true"/>
