@@ -1,0 +1,96 @@
+{% load tags %}
+<h4>Refine search</h4>
+
+{% if 'treaty' in form.type.data and facets.type.treaty > 0 %}
+  <fieldset class="special-filter">
+    <h5 data-toggle="collapse"
+        data-target="#filter-treaties">Treaty filters</h5>
+
+    <div id="filter-treaties" class="collapse in">
+      {% if facets.trTypeOfText %}
+        <h6>Type of document</h6>
+        <ul class="filter-treaty" data-formid="#id_tr_type">
+          {% include 'bits/checkbox_facet.html' with facet=facets.trTypeOfText form_field=form.tr_type %}
+        </ul>
+      {% endif %}
+
+      <h6>Field of application</h6>
+      <ul class="filter-treaty" data-formid="#id_tr_field">
+        {% include 'bits/checkbox_facet.html' with facet=facets.trFieldOfApplication form_field=form.tr_field %}
+      </ul>
+
+      <h6>Participants</h6>
+      <select id="tr_party" multiple="multiple" data-formid="#id_tr_party">
+        {% include 'bits/select_facet.html' with facet=facets.partyCountry form_field=form.tr_party %}
+      </select>
+
+      <h6>Subject</h6>
+      <select id="tr_subject" multiple="multiple" data-formid="#id_tr_subject">
+        {% include 'bits/select_facet.html' with facet=facets.trSubject form_field=form.tr_subject %}
+      </select>
+    </div>
+  </fieldset>
+{% endif %}
+
+{% if 'decision' in form.type.data and facets.type.decision > 0 %}
+  <fieldset class="special-filter">
+    <h5 data-toggle="collapse"
+        data-target="#filter-cop-decisions">COP Decision filters</h5>
+
+    <div id="filter-cop-decisions" class="collapse in">
+      {% if facets.decType %}
+        <h6>Type of document</h6>
+        <ul class="filter-decision" data-formid="#id_dec_type">
+          {% include 'bits/checkbox_facet.html' with facet=facets.decType form_field=form.dec_type %}
+        </ul>
+      {% endif %}
+
+      <h6>Decision status</h6>
+      <ul class="filter-decision" data-formid="#id_dec_status">
+        {% include 'bits/checkbox_facet.html' with facet=facets.decStatus form_field=form.dec_status %}
+      </ul>
+
+      <h6>Treaty</h6>
+      <select id="dec_treaty" multiple="multiple" data-formid="#id_dec_treaty">
+        {% include 'bits/select_facet.html' with facet=facets.decTreatyId type_map=dec_treaty_names form_field=form.dec_treaty %}
+      </select>
+    </div>
+  </fieldset>
+{% endif %}
+
+<fieldset class="global-filter">
+  <h5>Keywords</h5>
+  <select id="keyword" multiple="multiple" data-formid="#id_keyword">
+    {% include 'bits/select_facet.html' with facet=facets.docKeyword form_field=form.keyword %}
+  </select>
+</fieldset>
+
+{% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
+  <fieldset class="global-filter">
+    <h5>Years</h5>
+
+    <div class="indent">
+      <!--<input id="filter-years" type="text"
+               data-slider-min="{{ stats_fields.docDate.min|just_year }}"
+               data-slider-max="{{ stats_fields.docDate.max|just_year }}"
+               data-slider-value="[1896,2015]"
+               data-slider-tooltip="show"/>-->
+      <div class="row">
+        <div class="form-group col-xs-6">
+          <label for="year-min">From</label>
+          <input class="form-control" id="year-min" type="number"
+                 value="{{ form.yearmin.data }}"
+                 placeholder="{{ stats_fields.docDate.min|just_year }}"
+                 data-formid="#id_yearmin"/>
+        </div>
+        <div class="form-group col-xs-6">
+          <label for="year-max">To</label>
+          <input class="form-control" id="year-max" type="number"
+                 value="{{ form.yearmax.data }}"
+                 placeholder="{{ stats_fields.docDate.max|just_year }}"
+                 data-formid="#id_yearmax"/>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+{% endif %}

@@ -1,0 +1,119 @@
+{% load tags %}
+
+<h4>Total of {{ results.count }} results</h4>
+<div class="btn-group btn-group-sm filter-type">
+  <!-- Treaty filter -->
+  <button type="button"
+          class="btn btn-default {% if 'treaty' in form.type.data and form.type.data|length != 2 %}active{% endif %}"
+          data-filter="#treaty-fieldset"
+          data-toggle="tooltip"
+          data-placement="bottom"
+          data-container="body"
+          data-value="treaty"
+      {% if not 'treaty' in form.type.data %}
+          title="Show Treaties"
+      {% elif form.type.data|length == 2 %}
+          title="Show only Treaties"
+      {% else %}
+          title="Showing only Treaties"
+      {% endif %}>
+    <span class="icon icon-treaty"></span>
+    {% if facets.type.treaty > 0 %}
+      <span class="badge">{{ facets.type.treaty }}</span>
+    {% endif %}
+    <span class="btn-label">Treaties</span>
+  </button>
+
+  <!-- COP decision filter -->
+  <button type="button"
+          class="btn btn-default {% if 'decision' in form.type.data and form.type.data|length != 2 %}active{% endif %}"
+          data-filter="#copdecision-fieldset"
+          data-toggle="tooltip"
+          data-placement="bottom"
+          data-container="body"
+          data-value="decision"
+      {% if not 'decision' in form.type.data %}
+          title="Show COP decisions"
+      {% elif form.type.data|length == 2 %}
+          title="Show only COP decisions"
+      {% else %}
+          title="Showing only COP decisions"
+      {% endif %}>
+    <span class="icon icon-cop-decision"></span>
+    {% if facets.type.decision > 0 %}
+      <span class="badge">{{ facets.type.decision }}</span>
+    {% endif %}
+    <span class="btn-label">COP Decisions</span>
+  </button>
+
+  <!-- Legislation filter -->
+  <button type="button"
+          class="btn btn-default"
+          data-filter
+          data-toggle="tooltip"
+          data-placement="bottom"
+          data-container="body"
+          title="Hide Legislation"
+          disabled>
+    <span class="icon icon-legislation"></span>
+    <span class="badge"></span>
+    <span class="btn-label">Legislation</span>
+  </button>
+
+  <!-- Court decision filter -->
+  <button type="button"
+          class="btn btn-default"
+          data-filter
+          data-toggle="tooltip"
+          data-placement="bottom"
+          data-container="body"
+          title="Hide Court Decisions"
+          disabled>
+    <span class="icon icon-court-decision"></span>
+    <span class="badge"></span>
+    <span class="btn-label">Court Decisions</span>
+  </button>
+
+  <!-- Literature filter -->
+  <button type="button"
+          class="btn btn-default"
+          data-filter
+          data-toggle="tooltip"
+          data-placement="bottom"
+          data-container="body"
+          title="Hide Literature"
+          disabled>
+    <span class="icon icon-literature"></span>
+    <span class="badge"></span>
+    <span class="btn-label">Literature</span>
+  </button>
+</div>
+
+<!-- To do -->
+<!-- <button data-toggle="offcanvas" data-target="#filters" data-canvas="body"></button> -->
+
+<ul class="search-results">
+  {% for result in results %}
+    {% include "bits/search_result.html" with result=result %}
+  {% endfor %}
+</ul>
+
+<hr>
+
+{% if page.pages %}
+  <div class="pagination">
+      <span class="step-links">
+          {% if page.number > 1 %}
+            <a href="?{{ page.prev_url }}">previous</a>
+          {% endif %}
+
+        <span class="current">
+              Page {{ page.number }} of {{ page.pages }}.
+          </span>
+
+        {% if page.number < page.pages %}
+          <a href="?{{ page.next_url }}">next</a>
+        {% endif %}
+      </span>
+  </div>
+{% endif %}
