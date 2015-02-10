@@ -5328,28 +5328,9 @@ fieldset .indent {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.multiselect-wrapper.open .multiselect {
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-right: 3px;
-  margin: -3px 0;
-  background: #fff;
-  border-radius: 0 3px 3px 0;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0));
-  color: #212121;
-}
-.multiselect-wrapper.open .multiselect:before {
-  opacity: 0;
-}
-.multiselect-wrapper.open .multiselect:after {
-  opacity: 1;
-  transform: translateX(0px);
-  transform: rotate(90deg);
-}
 .multiselect-wrapper .multiselect {
   position: relative;
   padding: 0;
-  padding-left: 22px;
   border: 0;
   text-align: left;
   line-height: inherit;
@@ -5359,7 +5340,6 @@ fieldset .indent {
 .multiselect-wrapper .multiselect:hover {
   color: #212121;
 }
-.multiselect-wrapper .multiselect:after,
 .multiselect-wrapper .multiselect:before {
   font-family: "ecolex-icons";
   font-style: normal;
@@ -5368,31 +5348,20 @@ fieldset .indent {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   content: "\e60a";
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 22px;
   text-align: center;
-  transform: translateX(0px);
-  transition: all .35s ease;
   font-size: 125%;
-  opacity: 1;
   line-height: 19.6px;
-}
-.multiselect-wrapper .multiselect:after {
-  content: "\e605";
-  transform: translateX(20px);
-  transform: rotate(90deg);
-  opacity: 0;
+  float: left;
 }
 .multiselect-wrapper .multiselect-container {
-  max-width: 320px;
   padding-top: 0;
   font-size: inherit;
   line-height: inherit;
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .multiselect-wrapper .multiselect-container {
+    max-width: 320px;
     top: -16px;
     left: auto;
     right: 100%;
