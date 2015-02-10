@@ -188,7 +188,7 @@
       </select>
     </fieldset>
 
-    {% if stats_fields.docDate %}
+    {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
     <fieldset class="global-filter">
       <h5>Years</h5>
       <div class="indent">
@@ -201,13 +201,15 @@
           <div class="form-group col-xs-6">
             <label for="year-min">From</label>
             <input class="form-control" id="year-min" type="number"
-                   value="{{ stats_fields.docDate.min|just_year }}"
+                   value="{{ form.yearmin.data }}"
+                   placeholder="{{ stats_fields.docDate.min|just_year }}"
                    data-formid="#id_yearmin" />
           </div>
           <div class="form-group col-xs-6">
             <label for="year-max">To</label>
             <input class="form-control" id="year-max" type="number"
-                   value="{{ stats_fields.docDate.max|just_year }}"
+                   value="{{ form.yearmax.data }}"
+                   placeholder="{{ stats_fields.docDate.max|just_year }}"
                    data-formid="#id_yearmax" />
           </div>
         </div>
