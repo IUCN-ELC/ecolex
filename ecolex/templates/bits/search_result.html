@@ -6,9 +6,9 @@
     </h3>
 
     <div class="search-result-details">
-      <strong>{{ result.type }}</strong> |
-      <span>{{ result.status }} </span> |
-      <span> {{ result.number }} </span>
+      <strong>{{ result.type }}</strong> no:
+      <span> {{ result.number }} </span> |
+      <span class="label label-success">{{ result.status }} </span> 
       {% if result.date %}
         | <time>{{ result.date }}</time>
       {% endif %}
