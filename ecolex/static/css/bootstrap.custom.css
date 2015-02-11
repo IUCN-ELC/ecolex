@@ -5181,6 +5181,17 @@ main {
   padding-left: 5px;
   padding-right: 5px;
 }
+.filter-type .btn.active {
+  z-index: 5;
+  border-color: #f0ad4e;
+  background-color: #FFEEAB;
+}
+.filter-type .btn[disabled] {
+  opacity: 1!important;
+  color: #333!important;
+  border-color: #DDD!important;
+  background-color: #fff!important;
+}
 .filter-type .btn .icon {
   display: block;
   font-size: 300%;

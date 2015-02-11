@@ -1,6 +1,5 @@
 {% load tags %}
 
-<h4>Total of {{ results.count }} results</h4>
 <div class="btn-group btn-group-sm filter-type">
   <!-- Treaty filter -->
   <button type="button"
@@ -56,7 +55,7 @@
           title="Hide Legislation"
           disabled>
     <span class="icon icon-legislation"></span>
-    <span class="badge"></span>
+    <span class="badge">0</span>
     <span class="btn-label">Legislation</span>
   </button>
 
@@ -70,7 +69,7 @@
           title="Hide Court Decisions"
           disabled>
     <span class="icon icon-court-decision"></span>
-    <span class="badge"></span>
+    <span class="badge">0</span>
     <span class="btn-label">Court Decisions</span>
   </button>
 
@@ -84,10 +83,30 @@
           title="Hide Literature"
           disabled>
     <span class="icon icon-literature"></span>
-    <span class="badge"></span>
+    <span class="badge">0</span>
     <span class="btn-label">Literature</span>
   </button>
 </div>
+
+
+<p class="small clearfix">
+
+  <!-- Ugly -->
+
+  {% if 'treaty' in form.type.data and form.type.data|length != 2 %}
+    <span class="pull-left">Showing only treaties</span>
+  {% elif 'decision' in form.type.data and form.type.data|length != 2 %}
+    <span class="pull-left">Showing only COP decisions</span>
+  {% else %}
+    <span class="pull-left">Total of {{ results.count }} results</span>
+  {% endif %}
+  
+  <span class="pull-right">
+    <strong href="">Sorted by relevance</strong> | <a href="">Sort by year</a>
+  </span>
+</p>
+
+<hr>
 
 <!-- To do -->
 <!-- <button data-toggle="offcanvas" data-target="#filters" data-canvas="body"></button> -->
