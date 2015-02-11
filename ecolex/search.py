@@ -256,7 +256,6 @@ def escape_query(query):
         '+': r'\+', '-': r'\-', '&': r'\&', '|': r'\|', '!': r'\!', '(': r'\(',
         ')': r'\)', '{': r'\{', '}': r'\}', '[': r'\[', ']': r'\]', '^': r'\^',
         '~': r'\~', '*': r'\*', '?': r'\?', ':': r'\:', '"': r'\"', ';': r'\;',
-        ' ': r'\ ',
     }
 
     def _esc(term):
@@ -281,6 +280,32 @@ def get_hl():
     fields = set(fields)
     HIGHLIGHT_PARAMS['hl.fl'] = ','.join(fields)
     return HIGHLIGHT_PARAMS
+
+
+def get_relevancy():
+    RELEVANCY_FIELDS = {
+        'trPaperTitleOfText': 100,
+         'trPaperTitleOfTextSp':100,
+         'trPaperTitleOfTextFr': 100,
+         'trPaperTitleOfTextOther': 100,
+         'decLongTitle': 100,
+         'decShortTitle': 100,
+         'decSummary': 50,
+         'decBody': 50,
+         'trAbstract': 50,
+         'trKeyword': 30,
+         'decKeyword': 30,
+         'doc_content': 10,
+    }
+
+    def boost_pair_t(field, boost_factor):
+        return field + "^" + str(boost_factor)
+
+    params = {}
+    params['defType'] = 'edismax'
+    params['qf'] = ' '.join(
+        boost_pair_t(field, boost_factor) for field, boost_factor in RELEVANCY_FIELDS.items())
+    return params
 
 
 def get_fq(filters):
@@ -339,7 +364,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
         solr_query = 'text:*'
         highlight = False
     else:
-        solr_query = 'text:"' + escape_query(user_query) + '"~' + settings.SEARCH_PROXIMITY
+        solr_query = 'text:' + escape_query(user_query)
     filters = filters or get_default_filters()
     params = {
         'rows': rows,
@@ -355,6 +380,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
     if highlight:
         params.update(get_hl())
     params['sort'] = settings.SOLR_SORTING
+    params.update(get_relevancy())
 
     responses = solr.search(solr_query, **params)
 

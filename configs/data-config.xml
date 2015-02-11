@@ -98,7 +98,7 @@
              <field column="url_wikipedia" name="trUrlWikipedia" />
              <field column="url_elearning" name="trUrlElearning" />
              <field column="number_of_parties" name="trNumberOfParties" />
-             <field column="theme" name="trSubject" />
+             <!-- <field column="theme" name="trSubject" /> -->
              <field column="theme_secondary" name="trThemeSecondary" />
              <field column="enabled" name="trEnabled" />
              <field column="order" name="trOrder" />

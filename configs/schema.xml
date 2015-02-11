@@ -282,6 +282,7 @@
     <copyField source="decLongTitle" dest="text"/>
     <copyField source="decSummary" dest="text"/>
     <copyField source="decBody" dest="text"/>
+    <copyField source="decKeyword" dest="text"/>
     
     <copyField source="trSubject" dest="text"/>
     <copyField source="trKeyword" dest="text"/>
