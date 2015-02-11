@@ -98,9 +98,10 @@ $(document).ready(function () {
             disableIfEmpty: true,
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
-            filterBehavior: 'value',
+            // filterBehavior: 'value',
             numberDisplayed: 1,
             nonSelectedText: 'Nothing selected',
+            enableCaseInsensitiveFiltering: true,
             // filterPlaceholder: "porn",
             maxHeight: 240,
             onDropdownHidden: function (e) {
@@ -110,6 +111,9 @@ $(document).ready(function () {
                 $(formid).val(select.val());
                 // submit now for now
                 submit();
+            },
+            onDropdownShown: function(e) {
+                search = $(e.target).find('.multiselect-search').focus();
             }
         });
 
