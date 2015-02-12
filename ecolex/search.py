@@ -211,7 +211,7 @@ class Queryset(object):
         if not self._facets:
             self.fetch()
         return {
-            k: OrderedDict(sorted(tuple(v.items()), key=lambda v: v[0]))
+            k: OrderedDict(sorted(tuple(v.items()), key=lambda v: v[0].lower()))
             for k, v in self._facets.items()
         }
 
