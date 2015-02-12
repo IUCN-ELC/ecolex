@@ -204,6 +204,7 @@ class Queryset(object):
         self._facets = result['facets']
         self._stats = result['stats']
         self.maxscore = result['maxscore']
+        self.responses = result['responses']
         return self._result_cache
 
     def get_facets(self):
@@ -349,6 +350,7 @@ def get_fq(filters):
             start = start + '-01-01T00:00:00Z' if start else '*'
             end = end + '-12-31T23:59:00Z' if end else '*'
             return filter + ':[' + start + ' TO ' + end + ']'
+        values = ('"' + v + '"' for v in values)
         return filter + ':(' + ' OR '.join(t for t in values) + ')'
 
     def type_filter(type, filters):
@@ -409,6 +411,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     params.update(get_relevancy())
     if settings.DEBUG:
         params['fl'] = '*,score'
+        params['debug'] = True
 
     responses = solr.search(solr_query, **params)
 
@@ -425,6 +428,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     return {
         'results': results, 'query': user_query, 'facets': facets,
         'hits': hits, 'stats': stats, 'maxscore': maxscore,
+        'responses': responses,
     }
 
 
