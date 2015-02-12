@@ -878,16 +878,6 @@ pre code {
   padding-left: 15px;
   padding-right: 15px;
 }
-@media (min-width: 768px) {
-  .container {
-    width: 750px;
-  }
-}
-@media (min-width: 992px) {
-  .container {
-    width: 970px;
-  }
-}
 @media (min-width: 1200px) {
   .container {
     width: 1170px;
@@ -4878,7 +4868,7 @@ button.close {
   position: absolute;
   border: 1px solid #dddddd;
   border-radius: 3px;
-  background-color: #ffffff;
+  background-color: #eeeeee;
 }
 .slider-selection {
   position: absolute;
@@ -5266,6 +5256,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .slider-years {
   position: relative;
+  margin: 0 22px;
 }
 .slider-years .slider-min,
 .slider-years .slider-max {
@@ -5288,17 +5279,11 @@ input[type=number]::-webkit-outer-spin-button {
   box-shadow: none;
   border-bottom-color: #1c5479;
 }
-.global-filter,
-.special-filter {
-  padding-left: 32px;
-  padding-right: 32px;
-}
 .facet-counter {
   float: right;
-  margin-right: -22px;
 }
 .slider {
-  margin: 6px 0 11px;
+  margin: 6px 22px 11px;
 }
 fieldset {
   min-height: 20px;
@@ -5318,9 +5303,6 @@ fieldset ul {
   margin-top: auto;
   margin-bottom: 6px;
 }
-fieldset ul label {
-  margin-left: -22px;
-}
 fieldset ul label input {
   float: left;
   width: 22px;
@@ -5332,7 +5314,6 @@ fieldset h5 {
   white-space: nowrap;
 }
 fieldset h5[data-toggle="collapse"] {
-  margin-left: -22px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -5364,12 +5345,13 @@ fieldset h6 {
   font-size: 14px;
   font-weight: bold;
   line-height: 22px;
+  margin-left: 22px;
+  margin-right: 22px;
   margin-bottom: 6px;
 }
 .multiselect-wrapper {
   position: relative;
   margin-bottom: 6px;
-  margin-left: -22px;
 }
 .multiselect-wrapper .button-text-item {
   display: block;
@@ -5380,6 +5362,8 @@ fieldset h6 {
 .multiselect-wrapper .multiselect {
   position: relative;
   padding: 0;
+  display: block;
+  width: 100%;
   border: 0;
   text-align: left;
   line-height: inherit;
