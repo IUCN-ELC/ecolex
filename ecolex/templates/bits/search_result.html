@@ -28,7 +28,9 @@
     </h3>
 
     <div class="search-result-details">
-      <strong>{{ result.type }}</strong> | <span>{{ result.jurisdiction }}</span>
+      <strong>{{ result.type }}</strong> no:
+      <span> {{ result.treaty_id }} </span> |
+      <span>{{ result.jurisdiction }}</span>
       {% if result.date %}
         | <time>{{ result.date }}</time>
       {% endif %}
