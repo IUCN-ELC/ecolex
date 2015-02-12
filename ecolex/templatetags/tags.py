@@ -20,4 +20,7 @@ def join_by(lst, arg):
 
 @register.filter
 def parse_date(d):
-    return datetime.strptime(d, '%Y-%m-%dT%H:%M:%SZ').date()
+    try:
+        return datetime.strptime(d, '%Y-%m-%dT%H:%M:%SZ').date()
+    except:
+        return d
