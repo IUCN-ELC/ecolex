@@ -141,6 +141,7 @@ DATE_FIELDS = [
     'trEntryIntoForceDate',
     'trDateOfLastLegalAction',
     'trSearchDate',
+    'trDateOfConsolidation',
     'partyEntryIntoForce',
     'partyDateOfRatification',
     'partyDateOfAccessionApprobation',
@@ -175,20 +176,6 @@ BROKEN_DOCS_IDS = [
     'TRE-153648',
     'TRE-000781',
     'TRE-000733',
-]
-
-IGNORED_TREATIES = [
-    'TRE-149388',
-    'TRE-149538',
-    'TRE-149580',
-    'TRE-149583',
-    'TRE-150306',
-    'TRE-150381',
-    'TRE-150699',
-    'TRE-151032',
-    'TRE-151062',
-    'TRE-151065',
-    'TRE-153548',
 ]
 
 TEXT_UPLOAD_ENABLED = 1
@@ -231,6 +218,11 @@ def parse_xml(xml_path):
 
     for document in bs.findAll('document'):
         data = {}
+        #skip National treaties
+        application_field = getattr(document, 'fieldofapplication')
+        if application_field and application_field.text == 'National':
+            continue
+        
         for k, v in FIELD_MAP.items():
             field_values = document.findAll(k)
             if field_values:
@@ -238,8 +230,7 @@ def parse_xml(xml_path):
                 if v in DATE_FIELDS:
                     data[v] = [format_date(date) for date in data[v]]
         for party in document.findAll('party'):
-            no_children = len(list(party.children))
-            if no_children == 1 and getattr(party, "potentialparty"):
+            if not getattr(party, "country"):
                 continue
             for k, v in PARTICIPANT_FIELDS.items():
                 field = getattr(party, k)
@@ -254,9 +245,6 @@ def parse_xml(xml_path):
         
         # Special cases
         elis_id = data['trElisId'][0]
-        if elis_id in IGNORED_TREATIES:
-            print("ignoring treaty")
-            continue
         if elis_id == "TRE-146817":
             data['trFieldOfApplication'] = ["Global", "Regional/restricted"]
         if elis_id == "TRE-149349":
