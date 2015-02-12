@@ -74,7 +74,7 @@
         <tr class="country">
           <th>{{ country.country }}</th>
           {% for event in document.participants.events %}
-          <td>{{ country|lookup:event|default:"-"}}</td>
+          <td>{{ country|lookup:event|default:"-"|parse_date }}</td>
           {% endfor %}
         </tr>
         {% endfor %}
