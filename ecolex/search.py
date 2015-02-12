@@ -185,6 +185,7 @@ class Queryset(object):
         self.start = 0
         self.perpage = PERPAGE
         self.sortby = sortby
+        self.maxscore = None
         self._result_cache = None
         self._hits = None
         self._facets = {}
@@ -202,6 +203,7 @@ class Queryset(object):
         self._hits = result['hits']
         self._facets = result['facets']
         self._stats = result['stats']
+        self.maxscore = result['maxscore']
         return self._result_cache
 
     def get_facets(self):
@@ -405,11 +407,14 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         params.update(get_hl())
     params['sort'] = get_sortby(sortby)
     params.update(get_relevancy())
+    if settings.DEBUG:
+        params['fl'] = '*,score'
 
     responses = solr.search(solr_query, **params)
 
     hits = responses.hits
     stats = responses.stats
+    maxscore = responses.maxscore if hasattr(responses, 'maxscore') else None
 
     results = [parse_result(hit, responses) for hit in responses]
 
@@ -419,7 +424,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
 
     return {
         'results': results, 'query': user_query, 'facets': facets,
-        'hits': hits, 'stats': stats,
+        'hits': hits, 'stats': stats, 'maxscore': maxscore,
     }
 
 

@@ -34,6 +34,7 @@ class SearchView(TemplateView):
         data.setdefault('dec_treaty', [])
 
         ctx['form'] = self.form = SearchForm(data=data)
+        ctx['debug'] = settings.DEBUG
         self.query = self.form.data.get('q', '').strip() or '*'
 
         # Compute filters
