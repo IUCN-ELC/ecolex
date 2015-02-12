@@ -2849,7 +2849,7 @@ if (typeof jQuery === 'undefined') {
 
                         selected.push($('<span/>', {
                             class: 'button-text-item',
-                            text: label   
+                            html: label
                         }));
                     });
                     
