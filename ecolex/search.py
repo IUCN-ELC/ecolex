@@ -205,6 +205,7 @@ class Queryset(object):
         self._stats = result['stats']
         self.maxscore = result['maxscore']
         self.responses = result['responses']
+        self.debug_result = result
         return self._result_cache
 
     def get_facets(self):
@@ -389,10 +390,10 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     solr.optimize()
     if user_query == '*':
-        solr_query = 'text:*'
+        solr_query = '*:*'
         highlight = False
     else:
-        solr_query = 'text:' + escape_query(user_query)
+        solr_query = escape_query(user_query)
     filters = filters or get_default_filters()
     params = {
         'rows': rows,
@@ -430,6 +431,8 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         'results': results, 'query': user_query, 'facets': facets,
         'hits': hits, 'stats': stats, 'maxscore': maxscore,
         'responses': responses,
+        'debug_query': solr_query,
+        'debug_params': params,
     }
 
 
