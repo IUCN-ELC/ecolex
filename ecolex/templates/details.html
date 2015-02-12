@@ -40,8 +40,14 @@
             <a target="_blank" href="{{ url }}">{{ url }}</a><br>
             {% endfor %}
           </dd>
+        {% elif entry.type == "abstract" %}
+          <dd>
+            {% for abs in entry.value %}
+            <p>{{ abs }}</p>
+            {% endfor %}
+          </dd>
         {% else %}
-          <dd>{{ entry.value | join_by:", " }}</dd>
+          <dd>{{ entry.value | join_by:", " | safe }}</dd>
         {% endif %}
       {% endfor %}
     </dl>

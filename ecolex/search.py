@@ -119,22 +119,22 @@ class Treaty(ObjectNormalizer):
             ('trTitleAbbreviation', 'Title Abbreviation', ''),
             ('trEntryIntoForceDate', 'Entry into force', 'date'),
             ('trPlaceOfAdoption', 'Place of adoption', ''),
-            ('TODO', 'Available in', ''),
-            ('TODO', 'Geographical area', ''),
+            ('trAvailableIn', 'Available in', ''),
+            ('trRegion', 'Geographical area', ''),
             ('trDepository', 'Depository', ''),
-            ('trUrl', 'Available web site', 'url'),  #???
+            ('trUrl', 'Available web site', 'url'),
             ('trUrlTreatyText', 'Link to full text', 'url'),
             ('trLanguageOfDocument', 'Language of Document', ''),
-            ('TODO', 'Translation of Document', ''),  #??
-            ('trAbstract', 'Abstract', ''),
+            ('trLanguageOfTranslation', 'Translation of Document', ''),
+            ('trAbstract', 'Abstract', 'abstract'),
             ('trComment', 'Comment', ''),
             ('trSubject', 'Subject', ''),
             ('trKeyword', 'Keywords', ''),
-            ('TODO', 'Number of pages', ''),  #??
-            ('TODO', 'Official publication', ''),  #?
-            ('TODO', 'Internet Reference', ''),
+            ('trNumberOfPages', 'Number of pages', ''),
+            ('trOfficialPublication', 'Official publication', ''),
+            ('trInternetReference', 'Internet Reference', ''),
             ('trDateOfEntry', 'Date of Entry', 'date'),
-            ('TODO', 'Consolidation Date', 'date')  #?
+            ('trDateOfConsolidation', 'Consolidation Date', 'date')
         ]
 
         res = []

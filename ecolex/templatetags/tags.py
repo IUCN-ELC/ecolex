@@ -12,6 +12,6 @@ def just_year(value):
 
 @register.filter
 def join_by(lst, arg):
-    if not hasattr(lst, '__iter__'):
-        return lst
-    return arg.join(lst)
+    if lst and type(lst) is list:
+        return arg.join(lst)
+    return lst
