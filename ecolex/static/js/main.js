@@ -162,6 +162,22 @@ $(document).ready(function () {
             $('#id_sortby').val(value);
             submit();
         });
+
+        // Reset button
+        $('input[type=reset]').click(function (e) {
+            e.preventDefault();
+            var data = {
+                'q': $('#id_q').val(),
+                'type': $('#id_type').val()
+            };
+            $('.search-form select, .search-form input').each(function() {
+                $(this).val('')
+            });
+            $('#id_q').val(data.q);
+            $('#id_type').val(data.type);
+
+            submit();
+        });
     }
 
     init_all();
