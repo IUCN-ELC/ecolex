@@ -25,7 +25,8 @@ class SearchView(TemplateView):
         data.setdefault('tr_party', [])
         data.setdefault('tr_subject', [])
         data.setdefault('keyword', [])
-        for y in ('yearmin', 'yearmax'):
+        data.setdefault('sortby', [''])
+        for y in ('yearmin', 'yearmax', 'sortby'):
             data[y] = data[y][0] if y in data else None
 
         data.setdefault('dec_type', [])
@@ -51,6 +52,8 @@ class SearchView(TemplateView):
             self.filters['decType'] = data['dec_type']
             self.filters['decStatus'] = data['dec_status']
             self.filters['decTreatyId'] = data['dec_treaty']
+
+        self.sortby = data['sortby']
         return ctx
 
     def update_form_choices(self, facets):
@@ -95,7 +98,7 @@ class SearchResults(SearchView):
     def get_context_data(self, **kwargs):
         ctx = super(SearchResults, self).get_context_data(**kwargs)
         page = int(self.request.GET.get('page', 1))
-        results = search(self.query, filters=self.filters)
+        results = search(self.query, filters=self.filters, sortby=self.sortby)
         results.set_page(page)
         results.fetch()
         ctx['results'] = results

@@ -1,0 +1,15 @@
+{% if form.sortby.data == '' %}
+  <strong>Sorted by relevance</strong>
+{% else %}
+  <a data-sortby="" class="sortby" href="">Sort by relevance</a>
+{% endif %} |
+{% if form.sortby.data == 'last' %}
+  <strong>Sorted by most recent</strong>
+{% else %}
+  <a data-sortby="last" class="sortby" href="">Sort by most recent</a>
+{% endif %} |
+{% if form.sortby.data == 'first' %}
+  <strong>Sorted by least recent</strong>
+{% else %}
+  <a data-sortby="first" class="sortby" href="">Sort by least recent</a>
+{% endif %}

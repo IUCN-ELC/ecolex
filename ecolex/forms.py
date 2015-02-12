@@ -24,3 +24,5 @@ class SearchForm(Form):
     dec_type = MultipleChoiceField()
     dec_status = MultipleChoiceField()
     dec_treaty = MultipleChoiceField()
+
+    sortby = CharField(initial='')

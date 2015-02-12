@@ -122,19 +122,19 @@ class Treaty(ObjectNormalizer):
             ('TODO', 'Available in', ''),
             ('TODO', 'Geographical area', ''),
             ('trDepository', 'Depository', ''),
-            ('trUrl', 'Available web site', 'url'), #???
+            ('trUrl', 'Available web site', 'url'),  #???
             ('trUrlTreatyText', 'Link to full text', 'url'),
             ('trLanguageOfDocument', 'Language of Document', ''),
-            ('TODO', 'Translation of Document', ''), #??
+            ('TODO', 'Translation of Document', ''),  #??
             ('trAbstract', 'Abstract', ''),
             ('trComment', 'Comment', ''),
             ('trSubject', 'Subject', ''),
             ('trKeyword', 'Keywords', ''),
-            ('TODO', 'Number of pages', ''), #??
-            ('TODO', 'Official publication', ''), #?
+            ('TODO', 'Number of pages', ''),  #??
+            ('TODO', 'Official publication', ''),  #?
             ('TODO', 'Internet Reference', ''),
             ('trDateOfEntry', 'Date of Entry', 'date'),
-            ('TODO', 'Consolidation Date', 'date') #?
+            ('TODO', 'Consolidation Date', 'date')  #?
         ]
 
         res = []
@@ -148,10 +148,11 @@ class Treaty(ObjectNormalizer):
 
             if 'date' in type:
                 value = datetime.strptime(first(value),
-                                         '%Y-%m-%dT%H:%M:%SZ').date()
+                                          '%Y-%m-%dT%H:%M:%SZ').date()
             entry['value'] = value
             res.append(entry)
         return res
+
 
 class Decision(ObjectNormalizer):
     SUMMARY_FIELD = 'decBody'
@@ -169,12 +170,13 @@ class Decision(ObjectNormalizer):
 
 
 class Queryset(object):
-    def __init__(self, query=None, filters=None, highlight=None):
+    def __init__(self, query=None, filters=None, highlight=None, sortby=None):
         self.query = query
         self.filters = filters
         self.highlight = highlight
         self.start = 0
         self.perpage = PERPAGE
+        self.sortby = sortby
         self._result_cache = None
         self._hits = None
         self._facets = {}
@@ -187,7 +189,7 @@ class Queryset(object):
     def fetch(self):
         result = _search(self.query, filters=self.filters,
                          highlight=self.highlight, start=self.start,
-                         rows=self.perpage)
+                         rows=self.perpage, sortby=self.sortby)
         self._result_cache = result['results']
         self._hits = result['hits']
         self._facets = result['facets']
@@ -240,6 +242,7 @@ def first(obj, default=None):
         return obj[0]
     return obj if obj else default
 
+
 def parse_result(hit, responses):
     hl = responses.highlighting.get(hit['id'])
     if hit['type'] == 'treaty':
@@ -282,20 +285,30 @@ def get_hl():
     return HIGHLIGHT_PARAMS
 
 
+def get_sortby(sortby):
+    if sortby == 'last':
+        return 'docDate desc'
+    elif sortby == 'first':
+        return 'docDate asc'
+    elif sortby == '':
+        return ''
+    return settings.SOLR_SORTING
+
+
 def get_relevancy():
     RELEVANCY_FIELDS = {
         'trPaperTitleOfText': 100,
-         'trPaperTitleOfTextSp':100,
-         'trPaperTitleOfTextFr': 100,
-         'trPaperTitleOfTextOther': 100,
-         'decLongTitle': 100,
-         'decShortTitle': 100,
-         'decSummary': 50,
-         'decBody': 50,
-         'trAbstract': 50,
-         'trKeyword': 30,
-         'decKeyword': 30,
-         'doc_content': 10,
+        'trPaperTitleOfTextSp': 100,
+        'trPaperTitleOfTextFr': 100,
+        'trPaperTitleOfTextOther': 100,
+        'decLongTitle': 100,
+        'decShortTitle': 100,
+        'decSummary': 50,
+        'decBody': 50,
+        'trAbstract': 50,
+        'trKeyword': 30,
+        'decKeyword': 30,
+        'doc_content': 10,
     }
 
     def boost_pair_t(field, boost_factor):
@@ -304,7 +317,8 @@ def get_relevancy():
     params = {}
     params['defType'] = 'edismax'
     params['qf'] = ' '.join(
-        boost_pair_t(field, boost_factor) for field, boost_factor in RELEVANCY_FIELDS.items())
+        boost_pair_t(field, boost_factor) for field, boost_factor in
+        RELEVANCY_FIELDS.items())
     return params
 
 
@@ -353,11 +367,13 @@ def get_fq(filters):
     return global_filters
 
 
-def search(user_query, filters=None, highlight=True):
-    return Queryset(user_query, filters=filters, highlight=highlight)
+def search(user_query, filters=None, highlight=True, sortby=None):
+    return Queryset(user_query, filters=filters, highlight=highlight,
+                    sortby=sortby)
 
 
-def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
+def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
+            sortby=None):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     solr.optimize()
     if user_query == '*':
@@ -379,7 +395,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE):
     params['fq'] = get_fq(filters)
     if highlight:
         params.update(get_hl())
-    params['sort'] = settings.SOLR_SORTING
+    params['sort'] = get_sortby(sortby)
     params.update(get_relevancy())
 
     responses = solr.search(solr_query, **params)

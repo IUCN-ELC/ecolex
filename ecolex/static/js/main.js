@@ -158,6 +158,14 @@ $(document).ready(function () {
             // submit le form
             submit();
         });
+
+        // Sortby controls
+        $('.sortby').click(function (e) {
+            e.preventDefault();
+            var value = $(this).data('sortby');
+            $('#id_sortby').val(value);
+            submit();
+        });
     }
 
     init_all();
