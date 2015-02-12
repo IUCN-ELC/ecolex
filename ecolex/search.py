@@ -123,13 +123,18 @@ class Treaty(ObjectNormalizer):
             ('trRegion', 'Geographical area', ''),
             ('trDepository', 'Depository', ''),
             ('trUrl', 'Available web site', 'url'),
-            ('trUrlTreatyText', 'Link to full text', 'url'),
+            ('trLinkToFullText', 'Link to full text', 'url'),
+            #('trLinkToFullTextSp', 'Link to full text (spanish)', 'url'),
+            #('trLinkToFullTextFr', 'Link to full text (french)', 'url'),
+            #('trLinkToFullTextOther', 'Link to full text (other)', 'url'),
             ('trLanguageOfDocument', 'Language of Document', ''),
             ('trLanguageOfTranslation', 'Translation of Document', ''),
             ('trAbstract', 'Abstract', 'abstract'),
-            ('trComment', 'Comment', ''),
-            ('trSubject', 'Subject', ''),
-            ('trKeyword', 'Keywords', ''),
+            # display comments the same way as abstracts
+            ('trComment', 'Comment', 'abstract'),
+            # keywords are considered safe.
+            ('trSubject', 'Subject', 'keyword'),
+            ('trKeyword', 'Keywords', 'keyword'),
             ('trNumberOfPages', 'Number of pages', ''),
             ('trOfficialPublication', 'Official publication', ''),
             ('trInternetReference', 'Internet Reference', ''),
@@ -147,8 +152,11 @@ class Treaty(ObjectNormalizer):
             value = self.solr.get(field)
 
             if 'date' in type:
-                value = datetime.strptime(first(value),
-                                          '%Y-%m-%dT%H:%M:%SZ').date()
+                try:
+                    value = datetime.strptime(first(value),
+                                              '%Y-%m-%dT%H:%M:%SZ').date()
+                except:
+                    pass
             entry['value'] = value
             res.append(entry)
         return res

@@ -46,8 +46,10 @@
             <p>{{ abs }}</p>
             {% endfor %}
           </dd>
-        {% else %}
+        {% elif entry.type == "keyword" %}
           <dd>{{ entry.value | join_by:", " | safe }}</dd>
+        {% else %}
+          <dd>{{ entry.value | join_by:", " }}</dd>
         {% endif %}
       {% endfor %}
     </dl>
