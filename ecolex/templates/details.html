@@ -8,9 +8,16 @@
     <h1>{{ document.title }}</h1>
 
     <dl>
-      <dt>{{ document.type }}</dt> <dd>{{ document.treaty_id }}</dd> <!-- TODO(catalinb): add id field for documents. -->
-      <dt>Doc. type</dt> <dd>{{ document.type_of_document }}</dd>
+      {% if document.type == 'treaty' %}
+      <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id }}</dd>
+      {% endif %}
+      <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
+      {% if document.type == 'treaty' %}
       <dt>Field of application</dt> <dd>{{ document.field_of_application }}</dd>
+      {% endif %}
+      {% if document.type == 'decision' %}
+      <dt>Status</dt> <dd>{{ document.solr.decStatus.0|capfirst }}</dd>
+      {% endif %}
       <dt>Date of document</dt> <dd>{{ document.date }}</dd>
     </dl>
   </header>
@@ -43,11 +50,15 @@
         {% elif entry.type == "abstract" %}
           <dd>
             {% for abs in entry.value %}
-            <p>{{ abs }}</p>
+            <p>{{ abs|safe }}</p>
             {% endfor %}
           </dd>
         {% elif entry.type == "keyword" %}
           <dd>{{ entry.value | join_by:", " | safe }}</dd>
+        {% elif entry.type == "summary" %}
+          <dd>{{ entry.value | safe }}</dd>
+        {% elif entry.type == "treaty" %}
+          <dd>{{ dec_treaty_names }}</dd>
         {% else %}
           <dd>{{ entry.value | join_by:", " }}</dd>
         {% endif %}

@@ -30,6 +30,9 @@ class ObjectNormalizer:
     def id(self):
         return self.solr.get('id')
 
+    def document_id(self):
+        return self.solr.get(self.ID_FIELD)
+
     def title(self):
         for title_field in self.TITLE_FIELDS:
             if not self.solr.get(title_field):
@@ -57,14 +60,63 @@ class ObjectNormalizer:
     def summary(self):
         return first(self.solr.get(self.SUMMARY_FIELD), "")
 
+    def optional_fields(self):
+        res = []
+        for field, label, type in self.OPTIONAL_INFO_FIELDS:
+            if not self.solr.get(field):
+                continue
+            entry = {}
+            entry['type'] = first(type, 'text')
+            entry['label'] = label
+            value = self.solr.get(field)
+
+            if 'date' in type:
+                try:
+                    value = datetime.strptime(first(value),
+                                              '%Y-%m-%dT%H:%M:%SZ').date()
+                except:
+                    pass
+            entry['value'] = value
+            res.append(entry)
+        return res
+
 
 class Treaty(ObjectNormalizer):
+    ID_FIELD = 'trElisId'
     SUMMARY_FIELD = 'trIntroText'
     TITLE_FIELDS = [
         'trPaperTitleOfText', 'trPaperTitleOfTextFr', 'trPaperTitleOfTextSp',
         'trPaperTitleOfTextOther', 'trTitleOfTextShort',
     ]
     DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
+    OPTIONAL_INFO_FIELDS = [
+        # (solr field, display text, type=text)
+        ('trTitleAbbreviation', 'Title Abbreviation', ''),
+        ('trEntryIntoForceDate', 'Entry into force', 'date'),
+        ('trPlaceOfAdoption', 'Place of adoption', ''),
+        ('trAvailableIn', 'Available in', ''),
+        ('trRegion', 'Geographical area', ''),
+        ('trDepository', 'Depository', ''),
+        ('trUrl', 'Available web site', 'url'),
+        ('trLinkToFullText', 'Link to full text', 'url'),
+        #('trLinkToFullTextSp', 'Link to full text (spanish)', 'url'),
+        #('trLinkToFullTextFr', 'Link to full text (french)', 'url'),
+        #('trLinkToFullTextOther', 'Link to full text (other)', 'url'),
+        ('trLanguageOfDocument', 'Language', ''),
+        ('trLanguageOfTranslation', 'Translation', ''),
+        ('trAbstract', 'Abstract', 'abstract'),
+        # display comments the same way as abstracts
+        ('trComment', 'Comment', 'abstract'),
+        # keywords are considered safe.
+        ('trSubject', 'Subject', 'keyword'),
+        ('trKeyword', 'Keywords', 'keyword'),
+        ('trNumberOfPages', 'Number of pages', ''),
+        ('trOfficialPublication', 'Official publication', ''),
+        ('trInternetReference', 'Internet Reference', ''),
+        ('trDateOfEntry', 'Date of Entry', 'date'),
+        ('trDateOfConsolidation', 'Consolidation Date', 'date')
+    ]
+
 
     def jurisdiction(self):
         return first(self.solr.get('trJurisdiction'))
@@ -110,62 +162,22 @@ class Treaty(ObjectNormalizer):
         }
         return ret
 
-    def treaty_id(self):
-        return self.solr.get('trElisId')
-
-    def optional_fields(self):
-        OPTIONAL_INFO_FIELDS = [
-            # (solr field, display text, type=text)
-            ('trTitleAbbreviation', 'Title Abbreviation', ''),
-            ('trEntryIntoForceDate', 'Entry into force', 'date'),
-            ('trPlaceOfAdoption', 'Place of adoption', ''),
-            ('trAvailableIn', 'Available in', ''),
-            ('trRegion', 'Geographical area', ''),
-            ('trDepository', 'Depository', ''),
-            ('trUrl', 'Available web site', 'url'),
-            ('trLinkToFullText', 'Link to full text', 'url'),
-            #('trLinkToFullTextSp', 'Link to full text (spanish)', 'url'),
-            #('trLinkToFullTextFr', 'Link to full text (french)', 'url'),
-            #('trLinkToFullTextOther', 'Link to full text (other)', 'url'),
-            ('trLanguageOfDocument', 'Language', ''),
-            ('trLanguageOfTranslation', 'Translation', ''),
-            ('trAbstract', 'Abstract', 'abstract'),
-            # display comments the same way as abstracts
-            ('trComment', 'Comment', 'abstract'),
-            # keywords are considered safe.
-            ('trSubject', 'Subject', 'keyword'),
-            ('trKeyword', 'Keywords', 'keyword'),
-            ('trNumberOfPages', 'Number of pages', ''),
-            ('trOfficialPublication', 'Official publication', ''),
-            ('trInternetReference', 'Internet Reference', ''),
-            ('trDateOfEntry', 'Date of Entry', 'date'),
-            ('trDateOfConsolidation', 'Consolidation Date', 'date')
-        ]
-
-        res = []
-        for field, label, type in OPTIONAL_INFO_FIELDS:
-            if not self.solr.get(field):
-                continue
-            entry = {}
-            entry['type'] = first(type, 'text')
-            entry['label'] = label
-            value = self.solr.get(field)
-
-            if 'date' in type:
-                try:
-                    value = datetime.strptime(first(value),
-                                              '%Y-%m-%dT%H:%M:%SZ').date()
-                except:
-                    pass
-            entry['value'] = value
-            res.append(entry)
-        return res
-
 
 class Decision(ObjectNormalizer):
+    ID_FIELD = 'decNumber'
     SUMMARY_FIELD = 'decBody'
     TITLE_FIELDS = ['decTitleOfText']
     DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
+    OPTIONAL_INFO_FIELDS = [
+        ('decMeetingTitle', 'Meeting Title', ''),
+        # ('decTreatyId', 'Treaty', 'treaty'),
+        ('decNumber', 'Decision Number', ''),
+        ('decLink', 'Link to decision', 'url'),
+        ('decDocUrl', 'Link to full text', 'url'),
+        ('decSummary', 'Summary', 'abstract'),
+        ('decKeyword', 'Keywords', 'keyword'),
+        ('decUpdateDate', 'Date of Update', 'date'),
+    ]
 
     def url(self):
         return first(self.solr.get('decLink'))
@@ -212,7 +224,8 @@ class Queryset(object):
         if not self._facets:
             self.fetch()
         return {
-            k: OrderedDict(sorted(tuple(v.items()), key=lambda v: v[0].lower()))
+            k: OrderedDict(
+                sorted(tuple(v.items()), key=lambda v: v[0].lower()))
             for k, v in self._facets.items()
         }
 
@@ -446,6 +459,12 @@ def get_treaties_by_id(treaty_ids):
 
 
 def get_document(document_id):
+    # result = search('*', filters={'id': document_id})
+    # result.fetch()
+    # if not len(result):
+    #     return None
+    #
+    # return result
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     solr_query = 'id:' + document_id
     responses = solr.search(solr_query)

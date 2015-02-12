@@ -143,8 +143,10 @@ class ResultDetails(SearchView):
 
     def get_context_data(self, **kwargs):
         context = super(ResultDetails, self).get_context_data(**kwargs)
-        context['document'] = get_document(kwargs['id'])
+        results = get_document(kwargs['id'])
+        context['document'] = results #and results[0]
         context['debug'] = settings.DEBUG
+        #context['dec_treaty_names'] = results and results.get_treaty_names()
         return context
 
 
