@@ -84,30 +84,30 @@
                         'treaty' as data_type FROM ai_treaty">
              <field column="data_type" name="type" />
              <field column="id" name="trInformeaId" />
-             <field column="id_organization" name="trDepository" />
+             <!-- <field column="id_organization" name="trDepository" /> -->
              <field column="id_parent" name="trParentId" />
-             <field column="short_title" name="trTitleOfTextShort" />
-             <field column="short_title_alternative" name="trTitleAbbreviation" />
-             <field column="long_title" name="trPaperTitleOfText" />
-             <field column="abstract" name="trAbstract" />
-             <field column="primary" name="trPrimary" />
-             <field column="start" name="trDateOfText" />
-             <field column="url" name="trUrl" />
-             <field column="url_treaty_text" name="trUrlTreatyText" />
-             <field column="url_parties" name="trUrlParties" />
-             <field column="url_wikipedia" name="trUrlWikipedia" />
-             <field column="url_elearning" name="trUrlElearning" />
-             <field column="number_of_parties" name="trNumberOfParties" />
+             <!-- <field column="short_title" name="trTitleOfTextShort" /> -->
+             <!-- <field column="short_title_alternative" name="trTitleAbbreviation" /> -->
+             <!-- <field column="long_title" name="trPaperTitleOfText" /> -->
+             <!-- <field column="abstract" name="trAbstract" /> -->
+             <!-- <field column="primary" name="trPrimary" /> -->
+             <!-- <field column="start" name="trDateOfText" /> -->
+             <!-- <field column="url" name="trUrl" /> -->
+             <!-- <field column="url_treaty_text" name="trUrlTreatyText" /> -->
+             <!-- <field column="url_parties" name="trUrlParties" /> -->
+             <!-- <field column="url_wikipedia" name="trUrlWikipedia" /> -->
+             <!-- <field column="url_elearning" name="trUrlElearning" /> -->
+             <!-- <field column="number_of_parties" name="trNumberOfParties" /> -->
              <!-- <field column="theme" name="trSubject" /> -->
-             <field column="theme_secondary" name="trThemeSecondary" />
-             <field column="enabled" name="trEnabled" />
-             <field column="order" name="trOrder" />
-             <field column="is_protocol" name="trIsProtocol" />
-             <entity name="Treaty_Vocabulary" query="SELECT id_concept FROM ai_treaty_vocabulary WHERE id_treaty='${Treaties.id}'">
+             <!-- <field column="theme_secondary" name="trThemeSecondary" /> -->
+             <!-- <field column="enabled" name="trEnabled" /> -->
+             <!-- <field column="order" name="trOrder" /> -->
+             <!-- <field column="is_protocol" name="trIsProtocol" /> -->
+             <!-- <entity name="Treaty_Vocabulary" query="SELECT id_concept FROM ai_treaty_vocabulary WHERE id_treaty='${Treaties.id}'">
                  <entity name="Vocabulary_Concept" query="SELECT term FROM voc_concept WHERE id='${Treaty_Vocabulary.id_concept}'">
                      <field column="term" name="trKeyword" />
                  </entity>
-             </entity>
+             </entity> -->
         </entity>
     </document>
 </dataConfig>
