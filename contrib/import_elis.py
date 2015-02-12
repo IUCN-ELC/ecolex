@@ -211,7 +211,7 @@ def format_date(date):
     return date + "T00:00:00Z"
 
 
-def add_docs(solr, docs):
+def solr_add_docs(solr, docs):
     solr.add(docs)
     solr.optimize()
 
@@ -227,7 +227,7 @@ def merge_informea_entry(solr, treaty, informea_id):
 
 def parse_xml(xml_path):
     bs = BeautifulSoup(open(xml_path, 'r', encoding='utf-8'))
-    result = []
+    result = {}
 
     for document in bs.findAll('document'):
         data = {}
@@ -264,7 +264,7 @@ def parse_xml(xml_path):
 
         if elis_id in RICH_TEXT_DOCS and TEXT_UPLOAD_ENABLED:
             data['doc_content'] = get_text_tika(RICH_TEXT_DOCS[elis_id])
-        result.append(data)
+        result[elis_id] = data
 
     return result
 
@@ -301,22 +301,13 @@ def add_back_links(solr_docs):
         'trCitesTreaty': 'trCitedBy',
     }
     
-    doc_dict = {}
-    for doc in solr_docs:
-        elisId = doc['trElisId'][0]
-        doc_dict[elisId] = doc
-
-    for doc in solr_docs:
-        elisId = doc['trElisId'][0]
+    for elis_id, doc in solr_docs.items():
         for orig_field, backlink_field in FIELDS_MAPPING.items():
             if orig_field in doc:
-                for id in doc[orig_field]:
-                    if id in doc_dict:
-                        if backlink_field in doc_dict[id]:
-                            doc_dict[id][backlink_field].append(elisId)
-                        else:
-                            doc_dict[id][backlink_field] = []
-    return doc_dict.values()
+                for reference in doc[orig_field]:
+                    if reference in solr_docs:
+                        solr_docs[reference].setdefault(backlink_field, [])
+                        solr_docs[reference][backlink_field].append(elis_id)
           
 
 if __name__ == '__main__':
@@ -339,20 +330,20 @@ if __name__ == '__main__':
     generate_rich_text_mapping(
         "/home/anaion/nas/ecolex/xml_export_tools/files/treaties")
 
-    new_solr_docs = []
+    new_solr_docs = {}
     for xml_file in xml_files:
         r = parse_xml(xml_file)
 
-        for treaty in r:
-            if treaty['trElisId'][0] in duplicates_mapping.keys():
-                print("update:" + duplicates_mapping[treaty['trElisId'][0]])
+        for elis_id, treaty in r.items():
+            if elis_id in duplicates_mapping.keys():
+                print("update:" + duplicates_mapping[elis_id])
                 merged_doc = merge_informea_entry(solr, treaty,
-                                  duplicates_mapping[treaty['trElisId'][0]])
-                new_solr_docs.append(merged_doc)
+                                duplicates_mapping[elis_id])
+                new_solr_docs[elis_id] = merged_doc
             else:
                 treaty['type'] = 'treaty'
                 treaty['source'] = 'elis'
-                new_solr_docs.append(treaty)
-
-    final_docs = add_back_links(new_solr_docs)
-    add_docs(solr, final_docs)
+                new_solr_docs[elis_id] = treaty
+    
+    add_back_links(new_solr_docs)
+    solr_add_docs(solr, new_solr_docs.values())
