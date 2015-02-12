@@ -121,14 +121,10 @@ $(document).ready(function () {
         $('.filter-type button').click(function (e) {
             var current = $('#id_type').val() || [];
             var toggle_value = $(this).data('value');
-            if (current.length == 2) {
-                current = [toggle_value];
+            if (current.indexOf(toggle_value) == -1) {
+                current.push(toggle_value);
             } else {
-                if (current.indexOf(toggle_value) == -1) {
-                    current.push(toggle_value);
-                } else {
-                    current.splice(current.indexOf(toggle_value), 1);
-                }
+                current.splice(current.indexOf(toggle_value), 1);
             }
             $('#id_type').val(current);
             // submit now for now

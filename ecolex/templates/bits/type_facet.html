@@ -1,19 +1,13 @@
 <div class="btn-group btn-group-sm filter-type">
   <!-- Treaty filter -->
   <button type="button"
-          class="btn btn-default {% if 'treaty' in form.type.data and form.type.data|length != 2 %}active{% endif %}"
+          class="btn btn-default {% if 'treaty' in form.type.data %}active{% endif %}"
           data-filter="#treaty-fieldset"
           data-toggle="tooltip"
           data-placement="bottom"
           data-container="body"
           data-value="treaty"
-      {% if not 'treaty' in form.type.data %}
-          title="Show Treaties"
-      {% elif form.type.data|length == 2 %}
-          title="Show only Treaties"
-      {% else %}
-          title="Showing only Treaties"
-      {% endif %}>
+          title="Show Treaties">
     <span class="icon icon-treaty"></span>
     {% if facets.type.treaty > 0 %}
       <span class="badge">{{ facets.type.treaty }}</span>
@@ -23,19 +17,13 @@
 
   <!-- COP decision filter -->
   <button type="button"
-          class="btn btn-default {% if 'decision' in form.type.data and form.type.data|length != 2 %}active{% endif %}"
+          class="btn btn-default {% if 'decision' in form.type.data %}active{% endif %}"
           data-filter="#copdecision-fieldset"
           data-toggle="tooltip"
           data-placement="bottom"
           data-container="body"
           data-value="decision"
-      {% if not 'decision' in form.type.data %}
-          title="Show COP decisions"
-      {% elif form.type.data|length == 2 %}
-          title="Show only COP decisions"
-      {% else %}
-          title="Showing only COP decisions"
-      {% endif %}>
+          title="Show COP decisions">
     <span class="icon icon-cop-decision"></span>
     {% if facets.type.decision > 0 %}
       <span class="badge">{{ facets.type.decision }}</span>

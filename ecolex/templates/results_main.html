@@ -1,105 +1,21 @@
 {% load tags %}
 
-<div class="btn-group btn-group-sm filter-type">
-  <!-- Treaty filter -->
-  <button type="button"
-          class="btn btn-default {% if 'treaty' in form.type.data and form.type.data|length != 2 %}active{% endif %}"
-          data-filter="#treaty-fieldset"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          data-value="treaty"
-      {% if not 'treaty' in form.type.data %}
-          title="Show Treaties"
-      {% elif form.type.data|length == 2 %}
-          title="Show only Treaties"
-      {% else %}
-          title="Showing only Treaties"
-      {% endif %}>
-    <span class="icon icon-treaty"></span>
-    {% if facets.type.treaty > 0 %}
-      <span class="badge">{{ facets.type.treaty }}</span>
-    {% endif %}
-    <span class="btn-label">Treaties</span>
-  </button>
-
-  <!-- COP decision filter -->
-  <button type="button"
-          class="btn btn-default {% if 'decision' in form.type.data and form.type.data|length != 2 %}active{% endif %}"
-          data-filter="#copdecision-fieldset"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          data-value="decision"
-      {% if not 'decision' in form.type.data %}
-          title="Show COP decisions"
-      {% elif form.type.data|length == 2 %}
-          title="Show only COP decisions"
-      {% else %}
-          title="Showing only COP decisions"
-      {% endif %}>
-    <span class="icon icon-cop-decision"></span>
-    {% if facets.type.decision > 0 %}
-      <span class="badge">{{ facets.type.decision }}</span>
-    {% endif %}
-    <span class="btn-label">COP Decisions</span>
-  </button>
-
-  <!-- Legislation filter -->
-  <button type="button"
-          class="btn btn-default"
-          data-filter
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          title="Hide Legislation"
-          disabled>
-    <span class="icon icon-legislation"></span>
-    <span class="badge">0</span>
-    <span class="btn-label">Legislation</span>
-  </button>
-
-  <!-- Court decision filter -->
-  <button type="button"
-          class="btn btn-default"
-          data-filter
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          title="Hide Court Decisions"
-          disabled>
-    <span class="icon icon-court-decision"></span>
-    <span class="badge">0</span>
-    <span class="btn-label">Court Decisions</span>
-  </button>
-
-  <!-- Literature filter -->
-  <button type="button"
-          class="btn btn-default"
-          data-filter
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          title="Hide Literature"
-          disabled>
-    <span class="icon icon-literature"></span>
-    <span class="badge">0</span>
-    <span class="btn-label">Literature</span>
-  </button>
-</div>
+{% include 'bits/type_facet.html' %}
 
 
 <p class="small clearfix">
 
   <!-- Ugly -->
-
-  {% if 'treaty' in form.type.data and form.type.data|length != 2 %}
-    <span class="pull-left">Showing only treaties</span>
-  {% elif 'decision' in form.type.data and form.type.data|length != 2 %}
-    <span class="pull-left">Showing only COP decisions</span>
-  {% else %}
-    <span class="pull-left">Total of {{ results.count }} results</span>
-  {% endif %}
+  <span class="pull-left">
+    Found
+    {% if 'treaty' in form.type.data and form.type.data|length != 2 %}
+      {{ facets.type.treaty }} treaties
+    {% elif 'decision' in form.type.data and form.type.data|length != 2 %}
+      {{ facets.type.decision }} COP decisions
+    {% else %}
+      {{ results.count }} results
+    {% endif %}
+  </span>
   
   <span class="pull-right">
     {% include 'bits/sortby.html' %}
