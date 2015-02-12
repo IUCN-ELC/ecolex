@@ -91,7 +91,7 @@ FIELD_MAP = {
     'seatofcourt': 'trSeatOfCourt',
     'supersedestreaty': 'trSupersedesTreaty',
     'amendstreaty': 'trAmendsTreaty',
-    'citesTreaty': 'trCitesTreaty',
+    'citestreaty': 'trCitesTreaty',
     'availablein': 'trAvailableIn',
     'languageoftranslation': 'trLanguageOfTranslation',
     'numberofpages': 'trNumberOfPages',
@@ -216,13 +216,13 @@ def add_docs(solr, docs):
     solr.optimize()
 
 
-def update_solr_entry(solr, treaty, informea_id):
+def merge_informea_entry(solr, treaty, informea_id):
     result = solr.search('trInformeaId:' + informea_id)
     existing_fields = result.docs[0]
     existing_fields['source'] += ",elis"
     new_document = dict(list(treaty.items()) + list(existing_fields.items()))
     solr.delete('trInformeaId:' + informea_id)
-    add_docs(solr, [new_document])
+    return new_document
 
 
 def parse_xml(xml_path):
@@ -255,6 +255,7 @@ def parse_xml(xml_path):
         # Special cases
         elis_id = data['trElisId'][0]
         if elis_id in IGNORED_TREATIES:
+            print("ignoring treaty")
             continue
         if elis_id == "TRE-146817":
             data['trFieldOfApplication'] = ["Global", "Regional/restricted"]
@@ -290,7 +291,33 @@ def get_xml_abs_paths(root_directory):
         for xml_file in files:
             file_paths.append(os.path.join(root, xml_file))
     return file_paths
+ 
 
+def add_back_links(solr_docs):
+    FIELDS_MAPPING = {
+        'trEnabledByTreaty': 'trEnablesTreaty',
+        'trAmendsTreaty': 'trAmendedBy',
+        'trSupersedesTreaty': 'trSupersededBy',
+        'trCitesTreaty': 'trCitedBy',
+    }
+    
+    doc_dict = {}
+    for doc in solr_docs:
+        elisId = doc['trElisId'][0]
+        doc_dict[elisId] = doc
+
+    for doc in solr_docs:
+        elisId = doc['trElisId'][0]
+        for orig_field, backlink_field in FIELDS_MAPPING.items():
+            if orig_field in doc:
+                for id in doc[orig_field]:
+                    if id in doc_dict:
+                        if backlink_field in doc_dict[id]:
+                            doc_dict[id][backlink_field].append(elisId)
+                        else:
+                            doc_dict[id][backlink_field] = []
+    return doc_dict.values()
+          
 
 if __name__ == '__main__':
     import sys
@@ -319,11 +346,13 @@ if __name__ == '__main__':
         for treaty in r:
             if treaty['trElisId'][0] in duplicates_mapping.keys():
                 print("update:" + duplicates_mapping[treaty['trElisId'][0]])
-                update_solr_entry(solr, treaty,
+                merged_doc = merge_informea_entry(solr, treaty,
                                   duplicates_mapping[treaty['trElisId'][0]])
+                new_solr_docs.append(merged_doc)
             else:
                 treaty['type'] = 'treaty'
                 treaty['source'] = 'elis'
                 new_solr_docs.append(treaty)
 
-    add_docs(solr, new_solr_docs)
+    final_docs = add_back_links(new_solr_docs)
+    add_docs(solr, final_docs)
