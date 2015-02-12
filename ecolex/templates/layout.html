@@ -57,11 +57,8 @@
     <div class="logo-credits">
       <img src="/static/img/logo-credits.svg" alt="">
     </div>
-  </div>
-</div>
 
-<div class="search-section">
-  <div class="container">
+    <!-- search -->
     <form action="{% url 'results' %}" method="get" class="search-form">
       <label for="search">
         <span class="sr-only">Search</span>
@@ -79,7 +76,8 @@
 
 <main>
   <div class="container">
-    {% block content %} {% endblock %}
+    {% block content %} 
+    {% endblock %}
   </div>
 </main>
 

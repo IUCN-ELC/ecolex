@@ -3,12 +3,7 @@
 {% block content %}
   <div class="row">
     <div class="col-md-9" id="layout-main">
-      {% block main %}
-        <p></p>
-        <p>ECOLEX is a database providing the most comprehensive, global source
-          of information on environmental law.</p>
-        <p>Learn more <a href="{% url 'page' slug='about' %}">about it</a>.</p>
-      {% endblock %}
+      {% block main %} {% endblock %}
     </div>
     <aside id="filters" class="col-md-3">
       {% block sidebar %} {% endblock %}

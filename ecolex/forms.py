@@ -9,7 +9,7 @@ DOC_TYPE = (
 class SearchForm(Form):
     q = CharField(initial='', widget=TextInput(
         attrs={'id': 'search', 'class': 'form-control', 'autofocus': True,
-               'placeholder': "Treaties, Legislation, Court decisions, Literature, COP decisions"}))
+               'placeholder': "Search for Treaties, Legislation, Court decisions, Literature, COP decisions"}))
     type = MultipleChoiceField(choices=DOC_TYPE)
 
     tr_type = MultipleChoiceField()

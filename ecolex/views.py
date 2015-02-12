@@ -11,7 +11,7 @@ from django.conf import settings
 
 
 class SearchView(TemplateView):
-    template_name = 'search.html'
+    template_name = 'homepage.html'
 
     def get_context_data(self, **kwargs):
         ctx = super(SearchView, self).get_context_data(**kwargs)

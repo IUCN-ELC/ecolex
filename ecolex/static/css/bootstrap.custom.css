@@ -325,7 +325,7 @@ body {
   font-size: 16px;
   line-height: 1.4;
   color: #666666;
-  background-color: #eeeeee;
+  background-color: #ffffff;
 }
 input,
 button,
@@ -366,7 +366,7 @@ img {
 .img-thumbnail {
   padding: 4px;
   line-height: 1.4;
-  background-color: #eeeeee;
+  background-color: #ffffff;
   border: 1px solid #dddddd;
   border-radius: 3px;
   -webkit-transition: all 0.2s ease-in-out;
@@ -1583,7 +1583,7 @@ th {
   border-top: 2px solid #dddddd;
 }
 .table .table {
-  background-color: #eeeeee;
+  background-color: #ffffff;
 }
 .table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
@@ -3225,7 +3225,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
   color: #666666;
-  background-color: #eeeeee;
+  background-color: #ffffff;
   border: 1px solid #dddddd;
   border-bottom-color: transparent;
   cursor: default;
@@ -3271,7 +3271,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .nav-tabs.nav-justified > .active > a,
   .nav-tabs.nav-justified > .active > a:hover,
   .nav-tabs.nav-justified > .active > a:focus {
-    border-bottom-color: #eeeeee;
+    border-bottom-color: #ffffff;
   }
 }
 .nav-pills > li {
@@ -3339,7 +3339,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .nav-tabs-justified > .active > a,
   .nav-tabs-justified > .active > a:hover,
   .nav-tabs-justified > .active > a:focus {
-    border-bottom-color: #eeeeee;
+    border-bottom-color: #ffffff;
   }
 }
 .tab-content > .tab-pane {
@@ -4878,7 +4878,7 @@ button.close {
   position: absolute;
   border: 1px solid #dddddd;
   border-radius: 3px;
-  background-color: #eeeeee;
+  background-color: #ffffff;
 }
 .slider-selection {
   position: absolute;
@@ -5019,13 +5019,11 @@ button.close {
   right: 0px !important;
   opacity: 0 !important;
 }
-.search-section {
-  padding: 6px;
-  border-bottom: 1px solid #dddddd;
-  background-color: #fff;
-}
 .search-form {
   position: relative;
+  padding: 5px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 .search-form .form-control {
   border-color: transparent;
@@ -5040,25 +5038,33 @@ button.close {
 }
 .search-form label {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 5px;
+  left: 5px;
   width: 32px;
   padding-left: 0;
   padding-right: 0;
+  color: #666666;
 }
 .search-form label .icon {
   font-size: 150%;
 }
 .search-form button {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 5px;
+  right: 5px;
   width: 110px;
+}
+@media (min-width: 768px) {
+  .search-form {
+    top: 15px;
+    border-radius: 5px;
+  }
 }
 @media (max-width: 767px) {
   .search-form {
-    margin-left: -15px;
-    margin-right: -15px;
+    margin-left: -30px;
+    margin-right: -30px;
+    bottom: -30px;
   }
   .search-form .form-control {
     padding-right: 78px;
@@ -5096,14 +5102,27 @@ button.close {
 .search-result-description {
   margin-bottom: auto;
 }
+html {
+  min-height: 100%;
+}
+body {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 83px;
+}
 main {
   min-height: 420px;
   padding: 22px 0 30px;
   background-color: #fff;
 }
 .footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 30px 0;
   border-top: 1px solid #dddddd;
+  background-color: #eeeeee;
   font-size: 14px;
   color: #808080;
 }
