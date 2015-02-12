@@ -127,8 +127,8 @@ class Treaty(ObjectNormalizer):
             #('trLinkToFullTextSp', 'Link to full text (spanish)', 'url'),
             #('trLinkToFullTextFr', 'Link to full text (french)', 'url'),
             #('trLinkToFullTextOther', 'Link to full text (other)', 'url'),
-            ('trLanguageOfDocument', 'Language of Document', ''),
-            ('trLanguageOfTranslation', 'Translation of Document', ''),
+            ('trLanguageOfDocument', 'Language', ''),
+            ('trLanguageOfTranslation', 'Translation', ''),
             ('trAbstract', 'Abstract', 'abstract'),
             # display comments the same way as abstracts
             ('trComment', 'Comment', 'abstract'),
