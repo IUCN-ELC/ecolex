@@ -403,6 +403,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     params.update({
         'facet': 'on',
         'facet.field': filters.keys(),
+        'facet.limit': '-1',
     })
     params['fq'] = get_fq(filters)
     if highlight:
