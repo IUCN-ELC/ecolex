@@ -51,11 +51,8 @@ class ObjectNormalizer:
                 continue
         return ""
 
-    def __str__(self):
-        return str(self.solr)
-
     def jurisdiction(self):
-        return "International"
+        return first(self.solr.get('trJurisdiction', "International"))
 
     def summary(self):
         return first(self.solr.get(self.SUMMARY_FIELD), "")
@@ -190,36 +187,36 @@ class Decision(ObjectNormalizer):
 
 
 class Queryset(object):
-    def __init__(self, query=None, filters=None, highlight=None, sortby=None,
-                 raw=None):
+    def __init__(self, query=None, filters=None, rows=None, **kwargs):
         self.query = query
         self.filters = filters
-        self.highlight = highlight
         self.start = 0
-        self.perpage = PERPAGE
-        self.sortby = sortby
+        self.rows = rows or PERPAGE
         self.maxscore = None
-        self.raw = raw
         self._result_cache = None
         self._hits = None
+        self._debug_response = None
         self._facets = {}
         self._stats = {}
+        self._query_kwargs = kwargs
 
     def set_page(self, page, perpage=None):
-        self.perpage = perpage or PERPAGE
-        self.start = (page - 1) * self.perpage
+        self.rows = perpage or PERPAGE
+        self.start = (page - 1) * self.rows
 
     def fetch(self):
-        result = _search(self.query, filters=self.filters,
-                         highlight=self.highlight, start=self.start,
-                         rows=self.perpage, sortby=self.sortby, raw=self.raw)
-        self._result_cache = result['results']
-        self._hits = result['hits']
-        self._facets = result['facets']
-        self._stats = result['stats']
-        self.maxscore = result['maxscore']
-        self.responses = result['responses']
-        self.debug_result = result
+        responses = _search(self.query, filters=self.filters,
+                            start=self.start, **self._query_kwargs)
+        self._facets = parse_facets(responses.facets['facet_fields'])
+        self._result_cache = [
+            parse_result(hit, responses) for hit in responses
+        ]
+        self._hits = responses.hits
+        self._stats = responses.stats
+        self.maxscore = (
+            responses.maxscore if hasattr(responses, 'maxscore') else None
+        )
+        self._debug_response = responses
         return self._result_cache
 
     def get_facets(self):
@@ -253,7 +250,7 @@ class Queryset(object):
         return self._hits
 
     def pages(self):
-        return self.perpage and int(len(self) / self.perpage)
+        return self.rows and int(len(self) / self.rows)
 
     def first(self):
         if not self._hits:
@@ -282,6 +279,10 @@ def parse_result(hit, responses):
     elif hit['type'] == 'decision':
         return Decision(hit, hl)
     return hit
+
+
+def parse_facets(facets):
+    return {k: dict(zip(v[0::2], v[1::2])) for k, v in facets.items()}
 
 
 def escape_query(query):
@@ -396,13 +397,14 @@ def get_fq(filters):
     return global_filters
 
 
-def search(user_query, filters=None, highlight=True, sortby=None, raw=None):
-    return Queryset(user_query, filters=filters, highlight=highlight,
-                    sortby=sortby, raw=raw)
+def search(user_query, filters=None, sortby=None, raw=None,
+           **kwargs):
+    return Queryset(user_query, filters=filters, sortby=sortby, raw=raw,
+                    **kwargs)
 
 
 def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
-            sortby=None, raw=None):
+            sortby=None, raw=None, facets=None):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     solr.optimize()
     if user_query == '*':
@@ -419,7 +421,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     }
     params.update({
         'facet': 'on',
-        'facet.field': filters.keys(),
+        'facet.field': facets or filters.keys(),
         'facet.limit': '-1',
     })
     params['fq'] = get_fq(filters)
@@ -431,40 +433,20 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         params['fl'] = '*,score'
         params['debug'] = True
 
-    responses = solr.search(solr_query, **params)
-
-    hits = responses.hits
-    stats = responses.stats
-    maxscore = responses.maxscore if hasattr(responses, 'maxscore') else None
-
-    results = [parse_result(hit, responses) for hit in responses]
-
-    facets = responses.facets['facet_fields']
-    for k, v in facets.items():
-        facets[k] = dict(zip(v[0::2], v[1::2]))
-
-    return {
-        'results': results, 'query': user_query, 'facets': facets,
-        'hits': hits, 'stats': stats, 'maxscore': maxscore,
-        'responses': responses,
-        'debug_query': solr_query,
-        'debug_params': params,
-    }
+    return solr.search(solr_query, **params)
 
 
 def get_treaties_by_id(treaty_ids):
-    solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     solr_query = "trInformeaId:(" + " ".join(treaty_ids) + ")"
-    responses = solr.search(solr_query, rows=len(treaty_ids))
-    if not responses.hits:
+    result = search(solr_query, rows=len(treaty_ids), raw=True)
+    if not len(result):
         return None
-    return [parse_result(hit, responses) for hit in responses]
+    return result
 
 
 def get_document(document_id):
     result = search('id:' + document_id, raw=True,
                     filters={'decTreatyId': ''})
-    result.fetch()
     if not len(result):
         return None
 
