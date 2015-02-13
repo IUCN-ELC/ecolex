@@ -190,7 +190,8 @@ class Decision(ObjectNormalizer):
 
 
 class Queryset(object):
-    def __init__(self, query=None, filters=None, highlight=None, sortby=None):
+    def __init__(self, query=None, filters=None, highlight=None, sortby=None,
+                 raw=None):
         self.query = query
         self.filters = filters
         self.highlight = highlight
@@ -198,6 +199,7 @@ class Queryset(object):
         self.perpage = PERPAGE
         self.sortby = sortby
         self.maxscore = None
+        self.raw = raw
         self._result_cache = None
         self._hits = None
         self._facets = {}
@@ -210,7 +212,7 @@ class Queryset(object):
     def fetch(self):
         result = _search(self.query, filters=self.filters,
                          highlight=self.highlight, start=self.start,
-                         rows=self.perpage, sortby=self.sortby)
+                         rows=self.perpage, sortby=self.sortby, raw=self.raw)
         self._result_cache = result['results']
         self._hits = result['hits']
         self._facets = result['facets']
@@ -252,6 +254,11 @@ class Queryset(object):
 
     def pages(self):
         return self.perpage and int(len(self) / self.perpage)
+
+    def first(self):
+        if not self._hits:
+            self.fetch()
+        return self._result_cache[0]
 
     def __len__(self):
         return self.count()
@@ -295,10 +302,6 @@ def escape_query(query):
 
     query = query.replace('\\', r'\\')
     return "".join(c for c in _esc(query))
-
-
-def get_default_filters():
-    return 'type', 'trTypeOfText', 'decType'
 
 
 def get_hl():
@@ -393,21 +396,21 @@ def get_fq(filters):
     return global_filters
 
 
-def search(user_query, filters=None, highlight=True, sortby=None):
+def search(user_query, filters=None, highlight=True, sortby=None, raw=None):
     return Queryset(user_query, filters=filters, highlight=highlight,
-                    sortby=sortby)
+                    sortby=sortby, raw=raw)
 
 
 def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
-            sortby=None):
+            sortby=None, raw=None):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     solr.optimize()
     if user_query == '*':
         solr_query = '*:*'
         highlight = False
     else:
-        solr_query = escape_query(user_query)
-    filters = filters or get_default_filters()
+        solr_query = user_query if raw else escape_query(user_query)
+    filters = filters or {}
     params = {
         'rows': rows,
         'start': start,
@@ -459,16 +462,9 @@ def get_treaties_by_id(treaty_ids):
 
 
 def get_document(document_id):
-    # result = search('*', filters={'id': document_id})
-    # result.fetch()
-    # if not len(result):
-    #     return None
-    #
-    # return result
-    solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
-    solr_query = 'id:' + document_id
-    responses = solr.search(solr_query)
-    if not responses.hits:
+    result = search('id:' + document_id, raw=True)
+    result.fetch()
+    if not len(result):
         return None
-    hit = list(responses)[0]
-    return parse_result(hit, responses)
+
+    return result

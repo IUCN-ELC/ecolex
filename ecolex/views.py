@@ -144,9 +144,11 @@ class ResultDetails(SearchView):
     def get_context_data(self, **kwargs):
         context = super(ResultDetails, self).get_context_data(**kwargs)
         results = get_document(kwargs['id'])
-        context['document'] = results #and results[0]
+        if not results:
+            raise Http404()
+        context['document'] = results.first()
         context['debug'] = settings.DEBUG
-        #context['dec_treaty_names'] = results and results.get_treaty_names()
+        context['dec_treaty_names'] = results.get_treaty_names()
         return context
 
 
