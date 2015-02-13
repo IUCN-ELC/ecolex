@@ -112,14 +112,14 @@
     <field name="trRegion" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trBasin" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trScope" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trIntoForceTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trRelevantTextTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
+
+    <!-- Links -->
     <field name="trEnabledByTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trAmendsTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="trIntoForceTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trSupersedesTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trCitesTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="trRelevantTextTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
-    
-    
     <!-- Backlinks-->
     <field name="trEnablesTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trAmendedBy" type="string" indexed="true" stored="true" multiValued="true"/>
