@@ -135,25 +135,26 @@ class Treaty(ObjectNormalizer):
         return first(self.solr.get('trUrlTreatyText'))
 
     def participants(self):
-        PARTY_MAP = {
-            'partyCountry': 'country',
-            # 'partyPotentialParty': 'partyPotentialParty',
-            # 'partyEntryIntoForce': 'partyEntryIntoForce',
-            'partyDateOfRatification': 'ratification',
-            'partyDateOfAccessionApprobation': 'accession approbation',
-            'partyDateOfAcceptanceApproval': 'acceptance approval',
-            'partyDateOfConsentToBeBound': 'consent to be bound',
-            'partyDateOfSuccession': 'succession',
-            'partyDateOfDefiniteSignature': 'definite signature',
-            'partyDateOfSimpleSignature': 'simple signature',
-            'partyDateOfProvisionalApplication': 'provisional application',
-            'partyDateOfParticipation': 'participation',
-            'partyDateOfDeclaration': 'declaration',
-            'partyDateOfReservation': 'reservation',
-            'partyDateOfWithdrawal': 'withdrawal',
-        }
+        PARTY_MAP = OrderedDict((
+            ('partyCountry', 'country'),
+            ('partyPotentialParty', 'potential party'),
+            ('partyEntryIntoForce', 'entry into force'),
+            ('partyDateOfRatification', 'ratification'),
+            ('partyDateOfAccessionApprobation', 'accession approbation'),
+            ('partyDateOfAcceptanceApproval', 'acceptance approval'),
+            ('partyDateOfConsentToBeBound', 'consent to be bound'),
+            ('partyDateOfSuccession', 'succession'),
+            ('partyDateOfDefiniteSignature', 'definite signature'),
+            ('partyDateOfSimpleSignature', 'simple signature'),
+            ('partyDateOfProvisionalApplication', 'provisional application'),
+            ('partyDateOfDeclaration', 'declaration'),
+            ('partyDateOfParticipation', 'participation'),
+            ('partyDateOfReservation', 'reservation'),
+            ('partyDateOfWithdrawal', 'withdrawal'),
+        ))
+
         clean = lambda d: d if d != '0002-11-30T00:00:00Z' else None
-        data = {}
+        data = OrderedDict()
         for field, event in PARTY_MAP.items():
             values = [clean(v) for v in self.solr.get(field, [])]
             if values and any(values):
@@ -161,11 +162,11 @@ class Treaty(ObjectNormalizer):
         results = []
         for i, country in enumerate(data['country']):
             results.append(
-                {v: data[v][i] for v in data.keys()}
+                OrderedDict((v, data[v][i]) for v in data.keys())
             )
         ret = {
             'countries': results,
-            'events': [c for c in sorted(data.keys()) if c != 'country'],
+            'events': [c for c in data.keys() if c != 'country'],
         }
         return ret
 
