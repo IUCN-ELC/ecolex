@@ -108,7 +108,7 @@ class SearchResults(SearchView):
 
         # a map of (treatyId -> treatyNames) for treaties which are referenced
         # by decisions in the current result set
-        ctx['dec_treaty_names'] = results.get_treaty_names()
+        ctx['dec_treaty_names'] = results.get_facet_treaty_names()
 
         ctx['page'] = self.page_details(page, results)
         self.update_form_choices(ctx['facets'])
@@ -149,7 +149,9 @@ class ResultDetails(SearchView):
         context['document'] = results.first()
         context['results'] = results
         context['debug'] = settings.DEBUG
-        context['dec_treaty_names'] = results.get_treaty_names()
+        context['dec_treaty_names'] = results.get_facet_treaty_names()
+        ids = context['document'].get_references_ids_set()
+        context['reference_names'] = results.get_treaty_names('trElisId', ids)
         return context
 
 

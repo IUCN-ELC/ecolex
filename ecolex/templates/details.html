@@ -95,26 +95,19 @@
   </section>
   {% endif %}
 
-  {% if document.references or true %}
+  {% if document.type == 'treaty' and document.references %}
   <section id="treaty-references">
     <h2 class="section-title">Treaty references</h2>
-
-    <dl class="dl-horizontal references">
-      <dt>relation</dt>
-      <dd>
-        <a href="">relation_to</a> -
-        <time title="What happened that year">year</time>
-      </dd>
-      <dt>Ammeds</dt>
-      <dd>
-        <a href="">Agreement between the European Community and the Swiss Confederation on trade in agricultural products</a> -
-        <time title="What happened that year">year</time>
-      </dd>
-      <dd>
-        <a href="">This other treaty</a> -
-        <time title="What happened that year">year</time>
-      </dd>
-    </dl>
+      {% for label, value in document.references.items%}
+        <dl class="dl-horizontal references">
+          <dt>{{ label }}</dt>
+            {% for entry in value %}
+            <dd>
+                <a href="">{{ reference_names|lookup:entry|parse_date }}</a>
+            </dd>
+            {% endfor %}
+        </dl>
+      {% endfor %}
   </section>
   {% endif %}
 

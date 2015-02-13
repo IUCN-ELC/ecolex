@@ -114,6 +114,16 @@ class Treaty(ObjectNormalizer):
         ('trDateOfConsolidation', 'Consolidation Date', 'date')
     ]
 
+    REFERENCE_FIELDS = {
+        'trAmendsTreaty': 'Amends:',
+        'trSupersedesTreaty': 'Supersedes:',
+        'trCitesTreaty': 'Cites:',
+        'trEnablesTreaty': 'Enables:',
+        'trEnabledByTreaty': 'Enabled by:',
+        'trAmendedBy': 'Amended by:',
+        'trSupersededBy': 'Superseded by:',
+        'trCitedBy': 'Cited by:',
+    }
 
     def jurisdiction(self):
         return first(self.solr.get('trJurisdiction'))
@@ -158,6 +168,22 @@ class Treaty(ObjectNormalizer):
             'events': [c for c in sorted(data.keys()) if c != 'country'],
         }
         return ret
+
+    def get_references_ids_set(self):
+        ids = set()
+        for field, label in self.REFERENCE_FIELDS.items():
+            values = [v for v in self.solr.get(field, [])]
+            if values and any(values):
+               ids.update(values)
+
+        return ids
+    def references(self):
+        data = {}
+        for field, label in self.REFERENCE_FIELDS.items():
+            values = [v for v in self.solr.get(field, [])]
+            if values and any(values):
+                data[label] = values
+        return data
 
 
 class Decision(ObjectNormalizer):
@@ -233,16 +259,21 @@ class Queryset(object):
             self.fetch()
         return self._stats.get('stats_fields')
 
-    def get_treaty_names(self):
+    def get_treaty_names(self, id_name, ids_list):
+        if not any(ids_list):
+            return {}
+        results = get_treaties_by_id(id_name, ids_list)
+        return dict(
+            (r.solr.get(id_name, -1),
+             r.title() + "(" +  str(r.date()) + ")") for r in results)
+
+    def get_facet_treaty_names(self):
         """ Returns map of names for treaties returned by the decTreaty facet.
         """
         facets = self.get_facets()
         if not facets.get('decTreatyId'):
             return {}
-
-        results = get_treaties_by_id(facets['decTreatyId'].keys())
-        return dict(
-            (r.solr.get('trInformeaId', -1), r.title()) for r in results)
+        return self.get_treaty_names('trInformeaId', facets['decTreatyId'].keys())
 
     def count(self):
         if not self._hits:
@@ -436,8 +467,8 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     return solr.search(solr_query, **params)
 
 
-def get_treaties_by_id(treaty_ids):
-    solr_query = "trInformeaId:(" + " ".join(treaty_ids) + ")"
+def get_treaties_by_id(id_name, treaty_ids):
+    solr_query = id_name + ":(" + " ".join(treaty_ids) + ")"
     result = search(solr_query, rows=len(treaty_ids), raw=True)
     if not len(result):
         return None
