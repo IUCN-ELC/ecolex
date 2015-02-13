@@ -19,7 +19,7 @@ class SearchView(TemplateView):
         data = dict(self.request.GET)
         if 'q' in data:
             data['q'] = data['q'][0]
-        data.setdefault('type', dict(DOC_TYPE).keys())
+        data.setdefault('type', [])
         data.setdefault('tr_type', [])
         data.setdefault('tr_field', [])
         data.setdefault('tr_party', [])
@@ -39,17 +39,17 @@ class SearchView(TemplateView):
 
         # Compute filters
         self.filters = {
-            'type': data['type'],
+            'type': data['type'] or dict(DOC_TYPE).keys(),
             'docKeyword': data['keyword'],
             'docDate': (data['yearmin'], data['yearmax']),
         }
-        if 'treaty' in data['type']:  # specific filters
+        if 'treaty' in self.filters['type']:
             self.filters['trTypeOfText'] = data['tr_type']
             self.filters['trFieldOfApplication'] = data['tr_field']
             self.filters['partyCountry'] = data['tr_party']
             self.filters['trSubject'] = data['tr_subject']
 
-        if 'decision' in data['type']:
+        if 'decision' in self.filters['type']:
             self.filters['decType'] = data['dec_type']
             self.filters['decStatus'] = data['dec_status']
             self.filters['decTreatyId'] = data['dec_treaty']
