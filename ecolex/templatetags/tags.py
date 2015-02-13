@@ -3,13 +3,16 @@ from datetime import datetime
 
 register = template.Library()
 
+
 @register.filter
 def lookup(d, key):
-    return d.get(key)
+    return d.get(key, d.get(str(key)))
+
 
 @register.filter
 def just_year(value):
     return value and value[0:4]
+
 
 @register.filter
 def join_by(lst, arg):

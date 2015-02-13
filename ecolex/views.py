@@ -147,6 +147,7 @@ class ResultDetails(SearchView):
         if not results:
             raise Http404()
         context['document'] = results.first()
+        context['results'] = results
         context['debug'] = settings.DEBUG
         context['dec_treaty_names'] = results.get_treaty_names()
         return context

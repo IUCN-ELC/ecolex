@@ -170,7 +170,7 @@ class Decision(ObjectNormalizer):
     DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
     OPTIONAL_INFO_FIELDS = [
         ('decMeetingTitle', 'Meeting Title', ''),
-        # ('decTreatyId', 'Treaty', 'treaty'),
+        ('decTreatyId', 'Treaty', 'treaty'),
         ('decNumber', 'Decision Number', ''),
         ('decLink', 'Link to decision', 'url'),
         ('decDocUrl', 'Link to full text', 'url'),
@@ -245,7 +245,7 @@ class Queryset(object):
 
         results = get_treaties_by_id(facets['decTreatyId'].keys())
         return dict(
-            (r.solr.get("trInformeaId", -1), r.title()) for r in results)
+            (r.solr.get('trInformeaId', -1), r.title()) for r in results)
 
     def count(self):
         if not self._hits:
@@ -462,7 +462,8 @@ def get_treaties_by_id(treaty_ids):
 
 
 def get_document(document_id):
-    result = search('id:' + document_id, raw=True)
+    result = search('id:' + document_id, raw=True,
+                    filters={'decTreatyId': ''})
     result.fetch()
     if not len(result):
         return None

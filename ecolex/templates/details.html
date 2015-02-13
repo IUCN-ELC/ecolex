@@ -58,7 +58,7 @@
         {% elif entry.type == "summary" %}
           <dd>{{ entry.value | safe }}</dd>
         {% elif entry.type == "treaty" %}
-          <dd>{{ dec_treaty_names }}</dd>
+          <dd>{{ dec_treaty_names|lookup:entry.value.0 }}</dd>
         {% else %}
           <dd>{{ entry.value | join_by:", " }}</dd>
         {% endif %}
