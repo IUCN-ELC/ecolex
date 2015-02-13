@@ -23,7 +23,7 @@
           data-placement="bottom"
           data-container="body"
           data-value="decision"
-          title="{% if not form.type.data %}Show only COP Decisions{% elif 'treaty' in form.type.data %}{% if form.type.data|length == 1 %}Show all{% else %}Hide COP Decisions{% endif %}{% else %}Show COP Decisions{% endif %}">
+          title="{% if not form.type.data %}Show only COP Decisions{% elif 'decision' in form.type.data %}{% if form.type.data|length == 1 %}Show all{% else %}Hide COP Decisions{% endif %}{% else %}Show COP Decisions{% endif %}">
     <span class="icon icon-cop-decision"></span>
     {% if facets.type.decision > 0 %}
       <span class="badge">{{ facets.type.decision }}</span>
