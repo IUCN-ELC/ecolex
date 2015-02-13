@@ -158,28 +158,15 @@ DATE_FIELDS = [
 ]
 
 RICH_TEXT_DOCS = {}
-BROKEN_DOCS_IDS = [
-    'TRE-000077',
-    'TRE-001214',
-    'TRE-001953',
-    'TRE-000155',
-    'TRE-149568',
-    'TRE-149655',
-    'TRE-149799',
-    'TRE-000565',
-    'TRE-000566',
-    'TRE-000567',
-    'TRE-000569',
-    'TRE-000570',
-    'TRE-000887',
-    'TRE-153643',
-    'TRE-153648',
-    'TRE-000781',
-    'TRE-000733',
-]
 
-TEXT_UPLOAD_ENABLED = 1
+TEXT_UPLOAD_ENABLED = 0
 
+REFERENCE_MAPPING = {
+    'trEnabledByTreaty': 'trEnablesTreaty',
+    'trAmendsTreaty': 'trAmendedBy',
+    'trSupersedesTreaty': 'trSupersededBy',
+    'trCitesTreaty': 'trCitedBy',
+}
 
 def clean_text(text):
     return text.strip()
@@ -189,12 +176,24 @@ def missing_fields():
     return [f for f in SCHEMA_FIELDS if f not in FIELD_MAP.values()]
 
 
-def format_date(date):
+def valid_date(date):
+    date_info = date.split('-')
+    if len(date_info) != 3:
+        return False
+    if date_info[0] == '0000' or date_info[1] == '00' or date_info[2] == '00':
+        return False
+    return True
+
+
+def party_format_date(date):
     if date == '':
         return date
     date_fields = date.split('-')
     for i in range(3 - len(date_fields)):
         date += "-01"
+    return format_date(date)
+
+def format_date(date):
     return date + "T00:00:00Z"
 
 
@@ -228,7 +227,7 @@ def parse_xml(xml_path):
             if field_values:
                 data[v] = [clean_text(field.text) for field in field_values]
                 if v in DATE_FIELDS:
-                    data[v] = [format_date(date) for date in data[v]]
+                    data[v] = [format_date(date) for date in data[v] if valid_date(date)]
         for party in document.findAll('party'):
             if not getattr(party, "country"):
                 continue
@@ -238,7 +237,7 @@ def parse_xml(xml_path):
                     data[v] = []
                 if field:
                     clean_field = clean_text(field.text)
-                    data[v].append(format_date(
+                    data[v].append(party_format_date(
                         clean_field) if v in DATE_FIELDS else clean_field)
                 else:
                     data[v].append(format_date("0000-00-00"))
@@ -281,22 +280,23 @@ def get_xml_abs_paths(root_directory):
     return file_paths
  
 
-def add_back_links(solr_docs):
-    FIELDS_MAPPING = {
-        'trEnabledByTreaty': 'trEnablesTreaty',
-        'trAmendsTreaty': 'trAmendedBy',
-        'trSupersedesTreaty': 'trSupersededBy',
-        'trCitesTreaty': 'trCitedBy',
-    }
-    
+def clean_referred_treaties(solr_docs):
     for elis_id, doc in solr_docs.items():
-        for orig_field, backlink_field in FIELDS_MAPPING.items():
+        for field_name in REFERENCE_MAPPING:
+            if field_name in doc:
+                doc[field_name] = [ref for ref in doc[field_name] if ref in solr_docs]
+        solr_docs[elis_id] = dict((k, v) 
+            for k, v in solr_docs[elis_id].items() if not isinstance(v, list) or any(v))
+    
+
+def add_back_links(solr_docs):
+    for elis_id, doc in solr_docs.items():
+        for orig_field, backlink_field in REFERENCE_MAPPING.items():
             if orig_field in doc:
                 for reference in doc[orig_field]:
                     if reference in solr_docs:
                         solr_docs[reference].setdefault(backlink_field, [])
                         solr_docs[reference][backlink_field].append(elis_id)
-          
 
 if __name__ == '__main__':
     import sys
@@ -333,5 +333,6 @@ if __name__ == '__main__':
                 treaty['source'] = 'elis'
                 new_solr_docs[elis_id] = treaty
     
+    clean_referred_treaties(new_solr_docs)
     add_back_links(new_solr_docs)
     solr_add_docs(solr, new_solr_docs.values())
