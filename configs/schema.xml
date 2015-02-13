@@ -186,7 +186,7 @@
     <field name="decType" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="decStatus" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="decNumber" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="decTreatyId" type="int" indexed="true" stored="true" multiValued="true"/>
+    <field name="decTreatyId" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="decPublishDate" type="tdate" indexed="true" stored="true" multiValued="true"/>
     <field name="decUpdateDate" type="tdate" indexed="true" stored="true" multiValued="true"/>
     <field name="decMeetingId" type="int" indexed="true" stored="true" multiValued="true"/>
