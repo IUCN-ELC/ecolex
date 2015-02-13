@@ -1,39 +1,60 @@
 var _form_data = null;
 
 $(document).ready(function () {
-    // $('[data-filter]').on('click', function() {
-    // 	target = $(this).data('filter')
-    // 	target = $(target);
-    // 	$(this).toggleClass('active');
+    $('[data-filter]').on('click', function() {
+      target = $(this).data('filter')
+      target = $(target);
+      $(this).toggleClass('active');
 
-    // 	if (target.attr('disabled')) {
-    // 		target.removeAttr('disabled');
-    // 	} else {
-    // 		target.attr('disabled', true);
-    // 	}
-    // });
+      if (target.attr('disabled')) {
+        target.removeAttr('disabled');
+      } else {
+        target.attr('disabled', true);
+      }
+    });
+
+   // reload results when the back button was pressed
+   $(window).on("popstate", function(e) {
+      // $(".search-form").deserialize(location.search.substring(1));
+      $(".search-form").deserialize(history.state);
+      submit(history.state);
+   });
+
 
     // initial form value
     var _initial_form_data = $('.search-form').serialize();
 
-    function submit() {
+    init = 0;
+    function push_and_submit() {
         var data = $('.search-form').serialize();
+        history.pushState(data , '', '?' + data);
+        submit(data);
+    }
+
+    function submit(data) {
         if (data != _initial_form_data) {
-            /*$.ajax({
+            $('main').block({ message: null });
+            $.ajax({
                 url: '/result/ajax?' + data,
                 format: 'JSON',
                 success: function (data) {
                     $('#layout-main').html(data.main);
                     $('#filters').html(data.sidebar);
                     _initial_form_data = data;
+                    $(".search-form").deserialize(history.state);
                     init_all();
+                    $('main').unblock();
+                },
+                error: function (e) {
+                    $('main').unblock();
                 }
-            });*/
-            $('.search-form').submit();
+            });
+            //$('.search-form').submit();
         } else {
             console.log('No new data');
         }
     }
+
 
     function init_all() {
         // initialize tooltips
@@ -68,7 +89,7 @@ $(document).ready(function () {
             var form_id = $(max).data('formid');
             $(form_id).val($(max).val());
 
-            submit();
+            push_and_submit();
           });
 
         // Year inputs
@@ -110,7 +131,7 @@ $(document).ready(function () {
 
                 $(formid).val(select.val());
                 // submit now for now
-                submit();
+                push_and_submit();
             },
             onDropdownShown: function(e) {
                 search = $(e.target).find('.multiselect-search').focus();
@@ -128,7 +149,7 @@ $(document).ready(function () {
             }
             $('#id_type').val(current);
             // submit now for now
-            submit();
+            push_and_submit();
         });
 
         // Treaty -> Type of Document/Field of application filter
@@ -144,7 +165,7 @@ $(document).ready(function () {
                 });
                 $(form_id).val(current);
                 // submit now for now
-                submit();
+                push_and_submit();
             });
 
         // Year controls
@@ -152,7 +173,7 @@ $(document).ready(function () {
             var form_id = $(this).data('formid');
             $(form_id).val($(this).val());
             // submit le form
-            submit();
+            push_and_submit();
         });
 
         // Sortby controls
@@ -160,7 +181,7 @@ $(document).ready(function () {
             e.preventDefault();
             var value = $(this).data('sortby');
             $('#id_sortby').val(value);
-            submit();
+            push_and_submit();
         });
 
         // Reset button
@@ -176,7 +197,7 @@ $(document).ready(function () {
             $('#id_q').val(data.q);
             $('#id_type').val(data.type);
 
-            submit();
+            push_and_submit();
         });
     }
 
