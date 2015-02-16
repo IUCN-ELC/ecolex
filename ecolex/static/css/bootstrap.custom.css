@@ -2271,8 +2271,7 @@ select[multiple].form-group-lg .form-control {
     padding-top: 6px;
   }
 }
-.btn,
-.search-form button {
+.btn {
   display: inline-block;
   margin-bottom: 0;
   font-weight: normal;
@@ -2418,8 +2417,7 @@ fieldset[disabled] .btn-primary.active {
   color: #1c5479;
   background-color: #ffffff;
 }
-.btn-success,
-.search-form button {
+.btn-success {
   color: #ffffff;
   background-color: #1cb54b;
   border-color: #1cb54b;
