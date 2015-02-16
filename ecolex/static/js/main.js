@@ -22,7 +22,7 @@ $(document).ready(function () {
       }
       // $(".search-form").deserialize(location.search.substring(1));
       $(".search-form").deserialize(history.state.data);
-      submit(history.state);
+      submit(history.state.data);
    });
 
 
