@@ -308,7 +308,7 @@ class Queryset(object):
                                   facets['decTreatyId'].keys())
 
     def get_suggested_text(self):
-        return self._suggested_text or ''
+        return self._suggested_text
 
     def count(self):
         if not self._hits:
@@ -353,7 +353,7 @@ def parse_facets(facets):
 
 def parse_suggestions(solr_suggestions):
     if not solr_suggestions or not any(solr_suggestions['suggestions']):
-        return None
+        return ''
 
     return solr_suggestions['suggestions'][-1]
 
