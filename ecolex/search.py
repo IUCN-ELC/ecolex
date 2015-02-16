@@ -31,7 +31,7 @@ class ObjectNormalizer:
         return self.solr.get('id')
 
     def document_id(self):
-        return self.solr.get(self.ID_FIELD)
+        return first(self.solr.get(self.ID_FIELD))
 
     def title(self):
         for title_field in self.TITLE_FIELDS:
@@ -175,9 +175,10 @@ class Treaty(ObjectNormalizer):
         for field, label in self.REFERENCE_FIELDS.items():
             values = [v for v in self.solr.get(field, [])]
             if values and any(values):
-               ids.update(values)
+                ids.update(values)
 
         return ids
+
     def references(self):
         data = {}
         for field, label in self.REFERENCE_FIELDS.items():
@@ -208,9 +209,6 @@ class Decision(ObjectNormalizer):
 
     def status(self):
         return first(self.solr.get('decStatus'), "unknown")
-
-    def number(self):
-        return first(self.solr.get('decNumber'))
 
 
 class Queryset(object):
@@ -266,7 +264,7 @@ class Queryset(object):
         results = get_treaties_by_id(id_name, ids_list)
         return dict(
             (r.solr.get(id_name, -1),
-             r.title() + "(" +  str(r.date()) + ")") for r in results)
+             r.title() + "(" + str(r.date()) + ")") for r in results)
 
     def get_facet_treaty_names(self):
         """ Returns map of names for treaties returned by the decTreaty facet.
@@ -274,7 +272,8 @@ class Queryset(object):
         facets = self.get_facets()
         if not facets.get('decTreatyId'):
             return {}
-        return self.get_treaty_names('trInformeaId', facets['decTreatyId'].keys())
+        return self.get_treaty_names('trInformeaId',
+                                     facets['decTreatyId'].keys())
 
     def count(self):
         if not self._hits:

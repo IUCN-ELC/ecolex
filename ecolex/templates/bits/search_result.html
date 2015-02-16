@@ -1,44 +1,40 @@
-{% if result.type == "decision" %}
-  <li class="search-result">
-    <h3 class="search-result-title">
-      <a href="{% url 'result' result.id %}"
-         title="{{ result.title|safe|striptags }}">{{ result.title|safe }}</a>
-    </h3>
+<li class="search-result">
+  <h3 class="search-result-title">
+    <a href="{% url 'result' result.id %}"
+       title="{{ result.title|safe|striptags }}">{{ result.title|safe }}</a>
+  </h3>
 
+  {% if result.type == "decision" %}
     <div class="search-result-details">
-      <strong>{{ result.type }}</strong> no:
-      <span> {{ result.number }} </span> |
-      <span class="label label-success">{{ result.status }} </span> 
+      <strong>{{ result.type }}</strong>
+      {% if result.document_id %}
+        no:<span> {{ result.document_id }} </span>{% endif %} |
+      <span class="label label-success">{{ result.status }} </span>
       {% if result.date %}
-        | <time>{{ result.date }}</time>
+        |
+        <time>{{ result.date }}</time>
       {% endif %}
 
       <!-- for debug. FIXME(catalinb): remove -->
       <p class="search-result-description" hidden> {{ result }}</p>
     </div>
     <p class="search-result-description">{# result.summary|safe #}</p>
-  </li>
 
-{% else %}
-
-  <li class="search-result">
-    <h3 class="search-result-title">
-      <a href="{% url 'result' result.id %}"
-         title="{{ result.title|safe|striptags }}">{{ result.title|safe }}</a>
-    </h3>
+  {% else %}
 
     <div class="search-result-details">
-      <strong>{{ result.type }}</strong> no:
-      <span> {{ result.treaty_id }} </span> |
+      <strong>{{ result.type }}</strong>
+      {% if result.document_id %}
+        no:<span> {{ result.document_id }} </span>{% endif %} |
       <span>{{ result.jurisdiction }}</span>
       {% if result.date %}
-        | <time>{{ result.date }}</time>
+        |
+        <time>{{ result.date }}</time>
       {% endif %}
 
       <!-- for debug. FIXME(catalinb): remove -->
       <p class="search-result-description" hidden> {{ result }}</p>
     </div>
     <p class="search-result-description">{{ result.summary|safe }}</p>
-  </li>
-
-{% endif %}
+  {% endif %}
+</li>
