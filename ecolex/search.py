@@ -308,8 +308,7 @@ class Queryset(object):
                                   facets['decTreatyId'].keys())
 
     def get_suggested_text(self):
-        return "Suggested string: " + self._suggested_text \
-            if self._suggested_text else 'No suggestion (valid string)'
+        return self._suggested_text or ''
 
     def count(self):
         if not self._hits:

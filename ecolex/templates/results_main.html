@@ -2,9 +2,13 @@
 
 {% include 'bits/type_facet.html' %}
 
+{% if text_suggestion and results.get_suggested_text %}
+<p class="clearfix">
+    Did you mean: <a href="?q={{ results.get_suggested_text }}"><em>{{ results.get_suggested_text }}</em></a>?
+</p>
+{% endif %}
 
 <p class="small clearfix">
-
   <!-- Ugly -->
   <span class="pull-left">
     Found
@@ -21,19 +25,6 @@
     {% include 'bits/sortby.html' %}
   </span>
 </p>
-
-{% if text_suggestion %}
-<pre>
-    {{ results.get_suggested_text}}
-</pre>
-{% endif %}
-
-{% if debug %}
-<pre>
-  {{ results.debug_result.debug_query }}
-  {{ results.debug_result.debug_params }}
-</pre>
-{% endif %}
 
 <hr>
 
