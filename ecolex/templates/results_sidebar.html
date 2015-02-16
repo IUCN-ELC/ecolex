@@ -64,9 +64,10 @@
 
   <div id="filter-global" class="collapse in">
     <h6>Keywords</h6>
-    <select id="keyword" multiple="multiple" data-formid="#id_keyword">
+    <input type="text" id="tagManager" class="tm-input" placeholder="Add some tag" />
+    <!-- <select id="keyword" multiple="multiple" data-formid="#id_keyword">
       {% include 'bits/select_facet.html' with facet=facets.docKeyword form_field=form.keyword %}
-    </select>
+    </select> -->
 
     {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
       <h6>Years</h6>
@@ -95,13 +96,6 @@
       </div>
     {% endif %}
   </div>
-</fieldset>
-
-<fieldset class="global-filter">
-  <h5>Test</h5>
-
-  <h6>Multiselect a pierdut</h6>
-  <input type="text" id="tagManager" class="tm-input" placeholder="Add some tag" />
 </fieldset>
 
 <input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">

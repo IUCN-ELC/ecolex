@@ -217,34 +217,17 @@ $(document).ready(function () {
           };
         };
          
-        var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-           'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-           'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-           'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-           'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-           'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-           'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-           'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-           'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-        ];
+        var states = ['Access right', 'Alien species', 'Animal health', 'Animal production', 'Biology',
+           'Birds', 'Climate change', 'Environment', 'Farming', 'Health', 'Insects', 'Marine area',
+           'Navigation', 'Public forrest', 'Reptiles', 'Turism', 'Wild fauna'
+        ]; 
 
         $('.tm-input').each(function() {
+            var self = this;
             $(this).tagsManager({
                 tagsContainer: $('<ul/>', { class: 'tm-taglist' }),
                 tagCloseIcon: '',
             })
-
-            $(this).typeahead({
-              hint: true,
-              highlight: true,
-              minLength: 1
-            },
-            {
-              name: 'states',
-              displayKey: 'value',
-              source: substringMatcher(states)
-            });
-
 
             $(this).wrap( $('<div/>', { class: 'tm-wrapper' }) );
             var label = $('<label/>', {
@@ -253,29 +236,22 @@ $(document).ready(function () {
                 // 'text': $(this).attr('placeholder')
             });
             $(this).before(label);
+
+            $(this).typeahead({
+              hint: false,
+              highlight: true,
+              minLength: 1,
+            },
+            {
+              name: 'states',
+              displayKey: 'value',
+              source: substringMatcher(states)
+            });
+
+            $(this).on('blur', function() {
+                $(this).val('');
+            });
         });
-        
-        // var tagApi = $('#tagManager').tagsManager({
-        //     prefilled: ['Arkansas', 'Wyoming'],
-        //     tagsContainer: $('<ul/>', { class: 'tm-taglist' }),
-        //     // tagClass: '',
-        //     tagCloseIcon: '',
-        // }); 
-        // $('#the-basics .typeahead').typeahead({
-        //   hint: true,
-        //   highlight: true,
-        //   minLength: 1
-        // },
-        // {
-        //   name: 'states',
-        //   displayKey: 'value',
-        //   source: states.ttAdapter()
-        //   // source: substringMatcher(states)
-        // }).on('typeahead:selected', function (e, d) {
-        //     tagApi.tagsManager('pushTag', d.value);
-        // });
-
-
 
     }
 

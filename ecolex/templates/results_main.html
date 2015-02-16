@@ -56,8 +56,14 @@
          {% if page.number == page.pages %}disabled{% endif %}>Next</a>
       
     </div>
-  {% endif %}
     
-  <div>Page {{ page.number }} of {{ page.pages }}</div>
+  Page {{ page.number }} of {{ page.pages }}
+
+  {% else %}
+
+  No more results
+
+  {% endif %}
+
 
 </div>
