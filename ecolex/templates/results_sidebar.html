@@ -20,12 +20,12 @@
       </ul>
 
       <h6>Participants</h6>
-      <select id="tr_party" multiple="multiple" data-formid="#id_tr_party">
+      <select id="tr_party" multiple="multiple" data-formid="#id_tr_party" hidden>
         {% include 'bits/select_facet.html' with facet=facets.partyCountry form_field=form.tr_party %}
       </select>
 
       <h6>Subject</h6>
-      <select id="tr_subject" multiple="multiple" data-formid="#id_tr_subject">
+      <select id="tr_subject" multiple="multiple" data-formid="#id_tr_subject" hidden>
         {% include 'bits/select_facet.html' with facet=facets.trSubject form_field=form.tr_subject %}
       </select>
     </div>
@@ -51,7 +51,7 @@
       </ul>
 
       <h6>Treaty</h6>
-      <select id="dec_treaty" multiple="multiple" data-formid="#id_dec_treaty">
+      <select id="dec_treaty" multiple="multiple" data-formid="#id_dec_treaty" hidden>
         {% include 'bits/select_facet.html' with facet=facets.decTreatyId type_map=dec_treaty_names form_field=form.dec_treaty %}
       </select>
     </div>
@@ -64,7 +64,7 @@
 
   <div id="filter-global" class="collapse in">
     <h6>Keywords</h6>
-    <select id="keyword" multiple="multiple" data-formid="#id_keyword">
+    <select id="keyword" multiple="multiple" data-formid="#id_keyword" hidden>
       {% include 'bits/select_facet.html' with facet=facets.docKeyword form_field=form.keyword %}
     </select>
 
