@@ -15,8 +15,13 @@ $(document).ready(function () {
 
    // reload results when the back button was pressed
    $(window).on("popstate", function(e) {
+      // history states are tagged in order to ignore popstate events
+      // triggered on page load.
+      if (history.state.tag !== "ecolex") {
+        return;
+      }
       // $(".search-form").deserialize(location.search.substring(1));
-      $(".search-form").deserialize(history.state);
+      $(".search-form").deserialize(history.state.data);
       submit(history.state);
    });
 
@@ -27,7 +32,7 @@ $(document).ready(function () {
     init = 0;
     function push_and_submit() {
         var data = $('.search-form').serialize();
-        history.pushState(data , '', '?' + data);
+        history.pushState({data : data, tag: 'ecolex'} , '', '?' + data);
         submit(data);
     }
 
@@ -41,7 +46,7 @@ $(document).ready(function () {
                     $('#layout-main').html(data.main);
                     $('#filters').html(data.sidebar);
                     _initial_form_data = data;
-                    $(".search-form").deserialize(history.state);
+                    $(".search-form").deserialize(history.state.data);
                     init_all();
                     $('main').unblock();
                 },
