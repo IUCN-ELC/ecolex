@@ -77,6 +77,8 @@ class ObjectNormalizer:
             res.append(entry)
         return res
 
+    __repr__ = title
+
 
 class Treaty(ObjectNormalizer):
     ID_FIELD = 'trElisId'
@@ -193,8 +195,6 @@ class Treaty(ObjectNormalizer):
     def informea_id(self):
         return first(self.solr.get('trInformeaId'))
 
-    __repr__ = full_title
-
 
 class Decision(ObjectNormalizer):
     ID_FIELD = 'decNumber'
@@ -303,7 +303,7 @@ class Queryset(object):
         if not facets.get('decTreatyId'):
             return []
         return get_treaties_by_id('trInformeaId',
-                                     facets['decTreatyId'].keys())
+                                  facets['decTreatyId'].keys())
 
     def count(self):
         if not self._hits:
