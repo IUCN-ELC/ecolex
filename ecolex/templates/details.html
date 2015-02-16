@@ -8,9 +8,7 @@
     <h1>{{ document.title }}</h1>
 
     <dl>
-      {% if document.type == 'treaty' %}
-      <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id }}</dd>
-      {% endif %}
+      <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
       {% if document.type == 'treaty' %}
       <dt>Field of application</dt> <dd>{{ document.field_of_application }}</dd>
@@ -47,7 +45,7 @@
             <a target="_blank" href="{{ url }}">{{ url }}</a><br>
             {% endfor %}
           </dd>
-        {% elif entry.type == "abstract" %}
+        {% elif entry.type == "text" %}
           <dd>
             {% for abs in entry.value %}
             <p>{{ abs|safe }}</p>

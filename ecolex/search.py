@@ -101,9 +101,9 @@ class Treaty(ObjectNormalizer):
         #('trLinkToFullTextOther', 'Link to full text (other)', 'url'),
         ('trLanguageOfDocument', 'Language', ''),
         ('trLanguageOfTranslation', 'Translation', ''),
-        ('trAbstract', 'Abstract', 'abstract'),
-        # display comments the same way as abstracts
-        ('trComment', 'Comment', 'abstract'),
+        ('trAbstract', 'Abstract', 'text'),
+        # display comments the same way as texts
+        ('trComment', 'Comment', 'text'),
         # keywords are considered safe.
         ('trSubject', 'Subject', 'keyword'),
         ('trKeyword', 'Keywords', 'keyword'),
@@ -195,11 +195,12 @@ class Decision(ObjectNormalizer):
     DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
     OPTIONAL_INFO_FIELDS = [
         ('decMeetingTitle', 'Meeting Title', ''),
+        ('decMeetingUrl', 'Meeting URL', 'url'),
         ('decTreatyId', 'Treaty', 'treaty'),
-        ('decNumber', 'Decision Number', ''),
         ('decLink', 'Link to decision', 'url'),
         ('decDocUrl', 'Link to full text', 'url'),
-        ('decSummary', 'Summary', 'abstract'),
+        ('decSummary', 'Summary', 'text'),
+        ('decBody', 'Decision Body', 'text'),
         ('decKeyword', 'Keywords', 'keyword'),
         ('decUpdateDate', 'Date of Update', 'date'),
     ]
