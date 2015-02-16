@@ -204,7 +204,83 @@ $(document).ready(function () {
 
             push_and_submit();
         });
+
+        // Tag manager
+
+        var states = new Bloodhound({
+          name: 'animals',
+          local: [{ val: 'dog' }, { val: 'pig' }, { val: 'moose' }],
+          // remote: 'http://example.com/animals?q=%QUERY',
+          datumTokenizer: function(d) {
+            return Bloodhound.tokenizers.whitespace(d.val);
+          },
+          queryTokenizer: Bloodhound.tokenizers.whitespace
+        });
+
+        states.initialize();
+
+        var substringMatcher = function(strs) {
+          return function findMatches(q, cb) {
+            var matches, substrRegex;
+        
+            // an array that will be populated with substring matches
+            matches = [];
+        
+            // regex used to determine if a string contains the substring `q`
+            substrRegex = new RegExp(q, 'i');
+        
+            // iterate through the pool of strings and for any string that
+            // contains the substring `q`, add it to the `matches` array
+            $.each(strs, function(i, str) {
+              if (substrRegex.test(str)) {
+                // the typeahead jQuery plugin expects suggestions to a
+                // JavaScript object, refer to typeahead docs for more info
+                matches.push({ value: str });
+              }
+            });
+        
+            cb(matches);
+          };
+        };
+         
+        var states = ['Access right', 'Alien species', 'Animal health', 'Animal production', 'Biology',
+           'Birds', 'Climate change', 'Environment', 'Farming', 'Health', 'Insects', 'Marine area',
+           'Navigation', 'Public forrest', 'Reptiles', 'Turism', 'Wild fauna'
+        ]; 
+
+        $('.tm-input').each(function() {
+            var self = this;
+            $(this).tagsManager({
+                tagsContainer: $('<ul/>', { class: 'tm-taglist' }),
+                tagCloseIcon: '',
+            })
+
+            $(this).wrap( $('<div/>', { class: 'tm-wrapper' }) );
+            var label = $('<label/>', {
+                'class': 'tm-label',
+                'for': $(this).attr('id'),
+                // 'text': $(this).attr('placeholder')
+            });
+            $(this).before(label);
+
+            $(this).typeahead({
+              hint: false,
+              highlight: true,
+              minLength: 1,
+            },
+            {
+              name: 'states',
+              displayKey: 'value',
+              source: substringMatcher(states)
+            });
+
+            $(this).on('blur', function() {
+                $(this).val('');
+            });
+        });
+
     }
 
     init_all();
 });
+    
