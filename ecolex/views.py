@@ -108,7 +108,10 @@ class SearchResults(SearchView):
 
         # a map of (treatyId -> treatyNames) for treaties which are referenced
         # by decisions in the current result set
-        ctx['dec_treaty_names'] = results.get_facet_treaty_names()
+        all_treaties = results.get_facet_treaty_names()
+        ctx['dec_treaty_names'] = {
+            t.informea_id(): t for t in all_treaties
+        }
 
         ctx['page'] = self.page_details(page, results)
         self.update_form_choices(ctx['facets'])
@@ -149,15 +152,20 @@ class ResultDetails(SearchView):
         context['document'] = results.first()
         context['results'] = results
         context['debug'] = settings.DEBUG
-        context['dec_treaty_names'] = results.get_facet_treaty_names()
+        if context['document'].type == 'decision':
+            treaties = context['document'].solr.get('decTreatyId', [])
+            all_treaties = results.get_facet_treaty_names()
+            context['all_treaties'] = [
+                t for t in all_treaties if t.solr['trInformeaId'] in treaties
+            ]
         if context['document'].type == 'treaty':
             ids = context['document'].get_references_ids_set()
             references_info = results.get_references_info('trElisId', ids)
-            context['references_display_names'] = results.\
+            context['references_display_names'] = results. \
                 get_references_display_names(references_info)
-            context['references_solr_ids'] = results.\
+            context['references_solr_ids'] = results. \
                 get_references_solr_ids(references_info)
-            context['references_titles'] = results.\
+            context['references_titles'] = results. \
                 get_references_titles(references_info)
         return context
 

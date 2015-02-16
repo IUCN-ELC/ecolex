@@ -37,6 +37,12 @@
   <section id="details">
     <h2 class="section-title">Details</h2>
     <dl>
+      {% if document.type == 'decision' %}
+        {% for treaty in all_treaties %}
+        <dt>Treaty</dt>
+        <dd><a href="{% url 'result' treaty.id %}">{{ treaty.full_title }}</a></dd>
+        {% endfor %}
+      {% endif %}
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>
         {% if entry.type == "url" %}
@@ -55,8 +61,6 @@
           <dd>{{ entry.value | join_by:", " | safe }}</dd>
         {% elif entry.type == "summary" %}
           <dd>{{ entry.value | safe }}</dd>
-        {% elif entry.type == "treaty" %}
-          <dd>{{ dec_treaty_names|lookup:entry.value.0 }}</dd>
         {% else %}
           <dd>{{ entry.value | join_by:", " }}</dd>
         {% endif %}

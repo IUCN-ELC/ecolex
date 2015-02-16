@@ -187,6 +187,14 @@ class Treaty(ObjectNormalizer):
                 data[label] = values
         return data
 
+    def full_title(self):
+        return '{} ({})'.format(self.title(), self.date())
+
+    def informea_id(self):
+        return first(self.solr.get('trInformeaId'))
+
+    __repr__ = full_title
+
 
 class Decision(ObjectNormalizer):
     ID_FIELD = 'decNumber'
@@ -196,7 +204,6 @@ class Decision(ObjectNormalizer):
     OPTIONAL_INFO_FIELDS = [
         ('decMeetingTitle', 'Meeting Title', ''),
         ('decMeetingUrl', 'Meeting URL', 'url'),
-        ('decTreatyId', 'Treaty', 'treaty'),
         ('decLink', 'Link to decision', 'url'),
         ('decDocUrl', 'Link to full text', 'url'),
         ('decSummary', 'Summary', 'text'),
@@ -281,7 +288,6 @@ class Queryset(object):
         return dict((ref_id, ref_info[2])
                     for ref_id, ref_info in references.items())
 
-
     def get_treaty_names(self, id_name, ids_list):
         if not any(ids_list):
             return {}
@@ -295,11 +301,9 @@ class Queryset(object):
         """
         facets = self.get_facets()
         if not facets.get('decTreatyId'):
-            return {}
-        results = get_treaties_by_id('trInformeaId', facets['decTreatyId'].keys())
-        return dict(
-            (r.solr.get('trInformeaId', -1),
-             r.title() + "(" +  str(r.date()) + ")") for r in results)
+            return []
+        return get_treaties_by_id('trInformeaId',
+                                     facets['decTreatyId'].keys())
 
     def count(self):
         if not self._hits:
@@ -506,5 +510,4 @@ def get_document(document_id):
                     filters={'decTreatyId': ''})
     if not len(result):
         return None
-
     return result
