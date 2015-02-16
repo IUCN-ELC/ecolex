@@ -150,8 +150,9 @@ class ResultDetails(SearchView):
         context['results'] = results
         context['debug'] = settings.DEBUG
         context['dec_treaty_names'] = results.get_facet_treaty_names()
-        ids = context['document'].get_references_ids_set()
-        context['reference_names'] = results.get_treaty_names('trElisId', ids)
+        if context['document'].type == 'treaty':
+            ids = context['document'].get_references_ids_set()
+            context['reference_names'] = results.get_treaty_names('trElisId', ids)
         return context
 
 
