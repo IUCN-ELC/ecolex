@@ -220,11 +220,11 @@ class Decision(ObjectNormalizer):
 
 
 class Queryset(object):
-    def __init__(self, query=None, filters=None, rows=None, **kwargs):
+    def __init__(self, query=None, filters=None, **kwargs):
         self.query = query
         self.filters = filters
         self.start = 0
-        self.rows = rows or PERPAGE
+        self.rows = kwargs.get('rows') or PERPAGE
         self.maxscore = None
         self._result_cache = None
         self._hits = None
