@@ -205,9 +205,9 @@ class Decision(ObjectNormalizer):
         ('decMeetingTitle', 'Meeting Title', ''),
         ('decMeetingUrl', 'Meeting URL', 'url'),
         ('decLink', 'Link to decision', 'url'),
-        ('decDocUrl', 'Link to full text', 'url'),
         ('decSummary', 'Summary', 'text'),
         ('decBody', 'Decision Body', 'text'),
+        ('decDocUrls', 'Documents', 'url'),
         ('decKeyword', 'Keywords', 'keyword'),
         ('decUpdateDate', 'Date of Update', 'date'),
     ]
