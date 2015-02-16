@@ -5238,7 +5238,8 @@ button.close {
   line-height: 1.4;
 }
 .search-result .hl {
-  background-color: pink;
+  font-style: normal;
+  font-weight: bold;
 }
 .search-result-title {
   margin-top: auto;
@@ -5250,9 +5251,13 @@ button.close {
 }
 .search-result-details {
   margin: 1px 0;
+  color: #333;
+  font-weight: bold;
 }
 .search-result-description {
   margin-bottom: auto;
+  max-height: 38px;
+  overflow: hidden;
 }
 html {
   height: 100%;
