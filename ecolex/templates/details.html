@@ -103,7 +103,8 @@
           <dt>{{ label }}</dt>
             {% for entry in value %}
             <dd>
-                <a href="">{{ reference_names|lookup:entry|parse_date }}</a>
+                <a href="url 'details' references_solr_ids|lookup:entry">
+                    {{ references_display_names|lookup:entry }}</a>
             </dd>
             {% endfor %}
         </dl>

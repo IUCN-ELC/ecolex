@@ -152,7 +152,13 @@ class ResultDetails(SearchView):
         context['dec_treaty_names'] = results.get_facet_treaty_names()
         if context['document'].type == 'treaty':
             ids = context['document'].get_references_ids_set()
-            context['reference_names'] = results.get_treaty_names('trElisId', ids)
+            references_info = results.get_references_info('trElisId', ids)
+            context['references_display_names'] = results.\
+                get_references_display_names(references_info)
+            context['references_solr_ids'] = results.\
+                get_references_solr_ids(references_info)
+            context['references_titles'] = results.\
+                get_references_titles(references_info)
         return context
 
 
