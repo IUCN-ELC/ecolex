@@ -22,6 +22,12 @@
   </span>
 </p>
 
+{% if text_suggestion %}
+<pre>
+    {{ results.get_suggested_text}}
+</pre>
+{% endif %}
+
 {% if debug %}
 <pre>
   {{ results.debug_result.debug_query }}

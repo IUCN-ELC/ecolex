@@ -229,6 +229,7 @@ class Queryset(object):
         self._result_cache = None
         self._hits = None
         self._debug_response = None
+        self._suggested_text = None
         self._facets = {}
         self._stats = {}
         self._query_kwargs = kwargs
@@ -249,6 +250,7 @@ class Queryset(object):
         self.maxscore = (
             responses.maxscore if hasattr(responses, 'maxscore') else None
         )
+        self._suggested_text = parse_suggestions(responses.spellcheck)
         self._debug_response = responses
         return self._result_cache
 
@@ -305,6 +307,10 @@ class Queryset(object):
         return get_treaties_by_id('trInformeaId',
                                   facets['decTreatyId'].keys())
 
+    def get_suggested_text(self):
+        return "Suggested string: " + self._suggested_text \
+            if self._suggested_text else 'No suggestion (valid string)'
+
     def count(self):
         if not self._hits:
             self.fetch()
@@ -344,6 +350,13 @@ def parse_result(hit, responses):
 
 def parse_facets(facets):
     return {k: dict(zip(v[0::2], v[1::2])) for k, v in facets.items()}
+
+
+def parse_suggestions(solr_suggestions):
+    if not solr_suggestions or not any(solr_suggestions['suggestions']):
+        return None
+
+    return solr_suggestions['suggestions'][-1]
 
 
 def escape_query(query):
@@ -490,6 +503,11 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         params.update(get_hl())
     params['sort'] = get_sortby(sortby)
     params.update(get_relevancy())
+    #add spellcheck
+    params.update({
+        'spellcheck': 'true',
+        'spellcheck.collate': 'true',
+    })
     if settings.DEBUG:
         params['fl'] = '*,score'
         params['debug'] = True

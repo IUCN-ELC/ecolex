@@ -108,6 +108,7 @@ GA_CODE = ''
 
 # Debug
 DEBUG = True
+TEXT_SUGGESTION = False
 
 # Local settings
 try:

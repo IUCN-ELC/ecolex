@@ -35,6 +35,7 @@ class SearchView(TemplateView):
 
         ctx['form'] = self.form = SearchForm(data=data)
         ctx['debug'] = settings.DEBUG
+        ctx['text_suggestion'] = settings.TEXT_SUGGESTION
         self.query = self.form.data.get('q', '').strip() or '*'
 
         # Compute filters
