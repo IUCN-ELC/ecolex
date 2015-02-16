@@ -46,7 +46,7 @@ $(document).ready(function () {
                     $('#layout-main').html(data.main);
                     $('#filters').html(data.sidebar);
                     _initial_form_data = data;
-                    $(".search-form").deserialize(history.state.data);
+                    $(".search-form").deserialize(data);
                     init_all();
                     $('main').unblock();
                 },
@@ -128,7 +128,6 @@ $(document).ready(function () {
             numberDisplayed: 1,
             nonSelectedText: 'Nothing selected',
             enableCaseInsensitiveFiltering: true,
-            // filterPlaceholder: "porn",
             maxHeight: 240,
             onDropdownHidden: function (e) {
                 var select = $(this.$select);
@@ -143,8 +142,35 @@ $(document).ready(function () {
             }
         });
 
-        // Type filter - ugly
-        $('.filter-type button').click(function (e) {
+        var type_filter_handler_base = function (e) {
+            // Type filter - ugly
+            $('.filter-type button').click(function (e) {
+                var current = $('#id_type').val() || [];
+                var toggle_value = $(this).data('value');
+                if (current.indexOf(toggle_value) == -1) {
+                    current.push(toggle_value);
+                } else {
+                    current.splice(current.indexOf(toggle_value), 1);
+                }
+                $('#id_type').val(current);
+            });
+        };
+
+       // FIXME(catalinb): duplicate code. Ship it!
+       $('.filter-type.homepage button').click(function (e) {
+            var current = $('#id_type').val() || [];
+            var toggle_value = $(this).data('value');
+            if (current.indexOf(toggle_value) == -1) {
+                current.push(toggle_value);
+            } else {
+                current.splice(current.indexOf(toggle_value), 1);
+            }
+            $('#id_type').val(current);
+            // submit now for now
+            $(".search-form").submit();
+        });
+
+        $('.filter-type.results-page button').click(function (e) {
             var current = $('#id_type').val() || [];
             var toggle_value = $(this).data('value');
             if (current.indexOf(toggle_value) == -1) {
@@ -156,6 +182,8 @@ $(document).ready(function () {
             // submit now for now
             push_and_submit();
         });
+
+        console.log("set");
 
         // Treaty -> Type of Document/Field of application filter
         // COP Decision -> Decision Type, Decision Status /Decision Treaty
