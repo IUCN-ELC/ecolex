@@ -26,3 +26,15 @@ class SearchForm(Form):
     dec_treaty = MultipleChoiceField()
 
     sortby = CharField(initial='')
+
+    def has_treaty(self):
+        return 'treaty' in self.data.get('type', []) or any(
+            self.data.get(f) for f in
+            ('tr_type', 'tr_field', 'tr_party', 'tr_subject')
+        )
+
+    def has_decision(self):
+        return 'decision' in self.data.get('type', []) or any(
+            self.data.get(f) for f in
+            ('dec_type', 'dec_status', 'dec_treaty')
+        )

@@ -1,12 +1,12 @@
 {% load tags %}
 <!-- <h4>Refine search</h4> -->
 
-{% if not form.type.data or 'treaty' in form.type.data and facets.type.treaty > 0 %}
+{% if not form.type.data or form.has_treaty %}
   <fieldset class="special-filter">
-    <h5 data-toggle="collapse" {% if not form.type.data %}class="collapsed"{% endif %}
+    <h5 data-toggle="collapse" {% if not form.has_treaty %}class="collapsed"{% endif %}
         data-target="#filter-treaties">Treaty filters</h5>
 
-    <div id="filter-treaties" class="collapse {% if form.type.data %}in{% endif %}">
+    <div id="filter-treaties" class="collapse {% if form.has_treaty %}in{% endif %}">
       {% if facets.trTypeOfText %}
         <h6>Type of document</h6>
         <ul class="filter-treaty" data-formid="#id_tr_type">
@@ -32,12 +32,12 @@
   </fieldset>
 {% endif %}
 
-{% if not form.type.data or 'decision' in form.type.data and facets.type.decision > 0 %}
+{% if not form.type.data or form.has_decision %}
   <fieldset class="special-filter">
-    <h5 data-toggle="collapse" {% if not form.type.data %}class="collapsed"{% endif %}
+    <h5 data-toggle="collapse" {% if not form.has_decision %}class="collapsed"{% endif %}
         data-target="#filter-cop-decisions">COP Decision filters</h5>
 
-    <div id="filter-cop-decisions" class="collapse {% if form.type.data %}in{% endif %}">
+    <div id="filter-cop-decisions" class="collapse {% if form.has_decision %}in{% endif %}">
       {% if facets.decType %}
         <h6>Type of document</h6>
         <ul class="filter-decision" data-formid="#id_dec_type">
