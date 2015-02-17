@@ -54,7 +54,7 @@
         {% elif entry.type == "text" %}
           <dd>
             {% for abs in entry.value %}
-            <p>{{ abs|safe }}</p>
+            {{ abs|safe }}<br>
             {% endfor %}
           </dd>
         {% elif entry.type == "keyword" %}
