@@ -64,7 +64,13 @@
 
   <div id="filter-global" class="collapse in">
     <h6>Keywords</h6>
-    <input type="text" id="tagManager" class="tm-input" placeholder="Add Keywords" />
+    <div id="keyword-filter" class="tag-select">
+      <select id="options" hidden>
+        {% include 'bits/fancy_select.html' with facet=facets.docKeyword form_field=form.keyword %}
+      </select>
+      <input type="text" class="tm-input" data-formid="#id_keyword"/>
+    </div>
+
     <!--<select id="keyword" multiple="multiple" data-formid="#id_keyword" hidden>
       {% include 'bits/select_facet.html' with facet=facets.docKeyword form_field=form.keyword %}
     </select>-->
