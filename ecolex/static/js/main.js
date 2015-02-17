@@ -36,17 +36,18 @@ $(document).ready(function () {
         submit(data);
     }
 
-    function submit(data) {
-        if (data != _initial_form_data) {
+    function submit(serialized_form_data) {
+        if (serialized_form_data != _initial_form_data) {
             $('main').block({ message: null });
             $.ajax({
-                url: '/result/ajax?' + data,
+                url: '/result/ajax?' + serialized_form_data,
                 format: 'JSON',
                 success: function (data) {
                     $('#layout-main').html(data.main);
                     $('#filters').html(data.sidebar);
-                    _initial_form_data = data;
-                    $(".search-form").deserialize(data);
+                    $("#search-form-inputs").html(data.form_inputs);
+                    _initial_form_data = serialized_form_data;
+                    $(".search-form").deserialize(serialized_form_data);
                     init_all();
                     $('main').unblock();
                 },

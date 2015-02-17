@@ -128,7 +128,9 @@ class SearchResultsAjax(SearchResults):
         ctx = self.get_context_data(**kwargs)
         main = render_to_string('results_main.html', ctx)
         sidebar = render_to_string('results_sidebar.html', ctx)
-        return JsonResponse(dict(main=main, sidebar=sidebar))
+        search_form_inputs = render_to_string('bits/hidden_form.html', ctx);
+        return JsonResponse(dict(main=main, sidebar=sidebar,
+            form_inputs=search_form_inputs))
 
 
 class PageView(SearchView):
