@@ -268,35 +268,10 @@ class Queryset(object):
             self.fetch()
         return self._stats.get('stats_fields')
 
-    def get_references_info(self, id_name, ids_list):
-        """Get title, date of document and solr id for a list
-            of reference ids.
-        """
+    def get_referred_treaties(self, id_name, ids_list):
         if not any(ids_list):
             return {}
-        results = get_treaties_by_id(id_name, ids_list)
-        return dict((r.solr.get(id_name, -1),
-                     (r.title(), str(r.date()), r.id())) for r in results)
-
-    def get_references_titles(self, references):
-        return dict((ref_id, ref_info[0])
-                    for ref_id, ref_info in references.items())
-
-    def get_references_display_names(self, references):
-        return dict((ref_id, ref_info[0] + "(" + ref_info[1] + ")")
-                    for ref_id, ref_info in references.items())
-
-    def get_references_solr_ids(self, references):
-        return dict((ref_id, ref_info[2])
-                    for ref_id, ref_info in references.items())
-
-    def get_treaty_names(self, id_name, ids_list):
-        if not any(ids_list):
-            return {}
-        results = get_treaties_by_id(id_name, ids_list)
-        return dict(
-            (r.solr.get(id_name, -1),
-             r.title() + "(" + str(r.date()) + ")") for r in results)
+        return get_treaties_by_id(id_name, ids_list)
 
     def get_facet_treaty_names(self):
         """ Returns map of names for treaties returned by the decTreaty facet.

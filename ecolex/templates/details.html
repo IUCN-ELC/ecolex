@@ -97,16 +97,17 @@
   </section>
   {% endif %}
 
-  {% if document.type == 'treaty' and document.references %}
+  {% if document.type == 'treaty' and references %}
   <section id="treaty-references">
     <h2 class="section-title">Treaty references</h2>
-      {% for label, value in document.references.items%}
+      {% for label, treaties in references.items %}
         <dl class="dl-horizontal references">
           <dt>{{ label }}</dt>
-            {% for entry in value %}
+            {% for treaty in treaties %}
             <dd>
-                <a href="{% url 'result' references_solr_ids|lookup:entry %}">
-                    {{ references_display_names|lookup:entry }}</a>
+                <a href="{% url 'result' treaty.id %}">
+                    {{ treaty.title }}</a>
+                {{ treaty.date }}
             </dd>
             {% endfor %}
         </dl>

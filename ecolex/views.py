@@ -163,13 +163,17 @@ class ResultDetails(SearchView):
             ]
         if context['document'].type == 'treaty':
             ids = context['document'].get_references_ids_set()
-            references_info = results.get_references_info('trElisId', ids)
-            context['references_display_names'] = results. \
-                get_references_display_names(references_info)
-            context['references_solr_ids'] = results. \
-                get_references_solr_ids(references_info)
-            context['references_titles'] = results. \
-                get_references_titles(references_info)
+            treaties_info = results.get_referred_treaties('trElisId', ids)
+            references_mapping = context['document'].references()
+            if references_mapping:
+                context['references'] = {}
+                for label, treaties_list in references_mapping.items():
+                    if treaties_list and any(treaties_list):
+                        context['references'].setdefault(label, [])
+                        context['references'][label].\
+                            extend([t for t in treaties_info
+                                    if t.solr.get('trElisId', -1) in treaties_list])
+                        context['references'][label].sort(key = lambda x: x.date())
         return context
 
 
