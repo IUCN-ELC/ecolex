@@ -1,15 +1,15 @@
 {% for type,count in facet.items %}
   {% if show_empty or count > 0 %}
   <li>
-    <label for="{{ form_field.name }}_{{ type }}">
+    <label class="facet-checkbox" for="{{ form_field.name }}_{{ type }}">
       <input type="checkbox"
              id="{{ form_field.name }}_{{ type }}"
              name="{{ form_field.name }}"
              value="{{ type }}"
              {% if type in form_field.data %}checked{% endif %}>
-      {{ type|capfirst }}
+      <span class="facet-text">{{ type|capfirst }}</span>
+      <span class="facet-counter">{{ count }}</span>
     </label>
-    <span class="facet-counter">{{ count }}</span>
   </li>
   {% endif %}
 {% endfor %}

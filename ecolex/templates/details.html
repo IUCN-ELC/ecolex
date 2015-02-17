@@ -54,11 +54,18 @@
         {% elif entry.type == "text" %}
           <dd>
             {% for abs in entry.value %}
-            {{ abs|safe }}<br>
+              <p class="abstract">{{ abs|safe }}</p>
             {% endfor %}
           </dd>
         {% elif entry.type == "keyword" %}
-          <dd>{{ entry.value | join_by:", " | safe }}</dd>
+          <dd>
+            <ul class="list-inline">
+            {% for value in entry.value %}
+              <li><span class="tag">{{ value }}</span></li>
+            {% endfor %}
+            </ul>
+            {{ entry.value | join_by:", " | safe }}
+          </dd>
         {% elif entry.type == "summary" %}
           <dd>{{ entry.value | safe }}</dd>
         {% else %}

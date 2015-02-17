@@ -1786,8 +1786,7 @@ legend {
   border-bottom: 1px solid #e5e5e5;
 }
 label {
-  display: inline-block;
-  max-width: 100%;
+  display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
@@ -2720,13 +2719,13 @@ tbody.collapse.in {
   float: left;
   min-width: 160px;
   padding: 5px 0;
-  margin: 2px 0 0;
+  margin: 1px 0 0;
   list-style: none;
   font-size: 16px;
   text-align: left;
   background-color: #ffffff;
   border: 1px solid #cccccc;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid #eeeeee;
   border-radius: 3px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   background-clip: padding-box;
@@ -3165,6 +3164,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
+  cursor: pointer;
   text-decoration: none;
   background-color: #eeeeee;
 }
@@ -3352,7 +3352,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 @media (min-width: 768px) {
   .navbar {
-    border-radius: 3px;
+    border-radius: 0;
   }
 }
 @media (min-width: 768px) {
@@ -3629,8 +3629,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-fixed-bottom .navbar-nav > li > .dropdown-menu {
   margin-bottom: 0;
-  border-top-right-radius: 3px;
-  border-top-left-radius: 3px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -3647,14 +3647,17 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   margin-bottom: 13px;
 }
 .navbar-text {
-  margin-top: 13px;
-  margin-bottom: 13px;
+  display: block;
+  line-height: 22px;
+  padding: 10px 10px;
 }
 @media (min-width: 768px) {
   .navbar-text {
     float: left;
     margin-left: 10px;
     margin-right: 10px;
+    padding-top: 13px;
+    padding-bottom: 13px;
   }
 }
 @media (min-width: 768px) {
@@ -3950,7 +3953,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 }
 .label {
   display: inline-block;
-  padding: .2em .6em .2em;
+  padding: 1px 3px;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
@@ -4278,7 +4281,7 @@ a.list-group-item-danger.active:focus {
   border-radius: 3px;
 }
 .well-sm {
-  padding: 9px;
+  padding: 8px;
   border-radius: 3px;
 }
 .close {
@@ -5020,9 +5023,25 @@ button.close {
  * https://github.com/max-favilli/tagmanager
  * Copyright 2012 MaxFavilli.com
  */
+.tag {
+  display: inline-block;
+  padding: 1px 3px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: .25em;
+  padding: 1px 5px;
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background-color: #d5d5d5;
+  box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.4);
+}
 .tm-tag {
   display: inline-block;
-  padding: .2em .6em .2em;
+  padding: 1px 3px;
   text-align: center;
   vertical-align: middle;
   border-radius: .25em;
@@ -5042,11 +5061,9 @@ button.close {
   border: 0;
   background: transparent;
   color: inherit;
-  height: 1.5em;
   width: 1.5em;
   text-align: center;
   opacity: 0.6;
-  vertical-align: middle;
 }
 .tm-tag-remove:before {
   font-family: "ecolex-icons";
@@ -5151,7 +5168,7 @@ button.close {
   margin-top: 2px;
   padding: 5px 0;
   background-color: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid #eeeeee;
   border-radius: 3px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   background-clip: padding-box;
@@ -5233,7 +5250,7 @@ button.close {
   margin: 22px 0;
 }
 .search-result {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
   font-size: 14px;
   line-height: 1.4;
 }
@@ -5244,15 +5261,31 @@ button.close {
 .search-result-title {
   margin-top: auto;
   margin-bottom: 1px;
-  font-size: 18px;
+  font-size: 17px;
   line-height: inherit;
   letter-spacing: -0.03em;
   color: #0066cc;
 }
+.search-result-title a:visited {
+  color: #4E00D5;
+}
 .search-result-details {
   margin: 1px 0;
-  color: #333;
-  font-weight: bold;
+  color: #808080;
+}
+.sr-type {
+  text-transform: capitalize;
+}
+.sr-type,
+.sr-id {
+  color: #212121;
+}
+.sr-jurisdiction {
+  color: #666666;
+}
+.sr-status:hover,
+.sr-date:hover {
+  cursor: help;
 }
 .search-result-description {
   margin-bottom: auto;
@@ -5457,7 +5490,7 @@ fieldset {
   padding: 19px;
   margin-bottom: 20px;
   background-color: #f5f5f5;
-  padding: 9px;
+  padding: 8px;
   border-radius: 3px;
 }
 fieldset blockquote {
@@ -5470,10 +5503,28 @@ fieldset ul {
   margin-top: auto;
   margin-bottom: 6px;
 }
+fieldset ul label {
+  margin: 0 -8px;
+  padding: 3px 8px;
+}
+fieldset ul label:after {
+  content: '';
+  display: block;
+  clear: both;
+}
 fieldset ul label input {
   float: left;
   width: 22px;
   text-align: center;
+}
+fieldset ul label .facet-text {
+  float: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+fieldset ul label .facet-counter {
+  float: right;
 }
 fieldset h5 {
   margin: 0;
@@ -5588,6 +5639,12 @@ fieldset h6 {
 }
 .multiselect-wrapper .multiselect-search {
   border-radius: 0;
+}
+.abstract {
+  margin-bottom: 0;
+}
+.abstract + .abstract {
+  margin-top: 22px;
 }
 .record-details header {
   margin-bottom: 22px;
