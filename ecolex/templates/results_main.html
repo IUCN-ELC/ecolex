@@ -41,20 +41,43 @@
 
 <div class="clearfix">
     
-  {% if page.pages %}
+  {% if page.no_pages %}
+
     <div class="pull-right">
       
       <a class="btn btn-sm btn-default" 
          href="?{{ page.prev_url }}"
          {% if page.number == 1 %}disabled{% endif %}>Previous</a>
+
+        {% if 1 not in page.pages_list%}
+            <a class="btn btn-sm btn-default"
+               href="?{{ page.first_url }}">1</a>
+             ...
+        {% endif %}
+        {% for page_no in page.pages_list %}
+            {% if page_no != page.number %}
+                <a class="btn btn-sm btn-default"
+                   href="?{{ page.pages_urls|lookup:page_no }}">{{ page_no }}</a>
+            {% else %}
+                <a class="btn btn-sm btn-default"
+                   href="?{{ page.pages_urls|lookup:page_no }}" disabled>
+                    <b>{{ page_no }}</b>
+                </a>
+            {% endif %}
+        {% endfor %}
+        {% if page.no_pages not in page.pages_list%}
+            {% if page.no_pages|add:"-1" not in page.pages_list %}
+             ...
+            {% endif %}
+            <a class="btn btn-sm btn-default"
+               href="?{{ page.last_url }}">{{ page.no_pages }}</a>
+        {% endif %}
       
       <a class="btn btn-sm btn-default"
          href="?{{ page.next_url }}"
-         {% if page.number == page.pages %}disabled{% endif %}>Next</a>
-      
+         {% if page.number == page.no_pages %}disabled{% endif %}>Next</a>
+
     </div>
-    
-  Page {{ page.number }} of {{ page.pages }}
 
   {% else %}
 

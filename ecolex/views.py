@@ -81,16 +81,21 @@ class SearchResults(SearchView):
     template_name = 'list_results.html'
 
     def page_details(self, page, results):
-        get_query = self.request.GET.copy()
-        get_query.pop(page, None)
-
         def _get_url(page):
             get_query['page'] = page
             return get_query.urlencode()
 
+        get_query = self.request.GET.copy()
+        get_query.pop(page, None)
+        pages_list = [p for p in
+                     range(max(page - 2, 1), min(page + 2, results.pages()) + 1)]
+        pages_urls = dict((page_no, _get_url(page_no)) for page_no in pages_list)
+
         return {
             'number': page,
-            'pages': results.pages,
+            'no_pages': results.pages,
+            'pages_list': pages_list,
+            'pages_urls': pages_urls,
             'next_url': _get_url(page + 1),
             'prev_url': _get_url(page - 1),
             'first_url': _get_url(1),
