@@ -380,6 +380,7 @@ def get_relevancy():
         'trPaperTitleOfTextOther': 100,
         'decLongTitle': 100,
         'decShortTitle': 100,
+        'trTitleAbbreviation': 75,
         'decSummary': 50,
         'decBody': 50,
         'trAbstract': 50,
