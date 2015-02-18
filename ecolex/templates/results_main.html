@@ -4,7 +4,7 @@
 
 {% if text_suggestion and results.get_suggested_text %}
 <p class="clearfix">
-    Did you mean: <a href="?q={{ results.get_suggested_text }}"><em>{{ results.get_suggested_text }}</em></a>?
+    Did you mean: <a href="?q={{ results.get_suggested_text }}" id="suggestion-link"><em>{{ results.get_suggested_text }}</em></a>?
 </p>
 {% endif %}
 

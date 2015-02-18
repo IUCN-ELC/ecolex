@@ -218,6 +218,18 @@ $(document).ready(function () {
             push_and_submit();
         });
 
+        $('button[type=submit]').click(function (e) {
+            e.preventDefault();
+            push_and_submit();
+        });
+
+        $('#suggestion-link').click(function (e) {
+            e.preventDefault();
+            var value = $(this).text()
+            $('#search').val(value);
+            push_and_submit();
+        });
+
         // Reset button
         $('input[type=reset]').click(function (e) {
             e.preventDefault();
