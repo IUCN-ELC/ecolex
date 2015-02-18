@@ -77,6 +77,13 @@ class SearchView(TemplateView):
         self.form.fields['dec_treaty'].choices = _extract('decTreatyId')
 
 
+class Homepage(SearchView):
+    def get_context_data(self, **kwargs):
+        ctx = super(Homepage, self).get_context_data(**kwargs)
+        ctx['page_type'] = 'homepage'
+        return ctx
+
+
 class SearchResults(SearchView):
     template_name = 'list_results.html'
 
@@ -133,7 +140,7 @@ class SearchResultsAjax(SearchResults):
         ctx = self.get_context_data(**kwargs)
         main = render_to_string('results_main.html', ctx)
         sidebar = render_to_string('results_sidebar.html', ctx)
-        search_form_inputs = render_to_string('bits/hidden_form.html', ctx);
+        search_form_inputs = render_to_string('bits/hidden_form.html', ctx)
         return JsonResponse(dict(main=main, sidebar=sidebar,
             form_inputs=search_form_inputs))
 
