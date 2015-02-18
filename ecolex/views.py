@@ -77,6 +77,13 @@ class SearchView(TemplateView):
         self.form.fields['dec_treaty'].choices = _extract('decTreatyId')
 
 
+class Homepage(SearchView):
+    def get_context_data(self, **kwargs):
+        ctx = super(Homepage, self).get_context_data(**kwargs)
+        ctx['page_type'] = 'homepage'
+        return ctx
+
+
 class SearchResults(SearchView):
     template_name = 'list_results.html'
 

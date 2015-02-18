@@ -198,14 +198,18 @@ $(document).ready(function () {
 
         $('button[type=submit]').click(function (e) {
             e.preventDefault();
-            push_and_submit();
+            var is_homepage = $(this).parents().hasClass('homepage');
+            if (is_homepage)
+                push_and_submit(false);
+            else
+                push_and_submit(true);
         });
 
         $('#suggestion-link').click(function (e) {
             e.preventDefault();
-            var value = $(this).text()
+            var value = $(this).text();
             $('#search').val(value);
-            push_and_submit();
+            push_and_submit(true);
         });
 
         // Reset button
