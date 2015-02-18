@@ -189,6 +189,10 @@ class Treaty(ObjectNormalizer):
                 data[label] = values
         return data
 
+    def get_decisions(self):
+        return get_documents_by_field('decTreatyId',
+                                      [self.informea_id()], rows=100)
+
     def full_title(self):
         return '{} ({})'.format(self.title(), self.date())
 
@@ -278,7 +282,7 @@ class Queryset(object):
     def get_referred_treaties(self, id_name, ids_list):
         if not any(ids_list):
             return {}
-        return get_treaties_by_id(id_name, ids_list)
+        return get_documents_by_field(id_name, ids_list)
 
     def get_facet_treaty_names(self):
         """ Returns map of names for treaties returned by the decTreaty facet.
@@ -286,8 +290,8 @@ class Queryset(object):
         facets = self.get_facets()
         if not facets.get('decTreatyId'):
             return []
-        return get_treaties_by_id('trInformeaId',
-                                  facets['decTreatyId'].keys())
+        return get_documents_by_field('trInformeaId',
+                                      facets['decTreatyId'].keys())
 
     def get_suggested_text(self):
         return self._suggested_text
@@ -497,9 +501,10 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     return solr.search(solr_query, **params)
 
 
-def get_treaties_by_id(id_name, treaty_ids):
+def get_documents_by_field(id_name, treaty_ids, rows=None):
     solr_query = id_name + ":(" + " ".join(treaty_ids) + ")"
-    result = search(solr_query, rows=len(treaty_ids), raw=True)
+    rows = len(treaty_ids) if rows is None else rows
+    result = search(solr_query, rows=rows, raw=True)
     if not len(result):
         return None
     return result
