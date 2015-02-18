@@ -6229,7 +6229,7 @@ if (typeof jQuery === 'undefined') {
                 escaped = $("<span/>").text(tag).html();
 
                 html = '<li id="' + newTagId + '">';
-                html+= '<span class="' + privateMethods.tagClasses.call($self) + '">' + escaped;
+                html+= '<span class="' + privateMethods.tagClasses.call($self) + '" title="' + escaped + '">' + escaped;
                 html+= '<button type="button" class="tm-tag-remove" id="' + newTagRemoveId + '" TagIdToRemove="' + tagId + '">';
                 html+= opts.tagCloseIcon + '</button></span></li>';
                 $el = $(html);

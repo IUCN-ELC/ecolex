@@ -7,6 +7,7 @@
   <title>Ecolex</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/static/css/bootstrap.custom.css">
+  <link rel="stylesheet" href="/static/css/bootstrap-tour.min.css">
   <link rel="stylesheet" href="/static/css/main.css">
   {% include 'bits/favicon.html' %}
 </head>
@@ -47,7 +48,7 @@
   </div>
 </div>
 
-<div class="jumbotron text-center">
+<div id="masthead" class="jumbotron text-center">
   <div class="container">
     <div class="logo-ecolex">
       <img src="/static/img/logo-ecolex-inverted.svg" alt="">
@@ -104,10 +105,13 @@
 <!-- scripts -->
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/bootstrap-tour.min.js"></script>
 <script src="/static/js/jquery.deserialize.js"></script>
 <script src="/static/js/jquery.blockUI.js"></script>
 <script src="/static/js/main.js"></script>
+<script src="/static/js/tour.js"></script>
 {% if GA_CODE %}{% include 'bits/ga.html' %}{% endif %}
+{% block scripts %}{% endblock %}
 </body>
 
 </html>

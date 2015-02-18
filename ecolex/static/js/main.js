@@ -42,7 +42,13 @@ $(document).ready(function () {
 
     function submit(serialized_form_data) {
         if (serialized_form_data != _initial_form_data) {
-            $('main').block({ message: null });
+            $('main').block({ 
+              message: 'Updating results',
+              css: {
+                backgroundColor: '#666',
+
+              }
+            });
             $.ajax({
                 url: '/result/ajax?' + serialized_form_data,
                 format: 'JSON',
@@ -302,9 +308,12 @@ $(document).ready(function () {
                 });
 
                 $(this).wrap($('<div/>', { class: 'tm-wrapper' }));
-                var label = $('<label/>', {
+
+                labelFor = $(this).attr('data-formid');
+                labelFor = labelFor.substr(1, labelFor.length); // remove #
+                label = $('<label/>', {
                     'class': 'tm-label',
-                    'for': $(this).attr('id')
+                    'for': labelFor
                     // 'text': $(this).attr('placeholder')
                 });
                 $(this).before(label);
@@ -325,8 +334,8 @@ $(document).ready(function () {
                 });
             });
         });
+
     }
 
     init_all();
 });
-

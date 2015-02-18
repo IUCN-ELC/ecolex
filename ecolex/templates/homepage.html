@@ -11,3 +11,39 @@
   </div>
 
 {% endblock %}
+
+{% block scripts %}
+<script>
+  // Bootstrap tour
+  var tour = new Tour({
+    steps: [
+    {
+      // element: "#masthead",
+      title: "Ecolex Tour",
+      orphan: true,
+      // placement: "bottom",
+      content: "Hello alex"
+    },
+    {
+      element: "#my-other-element",
+      title: "Title of my step",
+      placement: "top",
+      content: "Content of my step"
+    }],
+    // debug: true,
+    // backdrop: true,
+    onStart: function() {
+      console.log('Start');
+    }
+  });
+
+  console.log(tour);
+
+  // Initialize the tour
+  tour.init();
+
+  // Start the tour
+  tour.start(true);
+  tour.restart();
+</script>
+{% endblock %}
