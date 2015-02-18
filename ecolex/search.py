@@ -257,9 +257,16 @@ class Queryset(object):
     def get_facets(self):
         if not self._facets:
             self.fetch()
+
+        def _prepare(v):
+            # data = [(k.capitalize(), v) for k, v in v.items()]
+            data = [(k, v) for k, v in v.items()]
+            return OrderedDict(
+                sorted(data, key=lambda v: v[0].lower())
+            )
+
         return {
-            k: OrderedDict(
-                sorted(tuple(v.items()), key=lambda v: v[0].lower()))
+            k: _prepare(v)
             for k, v in self._facets.items()
         }
 
