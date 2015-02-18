@@ -65,7 +65,7 @@
     </div>
 
     <!-- search -->
-    <form action="{% url 'results' %}" method="get" class="search-form">
+    <form action="{% url 'results' %}" method="get" class="search-form {{ page_type|default:"results-page" }}">
       <label for="search">
         <span class="sr-only">Search</span>
         <span class="icon icon-search"></span>
