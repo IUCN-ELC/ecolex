@@ -3,7 +3,6 @@
 {% for type,count in facet.items %}
   {% if show_empty or count > 0 %}
   <option value="{{ type }}"
-          {% if type in form_field.data %}selected{% endif %}>
-          {% if type_map %}{{ type_map|lookup:type|capfirst }} ({{ count }}){% else %}{{ type|capfirst|safe }} ({{ count }}){% endif %}</option>
+          {% if type in form_field.data %}selected{% endif %}>{% if type_map %}{{ type_map|lookup:type|capfirst }} ({{ count }}){% else %}{{ type|capfirst|safe }} ({{ count }}){% endif %}</option>
   {% endif %}
 {% endfor %}

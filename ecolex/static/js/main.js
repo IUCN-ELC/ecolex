@@ -145,20 +145,6 @@ $(document).ready(function () {
             }
         });
 
-        var type_filter_handler_base = function (e) {
-            // Type filter - ugly
-            $('.filter-type button').click(function (e) {
-                var current = $('#id_type').val() || [];
-                var toggle_value = $(this).data('value');
-                if (current.indexOf(toggle_value) == -1) {
-                    current.push(toggle_value);
-                } else {
-                    current.splice(current.indexOf(toggle_value), 1);
-                }
-                $('#id_type').val(current);
-            });
-        };
-
         $('.filter-type button').click(function (e) {
             var current = $('#id_type').val() || [];
             var toggle_value = $(this).data('value');
@@ -252,10 +238,10 @@ $(document).ready(function () {
                 // iterate through the pool of strings and for any string that
                 // contains the substring `q`, add it to the `matches` array
                 $.each(strs, function (i, str) {
-                    if (substrRegex.test(str.value)) {
+                    if (substrRegex.test(str)) {
                         // the typeahead jQuery plugin expects suggestions to a
                         // JavaScript object, refer to typeahead docs for more info
-                        matches.push(str);
+                        matches.push({'value': str});
                     }
                 });
 
@@ -267,45 +253,56 @@ $(document).ready(function () {
             return function (tag) {
                 return (strs.indexOf(tag) !== -1);
             }
-        }
+        };
 
         $(".tag-select").each(function () {
             var suggestions = [];
             var preselected = [];
             $("#options option", this).each(function (i, opt) {
-                selected = console.log($(opt).attr("selected"));
-                entry = {
-                    value: $(opt).val(),
-                    displayValue: opt.innerHTML
-                };
-                suggestions.push(entry);
-                preselected.push(entry);
+                var selected = $(opt).attr("selected");
+                var entry = opt.innerHTML;
+                if (selected)
+                    preselected.push(entry);
+                else
+                    suggestions.push(entry);
             });
+
+            function get_values(tags) {
+                var result = [];
+                for(var j=0; j<tags.length; j++) {
+                    var tag = tags[j];
+                    var parts = tag.split(" ");
+                    parts.pop();
+                    tag = parts.join(" ");
+                    result.push(tag);
+                }
+                return result;
+            }
 
             $('.tm-input', this).each(function () {
                 var self = this;
                 $(this).tagsManager({
                     tagsContainer: $('<ul/>', { class: 'tm-taglist' }),
-                    tagCloseIcon: 'x',
+                    tagCloseIcon: '',
                     prefilled: preselected,
                     // onlyTagList: true,
                     // validator: tagValidator(suggestions),
                 }).on("tm:spliced",function (e) {
                     var formid = $(this).data('formid');
                     var value = $(this).tagsManager('tags');
-                    $(formid).val(value);
-                    push_and_submit();
+                    $(formid).val(get_values(value));
+                    push_and_submit(true);
                 }).on("tm:pushed", function (e) {
                     var formid = $(this).data('formid');
                     var value = $(this).tagsManager('tags');
-                    $(formid).val(value);
-                    push_and_submit();
+                    $(formid).val(get_values(value));
+                    push_and_submit(true);
                 });
 
                 $(this).wrap($('<div/>', { class: 'tm-wrapper' }));
                 var label = $('<label/>', {
                     'class': 'tm-label',
-                    'for': $(this).attr('id'),
+                    'for': $(this).attr('id')
                     // 'text': $(this).attr('placeholder')
                 });
                 $(this).before(label);
@@ -313,12 +310,12 @@ $(document).ready(function () {
                 $(this).typeahead({
                         hint: false,
                         highlight: true,
-                        minLength: 0,
+                        minLength: 0
                     },
                     {
                         name: 'states',
-                        displayKey: 'displayValue',
-                        source: substringMatcher(suggestions),
+                        displayKey: 'value',
+                        source: substringMatcher(suggestions)
                     });
 
                 $(this).on('blur', function () {
