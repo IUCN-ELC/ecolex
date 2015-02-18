@@ -5640,11 +5640,42 @@ fieldset h6 {
 .multiselect-wrapper .multiselect-search {
   border-radius: 0;
 }
-.abstract {
+.html-disclaimer {
+  font-size: 85%;
+  font-style: italic;
+  color: #808080;
+  padding: 6px 16px;
+  border: 1px solid #dddddd;
+  border-radius: 3px 3px 0 0;
+  border-bottom: 0;
+  background-color: #f5f5f5;
+}
+.html {
+  padding: 10px 16px;
+  border: 1px solid #dddddd;
+  border-radius: 0 0 3px 3px;
+}
+.summary,
+.abstract,
+.comment {
   margin-bottom: 0;
 }
-.abstract + .abstract {
+.summary + .summary,
+.summary + .abstract,
+.summary + .comment,
+.abstract + .summary,
+.abstract + .abstract,
+.abstract + .comment,
+.comment + .summary,
+.comment + .abstract,
+.comment + .comment {
   margin-top: 22px;
+}
+.na {
+  color: #808080;
+  font-style: italic;
+  font-size: 85%;
+  vertical-align: baseline;
 }
 .record-details header {
   margin-bottom: 22px;
@@ -5806,7 +5837,21 @@ fieldset h6 {
   }
 }
 .references time {
-  font-size: 14px;
   color: #808080;
+  font-size: 85%;
+  display: block;
+}
+@media (min-width: 768px) {
+  .references dd {
+    display: table;
+  }
+  .references time {
+    display: table-cell;
+    text-align: right;
+    width: 140px;
+  }
+  .references .treaty-link {
+    display: table-cell;
+  }
 }
 /*# sourceMappingURL=bootstrap.custom.css.map */

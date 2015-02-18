@@ -43,37 +43,109 @@
         <dd><a href="{% url 'result' treaty.id %}">{{ treaty.full_title }}</a></dd>
         {% endfor %}
       {% endif %}
+
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>
         {% if entry.type == "url" %}
-          <dd>
-            {% for url in entry.value %}
-            <a target="_blank" href="{{ url }}">{{ url }}</a><br>
-            {% endfor %}
-          </dd>
-        {% elif entry.type == "text" %}
-          <dd>
-            {% for abs in entry.value %}
-              <p class="abstract">{{ abs|safe }}</p>
-            {% endfor %}
-          </dd>
-        {% elif entry.type == "keyword" %}
-          <dd>
-            <ul class="list-inline">
-            {% for value in entry.value %}
-              <li><span class="tag">{{ value }}</span></li>
-            {% endfor %}
-            </ul>
-            {{ entry.value | join_by:", " | safe }}
-          </dd>
-        {% elif entry.type == "summary" %}
-          <dd>{{ entry.value | safe }}</dd>
+          {% for url in entry.value %}
+            <dd><a target="_blank" href="{{ url }}">{{ url }}</a></dd>
+          {% endfor %}
         {% else %}
           <dd>{{ entry.value | join_by:", " }}</dd>
         {% endif %}
       {% endfor %}
+
+      {% if document.type == 'treaty' %}
+        <dt>Subject</dt>
+        <dd>
+          {% if document.solr.trSubject %}
+            <!-- Ajutor -->
+            {{ document.solr.trSubject | join_by:", " }}
+          {% else %}
+            <span class="na">Not available</span>
+          {% endif %}
+        </dd>
+      {% endif %}
+
+      <dt>Keywords</dt>
+      <dd>
+        {% for keyword in document.solr.trKeyword %}
+          <span class="tag">{{ keyword }}</span>
+        {% empty %}
+          <span class="na">Not available</span>
+        {% endfor %}
+      </dd>
     </dl>
   </section>
+
+  {% if document.type == 'decision' %}
+  <section id="text">
+    <h2 class="section-title">Text</h2>
+
+    <dl>
+      <dt>Summary</dt>
+      <dd>
+        {% for summary in document.solr.decSummary %}
+          <p class="summary">{{ summary|safe }}</p>
+        {% empty %}
+          <span class="na">Not available</span>
+        {% endfor %}
+      </dd>
+      <dt>Decision Body</dt>
+      <dd>
+        {% if document.solr.decBody %}
+          <div class="html-disclaimer">As extracted from 
+            <a href="{{ document.solr.decLink }}" 
+               rel="external" 
+               target="_blank">source</a>.
+          </div>
+          <div class="html">
+            <!-- Please review -->
+            {{ document.solr.decBody.0|safe }}
+          </div>
+        {% else %}
+          <span class="na">Not available</span>
+        {% endif %}
+      </dd>
+    </dl>
+  </section>
+  {% endif %}
+
+  {% if document.type == 'treaty' %}
+  <section id="text">
+    <h2 class="section-title">Text</h2>
+
+    <dl>
+      <dt>Abstract</dt>
+      <dd>
+        {% for abs in document.solr.trAbstract %}
+          <p class="abstract">{{ abs|safe }}</p>
+        {% empty %}
+          <span class="na">Not available</span>
+        {% endfor %}
+      </dd>
+      {% if document.solr.trComment %}
+        <dt>Comment</dt>
+        {% for comment in document.solr.trComment %}
+        <dd>
+          <p class="comment">{{ comment|safe }}</p>
+        </dd>
+        {% endfor %}
+      {% endif %}
+      <dt>Link to full text</dt>
+      <dd>
+        {% if document.solr.trLinkToFullText %}
+          <!-- De ce sunt mai multe aici -->
+          <a href="{{ document.solr.trLinkToFullText.0 }}"
+             target="_blank">{{ document.solr.trLinkToFullText.0 }}</a>
+          <small class="text-muted">({{ document.solr.trNumberOfPages.0 }} pages)</small>
+        {% else %}
+          <span class="na">Not available</span>
+        {% endif %}
+      </dd>
+    </dl>
+  </section>
+  {% endif %}
 
   {% if document.type == 'treaty' and document.participants %}
   <section id="participants">
@@ -82,7 +154,7 @@
     <table class="participants">
       <thead>
         <tr>
-          <th>&nbsp;</th>
+          <th>Countries</th>
           {% for event in document.participants.events %}
           <th nowrap="nowrap">{{ event|capfirst }}</th>
           {% endfor %}
@@ -112,9 +184,11 @@
           <dt>{{ label }}</dt>
             {% for treaty in treaties %}
             <dd>
-                <a href="{% url 'result' treaty.id %}">
-                    {{ treaty.title }}</a>
-                {{ treaty.date }}
+              <div class="treaty-link">
+                <a href="{% url 'result' treaty.id %}" 
+                   title="See treaty details">{{ treaty.title }}</a>
+              </div>
+              <time>{{ treaty.date }}</time>
             </dd>
             {% endfor %}
         </dl>
