@@ -263,8 +263,7 @@ $(document).ready(function () {
                 var entry = opt.innerHTML;
                 if (selected)
                     preselected.push(entry);
-                else
-                    suggestions.push(entry);
+                suggestions.push(entry);
             });
 
             function get_values(tags) {
@@ -285,8 +284,7 @@ $(document).ready(function () {
                     tagsContainer: $('<ul/>', { class: 'tm-taglist' }),
                     tagCloseIcon: '',
                     prefilled: preselected,
-                    // onlyTagList: true,
-                    // validator: tagValidator(suggestions),
+                    validator: tagValidator(suggestions)
                 }).on("tm:spliced",function (e) {
                     var formid = $(this).data('formid');
                     var value = $(this).tagsManager('tags');
