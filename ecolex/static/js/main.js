@@ -17,7 +17,7 @@ $(document).ready(function () {
     $(window).on("popstate", function (e) {
         // history states are tagged in order to ignore popstate events
         // triggered on page load.
-        if (history.state.tag !== "ecolex") {
+        if (!history.state || history.state.tag !== "ecolex") {
             return;
         }
         // $(".search-form").deserialize(location.search.substring(1));
