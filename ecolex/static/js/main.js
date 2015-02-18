@@ -29,8 +29,28 @@ $(document).ready(function () {
     // initial form value
     var _initial_form_data = $('.search-form').serialize();
 
-    init = 0;
+    function debounce(func, wait, immediate) {
+        var timeout;
+        return function () {
+            var context = this, args = arguments;
+            var later = function () {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    }
+
     function push_and_submit(ajax) {
+        return debounce(function () {
+            _push_and_submit(ajax);
+        }, 300)();
+    }
+
+    function _push_and_submit(ajax) {
         if (ajax) {
             var data = $('.search-form').serialize();
             history.pushState({data: data, tag: 'ecolex'}, '', '?' + data);
@@ -42,7 +62,7 @@ $(document).ready(function () {
 
     function submit(serialized_form_data) {
         if (serialized_form_data != _initial_form_data) {
-            $('main').block({ 
+            $('main').block({
               message: 'Updating results',
               css: {
                 backgroundColor: '#666',
@@ -278,7 +298,7 @@ $(document).ready(function () {
 
             function get_values(tags) {
                 var result = [];
-                for(var j=0; j<tags.length; j++) {
+                for (var j = 0; j < tags.length; j++) {
                     var tag = tags[j];
                     var parts = tag.split(" ");
                     parts.pop();
