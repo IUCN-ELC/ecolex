@@ -167,6 +167,7 @@ class ResultDetails(SearchView):
         context['document'] = results.first()
         context['results'] = results
         context['debug'] = settings.DEBUG
+        context['page_type'] = 'homepage'
         if context['document'].type == 'decision':
             treaties = context['document'].solr.get('decTreatyId', [])
             all_treaties = results.get_facet_treaty_names()
