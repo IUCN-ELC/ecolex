@@ -75,6 +75,9 @@
           <span class="na">Not available</span>
         {% endfor %}
       </dd>
+
+      <dt>Source</dt>
+      <dd>{% if document.type == 'decision' %}InforMEA{% else %}IUCN{% endif %}</dd>
     </dl>
   </section>
 
