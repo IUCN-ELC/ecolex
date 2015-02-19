@@ -186,7 +186,8 @@ class ResultDetails(SearchView):
                         context['references'][label].\
                             extend([t for t in treaties_info
                                     if t.solr.get('trElisId', -1) in treaties_list])
-                        context['references'][label].sort(key = lambda x: x.date())
+                        context['references'][label].\
+                            sort(key = lambda x: x.date(), reverse = True)
 
             if context['document'].informea_id():
                 context['decisions'] = context['document'].get_decisions()
