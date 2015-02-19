@@ -13,6 +13,12 @@ $(document).ready(function () {
         }
     });
 
+    // set initial history entry
+    if (!history.state) {
+        var data = $('.search-form').serialize();
+        history.replaceState({data: data, tag: 'ecolex'}, '', '?' + data);
+    }
+
     // reload results when the back button was pressed
     $(window).on("popstate", function (e) {
         // history states are tagged in order to ignore popstate events
