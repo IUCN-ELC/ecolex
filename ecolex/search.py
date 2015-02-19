@@ -208,7 +208,7 @@ class Decision(ObjectNormalizer):
     OPTIONAL_INFO_FIELDS = [
         ('decMeetingTitle', 'Meeting Title', ''),
         ('decMeetingUrl', 'Meeting URL', 'url'),
-        ('decLink', 'Link to decision', 'url'),
+        ('decLink', 'Link to decision', 'url-tracked'),
         #('decSummary', 'Summary', 'text'),
         #('decBody', 'Decision Body', 'text'),
         ('decDocUrls', 'Documents', 'url'),

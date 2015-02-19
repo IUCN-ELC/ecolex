@@ -46,9 +46,9 @@
 
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>
-        {% if entry.type == "url" %}
+        {% if "url" in entry.type %}
           {% for url in entry.value %}
-            <dd><a target="_blank" href="{{ url }}">{{ url }}</a></dd>
+            <dd><a target="_blank" {% if "tracked" in entry.type %} class="decision-link" {% endif %} href="{{ url }}">{{ url }}</a></dd>
           {% endfor %}
         {% else %}
           <dd>{{ entry.value | join_by:", " }}</dd>
@@ -136,7 +136,7 @@
       <dd>
         {% if document.solr.trLinkToFullText %}
           <!-- De ce sunt mai multe aici -->
-          <a href="{{ document.solr.trLinkToFullText.0 }}"
+          <a href="{{ document.solr.trLinkToFullText.0 }}" class="treaty-link"
              target="_blank">{{ document.solr.trLinkToFullText.0 }}</a>
           <small class="text-muted">({{ document.solr.trNumberOfPages.0 }} pages)</small>
         {% else %}

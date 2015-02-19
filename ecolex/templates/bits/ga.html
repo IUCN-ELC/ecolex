@@ -7,4 +7,36 @@
   ga('create', '{{ GA_CODE }}', 'auto');
   ga('send', 'pageview');
 
+  // FIXME(catalinb): duplicate code
+  function decision_link() {
+    var url = this.href;
+    var eventAction = "Outbound Result Link";
+
+    if (this.hostname === "faolex.fao.org") {
+      eventAction = "Faolex Result Link";
+    } else if (this.hostname === "www.ecolex.org") {
+      eventAction = "Internal Result Link";
+    }
+
+    ga('send', 'event', 'Decision Outbound Link', eventAction, url);
+  }
+
+  function treaty_link() {
+    var url = this.href;
+    var eventAction = "Outbound Result Link";
+
+    if (this.hostname === "faolex.fao.org") {
+      eventAction = "Faolex Result Link";
+    } else if (this.hostname === "www.ecolex.org") {
+      eventAction = "Internal Result Link";
+    }
+
+    ga('send', 'event', 'Treaty Outbound Link', eventAction, url);
+  }
+
+  window.addEventListener('load', function () {
+    // setup handlers
+    $(".decision-link").click(decision_link);
+    $(".treaty-link").click(treaty_link);
+  });
 </script>
