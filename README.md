@@ -110,3 +110,11 @@ We are using Python 3 for the web server application. Initialize an environment 
 Run with:
 
     $ ./manage.py runserver
+
+### Configuration settings
+
+Create a file `local_settings.py` in the same path as `manage.py`.
+
+To enable spelling suggestions, set:
+
+    TEXT_SUGGESTION = True
