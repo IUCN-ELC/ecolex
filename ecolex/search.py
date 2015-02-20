@@ -464,7 +464,7 @@ def search(user_query, filters=None, sortby=None, raw=None,
 
 
 def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
-            sortby=None, raw=None, facets=None):
+            sortby=None, raw=None, facets=None, fields=None):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     solr.optimize()
     if user_query == '*':
@@ -483,6 +483,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         'facet': 'on',
         'facet.field': facets or filters.keys(),
         'facet.limit': '-1',
+        'facet.method': 'enum',
     })
     params['fq'] = get_fq(filters)
     if highlight:
@@ -494,8 +495,10 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         'spellcheck': 'true',
         'spellcheck.collate': 'true',
     })
+    if fields:
+        params['fl'] = ','.join(f for f in fields)
+
     if settings.DEBUG:
-        params['fl'] = '*,score'
         params['debug'] = True
 
     return solr.search(solr_query, **params)
