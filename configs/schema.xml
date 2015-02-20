@@ -238,7 +238,7 @@
     <field name="evIsIndexed" type="boolean" indexed="true" stored="true" multiValued="true"/>
     
     <!-- Document text field -->
-    <field name="doc_content" type="text_general" indexed="false" stored="true" multiValued="true"/>
+    <field name="doc_content" type="text_general" indexed="false" stored="false" multiValued="true"/>
 
     <!-- Keyword field -->
     <field name="docKeyword" type="string" indexed="true" stored="true" multiValued="true"/>
