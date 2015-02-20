@@ -5,9 +5,8 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.views.generic import TemplateView
 from django.conf import settings
-from ecolex.search import search, get_document, PERPAGE
+from ecolex.search import search, get_document, PERPAGE, get_all_treaties
 from ecolex.forms import SearchForm, DOC_TYPE
-from django.conf import settings
 
 
 class SearchView(TemplateView):
@@ -128,7 +127,7 @@ class SearchResults(SearchView):
 
         # a map of (treatyId -> treatyNames) for treaties which are referenced
         # by decisions in the current result set
-        all_treaties = results.get_facet_treaty_names()
+        all_treaties = get_all_treaties()
         ctx['dec_treaty_names'] = {
             t.informea_id(): t for t in all_treaties
         }
@@ -177,7 +176,7 @@ class ResultDetails(SearchView):
         context['page_type'] = 'homepage'
         if context['document'].type == 'decision':
             treaties = context['document'].solr.get('decTreatyId', [])
-            all_treaties = results.get_facet_treaty_names()
+            all_treaties = get_all_treaties()
             context['all_treaties'] = [
                 t for t in all_treaties if t.solr['trInformeaId'] in treaties
             ]

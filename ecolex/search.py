@@ -1,6 +1,7 @@
 from datetime import datetime
 from collections import OrderedDict
 import pysolr
+import json
 from django.conf import settings
 
 
@@ -245,7 +246,11 @@ class Queryset(object):
     def fetch(self):
         responses = _search(self.query, filters=self.filters,
                             start=self.start, **self._query_kwargs)
-        self._facets = parse_facets(responses.facets['facet_fields'])
+        return self._fetch(responses)
+
+    def _fetch(self, responses):
+        if responses.facets:
+            self._facets = parse_facets(responses.facets['facet_fields'])
         self._result_cache = [
             parse_result(hit, responses) for hit in responses
         ]
@@ -518,3 +523,25 @@ def get_document(document_id):
     if not len(result):
         return None
     return result
+
+
+def load_treaties_cache():
+    data = json.load(open('./contrib/treaties.json'))
+    response = data['response']
+    result_kwargs = {}
+    numFound = response.get('numFound', 0)
+    results = pysolr.Results(response.get('docs', ()), numFound,
+                             **result_kwargs)
+    qs = Queryset()
+    qs._fetch(results)
+    return qs
+
+
+_treaties = None
+
+
+def get_all_treaties():
+    global _treaties
+    if _treaties is None:
+        _treaties = load_treaties_cache()
+    return _treaties
