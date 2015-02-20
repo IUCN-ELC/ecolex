@@ -27,6 +27,9 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#Selenium
+TEST_RUNNER = 'django_selenium.selenium_runner.SeleniumTestRunner'
+
 
 # Application definition
 
