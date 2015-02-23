@@ -66,24 +66,33 @@ $(document).ready(function () {
         }
     }
 
-    function submit(serialized_form_data) {
-        if (serialized_form_data != _initial_form_data) {
-            $('main').block({
-              message: '<img src="/static/img/ajax-spinner.gif" width="48" height="48"><h3 style="color: #666; margin: 0;">Updating results<h3>',
-              centerY: false,
-              css: {
+    function block_ui() {
+        $('.tooltip').remove();
+        $('main').block({
+            message: '<img src="/static/img/ajax-spinner.gif" width="48" height="48"><h3 style="color: #666; margin: 0;">Updating results<h3>',
+            centerY: false,
+            css: {
                 padding: '0',
                 margin: '0',
                 border: '0',
                 top: '169px',
                 color: "#666",
                 backgroundColor: 'transparent',
-              },
-              overlayCSS: {
+            },
+            overlayCSS: {
                 backgroundColor:  '#ccc',
                 opacity:          0.9,
-              }
-            });
+            }
+        });
+    }
+
+    function unblock_ui() {
+        $('main').unblock();
+    }
+
+    function submit(serialized_form_data) {
+        if (serialized_form_data != _initial_form_data) {
+            block_ui();
             $.ajax({
                 url: '/result/ajax?' + serialized_form_data,
                 format: 'JSON',
@@ -94,12 +103,12 @@ $(document).ready(function () {
                     _initial_form_data = serialized_form_data;
                     $(".search-form").deserialize(serialized_form_data);
                     init_all();
-                    $('main').unblock();
+                    unblock_ui();
                     // for bootstrap tour
                     $("body").trigger('onajax');
                 },
                 error: function (e) {
-                    $('main').unblock();
+                    unblock_ui();
                 }
             });
         } else {
