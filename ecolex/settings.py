@@ -25,7 +25,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 #Selenium
 TEST_RUNNER = 'django_selenium.selenium_runner.SeleniumTestRunner'
@@ -109,9 +109,7 @@ SEARCH_PROXIMITY = '100'
 
 GA_CODE = ''
 
-# Debug
-DEBUG = True
-TEXT_SUGGESTION = False
+TEXT_SUGGESTION = True
 
 # Local settings
 try:

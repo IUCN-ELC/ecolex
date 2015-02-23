@@ -3,8 +3,8 @@
 {% include 'bits/type_facet.html' %}
 
 {% if text_suggestion and results.get_suggested_text %}
-<p class="clearfix">
-    Did you mean: <a href="?q={{ results.get_suggested_text }}" id="suggestion-link"><em>{{ results.get_suggested_text }}</em></a>?
+<p id="suggestion">
+  <em>Did you mean: <a href="?q={{ results.get_suggested_text }}" id="suggestion-link">{{ results.get_suggested_text }}</a>?</em>
 </p>
 {% endif %}
 
@@ -13,11 +13,11 @@
   <span class="pull-left">
     Found
     {% if 'treaty' in form.type.data and form.type.data|length != 2 %}
-      {{ facets.type.treaty }} treaties
+      <span id="number-of-results">{{ facets.type.treaty }}</span> treaties
     {% elif 'decision' in form.type.data and form.type.data|length != 2 %}
-      {{ facets.type.decision }} COP decisions
+      <span id="number-of-results">{{ facets.type.decision }}</span> COP decisions
     {% else %}
-      {{ results.count }} results
+      <span id="number-of-results">{{ results.count }}</span> results
     {% endif %}
   </span>
   

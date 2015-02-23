@@ -19,12 +19,10 @@
         <time class="sr-date" title="Date of document: {{ result.date }}">
           {{ result.date }}
         </time>
-        | Source: InforMEA
       {% endif %}
     </div>
-    <!-- for debug. FIXME(catalinb): remove -->
-    <p class="search-result-description" hidden> {{ result }}</p>
     <p class="search-result-description">{# result.summary|safe #}</p>
+    <p class="search-result-source">Source: InforMEA</p>
 
   {% else %}
 
@@ -39,11 +37,9 @@
         <time class="sr-date" title="Date of document: {{ result.date }}">
           {{ result.date }}
         </time>
-        | Source: IUCN
       {% endif %}
     </div>
-    <!-- for debug. FIXME(catalinb): remove -->
-    <p class="search-result-description" hidden> {{ result }}</p>
     <p class="search-result-description">{{ result.summary|safe }}</p>
+    <p class="search-result-source">Source: IUCN</p>
   {% endif %}
 </li>

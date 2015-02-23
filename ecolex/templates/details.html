@@ -5,7 +5,16 @@
 <article class="record-details">
 
   <header>
-    <h1>{{ document.title }}</h1>
+    <div class="record-title">
+      <div class="record-icon">
+        {% if document.type == 'decision' %}
+          <span class="icon icon-cop-decision" title="COP Decision"></span>
+        {% else %}
+          <span class="icon icon-treaty" title="Treaty"></span>
+        {% endif %}
+      </div>
+      <h1>{{ document.title }}</h1>
+    </div>
 
     <dl>
       <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
@@ -42,6 +51,15 @@
         <dt>Treaty</dt>
         <dd><a href="{% url 'result' treaty.id %}">{{ treaty.full_title }}</a></dd>
         {% endfor %}
+        <dt>Meeting</dt>
+        <dd>
+          {% if document.solr.decMeetingUrl %}
+            <a href="{{ document.solr.decMeetingUrl.0 }}"
+               rel="external">{{ document.solr.decMeetingTitle.0 | safe }}</a>
+          {% else %}
+            {{ document.solr.decMeetingTitle.0 | safe }}
+          {% endif %}
+        </dd>
       {% endif %}
 
       {% for entry in document.optional_fields %}
@@ -59,25 +77,34 @@
         <dt>Subject</dt>
         <dd>
           {% if document.solr.trSubject %}
-            <!-- Ajutor -->
-            {{ document.solr.trSubject | join_by:", " }}
+            {{ document.solr.trSubject | join_by:", " | safe }}
           {% else %}
             <span class="na">Not available</span>
           {% endif %}
         </dd>
       {% endif %}
 
-      <dt>Keywords</dt>
-      <dd>
-        {% for keyword in document.solr.trKeyword %}
-          <span class="tag">{{ keyword }}</span>
-        {% empty %}
-          <span class="na">Not available</span>
-        {% endfor %}
-      </dd>
-
-      <dt>Source</dt>
-      <dd>{% if document.type == 'decision' %}InforMEA{% else %}IUCN{% endif %}</dd>
+      <!-- Ajutor -->
+      {% if document.type == 'treaty' %}
+        <dt>Keywords</dt>
+        <dd>
+          {% for keyword in document.solr.trKeyword %}
+            <span class="tag">{{ keyword }}</span>
+          {% empty %}
+            <span class="na">Not available</span>
+          {% endfor %}
+        </dd>
+      {% endif %}
+      {% if document.type == 'decision' %}
+        <dt>Keywords</dt>
+        <dd>
+          {% for keyword in document.solr.decKeyword %}
+            <span class="tag">{{ keyword }}</span>
+          {% empty %}
+            <span class="na">Not available</span>
+          {% endfor %}
+        </dd>
+      {% endif %}
     </dl>
   </section>
 
@@ -95,21 +122,18 @@
         {% endfor %}
       </dd>
       <dt>Decision Body</dt>
-      <dd>
-        {% if document.solr.decBody %}
+      {% for body in document.solr.decBody %}
+        <dd>
           <div class="html-disclaimer">As extracted from 
             <a href="{{ document.solr.decLink }}" 
                rel="external" 
                target="_blank">source</a>.
           </div>
-          <div class="html">
-            <!-- Please review -->
-            {{ document.solr.decBody.0|safe }}
-          </div>
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
+          <div class="html">{{ body|safe }}</div>
+        </dd>
+      {% empty %}
+        <dd><span class="na">Not available</span></dd>
+      {% endfor %}
     </dl>
   </section>
   {% endif %}
@@ -141,18 +165,25 @@
           <!-- De ce sunt mai multe aici -->
           <a href="{{ document.solr.trLinkToFullText.0 }}" class="treaty-link"
              target="_blank">{{ document.solr.trLinkToFullText.0 }}</a>
-          <small class="text-muted">({{ document.solr.trNumberOfPages.0 }} pages)</small>
+          {% if document.solr.trNumberOfPages.0 %}
+            <small class="text-muted">({{ document.solr.trNumberOfPages.0 }} pages)</small>
+          {% endif %}
         {% else %}
           <span class="na">Not available</span>
         {% endif %}
       </dd>
+      <dt>Source</dt>
+      <dd>{% if document.type == 'decision' %}InforMEA{% else %}IUCN{% endif %}</dd>
     </dl>
   </section>
   {% endif %}
 
   {% if document.type == 'treaty' and document.participants %}
   <section id="participants">
-    <h2 class="section-title">Participants</h2>
+    <div class="clearfix">
+      <button id="participants-extras" class="pull-right btn btn-link">See Expanded View</button>
+      <h2 class="section-title">Participants</h2>
+    </div>
 
     <table class="participants">
       <thead>
@@ -169,7 +200,13 @@
         <tr class="country">
           <th>{{ country.country }}</th>
           {% for event in document.participants.events %}
-          <td>{{ country|lookup:event|default:"-"|parse_date }}</td>
+          <td>
+            {% if country|lookup:event %}
+              <time title="{{ event|capfirst }} date">{{ country|lookup:event|default:"-"|parse_date }}</time>
+            {% else %}
+              <span class="text-muted" title="Not available">-</span>
+            {% endif %}
+          </td>
           {% endfor %}
         </tr>
         {% endfor %}
@@ -187,10 +224,10 @@
           <dt>{{ label }}</dt>
             {% for treaty in treaties %}
             <dd>
-              <div class="treaty-link">
+              <div class="treaty-link-container">
                 <a href="{% url 'result' treaty.id %}" 
                    title="See treaty details">{{ treaty.title }}</a>
-              </div>
+               </div>
               <time>{{ treaty.date }}</time>
             </dd>
             {% endfor %}

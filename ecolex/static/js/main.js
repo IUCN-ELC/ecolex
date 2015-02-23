@@ -53,7 +53,7 @@ $(document).ready(function () {
     function push_and_submit(ajax) {
         return debounce(function () {
             _push_and_submit(ajax);
-        }, 300)();
+        }, 500)();
     }
 
     function _push_and_submit(ajax) {
@@ -69,10 +69,19 @@ $(document).ready(function () {
     function submit(serialized_form_data) {
         if (serialized_form_data != _initial_form_data) {
             $('main').block({
-              message: 'Updating results',
+              message: '<img src="/static/img/ajax-spinner.gif" width="48" height="48"><h3 style="color: #666; margin: 0;">Updating results<h3>',
+              centerY: false,
               css: {
-                backgroundColor: '#666',
-
+                padding: '0',
+                margin: '0',
+                border: '0',
+                top: '169px',
+                color: "#666",
+                backgroundColor: 'transparent',
+              },
+              overlayCSS: {
+                backgroundColor:  '#ccc',
+                opacity:          0.9,
               }
             });
             $.ajax({
@@ -86,6 +95,8 @@ $(document).ready(function () {
                     $(".search-form").deserialize(serialized_form_data);
                     init_all();
                     $('main').unblock();
+                    // for bootstrap tour
+                    $("body").trigger('onajax');
                 },
                 error: function (e) {
                     $('main').unblock();
