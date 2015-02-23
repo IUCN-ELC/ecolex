@@ -16,6 +16,13 @@
       <h1>{{ document.title }}</h1>
     </div>
 
+    {% if document.type == 'decision' %}
+    <a href="{% url "meeting_details" document.solr.decMeetingId|first %}">Meeting</a>
+    {% else %}
+    <a href="{% url "participant_details" document.solr.partyCountry|first %}">First Participant</a>
+    {% endif %}
+
+
     <dl>
       <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>

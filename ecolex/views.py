@@ -5,7 +5,8 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.views.generic import TemplateView
 from django.conf import settings
-from ecolex.search import search, get_document, PERPAGE, get_all_treaties
+from ecolex.search import search, get_document, PERPAGE, get_all_treaties, \
+get_documents_by_field
 from ecolex.forms import SearchForm, DOC_TYPE
 
 
@@ -149,6 +150,26 @@ class SearchResultsAjax(SearchResults):
         search_form_inputs = render_to_string('bits/hidden_form.html', ctx)
         return JsonResponse(dict(main=main, sidebar=sidebar,
             form_inputs=search_form_inputs))
+
+class DecMeetingView(SearchView):
+    template_name = 'decision_meeting_details.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super(DecMeetingView, self).get_context_data(**kwargs)
+        ctx['results'] = get_documents_by_field('decMeetingId',
+                                                [kwargs['id']],
+                                                1000000)  # get all results
+        return ctx
+
+class TreatyParticipantView(SearchView):
+    template_name = 'treaty_participant_details.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super(TreatyParticipantView, self).get_context_data(**kwargs)
+        ctx['results'] = get_documents_by_field('partyCountry',
+                                                [kwargs['id']],
+                                                1000000)  # get all results
+        return ctx
 
 
 class PageView(SearchView):
