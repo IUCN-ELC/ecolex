@@ -526,7 +526,10 @@ def get_document(document_id):
 
 
 def load_treaties_cache():
-    data = json.load(open('./contrib/treaties.json', encoding='utf-8'))
+    try:
+        data = json.load(open('./contrib/treaties.json', encoding='utf-8'))
+    except:
+        data = json.load(open('./contrib/treaties.json'))
     response = data['response']
     result_kwargs = {}
     numFound = response.get('numFound', 0)
