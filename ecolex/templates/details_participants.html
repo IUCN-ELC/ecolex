@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% load tags %}
+
+{% block content %}
+<article class="record-details">
+
+  <header>
+    <div class="record-title">
+      <div class="record-icon">
+        <span class="icon icon-treaty" title="Treaty"></span>
+      </div>
+      <h1><a href="{% url 'result' treaty.id %}">{{ treaty.full_title }}</a></h1>
+      <h2>Treaty participants</h2>
+    </div>
+  </header>
+
+  <table class="table table-bordered participants-expanded">
+    <thead>
+      <tr>
+        <th>Countries</th>
+        {% for event in treaty.participants.events %}
+        <th>{{ event|capfirst }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for country in treaty.participants.countries %}
+        <tr>
+          <th>{{ country.country }}</th>
+          {% for event in treaty.participants.events %}
+            <td>
+              {% if country|lookup:event %}
+                <time title="{{ event|capfirst }} date">{{ country|lookup:event|parse_date }}</time>
+              {% else %}
+                <span class="na" title="Not available">-</span>
+              {% endif %}
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</article>
+{% endblock %}

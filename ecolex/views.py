@@ -220,6 +220,42 @@ class ResultDetails(SearchView):
                 context['decisions'] = context['document'].get_decisions()
         return context
 
+class ResultDetailsDecisions(SearchView):
+    template_name = 'details_decisions.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ResultDetailsDecisions, self).get_context_data(**kwargs)
+        results = get_document(kwargs['id'])
+        if not results:
+            raise Http404()
+
+        meetings = {}
+        meetingNames = {}
+        context['treaty'] = results.first()
+
+        for decision in context['treaty'].get_decisions():
+            decId = decision.solr['decMeetingId'][0]
+            x = meetings.get( decId, [] )
+            x.append(decision)
+            meetings[decId] = x
+            meetingNames[decId] = decision.solr['decMeetingTitle'][0]
+        context['meetings'] = meetings
+        context['meetingNames'] = meetingNames
+        return context
+
+class ResultDetailsParticipants(SearchView):
+    template_name = 'details_participants.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ResultDetailsParticipants, self).get_context_data(**kwargs)
+        results = get_document(kwargs['id'])
+        if not results:
+            raise Http404()
+
+        context['treaty'] = results.first()
+
+        return context
+
 
 def debug(request):
     import subprocess

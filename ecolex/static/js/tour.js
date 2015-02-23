@@ -9,25 +9,22 @@ var templateNoNav = "<div class='popover tour'><div class='arrow'></div>" + _tem
     templateDefault = "<div class='popover tour'><div class='arrow'></div>" + _templateHelp + "<h3 class='popover-title'></h3><div class='popover-content'></div>" + _templateNav + "</div>";
 
 var tourSteps = [
-  // Welcome
   {
     orphan: true,
-    title: "Take a tour of the prototype",
-    content: "See all the great features of this <strong>prototype</strong> and learn about the thing we have in mind for the final product.",
-    template: templateStart,
-    onNext: function() {
-      str = "Access to Genetic Resourses";
-      $("#search").val(str);
-    }
+    title: "Welcome to the tour",
+    content: "<p>Please follow the tour to the end. It only takes 5 minutes.</p>"
   },
   // The search bar
   {
     element: "#search",
     placement: "bottom",
     title: "Permanent search bar",
-    content: "<p>Always visible from any page. Provides <strong>quick access</strong> to the website's main function.</p><p>We'll start by searching for <em>Access to Genetic Resourses</em>.</p>"
+    content: "<p>Always visible from any page. Provides <strong>quick access</strong> to the website's main function.</p><p>We'll start by searching for <em>Access to Genetic Resourses</em>.</p>",
+    onShow: function() {
+      str = "Access to Genetic Resourses";
+      $("#search").val(str);
+    }
   },
-
   // Speed
   // {
   //   element: "#number-of-results",
@@ -42,7 +39,7 @@ var tourSteps = [
     element: ".btn-group.filter-type",
     placement: "right",
     title: "Interactive categories",
-    content: "<p>Currently, we are looking at records from all categories. However, you can search in <strong>any number of categories simultaneously</strong>.</p><p>For instance: 'Legislation' and 'Court decisions' don't need separate windows.</p>"
+    content: "<p>This approach allows you to filter results from more than category, meaning you can search for Treaties and COP Decisions simultaneously.</p>"
   },
   // Highlighted results 
   {
@@ -72,7 +69,7 @@ var tourSteps = [
     element: ".search-result:first-child .hl:first-child",
     placement: "top",
     title: "Relevant results",
-    content: "<p><strong>Access to Genetic Resourses</strong> matches perfectly and therefor is first.</p><p><a href='http://ecolex.org'>ecolex.org</a> currently uses a <em>Match all/Match any of these words</em> setting that is very difficult to use.</p>",
+    content: "<p>A smart search engine doesn't rely on <em>Match all/Match any these Words</em>. For example, <em>Access to Genetic Resources</em> matches perfectly and is therefor first in the list of results.</p><p>For details regarding relevancy, check the Technical description document.</p>"
   },
   // Filters
   {
@@ -131,7 +128,7 @@ var tourSteps = [
   {
     orphan: true,
     title: "Beyond the prototype",
-    content: "<p>Please keep in mind that this is a prototype and that some features are not included.</p><p><strong>More suggestions for improving Ecolex</strong> can be found in the <em>Technical description</em>.</p>",
+    content: "<p>This prototype offers an improved search and filter engine.  To reach the mature envisioned application more features need to be added.</p><p><strong>More suggestions for improving Ecolex</strong> can be found in the <em>Technical description</em>.</p>"
   },
   // Cross-device
   {
@@ -148,8 +145,8 @@ var tour = new Tour({
   keyboard: false,
   template: templateDefault,
   onShown: function(tour) {
-    $('.popover-help [data-role="current"]').text(tour.getCurrentStep());
-    $('.popover-help [data-role="steps"]').text(tourSteps.length - 1);
+    $('.popover-help [data-role="current"]').text(tour.getCurrentStep() + 1);
+    $('.popover-help [data-role="steps"]').text(tourSteps.length);
   },
   steps: tourSteps,
   debug: true,
@@ -166,14 +163,12 @@ $(document).ready(function() {
     tour.init();
   }
 
-  tour.start();
-  // Start
-  if ($('#welcome-text').length && tour.ended()) {
-    tour.restart();
-  }
-
   $('#suggestion-link').on('click', function() {
     $('.popover.tour-tour').hide();
+  });
+
+  $('[data-toggle="tour"]').on('click', function() {
+    tour.restart();
   });
 
   // tour.start();

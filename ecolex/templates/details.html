@@ -16,13 +16,6 @@
       <h1>{{ document.title }}</h1>
     </div>
 
-    {% if document.type == 'decision' %}
-    <a href="{% url "meeting_details" document.solr.decMeetingId|first %}">Meeting</a>
-    {% else %}
-    <a href="{% url "participant_details" document.solr.partyCountry|first %}">First Participant</a>
-    {% endif %}
-
-
     <dl>
       <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
@@ -258,36 +251,7 @@
   </section>
   {% endif %}
 
-  {% if document.subjects %}
-  <section id="subjects">
-    <h2 class="section-title pull-left">Subjects</h2>
-    <div class="indent">
-      <ul>
-        <li>Subject</li>
-        <li>Subject</li>
-        <li>Subject</li>
-        <li>Subject</li>
-      </ul>
-    </div>
-  </section>
-  {% endif %}
-
-  {% if document.keywords %}
-  <section id="keywords">
-    <h2 class="section-title pull-left">Keywords</h2>
-    <div class="indent">
-      <ul class="list-inline">
-        <li>Some keyword</li>
-        <li>Some keyword</li>
-        <li>Some keyword</li>
-        <li>Some keyword</li>
-      </ul>
-    </div>
-  </section>
-  {% endif %}
-
-
-  {% if document.type == 'treaty' and decisions %}
+   {% if document.type == 'treaty' and decisions %}
     Click
     <a href="" data-toggle="modal" data-target="#decModal">
         <em> here </em>

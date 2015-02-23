@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% load tags %}
+
+{% block content %}
+<article class="record-details">
+
+  <header>
+    <div class="record-title">
+      <div class="record-icon">
+        <span class="icon icon-treaty" title="Treaty"></span>
+      </div>
+      <h1>{{ treaty.full_title }}</h1>
+    </div>
+  </header>
+
+  {% for meetingId in meetings.keys %}
+  <section class="section-meeting">
+    <h5>{{ meetingNames|lookup:meetingId }}</h5>
+    <ol class="meeting-decisions">
+      {% for decision in meetings|lookup:meetingId %}
+        <li>
+          <span class="decision-number">{{ decision.document_id }}</span>
+          <a href="{% url 'result' decision.id %}">{{ decision }}</a>
+          <time>{{ decision.date }}</time>
+        </li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endfor %}
+
+</article>
+{% endblock %}
