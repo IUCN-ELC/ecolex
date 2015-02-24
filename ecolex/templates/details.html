@@ -124,10 +124,7 @@
       <dt>Decision Body</dt>
       {% for body in document.solr.decBody %}
         <dd>
-          <div class="html-disclaimer">As extracted from 
-            <a href="{{ document.solr.decLink }}" 
-               rel="external" 
-               target="_blank">source</a>.
+          <div class="html-disclaimer">As extracted from source. For details check the link to decision above.
           </div>
           <div class="html">{{ body|safe }}</div>
         </dd>
