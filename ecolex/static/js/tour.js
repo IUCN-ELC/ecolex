@@ -97,7 +97,7 @@ var tourSteps = [
   },
   // The details page
   {
-    path: "/details/a70ca280-b336-4fbb-b8f5-be390074c1ce/",
+    path: "/details/5c287528-a034-4f3c-8a99-162ffaa2a920/",
     element: ".record-title",
     placement: "top",
     title: "The details page",
