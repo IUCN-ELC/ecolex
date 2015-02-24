@@ -26,6 +26,8 @@
       <dt>Status</dt> <dd>{{ document.solr.decStatus.0|capfirst }}</dd>
       {% endif %}
       <dt>Date of document</dt> <dd>{{ document.date }}</dd>
+      <dt>Source</dt>
+      <dd>{% if document.type == 'decision' %}InforMEA{% else %}IUCN{% endif %}</dd>
     </dl>
   </header>
 
@@ -169,8 +171,6 @@
           <span class="na">Not available</span>
         {% endif %}
       </dd>
-      <dt>Source</dt>
-      <dd>{% if document.type == 'decision' %}InforMEA{% else %}IUCN{% endif %}</dd>
     </dl>
   </section>
   {% endif %}
