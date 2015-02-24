@@ -128,10 +128,11 @@ var tourSteps = [
   {
     orphan: true,
     title: "Beyond the prototype",
-    content: "<p>This prototype offers an improved search and filter engine.  To reach the mature envisioned application more features need to be added.</p><p><strong>More suggestions for improving Ecolex</strong> can be found in the <em>Technical description</em>.</p>"
+    content: "<p>This prototype offers an improved search and filter engine.  To reach the mature envisioned application more features need to be added.</p><p><strong>More suggestions for improving Ecolex</strong> can be found in the <em>Technical description</em>.</p>",
   },
   // Cross-device
   {
+    path: "/",
     orphan: true,
     title: "Mobile &amp; Tablet support",
     content: "Please have a look at this prototype from your mobile or tablet as well.",
@@ -149,11 +150,6 @@ var tour = new Tour({
     $('.popover-help [data-role="steps"]').text(tourSteps.length);
   },
   steps: tourSteps,
-  debug: true,
-  // backdrop: true,
-  onStart: function() {
-    console.log('Start');
-  }
 });
 
 $(document).ready(function() {

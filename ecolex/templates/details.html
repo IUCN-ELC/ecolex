@@ -238,33 +238,20 @@
   </section>
   {% endif %}
 
-  {% if document.other_references or true %}
   <section id="other-references">
-    <h2 class="section-title pull-left">Other references</h2>
+    <h2 class="section-title">Other references</h2>
 
-    <div class="indent">
-      <a href="">215 in total</a>
-      <ul>
-        <li><a href="">45 to literature</a></li>
-        <li><a href="">124 to court decisions</a></li>
-        <li><a href="">56 to legislation</a></li>
-      </ul>
-    </div>
-  </section>
-  {% endif %}
-
-  <section id="decisions">
-    <h2 class="section-title pull-left">COP Decisions</h2>
-
-    <div class="indent">
-      {% if decisions|length %}
-        <strong>{{ decisions|length }} decisions</strong> related to this treaty.
-        <a class="btn btn-sm btn-default" 
-           href="{% url 'resultDecisions' document.id %}">View decisions</a>
-      {% else %}
-        <span class="na">Not available</span>
-      {% endif %}
-    </div>
+    <dl>
+      <dt>COP decisions</dt>
+      <dd>
+        {% if decisions|length %}
+          <strong>{{ decisions|length }} decisions</strong> related to this treaty.
+          <a href="{% url 'resultDecisions' document.id %}">View decisions</a>
+        {% else %}
+          <span class="na">Not available</span>
+        {% endif %}
+      </dd>
+    </dl>
     
   </section>
 
