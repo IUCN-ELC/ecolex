@@ -2,44 +2,52 @@
 {% load tags %}
 
 {% block content %}
-<article class="record-details">
 
+<p>
+  <span class="treaty-name">{{ treaty.full_title }}</span>
+  <br>
+  <a href="{% url 'result' treaty.id %}">Back to treaty details</a>
+</p>
+
+<hr>
+
+<article class="record-details-participants">
   <header>
-    <div class="record-title">
-      <div class="record-icon">
-        <span class="icon icon-treaty" title="Treaty"></span>
-      </div>
-      <h1><a href="{% url 'result' treaty.id %}">{{ treaty.full_title }}</a></h1>
-      <h2>Treaty participants</h2>
-    </div>
+    <h1>Treaty participants</h1>
   </header>
 
-  <table class="table table-bordered participants-expanded">
-    <thead>
-      <tr>
-        <th>Countries</th>
-        {% for event in treaty.participants.events %}
-        <th>{{ event|capfirst }}</th>
-        {% endfor %}
-      </tr>
-    </thead>
-    <tbody>
-      {% for country in treaty.participants.countries %}
+  <div class="table-wrapper">
+    <table class="table table-bordered">
+      <thead>
         <tr>
-          <th>{{ country.country }}</th>
+          <th class="col-country">Countries</th>
           {% for event in treaty.participants.events %}
-            <td>
-              {% if country|lookup:event %}
-                <time title="{{ event|capfirst }} date">{{ country|lookup:event|parse_date }}</time>
-              {% else %}
-                <span class="na" title="Not available">-</span>
-              {% endif %}
-            </td>
+          <th>{{ event|capfirst }}</th>
           {% endfor %}
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for country in treaty.participants.countries %}
+          <tr>
+            <th>{{ country.country }}</th>
+            {% for event in treaty.participants.events %}
+              <td>
+                {% if country|lookup:event %}
+                  <time title="{{ event|capfirst }} date">{{ country|lookup:event|parse_date }}</time>
+                {% else %}
+                  <span class="na" title="Not available">-</span>
+                {% endif %}
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+
+  <p><a class="btn btn-sm btn-default" href="{% url 'result' treaty.id %}">Back to treaty details</a></p>
 
 </article>
 {% endblock %}

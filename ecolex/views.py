@@ -226,12 +226,13 @@ class ResultDetailsDecisions(SearchView):
     def get_context_data(self, **kwargs):
         context = super(ResultDetailsDecisions, self).get_context_data(**kwargs)
         results = get_document(kwargs['id'])
-        if not results:
+        if not results.count():
             raise Http404()
 
         meetings = {}
         meetingNames = {}
         context['treaty'] = results.first()
+        context['page_type'] = 'homepage'
 
         for decision in context['treaty'].get_decisions():
             decId = decision.solr['decMeetingId'][0]

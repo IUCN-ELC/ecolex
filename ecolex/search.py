@@ -191,6 +191,8 @@ class Treaty(ObjectNormalizer):
         return data
 
     def get_decisions(self):
+        if not self.informea_id():
+            return []
         return get_documents_by_field('decTreatyId',
                                       [self.informea_id()], rows=100)
 

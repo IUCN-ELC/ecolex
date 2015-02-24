@@ -181,7 +181,9 @@
   {% if document.type == 'treaty' and document.participants %}
   <section id="participants">
     <div class="clearfix">
-      <button id="participants-extras" class="pull-right btn btn-link">See Expanded View</button>
+      <a id="participants-extras" 
+         href="{% url 'resultParticipants' document.id %}"
+         class="pull-right btn btn-link">See Expanded View</a>
       <h2 class="section-title">Participants</h2>
     </div>
 
@@ -251,45 +253,28 @@
   </section>
   {% endif %}
 
-   {% if document.type == 'treaty' and decisions %}
-    Click
-    <a href="" data-toggle="modal" data-target="#decModal">
-        <em> here </em>
-    </a>
-    to view details about the {{ decisions|length }} decisisons related to this treaty.
+  <section id="decisions">
+    <h2 class="section-title pull-left">COP Decisions</h2>
 
-    <div class="modal fade" id="decModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel"> Decisions({{ decisions|length }}) </h4>
-          </div>
-          <div class="modal-body">
-              <ul>
-                  {% for decision in decisions %}
-                      <li>
-                        <a href="{% url 'result' decision.id %}">{{ decision.title }}</a>
-                      </li>
-                  {% endfor %}
-              </ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
+    <div class="indent">
+      {% if decisions|length %}
+        <strong>{{ decisions|length }} decisions</strong> related to this treaty.
+        <a class="btn btn-sm btn-default" 
+           href="{% url 'resultDecisions' document.id %}">View decisions</a>
+      {% else %}
+        <span class="na">Not available</span>
+      {% endif %}
     </div>
+    
+  </section>
 
-  {% endif %}
-
-    {% if debug %}
+    <!-- {% if debug %}
     <section id="debug">
         <pre>
         {{ document.solr }}
         </pre>
     </section>
-    {% endif %}
+    {% endif %} -->
 
 </article>
 {% endblock content %}
