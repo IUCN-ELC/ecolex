@@ -10,6 +10,8 @@ window.addEventListener('load', function () {
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-58379026-1', 'auto');
+  
+  count_searches();
   ga('send', 'pageview');
 
   setup_handlers();
@@ -23,7 +25,20 @@ window.addEventListener('load', function () {
 
 // Advanced Search Hit
 // ga('set', 'metric4', metricValue);
-acc = []; $.each(a, function(i, str) {acc.push(i + "--" + str);})
+//acc = []; $.each(a, function(i, str) {acc.push(i + "--" + str);})
+
+function get_fancy_name(str) {
+  if (str === "treaties")
+    return "Treaties";
+  if (str === "literature")
+    return "Literature";
+  if (str === "documents")
+    return "Legislation";
+  if (str === "courtdecisions")
+    return "CourtDecisions";
+  
+  return str;
+}
 
 function count_searches() {
   var params = window.location.search.substring(1).split('&')
@@ -51,28 +66,47 @@ function count_searches() {
   if (screen === false && query !== false) {
     if (indexValues.length === 0) {
       console.log("SimpleSearch:" + "All");
+      ga('set', 'dimension7', "All Categories");
     } else {
       $.each(indexValues, function(i, str) {
-        console.log("SimpleSearch:" + str);
+        console.log("SimpleSearch:" + get_fancy_name(str));
+        ga('set', 'dimension7', get_fancy_name(str));
       });
     }
-
+    
+    // simple search hit
+    ga('set', 'metric3', 1);
+    
+    // any search hit
+    ga('set', 'metric3', 5);
     return;
   }
 
   if (screen === "Common") {
     if (indexValues.length === 0) {
       console.log("AdvancedSearch:" + "All");
+      ga('set', 'dimension7', "All Categories";
     } else {
       $.each(indexValues, function(i, str) {
-        console.log("AdvancedSearch:" + str);
+        console.log("AdvancedSearch:" + get_fancy_name(str));
+        ga('set', 'dimension7', get_fancy_name(str));
       });
     }
+    // advanced search hit
+    ga('set', 'metric4', 1);
+    // any search hit
+    ga('set', 'metric3', 5);
     return;
   }
 
   if (screen !== false) {
-    console.log("AdvancedSearch:" + screen);
+    console.log("AdvancedSearch:" + get_fancy_name(screen));
+    ga('set', 'dimension7', get_fancy_name(screen));
+    // advanced search hit
+    ga('set', 'metric4', 1);
+    // any search hit
+    ga('set', 'metric3', 5);
+    
     return;
   }
 
