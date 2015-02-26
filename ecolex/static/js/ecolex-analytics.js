@@ -85,7 +85,7 @@ function count_searches() {
   if (screen === "Common") {
     if (indexValues.length === 0) {
       console.log("AdvancedSearch:" + "All");
-      ga('set', 'dimension7', "All Categories";
+      ga('set', 'dimension7', "All Categories");
     } else {
       $.each(indexValues, function(i, str) {
         console.log("AdvancedSearch:" + get_fancy_name(str));
