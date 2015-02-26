@@ -45,7 +45,7 @@ function count_searches() {
     if (kv[0] === "screen") {
       screen = kv[1];
     }
-  };
+  });
 
   // Simple Search
   if (screen === false && query !== false) {
