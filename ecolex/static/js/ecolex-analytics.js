@@ -67,10 +67,12 @@ function count_searches() {
     if (indexValues.length === 0) {
       console.log("SimpleSearch:" + "All");
       ga('set', 'dimension7', "All Categories");
+      ga('set', 'dimension8', "Simple Search");
     } else {
       $.each(indexValues, function(i, str) {
         console.log("SimpleSearch:" + get_fancy_name(str));
         ga('set', 'dimension7', get_fancy_name(str));
+        ga('set', 'dimension8', "Simple Search");
       });
     }
     
@@ -86,10 +88,12 @@ function count_searches() {
     if (indexValues.length === 0) {
       console.log("AdvancedSearch:" + "All");
       ga('set', 'dimension7', "All Categories");
+      ga('set', 'dimension8', "Advanced Search");
     } else {
       $.each(indexValues, function(i, str) {
         console.log("AdvancedSearch:" + get_fancy_name(str));
         ga('set', 'dimension7', get_fancy_name(str));
+        ga('set', 'dimension8', "Advanced Search");
       });
     }
     // advanced search hit
@@ -102,6 +106,7 @@ function count_searches() {
   if (screen !== false) {
     console.log("AdvancedSearch:" + get_fancy_name(screen));
     ga('set', 'dimension7', get_fancy_name(screen));
+    ga('set', 'dimension8', "Advanced Search");
     // advanced search hit
     ga('set', 'metric4', 1);
     // any search hit
