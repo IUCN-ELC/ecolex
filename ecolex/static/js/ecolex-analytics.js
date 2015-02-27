@@ -110,7 +110,7 @@ function count_searches() {
     // advanced search hit
     ga('set', 'metric4', 1);
     // any search hit
-    ga('set', 'metric3', 5);
+    ga('set', 'metric5', 1);
     
     return;
   }
