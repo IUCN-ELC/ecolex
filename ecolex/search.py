@@ -113,7 +113,6 @@ class Treaty(ObjectNormalizer):
         #('trNumberOfPages', 'Number of pages', ''),
         ('trOfficialPublication', 'Official publication', ''),
         ('trInternetReference', 'Internet Reference', ''),
-        ('trDateOfEntry', 'Date of Entry', 'date'),
         ('trDateOfConsolidation', 'Consolidation Date', 'date')
     ]
 
