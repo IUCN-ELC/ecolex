@@ -281,15 +281,14 @@ $(document).ready(function () {
         });
 
         // Tag manager
-        var substringMatcher = function (strs) {
+        var substringMatcher = function (strs, regex_prefix) {
             return function findMatches(q, cb) {
                 var matches, substrRegex;
-
                 // an array that will be populated with substring matches
                 matches = [];
 
                 // regex used to determine if a string contains the substring `q`
-                substrRegex = new RegExp(q, 'i');
+                substrRegex = new RegExp(regex_prefix + q, 'i');
 
                 // iterate through the pool of strings and for any string that
                 // contains the substring `q`, add it to the `matches` array
@@ -314,21 +313,26 @@ $(document).ready(function () {
         $(".tag-select").each(function () {
             var suggestions = [];
             var preselected = [];
-            $("#options option", this).each(function (i, opt) {
+            $(".tag-options option", this).each(function (i, opt) {
                 var selected = $(opt).attr("selected");
-                var entry = opt.innerHTML;
+                var entry = opt.innerText;
                 if (selected)
                     preselected.push(entry);
                 suggestions.push(entry);
             });
 
-            function get_values(tags) {
+            function get_values(tags, options) {
                 var result = [];
+                var fixed_tags = {};
+                options.each(function () {
+                    text = this.innerText;
+                    val = $(this).val();
+                    fixed_tags[text] = val;
+                });
+
                 for (var j = 0; j < tags.length; j++) {
                     var tag = tags[j];
-                    var parts = tag.split(" ");
-                    parts.pop();
-                    tag = parts.join(" ");
+                    tag = fixed_tags[tag];
                     result.push(tag);
                 }
                 return result;
@@ -336,6 +340,8 @@ $(document).ready(function () {
 
             $('.tm-input', this).each(function () {
                 var self = this;
+                var options = $('option', $(this).parents('.tag-select').children('.tag-options')[0]);
+
                 $(this).tagsManager({
                     tagsContainer: $('<ul/>', { class: 'tm-taglist' }),
                     tagCloseIcon: '',
@@ -344,12 +350,12 @@ $(document).ready(function () {
                 }).on("tm:spliced",function (e) {
                     var formid = $(this).data('formid');
                     var value = $(this).tagsManager('tags');
-                    $(formid).val(get_values(value));
+                    $(formid).val(get_values(value, options));
                     push_and_submit(true);
                 }).on("tm:pushed", function (e) {
                     var formid = $(this).data('formid');
                     var value = $(this).tagsManager('tags');
-                    $(formid).val(get_values(value));
+                    $(formid).val(get_values(value, options));
                     push_and_submit(true);
                 });
 
@@ -364,6 +370,10 @@ $(document).ready(function () {
                 });
                 $(this).before(label);
 
+                var regex_prefix = '';
+                if (!$(this).hasClass('full-match')) {
+                    regex_prefix = '^';
+                }
                 $(this).typeahead({
                         hint: false,
                         highlight: true,
@@ -372,7 +382,7 @@ $(document).ready(function () {
                     {
                         name: 'states',
                         displayKey: 'value',
-                        source: substringMatcher(suggestions)
+                        source: substringMatcher(suggestions, regex_prefix)
                     });
 
                 $(this).on('blur', function () {
