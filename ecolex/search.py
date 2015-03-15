@@ -1,3 +1,5 @@
+import os
+import sys
 from datetime import datetime
 from collections import OrderedDict
 import pysolr
@@ -527,10 +529,15 @@ def get_document(document_id):
 
 
 def load_treaties_cache():
+    if not os.path.exists(settings.TREATIES_JSON):
+        print("Missing {}. Please run ./manage.py treaties_cache".format(
+            settings.TREATIES_JSON)
+        )
+        return None
     try:
-        data = json.load(open('./contrib/treaties.json', encoding='utf-8'))
+        data = json.load(open(settings.TREATIES_JSON, encoding='utf-8'))
     except:
-        data = json.load(open('./contrib/treaties.json'))
+        data = json.load(open(settings.TREATIES_JSON))
     response = data['response']
     result_kwargs = {}
     numFound = response.get('numFound', 0)
