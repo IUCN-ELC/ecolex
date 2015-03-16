@@ -132,6 +132,9 @@ class Treaty(ObjectNormalizer):
     def jurisdiction(self):
         return first(self.solr.get('trJurisdiction'))
 
+    def place_of_adoption(self):
+        return first(self.solr.get('trPlaceOfAdoption'))
+
     def field_of_application(self):
         return first(self.solr.get('trFieldOfApplication'))
 

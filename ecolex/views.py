@@ -113,11 +113,12 @@ class SearchResults(SearchView):
         ctx = super(SearchResults, self).get_context_data(**kwargs)
         page = int(self.request.GET.get('page', 1))
         fields = ['id', 'type', 'source', 'trTitleOfText', 'trJurisdiction',
-                  'trDateOfText', 'trDateOfEntry', 'trDateOfModification',
-                  'trPaperTitleOfText', 'trPaperTitleOfTextFr',
-                  'trPaperTitleOfTextSp', 'trPaperTitleOfTextOther',
-                  'trTitleOfTextShort', 'decTitleOfText', 'decStatus',
-                  'decPublishDate', 'decUpdateDate', 'decNumber']
+                  'trPlaceOfAdoption', 'trDateOfText', 'trDateOfEntry',
+                  'trDateOfModification', 'trPaperTitleOfText',
+                  'trPaperTitleOfTextFr', 'trPaperTitleOfTextSp',
+                  'trPaperTitleOfTextOther', 'trTitleOfTextShort',
+                  'decTitleOfText', 'decStatus', 'decPublishDate',
+                  'decUpdateDate', 'decNumber']
         results = search(self.query, filters=self.filters,
                          sortby=self.sortby, fields=fields)
         results.set_page(page)
