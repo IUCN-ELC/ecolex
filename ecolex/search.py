@@ -438,6 +438,10 @@ def get_fq(filters):
         'decTreatyId': 'decision',
     }
 
+    AND_FILTERS = [
+        'docKeyword',
+    ]
+
     def multi_filter(filter, values):
         if filter == 'docDate':
             start, end = values
@@ -445,7 +449,8 @@ def get_fq(filters):
             end = end + '-12-31T23:59:00Z' if end else '*'
             return filter + ':[' + start + ' TO ' + end + ']'
         values = ('"' + v + '"' for v in values)
-        return filter + ':(' + ' OR '.join(t for t in values) + ')'
+        operator = ' AND ' if filter in AND_FILTERS else ' OR '
+        return filter + ':(' + operator.join(t for t in values) + ')'
 
     def type_filter(type, filters):
         if filters:
