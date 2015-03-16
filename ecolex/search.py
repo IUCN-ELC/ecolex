@@ -94,7 +94,7 @@ class Treaty(ObjectNormalizer):
     OPTIONAL_INFO_FIELDS = [
         # (solr field, display text, type=text)
         ('trTitleAbbreviation', 'Title Abbreviation', ''),
-        ('trEntryIntoForceDate', 'Entry into force', 'date'),
+        #('trEntryIntoForceDate', 'Entry into force', 'date'),
         ('trPlaceOfAdoption', 'Place of adoption', ''),
         ('trAvailableIn', 'Available in', ''),
         ('trRegion', 'Geographical area', ''),
@@ -137,6 +137,11 @@ class Treaty(ObjectNormalizer):
 
     def url(self):
         return first(self.solr.get('trUrlTreatyText'))
+
+    def entry_into_force(self):
+        return datetime.strptime(
+            first(self.solr.get(
+                'trEntryIntoForceDate')), '%Y-%m-%dT%H:%M:%SZ').date()
 
     def participants(self):
         PARTY_MAP = OrderedDict((

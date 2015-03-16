@@ -86,6 +86,14 @@
             <span class="na">Not available</span>
           {% endif %}
         </dd>
+        <dt>Entry into force</dt>
+        <dd>
+          {% if document.solr.trEntryIntoForceDate %}
+            {{ document.entry_into_force}}
+          {% else %}
+            <span class="na">Not available</span>
+          {% endif %}
+        </dd>
       {% endif %}
 
       <!-- Ajutor -->
