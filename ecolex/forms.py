@@ -15,7 +15,10 @@ class SearchForm(Form):
     tr_type = MultipleChoiceField()
     tr_field = MultipleChoiceField()
     tr_party = MultipleChoiceField()
+    tr_region = MultipleChoiceField()
+    tr_basin = MultipleChoiceField()
     tr_subject = MultipleChoiceField()
+    tr_language = MultipleChoiceField()
 
     keyword = MultipleChoiceField()
     yearmin = CharField()

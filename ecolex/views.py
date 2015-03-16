@@ -23,7 +23,10 @@ class SearchView(TemplateView):
         data.setdefault('tr_type', [])
         data.setdefault('tr_field', [])
         data.setdefault('tr_party', [])
+        data.setdefault('tr_region', [])
+        data.setdefault('tr_basin', [])
         data.setdefault('tr_subject', [])
+        data.setdefault('tr_language', [])
         data.setdefault('keyword', [])
         data.setdefault('sortby', [''])
         for y in ('yearmin', 'yearmax', 'sortby'):
@@ -48,7 +51,10 @@ class SearchView(TemplateView):
             self.filters['trTypeOfText'] = data['tr_type']
             self.filters['trFieldOfApplication'] = data['tr_field']
             self.filters['partyCountry'] = data['tr_party']
+            self.filters['trRegion'] = data['tr_region']
+            self.filters['trBasin'] = data['tr_basin']
             self.filters['trSubject'] = data['tr_subject']
+            self.filters['trLanguageOfDocument'] = data['tr_language']
 
         if 'decision' in self.filters['type']:
             self.filters['decType'] = data['dec_type']
@@ -69,7 +75,10 @@ class SearchView(TemplateView):
         self.form.fields['tr_type'].choices = _extract('trTypeOfText')
         self.form.fields['tr_field'].choices = _extract('trFieldOfApplication')
         self.form.fields['tr_party'].choices = _extract('partyCountry')
+        self.form.fields['tr_region'].choices = _extract('trRegion')
+        self.form.fields['tr_basin'].choices = _extract('trBasin')
         self.form.fields['tr_subject'].choices = _extract('trSubject')
+        self.form.fields['tr_language'].choices = _extract('trLanguageOfDocument')
         self.form.fields['keyword'].choices = _extract('docKeyword')
 
         self.form.fields['dec_type'].choices = _extract('decType')

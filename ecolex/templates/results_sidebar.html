@@ -27,12 +27,36 @@
         <input type="text" class="tm-input" placeholder="Add participants" data-formid="#id_tr_party"/>
       </div>
 
+      <h6>Geographical area</h6>
+      <div id="tr_region" class="tag-select">
+        <select class="tag-options" hidden>
+          {% include 'bits/fancy_select.html' with facet=facets.trRegion form_field=form.tr_region %}
+        </select>
+        <input type="text" class="tm-input" placeholder="Add geographical areas" data-formid="#id_tr_region"/>
+      </div>
+
+      <h6>Basin</h6>
+      <div id="tr_basin" class="tag-select">
+        <select class="tag-options" hidden>
+          {% include 'bits/fancy_select.html' with facet=facets.trBasin form_field=form.tr_basin %}
+        </select>
+        <input type="text" class="tm-input" placeholder="Add basin" data-formid="#id_tr_basin"/>
+      </div>
+
       <h6>Subject</h6>
       <div id="tr_subject" class="tag-select">
         <select class="tag-options" hidden>
           {% include 'bits/fancy_select.html' with facet=facets.trSubject form_field=form.tr_subject %}
         </select>
         <input type="text" class="tm-input" placeholder="Add subjects" data-formid="#id_tr_subject"/>
+      </div>
+
+      <h6>Document language</h6>
+      <div id="tr_language" class="tag-select">
+        <select class="tag-options" hidden>
+          {% include 'bits/fancy_select.html' with facet=facets.trLanguageOfDocument form_field=form.tr_language %}
+        </select>
+        <input type="text" class="tm-input" placeholder="Add languages" data-formid="#id_tr_language"/>
       </div>
     </div>
   </fieldset>
