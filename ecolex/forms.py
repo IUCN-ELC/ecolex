@@ -31,13 +31,20 @@ class SearchForm(Form):
     sortby = CharField(initial='')
 
     def has_treaty(self):
+        TREATY_FACETS = (
+            'tr_type', 'tr_field', 'tr_party', 'tr_subject',
+            'tr_basin', 'tr_region', 'tr_language'
+        )
+
         return (not self.data.get('type') and any(
-            self.data.get(f) for f in
-            ('tr_type', 'tr_field', 'tr_party', 'tr_subject')
+            self.data.get(f) for f in TREATY_FACETS
         )) or ('treaty' in self.data.get('type', []))
 
     def has_decision(self):
+        DECISION_FACETS = (
+            'dec_type', 'dec_status', 'dec_treaty'
+        )
+
         return (not self.data.get('type') and any(
-            self.data.get(f) for f in
-            ('dec_type', 'dec_status', 'dec_treaty')
+            self.data.get(f) for f in DECISION_FACETS
         )) or ('decision' in self.data.get('type', []))
