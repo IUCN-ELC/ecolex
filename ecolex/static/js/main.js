@@ -315,7 +315,7 @@ $(document).ready(function () {
             var preselected = [];
             $(".tag-options option", this).each(function (i, opt) {
                 var selected = $(opt).attr("selected");
-                var entry = opt.innerText;
+                var entry = $(opt).text();
                 if (selected)
                     preselected.push(entry);
                 suggestions.push(entry);
@@ -325,7 +325,7 @@ $(document).ready(function () {
                 var result = [];
                 var fixed_tags = {};
                 options.each(function () {
-                    text = this.innerText;
+                    text = $(this).text();
                     val = $(this).val();
                     fixed_tags[text] = val;
                 });
@@ -341,6 +341,7 @@ $(document).ready(function () {
             $('.tm-input', this).each(function () {
                 var self = this;
                 var options = $('option', $(this).parents('.tag-select').children('.tag-options')[0]);
+                console.log(options);
 
                 $(this).tagsManager({
                     tagsContainer: $('<ul/>', { class: 'tm-taglist' }),
