@@ -4,9 +4,7 @@
 {% block content %}
 <script>
 {% if informea_url_id %}
-  url = "http://www.informea.org/treaties/{{informea_url_id}}/decision/{{document.solr.decId}}";
-  ga('informea.set', 'location', url);
-  ga('informea.send', 'pageview');
+  document.informea_url = "http://www.informea.org/treaties/{{informea_url_id}}/decision/{{document.solr.decId}}";
 {% endif %}
 </script>
 

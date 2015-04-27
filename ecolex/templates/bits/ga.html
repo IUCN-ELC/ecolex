@@ -9,6 +9,10 @@
 
   // informea.org tracker.
   ga('create', 'UA-58483450-2', 'auto', {'name': 'informea'});
+  if (document.informea_url) {
+    ga('informea.set', 'location', document.informea_url);
+    ga('informea.send', 'pageview');
+  }
 
   function set_custom_dimension(elem) {
     if (elem.hostname === "faolex.fao.org") {
