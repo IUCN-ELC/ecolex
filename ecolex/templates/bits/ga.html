@@ -7,6 +7,9 @@
   ga('create', '{{ GA_CODE }}', 'auto');
   ga('send', 'pageview');
 
+  // informea.org tracker.
+  ga('create', 'UA-58483450-2', 'auto', {'name': 'informea'});
+
   function set_custom_dimension(elem) {
     if (elem.hostname === "faolex.fao.org") {
       ga('set', 'dimension1', true);
@@ -26,7 +29,6 @@
       eventAction = "InternalResultLink";
     }
   }
-
 
   // FIXME(catalinb): duplicate code
   function decision_link() {
