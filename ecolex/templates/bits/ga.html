@@ -10,6 +10,8 @@
   // informea.org tracker.
   ga('create', 'UA-58483450-2', 'auto', {'name': 'informea'});
   if (document.informea_url) {
+    ga('informea.set', 'referrer', document.domain);
+    ga('informea.set', 'hostname', 'informea.org');
     ga('informea.set', 'location', document.informea_url);
     ga('informea.send', 'pageview');
   }
