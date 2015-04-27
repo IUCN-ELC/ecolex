@@ -29,9 +29,14 @@
     <div class="search-result-details">
       <strong class="sr-type">{{ result.type|capfirst }}</strong>
       {% if result.document_id %}
-        <span class="sr-id"> {{ result.document_id }} </span>{% endif %} 
+        <span class="sr-id"> {{ result.document_id }} </span>
+      {% endif %}
         |
       <span class="sr-jurisdiction">{{ result.jurisdiction }}</span>
+      {% if result.place_of_adoption %}
+        |
+        <span class="sr-jurisdiction"> {{ result.place_of_adoption }}</span>
+      {% endif %}
       {% if result.date %}
         |
         <time class="sr-date" title="Date of document: {{ result.date }}">

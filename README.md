@@ -106,6 +106,7 @@ We are using Python 3 for the web server application. Initialize an environment 
     $ pyvenv sandbox
     $ source sanbox/bin/activate
     $ pip install -r requirements.txt
+    $ ./manage.py treaties_cache
 
 Run with:
 

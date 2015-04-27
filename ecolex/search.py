@@ -1,3 +1,5 @@
+import os
+import sys
 from datetime import datetime
 from collections import OrderedDict
 import pysolr
@@ -92,10 +94,11 @@ class Treaty(ObjectNormalizer):
     OPTIONAL_INFO_FIELDS = [
         # (solr field, display text, type=text)
         ('trTitleAbbreviation', 'Title Abbreviation', ''),
-        ('trEntryIntoForceDate', 'Entry into force', 'date'),
+        #('trEntryIntoForceDate', 'Entry into force', 'date'),
         ('trPlaceOfAdoption', 'Place of adoption', ''),
         ('trAvailableIn', 'Available in', ''),
         ('trRegion', 'Geographical area', ''),
+        ('trBasin', 'Basin', ''),
         ('trDepository', 'Depository', ''),
         ('trUrl', 'Available web site', 'url'),
         #('trLinkToFullText', 'Link to full text', 'url'),
@@ -113,7 +116,6 @@ class Treaty(ObjectNormalizer):
         #('trNumberOfPages', 'Number of pages', ''),
         ('trOfficialPublication', 'Official publication', ''),
         ('trInternetReference', 'Internet Reference', ''),
-        ('trDateOfEntry', 'Date of Entry', 'date'),
         ('trDateOfConsolidation', 'Consolidation Date', 'date')
     ]
 
@@ -131,11 +133,19 @@ class Treaty(ObjectNormalizer):
     def jurisdiction(self):
         return first(self.solr.get('trJurisdiction'))
 
+    def place_of_adoption(self):
+        return first(self.solr.get('trPlaceOfAdoption'))
+
     def field_of_application(self):
         return first(self.solr.get('trFieldOfApplication'))
 
     def url(self):
         return first(self.solr.get('trUrlTreatyText'))
+
+    def entry_into_force(self):
+        return datetime.strptime(
+            first(self.solr.get(
+                'trEntryIntoForceDate')), '%Y-%m-%dT%H:%M:%SZ').date()
 
     def participants(self):
         PARTY_MAP = OrderedDict((
@@ -423,11 +433,18 @@ def get_fq(filters):
         'trTypeOfText': 'treaty',
         'trFieldOfApplication': 'treaty',
         'partyCountry': 'treaty',
+        'trRegion': 'treaty',
+        'trBasin': 'treaty',
         'trSubject': 'treaty',
+        'trLanguageOfDocument': 'treaty',
         'decType': 'decision',
         'decStatus': 'decision',
         'decTreatyId': 'decision',
     }
+
+    AND_FILTERS = [
+        'docKeyword',
+    ]
 
     def multi_filter(filter, values):
         if filter == 'docDate':
@@ -436,7 +453,8 @@ def get_fq(filters):
             end = end + '-12-31T23:59:00Z' if end else '*'
             return filter + ':[' + start + ' TO ' + end + ']'
         values = ('"' + v + '"' for v in values)
-        return filter + ':(' + ' OR '.join(t for t in values) + ')'
+        operator = ' AND ' if filter in AND_FILTERS else ' OR '
+        return filter + ':(' + operator.join(t for t in values) + ')'
 
     def type_filter(type, filters):
         if filters:
@@ -528,10 +546,15 @@ def get_document(document_id):
 
 
 def load_treaties_cache():
+    if not os.path.exists(settings.TREATIES_JSON):
+        print("Missing {}. Please run ./manage.py treaties_cache".format(
+            settings.TREATIES_JSON)
+        )
+        return None
     try:
-        data = json.load(open('./contrib/treaties.json', encoding='utf-8'))
+        data = json.load(open(settings.TREATIES_JSON, encoding='utf-8'))
     except:
-        data = json.load(open('./contrib/treaties.json'))
+        data = json.load(open(settings.TREATIES_JSON))
     response = data['response']
     result_kwargs = {}
     numFound = response.get('numFound', 0)

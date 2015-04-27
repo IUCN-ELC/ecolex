@@ -7,3 +7,4 @@ db.sqlite3
 supervisord.conf
 env27/
 local_settings.py
+contrib/treaties.json

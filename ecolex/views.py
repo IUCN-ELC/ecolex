@@ -9,6 +9,33 @@ from ecolex.search import search, get_document, PERPAGE, get_all_treaties, \
 get_documents_by_field
 from ecolex.forms import SearchForm, DOC_TYPE
 
+# We use this to generate urls to informea.org decisions.
+informea_treaty_identifier = {
+     1 : "cbd",              # CBD
+     2 : "basel",            # Basel Convention
+     3 : "cites",            # CITES
+     4 : "cms",              # CMS
+     5 : "stockholm",        # Stockholm Convention
+     6 : "vienna",           # Vienna Convention
+     7 : "montreal",         # Montreal Protocol
+     8 : "cartagena",        # Cartagena Protocol
+     9 : "nagoya",           # Nagoya Protocol
+    10 : "aewa",             # AEWA
+    14 : "plant-treaty",     # Plant Treaty
+    15 : "unfccc",           # UNFCCC
+    16 : "whc",              # World Heritage Convention
+    17 : "kyoto",            # Kyoto Protocol
+    18 : "ramsar",           # Ramsar Convention
+    19 : "unccd",            # UNCCD
+    20 : "rotterdam",        # Rotterdam Convention
+    28 : "gc",               # Governing Council
+    43 : "bamako",           # Bamako Convention
+    44 : "pollutantrelease", # SEA Protocol
+    48 : "unga",             # UNGA
+    50 : "ascobans",         # ASCOBANS
+    52 : "eurobats",         # EUROBATS
+    71 : "unea"              # UNEA
+}
 
 class SearchView(TemplateView):
     template_name = 'homepage.html'
@@ -23,7 +50,10 @@ class SearchView(TemplateView):
         data.setdefault('tr_type', [])
         data.setdefault('tr_field', [])
         data.setdefault('tr_party', [])
+        data.setdefault('tr_region', [])
+        data.setdefault('tr_basin', [])
         data.setdefault('tr_subject', [])
+        data.setdefault('tr_language', [])
         data.setdefault('keyword', [])
         data.setdefault('sortby', [''])
         for y in ('yearmin', 'yearmax', 'sortby'):
@@ -48,7 +78,10 @@ class SearchView(TemplateView):
             self.filters['trTypeOfText'] = data['tr_type']
             self.filters['trFieldOfApplication'] = data['tr_field']
             self.filters['partyCountry'] = data['tr_party']
+            self.filters['trRegion'] = data['tr_region']
+            self.filters['trBasin'] = data['tr_basin']
             self.filters['trSubject'] = data['tr_subject']
+            self.filters['trLanguageOfDocument'] = data['tr_language']
 
         if 'decision' in self.filters['type']:
             self.filters['decType'] = data['dec_type']
@@ -69,7 +102,10 @@ class SearchView(TemplateView):
         self.form.fields['tr_type'].choices = _extract('trTypeOfText')
         self.form.fields['tr_field'].choices = _extract('trFieldOfApplication')
         self.form.fields['tr_party'].choices = _extract('partyCountry')
+        self.form.fields['tr_region'].choices = _extract('trRegion')
+        self.form.fields['tr_basin'].choices = _extract('trBasin')
         self.form.fields['tr_subject'].choices = _extract('trSubject')
+        self.form.fields['tr_language'].choices = _extract('trLanguageOfDocument')
         self.form.fields['keyword'].choices = _extract('docKeyword')
 
         self.form.fields['dec_type'].choices = _extract('decType')
@@ -113,11 +149,12 @@ class SearchResults(SearchView):
         ctx = super(SearchResults, self).get_context_data(**kwargs)
         page = int(self.request.GET.get('page', 1))
         fields = ['id', 'type', 'source', 'trTitleOfText', 'trJurisdiction',
-                  'trDateOfText', 'trDateOfEntry', 'trDateOfModification',
-                  'trPaperTitleOfText', 'trPaperTitleOfTextFr',
-                  'trPaperTitleOfTextSp', 'trPaperTitleOfTextOther',
-                  'trTitleOfTextShort', 'decTitleOfText', 'decStatus',
-                  'decPublishDate', 'decUpdateDate', 'decNumber']
+                  'trPlaceOfAdoption', 'trDateOfText', 'trDateOfEntry',
+                  'trDateOfModification', 'trPaperTitleOfText',
+                  'trPaperTitleOfTextFr', 'trPaperTitleOfTextSp',
+                  'trPaperTitleOfTextOther', 'trTitleOfTextShort',
+                  'decTitleOfText', 'decStatus', 'decPublishDate',
+                  'decUpdateDate', 'decNumber']
         results = search(self.query, filters=self.filters,
                          sortby=self.sortby, fields=fields)
         results.set_page(page)
@@ -201,6 +238,10 @@ class ResultDetails(SearchView):
             context['all_treaties'] = [
                 t for t in all_treaties if t.solr['trInformeaId'] in treaties
             ]
+            if len(treaties) > 0:
+                context['informea_url_id'] =\
+                    informea_treaty_identifier.get(int(treaties[0]), None)
+
         if context['document'].type == 'treaty':
             ids = context['document'].get_references_ids_set()
             treaties_info = results.get_referred_treaties('trElisId', ids)

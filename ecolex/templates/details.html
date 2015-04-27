@@ -2,6 +2,12 @@
 {% load tags %}
 
 {% block content %}
+<script>
+{% if informea_url_id %}
+  document.informea_url = "http://www.informea.org/treaties/{{informea_url_id}}/decision/{{document.solr.decId}}";
+{% endif %}
+</script>
+
 <article class="record-details">
 
   <header>
@@ -17,7 +23,9 @@
     </div>
 
     <dl>
-      <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
+      {% if document.type == 'decision' %}
+        <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
+      {% endif %}
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
       {% if document.type == 'treaty' %}
       <dt>Field of application</dt> <dd>{{ document.field_of_application }}</dd>
@@ -80,6 +88,14 @@
         <dd>
           {% if document.solr.trSubject %}
             {{ document.solr.trSubject | join_by:", " | safe }}
+          {% else %}
+            <span class="na">Not available</span>
+          {% endif %}
+        </dd>
+        <dt>Entry into force</dt>
+        <dd>
+          {% if document.solr.trEntryIntoForceDate %}
+            {{ document.entry_into_force}}
           {% else %}
             <span class="na">Not available</span>
           {% endif %}
@@ -158,19 +174,13 @@
         </dd>
         {% endfor %}
       {% endif %}
-      <dt>Link to full text</dt>
-      <dd>
-        {% if document.solr.trLinkToFullText %}
-          <!-- De ce sunt mai multe aici -->
-          <a href="{{ document.solr.trLinkToFullText.0 }}" class="treaty-link"
+      {% if document.solr.trLinkToFullText %}
+        <dt>Link to full text</dt>
+        <dd>
+            <a href="{{ document.solr.trLinkToFullText.0 }}" class="treaty-link"
              target="_blank">{{ document.solr.trLinkToFullText.0 }}</a>
-          {% if document.solr.trNumberOfPages.0 %}
-            <small class="text-muted">({{ document.solr.trNumberOfPages.0 }} pages)</small>
-          {% endif %}
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
+        </dd>
+      {% endif %}
     </dl>
   </section>
   {% endif %}
