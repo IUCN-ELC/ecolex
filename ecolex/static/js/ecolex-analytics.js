@@ -53,7 +53,7 @@ function faolex_legislation_views() {
     if (matches.length !== 2) {
       return;
     }
-    var url = "http://faolex.fao.org/cgi-bin/faolex.exe?database=faolex&search_type=link&table=result&lang=eng&format_name=%40ERALL&rec_id=" + id;
+    var url = "http://faolex.fao.org/cgi-bin/faolex.exe?database=faolex&search_type=link&table=result&lang=eng&format_name=%40ERALL&rec_id=" + matches[1];
     console.log("hit on: " + url);
   });
 }
