@@ -10,11 +10,17 @@ window.addEventListener('load', function () {
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-58379026-1', 'auto');
-
+  ga('create','UA-58483450-2', 'auto', {'name': 'faolex'});
+  
   count_searches();
   ga('send', 'pageview');
 
   faolex_legislation_views();
+  if (document.faolex_url) {
+    ga('faolex.set', 'referrer', "http://" + document.domain);
+    ga('faolex.set', 'location', document.faolex_url);
+    ga('faolex.send', 'pageview');
+  }
 
   setup_handlers();
 }, false);
@@ -54,7 +60,7 @@ function faolex_legislation_views() {
       return;
     }
     var url = "http://faolex.fao.org/cgi-bin/faolex.exe?database=faolex&search_type=link&table=result&lang=eng&format_name=%40ERALL&rec_id=" + matches[1];
-    console.log("hit on: " + url);
+    document.faolex_url = url;
   });
 }
 
