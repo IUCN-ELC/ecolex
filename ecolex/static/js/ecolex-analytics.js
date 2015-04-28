@@ -55,7 +55,7 @@ function faolex_legislation_views() {
     }
     var url = "http://faolex.fao.org/cgi-bin/faolex.exe?database=faolex&search_type=link&table=result&lang=eng&format_name=%40ERALL&rec_id=" + id;
     console.log("hit on: " + url);
-  }
+  });
 }
 
 function count_searches() {
