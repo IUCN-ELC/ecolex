@@ -46,7 +46,7 @@ function faolex_legislation_views() {
   $.each(params, function(i, str) {
     kv = str.split('=');
     if (kv[0] !== "id") {
-      continue;
+      return;
     }
     var id = kv[1];
     matches = id.match(/LEX-FAOC([0-9]+)/);
