@@ -11,7 +11,8 @@ window.addEventListener('load', function () {
 
   ga('create', 'UA-58379026-1', 'auto');
   ga('create','UA-49257525-1', 'auto', {'name': 'faolex'});
-  
+  ga('create','UA-16957552-1', 'auto', {'name': 'allSites'});
+
   count_searches();
   ga('send', 'pageview');
 
@@ -20,6 +21,10 @@ window.addEventListener('load', function () {
     ga('faolex.set', 'referrer', "http://" + document.domain);
     ga('faolex.set', 'location', document.faolex_url);
     ga('faolex.send', 'pageview');
+
+    ga('allSites.set', 'referrer', "http://" + document.domain);
+    ga('allSites.set', 'location', document.faolex_url);
+    ga('allSites.send', 'pageview');
   }
 
   setup_handlers();
