@@ -2,11 +2,7 @@
 {% load tags %}
 
 {% block content %}
-<script>
-{% if informea_url_id %}
-  document.informea_url = "http://www.informea.org/treaties/{{informea_url_id}}/decision/{{document.solr.decId}}";
-{% endif %}
-</script>
+{% informea_url_id document %}
 
 <article class="record-details">
 

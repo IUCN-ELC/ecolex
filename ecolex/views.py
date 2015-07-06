@@ -10,34 +10,6 @@ from ecolex.search import (
 )
 from ecolex.forms import SearchForm, DOC_TYPE
 
-# We use this to generate urls to informea.org decisions.
-informea_treaty_identifier = {
-     1 : "cbd",              # CBD
-     2 : "basel",            # Basel Convention
-     3 : "cites",            # CITES
-     4 : "cms",              # CMS
-     5 : "stockholm",        # Stockholm Convention
-     6 : "vienna",           # Vienna Convention
-     7 : "montreal",         # Montreal Protocol
-     8 : "cartagena",        # Cartagena Protocol
-     9 : "nagoya",           # Nagoya Protocol
-    10 : "aewa",             # AEWA
-    14 : "plant-treaty",     # Plant Treaty
-    15 : "unfccc",           # UNFCCC
-    16 : "whc",              # World Heritage Convention
-    17 : "kyoto",            # Kyoto Protocol
-    18 : "ramsar",           # Ramsar Convention
-    19 : "unccd",            # UNCCD
-    20 : "rotterdam",        # Rotterdam Convention
-    28 : "gc",               # Governing Council
-    43 : "bamako",           # Bamako Convention
-    44 : "pollutantrelease", # SEA Protocol
-    48 : "unga",             # UNGA
-    50 : "ascobans",         # ASCOBANS
-    52 : "eurobats",         # EUROBATS
-    71 : "unea"              # UNEA
-}
-
 
 class SearchView(TemplateView):
     template_name = 'homepage.html'
@@ -240,9 +212,6 @@ class ResultDetails(SearchView):
             context['all_treaties'] = [
                 t for t in all_treaties if t.solr['trInformeaId'] in treaties
             ]
-            if len(treaties) > 0:
-                context['informea_url_id'] =\
-                    informea_treaty_identifier.get(int(treaties[0]), None)
 
         if context['document'].type == 'treaty':
             ids = context['document'].get_references_ids_set()
