@@ -165,8 +165,6 @@ $(document).ready(function () {
             if (max == '' || typeof max == 'undefined')
                 max = $(maxEl).attr('max');
 
-            console.log([min, max]);
-
             $("#slider-years").slider('setValue', [min, max]);
         }
 
@@ -213,8 +211,6 @@ $(document).ready(function () {
             else
                 push_and_submit(true);
         });
-
-        console.log("set");
 
         // Treaty -> Type of Document/Field of application filter
         // COP Decision -> Decision Type, Decision Status /Decision Treaty
@@ -341,7 +337,6 @@ $(document).ready(function () {
             $('.tm-input', this).each(function () {
                 var self = this;
                 var options = $('option', $(this).parents('.tag-select').children('.tag-options')[0]);
-                console.log(options);
 
                 $(this).tagsManager({
                     tagsContainer: $('<ul/>', { class: 'tm-taglist' }),
