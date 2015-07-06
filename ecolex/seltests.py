@@ -1,6 +1,7 @@
 from django_selenium.testcases import SeleniumTestCase
 from django.core.urlresolvers import reverse
 
+
 class SimpleQuery(SeleniumTestCase):
     def find_css(self, css_selector):
         """ Shortcut to find elements by CSS. Returns either the first matching el or None.

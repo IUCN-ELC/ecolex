@@ -5,8 +5,9 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.views.generic import TemplateView
 from django.conf import settings
-from ecolex.search import search, get_document, PERPAGE, get_all_treaties, \
-get_documents_by_field
+from ecolex.search import (
+    search, get_document, PERPAGE, get_all_treaties, get_documents_by_field,
+)
 from ecolex.forms import SearchForm, DOC_TYPE
 
 # We use this to generate urls to informea.org decisions.
@@ -36,6 +37,7 @@ informea_treaty_identifier = {
     52 : "eurobats",         # EUROBATS
     71 : "unea"              # UNEA
 }
+
 
 class SearchView(TemplateView):
     template_name = 'homepage.html'
