@@ -100,7 +100,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Solr
-SOLR_URI = 'http://10.0.0.98:8983/solr/ecolex'
+SOLR_URI = os.environ.get('SOLR_URI', '')
 
 # For default sorting, set SOLR_SORTING to ''
 SOLR_SORTING = ''
