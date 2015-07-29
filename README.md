@@ -119,3 +119,23 @@ Create a file `local_settings.py` in the same path as `manage.py`.
 To enable spelling suggestions, set:
 
     TEXT_SUGGESTION = True
+    
+
+## Informea and Elis data
+
+There are currently two sources of data available, each of them differently managed.
+
+### Informea
+
+Informea data ingestion uses the DIH utility in Solr. The configs/data-config.xml describes the SQL data source. You can use this file to configure the database details. After uploading data-config.xml (along with the solrconfig.xml and schema.xml) to the collection's config directory, run DataImport from the Solr admin. The import url looks like this:
+
+	localhost:8983/solr/ecolex/dataimport?command=full-import
+
+## Elis
+
+The Elis data is ingested using a xml dump. You should first add to the index the Informea documents, as the import script (contrib/import_elis.py) deduplicates the treaties:
+
+	./contrib/import_elis.py treaties_directory localhost collection1
+	
+If you wish to attach the rich text content when adding the treaties, start a tika server locally and set TEXT_UPLOAD_ENABLED in import_elis.py (you can configure the tika connection details in contrib/utils.py).
+
