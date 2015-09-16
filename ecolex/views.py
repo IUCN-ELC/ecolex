@@ -1,66 +1,56 @@
-from datetime import datetime
-import pysolr
-from django.http import HttpResponse, Http404, JsonResponse
+from django.http import Http404, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.views.generic import TemplateView
 from django.conf import settings
 from ecolex.search import (
-    search, get_document, PERPAGE, get_all_treaties, get_documents_by_field,
+    search, get_document, get_all_treaties, get_documents_by_field,
 )
-from ecolex.forms import SearchForm, DOC_TYPE
+from ecolex.forms import SearchForm
+from ecolex.definitions import DOC_TYPE, DOC_TYPE_FILTER_MAPPING
 
 
 class SearchView(TemplateView):
     template_name = 'homepage.html'
 
-    def get_context_data(self, **kwargs):
-        ctx = super(SearchView, self).get_context_data(**kwargs)
-        # Prepare query
-        data = dict(self.request.GET)
+    def _set_form_defaults(self, data):
+        exclude_fields = ['q', 'sortby', 'yearmin', 'yearmax']
+        fields = [x for x in SearchForm.base_fields if x not in exclude_fields]
+        for field in fields:
+            data.setdefault(field, [])
         if 'q' in data:
             data['q'] = data['q'][0]
-        data.setdefault('type', [])
-        data.setdefault('tr_type', [])
-        data.setdefault('tr_field', [])
-        data.setdefault('tr_party', [])
-        data.setdefault('tr_region', [])
-        data.setdefault('tr_basin', [])
-        data.setdefault('tr_subject', [])
-        data.setdefault('tr_language', [])
-        data.setdefault('keyword', [])
+
         data.setdefault('sortby', [''])
         for y in ('yearmin', 'yearmax', 'sortby'):
             data[y] = data[y][0] if y in data else None
+        return data
 
-        data.setdefault('dec_type', [])
-        data.setdefault('dec_status', [])
-        data.setdefault('dec_treaty', [])
+    def _set_filters(self, data):
+        filters = {
+            'type': data['type'] or dict(DOC_TYPE).keys(),
+            'docKeyword': data['keyword'],
+            'docDate': (data['yearmin'], data['yearmax']),
+        }
+
+        for doc_type in filters['type']:
+            mapping = DOC_TYPE_FILTER_MAPPING[doc_type]
+            for k, v in mapping.items():
+                filters[k] = data[v]
+
+        return filters
+
+    def get_context_data(self, **kwargs):
+        ctx = super(SearchView, self).get_context_data(**kwargs)
+        # Prepare query
+        data = self._set_form_defaults(dict(self.request.GET))
 
         ctx['form'] = self.form = SearchForm(data=data)
         ctx['debug'] = settings.DEBUG
         ctx['text_suggestion'] = settings.TEXT_SUGGESTION
         self.query = self.form.data.get('q', '').strip() or '*'
-
         # Compute filters
-        self.filters = {
-            'type': data['type'] or dict(DOC_TYPE).keys(),
-            'docKeyword': data['keyword'],
-            'docDate': (data['yearmin'], data['yearmax']),
-        }
-        if 'treaty' in self.filters['type']:
-            self.filters['trTypeOfText'] = data['tr_type']
-            self.filters['trFieldOfApplication'] = data['tr_field']
-            self.filters['partyCountry'] = data['tr_party']
-            self.filters['trRegion'] = data['tr_region']
-            self.filters['trBasin'] = data['tr_basin']
-            self.filters['trSubject'] = data['tr_subject']
-            self.filters['trLanguageOfDocument'] = data['tr_language']
-
-        if 'decision' in self.filters['type']:
-            self.filters['decType'] = data['dec_type']
-            self.filters['decStatus'] = data['dec_status']
-            self.filters['decTreatyId'] = data['dec_treaty']
+        self.filters = self._set_filters(data)
 
         self.sortby = data['sortby']
         return ctx
