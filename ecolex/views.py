@@ -7,7 +7,9 @@ from ecolex.search import (
     search, get_document, get_all_treaties, get_documents_by_field,
 )
 from ecolex.forms import SearchForm
-from ecolex.definitions import DOC_TYPE, DOC_TYPE_FILTER_MAPPING
+from ecolex.definitions import (
+    DOC_TYPE, DOC_TYPE_FILTER_MAPPING, FIELD_TO_FACET_MAPPING, SOLR_FIELDS
+)
 
 
 class SearchView(TemplateView):
@@ -63,18 +65,8 @@ class SearchView(TemplateView):
             values = (facets.get(facet) or {}).keys()
             return zip(values, values)
 
-        self.form.fields['tr_type'].choices = _extract('trTypeOfText')
-        self.form.fields['tr_field'].choices = _extract('trFieldOfApplication')
-        self.form.fields['tr_party'].choices = _extract('partyCountry')
-        self.form.fields['tr_region'].choices = _extract('trRegion')
-        self.form.fields['tr_basin'].choices = _extract('trBasin')
-        self.form.fields['tr_subject'].choices = _extract('trSubject')
-        self.form.fields['tr_language'].choices = _extract('trLanguageOfDocument')
-        self.form.fields['keyword'].choices = _extract('docKeyword')
-
-        self.form.fields['dec_type'].choices = _extract('decType')
-        self.form.fields['dec_status'].choices = _extract('decStatus')
-        self.form.fields['dec_treaty'].choices = _extract('decTreatyId')
+        for k, v in FIELD_TO_FACET_MAPPING.items():
+            self.form.fields[k].choices = _extract(v)
 
 
 class Homepage(SearchView):
@@ -94,9 +86,10 @@ class SearchResults(SearchView):
 
         get_query = self.request.GET.copy()
         get_query.pop(page, None)
-        pages_list = [p for p in
-                     range(max(page - 2, 1), min(page + 2, results.pages()) + 1)]
-        pages_urls = dict((page_no, _get_url(page_no)) for page_no in pages_list)
+        pages_list = [p for p in range(max(page - 2, 1),
+                                       min(page + 2, results.pages()) + 1)]
+        pages_urls = dict((page_no, _get_url(page_no))
+                          for page_no in pages_list)
 
         return {
             'number': page,
@@ -112,13 +105,7 @@ class SearchResults(SearchView):
     def get_context_data(self, **kwargs):
         ctx = super(SearchResults, self).get_context_data(**kwargs)
         page = int(self.request.GET.get('page', 1))
-        fields = ['id', 'type', 'source', 'trTitleOfText', 'trJurisdiction',
-                  'trPlaceOfAdoption', 'trDateOfText', 'trDateOfEntry',
-                  'trDateOfModification', 'trPaperTitleOfText',
-                  'trPaperTitleOfTextFr', 'trPaperTitleOfTextSp',
-                  'trPaperTitleOfTextOther', 'trTitleOfTextShort',
-                  'decTitleOfText', 'decStatus', 'decPublishDate',
-                  'decUpdateDate', 'decNumber']
+        fields = SOLR_FIELDS
         results = search(self.query, filters=self.filters,
                          sortby=self.sortby, fields=fields)
         results.set_page(page)
@@ -144,13 +131,15 @@ class SearchResults(SearchView):
 
 
 class SearchResultsAjax(SearchResults):
+
     def get(self, request, **kwargs):
         ctx = self.get_context_data(**kwargs)
         main = render_to_string('results_main.html', ctx)
         sidebar = render_to_string('results_sidebar.html', ctx)
         search_form_inputs = render_to_string('bits/hidden_form.html', ctx)
         return JsonResponse(dict(main=main, sidebar=sidebar,
-            form_inputs=search_form_inputs))
+                                 form_inputs=search_form_inputs))
+
 
 class DecMeetingView(SearchView):
     template_name = 'decision_meeting_details.html'
@@ -161,6 +150,7 @@ class DecMeetingView(SearchView):
                                                 [kwargs['id']],
                                                 1000000)  # get all results
         return ctx
+
 
 class TreatyParticipantView(SearchView):
     template_name = 'treaty_participant_details.html'
@@ -174,6 +164,7 @@ class TreatyParticipantView(SearchView):
 
 
 class PageView(SearchView):
+
     def get(self, request, **kwargs):
         slug = kwargs.pop('slug', '')
         PAGES = ('about', 'privacy', 'agreement', 'acknowledgements')
@@ -196,6 +187,7 @@ class ResultDetails(SearchView):
         context['results'] = results
         context['debug'] = settings.DEBUG
         context['page_type'] = 'homepage'
+
         if context['document'].type == 'decision':
             treaties = context['document'].solr.get('decTreatyId', [])
             all_treaties = get_all_treaties()
@@ -221,6 +213,7 @@ class ResultDetails(SearchView):
             if context['document'].informea_id():
                 context['decisions'] = context['document'].get_decisions()
         return context
+
 
 class ResultDetailsDecisions(SearchView):
     template_name = 'details_decisions.html'

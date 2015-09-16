@@ -184,7 +184,7 @@
   {% if document.type == 'treaty' and document.participants %}
   <section id="participants">
     <div class="clearfix">
-      <a id="participants-extras" 
+      <a id="participants-extras"
          href="{% url 'resultParticipants' document.id %}"
          class="pull-right btn btn-link">See Expanded View</a>
       <h2 class="section-title">Participants</h2>
@@ -230,7 +230,7 @@
             {% for treaty in treaties %}
             <dd>
               <div class="treaty-link-container">
-                <a href="{% url 'result' treaty.id %}" 
+                <a href="{% url 'result' treaty.id %}"
                    title="See treaty details">{{ treaty.title }}</a>
                </div>
               <time>{{ treaty.date }}</time>
@@ -255,7 +255,7 @@
         {% endif %}
       </dd>
     </dl>
-    
+
   </section>
 
     <!-- {% if debug %}
