@@ -1,7 +1,7 @@
 <li class="search-result">
 
   <h3 class="search-result-title">
-    <a href="{% url 'result' result.id %}"
+    <a href="{{ result.details_url }}"
        title="{{ result.title|safe|striptags }}">{{ result.title|safe }}</a>
   </h3>
 

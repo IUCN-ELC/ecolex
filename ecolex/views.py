@@ -208,10 +208,32 @@ class ResultDetails(SearchView):
                             extend([t for t in treaties_info
                                     if t.solr.get('trElisId', -1) in treaties_list])
                         context['references'][label].\
-                            sort(key = lambda x: x.date(), reverse = True)
+                            sort(key=lambda x: x.date(), reverse=True)
 
             if context['document'].informea_id():
                 context['decisions'] = context['document'].get_decisions()
+        return context
+
+
+class ResultDecisionDetails(SearchView):
+
+    template_name = 'details/decision.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ResultDecisionDetails, self).get_context_data(**kwargs)
+        results = get_document(kwargs['id'])
+        if not results:
+            raise Http404()
+        context['document'] = results.first()
+        context['results'] = results
+        context['debug'] = settings.DEBUG
+        context['page_type'] = 'homepage'
+
+        treaties = context['document'].solr.get('decTreatyId', [])
+        all_treaties = get_all_treaties()
+        context['all_treaties'] = [t for t in all_treaties
+                                   if t.solr['trInformeaId'] in treaties]
+
         return context
 
 
@@ -231,13 +253,14 @@ class ResultDetailsDecisions(SearchView):
 
         for decision in context['treaty'].get_decisions():
             decId = decision.solr['decMeetingId'][0]
-            x = meetings.get( decId, [] )
+            x = meetings.get(decId, [])
             x.append(decision)
             meetings[decId] = x
             meetingNames[decId] = decision.solr['decMeetingTitle'][0]
         context['meetings'] = meetings
         context['meetingNames'] = meetingNames
         return context
+
 
 class ResultDetailsParticipants(SearchView):
     template_name = 'details_participants.html'

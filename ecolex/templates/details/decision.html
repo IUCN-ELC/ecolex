@@ -1,0 +1,123 @@
+{% extends 'layout.html' %}
+{% load tags %}
+
+{% block content %}
+{% informea_url_id document %}
+
+<article class="record-details">
+
+  <header>
+    <div class="record-title">
+      <div class="record-icon">
+          <span class="icon icon-cop-decision" title="COP Decision"></span>
+      </div>
+      <h1>{{ document.title }}</h1>
+    </div>
+
+    <dl>
+      <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
+      <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
+      <dt>Status</dt> <dd>{{ document.solr.decStatus.0|capfirst }}</dd>
+      <dt>Date of document</dt> <dd>{{ document.date }}</dd>
+      <dt>Source</dt>
+      <dd>InforMEA</dd>
+    </dl>
+  </header>
+
+  {% if document.also or true %} {# check for alternative titles #}
+  <section id="aka">
+    <dl>
+      <dt>Also known as</dt>
+      <dd>
+        <ul>
+          <li>Convention sur la diversité biologique <sup>French</sup></li>
+          <li>other_language_title <sup>language</sup></li>
+        </ul>
+      </dd>
+    </dl>
+  </section>
+  {% endif %}
+
+  <section id="details">
+    <h2 class="section-title">Details</h2>
+    <dl>
+      {% for treaty in all_treaties %}
+      <dt>Treaty</dt>
+      <dd><a href="{% url 'result' treaty.id %}">{{ treaty.full_title }}</a></dd>
+      {% endfor %}
+      <dt>Meeting</dt>
+      <dd>
+        {% if document.solr.decMeetingUrl %}
+          <a href="{{ document.solr.decMeetingUrl.0 }}"
+             rel="external">{{ document.solr.decMeetingTitle.0 | safe }}</a>
+        {% else %}
+          {{ document.solr.decMeetingTitle.0 | safe }}
+        {% endif %}
+      </dd>
+
+      {% for entry in document.optional_fields %}
+        <dt> {{ entry.label }} </dt>
+        {% if "url" in entry.type %}
+          {% for url in entry.value %}
+            <dd><a target="_blank" {% if "tracked" in entry.type %} class="decision-link" {% endif %} href="{{ url }}">{{ url }}</a></dd>
+          {% endfor %}
+        {% else %}
+          <dd>{{ entry.value | join_by:", " }}</dd>
+        {% endif %}
+      {% endfor %}
+
+      <dt>Keywords</dt>
+      <dd>
+        {% for keyword in document.solr.decKeyword %}
+          <span class="tag">{{ keyword }}</span>
+        {% empty %}
+          <span class="na">Not available</span>
+        {% endfor %}
+      </dd>
+    </dl>
+  </section>
+
+  <section id="text">
+    <h2 class="section-title">Text</h2>
+
+    <dl>
+      <dt>Summary</dt>
+      <dd>
+        {% for summary in document.solr.decSummary %}
+          <p class="summary">{{ summary|safe }}</p>
+        {% empty %}
+          <span class="na">Not available</span>
+        {% endfor %}
+      </dd>
+      <dt>Decision Body</dt>
+      {% for body in document.solr.decBody %}
+        <dd>
+          <div class="html-disclaimer">As extracted from source. For details check the link to decision above.
+          </div>
+          <div class="html">{{ body|safe }}</div>
+        </dd>
+      {% empty %}
+        <dd><span class="na">Not available</span></dd>
+      {% endfor %}
+    </dl>
+  </section>
+
+  <section id="other-references">
+    <h2 class="section-title">Other references</h2>
+
+    <dl>
+      <dt>COP decisions</dt>
+      <dd>
+        {% if decisions|length %}
+          <strong>{{ decisions|length }} decisions</strong> related to this treaty.
+          <a href="{% url 'resultDecisions' document.id %}">View decisions</a>
+        {% else %}
+          <span class="na">Not available</span>
+        {% endif %}
+      </dd>
+    </dl>
+
+  </section>
+
+</article>
+{% endblock content %}
