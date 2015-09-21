@@ -215,12 +215,12 @@ class ResultDetails(SearchView):
         return context
 
 
-class ResultDecisionDetails(SearchView):
+class DecisionDetails(SearchView):
 
     template_name = 'details/decision.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ResultDecisionDetails, self).get_context_data(**kwargs)
+        context = super(DecisionDetails, self).get_context_data(**kwargs)
         results = get_document(kwargs['id'])
         if not results:
             raise Http404()
@@ -233,6 +233,39 @@ class ResultDecisionDetails(SearchView):
         all_treaties = get_all_treaties()
         context['all_treaties'] = [t for t in all_treaties
                                    if t.solr['trInformeaId'] in treaties]
+
+        return context
+
+
+class TreatyDetails(SearchView):
+
+    template_name = 'details/treaty.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TreatyDetails, self).get_context_data(**kwargs)
+        results = get_document(kwargs['id'])
+        if not results:
+            raise Http404()
+        context['document'] = results.first()
+        context['results'] = results
+        context['debug'] = settings.DEBUG
+        context['page_type'] = 'homepage'
+
+        ids = context['document'].get_references_ids_set()
+        treaties_info = results.get_referred_treaties('trElisId', ids)
+        references_mapping = context['document'].references()
+        if references_mapping:
+            context['references'] = {}
+            for label, treaties_list in references_mapping.items():
+                if treaties_list and any(treaties_list):
+                    context['references'].setdefault(label, [])
+                    context['references'][label].\
+                        extend([t for t in treaties_info
+                                if t.solr.get('trElisId', -1) in treaties_list])
+                    context['references'][label].\
+                        sort(key=lambda x: x.date(), reverse=True)
+        if context['document'].informea_id():
+            context['decisions'] = context['document'].get_decisions()
 
         return context
 

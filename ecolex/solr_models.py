@@ -212,7 +212,7 @@ class Treaty(ObjectNormalizer):
         return first(self.solr.get('trInformeaId'))
 
     def details_url(self):
-        return reverse('result', kwargs={'id': self.id()})
+        return reverse('treaty_details', kwargs={'id': self.id()})
 
 
 class Decision(ObjectNormalizer):

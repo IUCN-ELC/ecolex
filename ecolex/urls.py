@@ -3,7 +3,7 @@ from django.contrib import admin
 from .views import (
     SearchView, SearchResults, PageView, ResultDetails, ResultDetailsDecisions,
     ResultDetailsParticipants, debug, SearchResultsAjax, Homepage, DecMeetingView,
-    TreatyParticipantView, ResultDecisionDetails
+    TreatyParticipantView, DecisionDetails, TreatyDetails,
 )
 
 
@@ -24,8 +24,10 @@ urlpatterns = patterns('',
    url(r'^details/(?P<id>[^/]+)/$', ResultDetails.as_view(),
        name="result"),
 
-   url(r'^details/decision/(?P<id>[^/]+)/$', ResultDecisionDetails.as_view(),
+   url(r'^details/decision/(?P<id>[^/]+)/$', DecisionDetails.as_view(),
        name="decision_details"),
+   url(r'^details/treaty/(?P<id>[^/]+)/$', TreatyDetails.as_view(),
+       name="treaty_details"),
 
    url(r'^p/(?P<slug>\w+)/', PageView.as_view(),
        name="page"),
