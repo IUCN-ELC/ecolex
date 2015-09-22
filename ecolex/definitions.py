@@ -4,6 +4,11 @@ DOC_TYPE = (
     ('decision', "Decision"),
 )
 
+DOC_SOURCES = {
+    'treaty': 'IUCN',
+    'decision': 'InforMEA'
+}
+
 TREATY_FILTERS = {
     'trTypeOfText': 'tr_type',
     'trFieldOfApplication': 'tr_field',

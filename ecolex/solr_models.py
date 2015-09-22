@@ -3,6 +3,8 @@ from datetime import datetime
 
 from django.core.urlresolvers import reverse
 
+from ecolex.definitions import DOC_SOURCES
+
 
 def first(obj, default=None):
     if obj and type(obj) is list:
@@ -76,6 +78,10 @@ class ObjectNormalizer:
 
     def details_url(self):
         raise NotImplementedError
+
+    def source(self):
+        source = DOC_SOURCES.get(self.type, "Unknown source")
+        return source
 
     __repr__ = title
 

@@ -22,7 +22,7 @@
       {% endif %}
     </div>
     <p class="search-result-description">{# result.summary|safe #}</p>
-    <p class="search-result-source">Source: InforMEA</p>
+    <p class="search-result-source">Source: {{ result.source }}</p>
 
   {% else %}
 
@@ -45,6 +45,6 @@
       {% endif %}
     </div>
     <p class="search-result-description">{{ result.summary|safe }}</p>
-    <p class="search-result-source">Source: IUCN</p>
+    <p class="search-result-source">Source: {{ result.source }}</p>
   {% endif %}
 </li>

@@ -20,7 +20,7 @@
       <dt>Status</dt> <dd>{{ document.solr.decStatus.0|capfirst }}</dd>
       <dt>Date of document</dt> <dd>{{ document.date }}</dd>
       <dt>Source</dt>
-      <dd>InforMEA</dd>
+      <dd>{{ document.source }}</dd>
     </dl>
   </header>
 
@@ -43,7 +43,7 @@
     <dl>
       {% for treaty in all_treaties %}
       <dt>Treaty</dt>
-      <dd><a href="{% url 'result' treaty.id %}">{{ treaty.full_title }}</a></dd>
+      <dd><a href="{% url 'treaty_details' treaty.id %}">{{ treaty.full_title }}</a></dd>
       {% endfor %}
       <dt>Meeting</dt>
       <dd>

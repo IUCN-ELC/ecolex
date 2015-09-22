@@ -19,7 +19,7 @@
       <dt>Field of application</dt> <dd>{{ document.field_of_application }}</dd>
       <dt>Date of document</dt> <dd>{{ document.date }}</dd>
       <dt>Source</dt>
-      <dd>IUCN</dd>
+      <dd>{{ document.source }}</dd>
     </dl>
   </header>
 
@@ -158,7 +158,7 @@
             {% for treaty in treaties %}
             <dd>
               <div class="treaty-link-container">
-                <a href="{% url 'result' treaty.id %}"
+                <a href="{% url 'treaty_details' treaty.id %}"
                    title="See treaty details">{{ treaty.title }}</a>
                </div>
               <time>{{ treaty.date }}</time>

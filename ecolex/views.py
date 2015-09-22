@@ -175,11 +175,10 @@ class PageView(SearchView):
         return render(request, 'pages/' + slug + '.html', ctx)
 
 
-class ResultDetails(SearchView):
-    template_name = 'details.html'
+class DetailsView(SearchView):
 
     def get_context_data(self, **kwargs):
-        context = super(ResultDetails, self).get_context_data(**kwargs)
+        context = super(DetailsView, self).get_context_data(**kwargs)
         results = get_document(kwargs['id'])
         if not results:
             raise Http404()
@@ -188,46 +187,15 @@ class ResultDetails(SearchView):
         context['debug'] = settings.DEBUG
         context['page_type'] = 'homepage'
 
-        if context['document'].type == 'decision':
-            treaties = context['document'].solr.get('decTreatyId', [])
-            all_treaties = get_all_treaties()
-            context['all_treaties'] = [
-                t for t in all_treaties if t.solr['trInformeaId'] in treaties
-            ]
-
-        if context['document'].type == 'treaty':
-            ids = context['document'].get_references_ids_set()
-            treaties_info = results.get_referred_treaties('trElisId', ids)
-            references_mapping = context['document'].references()
-            if references_mapping:
-                context['references'] = {}
-                for label, treaties_list in references_mapping.items():
-                    if treaties_list and any(treaties_list):
-                        context['references'].setdefault(label, [])
-                        context['references'][label].\
-                            extend([t for t in treaties_info
-                                    if t.solr.get('trElisId', -1) in treaties_list])
-                        context['references'][label].\
-                            sort(key=lambda x: x.date(), reverse=True)
-
-            if context['document'].informea_id():
-                context['decisions'] = context['document'].get_decisions()
         return context
 
 
-class DecisionDetails(SearchView):
+class DecisionDetails(DetailsView):
 
     template_name = 'details/decision.html'
 
     def get_context_data(self, **kwargs):
         context = super(DecisionDetails, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'])
-        if not results:
-            raise Http404()
-        context['document'] = results.first()
-        context['results'] = results
-        context['debug'] = settings.DEBUG
-        context['page_type'] = 'homepage'
 
         treaties = context['document'].solr.get('decTreatyId', [])
         all_treaties = get_all_treaties()
@@ -237,22 +205,16 @@ class DecisionDetails(SearchView):
         return context
 
 
-class TreatyDetails(SearchView):
+class TreatyDetails(DetailsView):
 
     template_name = 'details/treaty.html'
 
     def get_context_data(self, **kwargs):
         context = super(TreatyDetails, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'])
-        if not results:
-            raise Http404()
-        context['document'] = results.first()
-        context['results'] = results
-        context['debug'] = settings.DEBUG
-        context['page_type'] = 'homepage'
 
         ids = context['document'].get_references_ids_set()
-        treaties_info = results.get_referred_treaties('trElisId', ids)
+        treaties_info = context['results'].get_referred_treaties('trElisId',
+                                                                 ids)
         references_mapping = context['document'].references()
         if references_mapping:
             context['references'] = {}
