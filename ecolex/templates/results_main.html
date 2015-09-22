@@ -12,15 +12,15 @@
   <!-- Ugly -->
   <span class="pull-left">
     Found
-    {% if 'treaty' in form.type.data and form.type.data|length != 2 %}
-      <span id="number-of-results">{{ facets.type.treaty }}</span> treaties
-    {% elif 'decision' in form.type.data and form.type.data|length != 2 %}
-      <span id="number-of-results">{{ facets.type.decision }}</span> COP decisions
-    {% else %}
+    {% if form.type.data|length != 1 %}
       <span id="number-of-results">{{ results.count }}</span> results
+    {% elif 'treaty' in form.type.data %}
+      <span id="number-of-results">{{ facets.type.treaty }}</span> treaties
+    {% elif 'decision' in form.type.data %}
+      <span id="number-of-results">{{ facets.type.decision }}</span> COP decisions
     {% endif %}
   </span>
-  
+
   <span class="pull-right">
     {% include 'bits/sortby.html' %}
   </span>
@@ -40,12 +40,12 @@
 <hr>
 
 <div class="clearfix">
-    
+
   {% if page.no_pages %}
 
     <div class="pull-right">
-      
-      <a class="btn btn-sm btn-default" 
+
+      <a class="btn btn-sm btn-default"
          href="?{{ page.prev_url }}"
          {% if page.number == 1 %}disabled{% endif %}>Previous</a>
 
@@ -72,7 +72,7 @@
             <a class="btn btn-sm btn-default"
                href="?{{ page.last_url }}">{{ page.no_pages }}</a>
         {% endif %}
-      
+
       <a class="btn btn-sm btn-default"
          href="?{{ page.next_url }}"
          {% if page.number == page.no_pages %}disabled{% endif %}>Next</a>
