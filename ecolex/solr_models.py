@@ -1,6 +1,10 @@
 from collections import OrderedDict
 from datetime import datetime
 
+from django.core.urlresolvers import reverse
+
+from ecolex.definitions import DOC_SOURCES
+
 
 def first(obj, default=None):
     if obj and type(obj) is list:
@@ -71,6 +75,13 @@ class ObjectNormalizer:
             entry['value'] = value
             res.append(entry)
         return res
+
+    def details_url(self):
+        raise NotImplementedError
+
+    def source(self):
+        source = DOC_SOURCES.get(self.type, "Unknown source")
+        return source
 
     __repr__ = title
 
@@ -206,6 +217,9 @@ class Treaty(ObjectNormalizer):
     def informea_id(self):
         return first(self.solr.get('trInformeaId'))
 
+    def details_url(self):
+        return reverse('treaty_details', kwargs={'id': self.id()})
+
 
 class Decision(ObjectNormalizer):
     ID_FIELD = 'decNumber'
@@ -225,6 +239,9 @@ class Decision(ObjectNormalizer):
 
     def url(self):
         return first(self.solr.get('decLink'))
+
+    def details_url(self):
+        return reverse('decision_details', kwargs={'id': self.id()})
 
     def status(self):
         return first(self.solr.get('decStatus'), "unknown")

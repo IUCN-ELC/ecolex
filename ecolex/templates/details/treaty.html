@@ -9,29 +9,17 @@
   <header>
     <div class="record-title">
       <div class="record-icon">
-        {% if document.type == 'decision' %}
-          <span class="icon icon-cop-decision" title="COP Decision"></span>
-        {% else %}
-          <span class="icon icon-treaty" title="Treaty"></span>
-        {% endif %}
+        <span class="icon icon-treaty" title="Treaty"></span>
       </div>
       <h1>{{ document.title }}</h1>
     </div>
 
     <dl>
-      {% if document.type == 'decision' %}
-        <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
-      {% endif %}
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
-      {% if document.type == 'treaty' %}
       <dt>Field of application</dt> <dd>{{ document.field_of_application }}</dd>
-      {% endif %}
-      {% if document.type == 'decision' %}
-      <dt>Status</dt> <dd>{{ document.solr.decStatus.0|capfirst }}</dd>
-      {% endif %}
       <dt>Date of document</dt> <dd>{{ document.date }}</dd>
       <dt>Source</dt>
-      <dd>{% if document.type == 'decision' %}InforMEA{% else %}IUCN{% endif %}</dd>
+      <dd>{{ document.source }}</dd>
     </dl>
   </header>
 
@@ -52,22 +40,6 @@
   <section id="details">
     <h2 class="section-title">Details</h2>
     <dl>
-      {% if document.type == 'decision' %}
-        {% for treaty in all_treaties %}
-        <dt>Treaty</dt>
-        <dd><a href="{% url 'result' treaty.id %}">{{ treaty.full_title }}</a></dd>
-        {% endfor %}
-        <dt>Meeting</dt>
-        <dd>
-          {% if document.solr.decMeetingUrl %}
-            <a href="{{ document.solr.decMeetingUrl.0 }}"
-               rel="external">{{ document.solr.decMeetingTitle.0 | safe }}</a>
-          {% else %}
-            {{ document.solr.decMeetingTitle.0 | safe }}
-          {% endif %}
-        </dd>
-      {% endif %}
-
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>
         {% if "url" in entry.type %}
@@ -79,77 +51,34 @@
         {% endif %}
       {% endfor %}
 
-      {% if document.type == 'treaty' %}
-        <dt>Subject</dt>
-        <dd>
-          {% if document.solr.trSubject %}
-            {{ document.solr.trSubject | join_by:", " | safe }}
-          {% else %}
-            <span class="na">Not available</span>
-          {% endif %}
-        </dd>
-        <dt>Entry into force</dt>
-        <dd>
-          {% if document.solr.trEntryIntoForceDate %}
-            {{ document.entry_into_force}}
-          {% else %}
-            <span class="na">Not available</span>
-          {% endif %}
-        </dd>
-      {% endif %}
-
-      <!-- Ajutor -->
-      {% if document.type == 'treaty' %}
-        <dt>Keywords</dt>
-        <dd>
-          {% for keyword in document.solr.trKeyword %}
-            <span class="tag">{{ keyword }}</span>
-          {% empty %}
-            <span class="na">Not available</span>
-          {% endfor %}
-        </dd>
-      {% endif %}
-      {% if document.type == 'decision' %}
-        <dt>Keywords</dt>
-        <dd>
-          {% for keyword in document.solr.decKeyword %}
-            <span class="tag">{{ keyword }}</span>
-          {% empty %}
-            <span class="na">Not available</span>
-          {% endfor %}
-        </dd>
-      {% endif %}
-    </dl>
-  </section>
-
-  {% if document.type == 'decision' %}
-  <section id="text">
-    <h2 class="section-title">Text</h2>
-
-    <dl>
-      <dt>Summary</dt>
+      <dt>Subject</dt>
       <dd>
-        {% for summary in document.solr.decSummary %}
-          <p class="summary">{{ summary|safe }}</p>
+        {% if document.solr.trSubject %}
+          {{ document.solr.trSubject | join_by:", " | safe }}
+        {% else %}
+          <span class="na">Not available</span>
+        {% endif %}
+      </dd>
+      <dt>Entry into force</dt>
+      <dd>
+        {% if document.solr.trEntryIntoForceDate %}
+          {{ document.entry_into_force}}
+        {% else %}
+          <span class="na">Not available</span>
+        {% endif %}
+      </dd>
+
+      <dt>Keywords</dt>
+      <dd>
+        {% for keyword in document.solr.trKeyword %}
+          <span class="tag">{{ keyword }}</span>
         {% empty %}
           <span class="na">Not available</span>
         {% endfor %}
       </dd>
-      <dt>Decision Body</dt>
-      {% for body in document.solr.decBody %}
-        <dd>
-          <div class="html-disclaimer">As extracted from source. For details check the link to decision above.
-          </div>
-          <div class="html">{{ body|safe }}</div>
-        </dd>
-      {% empty %}
-        <dd><span class="na">Not available</span></dd>
-      {% endfor %}
     </dl>
   </section>
-  {% endif %}
 
-  {% if document.type == 'treaty' %}
   <section id="text">
     <h2 class="section-title">Text</h2>
 
@@ -179,12 +108,11 @@
       {% endif %}
     </dl>
   </section>
-  {% endif %}
 
-  {% if document.type == 'treaty' and document.participants %}
+  {% if document.participants %}
   <section id="participants">
     <div class="clearfix">
-      <a id="participants-extras" 
+      <a id="participants-extras"
          href="{% url 'resultParticipants' document.id %}"
          class="pull-right btn btn-link">See Expanded View</a>
       <h2 class="section-title">Participants</h2>
@@ -221,7 +149,7 @@
   </section>
   {% endif %}
 
-  {% if document.type == 'treaty' and references %}
+  {% if references %}
   <section id="treaty-references">
     <h2 class="section-title">Treaty references</h2>
       {% for label, treaties in references.items %}
@@ -230,7 +158,7 @@
             {% for treaty in treaties %}
             <dd>
               <div class="treaty-link-container">
-                <a href="{% url 'result' treaty.id %}" 
+                <a href="{% url 'treaty_details' treaty.id %}"
                    title="See treaty details">{{ treaty.title }}</a>
                </div>
               <time>{{ treaty.date }}</time>
@@ -255,16 +183,8 @@
         {% endif %}
       </dd>
     </dl>
-    
-  </section>
 
-    <!-- {% if debug %}
-    <section id="debug">
-        <pre>
-        {{ document.solr }}
-        </pre>
-    </section>
-    {% endif %} -->
+  </section>
 
 </article>
 {% endblock content %}

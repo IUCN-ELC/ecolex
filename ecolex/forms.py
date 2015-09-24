@@ -1,9 +1,6 @@
 from django.forms import Form, CharField, MultipleChoiceField, TextInput
 
-DOC_TYPE = (
-    ('treaty', "Treaty"),
-    ('decision', "Decision"),
-)
+from ecolex.definitions import DOC_TYPE
 
 
 class SearchForm(Form):
