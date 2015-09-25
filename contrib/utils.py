@@ -1,9 +1,11 @@
+from datetime import datetime
+import re
 import socket
 
 
 def get_text_tika(file_path):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect(('127.0.0.1',1234))
+    s.connect(('127.0.0.1', 1234))
     f = open(file_path, 'rb')
 
     while True:
@@ -22,3 +24,8 @@ def get_text_tika(file_path):
         file_content += chunk.decode('utf-8')
 
     return file_content
+
+
+def get_date(text):
+    datestr = re.findall("Date\((.*)\)", text)[0][:-3]
+    return datetime.fromtimestamp(int(datestr))
