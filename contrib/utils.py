@@ -1,4 +1,5 @@
 from datetime import datetime
+import pysolr
 import re
 import socket
 
@@ -29,3 +30,24 @@ def get_text_tika(file_path):
 def get_date(text):
     datestr = re.findall("Date\((.*)\)", text)[0][:-3]
     return datetime.fromtimestamp(int(datestr))
+
+
+class SolrWrapper(object):
+
+    def __init__(self):
+        import os
+        solr_uri = os.environ.get('SOLR_URI', '')
+        self.solr = pysolr.Solr(solr_uri, timeout=10)
+
+    def search_decision(self, dec_id):
+        print(dec_id)
+        query = 'decId:"%d"' % (dec_id, )
+        results = self.solr.search(query)
+
+        if len(results) > 0:
+            print('Found document')
+
+        return None
+
+    def add_decision(self, decision):
+        self.solr.add([decision])

@@ -2,7 +2,7 @@
 """
 import requests
 
-from utils import get_date
+from utils import get_date, SolrWrapper
 
 
 ODATA_COP_DECISIONS_URL = 'http://odata.informea.org/informea.svc/Decisions'
@@ -16,7 +16,7 @@ BASE_FIELDS = [
 ]
 
 FIELD_MAP = {
-    'id': 'decOriginalId',
+    'id': 'decId',
     'link': 'decLink',
 
     'title': 'decShortTitle',
@@ -27,13 +27,15 @@ FIELD_MAP = {
     'type': 'decType',
     'status': 'decStatus',
     'number': 'decNumber',
-    'treaty': 'decTreatyID',
+    'treaty': 'decTreatyId',
     'published': 'decPublishDate',
     'updated': 'decUpdateDate',
     'meetingId': 'decMeetingId',
     'meetingTitle': 'decMeetingTitle',
     'meetingUrl': 'decMeetingUrl',
 }
+
+solr = SolrWrapper()
 
 
 def get_url(info):
@@ -85,7 +87,7 @@ def fetch_document_summary(url):
 
 def get_document(base_info):
 
-    document = {}
+    document = {'type': 'decision'}
 
     for field in BASE_FIELDS:
         document[FIELD_MAP[field]] = base_info[field]
@@ -107,8 +109,16 @@ def get_document(base_info):
     summary_url = get_url(base_info['summary']) + QUERY_FORMAT
     document['decSummary'] = fetch_document_summary(summary_url)
 
+    decision = solr.search_decision(int(document['decId']))
+    if decision:
+        # CHECK IF NEEDS UPDATE
+        pass
+    else:
+        # DECISION DOES NOT EXIST! ADD TO SOLR
+        solr.add_decision(document)
 
-def fetch_data(limit=3000):
+
+def fetch_data(limit=10):
     query = BULK_QUERY % (limit, )
 
     response = requests.get(ODATA_COP_DECISIONS_URL + query)
