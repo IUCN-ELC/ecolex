@@ -44,10 +44,11 @@ class SolrWrapper(object):
         query = 'decId:"%d"' % (dec_id, )
         results = self.solr.search(query)
 
-        if len(results) > 0:
-            print('Found document')
+        for result in results:
+            if result['decId'] == dec_id:
+                return result
 
-        return None
+        return False
 
     def add_decision(self, decision):
         self.solr.add([decision])

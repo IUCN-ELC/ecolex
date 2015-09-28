@@ -6,7 +6,7 @@ from utils import get_date, SolrWrapper
 
 
 ODATA_COP_DECISIONS_URL = 'http://odata.informea.org/informea.svc/Decisions'
-BULK_QUERY = '?$top=%d&$format=json&$orderby=published asc'
+BULK_QUERY = '?$top=%d&$format=json&$orderby=updated desc'
 QUERY_FORMAT = '?&$format=json'
 LANGUAGES = 'en', 'es', 'fr'
 
@@ -115,7 +115,8 @@ def get_document(base_info):
         pass
     else:
         # DECISION DOES NOT EXIST! ADD TO SOLR
-        solr.add_decision(document)
+        print(document['decShortTitle'])
+        # solr.add_decision(document)
 
 
 def fetch_data(limit=10):
@@ -126,9 +127,10 @@ def fetch_data(limit=10):
         raise ValueError('Invalid return code %d' % response.status_code)
 
     results = response.json()['d']['results']
-    for result in results:
-        # TODO CHECK IF DOCUMENT NEEDS UPDATED (only then fetch_document)
-        document = get_document(result)
+
+    # for result in results:
+    #     # TODO CHECK IF DOCUMENT NEEDS UPDATED (only then fetch_document)
+    #     document = get_document(result)
 
 
 if __name__ == '__main__':
