@@ -3,7 +3,7 @@
 import requests
 from datetime import date, timedelta
 
-from utils import get_date
+from utils import get_date, SolrWrapper
 
 
 ODATA_URL = "http://odata.informea.org/informea.svc/Decisions"
@@ -98,7 +98,7 @@ def parse_decisions(raw_decisions):
     decisions = []
 
     for raw_decision in raw_decisions:
-        decision = {}
+        decision = {'type': 'decision'}
 
         for field in BASE_FIELDS:
             decision[FIELD_MAP[field]] = raw_decision[field]
@@ -112,14 +112,26 @@ def parse_decisions(raw_decisions):
         decision['decLongTitle'] = parse_multilangual(raw_decision['longTitle'])
         decision['decKeyword'] = parse_keywords(raw_decision['keywords'])
         decision['decBody'] = parse_multilangual(raw_decision['content'])
-        print(decision['decShortTitle'])
-        print(decision['decKeyword'])
-        print(decision['decBody'])
-        print('*****')
+        decisions.append(decision)
 
     return decisions
+
+
+def add_decisions(decisions):
+    solr = SolrWrapper()
+    print(len(decisions))
+    for decision in decisions:
+        decision_result = solr.search_decision(int(decision['decId']))
+        if decision_result:
+            # CHECK AND UPDATE
+            pass
+        else:
+            solr.add_decision(decision)
+            print('Added: %d-%s' % (int(decision['decId']),
+                                    decision['decShortTitle']))
 
 
 if __name__ == '__main__':
     raw_decisions = fetch_decisions()
     decisions = parse_decisions(raw_decisions)
+    add_decisions(decisions)

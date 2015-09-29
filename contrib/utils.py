@@ -40,15 +40,13 @@ class SolrWrapper(object):
         self.solr = pysolr.Solr(solr_uri, timeout=10)
 
     def search_decision(self, dec_id):
-        print(dec_id)
         query = 'decId:"%d"' % (dec_id, )
         results = self.solr.search(query)
-
         for result in results:
             if result['decId'] == dec_id:
                 return result
 
-        return False
+        return None
 
     def add_decision(self, decision):
         self.solr.add([decision])
