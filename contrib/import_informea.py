@@ -15,7 +15,7 @@ DUMMY_FILTER = "$filter=type eq 'decision'"
 DUMMY_DATE = '2000-01-01T00:00:00'
 
 FORMAT = '$format=json'
-EXPAND = '$expand=title,longTitle,keywords,content'
+EXPAND = '$expand=title,longTitle,keywords,content,files'
 TIMEDELTA = 7  # DAYS
 
 LANGUAGES = ['en', 'es', 'fr', 'ar', 'ru', 'zh']
@@ -59,7 +59,8 @@ def fetch_decisions(limit=100):
 
     decisions = []
     skip = 0
-    while True and skip < 100:
+    while True:
+        print(skip)
         bulk = BULK % (limit, skip)
 
         query = '%s?%s&%s&%s&%s' % (ODATA_URL, bulk, FORMAT, EXPAND,
@@ -83,9 +84,9 @@ def parse_multilangual(info):
     for result in info['results']:
         language = result['language']
         if language not in LANGUAGES:
-            print(language, result['value'])
+            continue
         value = regex.sub('', result['value'])
-        values[language] = value
+        values[language] = value.strip()
     return values
 
 
@@ -139,6 +140,8 @@ def decision_needs_update(old, new):
     for field in FIELD_MAP.values():
         old_value = old.get(field, None)
         new_value = new.get(field, None)
+        if not (old_value or new_value) or field == 'decUpdateDate':
+            continue
         if old_value != new_value and old_value != [new_value]:
             return True
     return False
@@ -146,22 +149,28 @@ def decision_needs_update(old, new):
 
 def add_decisions(decisions):
     solr = SolrWrapper()
-    print(len(decisions))
+    new_decisions = []
+    updated_decisions = []
+
     for decision in decisions:
         dec_id = int(decision['decId'])
         decision_result = solr.search_decision(dec_id)
         if decision_result:
             # CHECK AND UPDATE
             if decision_needs_update(decision_result, decision):
-                dec_solr_id = decision_result['id']
-                # solr.update_decision(dec_solr_id, decision)
+                decision['id'] = decision_result['id']
+                updated_decisions.append(decision)
                 print('Decision %d has been updated' % (dec_id,))
             else:
                 print('Decision %d already indexed' % (dec_id,))
         else:
-            solr.add_decision(decision)
+            new_decisions.append(decision)
             print('Added: %d' % (int(decision['decId'])))
 
+    solr.add_decisions(new_decisions)
+    solr.add_decisions(updated_decisions)
+    print('Added %d new decisions' % (len(new_decisions)))
+    print('Updated %d decisions' % (len(updated_decisions)))
 
 if __name__ == '__main__':
     raw_decisions = fetch_decisions()

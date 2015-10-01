@@ -48,9 +48,5 @@ class SolrWrapper(object):
 
         return None
 
-    def add_decision(self, decision):
-        self.solr.add([decision])
-
-    def update_decision(self, dec_id, decision):
-        decision['id'] = dec_id
-        self.solr.add([decision])
+    def add_decisions(self, decisions):
+        self.solr.add(decisions)
