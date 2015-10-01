@@ -1,19 +1,31 @@
 """ Import COP Decisions from Informea OData and update Solr index
 """
+import re
 import requests
+from datetime import date, timedelta
 
 from utils import get_date, SolrWrapper
 
 
-ODATA_COP_DECISIONS_URL = 'http://odata.informea.org/informea.svc/Decisions'
-BULK_QUERY = '?$top=%d&$format=json&$orderby=updated desc'
-QUERY_FORMAT = '?&$format=json'
-LANGUAGES = 'en', 'es', 'fr'
+ODATA_URL = "http://odata.informea.org/informea.svc/Decisions"
+BULK = "$top=%d&$skip=%d"
+
+FILTER = "$filter=updated gt datetime'%s'"
+DUMMY_FILTER = "$filter=type eq 'decision'"
+DUMMY_DATE = '2000-01-01T00:00:00'
+
+FORMAT = '$format=json'
+EXPAND = '$expand=title,longTitle,keywords,content'
+TIMEDELTA = 7  # DAYS
+
+LANGUAGES = ['en', 'es', 'fr', 'ar', 'ru', 'zh']
 
 BASE_FIELDS = [
     'id', 'link', 'type', 'status', 'number', 'treaty', 'published', 'updated',
     'meetingId', 'meetingTitle', 'meetingUrl'
 ]
+
+MULTILANGUAL_FIELDS = ['title', 'longTitle']
 
 FIELD_MAP = {
     'id': 'decId',
@@ -24,6 +36,7 @@ FIELD_MAP = {
     'keyword': 'decKeyword',
     'summary': 'decSummary',
 
+    'content': 'decBody',
     'type': 'decType',
     'status': 'decStatus',
     'number': 'decNumber',
@@ -34,104 +47,123 @@ FIELD_MAP = {
     'meetingTitle': 'decMeetingTitle',
     'meetingUrl': 'decMeetingUrl',
 }
-
-solr = SolrWrapper()
-
-
-def get_url(info):
-    if '__deferred' in info:
-        return info['__deferred']['uri']
+regex = re.compile(r'[\n\t\r]')
 
 
-def fetch_document_title(url):
-    response = requests.get(url)
-    if response.status_code != 200:
-        raise ValueError('Invalid return code %d' % response.status_code)
-    results = response.json()['d']['results']
+def fetch_decisions(limit=100):
+    # THE CRON WILL RUN WEEKLY, SO WE CHECK THE UPDATES FOR THE LAST WEEK
+    today = date.today()
+    last_update = today - timedelta(TIMEDELTA)
+    date_filter = FILTER % (last_update.strftime("%Y-%m-%dT00:00:00"), )
+    date_filter = DUMMY_FILTER  # TESTING PURPOSES UNTIL CRISTI SOLVES BUG
 
-    titles = {}
-    for result in results:
+    decisions = []
+    skip = 0
+    while True and skip < 100:
+        bulk = BULK % (limit, skip)
+
+        query = '%s?%s&%s&%s&%s' % (ODATA_URL, bulk, FORMAT, EXPAND,
+                                    date_filter)
+        response = requests.get(query)
+        if response.status_code != 200:
+            raise ValueError('Invalid return code %d' % response.status_code)
+
+        results = response.json()['d']['results']
+        if not results:
+            break
+        else:
+            decisions.extend(results)
+        skip += limit
+
+    return decisions
+
+
+def parse_multilangual(info):
+    values = {}
+    for result in info['results']:
         language = result['language']
         if language not in LANGUAGES:
-            continue
-        title = result['value']
-        titles[language] = title
+            print(language, result['value'])
+        value = regex.sub('', result['value'])
+        values[language] = value
+    return values
 
-    return titles
 
-
-def fetch_document_keywords(url):
-    response = requests.get(url)
-    if response.status_code != 200:
-        raise ValueError('Invalid return code %d' % response.status_code)
-    results = response.json()['d']['results']
-
+def parse_keywords(info):
     keywords = {}
-    for result in results:
+    for result in info['results']:
         term = result['term']
         if term not in keywords:
             keywords[term] = True
-    return keywords.keys()
+    return list(keywords.keys()) or None
 
 
-def fetch_document_summary(url):
-    response = requests.get(url)
-    if response.status_code != 200:
-        raise ValueError('Invalid return code %d' % response.status_code)
-    results = response.json()['d']['results']
+def parse_decisions(raw_decisions):
+    decisions = []
 
-    summary = None
-    # TODO: ASK CRISTI ABOUT SUMMARY FIELD
-    return summary
+    for raw_decision in raw_decisions:
+        decision = {'type': 'decision'}
 
+        for field in BASE_FIELDS:
+            try:
+                raw_decision[field] = int(raw_decision[field])
+            except:
+                pass
+            decision[FIELD_MAP[field]] = raw_decision[field]
 
-def get_document(base_info):
+        if decision['decPublishDate']:
+            date = get_date(decision['decPublishDate'])
+            decision['decPublishDate'] = date.strftime("%Y-%m-%dT%H:%M:%SZ")
+        if decision['decUpdateDate']:
+            date = get_date(decision['decUpdateDate'])
+            decision['decUpdateDate'] = date.strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    document = {'type': 'decision'}
+        decision['decKeyword'] = parse_keywords(raw_decision['keywords'])
 
-    for field in BASE_FIELDS:
-        document[FIELD_MAP[field]] = base_info[field]
+        for multi_field in MULTILANGUAL_FIELDS:
+            multi_values = parse_multilangual(raw_decision[multi_field])
+            field = FIELD_MAP[multi_field]
+            for k, v in multi_values.items():
+                field_name = field + '_' + k
+                decision[field_name] = v
 
-    if document['decPublishDate']:
-        document['decPublishDate'] = get_date(document['decPublishDate'])
-    if document['decUpdateDate']:
-        document['decUpdateDate'] = get_date(document['decUpdateDate'])
+        dec_body = parse_multilangual(raw_decision['content'])
+        decision['decBody'] = list(dec_body.values())
 
-    title_url = get_url(base_info['title']) + QUERY_FORMAT
-    document['decShortTitle'] = fetch_document_title(title_url)
+        decisions.append(decision)
 
-    long_title_url = get_url(base_info['longTitle']) + QUERY_FORMAT
-    document['decLongTitle'] = fetch_document_title(long_title_url)
-
-    keywords_url = get_url(base_info['keywords']) + QUERY_FORMAT
-    document['decKeyword'] = fetch_document_keywords(keywords_url)
-
-    summary_url = get_url(base_info['summary']) + QUERY_FORMAT
-    document['decSummary'] = fetch_document_summary(summary_url)
-
-    decision = solr.search_decision(int(document['decId']))
-    if decision:
-        # CHECK IF NEEDS UPDATE
-        pass
-    else:
-        # DECISION DOES NOT EXIST! ADD TO SOLR
-        print(document['decShortTitle'])
-        # solr.add_decision(document)
+    return decisions
 
 
-def fetch_data(limit=10):
-    query = BULK_QUERY % (limit, )
+def decision_needs_update(old, new):
+    for field in FIELD_MAP.values():
+        old_value = old.get(field, None)
+        new_value = new.get(field, None)
+        if old_value != new_value and old_value != [new_value]:
+            return True
+    return False
 
-    response = requests.get(ODATA_COP_DECISIONS_URL + query)
-    if response.status_code != 200:
-        raise ValueError('Invalid return code %d' % response.status_code)
 
-    results = response.json()['d']['results']
-
-    # for result in results:
-    #     # TODO CHECK IF DOCUMENT NEEDS UPDATED (only then fetch_document)
-    #     document = get_document(result)
+def add_decisions(decisions):
+    solr = SolrWrapper()
+    print(len(decisions))
+    for decision in decisions:
+        dec_id = int(decision['decId'])
+        decision_result = solr.search_decision(dec_id)
+        if decision_result:
+            # CHECK AND UPDATE
+            if decision_needs_update(decision_result, decision):
+                dec_solr_id = decision_result['id']
+                # solr.update_decision(dec_solr_id, decision)
+                print('Decision %d has been updated' % (dec_id,))
+            else:
+                print('Decision %d already indexed' % (dec_id,))
+        else:
+            solr.add_decision(decision)
+            print('Added: %d' % (int(decision['decId'])))
 
 
 if __name__ == '__main__':
-    fetch_data()
+    raw_decisions = fetch_decisions()
+    decisions = parse_decisions(raw_decisions)
+    add_decisions(decisions)
