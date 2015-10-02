@@ -107,7 +107,9 @@ def parse_decisions(raw_decisions):
 
         for field in BASE_FIELDS:
             try:
-                raw_decision[field] = int(raw_decision[field])
+                raw_decision[field] = raw_decision[field].strip()
+                if field in ('id', 'meetingId'):
+                    raw_decision[field] = int(raw_decision[field])
             except:
                 pass
             decision[FIELD_MAP[field]] = raw_decision[field]
@@ -142,7 +144,10 @@ def decision_needs_update(old, new):
         new_value = new.get(field, None)
         if not (old_value or new_value) or field == 'decUpdateDate':
             continue
-        if old_value != new_value and old_value != [new_value]:
+        if (field == 'decBody' and set(old_value) == set(new_value)):
+            continue
+        if (old_value != new_value and old_value != [new_value]):
+            import pdb; pdb.set_trace()
             return True
     return False
 
