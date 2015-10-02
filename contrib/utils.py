@@ -1,8 +1,8 @@
 from datetime import datetime
+import os
 import pysolr
 import re
 import socket
-import os
 
 
 def get_text_tika(file_path):
