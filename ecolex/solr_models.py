@@ -1,5 +1,6 @@
 from collections import OrderedDict
 from datetime import datetime
+from html import unescape
 
 from django.core.urlresolvers import reverse
 
@@ -38,7 +39,7 @@ class ObjectNormalizer:
                 continue
             t = max(self.solr.get(title_field), key=lambda i: len(i))
             if len(t):
-                return t
+                return unescape(t)
         return "Unknown Document"
 
     def date(self):

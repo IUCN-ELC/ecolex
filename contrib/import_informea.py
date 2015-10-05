@@ -147,7 +147,6 @@ def decision_needs_update(old, new):
         if (field == 'decBody' and set(old_value) == set(new_value)):
             continue
         if (old_value != new_value and old_value != [new_value]):
-            import pdb; pdb.set_trace()
             return True
     return False
 
