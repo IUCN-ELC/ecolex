@@ -171,8 +171,8 @@ def add_decisions(decisions):
             new_decisions.append(decision)
             print('Added: %d' % (int(decision['decId'])))
 
-    solr.add_decisions(new_decisions)
-    solr.add_decisions(updated_decisions)
+    solr.add_documents(new_decisions)
+    solr.add_documents(updated_decisions)
     print('Added %d new decisions' % (len(new_decisions)))
     print('Updated %d decisions' % (len(updated_decisions)))
 

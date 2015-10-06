@@ -45,8 +45,15 @@ class SolrWrapper(object):
         for result in results:
             if result['decId'] == dec_id:
                 return result
-
         return None
 
-    def add_decisions(self, decisions):
-        self.solr.add(decisions)
+    def search_literature(self, lit_id):
+        query = 'litId:"%s"' % (lit_id, )
+        results = self.solr.search(query)
+        for result in results:
+            if result['litId'] == lit_id:
+                return result
+        return None
+
+    def add_documents(self, documents):
+        self.solr.add(documents)
