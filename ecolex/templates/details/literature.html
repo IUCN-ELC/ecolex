@@ -17,12 +17,52 @@
     <dl>
       <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
-      <dt>Status</dt> <dd>{{ document.solr.decStatus.0|capfirst }}</dd>
       <dt>Date of document</dt> <dd>{{ document.date }}</dd>
       <dt>Source</dt>
       <dd>{{ document.source }}</dd>
     </dl>
   </header>
+
+  <section id="details">
+    <h2 class="section-title">Details</h2>
+    <dl>
+      <dt>Authors</dt>
+      <dd>{% for author in document.solr.litAuthor %}
+            {{ author }}{%if not forloop.last%};{% endif %}
+          {% endfor %}
+      </dd>
+      <dt>ISBN</dt>
+      <dd>{{ document.solr.litISBN }}</dd>
+      <dt>Volume</dt>
+      <dd>{{ document.solr.litVolumeNo }}</dd>
+      <dt>Publisher</dt>
+      <dd>{{ document.solr.litPublisher }}</dd>
+      <dt>Place of publication</dt>
+      <dd>{{ document.solr.litPublPlace }}</dd>
+      <dt>Pages</dt>
+      <dd>{{ document.solr.litCollation }}</dd>
+      <dt>Date of publication</dt>
+      <dd>{{ document.solr.litDateOfText }}</dd>
+      <dt>Language of document</dt>
+      <dd>{{ document.solr.litLanguageOfDocument }}</dd>
+      <dt>Country & Region</dt>
+      <dd>{{ document.solr.litCountry }} - {{ document.solr.litDisplayRegion }}</dd>
+
+      <dt>Subjects</dt>
+      <dd>{% for subject in document.solr.litSubject %}
+            {{ subject }}
+          {% endfor %}
+      </dd>
+      <dt>Keywords</dt>
+      <dd>{% for keyword in document.solr.litKeyword %}
+            <span class="tag">{{ keyword|capfirst }}</span>
+          {% empty %}
+            <span class="na">Not available</span>
+          {% endfor %}
+      </dd>
+    </dl>
+
+  </section>
 
 </article>
 {% endblock content %}
