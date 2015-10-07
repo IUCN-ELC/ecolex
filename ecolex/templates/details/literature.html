@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% load tags %}
+
+{% block content %}
+{% informea_url_id document %}
+
+<article class="record-details">
+
+  <header>
+    <div class="record-title">
+      <div class="record-icon">
+          <span class="icon icon-literature" title="COP Decision"></span>
+      </div>
+      <h1>{{ document.title }}</h1>
+    </div>
+
+    <dl>
+      <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
+      <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
+      <dt>Status</dt> <dd>{{ document.solr.decStatus.0|capfirst }}</dd>
+      <dt>Date of document</dt> <dd>{{ document.date }}</dd>
+      <dt>Source</dt>
+      <dd>{{ document.source }}</dd>
+    </dl>
+  </header>
+
+</article>
+{% endblock content %}

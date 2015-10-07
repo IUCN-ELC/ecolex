@@ -25,6 +25,8 @@ class SearchForm(Form):
     dec_status = MultipleChoiceField()
     dec_treaty = MultipleChoiceField()
 
+    lit_type = MultipleChoiceField()
+
     sortby = CharField(initial='')
 
     def has_treaty(self):

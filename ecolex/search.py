@@ -4,7 +4,7 @@ import json
 import pysolr
 from django.conf import settings
 
-from ecolex.solr_models import Treaty, Decision
+from ecolex.solr_models import Treaty, Decision, Literature
 
 
 HIGHLIGHT_FIELDS = []
@@ -121,6 +121,8 @@ def parse_result(hit, responses):
         return Treaty(hit, hl)
     elif hit['type'] == 'decision':
         return Decision(hit, hl)
+    elif hit['type'] == 'literature':
+        return Literature(hit, hl)
     return hit
 
 
@@ -224,6 +226,7 @@ def get_fq(filters):
         'decType': 'decision',
         'decStatus': 'decision',
         'decTreatyId': 'decision',
+        'litTypeOfText': 'literature',
     }
 
     AND_FILTERS = [
@@ -246,7 +249,7 @@ def get_fq(filters):
         else:
             return 'type:' + type
 
-    enabled_types = filters.get('type', []) or ['treaty', 'decision']
+    enabled_types = filters.get('type', []) or ['treaty', 'decision', 'literature']
     type_filters = {f: [] for f in enabled_types}
     global_filters = []
     for filter, values in filters.items():

@@ -25,6 +25,8 @@ class ObjectNormalizer:
             return first(self.solr.get('trTypeOfText'))
         if self.solr.get('decType'):
             return first(self.solr.get('decType'))
+        if self.solr.get('litTypeOfText'):
+            return first(self.solr.get('litTypeOfText'))
         return "Unknown type of document"
 
     def id(self):
@@ -37,9 +39,11 @@ class ObjectNormalizer:
         for title_field in self.TITLE_FIELDS:
             if not self.solr.get(title_field):
                 continue
-            t = max(self.solr.get(title_field), key=lambda i: len(i))
-            if len(t):
-                return unescape(t)
+            title_value = self.solr.get(title_field)
+            if type(title_value) == list:
+                title_value = max(title_value, key=lambda i: len(i))
+            if len(title_value):
+                return unescape(title_value)
         return "Unknown Document"
 
     def date(self):
@@ -246,3 +250,20 @@ class Decision(ObjectNormalizer):
 
     def status(self):
         return first(self.solr.get('decStatus'), "unknown")
+
+
+class Literature(ObjectNormalizer):
+    ID_FIELD = 'litId'
+    SUMMARY_FIELD = 'litAbstract'
+    TITLE_FIELDS = ['litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp',
+                    'litLongTitle_other',
+                    'litPaperTitleOfText', 'litPaperTitleOfText_fr',
+                    'litPaperTitleOfText_sp', 'litPaperTitleOfText_other',
+                    'litTitleOfTextShort', 'litTitleOfTextShort_fr',
+                    'litTitleOfTextShort_sp', 'litTitleOfTextShort_other',
+                    'litTitleOfTextTransl', 'litTitleOfTextTransl_fr',
+                    'litTitleOfTextTransl_sp']
+    DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
+
+    def details_url(self):
+        return reverse('literature_details', kwargs={'id': self.id()})

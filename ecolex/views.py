@@ -179,6 +179,7 @@ class DetailsView(SearchView):
 
     def get_context_data(self, **kwargs):
         context = super(DetailsView, self).get_context_data(**kwargs)
+
         results = get_document(kwargs['id'])
         if not results:
             raise Http404()
@@ -229,6 +230,15 @@ class TreatyDetails(DetailsView):
         if context['document'].informea_id():
             context['decisions'] = context['document'].get_decisions()
 
+        return context
+
+
+class LiteratureDetails(DetailsView):
+
+    template_name = 'details/literature.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(LiteratureDetails, self).get_context_data(**kwargs)
         return context
 
 

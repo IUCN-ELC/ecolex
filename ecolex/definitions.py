@@ -2,11 +2,13 @@
 DOC_TYPE = (
     ('treaty', "Treaty"),
     ('decision', "Decision"),
+    ('literature', "Literature"),
 )
 
 DOC_SOURCES = {
     'treaty': 'IUCN',
-    'decision': 'InforMEA'
+    'decision': 'InforMEA',
+    'literature': 'ELIS'
 }
 
 TREATY_FILTERS = {
@@ -25,9 +27,14 @@ DECISION_FILTERS = {
     'decTreatyId': 'dec_treaty',
 }
 
+LITERATURE_FILTERS = {
+    'litTypeOfText': 'lit_type'
+}
+
 DOC_TYPE_FILTER_MAPPING = {
     'treaty': TREATY_FILTERS,
     'decision': DECISION_FILTERS,
+    'literature': LITERATURE_FILTERS,
 }
 
 FIELD_TO_FACET_MAPPING = {
@@ -44,6 +51,8 @@ FIELD_TO_FACET_MAPPING = {
     'dec_type': 'decType',
     'dec_status': 'decStatus',
     'dec_treaty': 'decTreatyId',
+
+    'lit_type': 'litTypeOfText',
 }
 
 
@@ -53,5 +62,14 @@ SOLR_FIELDS = [
     'trDateOfModification', 'trPaperTitleOfText', 'trPaperTitleOfTextFr',
     'trPaperTitleOfTextSp', 'trPaperTitleOfTextOther', 'trTitleOfTextShort',
     'decTitleOfText', 'decStatus', 'decPublishDate', 'decUpdateDate',
-    'decNumber'
+    'decNumber',
+    'litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp', 'litLongTitle_other',
+    'litPaperTitleOfText', 'litPaperTitleOfText_fr', 'litPaperTitleOfText_sp',
+    'litPaperTitleOfText_other',
+    'litTitleOfTextShort', 'litTitleOfTextShort_fr', 'litTitleOfTextShort_sp',
+    'litTitleOfTextShort_other',
+    'litTitleOfTextTransl', 'litTitleOfTextTransl_fr',
+    'litTitleOfTextTransl_sp',
+    'litDateOfEntry', 'litDateOfModifcation', 'litAbstract',
+    'litTypeOfText'
 ]
