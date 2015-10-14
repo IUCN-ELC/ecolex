@@ -71,5 +71,9 @@ SOLR_FIELDS = [
     'litTitleOfTextTransl', 'litTitleOfTextTransl_fr',
     'litTitleOfTextTransl_sp',
     'litDateOfEntry', 'litDateOfModifcation', 'litAbstract',
-    'litTypeOfText'
+    'litTypeOfText',
+    'litScope', 'litScope_fr', 'litScope_sp',
+    'litAuthor', 'litCorpAuthor',
+    'litPublisher', 'litPublPlace', 'litDateOfText',
+    'litKeyword', 'litSeriesFlag',
 ]

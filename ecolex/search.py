@@ -99,7 +99,8 @@ class Queryset(object):
         return self._hits
 
     def pages(self):
-        return self.rows and int(len(self) / self.rows)
+        number_of_pages = (len(self) // self.rows) + 1
+        return number_of_pages
 
     def first(self):
         if not self._hits:
@@ -159,7 +160,7 @@ def escape_query(query):
 
 def get_hl():
     fields = HIGHLIGHT_FIELDS
-    for t in Decision, Treaty:
+    for t in Decision, Treaty, Literature:
         fields += [t.SUMMARY_FIELD] + t.TITLE_FIELDS
     fields = set(fields)
     HIGHLIGHT_PARAMS['hl.fl'] = ','.join(fields)
@@ -179,9 +180,6 @@ def get_sortby(sortby):
 def get_relevancy():
     RELEVANCY_FIELDS = {
         'trPaperTitleOfText': 100,
-        'trPaperTitleOfTextSp': 100,
-        'trPaperTitleOfTextFr': 100,
-        'trPaperTitleOfTextOther': 100,
         'decLongTitle_en': 100,
         'decLongTitle_es': 100,
         'decLongTitle_fr': 100,
@@ -194,6 +192,10 @@ def get_relevancy():
         'decShortTitle_ru': 100,
         'decShortTitle_ar': 100,
         'decShortTitle_zh': 100,
+        'litLongTitle': 100,
+        'litLongTitle_fr': 100,
+        'litLongTitle_sp': 100,
+        'litLongTitle_other': 100,
         'trTitleAbbreviation': 75,
         'decSummary': 50,
         'decBody': 50,
@@ -301,7 +303,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         params.update(get_hl())
     params['sort'] = get_sortby(sortby)
     params.update(get_relevancy())
-    #add spellcheck
+    # add spellcheck
     params.update({
         'spellcheck': 'true',
         'spellcheck.collate': 'true',
@@ -311,7 +313,6 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
 
     if settings.DEBUG:
         params['debug'] = True
-
     return solr.search(solr_query, **params)
 
 

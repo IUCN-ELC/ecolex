@@ -24,6 +24,40 @@
     <p class="search-result-description">{# result.summary|safe #}</p>
     <p class="search-result-source">Source: {{ result.source }}</p>
 
+  {% elif result.type == "literature" %}
+
+    <div class="search-result-details">
+      <strong class="sr-type">{{ result.type|capfirst }}</strong>
+      {% for author in result.authors %}
+        {% if forloop.first %}
+        |
+        {% endif %}
+        <span>{{ author }} </span>
+        {% if not forloop.last %}
+        ,
+        {% endif %}
+      {% endfor %}
+
+      {% if result.publisher %}
+        |
+        <span>{{ result.publisher }}</span>
+      {% endif %}
+
+      {% if result.publication_place %}
+        |
+        <span>{{ result.publication_place }}</span>
+      {% endif %}
+
+      {% if result.date %}
+        |
+        <time class="sr-date" title="Date of document: {{ result.date }}">
+          {{ result.date }}
+        </time>
+      {% endif %}
+    </div>
+    <p class="search-result-description"><strong>Keywords:</strong> {{ result.keywords }}</p>
+    <p class="search-result-source">Source: {{ result.source }}</p>
+
   {% else %}
 
     <div class="search-result-details">
@@ -31,8 +65,10 @@
       {% if result.document_id %}
         <span class="sr-id"> {{ result.document_id }} </span>
       {% endif %}
+      {% if result.jurisdiction %}
         |
       <span class="sr-jurisdiction">{{ result.jurisdiction }}</span>
+      {% endif %}
       {% if result.place_of_adoption %}
         |
         <span class="sr-jurisdiction"> {{ result.place_of_adoption }}</span>

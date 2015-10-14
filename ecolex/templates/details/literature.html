@@ -43,6 +43,8 @@
       <dd>{{ document.solr.litCollation }}</dd>
       <dt>Date of publication</dt>
       <dd>{{ document.solr.litDateOfText }}</dd>
+      <dt>Series</dt>
+      <dd>{{ document.solr.litSeriesFlag }}</dd>
       <dt>Language of document</dt>
       <dd>{{ document.solr.litLanguageOfDocument }}</dd>
       <dt>Country & Region</dt>
@@ -50,7 +52,7 @@
 
       <dt>Subjects</dt>
       <dd>{% for subject in document.solr.litSubject %}
-            {{ subject }}
+            {{ subject|safe }}
           {% endfor %}
       </dd>
       <dt>Keywords</dt>
@@ -61,7 +63,34 @@
           {% endfor %}
       </dd>
     </dl>
+  </section>
 
+  <section id="text">
+    <h2 class="section-title">Text</h2>
+
+    <dl>
+      <dt>Abstract</dt>
+      <dd>
+        {% if document.abstract %}
+          <p class="abstract">{{ document.abstract }}</p>
+        {% else %}
+          <p class="na">Not available</p>
+        {% endif %}
+      </dd>
+      <dt>Link to full text</dt>
+      <dd><a class="decision-link" href="{{ document.solr.litLinkToFullText }}" target="_blank">{{ document.solr.litLinkToFullText }}</a></dd>
+      <dt>Available web site</dt>
+      <dd><a class="decision-link" href="{{ document.solr.litRelatedWebSite }}">{{ document.solr.litRelatedWebSite }}</a></dd>
+    </dl>
+  </section>
+
+  <section id="other-references">
+    <h2 class="section-title">Other references</h2>
+
+    <dl>
+      <dt>Treaties</dt>
+      <dd>Not available</dd>
+    </dl>
   </section>
 
 </article>

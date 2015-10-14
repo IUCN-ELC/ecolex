@@ -267,3 +267,27 @@ class Literature(ObjectNormalizer):
 
     def details_url(self):
         return reverse('literature_details', kwargs={'id': self.id()})
+
+    def jurisdiction(self):
+        return first(self.solr.get('litScope'))
+
+    def authors(self):
+        authors = self.solr.get('litAuthor')
+        if not authors:
+            authors = self.solr.get('litCorpAuthor')
+        return authors
+
+    def publisher(self):
+        return first(self.solr.get('litPublisher'))
+
+    def publication_place(self):
+        return first(self.solr.get('litPublPlace'))
+
+    def publication_date(self):
+        return first(self.solr.get('litDateOfText'))
+
+    def keywords(self):
+        return first(self.solr.get('litKeyword'))
+
+    def abstract(self):
+        return first(self.solr.get('litAbstract'))
