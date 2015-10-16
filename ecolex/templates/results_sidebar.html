@@ -91,6 +91,77 @@
   </fieldset>
 {% endif %}
 
+{% if not form.type.data or form.has_literature %}
+  <fieldset class="speciali-filter">
+    <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">Literature filters</h5>
+
+    <div id="filter-literatures" class="collapse {% if form.has_literature %}in{% endif %}">
+      {% if facets.litTypeOfText %}
+        <h6>Type of document</h6>
+        <ul class="filter-literature" data-formid="#id_lit_type">
+        {% include 'bits/checkbox_facet.html' with facet=facets.litTypeOfText form_field=form.lit_type %}
+        </ul>
+      {% endif %}
+
+      <h6>Literature author</h6>
+      <div id="lit_author" class="tag-select">
+        <select class="tag-options" hidden>
+          {% include 'bits/fancy_select.html' with facet=facets.litAuthor form_field=form.lit_author %}
+        </select>
+        <input type="text" class="tm-input" placeholder="Add author" data-formid="#id_lit_author"/>
+      </div>
+
+      <h6>Country</h6>
+      <ul class="filter-literature" data-formid="#id_lit_country">
+        {% include 'bits/checkbox_facet.html' with facet=facets.litCountry form_field=form.lit_country %}
+      </ul>
+
+      <h6>Geographical Area</h6>
+      <div id="lit_region" class="tag-select">
+        <select class="tag-options" hidden>
+          {% include 'bits/fancy_select.html' with facet=facets.litRegion form_field=form.lit_region %}
+        </select>
+        <input type="text" class="tm-input" placeholder="Add geographical areas" data-formid="#id_lit_region"/>
+      </div>
+
+      <h6>Basin</h6>
+      <div id="lit_basin" class="tag-select">
+        <select class="tag-options" hidden>
+          {% include 'bits/fancy_select.html' with facet=facets.litBasin form_field=form.lit_basin %}
+        </select>
+        <input type="text" class="tm-input" placeholder="Add basin" data-formid="#id_lit_basin"/>
+      </div>
+
+      <h6>Journal/Series</h6>
+      <ul class="filter-literature" data-formid="#id_lit_serial">
+        {% include 'bits/checkbox_facet.html' with facet=facets.litSerialTitle form_field=form.lit_serial %}
+      </ul>
+
+      <h6>Publisher</h6>
+      <ul class="filter-literature" data-formid="#id_lit_publisher">
+        {% include 'bits/checkbox_facet.html' with facet=facets.litPublisher form_field=form.lit_publisher %}
+      </ul>
+
+      <h6>Subject</h6>
+      <div id="lit_subject" class="tag-select">
+        <select class="tag-options" hidden>
+          {% include 'bits/fancy_select.html' with facet=facets.litSubject form_field=form.lit_subject %}
+        </select>
+        <input type="text" class="tm-input" placeholder="Add subject" data-formid="#id_lit_subject"/>
+      </div>
+
+      <h6>Document language</h6>
+      <div id="lit_language" class="tag-select">
+        <select class="tag-options" hidden>
+          {% include 'bits/fancy_select.html' with facet=facets.litLanguageOfDocument form_field=form.lit_language %}
+        </select>
+        <input type="text" class="tm-input" placeholder="Add subject" data-formid="#id_lit_language"/>
+      </div>
+
+    </div>
+  </fieldset>
+{% endif %}
+
 <fieldset class="global-filter">
   <h5 data-toggle="collapse"
       data-target="#filter-global">Global filters</h5>
@@ -119,17 +190,17 @@
         <div class="slider-min">
           <!-- <label for="year-min">From</label> -->
           <input id="year-min" type="number"
-                 data-formid="#id_yearmin" 
+                 data-formid="#id_yearmin"
                  value="{{ form.yearmin.data }}"
-                 min="1860" 
+                 min="1860"
                  placeholder="First ({{ stats_fields.docDate.min|just_year }})">
         </div>
         <div class="slider-max">
           <!-- <label for="year-max">To</label> -->
-          <input id="year-max" type="number" 
+          <input id="year-max" type="number"
                  data-formid="#id_yearmax"
                  value="{{ form.yearmax.data }}"
-                 max="2015" 
+                 max="2015"
                  placeholder="Last ({{ stats_fields.docDate.max|just_year }})">
         </div>
       </div>

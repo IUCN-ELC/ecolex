@@ -192,16 +192,19 @@ def get_relevancy():
         'decShortTitle_ru': 100,
         'decShortTitle_ar': 100,
         'decShortTitle_zh': 100,
+
         'litLongTitle': 100,
         'litLongTitle_fr': 100,
         'litLongTitle_sp': 100,
         'litLongTitle_other': 100,
+
         'trTitleAbbreviation': 75,
         'decSummary': 50,
         'decBody': 50,
         'trAbstract': 50,
         'trKeyword': 30,
         'decKeyword': 30,
+        'litKeyword': 30,
         'doc_content': 10,
     }
 
@@ -229,6 +232,14 @@ def get_fq(filters):
         'decStatus': 'decision',
         'decTreatyId': 'decision',
         'litTypeOfText': 'literature',
+        'litAuthor': 'literature',
+        'litCountry': 'literature',
+        'lit_region': 'literature',
+        'lit_basin': 'literature',
+        'lit_serial': 'literature',
+        'lit_publisher': 'literature',
+        'lit_subject': 'literature',
+        'lit_language': 'literature',
     }
 
     AND_FILTERS = [

@@ -26,6 +26,14 @@ class SearchForm(Form):
     dec_treaty = MultipleChoiceField()
 
     lit_type = MultipleChoiceField()
+    lit_author = MultipleChoiceField()
+    lit_country = MultipleChoiceField()
+    lit_region = MultipleChoiceField()
+    lit_basin = MultipleChoiceField()
+    lit_serial = MultipleChoiceField()
+    lit_publisher = MultipleChoiceField()
+    lit_subject = MultipleChoiceField()
+    lit_language = MultipleChoiceField()
 
     sortby = CharField(initial='')
 
@@ -47,3 +55,13 @@ class SearchForm(Form):
         return (not self.data.get('type') and any(
             self.data.get(f) for f in DECISION_FACETS
         )) or ('decision' in self.data.get('type', []))
+
+    def has_literature(self):
+        LITERATURE_FACETS = (
+            'lit_type', 'lit_author', 'lit_country', 'lit_region', 'lit_basin',
+            'lit_serial', 'lit_publisher', 'lit_subject', 'lit_language',
+        )
+
+        return (not self.data.get('type') and any(
+            self.data.get(f) for f in LITERATURE_FACETS
+        )) or ('literature' in self.data.get('type', []))

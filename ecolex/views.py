@@ -34,7 +34,6 @@ class SearchView(TemplateView):
             'docKeyword': data['keyword'],
             'docDate': (data['yearmin'], data['yearmax']),
         }
-
         for doc_type in filters['type']:
             mapping = DOC_TYPE_FILTER_MAPPING[doc_type]
             for k, v in mapping.items():
@@ -53,7 +52,6 @@ class SearchView(TemplateView):
         self.query = self.form.data.get('q', '').strip() or '*'
         # Compute filters
         self.filters = self._set_filters(data)
-
         self.sortby = data['sortby']
         return ctx
 

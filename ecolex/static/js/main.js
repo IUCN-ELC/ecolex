@@ -215,7 +215,7 @@ $(document).ready(function () {
         // Treaty -> Type of Document/Field of application filter
         // COP Decision -> Decision Type, Decision Status /Decision Treaty
         $('input[type=checkbox]',
-            $('.filter-decision, .filter-treaty')).change(function (e) {
+            $('.filter-decision, .filter-treaty, .filter-literature')).change(function (e) {
                 var current = [];
                 var ul = $(this).parents('ul');
                 var form_id = ul.data('formid');

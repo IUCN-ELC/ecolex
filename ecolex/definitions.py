@@ -28,7 +28,15 @@ DECISION_FILTERS = {
 }
 
 LITERATURE_FILTERS = {
-    'litTypeOfText': 'lit_type'
+    'litTypeOfText': 'lit_type',
+    'litAuthor': 'lit_author',
+    'litCountry': 'lit_country',
+    'litRegion': 'lit_region',
+    'litBasin': 'lit_basin',
+    'litSerialTitle': 'lit_serial',
+    'litPublisher': 'lit_publisher',
+    'litSubject': 'lit_subject',
+    'litLanguageOfDocument': 'lit_language',
 }
 
 DOC_TYPE_FILTER_MAPPING = {
@@ -53,6 +61,14 @@ FIELD_TO_FACET_MAPPING = {
     'dec_treaty': 'decTreatyId',
 
     'lit_type': 'litTypeOfText',
+    'lit_author': 'litAuthor',
+    'lit_country': 'litCountry',
+    'lit_region': 'litRegion',
+    'lit_basin': 'litBasin',
+    'lit_serial': 'litSerialTitle',
+    'lit_publisher': 'litPublisher',
+    'lit_subject': 'litSubject',
+    'lit_language': 'litLanguageOfDocument',
 }
 
 
@@ -76,4 +92,5 @@ SOLR_FIELDS = [
     'litAuthor', 'litCorpAuthor',
     'litPublisher', 'litPublPlace', 'litDateOfText',
     'litKeyword', 'litSeriesFlag',
+    'litCountry', 'litRegion', 'litSubject', 'litLanguageOfDocument',
 ]

@@ -142,7 +142,7 @@ DATE_FIELDS = [
 MULTIVALUED_FIELDS = [
     'litId', 'litAuthor', 'litCorpAuthor', 'litSubject', 'litSubject_fr',
     'litSubject_sp', 'litKeyword', 'litKeyword_fr', 'litKeyword_sp',
-    'litContributor'
+    'litContributor', 'litTypeOfText', 'litTypeOfText_sp', 'litTypeOfText_fr',
 ]
 
 
@@ -151,7 +151,7 @@ def fetch_literature():
     data fetcher when we get access to the elis endpoint.
      """
     literatures = []
-    bs = BeautifulSoup(open('literature.xml', 'r', encoding='utf-8'))
+    bs = BeautifulSoup(open('literature2.xml', 'r', encoding='utf-8'))
 
     documents = bs.findAll(DOCUMENT)
     literatures.extend(documents)
@@ -184,7 +184,6 @@ def parse_literatures(raw_literatures):
                     data[v] = [clean_text(field.text) for field in field_values]
                 if v in data and v not in MULTIVALUED_FIELDS:
                     data[v] = data[v][0]
-        import pdb; pdb.set_trace()
         pp.pprint(data)
         literatures.append(data)
     return literatures
@@ -213,8 +212,8 @@ def add_literature(literatures):
         else:
             new_literatures.append(literature)
             print('Added %s' % (lit_id,))
-    # solr.add_documents(new_literatures)
-    # solr.add_documents(updated_literatures)
+    solr.add_documents(new_literatures)
+    solr.add_documents(updated_literatures)
 
 if __name__ == '__main__':
     raw_literatures = fetch_literature()

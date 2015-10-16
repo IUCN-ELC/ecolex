@@ -8,7 +8,7 @@
              value="{{ type }}"
              {% if type in form_field.data %}checked{% endif %}
              {% if not count %}disabled{% endif %}>
-      <span class="facet-text">{{ type|capfirst }}</span>
+      <span class="facet-text">{{ type|truncatechars:32|capfirst }}</span>
       <span class="facet-counter">{{ count }}</span>
     </label>
   </li>
