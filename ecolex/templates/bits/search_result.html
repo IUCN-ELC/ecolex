@@ -58,7 +58,7 @@
     <p class="search-result-description"><strong>Keywords:</strong> {{ result.keywords }}</p>
     <p class="search-result-source">Source: {{ result.source }}</p>
 
-  {% else %}
+  {% elif result.type == 'treaty' %}
 
     <div class="search-result-details">
       <strong class="sr-type">{{ result.type|capfirst }}</strong>
@@ -82,5 +82,19 @@
     </div>
     <p class="search-result-description">{{ result.summary|safe }}</p>
     <p class="search-result-source">Source: {{ result.source }}</p>
+
+  {% elif result.type == "court_decision" %}
+    <div class="search-result-details">
+      <strong class="sr-type">Court Decision</strong>
+      {% if result.date %}
+        |
+        <time class="sr-date" title="Date of document: {{ result.date }}">
+          {{ result.date }}
+        </time>
+      {% endif %}
+    </div>
+    <p class="search-result-description">{# result.summary|safe #}</p>
+    <p class="search-result-source">Source: {{ result.source }}</p>
+
   {% endif %}
 </li>

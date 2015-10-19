@@ -1,10 +1,8 @@
-import os
 from collections import OrderedDict
-import json
 import pysolr
 from django.conf import settings
 
-from ecolex.solr_models import Treaty, Decision, Literature
+from ecolex.solr_models import Treaty, Decision, Literature, CourtDecision
 
 
 HIGHLIGHT_FIELDS = []
@@ -59,9 +57,9 @@ class Queryset(object):
         if not self._facets:
             self.fetch()
 
-        def _prepare(v):
+        def _prepare(val):
             # data = [(k.capitalize(), v) for k, v in v.items()]
-            data = [(k, v) for k, v in v.items()]
+            data = [(k, v) for k, v in val.items()]
             return OrderedDict(
                 sorted(data, key=lambda v: v[0].lower())
             )
@@ -124,6 +122,8 @@ def parse_result(hit, responses):
         return Decision(hit, hl)
     elif hit['type'] == 'literature':
         return Literature(hit, hl)
+    elif hit['type'] == 'court_decision':
+        return CourtDecision(hit, hl)
     return hit
 
 
@@ -160,7 +160,7 @@ def escape_query(query):
 
 def get_hl():
     fields = HIGHLIGHT_FIELDS
-    for t in Decision, Treaty, Literature:
+    for t in Decision, Treaty, Literature, CourtDecision:
         fields += [t.SUMMARY_FIELD] + t.TITLE_FIELDS
     fields = set(fields)
     HIGHLIGHT_PARAMS['hl.fl'] = ','.join(fields)
@@ -262,7 +262,8 @@ def get_fq(filters):
         else:
             return 'type:' + type
 
-    enabled_types = filters.get('type', []) or ['treaty', 'decision', 'literature']
+    enabled_types = filters.get('type', []) or \
+        ['treaty', 'decision', 'literature', 'court_decision']
     type_filters = {f: [] for f in enabled_types}
     global_filters = []
     for filter, values in filters.items():

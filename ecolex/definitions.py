@@ -3,12 +3,14 @@ DOC_TYPE = (
     ('treaty', "Treaty"),
     ('decision', "Decision"),
     ('literature', "Literature"),
+    ('court_decision', "Court Decision"),
 )
 
 DOC_SOURCES = {
     'treaty': 'IUCN',
     'decision': 'InforMEA',
-    'literature': 'ELIS'
+    'literature': 'ELIS',
+    'court_decision': 'LEO',
 }
 
 TREATY_FILTERS = {
@@ -38,11 +40,13 @@ LITERATURE_FILTERS = {
     'litSubject': 'lit_subject',
     'litLanguageOfDocument': 'lit_language',
 }
+COURT_DECISION_FILTERS = {}
 
 DOC_TYPE_FILTER_MAPPING = {
     'treaty': TREATY_FILTERS,
     'decision': DECISION_FILTERS,
     'literature': LITERATURE_FILTERS,
+    'court_decision': COURT_DECISION_FILTERS,
 }
 
 FIELD_TO_FACET_MAPPING = {
@@ -93,4 +97,6 @@ SOLR_FIELDS = [
     'litPublisher', 'litPublPlace', 'litDateOfText',
     'litKeyword', 'litSeriesFlag',
     'litCountry', 'litRegion', 'litSubject', 'litLanguageOfDocument',
+    'decNumber', 'cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr',
+    'cdDateOfEntry', 'cdDateOfModification',
 ]

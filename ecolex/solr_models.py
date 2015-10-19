@@ -37,13 +37,14 @@ class ObjectNormalizer:
 
     def title(self):
         for title_field in self.TITLE_FIELDS:
-            if not self.solr.get(title_field):
+            title = self.solr.get(title_field)
+            if not title:
                 continue
-            title_value = self.solr.get(title_field)
-            if type(title_value) == list:
-                title_value = max(title_value, key=lambda i: len(i))
-            if len(title_value):
-                return unescape(title_value)
+
+            if isinstance(title, list):
+                title = max(title, key=lambda x: len(x))
+            if len(title):
+                return unescape(title)
         return "Unknown Document"
 
     def date(self):
@@ -290,3 +291,13 @@ class Literature(ObjectNormalizer):
 
     def abstract(self):
         return first(self.solr.get('litAbstract'))
+
+
+class CourtDecision(ObjectNormalizer):
+    ID_FIELD = 'cdLeoId'
+    SUMMARY_FIELD = 'cdAbstract'
+    TITLE_FIELDS = ['cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr']
+    DATE_FIELDS = ['cdDateOfEntry', 'cdDateOfModification']
+
+    def details_url(self):
+        return ''
