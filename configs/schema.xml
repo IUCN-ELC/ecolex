@@ -257,8 +257,8 @@
     <field name="cdCourtDecisionIdNumber" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdCourtDecisionSubdivision" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdCourtName" type="string" indexed="true" stored="true" multiValued="false"/>
-    <field name="cdDateOfEntry" type="tdate" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdDateOfModification" type="tdate" indexed="false" stored="false" multiValued="false"/>
+    <field name="cdDateOfEntry" type="tdate" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdDateOfModification" type="tdate" indexed="true" stored="true" multiValued="false"/>
     <field name="cdStatusOfDecision" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdEcolexTags" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdEcolexUrl" type="string" indexed="false" stored="false" multiValued="false"/>

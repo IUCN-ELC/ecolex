@@ -6,7 +6,8 @@ from utils import EcolexSolr
 
 COURT_DECISIONS_URL = 'http://leo.informea.org/ws/court-decisions'
 UPDATE_INTERVAL = 1  # expressed in hours
-DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+JSON_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
 FIELD_MAP = {
     'nid': 'cdLeoId',
@@ -110,7 +111,8 @@ def get_value(key, value):
         final_val = get_value_from_dict(value)
 
     if key in DATE_FIELDS:
-        final_val = datetime.strptime(final_val, DATE_FORMAT)
+        date = datetime.strptime(final_val, JSON_DATE_FORMAT)
+        final_val = date.strftime(SOLR_DATE_FORMAT)
     if key in INTEGER_FIELDS:
         final_val = int(final_val)
 
@@ -135,8 +137,8 @@ def parse_decision(decision, uuid):
                 solr_decision[key] = get_value(json_field, value)
         else:
             solr_decision[solr_field] = get_value(json_field, json_value)
-    solr_decision['type'] = 'court decision'
-    solr_decision['source'] = 'leo'
+    solr_decision['type'] = 'court_decision'
+    solr_decision['source'] = 'LEO'
     return solr_decision
 
 
