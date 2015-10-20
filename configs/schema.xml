@@ -251,6 +251,7 @@
     <field name="cdAbstract_en" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_es" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_fr" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdAbstract_ru" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAlternativeRecordId" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdSeatOfCourt" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdCountry" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -267,6 +268,7 @@
     <field name="cdFiles_en" type="string" indexed="false" stored="false" multiValued="true"/>
     <field name="cdFiles_es" type="string" indexed="false" stored="false" multiValued="true"/>
     <field name="cdFiles_fr" type="string" indexed="false" stored="false" multiValued="true"/>
+    <field name="cdFiles_ru" type="string" indexed="false" stored="false" multiValued="true"/>
     <field name="cdInformeaTags" type="string" indexed="false" stored="false" multiValued="true"/>
     <field name="cdInternetReference" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdIsisNumber" type="string" indexed="false" stored="false" multiValued="false"/>
@@ -276,6 +278,7 @@
     <field name="cdKeywords_en" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="cdKeywords_es" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="cdKeywords_fr" type="string" indexed="false" stored="true" multiValued="true"/>
+    <field name="cdKeywords_ru" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="cdNumberOfPages" type="int" indexed="false" stored="false" multiValued="false"/>
     <field name="cdOriginalId" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdReferenceNumber" type="string" indexed="false" stored="true" multiValued="false"/>
@@ -286,15 +289,18 @@
     <field name="cdTerritorialSubdivision_en" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTerritorialSubdivision_es" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTerritorialSubdivision_fr" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdTerritorialSubdivision_ru" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTypeOfText" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdLinkToFullText" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdLinkToFullText_en" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdLinkToFullText_es" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdLinkToFullText_fr" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdLinkToFullText_ru" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdTitleOfText" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_en" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_es" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_fr" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdTitleOfText_ru" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdNotes" type="string" indexed="false" stored="false" multiValued="true"/>
     <field name="cdOriginalTitle" type="text" indexed="false" stored="false" multiValued="false"/>
 

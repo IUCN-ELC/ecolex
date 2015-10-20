@@ -63,6 +63,7 @@ FALSE_MULTILINGUAL_FIELDS = [
     'field_original_id',
     'field_reference_number',
     'field_source_language',
+    'field_notes',
 ]
 MULTIVALUED_FIELDS = [
     'field_justices',
@@ -99,7 +100,7 @@ def is_recent(decision):
 
 def get_value(key, value):
     if not value:
-        return None
+        return
 
     final_val = value
 
@@ -110,10 +111,13 @@ def get_value(key, value):
     if isinstance(value, dict):
         final_val = get_value_from_dict(value)
 
+    if not final_val:
+        return
+
     if key in DATE_FIELDS:
         date = datetime.strptime(final_val, JSON_DATE_FORMAT)
         final_val = date.strftime(SOLR_DATE_FORMAT)
-    if key in INTEGER_FIELDS:
+    elif key in INTEGER_FIELDS:
         final_val = int(final_val)
 
     return final_val
