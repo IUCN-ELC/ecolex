@@ -198,10 +198,17 @@ def get_relevancy():
         'litLongTitle_sp': 100,
         'litLongTitle_other': 100,
 
+        'cdTitleOfText_en': 100,
+        'cdTitleOfText_es': 100,
+        'cdTitleOfText_fr': 100,
+
         'trTitleAbbreviation': 75,
         'decSummary': 50,
         'decBody': 50,
         'trAbstract': 50,
+        'cdAbstract_en': 50,
+        'cdAbstract_es': 50,
+        'cdAbstract_fr': 50,
         'trKeyword': 30,
         'decKeyword': 30,
         'litKeyword': 30,

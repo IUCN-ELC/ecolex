@@ -1,4 +1,3 @@
-
 DOC_TYPE = (
     ('treaty', "Treaty"),
     ('decision', "Decision"),
@@ -10,7 +9,7 @@ DOC_SOURCES = {
     'treaty': 'IUCN',
     'decision': 'InforMEA',
     'literature': 'ELIS',
-    'court_decision': 'LEO',
+    'court_decision': 'InforMEA',
 }
 
 TREATY_FILTERS = {
@@ -100,3 +99,10 @@ SOLR_FIELDS = [
     'decNumber', 'cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr',
     'cdDateOfEntry', 'cdDateOfModification',
 ]
+
+LANGUAGE_MAP = {
+    'en': 'English',
+    'es': 'Spanish',
+    'fr': 'French',
+    'ru': 'Russian',
+}

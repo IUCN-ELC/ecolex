@@ -4,7 +4,7 @@ from html import unescape
 
 from django.core.urlresolvers import reverse
 
-from ecolex.definitions import DOC_SOURCES
+from ecolex.definitions import DOC_SOURCES, LANGUAGE_MAP
 
 
 def first(obj, default=None):
@@ -21,15 +21,8 @@ class ObjectNormalizer:
             self.solr.update(hl)
 
     def type_of_document(self):
-        if self.solr.get('trTypeOfText'):
-            return first(self.solr.get('trTypeOfText'))
-        elif self.solr.get('decType'):
-            return first(self.solr.get('decType'))
-        if self.solr.get('litTypeOfText'):
-            return first(self.solr.get('litTypeOfText'))
-        elif self.solr.get('cdTypeOfText'):
-            return first(self.solr.get('cdTypeOfText'))
-        return "Unknown type of document"
+        type_of_doc = self.solr.get(self.DOCTYPE_FIELD)
+        return first(type_of_doc, "Unknown type of document")
 
     def id(self):
         return self.solr.get('id')
@@ -102,6 +95,7 @@ class Treaty(ObjectNormalizer):
         'trPaperTitleOfTextOther', 'trTitleOfTextShort',
     ]
     DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
+    DOCTYPE_FIELD = 'trTypeOfText'
     OPTIONAL_INFO_FIELDS = [
         # (solr field, display text, type=text)
         ('trTitleAbbreviation', 'Title Abbreviation', ''),
@@ -234,6 +228,7 @@ class Decision(ObjectNormalizer):
     SUMMARY_FIELD = 'decBody'
     TITLE_FIELDS = ['decTitleOfText']
     DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
+    DOCTYPE_FIELD = 'decType'
     OPTIONAL_INFO_FIELDS = [
         #('decMeetingTitle', 'Meeting Title', ''),
         #('decMeetingUrl', 'Meeting URL', 'url'),
@@ -266,6 +261,7 @@ class Literature(ObjectNormalizer):
                     'litTitleOfTextTransl', 'litTitleOfTextTransl_fr',
                     'litTitleOfTextTransl_sp']
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
+    DOCTYPE_FIELD = 'litTypeOfText'
 
     def details_url(self):
         return reverse('literature_details', kwargs={'id': self.id()})
@@ -297,9 +293,14 @@ class Literature(ObjectNormalizer):
 
 class CourtDecision(ObjectNormalizer):
     ID_FIELD = 'cdLeoId'
-    SUMMARY_FIELD = 'cdAbstract'
+    SUMMARY_FIELD = 'cdAbstract_en'
     TITLE_FIELDS = ['cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr']
     DATE_FIELDS = ['cdDateOfEntry', 'cdDateOfModification']
+    DOCTYPE_FIELD = 'cdTypeOfText'
 
     def details_url(self):
         return reverse('court_decision_details', kwargs={'id': self.id()})
+
+    def language(self):
+        langcodes = self.solr.get('cdLanguageOfDocument')
+        return ', '.join([LANGUAGE_MAP.get(code, code) for code in langcodes])
