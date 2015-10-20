@@ -241,6 +241,11 @@ class LiteratureDetails(DetailsView):
         return context
 
 
+class CourtDecisionDetails(DetailsView):
+
+    template_name = 'details/court_decision.html'
+
+
 class ResultDetailsDecisions(SearchView):
     template_name = 'details_decisions.html'
 

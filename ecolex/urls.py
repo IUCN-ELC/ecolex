@@ -2,7 +2,8 @@ from django.conf.urls import patterns, url
 from .views import (
     SearchResults, PageView, ResultDetailsDecisions, Homepage,
     ResultDetailsParticipants, debug, SearchResultsAjax, DecMeetingView,
-    TreatyParticipantView, DecisionDetails, TreatyDetails, LiteratureDetails
+    TreatyParticipantView, DecisionDetails, TreatyDetails, LiteratureDetails,
+    CourtDecisionDetails,
 )
 
 
@@ -26,7 +27,8 @@ urlpatterns = patterns('',
         name="treaty_details"),
     url(r'^details/literature/(?P<id>[^/]+)/$', LiteratureDetails.as_view(),
         name="literature_details"),
-
+    url(r'^details/court-decision/(?P<id>[^/]+)/$',
+        CourtDecisionDetails.as_view(), name="court_decision_details"),
     url(r'^p/(?P<slug>\w+)/', PageView.as_view(),
         name="page"),
     url(r'^_debug', debug, name="debug"),

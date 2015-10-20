@@ -120,7 +120,9 @@ def get_value(key, value):
 
 
 def get_value_from_dict(valdict):
-    return valdict.get('value', valdict.get('label', valdict.get('url')))
+    return valdict.get('safe_value',
+                       valdict.get('value',
+                                   valdict.get('label', valdict.get('url'))))
 
 
 def parse_decision(decision, uuid):
@@ -138,7 +140,7 @@ def parse_decision(decision, uuid):
         else:
             solr_decision[solr_field] = get_value(json_field, json_value)
     solr_decision['type'] = 'court_decision'
-    solr_decision['source'] = 'LEO'
+    solr_decision['source'] = 'InforMEA'
     return solr_decision
 
 
@@ -148,7 +150,6 @@ def update_decision(solr, decision):
     solr_decision = parse_decision(new_decision, decision['uuid'])
 
     if not existing_decision:
-        # TODO must actually update schema and format decision accordingly
         solr.add(solr_decision)
     if existing_decision and is_recent(new_decision):
         # By using the same ID, Solr will know this is an update operation

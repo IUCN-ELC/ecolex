@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% load tags %}
+
+{% block content %}
+{% informea_url_id document %}
+
+<article class="record-details">
+
+  <header>
+    <div class="record-title">
+      <div class="record-icon">
+          <span class="icon icon-cop-decision" title="COP Decision"></span>
+      </div>
+      <h1>{{ document.title }}</h1>
+    </div>
+
+    <dl>
+      <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
+      <dt>Date of document</dt> <dd>{{ document.date }}</dd>
+      <dt>Source</dt> <dd>{{ document.source }}</dd>
+      <dt>Court name</dt> <dd>{{ document.solr.cdCourtName }}</dd>
+      <dt>Justices</dt> <dd>{{ document.solr.cdJustices|join:"<br>" }}</dd>
+      <dt>Reference number</dt> <dd>{{ document.solr.cdReferenceNumber }}</dd>
+      <dt>Language of document</dt> <dd>{{ document.solr.cdLanguageOfDocument }}</dd>
+    </dl>
+  </header>
+
+  <section id="text">
+    <h2 class="section-title">Text</h2>
+
+    <dl>
+      <dt>Abstract</dt> <dd>{{ document.solr.cdAbstract_en|safe }}</dd>
+    </dl>
+  </section>
+
+</article>
+{% endblock content %}

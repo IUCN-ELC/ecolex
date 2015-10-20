@@ -23,10 +23,12 @@ class ObjectNormalizer:
     def type_of_document(self):
         if self.solr.get('trTypeOfText'):
             return first(self.solr.get('trTypeOfText'))
-        if self.solr.get('decType'):
+        elif self.solr.get('decType'):
             return first(self.solr.get('decType'))
         if self.solr.get('litTypeOfText'):
             return first(self.solr.get('litTypeOfText'))
+        elif self.solr.get('cdTypeOfText'):
+            return first(self.solr.get('cdTypeOfText'))
         return "Unknown type of document"
 
     def id(self):
@@ -300,4 +302,4 @@ class CourtDecision(ObjectNormalizer):
     DATE_FIELDS = ['cdDateOfEntry', 'cdDateOfModification']
 
     def details_url(self):
-        return ''
+        return reverse('court_decision_details', kwargs={'id': self.id()})
