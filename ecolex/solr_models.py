@@ -237,7 +237,6 @@ class Decision(ObjectNormalizer):
         ('decLink', 'Link to decision', 'url-tracked'),
         #('decSummary', 'Summary', 'text'),
         #('decBody', 'Decision Body', 'text'),
-        ('decDocUrls', 'Documents', 'url'),
         #('decKeyword', 'Keywords', 'keyword'),
         ('decUpdateDate', 'Date of Update', 'date'),
     ]

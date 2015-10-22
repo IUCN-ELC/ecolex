@@ -41,26 +41,24 @@
   <section id="details">
     <h2 class="section-title">Details</h2>
     <dl>
-      {% for treaty in all_treaties %}
+
       <dt>Treaty</dt>
-      <dd><a href="{% url 'treaty_details' treaty.id %}">{{ treaty.full_title }}</a></dd>
-      {% endfor %}
+      <dd><a href="{{ document.solr.decTreatyId }}">{{ document.solr.decTreaty }}</a></dd>
+
       <dt>Meeting</dt>
       <dd>
         {% if document.solr.decMeetingUrl %}
-          <a href="{{ document.solr.decMeetingUrl.0 }}"
-             rel="external">{{ document.solr.decMeetingTitle.0 | safe }}</a>
+          <a href="{{ document.solr.decMeetingUrl }}"
+             rel="external">{{ document.solr.decMeetingTitle | safe }}</a>
         {% else %}
-          {{ document.solr.decMeetingTitle.0 | safe }}
+          {{ document.solr.decMeetingTitle | safe }}
         {% endif %}
       </dd>
 
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>
         {% if "url" in entry.type %}
-          {% for url in entry.value %}
-            <dd><a target="_blank" {% if "tracked" in entry.type %} class="decision-link" {% endif %} href="{{ url }}">{{ url }}</a></dd>
-          {% endfor %}
+          <dd><a target="_blank" {% if "tracked" in entry.type %} class="decision-link" {% endif %} href="{{ entry.value }}">{{ entry.value }}</a></dd>
         {% else %}
           <dd>{{ entry.value | join_by:", " }}</dd>
         {% endif %}

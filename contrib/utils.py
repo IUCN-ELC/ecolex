@@ -2,6 +2,7 @@ from datetime import datetime
 import pysolr
 import re
 import socket
+import os
 
 
 def get_text_tika(file_path):
@@ -32,28 +33,36 @@ def get_date(text):
     return datetime.fromtimestamp(int(datestr))
 
 
-class SolrWrapper(object):
+class EcolexSolr(object):
+    COP_DECISION = 'COP Decision'
+    COURT_DECISION = 'Court Decision'
+    TREATY = 'Treaty'
+
+    # This is just an idea, might not be accurate
+    ID_MAPPING = {
+        COP_DECISION: 'decId',
+        COURT_DECISION: 'cdLeoId',
+        TREATY: 'trElisId',
+    }
 
     def __init__(self):
-        import os
-        solr_uri = os.environ.get('SOLR_URI', '')
+        solr_uri = os.environ.get('SOLR_URI')
+        if not solr_uri:
+            raise RuntimeError('SOLR_URI environment variable not set.')
         self.solr = pysolr.Solr(solr_uri, timeout=10)
 
-    def search_decision(self, dec_id):
-        query = 'decId:"%d"' % (dec_id, )
-        results = self.solr.search(query)
-        for result in results:
-            if result['decId'] == dec_id:
-                return result
-        return None
+    def search(self, obj_type, id_value):
+        id_field = self.ID_MAPPING.get(obj_type)
+        query = '{}:"{}"'.format(id_field, id_value)
+        result = self.solr.search(query)
+        if result.hits:
+            return result.docs[0]
 
-    def search_literature(self, lit_id):
-        query = 'litId:"%s"' % (lit_id, )
-        results = self.solr.search(query)
-        for result in results:
-            if result['litId'] == lit_id:
-                return result
-        return None
+    def add(self, obj):
+        self.solr.add([obj])
 
-    def add_documents(self, documents):
-        self.solr.add(documents)
+    def add_bulk(self, bulk_obj):
+        self.solr.add(bulk_obj)
+
+    def __del__(self):
+        self.solr.optimize()
