@@ -31,9 +31,9 @@ def parse_date(d):
 
 @register.simple_tag()
 def informea_url_id(document):
-    # We use this to generate urls to informea.org decisions.
-    treaty_id = document.solr['decTreatyId']
-    treaty_name = document.solr['decTreaty']
+    # We use this to generate urls to informea.org decisions
+    treaty_id = document.solr.get('decTreatyId', None)
+    treaty_name = document.solr.get('decTreaty', None)
     if not treaty_id or not treaty_name:
         return ''
 
