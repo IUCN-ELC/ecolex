@@ -247,6 +247,8 @@ def get_fq(filters):
         'lit_publisher': 'literature',
         'lit_subject': 'literature',
         'lit_language': 'literature',
+        'cdTypeOfText': 'court_decision',
+        'cdLanguageOfDocument': 'court_decision',
     }
 
     AND_FILTERS = [

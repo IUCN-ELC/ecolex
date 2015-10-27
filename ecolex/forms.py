@@ -1,12 +1,13 @@
 from django.forms import Form, CharField, MultipleChoiceField, TextInput
 
-from ecolex.definitions import DOC_TYPE
+from ecolex.definitions import DOC_TYPE, DOC_TYPE_FILTER_MAPPING
 
 
 class SearchForm(Form):
     q = CharField(initial='', widget=TextInput(
         attrs={'id': 'search', 'class': 'form-control', 'autofocus': True,
-               'placeholder': "Search for Treaties, Legislation, Court decisions, Literature, COP decisions"}))
+               'placeholder': "Search for Treaties, Legislation, Court "
+                              "decisions, Literature, COP decisions"}))
     type = MultipleChoiceField(choices=DOC_TYPE)
 
     tr_type = MultipleChoiceField()
@@ -35,33 +36,24 @@ class SearchForm(Form):
     lit_subject = MultipleChoiceField()
     lit_language = MultipleChoiceField()
 
+    cd_type = MultipleChoiceField()
+    cd_language = MultipleChoiceField()
+
     sortby = CharField(initial='')
 
-    def has_treaty(self):
-        TREATY_FACETS = (
-            'tr_type', 'tr_field', 'tr_party', 'tr_subject',
-            'tr_basin', 'tr_region', 'tr_language'
-        )
-
+    def _has_document_type(self, doctype):
         return (not self.data.get('type') and any(
-            self.data.get(f) for f in TREATY_FACETS
-        )) or ('treaty' in self.data.get('type', []))
+            self.data.get(f) for f in DOC_TYPE_FILTER_MAPPING[doctype].values()
+        )) or (doctype in self.data.get('type', []))
+
+    def has_treaty(self):
+        return self._has_document_type('treaty')
 
     def has_decision(self):
-        DECISION_FACETS = (
-            'dec_type', 'dec_status', 'dec_treaty'
-        )
-
-        return (not self.data.get('type') and any(
-            self.data.get(f) for f in DECISION_FACETS
-        )) or ('decision' in self.data.get('type', []))
+        return self._has_document_type('decision')
 
     def has_literature(self):
-        LITERATURE_FACETS = (
-            'lit_type', 'lit_author', 'lit_country', 'lit_region', 'lit_basin',
-            'lit_serial', 'lit_publisher', 'lit_subject', 'lit_language',
-        )
+        return self._has_document_type('literature')
 
-        return (not self.data.get('type') and any(
-            self.data.get(f) for f in LITERATURE_FACETS
-        )) or ('literature' in self.data.get('type', []))
+    def has_court_decision(self):
+        return self._has_document_type('court_decision')

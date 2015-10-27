@@ -39,7 +39,10 @@ LITERATURE_FILTERS = {
     'litSubject': 'lit_subject',
     'litLanguageOfDocument': 'lit_language',
 }
-COURT_DECISION_FILTERS = {}
+COURT_DECISION_FILTERS = {
+    'cdTypeOfText': 'cd_type',
+    'cdLanguageOfDocument': 'cd_language',
+}
 
 DOC_TYPE_FILTER_MAPPING = {
     'treaty': TREATY_FILTERS,
@@ -72,6 +75,9 @@ FIELD_TO_FACET_MAPPING = {
     'lit_publisher': 'litPublisher',
     'lit_subject': 'litSubject',
     'lit_language': 'litLanguageOfDocument',
+
+    'cd_type':  'cdTypeOfText',
+    'cd_language': 'cdLanguageOfDocument',
 }
 
 
