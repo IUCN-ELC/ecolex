@@ -166,7 +166,7 @@
     <div id="filter-court-decisions" class="collapse {% if form.has_court_decision %}in{% endif %}">
       {% if facets.cdTypeOfText %}
         <h6>Type of document</h6>
-        <ul class="filter-treaty" data-formid="#id_tr_type">
+        <ul class="filter-treaty" data-formid="#id_cd_type">
           {% include 'bits/checkbox_facet.html' with facet=facets.cdTypeOfText form_field=form.cd_type show_empty=True %}
         </ul>
       {% endif %}

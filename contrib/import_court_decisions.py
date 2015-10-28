@@ -10,6 +10,7 @@ JSON_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
 FIELD_MAP = {
+    'title_field': 'cdTitleOfText',
     'nid': 'cdLeoId',
     'field_abstract': 'cdAbstract',
     'field_alternative_record_id': 'cdAlternativeRecordId',
@@ -21,7 +22,7 @@ FIELD_MAP = {
     'field_date_of_entry': 'cdDateOfEntry',
     'field_date_of_modification': 'cdDateOfModification',
     'field_ecolex_decision_status': 'cdStatusOfDecision',
-    'field_ecolex_tags': 'cdEcolexTags',  # Subject
+    'field_ecolex_tags': 'cdSubject',
     'field_ecolex_url': 'cdEcolexUrl',
     'field_faolex_url': 'cdFaolexUrl',
     'field_files': 'cdFiles',
@@ -30,7 +31,6 @@ FIELD_MAP = {
     'field_isis_number': 'cdIsisNumber',  # IsisMfn
     'field_jurisdiction': 'cdCourtJurisdiction',
     'field_justices': 'cdJustices',
-    'field_keywords': 'cdKeywords',
     'field_number_of_pages': 'cdNumberOfPages',
     'field_original_id': 'cdOriginalId',
     'field_reference_number': 'cdReferenceNumber',
@@ -40,17 +40,29 @@ FIELD_MAP = {
     'field_territorial_subdivision': 'cdTerritorialSubdivision',
     'field_type_of_text': 'cdTypeOfText',
     'field_url': 'cdLinkToFullText',
-    'title_field': 'cdTitleOfText',
     'field_notes': 'cdNotes',
-    'title_original': 'cdOriginalTitle',
+    'field_abstract_other': 'cdAbstractOther',
+    'field_available_in': 'cdAvailableIn',
+    'field_court_decision': 'cdCourtDecisionReference',
+    'field_ecolex_keywords': 'cdKeywords',
+    'field_faolex_reference': 'cdFaolexReference',
+    'field_instance': 'cdInstance',
+    'field_official_publication': 'cdOfficialPublication',
+    'field_region': 'cdRegion',
+    'field_title_of_text_other': 'cdTitleOfTextOther',
+    'field_title_of_text_short': 'cdTitleOfTextShort',
+    'field_treaty': 'cdTreatyReference',
+    'field_url_other': 'cdUrlOther',
 }
 MULTILINGUAL_FIELDS = [
     'title_field',
     'field_abstract',
-    # 'field_territorial_subdivision',
+    'field_ecolex_url',
+    'field_faolex_url',
+    'field_internet_reference_url',
+    'field_related_url',
+    'field_city',
     'field_url',
-    'field_files',
-    'field_keywords',
 ]
 FALSE_MULTILINGUAL_FIELDS = [
     'field_alternative_record_id',
@@ -63,29 +75,40 @@ FALSE_MULTILINGUAL_FIELDS = [
     'field_original_id',
     'field_reference_number',
     'field_source_language',
+    'field_available_in',
+    'field_court_decision_subdivision',
+    'field_title_of_text_short',
+    'field_instance',
+    'field_title_of_text_other',
+    'field_url_other',
     'field_notes',
 ]
 MULTIVALUED_FIELDS = [
     'field_justices',
     'field_ecolex_tags',
     'field_informea_tags',
-    'field_keywords',
+    'field_ecolex_keywords',
     'field_notes',
 ]
 DATE_FIELDS = ['field_date_of_entry', 'field_date_of_modification']
 INTEGER_FIELDS = ['nid', 'field_number_of_pages']
 
 
-def get_content(url):
-    resp = requests.get(url)
+def get_content(url, headers={}):
+    resp = requests.get(url, headers=headers)
     if not resp.status_code == 200:
         raise RuntimeError('Unexpected request status code')
 
-    return json.loads(resp.text)
+    try:
+        return json.loads(resp.text)
+    except ValueError as ex:
+        # TODO: replace this with logging
+        print url, ex
 
 
 def get_decision(url):
-    return get_content(url)
+    headers = {'Accept': 'application/json'}
+    return get_content(url, headers)
 
 
 def get_decisions():
@@ -150,6 +173,8 @@ def parse_decision(decision, uuid):
 
 def update_decision(solr, decision):
     new_decision = get_decision(decision['data_url'])
+    if not new_decision:
+        return
     existing_decision = solr.search(solr.COURT_DECISION, new_decision['nid'])
     solr_decision = parse_decision(new_decision, decision['uuid'])
 
