@@ -344,6 +344,13 @@ def get_document(document_id):
     return result
 
 
+def get_treaty_by_elis_id(elis_id):
+    result = search('trElisId:' + elis_id, raw=True)
+    if not len(result):
+        return None
+    return result
+
+
 def load_treaties_cache():
     if not os.path.exists(settings.TREATIES_JSON):
         print("Missing {}. Please run ./manage.py treaties_cache".format(

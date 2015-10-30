@@ -14,6 +14,7 @@ STOP_STRING = 'java.lang.NegativeArraySizeException'
 
 FIELD_MAP = {
     'recid': 'trElisId',
+    'informeauid': 'trInformeaId',
     'dateofentry': 'trDateOfEntry',
     'dateofmodification': 'trDateOfModification',
     'dateoftext': 'trDateOfText',
@@ -166,6 +167,14 @@ def add_back_links(solr_docs):
 
 
 def treaty_needs_update(old, new):
+    for field in FIELD_MAP.values():
+        old_value = old.get(field, None)
+        new_value = new.get(field, None)
+        if new_value == ['false'] or (new_value == [] and not old_value):
+            continue
+        if (old_value != new_value and old_value != [new_value] and
+           [old_value] != new_value):
+            return True
     return False
 
 
@@ -204,7 +213,6 @@ def parse_treatries(raw_treaties):
                 'type': 'treaty',
                 'source': 'elis'
             }
-
             for k, v in FIELD_MAP.items():
                 field_values = document.findAll(k)
                 if field_values:
