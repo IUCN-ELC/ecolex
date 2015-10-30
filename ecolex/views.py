@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from ecolex.search import (
     search, get_document, get_all_treaties, get_documents_by_field,
-    get_treaty_by_elis_id
+    get_treaty_by_informea_id
 )
 from ecolex.forms import SearchForm
 from ecolex.definitions import (
@@ -199,8 +199,8 @@ class DecisionDetails(DetailsView):
         treaty_id = context['document'].solr.get('decTreatyId', None)
 
         if treaty_id:
-            results = get_treaty_by_elis_id(treaty_id)
-            # TODO: add to context
+            treaty = get_treaty_by_informea_id(treaty_id)
+            context['treaty'] = treaty
 
         return context
 

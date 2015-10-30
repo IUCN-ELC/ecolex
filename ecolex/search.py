@@ -344,11 +344,11 @@ def get_document(document_id):
     return result
 
 
-def get_treaty_by_elis_id(elis_id):
-    result = search('trElisId:' + elis_id, raw=True)
+def get_treaty_by_informea_id(informea_id):
+    result = search('trInformeaId:' + informea_id, raw=True)
     if not len(result):
         return None
-    return result
+    return result.first()
 
 
 def load_treaties_cache():

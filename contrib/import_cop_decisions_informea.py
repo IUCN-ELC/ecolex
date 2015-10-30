@@ -33,7 +33,7 @@ FIELD_MAP = {
 
     'title': 'decShortTitle',
     'longTitle': 'decLongTitle',
-    'keyword': 'decKeyword',
+    'keywords': 'decKeyword',
     'summary': 'decSummary',
     'content': 'decBody',
     'type': 'decType',
