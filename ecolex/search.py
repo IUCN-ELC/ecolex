@@ -351,31 +351,6 @@ def get_treaty_by_informea_id(informea_id):
     return result.first()
 
 
-def load_treaties_cache():
-    if not os.path.exists(settings.TREATIES_JSON):
-        print("Missing {}. Please run ./manage.py treaties_cache".format(
-            settings.TREATIES_JSON)
-        )
-        return None
-    try:
-        data = json.load(open(settings.TREATIES_JSON, encoding='utf-8'))
-    except:
-        data = json.load(open(settings.TREATIES_JSON))
-    response = data['response']
-    result_kwargs = {}
-    numFound = response.get('numFound', 0)
-    results = pysolr.Results(response.get('docs', ()), numFound,
-                             **result_kwargs)
-    qs = Queryset()
-    qs._fetch(results)
-    return qs
-
-
-_treaties = None
-
-
 def get_all_treaties():
-    global _treaties
-    if _treaties is None:
-        _treaties = load_treaties_cache()
-    return _treaties
+    result = search('type:treaty', raw=True, rows=10000)
+    return result

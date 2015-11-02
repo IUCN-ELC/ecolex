@@ -111,8 +111,6 @@ GA_CODE = ''
 
 TEXT_SUGGESTION = True
 
-TREATIES_JSON = './contrib/treaties.json'
-
 # Local settings
 try:
     from local_settings import *

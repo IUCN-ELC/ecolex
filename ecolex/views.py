@@ -117,7 +117,7 @@ class SearchResults(SearchView):
         # by decisions in the current result set
         all_treaties = get_all_treaties()
         ctx['dec_treaty_names'] = {
-            t.informea_id(): t for t in all_treaties
+            t.informea_id(): t for t in all_treaties if t.informea_id()
         }
 
         ctx['page'] = self.page_details(page, results)
