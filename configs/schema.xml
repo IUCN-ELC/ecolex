@@ -295,7 +295,7 @@
     <field name="cdNumberOfPages" type="int" indexed="false" stored="false" multiValued="false"/>
     <field name="cdOriginalId" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdReferenceNumber" type="string" indexed="false" stored="true" multiValued="false"/>
-    <field name="cdReferenceToLegislation" type="string" indexed="false" stored="false" multiValued="false"/>
+    <field name="cdReferenceToLegislation" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdRelatedUrl" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdRelatedUrl_en" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdRelatedUrl_es" type="string" indexed="false" stored="false" multiValued="false"/>
