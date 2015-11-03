@@ -64,5 +64,9 @@ class EcolexSolr(object):
     def add_bulk(self, bulk_obj):
         self.solr.add(bulk_obj)
 
+    def extract(self, file):
+        response = self.solr.extract(file)
+        return response
+
     def __del__(self):
         self.solr.optimize()

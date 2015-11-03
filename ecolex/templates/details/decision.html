@@ -17,7 +17,7 @@
     <dl>
       <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
-      <dt>Status</dt> <dd>{{ document.solr.decStatus.0|capfirst }}</dd>
+      <dt>Status</dt> <dd>{{ document.solr.decStatus|capfirst }}</dd>
       <dt>Date of document</dt> <dd>{{ document.date }}</dd>
       <dt>Source</dt>
       <dd>{{ document.source }}</dd>
@@ -42,8 +42,10 @@
     <h2 class="section-title">Details</h2>
     <dl>
 
-      <dt>Treaty</dt>
-      <dd><a href="{{ treaty.details_url }}">{{ treaty }} ({{ treaty.date }})</a></dd>
+      {% if treaty %}
+        <dt>Treaty</dt>
+        <dd><a href="{{ treaty.details_url }}">{{ treaty }} ({{ treaty.date }})</a></dd>
+      {% endif %}
 
       <dt>Meeting</dt>
       <dd>
