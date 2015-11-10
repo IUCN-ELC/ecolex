@@ -251,7 +251,7 @@
     <field name="cdTitleOfText_es" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_fr" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_ru" type="text" indexed="true" stored="true" multiValued="false"/>
-    <field name="cdLeoId" type="int" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdLeoId" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_en" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_es" type="text" indexed="true" stored="true" multiValued="false"/>

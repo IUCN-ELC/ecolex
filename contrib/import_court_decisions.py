@@ -11,7 +11,6 @@ SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
 FIELD_MAP = {
     'title_field': 'cdTitleOfText',
-    'nid': 'cdLeoId',
     'field_abstract': 'cdAbstract',
     'field_alternative_record_id': 'cdAlternativeRecordId',
     'field_city': 'cdSeatOfCourt',
@@ -91,7 +90,7 @@ MULTIVALUED_FIELDS = [
     'field_notes',
 ]
 DATE_FIELDS = ['field_date_of_entry', 'field_date_of_modification']
-INTEGER_FIELDS = ['nid', 'field_number_of_pages']
+INTEGER_FIELDS = ['field_number_of_pages']
 
 
 def get_content(url, headers={}):
@@ -103,7 +102,7 @@ def get_content(url, headers={}):
         return json.loads(resp.text)
     except ValueError as ex:
         # TODO: replace this with logging
-        print url, ex
+        print(url, ex)
 
 
 def get_decision(url):
@@ -152,22 +151,24 @@ def get_value_from_dict(valdict):
                                    valdict.get('label', valdict.get('url'))))
 
 
-def parse_decision(decision, uuid):
+def parse_decision(decision, leo_id, solr_id):
     solr_decision = {}
-    for json_field, solr_field in FIELD_MAP.iteritems():
+    for json_field, solr_field in FIELD_MAP.items():
         json_value = decision.get(json_field, None)
         if not json_value:
             solr_decision[solr_field] = None
         elif json_field in FALSE_MULTILINGUAL_FIELDS:
             solr_decision[solr_field] = get_value(json_field, json_value['und'])
         elif json_field in MULTILINGUAL_FIELDS:
-            for lang, value in json_value.iteritems():
+            for lang, value in json_value.items():
                 key = '{}_{}'.format(solr_field, lang)
                 solr_decision[key] = get_value(json_field, value)
         else:
             solr_decision[solr_field] = get_value(json_field, json_value)
     solr_decision['type'] = 'court_decision'
     solr_decision['source'] = 'InforMEA'
+    solr_decision['cdLeoId'] = leo_id
+    solr_decision['id'] = solr_id
     return solr_decision
 
 
@@ -175,15 +176,13 @@ def update_decision(solr, decision):
     new_decision = get_decision(decision['data_url'])
     if not new_decision:
         return
-    existing_decision = solr.search(solr.COURT_DECISION, new_decision['nid'])
-    solr_decision = parse_decision(new_decision, decision['uuid'])
 
-    if not existing_decision:
-        solr.add(solr_decision)
-    if existing_decision and is_recent(new_decision):
-        # By using the same ID, Solr will know this is an update operation
-        solr_decision['id'] = existing_decision['id']
-        solr.add(solr_decision)
+    existing_decision = solr.search(solr.COURT_DECISION, decision['uuid'])
+    solr_id = existing_decision['id'] if existing_decision and \
+        is_recent(new_decision) else None
+
+    solr_decision = parse_decision(new_decision, decision['uuid'], solr_id)
+    solr.add(solr_decision)
 
 
 if __name__ == '__main__':
