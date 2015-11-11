@@ -212,6 +212,7 @@ def get_relevancy():
         'trKeyword': 30,
         'decKeyword': 30,
         'litKeyword': 30,
+        'text': 20,
         'doc_content': 10,
     }
 

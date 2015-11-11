@@ -1,8 +1,17 @@
 from bs4 import BeautifulSoup
-import pprint
+import requests
+from io import BytesIO
 
 from import_elis import valid_date, format_date
-from utils import SolrWrapper
+from utils import EcolexSolr
+
+ELIS_URL = "http://ecolex.ecolex.org:8083/ecolex/ledge/view/ExportResult"
+EXPORT = "?exportType=xml&index=literature"
+FILTER = "searchDate_end=%d&searchDate_start=%d"
+ORDER = "sortField=searchDate"
+PAGE = "page=%d"
+
+STOP_STRING = 'java.lang.NegativeArraySizeException'
 
 DOCUMENT = 'document'
 
@@ -135,6 +144,8 @@ FIELD_MAP = {
 
 }
 
+URL_FIELD = 'linktofulltext'
+
 DATE_FIELDS = [
     'litDateOfEntry', 'litDateOfModification'
 ]
@@ -147,14 +158,29 @@ MULTIVALUED_FIELDS = [
 
 
 def fetch_literature():
-    """ This function is temporary. It will be replaced with the actual
-    data fetcher when we get access to the elis endpoint.
-     """
+    year_filter = FILTER % (2016, 1500)
+    page = 25
     literatures = []
-    bs = BeautifulSoup(open('literature2.xml', 'r', encoding='utf-8'))
 
-    documents = bs.findAll(DOCUMENT)
-    literatures.extend(documents)
+    while page < 28:
+        print(page)
+        page_filter = PAGE % (page,)
+        query = '%s%s&%s&%s&%s' % (ELIS_URL, EXPORT, year_filter, ORDER,
+                                   page_filter)
+        response = requests.get(query)
+
+        if response.status_code != 200:
+            raise ValueError('Invalid return code %d' % response.status_code)
+
+        if STOP_STRING in str(response.content):
+            break
+
+        bs = BeautifulSoup(response.content)
+        documents = bs.findAll(DOCUMENT)
+        literatures.extend(documents)
+
+        page += 1
+
     return literatures
 
 
@@ -165,8 +191,8 @@ def clean_text(text):
 
 
 def parse_literatures(raw_literatures):
-    pp = pprint.PrettyPrinter(indent=4)
     literatures = []
+    solr = EcolexSolr()
 
     for raw_literature in raw_literatures:
         data = {'type': 'literature'}
@@ -184,23 +210,67 @@ def parse_literatures(raw_literatures):
                     data[v] = [clean_text(field.text) for field in field_values]
                 if v in data and v not in MULTIVALUED_FIELDS:
                     data[v] = data[v][0]
-        pp.pprint(data)
+
+        if 'litTypeOfText' in data and len(data['litTypeOfText']) > 1:
+            data['litTypeOfText'] = ' '.join(data['litTypeOfText'])
+
+        if 'litTypeOfText_fr' in data and len(data['litTypeOfText_fr']) > 1:
+            data['litTypeOfText_fr'] = ' '.join(data['litTypeOfText_fr'])
+
+        if 'litTypeOfText_sp' in data and len(data['litTypeOfText_sp']) > 1:
+            data['litTypeOfText_sp'] = ' '.join(data['litTypeOfText_sp'])
+
+        value = raw_literature.find(URL_FIELD)
+        if value:
+            url = value.text
+            response = requests.get(url)
+            if response.status_code != 200:
+                raise ValueError('Invalid return code %d' %
+                                 response.status_code)
+
+            doc_content_bytes = response.content
+            file_obj = BytesIO()
+            file_obj.write(doc_content_bytes)
+            setattr(file_obj, 'name', url)
+            file_obj.seek(0)
+            response = solr.extract(file_obj)
+            data['text'] = response['contents']
+
         literatures.append(data)
     return literatures
 
 
 def literature_needs_update(old, new):
+    for field in FIELD_MAP.values():
+        old_value = old.get(field, None)
+        new_value = new.get(field, None)
+
+        if (not old_value and new_value == '') or (new_value == [] and
+           not old_value):
+            continue
+
+        if (isinstance(new_value, list) and isinstance(old_value, list) and
+           set(old_value) == set(new_value)):
+            continue
+
+        if isinstance(new_value, list) and '' in new_value:
+            new_value.remove('')
+
+        if (old_value != new_value and [old_value] != new_value and
+           [new_value] != old_value):
+            return True
     return False
 
 
 def add_literature(literatures):
-    solr = SolrWrapper()
+    solr = EcolexSolr()
     new_literatures = []
     updated_literatures = []
+    already_indexed = 0
 
     for literature in literatures:
         lit_id = literature['litId'][0]
-        literature_result = solr.search_literature(lit_id)
+        literature_result = solr.search('Literature', lit_id)
         if literature_result:
             # CHECK AND UPDATE
             if literature_needs_update(literature_result, literature):
@@ -208,12 +278,16 @@ def add_literature(literatures):
                 updated_literatures.append(literature)
                 print('Literature %s has been updated' % (lit_id,))
             else:
+                already_indexed += 1
                 print('Literature %s already indexed' % (lit_id,))
         else:
             new_literatures.append(literature)
             print('Added %s' % (lit_id,))
-    solr.add_documents(new_literatures)
-    solr.add_documents(updated_literatures)
+    solr.add_bulk(new_literatures)
+    solr.add_bulk(updated_literatures)
+    print('Added %d new treaties' % (len(new_literatures)))
+    print('Updated %d treaties' % (len(updated_literatures)))
+    print('Already indexed treaties %d' % (already_indexed,))
 
 if __name__ == '__main__':
     raw_literatures = fetch_literature()
