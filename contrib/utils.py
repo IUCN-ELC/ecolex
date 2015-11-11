@@ -37,12 +37,14 @@ class EcolexSolr(object):
     COP_DECISION = 'COP Decision'
     COURT_DECISION = 'Court Decision'
     TREATY = 'Treaty'
+    LITERATURE = 'Literature'
 
     # This is just an idea, might not be accurate
     ID_MAPPING = {
         COP_DECISION: 'decId',
         COURT_DECISION: 'cdLeoId',
         TREATY: 'trElisId',
+        LITERATURE: 'litId',
     }
 
     def __init__(self):

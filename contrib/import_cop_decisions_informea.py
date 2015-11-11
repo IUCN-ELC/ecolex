@@ -4,6 +4,7 @@ import re
 import requests
 import sys
 from datetime import date, timedelta
+from io import BytesIO
 
 from utils import get_date, EcolexSolr
 
@@ -103,6 +104,7 @@ def parse_keywords(info):
 
 def parse_decisions(raw_decisions):
     decisions = []
+    solr = EcolexSolr()
 
     for raw_decision in raw_decisions:
         decision = {'type': 'decision'}
@@ -132,6 +134,22 @@ def parse_decisions(raw_decisions):
 
         dec_body = parse_multilangual(raw_decision['content'])
         decision['decBody'] = list(dec_body.values())
+
+        if raw_decision['files']['results']:
+            urls = [x['url'] for x in raw_decision['files']['results']]
+            for url in urls:
+                response = requests.get(url)
+                if response.status_code != 200:
+                    raise ValueError('Invalid return code %d' %
+                                     response.status_code)
+
+                doc_content_bytes = response.content
+                file_obj = BytesIO()
+                file_obj.write(doc_content_bytes)
+                setattr(file_obj, 'name', url)
+                file_obj.seek(0)
+                response = solr.extract(file_obj)
+                decision['text'] = response['contents']
 
         decisions.append(decision)
 
