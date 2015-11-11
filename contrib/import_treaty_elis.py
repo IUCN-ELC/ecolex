@@ -1,4 +1,5 @@
 import requests
+from io import BytesIO
 
 from bs4 import BeautifulSoup
 
@@ -118,6 +119,11 @@ REFERENCE_MAPPING = {
     'trCitesTreaty': 'trCitedBy',
 }
 
+URL_FIELDS = [
+    'linktofulltext', 'linktofulltextsp', 'linktofulltextfr',
+    'linktofulltextother'
+]
+
 
 def clean_text(text):
     return text.strip()
@@ -205,6 +211,7 @@ def fetch_treaties():
 
 def parse_treatries(raw_treaties):
     treaties = {}
+    solr = EcolexSolr()
 
     for raw_treaty in raw_treaties:
         bs = BeautifulSoup(raw_treaty)
@@ -234,6 +241,24 @@ def parse_treatries(raw_treaties):
                             clean_field) if v in DATE_FIELDS else clean_field)
                     else:
                         data[v].append(format_date('0000-00-00'))
+
+            for field in URL_FIELDS:
+                value = document.find(field)
+                if value:
+                    url = value.text
+                    response = requests.get(url)
+
+                    if response.status_code != 200:
+                        raise ValueError('Invalid return code %d'
+                                         % response.status_code)
+
+                    doc_content_bytes = response.content
+                    file_obj = BytesIO()
+                    file_obj.write(doc_content_bytes)
+                    setattr(file_obj, 'name', url)
+                    file_obj.seek(0)
+                    response = solr.extract(file_obj)
+                    data['text'] = response['contents']
 
             elis_id = data['trElisId'][0]
             if elis_id == 'TRE-146817':

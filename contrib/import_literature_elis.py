@@ -159,10 +159,10 @@ MULTIVALUED_FIELDS = [
 
 def fetch_literature():
     year_filter = FILTER % (2016, 1500)
-    page = 25
+    page = 0
     literatures = []
 
-    while page < 28:
+    while True:
         print(page)
         page_filter = PAGE % (page,)
         query = '%s%s&%s&%s&%s' % (ELIS_URL, EXPORT, year_filter, ORDER,
