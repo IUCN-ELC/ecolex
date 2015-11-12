@@ -1,9 +1,7 @@
 import requests
-from io import BytesIO
-
 from bs4 import BeautifulSoup
 
-from utils import EcolexSolr
+from utils import EcolexSolr, get_file_from_url
 
 ELIS_URL = "http://ecolex.ecolex.org:8083/ecolex/ledge/view/ExportResult"
 EXPORT = "?exportType=xml&index=treaties"
@@ -246,17 +244,7 @@ def parse_treatries(raw_treaties):
                 value = document.find(field)
                 if value:
                     url = value.text
-                    response = requests.get(url)
-
-                    if response.status_code != 200:
-                        raise ValueError('Invalid return code %d'
-                                         % response.status_code)
-
-                    doc_content_bytes = response.content
-                    file_obj = BytesIO()
-                    file_obj.write(doc_content_bytes)
-                    setattr(file_obj, 'name', url)
-                    file_obj.seek(0)
+                    file_obj = get_file_from_url(url)
                     response = solr.extract(file_obj)
                     data['text'] = response['contents']
 

@@ -1,12 +1,40 @@
 from datetime import datetime
-import os
+from io import BytesIO
 import pysolr
+import os
 import re
+import requests
+
+
+def get_file_from_url(url):
+    response = requests.get(url)
+    if response.status_code != 200:
+        raise ValueError('Invalid return code {}'.format(response.status_code))
+
+    doc_content_bytes = response.content
+    file_obj = BytesIO()
+    file_obj.write(doc_content_bytes)
+    setattr(file_obj, 'name', url)
+    file_obj.seek(0)
+    return file_obj
 
 
 def get_date(text):
     datestr = re.findall("Date\((.*)\)", text)[0][:-3]
     return datetime.fromtimestamp(int(datestr))
+
+
+def valid_date(date):
+    date_info = date.split('-')
+    if len(date_info) != 3:
+        return False
+    if date_info[0] == '0000' or date_info[1] == '00' or date_info[2] == '00':
+        return False
+    return True
+
+
+def format_date(date):
+    return date + "T00:00:00Z"
 
 
 class EcolexSolr(object):

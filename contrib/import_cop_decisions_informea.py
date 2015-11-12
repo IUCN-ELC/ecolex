@@ -4,9 +4,8 @@ import re
 import requests
 import sys
 from datetime import date, timedelta
-from io import BytesIO
 
-from utils import get_date, EcolexSolr
+from utils import get_date, get_file_from_url, EcolexSolr
 
 
 ODATA_URL = "http://odata.informea.org/informea.svc/Decisions"
@@ -138,16 +137,7 @@ def parse_decisions(raw_decisions):
         if raw_decision['files']['results']:
             urls = [x['url'] for x in raw_decision['files']['results']]
             for url in urls:
-                response = requests.get(url)
-                if response.status_code != 200:
-                    raise ValueError('Invalid return code %d' %
-                                     response.status_code)
-
-                doc_content_bytes = response.content
-                file_obj = BytesIO()
-                file_obj.write(doc_content_bytes)
-                setattr(file_obj, 'name', url)
-                file_obj.seek(0)
+                file_obj = get_file_from_url(url)
                 response = solr.extract(file_obj)
                 decision['text'] = response['contents']
 
