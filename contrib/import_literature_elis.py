@@ -222,8 +222,7 @@ def parse_literatures(raw_literatures):
         if value:
             url = value.text
             file_obj = get_file_from_url(url)
-            response = solr.extract(file_obj)
-            data['text'] = response['contents']
+            data['text'] = solr.extract(file_obj)
 
         literatures.append(data)
     return literatures

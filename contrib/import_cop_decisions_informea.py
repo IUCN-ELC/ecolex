@@ -138,8 +138,7 @@ def parse_decisions(raw_decisions):
             urls = [x['url'] for x in raw_decision['files']['results']]
             for url in urls:
                 file_obj = get_file_from_url(url)
-                response = solr.extract(file_obj)
-                decision['text'] = response['contents']
+                decision['text'] = solr.extract(file_obj)
 
         decisions.append(decision)
 

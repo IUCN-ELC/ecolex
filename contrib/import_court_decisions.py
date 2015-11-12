@@ -3,7 +3,7 @@ import json
 import requests
 from pathlib import Path
 
-from utils import EcolexSolr
+from utils import get_file_from_url, EcolexSolr
 
 COURT_DECISIONS_URL = 'http://leo.informea.org/ws/court-decisions'
 COUNTRIES_JSON = 'countries.json'
@@ -94,6 +94,7 @@ MULTIVALUED_FIELDS = [
 DATE_FIELDS = ['field_date_of_entry', 'field_date_of_modification']
 INTEGER_FIELDS = ['field_number_of_pages']
 COUNTRY_FIELDS = ['field_country']
+CONTENT_FIELDS = ['field_url']
 
 
 def get_content(url, headers={}):
@@ -175,7 +176,7 @@ def get_value_from_dict(valdict):
 
 
 def parse_decision(decision, leo_id, solr_id):
-    solr_decision = {}
+    solr_decision = {'text': ''}
     for json_field, solr_field in FIELD_MAP.items():
         json_value = decision.get(json_field, None)
         if not json_value:
@@ -193,6 +194,12 @@ def parse_decision(decision, leo_id, solr_id):
                 solr_decision[key] = get_value(json_field, value)
         else:
             solr_decision[solr_field] = get_value(json_field, json_value)
+
+        if json_field in CONTENT_FIELDS and json_value:
+            urls = [d.get('url') for val in json_value.values() for d in val]
+            files = [get_file_from_url(url) for url in urls if url]
+            solr_decision['text'] += '\n'.join(solr.extract(f) for f in files)
+
     solr_decision['type'] = 'court_decision'
     solr_decision['source'] = 'InforMEA'
     solr_decision['cdLeoId'] = leo_id

@@ -72,7 +72,7 @@ class EcolexSolr(object):
 
     def extract(self, file):
         response = self.solr.extract(file)
-        return response
+        return response['contents']
 
     def __del__(self):
         self.solr.optimize()
