@@ -263,7 +263,9 @@
     <field name="cdSeatOfCourt_es" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdSeatOfCourt_fr" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdSeatOfCourt_ru" type="string" indexed="true" stored="true" multiValued="false"/>
-    <field name="cdCountry" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdCountry_en" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdCountry_es" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdCountry_fr" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdCourtDecisionIdNumber" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdCourtDecisionSubdivision" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdCourtName" type="string" indexed="true" stored="true" multiValued="false"/>

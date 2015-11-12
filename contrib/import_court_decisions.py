@@ -1,10 +1,12 @@
 from datetime import datetime, timedelta
 import json
 import requests
+from pathlib import Path
 
 from utils import EcolexSolr
 
 COURT_DECISIONS_URL = 'http://leo.informea.org/ws/court-decisions'
+COUNTRIES_JSON = 'countries.json'
 UPDATE_INTERVAL = 1  # expressed in hours
 JSON_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
@@ -91,6 +93,7 @@ MULTIVALUED_FIELDS = [
 ]
 DATE_FIELDS = ['field_date_of_entry', 'field_date_of_modification']
 INTEGER_FIELDS = ['field_number_of_pages']
+COUNTRY_FIELDS = ['field_country']
 
 
 def get_content(url, headers={}):
@@ -118,6 +121,26 @@ def is_recent(decision):
     changed = datetime.fromtimestamp(float(decision['changed'] or '0'))
     last_update = datetime.now() - timedelta(hours=UPDATE_INTERVAL)
     return changed > last_update
+
+
+def load_countries():
+    json_path = Path(__file__).parent.absolute().joinpath(COUNTRIES_JSON)
+    with json_path.open() as f:
+        codes_countries = json.load(f)
+    codes = codes_countries['code_corresp']
+    countries = codes_countries['official_names']
+    reverse_codes = {v: k for k, v in codes.items()}
+    return {reverse_codes.get(k, k): v for k, v in countries.items()}
+
+
+def get_country_value(value):
+    if len(value) != 1:
+        print('Unexpected value: {}!'.format(value))
+        return {}
+    country = countries.get(value[0], {})
+    if not country:
+        print('Country code {} not found!'.format(value))
+    return country
 
 
 def get_value(key, value):
@@ -163,6 +186,11 @@ def parse_decision(decision, leo_id, solr_id):
             for lang, value in json_value.items():
                 key = '{}_{}'.format(solr_field, lang)
                 solr_decision[key] = get_value(json_field, value)
+        elif json_field in COUNTRY_FIELDS:
+            country = get_country_value(json_value)
+            for lang, value in country.items():
+                key = '{}_{}'.format(solr_field, lang)
+                solr_decision[key] = get_value(json_field, value)
         else:
             solr_decision[solr_field] = get_value(json_field, json_value)
     solr_decision['type'] = 'court_decision'
@@ -178,8 +206,9 @@ def update_decision(solr, decision):
         return
 
     existing_decision = solr.search(solr.COURT_DECISION, decision['uuid'])
-    solr_id = existing_decision['id'] if existing_decision and \
-        is_recent(new_decision) else None
+    if existing_decision and not is_recent(new_decision):
+        return
+    solr_id = existing_decision['id'] if existing_decision else None
 
     solr_decision = parse_decision(new_decision, decision['uuid'], solr_id)
     solr.add(solr_decision)
@@ -188,6 +217,7 @@ def update_decision(solr, decision):
 if __name__ == '__main__':
     solr = EcolexSolr()
     decisions = get_decisions()
+    countries = load_countries()
 
     for decision in decisions:
         update_decision(solr, decision)
