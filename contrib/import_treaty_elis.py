@@ -245,7 +245,10 @@ def parse_treatries(raw_treaties):
                 if value:
                     url = value.text
                     file_obj = get_file_from_url(url)
-                    data['text'] = solr.extract(file_obj)
+                    if 'text' in data:
+                        data['text'] = solr.extract(file_obj)
+                    else:
+                        data['text'] += solr.extract(file_obj)
 
             elis_id = data['trElisId'][0]
             if elis_id == 'TRE-146817':
