@@ -262,6 +262,32 @@ class Literature(ObjectNormalizer):
                     'litTitleOfTextTransl_sp']
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
     DOCTYPE_FIELD = 'litTypeOfText'
+    REFERENCE_FIELDS = {
+        'litTreatyReference': 'treaty',
+        'litLiteratureReference': 'literature',
+    }
+    REFERENCE_MAPPING = {
+        'treaty': 'trElisId',
+        'literature': 'litId',
+    }
+
+    def get_references_ids_dict(self):
+        ids_dict = {}
+        for field, doc_type in self.REFERENCE_FIELDS.items():
+            values = [v for v in self.solr.get(field, [])]
+            if values and any(values):
+                ids_dict[doc_type] = values
+        return ids_dict
+
+    def get_references_from_ids(self, ids_dict):
+        from ecolex.search import get_documents_by_field
+        references = {}
+        for doc_type, ids in ids_dict.items():
+            results = get_documents_by_field(self.REFERENCE_MAPPING[doc_type],
+                                             ids, rows=10)
+            if results:
+                references[doc_type] = results
+        return references
 
     def details_url(self):
         return reverse('literature_details', kwargs={'id': self.id()})

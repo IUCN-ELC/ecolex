@@ -449,6 +449,12 @@
     <field name="litBasin_fr" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litBasin_sp" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litInternetReference" type="string" indexed="false" stored="true"/>
+    <field name="litTreatyReference" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litCourtDecisionReference" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litLiteratureReference" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litEULegislationReference" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litNationalLegislationReference" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litFaolexReference" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <uniqueKey>id</uniqueKey>
 

@@ -139,6 +139,12 @@ FIELD_MAP = {
     'basin_es_es': 'litBasin_sp',
 
     'internetreference': 'litInternetReference',
+    'referencetotreaties': 'litTreatyReference',
+    'referencetocourtdecision': 'litCourtDecisionReference',
+    'referencetoliterature': 'litLiteratureReference',
+    'referencetofaolex': 'litFaolexReference',
+    'referencetoeulegislation': 'litEULegislationReference',
+    'referencetonationallegislation': 'litNationalLegislationReference',
 
 }
 
