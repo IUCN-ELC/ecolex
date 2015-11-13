@@ -249,7 +249,7 @@ def get_fq(filters):
         'lit_subject': 'literature',
         'lit_language': 'literature',
         'cdTypeOfText': 'court_decision',
-        'cdLanguageOfDocument': 'court_decision',
+        'cdCourtJurisdiction': 'court_decision',
     }
 
     AND_FILTERS = [

@@ -40,8 +40,8 @@ LITERATURE_FILTERS = {
     'litLanguageOfDocument': 'lit_language',
 }
 COURT_DECISION_FILTERS = {
+    'cdCourtJurisdiction': 'cd_jurisdiction',
     'cdTypeOfText': 'cd_type',
-    'cdLanguageOfDocument': 'cd_language',
 }
 
 DOC_TYPE_FILTER_MAPPING = {
@@ -76,8 +76,8 @@ FIELD_TO_FACET_MAPPING = {
     'lit_subject': 'litSubject',
     'lit_language': 'litLanguageOfDocument',
 
-    'cd_type':  'cdTypeOfText',
-    'cd_language': 'cdLanguageOfDocument',
+    'cd_jurisdiction': 'cdCourtJurisdiction',
+    'cd_type': 'cdTypeOfText',
 }
 
 

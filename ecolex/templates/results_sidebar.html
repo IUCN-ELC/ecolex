@@ -91,6 +91,25 @@
   </fieldset>
 {% endif %}
 
+{% if not form.type.data or form.has_court_decision %}
+  <fieldset class="special-filter">
+    <h5 data-toggle="collapse" {% if not form.has_court_decision %}class="collapsed"{% endif %}
+        data-target="#filter-court-decisions">Court decision filters</h5>
+
+    <div id="filter-court-decisions" class="collapse {% if form.has_court_decision %}in{% endif %}">
+      <h6>Jurisdiction</h6>
+      <ul class="filter-treaty" data-formid="#id_cd_jurisdiction">
+        {% include 'bits/checkbox_facet.html' with facet=facets.cdCourtJurisdiction form_field=form.cd_jurisdiction show_empty=True %}
+      </ul>
+
+      <h6>Type of court</h6>
+      <ul class="filter-treaty" data-formid="#id_cd_type">
+        {% include 'bits/checkbox_facet.html' with facet=facets.cdTypeOfText form_field=form.cd_type show_empty=True %}
+      </ul>
+    </div>
+  </fieldset>
+{% endif %}
+
 {% if not form.type.data or form.has_literature %}
   <fieldset class="speciali-filter">
     <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">Literature filters</h5>
@@ -156,30 +175,6 @@
           {% include 'bits/fancy_select.html' with facet=facets.litLanguageOfDocument form_field=form.lit_language %}
         </select>
         <input type="text" class="tm-input" placeholder="Add subject" data-formid="#id_lit_language"/>
-      </div>
-    </div>
-  </fieldset>
-{% endif %}
-
-{% if not form.type.data or form.has_court_decision %}
-  <fieldset class="special-filter">
-    <h5 data-toggle="collapse" {% if not form.has_court_decision %}class="collapsed"{% endif %}
-        data-target="#filter-court-decisions">Court decision filters</h5>
-
-    <div id="filter-court-decisions" class="collapse {% if form.has_court_decision %}in{% endif %}">
-      {% if facets.cdTypeOfText %}
-        <h6>Type of document</h6>
-        <ul class="filter-treaty" data-formid="#id_cd_type">
-          {% include 'bits/checkbox_facet.html' with facet=facets.cdTypeOfText form_field=form.cd_type show_empty=True %}
-        </ul>
-      {% endif %}
-
-      <h6>Document language</h6>
-      <div id="cd_language" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.cdLanguageOfDocument form_field=form.cd_language %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add languages" data-formid="#id_cd_language"/>
       </div>
     </div>
   </fieldset>

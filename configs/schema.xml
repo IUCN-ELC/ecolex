@@ -291,9 +291,9 @@
     <field name="cdInternetReference_fr" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdInternetReference_ru" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdIsisNumber" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdCourtJurisdiction" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdCourtJurisdiction" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdJustices" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="cdKeywords" type="string" indexed="false" stored="true" multiValued="true"/>
+    <field name="cdKeywords" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdNumberOfPages" type="int" indexed="false" stored="false" multiValued="false"/>
     <field name="cdOriginalId" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdReferenceNumber" type="string" indexed="false" stored="true" multiValued="false"/>
@@ -492,6 +492,7 @@
 
     <copyField source="trKeyword" dest="docKeyword"/>
     <copyField source="decKeyword" dest="docKeyword"/>
+    <copyField source="cdKeywords" dest="docKeyword"/>
 
     <copyField source="trDateOfText" dest="docDate"/>
     <copyField source="decPublishDate" dest="docDate"/>

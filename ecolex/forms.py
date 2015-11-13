@@ -37,7 +37,7 @@ class SearchForm(Form):
     lit_language = MultipleChoiceField()
 
     cd_type = MultipleChoiceField()
-    cd_language = MultipleChoiceField()
+    cd_jurisdiction = MultipleChoiceField()
 
     sortby = CharField(initial='')
 
