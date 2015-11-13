@@ -42,22 +42,6 @@
         </select>
         <input type="text" class="tm-input" placeholder="Add basin" data-formid="#id_tr_basin"/>
       </div>
-
-      <h6>Subject</h6>
-      <div id="tr_subject" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.trSubject form_field=form.tr_subject %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add subjects" data-formid="#id_tr_subject"/>
-      </div>
-
-      <h6>Document language</h6>
-      <div id="tr_language" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.trLanguageOfDocument form_field=form.tr_language %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add languages" data-formid="#id_tr_language"/>
-      </div>
     </div>
   </fieldset>
 {% endif %}
@@ -130,11 +114,6 @@
         <input type="text" class="tm-input" placeholder="Add author" data-formid="#id_lit_author"/>
       </div>
 
-      <h6>Country</h6>
-      <ul class="filter-literature" data-formid="#id_lit_country">
-        {% include 'bits/checkbox_facet.html' with facet=facets.litCountry form_field=form.lit_country %}
-      </ul>
-
       <h6>Geographical Area</h6>
       <div id="lit_region" class="tag-select">
         <select class="tag-options" hidden>
@@ -160,22 +139,6 @@
       <ul class="filter-literature" data-formid="#id_lit_publisher">
         {% include 'bits/checkbox_facet.html' with facet=facets.litPublisher form_field=form.lit_publisher %}
       </ul>
-
-      <h6>Subject</h6>
-      <div id="lit_subject" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.litSubject form_field=form.lit_subject %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add subject" data-formid="#id_lit_subject"/>
-      </div>
-
-      <h6>Document language</h6>
-      <div id="lit_language" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.litLanguageOfDocument form_field=form.lit_language %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add subject" data-formid="#id_lit_language"/>
-      </div>
     </div>
   </fieldset>
 {% endif %}
@@ -185,12 +148,28 @@
       data-target="#filter-global">Global filters</h5>
 
   <div id="filter-global" class="collapse in">
+    <h6>Subject</h6>
+    <div id="subject-filter" class="tag-select">
+      <select class="tag-options" hidden>
+        {% include 'bits/fancy_select.html' with facet=facets.docSubject form_field=form.subject %}
+      </select>
+      <input type="text" class="tm-input full-match" placeholder="Add subjects" data-formid="#id_subject"/>
+    </div>
+
     <h6>Keywords</h6>
     <div id="keyword-filter" class="tag-select">
       <select class="tag-options" hidden>
         {% include 'bits/fancy_select.html' with facet=facets.docKeyword form_field=form.keyword %}
       </select>
       <input type="text" class="tm-input full-match" placeholder="Add keywords" data-formid="#id_keyword"/>
+    </div>
+
+    <h6>Country</h6>
+    <div id="country-filter" class="tag-select">
+      <select class="tag-options" hidden>
+        {% include 'bits/fancy_select.html' with facet=facets.docCountry form_field=form.country %}
+      </select>
+      <input type="text" class="tm-input full-match" placeholder="Add countries" data-formid="#id_country"/>
     </div>
 
     <!--<select id="keyword" multiple="multiple" data-formid="#id_keyword" hidden>
@@ -223,6 +202,14 @@
         </div>
       </div>
     {% endif %}
+
+    <h6>Language</h6>
+    <div id="language-filter" class="tag-select">
+      <select class="tag-options" hidden>
+        {% include 'bits/fancy_select.html' with facet=facets.docLanguage form_field=form.language %}
+      </select>
+      <input type="text" class="tm-input full-match" placeholder="Add languages" data-formid="#id_language"/>
+    </div>
   </div>
 </fieldset>
 

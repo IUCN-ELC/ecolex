@@ -15,11 +15,8 @@ DOC_SOURCES = {
 TREATY_FILTERS = {
     'trTypeOfText': 'tr_type',
     'trFieldOfApplication': 'tr_field',
-    'partyCountry': 'tr_party',
     'trRegion': 'tr_region',
     'trBasin': 'tr_basin',
-    'trSubject': 'tr_subject',
-    'trLanguageOfDocument': 'tr_language',
 }
 
 DECISION_FILTERS = {
@@ -31,13 +28,10 @@ DECISION_FILTERS = {
 LITERATURE_FILTERS = {
     'litTypeOfText': 'lit_type',
     'litAuthor': 'lit_author',
-    'litCountry': 'lit_country',
     'litRegion': 'lit_region',
     'litBasin': 'lit_basin',
     'litSerialTitle': 'lit_serial',
     'litPublisher': 'lit_publisher',
-    'litSubject': 'lit_subject',
-    'litLanguageOfDocument': 'lit_language',
 }
 COURT_DECISION_FILTERS = {
     'cdCourtJurisdiction': 'cd_jurisdiction',
@@ -57,10 +51,6 @@ FIELD_TO_FACET_MAPPING = {
     'tr_party': 'partyCountry',
     'tr_region': 'trRegion',
     'tr_basin': 'trBasin',
-    'tr_subject': 'trSubject',
-    'tr_language': 'trLanguageOfDocument',
-
-    'keyword': 'docKeyword',
 
     'dec_type': 'decType',
     'dec_status': 'decStatus',
@@ -68,16 +58,18 @@ FIELD_TO_FACET_MAPPING = {
 
     'lit_type': 'litTypeOfText',
     'lit_author': 'litAuthor',
-    'lit_country': 'litCountry',
     'lit_region': 'litRegion',
     'lit_basin': 'litBasin',
     'lit_serial': 'litSerialTitle',
     'lit_publisher': 'litPublisher',
-    'lit_subject': 'litSubject',
-    'lit_language': 'litLanguageOfDocument',
 
     'cd_jurisdiction': 'cdCourtJurisdiction',
     'cd_type': 'cdTypeOfText',
+
+    'subject': 'docSubject',
+    'keyword': 'docKeyword',
+    'country': 'docCountry',
+    'language': 'docLanguage',
 }
 
 

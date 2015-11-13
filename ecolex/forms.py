@@ -15,29 +15,27 @@ class SearchForm(Form):
     tr_party = MultipleChoiceField()
     tr_region = MultipleChoiceField()
     tr_basin = MultipleChoiceField()
-    tr_subject = MultipleChoiceField()
-    tr_language = MultipleChoiceField()
-
-    keyword = MultipleChoiceField()
-    yearmin = CharField()
-    yearmax = CharField()
 
     dec_type = MultipleChoiceField()
     dec_status = MultipleChoiceField()
     dec_treaty = MultipleChoiceField()
 
+    cd_type = MultipleChoiceField()
+    cd_jurisdiction = MultipleChoiceField()
+
     lit_type = MultipleChoiceField()
     lit_author = MultipleChoiceField()
-    lit_country = MultipleChoiceField()
     lit_region = MultipleChoiceField()
     lit_basin = MultipleChoiceField()
     lit_serial = MultipleChoiceField()
     lit_publisher = MultipleChoiceField()
-    lit_subject = MultipleChoiceField()
-    lit_language = MultipleChoiceField()
 
-    cd_type = MultipleChoiceField()
-    cd_jurisdiction = MultipleChoiceField()
+    subject = MultipleChoiceField()
+    keyword = MultipleChoiceField()
+    country = MultipleChoiceField()
+    language = MultipleChoiceField()
+    yearmin = CharField()
+    yearmax = CharField()
 
     sortby = CharField(initial='')
 

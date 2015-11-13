@@ -33,6 +33,9 @@ class SearchView(TemplateView):
         filters = {
             'type': data['type'] or dict(DOC_TYPE).keys(),
             'docKeyword': data['keyword'],
+            'docSubject': data['subject'],
+            'docCountry': data['country'],
+            'docLanguage': data['language'],
             'docDate': (data['yearmin'], data['yearmax']),
         }
         for doc_type in filters['type']:
