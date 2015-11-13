@@ -12,35 +12,26 @@
 
 <article class="record-details-decisions">
   <header>
-    <h1>Treaty decisions</h1>
+    <h1>Treaty literatures</h1>
   </header>
 
   <table class="table decisions-expanded">
     <thead>
-      <th>#</th>
       <th>Title</th>
       <th class="text-right" style="min-width: 120px;">Doc. date</th>
     </thead>
-    {% for meetingId in meetings.keys %}
       <tbody>
-        <tr>
-          <th colspan="3">{{ meetingNames|lookup:meetingId }}</th>
-        </tr>
-        {% for decision in meetings|lookup:meetingId %}
+        {% for literature in literatures %}
         <tr>
           <td>
-            <span title="Decision number">{{ decision.document_id }}</span>
-          </td>
-          <td>
-            <a href="{{ decision.detail_url }}" title="See decision details">{{ decision }}</a>
+            <a href="{{ literature.detail_url }}" title="See literature details">{{ literature }}</a>
           </td>
           <td class="text-right">
-            <time class="small text-muted">{{ decision.date }}</time>
+            <time class="small text-muted">{{ literature.date }}</time>
           </td>
         </tr>
         {% endfor %}
       </tbody>
-    {% endfor %}
   </table>
 
   <hr>

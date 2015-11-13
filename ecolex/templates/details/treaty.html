@@ -183,6 +183,18 @@
       </dd>
     </dl>
 
+    <dl>
+      <dt>Literature</dt>
+      <dd>
+        {% if literatures|length %}
+          <strong>{{ literatures|length }} literatures</strong> related to this treaty.
+          <a href="{% url 'resultLiteratures' document.id %}">View literatures</a>
+        {% else %}
+          <span class="na">Not available</span>
+        {% endif %}
+      </dd>
+    </dl>
+
   </section>
 
 </article>

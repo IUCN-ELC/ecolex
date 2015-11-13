@@ -213,6 +213,11 @@ class Treaty(ObjectNormalizer):
         return get_documents_by_field('decTreatyId',
                                       [self.informea_id()], rows=100)
 
+    def get_literatures(self):
+        from ecolex.search import get_documents_by_field
+        return get_documents_by_field('litTreatyReference',
+                                      [self.solr.get('trElisId')], rows=100)
+
     def full_title(self):
         return '{} ({})'.format(self.title(), self.date())
 

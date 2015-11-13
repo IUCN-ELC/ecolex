@@ -228,6 +228,7 @@ class TreatyDetails(DetailsView):
                         sort(key=lambda x: x.date(), reverse=True)
         if context['document'].informea_id():
             context['decisions'] = context['document'].get_decisions()
+        context['literatures'] = context['document'].get_literatures()
 
         return context
 
@@ -269,9 +270,26 @@ class ResultDetailsDecisions(SearchView):
             x = meetings.get(decId, [])
             x.append(decision)
             meetings[decId] = x
-            meetingNames[decId] = decision.solr['decMeetingTitle'][0]
+            if 'decMeetingTitle' in decision.solr:
+                meetingNames[decId] = decision.solr['decMeetingTitle'][0]
         context['meetings'] = meetings
         context['meetingNames'] = meetingNames
+        return context
+
+
+class ResultDetailsLiteratures(SearchView):
+
+    template_name = 'details_literatures.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ResultDetailsLiteratures, self).get_context_data(**kwargs)
+        results = get_document(kwargs['id'])
+        if not results.count():
+            raise Http404
+
+        context['treaty'] = results.first()
+        context['page_type'] = 'homepage'
+        context['literatures'] = context['treaty'].get_literatures()
         return context
 
 
