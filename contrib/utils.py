@@ -71,7 +71,11 @@ class EcolexSolr(object):
         self.solr.add(bulk_obj)
 
     def extract(self, file):
-        response = self.solr.extract(file)
+        # TODO should probably catch and log it in the caller
+        try:
+            response = self.solr.extract(file)
+        except pysolr.SolrError:
+            return ''
         return response['contents']
 
     def __del__(self):
