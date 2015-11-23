@@ -44,7 +44,6 @@ FIELD_MAP = {
     'citiestreaty': 'trCitiesTreaty',
     'confname': 'trConfName',
     'contributor': 'trContributor',
-    'country': 'trCountry',
     'courtname': 'trCourtName',
     'dateoflastlegalaction': 'trDateOfLastLegalAction',
     'linktofulltext': 'trLinkToFullText',

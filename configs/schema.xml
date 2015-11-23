@@ -107,7 +107,6 @@
     <field name="trLinkToFullTextFr" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="trLinkToFullTextOther" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="trLinkToAbstract" type="string" indexed="false" stored="true" multiValued="true"/>
-    <field name="trCountry" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trRegion" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trBasin" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trScope" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -508,8 +507,7 @@
     <copyField source="litKeyword_fr" dest="docKeyword"/>
     <copyField source="litKeyword_sp" dest="docKeyword"/>
 
-    <!-- TODO partyCountry instead of trCountry ?? -->
-    <copyField source="trCountry" dest="docCountry"/>
+    <copyField source="partyCountry" dest="docCountry"/>
     <copyField source="cdCountry_en" dest="docCountry"/>
     <copyField source="cdCountry_es" dest="docCountry"/>
     <copyField source="cdCountry_fr" dest="docCountry"/>
