@@ -271,6 +271,7 @@
     <field name="cdCourtName" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdDateOfEntry" type="tdate" indexed="true" stored="true" multiValued="false"/>
     <field name="cdDateOfModification" type="tdate" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdDateOfText" type="tdate" indexed="true" stored="true" multiValued="false"/>
     <field name="cdStatusOfDecision" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdSubject" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdEcolexUrl" type="string" indexed="false" stored="false" multiValued="false"/>
@@ -291,7 +292,7 @@
     <field name="cdInternetReference_fr" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdInternetReference_ru" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdIsisNumber" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdCourtJurisdiction" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdJurisdiction" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdJustices" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdKeywords" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdNumberOfPages" type="int" indexed="false" stored="false" multiValued="false"/>

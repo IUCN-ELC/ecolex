@@ -30,7 +30,7 @@ FIELD_MAP = {
     'field_informea_tags': 'cdInformeaTags',
     'field_internet_reference_url': 'cdInternetReference',
     'field_isis_number': 'cdIsisNumber',  # IsisMfn
-    'field_jurisdiction': 'cdCourtJurisdiction',
+    'field_jurisdiction': 'cdJurisdiction',
     'field_justices': 'cdJustices',
     'field_number_of_pages': 'cdNumberOfPages',
     'field_original_id': 'cdOriginalId',
@@ -54,6 +54,7 @@ FIELD_MAP = {
     'field_title_of_text_short': 'cdTitleOfTextShort',
     'field_treaty': 'cdTreatyReference',
     'field_url_other': 'cdUrlOther',
+    'field_sorting_date': 'cdDateOfText',
 }
 MULTILINGUAL_FIELDS = [
     'title_field',
@@ -91,7 +92,11 @@ MULTIVALUED_FIELDS = [
     'field_ecolex_keywords',
     'field_notes',
 ]
-DATE_FIELDS = ['field_date_of_entry', 'field_date_of_modification']
+DATE_FIELDS = [
+    'field_date_of_entry',
+    'field_date_of_modification',
+    'field_sorting_date',
+]
 INTEGER_FIELDS = ['field_number_of_pages']
 COUNTRY_FIELDS = ['field_country']
 CONTENT_FIELDS = ['field_url']
