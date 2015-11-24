@@ -240,8 +240,6 @@ def get_fq(filters):
 
         'litTypeOfText': 'literature',
         'litAuthor': 'literature',
-        'lit_region': 'literature',
-        'lit_basin': 'literature',
         'lit_serial': 'literature',
         'lit_publisher': 'literature',
 

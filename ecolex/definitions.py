@@ -28,8 +28,6 @@ DECISION_FILTERS = {
 LITERATURE_FILTERS = {
     'litTypeOfText': 'lit_type',
     'litAuthor': 'lit_author',
-    'litRegion': 'lit_region',
-    'litBasin': 'lit_basin',
     'litSerialTitle': 'lit_serial',
     'litPublisher': 'lit_publisher',
 }
@@ -57,8 +55,6 @@ FIELD_TO_FACET_MAPPING = {
 
     'lit_type': 'litTypeOfText',
     'lit_author': 'litAuthor',
-    'lit_region': 'litRegion',
-    'lit_basin': 'litBasin',
     'lit_serial': 'litSerialTitle',
     'lit_publisher': 'litPublisher',
 
@@ -68,6 +64,7 @@ FIELD_TO_FACET_MAPPING = {
     'subject': 'docSubject',
     'keyword': 'docKeyword',
     'country': 'docCountry',
+    'region': 'docRegion',
     'language': 'docLanguage',
 }
 

@@ -28,14 +28,13 @@ class SearchForm(Form):
 
     lit_type = MultipleChoiceField()
     lit_author = MultipleChoiceField()
-    lit_region = MultipleChoiceField()
-    lit_basin = MultipleChoiceField()
     lit_serial = MultipleChoiceField()
     lit_publisher = MultipleChoiceField()
 
     subject = MultipleChoiceField()
     keyword = MultipleChoiceField()
     country = MultipleChoiceField()
+    region = MultipleChoiceField()
     language = MultipleChoiceField()
     yearmin = CharField()
     yearmax = CharField()

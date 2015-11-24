@@ -334,6 +334,7 @@
     <field name="docSubject" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="docKeyword" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="docCountry" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="docRegion" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="docDate" type="tdate" indexed="true" stored="false" multiValued="false"/>
     <field name="docLanguage" type="string" indexed="true" stored="true" multiValued="true"/>
 
@@ -496,7 +497,7 @@
     <copyField source="decSummary" dest="decText"/>
     <copyField source="decBody" dest="decText"/>
 
-    <!-- Copy fields for general filters -->
+    <!-- Copy fields for common filters -->
     <copyField source="trSubject" dest="docSubject"/>
     <copyField source="cdSubject" dest="docSubject"/>
     <copyField source="litSubject" dest="docSubject"/>
@@ -511,12 +512,16 @@
     <copyField source="litKeyword_sp" dest="docKeyword"/>
 
     <copyField source="partyCountry" dest="docCountry"/>
-    <copyField source="cdCountry_en" dest="docCountry"/>
-    <copyField source="cdCountry_es" dest="docCountry"/>
-    <copyField source="cdCountry_fr" dest="docCountry"/>
+    <copyField source="cdTerritorialSubdivision" dest="docCountry"/>
     <copyField source="litCountry" dest="docCountry"/>
     <copyField source="litCountry_fr" dest="docCountry"/>
     <copyField source="litCountry_sp" dest="docCountry"/>
+
+    <copyField source="trRegion" dest="docRegion"/>
+    <copyField source="cdRegion" dest="docRegion"/>
+    <copyField source="litRegion" dest="docRegion"/>
+    <copyField source="litRegion_fr" dest="docRegion"/>
+    <copyField source="litRegion_sp" dest="docRegion"/>
 
     <copyField source="trDateOfText" dest="docDate"/>
     <copyField source="decPublishDate" dest="docDate"/>

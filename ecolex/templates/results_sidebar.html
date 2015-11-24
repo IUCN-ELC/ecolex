@@ -110,22 +110,6 @@
         <input type="text" class="tm-input" placeholder="Add author" data-formid="#id_lit_author"/>
       </div>
 
-      <h6>Geographical Area</h6>
-      <div id="lit_region" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.litRegion form_field=form.lit_region %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add geographical areas" data-formid="#id_lit_region"/>
-      </div>
-
-      <h6>Basin</h6>
-      <div id="lit_basin" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.litBasin form_field=form.lit_basin %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add basin" data-formid="#id_lit_basin"/>
-      </div>
-
       <h6>Journal/Series</h6>
       <ul class="filter-literature" data-formid="#id_lit_serial">
         {% include 'bits/checkbox_facet.html' with facet=facets.litSerialTitle form_field=form.lit_serial %}
@@ -168,8 +152,16 @@
       <input type="text" class="tm-input full-match" placeholder="Add countries" data-formid="#id_country"/>
     </div>
 
+    <h6>Geographical Area</h6>
+    <div id="region-filter" class="tag-select">
+      <select class="tag-options" hidden>
+        {% include 'bits/fancy_select.html' with facet=facets.docRegion form_field=form.region %}
+      </select>
+      <input type="text" class="tm-input full-match" placeholder="Add geographical areas" data-formid="#id_region"/>
+    </div>
+
     {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
-      <h6>Years</h6>
+      <h6>Year</h6>
       <input id="slider-years" type="text"
              data-slider-min="1860"
              data-slider-max="2015"

@@ -38,6 +38,7 @@ class SearchView(TemplateView):
             'docKeyword': data['keyword'],
             'docSubject': data['subject'],
             'docCountry': data['country'],
+            'docRegion': data['region'],
             'docLanguage': data['language'],
             'docDate': (data['yearmin'], data['yearmax']),
         }
