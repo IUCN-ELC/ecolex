@@ -49,6 +49,7 @@
     <field name="trEntryIntoForceDate" type="tdate" indexed="true" stored="true"/>
     <field name="trSearchDate" type="tdate" indexed="true" stored="true"/>
     <field name="trDateOfLastLegalAction" type="tdate" indexed="true" stored="true"/>
+    <field name="trStatus" type="string" indexed="true" stored="true" multiValued="false"/>
 
     <field name="trDisplayTitle" type="string" indexed="false" stored="true"/>
     <field name="trDisplayTitle_En_US" type="string" indexed="false" stored="true"/>
@@ -74,9 +75,9 @@
 
     <field name="trFieldOfApplication" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trPlaceOfAdoption" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trPlaceOfAdoption" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trDepository" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trDepository" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="trSubject" type="string" indexed="true" stored="true" multiValued="true"/>
 

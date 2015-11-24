@@ -9,8 +9,11 @@ from ecolex.search import (
 )
 from ecolex.forms import SearchForm
 from ecolex.definitions import (
-    DOC_TYPE, DOC_TYPE_FILTER_MAPPING, FIELD_TO_FACET_MAPPING, SOLR_FIELDS
+    DOC_TYPE, DOC_TYPE_FILTER_MAPPING, FIELD_TO_FACET_MAPPING, SOLR_FIELDS,
+    OPERATION_FIELD_MAPPING
 )
+
+from uuid import uuid4
 
 
 class SearchView(TemplateView):
@@ -43,6 +46,13 @@ class SearchView(TemplateView):
             for k, v in mapping.items():
                 filters[k] = data[v]
 
+        for field in OPERATION_FIELD_MAPPING.keys():
+            field_name = OPERATION_FIELD_MAPPING[field]
+            facet_name = FIELD_TO_FACET_MAPPING[field_name]
+            if not data[field] and facet_name in filters:
+                values = filters.pop(facet_name)
+                facet_name = '{!ex=%s}' % str(uuid4())[:8] + facet_name
+                filters[facet_name] = values
         return filters
 
     def get_context_data(self, **kwargs):

@@ -231,23 +231,27 @@ def get_fq(filters):
     FACETS_MAP = {
         'trTypeOfText': 'treaty',
         'trFieldOfApplication': 'treaty',
-        'trRegion': 'treaty',
-        'trBasin': 'treaty',
+        'trPlaceOfAdoption': 'treaty',
+        'trDepository': 'treaty',
+
         'decType': 'decision',
         'decStatus': 'decision',
         'decTreatyId': 'decision',
+
         'litTypeOfText': 'literature',
         'litAuthor': 'literature',
         'lit_region': 'literature',
         'lit_basin': 'literature',
         'lit_serial': 'literature',
         'lit_publisher': 'literature',
+
         'cdTypeOfText': 'court_decision',
         'cdJurisdiction': 'court_decision',
     }
 
     AND_FILTERS = [
         'docKeyword',
+        'trDepository'
     ]
 
     def multi_filter(filter, values):
@@ -271,6 +275,8 @@ def get_fq(filters):
     type_filters = {f: [] for f in enabled_types}
     global_filters = []
     for filter, values in filters.items():
+        if '!ex' in filter:
+            filter = filter.replace('!ex', '!tag')
         values = [v for v in values if v or filter == 'docDate']
         if not values or filter == 'type' or not any(values):
             continue

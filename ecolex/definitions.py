@@ -15,8 +15,8 @@ DOC_SOURCES = {
 TREATY_FILTERS = {
     'trTypeOfText': 'tr_type',
     'trFieldOfApplication': 'tr_field',
-    'trRegion': 'tr_region',
-    'trBasin': 'tr_basin',
+    'trPlaceOfAdoption': 'tr_place_of_adoption',
+    'trDepository': 'tr_depository',
 }
 
 DECISION_FILTERS = {
@@ -48,9 +48,8 @@ DOC_TYPE_FILTER_MAPPING = {
 FIELD_TO_FACET_MAPPING = {
     'tr_type': 'trTypeOfText',
     'tr_field': 'trFieldOfApplication',
-    'tr_party': 'partyCountry',
-    'tr_region': 'trRegion',
-    'tr_basin': 'trBasin',
+    'tr_place_of_adoption': 'trPlaceOfAdoption',
+    'tr_depository': 'trDepository',
 
     'dec_type': 'decType',
     'dec_status': 'decStatus',
@@ -70,6 +69,11 @@ FIELD_TO_FACET_MAPPING = {
     'keyword': 'docKeyword',
     'country': 'docCountry',
     'language': 'docLanguage',
+}
+
+
+OPERATION_FIELD_MAPPING = {
+    'tr_depository_op': 'tr_depository',
 }
 
 

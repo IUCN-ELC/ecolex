@@ -1,0 +1,8 @@
+<li>
+  <label class="facet-checkbox" for="{{ form_field.name }}_AND">
+    <input type="checkbox" id="{{ form_field.name }}_AND" value="AND"
+           name="{{ form_field.name }}" data-target="{{ form_target }}"
+           {% if form_field.data %}checked{% endif %}>
+    <span class="facet-text">Apply AND</span>
+  </label>
+</li>

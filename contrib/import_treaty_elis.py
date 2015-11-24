@@ -260,7 +260,6 @@ def parse_treatries(raw_treaties):
                     url = value.text
                     file_obj = get_file_from_url(url)
                     data['text'] += solr.extract(file_obj)
-
             elis_id = data['trElisId'][0]
             if elis_id == 'TRE-146817':
                 data['trFieldOfApplication'] = ['Global',

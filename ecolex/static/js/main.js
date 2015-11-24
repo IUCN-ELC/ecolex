@@ -219,7 +219,12 @@ $(document).ready(function () {
                 var current = [];
                 var ul = $(this).parents('ul');
                 var form_id = ul.data('formid');
-
+                var value = $(this).val();
+                if (value == 'AND' && $(this).is(':checked')) {
+                    var target_id = $(this).data('target');
+                    $('.search-form select' + target_id).val('');
+                    current.push('AND');
+                }
                 ul.find('input:checked').each(function () {
                     current.push($(this).val());
                 });
@@ -268,7 +273,7 @@ $(document).ready(function () {
                 'type': $('#id_type').val()
             };
             $('.search-form select, .search-form input').each(function () {
-                $(this).val('')
+                $(this).val('');
             });
             $('#id_q').val(data.q);
             $('#id_type').val(data.type);
@@ -339,6 +344,7 @@ $(document).ready(function () {
                 var options = $('option', $(this).parents('.tag-select').children('.tag-options')[0]);
 
                 $(this).tagsManager({
+                    delimiters: [9, 13],
                     tagsContainer: $('<ul/>', { class: 'tm-taglist' }),
                     tagCloseIcon: '',
                     prefilled: preselected,
@@ -362,7 +368,6 @@ $(document).ready(function () {
                 label = $('<label/>', {
                     'class': 'tm-label',
                     'for': labelFor
-                    // 'text': $(this).attr('placeholder')
                 });
                 $(this).before(label);
 
@@ -370,6 +375,7 @@ $(document).ready(function () {
                 if (!$(this).hasClass('full-match')) {
                     regex_prefix = '^';
                 }
+
                 $(this).typeahead({
                         hint: false,
                         highlight: true,

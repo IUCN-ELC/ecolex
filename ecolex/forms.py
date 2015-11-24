@@ -4,6 +4,9 @@ from ecolex.definitions import DOC_TYPE, DOC_TYPE_FILTER_MAPPING
 
 
 class SearchForm(Form):
+    OPERATION_OPTIONS = (
+        ('AND', 'AND'),
+    )
     q = CharField(initial='', widget=TextInput(
         attrs={'id': 'search', 'class': 'form-control', 'autofocus': True,
                'placeholder': "Search for Treaties, Legislation, Court "
@@ -12,9 +15,9 @@ class SearchForm(Form):
 
     tr_type = MultipleChoiceField()
     tr_field = MultipleChoiceField()
-    tr_party = MultipleChoiceField()
-    tr_region = MultipleChoiceField()
-    tr_basin = MultipleChoiceField()
+    tr_place_of_adoption = MultipleChoiceField()
+    tr_depository = MultipleChoiceField()
+    tr_depository_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
 
     dec_type = MultipleChoiceField()
     dec_status = MultipleChoiceField()

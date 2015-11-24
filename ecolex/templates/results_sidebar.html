@@ -1,5 +1,4 @@
 {% load tags %}
-<!-- <h4>Refine search</h4> -->
 
 {% if not form.type.data or form.has_treaty %}
   <fieldset class="special-filter">
@@ -19,29 +18,26 @@
         {% include 'bits/checkbox_facet.html' with facet=facets.trFieldOfApplication form_field=form.tr_field show_empty=True %}
       </ul>
 
-      <h6>Participants</h6>
-      <div id="tr_party" class="tag-select">
+      <h6>Depository</h6>
+      <ul class="filter-treaty" data-formid="#id_tr_depository_op">
+        {% include 'bits/operation_facet.html' with form_field=form.tr_depository_op form_target='#id_tr_depository' %}
+      </ul>
+
+      <div id="tr_depository" class="tag-select">
         <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.partyCountry form_field=form.tr_party %}
+          {% include 'bits/fancy_select.html' with facet=facets.trDepository form_field=form.tr_depository %}
         </select>
-        <input type="text" class="tm-input" placeholder="Add participants" data-formid="#id_tr_party"/>
+        <input type="text" class="tm-input" placeholder="Add depository" data-formid="#id_tr_depository"/>
       </div>
 
-      <h6>Geographical area</h6>
-      <div id="tr_region" class="tag-select">
+      <h6>Place of adoption</h6>
+      <div id="tr_place_of_adoption" class="tag-select">
         <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.trRegion form_field=form.tr_region %}
+          {% include 'bits/fancy_select.html' with facet=facets.trPlaceOfAdoption form_field=form.tr_place_of_adoption %}
         </select>
-        <input type="text" class="tm-input" placeholder="Add geographical areas" data-formid="#id_tr_region"/>
+        <input type="text" class="tm-input" placeholder="Add place" data-formid="#id_tr_place_of_adoption"/>
       </div>
 
-      <h6>Basin</h6>
-      <div id="tr_basin" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.trBasin form_field=form.tr_basin %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add basin" data-formid="#id_tr_basin"/>
-      </div>
     </div>
   </fieldset>
 {% endif %}
