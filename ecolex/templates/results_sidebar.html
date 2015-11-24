@@ -141,7 +141,7 @@
 
 <fieldset class="global-filter">
   <h5 data-toggle="collapse"
-      data-target="#filter-global">Global filters</h5>
+      data-target="#filter-global">Common filters</h5>
 
   <div id="filter-global" class="collapse in">
     <h6>Subject</h6>
@@ -168,10 +168,6 @@
       <input type="text" class="tm-input full-match" placeholder="Add countries" data-formid="#id_country"/>
     </div>
 
-    <!--<select id="keyword" multiple="multiple" data-formid="#id_keyword" hidden>
-      {% include 'bits/select_facet.html' with facet=facets.docKeyword form_field=form.keyword %}
-    </select>-->
-
     {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
       <h6>Years</h6>
       <input id="slider-years" type="text"
@@ -186,7 +182,7 @@
                  data-formid="#id_yearmin"
                  value="{{ form.yearmin.data }}"
                  min="1860"
-                 placeholder="First ({{ stats_fields.docDate.min|just_year }})">
+                 placeholder="From {{ stats_fields.docDate.min|just_year }}">
         </div>
         <div class="slider-max">
           <!-- <label for="year-max">To</label> -->
@@ -194,7 +190,7 @@
                  data-formid="#id_yearmax"
                  value="{{ form.yearmax.data }}"
                  max="2015"
-                 placeholder="Last ({{ stats_fields.docDate.max|just_year }})">
+                 placeholder="To {{ stats_fields.docDate.max|just_year }}">
         </div>
       </div>
     {% endif %}
