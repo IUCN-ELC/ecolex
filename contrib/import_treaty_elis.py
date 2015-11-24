@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-from utils import EcolexSolr, get_file_from_url
+from utils import EcolexSolr, get_file_from_url, DEC_TREATY_FIELDS
 
 ELIS_URL = "http://ecolex.ecolex.org:8083/ecolex/ledge/view/ExportResult"
 EXPORT = "?exportType=xml&index=treaties"
@@ -181,6 +181,20 @@ def treaty_needs_update(old, new):
     return False
 
 
+def update_decisions(solr, treaty):
+    if not treaty.get('trInformeaId'):
+        return
+
+    decisions = solr.search_all('decTreatyId', treaty['trInformeaId'])
+    if not decisions:
+        return
+
+    for decision in decisions:
+        for field in DEC_TREATY_FIELDS:
+            decision[field] = treaty[field]
+    solr.add(decisions)
+
+
 def fetch_treaties():
     year_filter = FILTER % (2016, 1500)
     page = 0
@@ -239,15 +253,13 @@ def parse_treatries(raw_treaties):
                     else:
                         data[v].append(format_date('0000-00-00'))
 
+            data['text'] = ''
             for field in URL_FIELDS:
                 value = document.find(field)
                 if value:
                     url = value.text
                     file_obj = get_file_from_url(url)
-                    if 'text' in data:
-                        data['text'] = solr.extract(file_obj)
-                    else:
-                        data['text'] += solr.extract(file_obj)
+                    data['text'] += solr.extract(file_obj)
 
             elis_id = data['trElisId'][0]
             if elis_id == 'TRE-146817':
@@ -280,6 +292,8 @@ def add_treaties(treaties):
         else:
             new_treaties[elis_id] = treaty
             print('Added %s' % (elis_id),)
+
+        update_decisions(solr, treaty)
 
     clean_referred_treaties(new_treaties)
     clean_referred_treaties(updated_treaties)

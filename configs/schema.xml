@@ -208,6 +208,8 @@
     <field name="decMeetingTitle" type="string" indexed="false" stored="true"/>
     <field name="decMeetingUrl" type="string" indexed="false" stored="true"/>
 
+    <field name="decLanguage" type="string" indexed="true" stored="true" multiValued="true"/>
+
     <!-- Decision copyfields-->
     <field name="decTitleOfText" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="decText" type="text" indexed="true" stored="true" multiValued="true"/>

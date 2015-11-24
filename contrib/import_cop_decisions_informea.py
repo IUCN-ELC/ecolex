@@ -5,7 +5,7 @@ import requests
 import sys
 from datetime import date, timedelta
 
-from utils import get_date, get_file_from_url, EcolexSolr
+from utils import get_date, get_file_from_url, EcolexSolr, DEC_TREATY_FIELDS
 
 
 ODATA_URL = "http://odata.informea.org/informea.svc/Decisions"
@@ -19,12 +19,12 @@ EXPAND = '$expand=title,longTitle,keywords,content,files'
 ORDER = '$orderby=updated asc'
 
 LANGUAGES = ['en', 'es', 'fr', 'ar', 'ru', 'zh']
+DEFAULT_LANG = 'en'
 
 BASE_FIELDS = [
     'id', 'link', 'type', 'status', 'number', 'treaty', 'published', 'updated',
     'meetingId', 'meetingTitle', 'meetingUrl', 'treatyUUID'
 ]
-
 MULTILANGUAL_FIELDS = ['title', 'longTitle']
 
 FIELD_MAP = {
@@ -101,6 +101,18 @@ def parse_keywords(info):
     return list(keywords.keys()) or None
 
 
+def parse_files(solr, files):
+    languages = set()
+    text = ''
+    for file_dict in files:
+        lang = file_dict.get('language')
+        languages.add(lang if lang not in (None, 'und') else DEFAULT_LANG)
+
+        file_obj = get_file_from_url(file_dict['url'])
+        text += solr.extract(file_obj)
+    return languages, text
+
+
 def parse_decisions(raw_decisions):
     decisions = []
     solr = EcolexSolr()
@@ -134,11 +146,15 @@ def parse_decisions(raw_decisions):
         dec_body = parse_multilangual(raw_decision['content'])
         decision['decBody'] = list(dec_body.values())
 
-        if raw_decision['files']['results']:
-            urls = [x['url'] for x in raw_decision['files']['results']]
-            for url in urls:
-                file_obj = get_file_from_url(url)
-                decision['text'] = solr.extract(file_obj)
+        files = raw_decision['files']['results']
+        if files:
+            decision['text'], decision['decLanguage'] = parse_files(solr, files)
+
+        if decision['decTreatyId']:
+            treaties = solr.search_all('trInformeaId', decision['decTreatyId'])
+            if treaties:
+                for field in DEC_TREATY_FIELDS:
+                    decision[field] = [treaty[field] for treaty in treaties]
 
         decisions.append(decision)
 

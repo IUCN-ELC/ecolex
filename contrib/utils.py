@@ -6,6 +6,9 @@ import re
 import requests
 
 
+DEC_TREATY_FIELDS = ['partyCountry', 'trSubject']
+
+
 def get_file_from_url(url):
     response = requests.get(url)
     if response.status_code != 200:
@@ -59,10 +62,14 @@ class EcolexSolr(object):
 
     def search(self, obj_type, id_value):
         id_field = self.ID_MAPPING.get(obj_type)
-        query = '{}:"{}"'.format(id_field, id_value)
+        result = self.search_all(id_field, id_value)
+        return result[0] if result else None
+
+    def search_all(self, key, value):
+        query = '{}:"{}"'.format(key, value)
         result = self.solr.search(query)
         if result.hits:
-            return result.docs[0]
+            return result.docs
 
     def add(self, obj):
         self.solr.add([obj])
