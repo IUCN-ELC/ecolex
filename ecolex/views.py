@@ -263,6 +263,12 @@ class CourtDecisionDetails(DetailsView):
 
     template_name = 'details/court_decision.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(CourtDecisionDetails, self).get_context_data(**kwargs)
+        references = context['document'].get_references()
+        context['references'] = references
+        return context
+
 
 class ResultDetailsDecisions(SearchView):
     template_name = 'details_decisions.html'

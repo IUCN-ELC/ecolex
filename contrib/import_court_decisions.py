@@ -71,6 +71,7 @@ FALSE_MULTILINGUAL_FIELDS = [
     'field_court_name',
     'field_date_of_entry',
     'field_date_of_modification',
+    'field_sorting_date',
     'field_isis_number',
     'field_justices',
     'field_number_of_pages',
@@ -100,6 +101,7 @@ DATE_FIELDS = [
 INTEGER_FIELDS = ['field_number_of_pages']
 COUNTRY_FIELDS = ['field_country']
 CONTENT_FIELDS = ['field_url']
+REFERENCE_FIELDS = ['field_treaty']
 
 
 def get_content(url, headers={}):
@@ -197,6 +199,8 @@ def parse_decision(decision, leo_id, solr_id):
             for lang, value in country.items():
                 key = '{}_{}'.format(solr_field, lang)
                 solr_decision[key] = get_value(json_field, value)
+        elif json_field in REFERENCE_FIELDS:
+            solr_decision[solr_field] = json_value[0].get('uuid')
         else:
             solr_decision[solr_field] = get_value(json_field, json_value)
 

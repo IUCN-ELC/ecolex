@@ -207,7 +207,6 @@ class Treaty(ObjectNormalizer):
 
     def get_decisions(self):
         from ecolex.search import get_documents_by_field
-
         if not self.informea_id():
             return []
         return get_documents_by_field('decTreatyId',
@@ -328,9 +327,24 @@ class CourtDecision(ObjectNormalizer):
     TITLE_FIELDS = ['cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr']
     DATE_FIELDS = ['cdDateOfText']
     DOCTYPE_FIELD = 'cdTypeOfText'
+    REFERENCE_FIELDS = {'treaty': 'cdTreatyReference'}
+    SOURCE_REF_FIELDS = {'treaty': 'trInformeaId'}
 
     def details_url(self):
         return reverse('court_decision_details', kwargs={'id': self.id()})
+
+    def get_references(self):
+        from ecolex.search import get_documents_by_field
+        references = {}
+        import pdb; pdb.set_trace()  # BREAKPOINT
+        for doc_type, ref_field in self.REFERENCE_FIELDS.items():
+            ref_id = first(self.solr.get(ref_field))
+            if not ref_id:
+                continue
+
+            references[doc_type] = get_documents_by_field(
+                self.SOURCE_REF_FIELDS[doc_type], [ref_id], rows=100)
+        return references
 
     def language(self):
         langcodes = self.solr.get('cdLanguageOfDocument')

@@ -44,5 +44,19 @@
     </dl>
   </section>
 
+  <section id="other-references">
+    <h2 class="section-title">Other references</h2>
+    {% for doc_type, docs in references.items %}
+      <dl>
+        <dt>{{ doc_type|capfirst }}</dt>
+        {% for doc in docs %}
+          <dd><a href="{{ doc.details_url }}">{{ doc }}</a></dd>
+        {% endfor %}
+      </dl>
+    {% empty %}
+      <h3>No references</h3>
+    {% endfor %}
+  </section>
+
 </article>
 {% endblock content %}
