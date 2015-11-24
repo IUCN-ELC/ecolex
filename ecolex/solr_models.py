@@ -326,7 +326,7 @@ class CourtDecision(ObjectNormalizer):
     ID_FIELD = 'cdLeoId'
     SUMMARY_FIELD = 'cdAbstract_en'
     TITLE_FIELDS = ['cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr']
-    DATE_FIELDS = ['cdDateOfEntry', 'cdDateOfModification']
+    DATE_FIELDS = ['cdDateOfText']
     DOCTYPE_FIELD = 'cdTypeOfText'
 
     def details_url(self):

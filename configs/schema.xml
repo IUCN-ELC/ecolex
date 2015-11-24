@@ -517,7 +517,7 @@
 
     <copyField source="trDateOfText" dest="docDate"/>
     <copyField source="decPublishDate" dest="docDate"/>
-    <copyField source="cdDateOfEntry" dest="docDate"/>
+    <copyField source="cdDateOfText" dest="docDate"/>
 
     <copyField source="trLanguageOfDocument" dest="docLanguage"/>
     <copyField source="cdLanguageOfDocument" dest="docLanguage"/>

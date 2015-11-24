@@ -34,7 +34,7 @@ LITERATURE_FILTERS = {
     'litPublisher': 'lit_publisher',
 }
 COURT_DECISION_FILTERS = {
-    'cdCourtJurisdiction': 'cd_jurisdiction',
+    'cdJurisdiction': 'cd_jurisdiction',
     'cdTypeOfText': 'cd_type',
 }
 
@@ -63,7 +63,7 @@ FIELD_TO_FACET_MAPPING = {
     'lit_serial': 'litSerialTitle',
     'lit_publisher': 'litPublisher',
 
-    'cd_jurisdiction': 'cdCourtJurisdiction',
+    'cd_jurisdiction': 'cdJurisdiction',
     'cd_type': 'cdTypeOfText',
 
     'subject': 'docSubject',
@@ -95,7 +95,7 @@ SOLR_FIELDS = [
     'litKeyword', 'litSeriesFlag',
     'litCountry', 'litRegion', 'litSubject', 'litLanguageOfDocument',
     'decNumber', 'cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr',
-    'cdDateOfEntry', 'cdDateOfModification',
+    'cdDateOfText',
 ]
 
 LANGUAGE_MAP = {

@@ -83,7 +83,7 @@
     <div id="filter-court-decisions" class="collapse {% if form.has_court_decision %}in{% endif %}">
       <h6>Jurisdiction</h6>
       <ul class="filter-treaty" data-formid="#id_cd_jurisdiction">
-        {% include 'bits/checkbox_facet.html' with facet=facets.cdCourtJurisdiction form_field=form.cd_jurisdiction show_empty=True %}
+        {% include 'bits/checkbox_facet.html' with facet=facets.cdJurisdiction form_field=form.cd_jurisdiction show_empty=True %}
       </ul>
 
       <h6>Type of court</h6>

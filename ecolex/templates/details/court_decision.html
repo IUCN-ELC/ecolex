@@ -18,18 +18,29 @@
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
       <dt>Date of document</dt> <dd>{{ document.date }}</dd>
       <dt>Source</dt> <dd>{{ document.source }}</dd>
+    </dl>
+  </header>
+
+  <section id="details">
+    <h2 class="section-title">Details</h2>
+    <dl>
+      <dt>Country</dt> <dd>{{ document.solr.cdCountry_en }}</dd>
       <dt>Court name</dt> <dd>{{ document.solr.cdCourtName }}</dd>
       <dt>Justices</dt> <dd>{{ document.solr.cdJustices|join:"<br>" }}</dd>
       <dt>Reference number</dt> <dd>{{ document.solr.cdReferenceNumber }}</dd>
       <dt>Language of document</dt> <dd>{{ document.language }}</dd>
+      <dt>Keywords</dt> <dd>{{ document.solr.cdKeywords|join:", " }}</dd>
+      <dt>Subjects</dt> <dd>{{ document.solr.cdSubject|join:", " }}</dd>
     </dl>
   </header>
 
   <section id="text">
     <h2 class="section-title">Text</h2>
-
     <dl>
       <dt>Abstract</dt> <dd>{{ document.solr.cdAbstract_en|safe }}</dd>
+      {% with document.solr.cdLinkToFullText_en as url %}
+        <dt>Link to full text</dt> <dd><a href="{{ url }}">{{ url }}</a></dd>
+      {% endwith %}
     </dl>
   </section>
 

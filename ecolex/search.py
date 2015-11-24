@@ -243,7 +243,7 @@ def get_fq(filters):
         'lit_serial': 'literature',
         'lit_publisher': 'literature',
         'cdTypeOfText': 'court_decision',
-        'cdCourtJurisdiction': 'court_decision',
+        'cdJurisdiction': 'court_decision',
     }
 
     AND_FILTERS = [
