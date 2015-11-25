@@ -512,7 +512,7 @@
     <copyField source="litKeyword_sp" dest="docKeyword"/>
 
     <copyField source="partyCountry" dest="docCountry"/>
-    <copyField source="cdTerritorialSubdivision" dest="docCountry"/>
+    <copyField source="cdCountry" dest="docCountry"/>
     <copyField source="litCountry" dest="docCountry"/>
     <copyField source="litCountry_fr" dest="docCountry"/>
     <copyField source="litCountry_sp" dest="docCountry"/>

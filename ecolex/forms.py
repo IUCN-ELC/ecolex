@@ -25,7 +25,7 @@ class SearchForm(Form):
     dec_treaty = MultipleChoiceField()
 
     cd_type = MultipleChoiceField()
-    cd_jurisdiction = MultipleChoiceField()
+    cd_territorial_subdivision = MultipleChoiceField()
 
     lit_type = MultipleChoiceField()
     lit_author = MultipleChoiceField()

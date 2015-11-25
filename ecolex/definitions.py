@@ -33,7 +33,7 @@ LITERATURE_FILTERS = {
     'litPublisher': 'lit_publisher',
 }
 COURT_DECISION_FILTERS = {
-    'cdJurisdiction': 'cd_jurisdiction',
+    'cdTerritorialSubdivision': 'cd_territorial_subdivision',
     'cdTypeOfText': 'cd_type',
 }
 
@@ -60,7 +60,7 @@ FIELD_TO_FACET_MAPPING = {
     'lit_serial': 'litSerialTitle',
     'lit_publisher': 'litPublisher',
 
-    'cd_jurisdiction': 'cdJurisdiction',
+    'cd_territorial_subdivision': 'cdTerritorialSubdivision',
     'cd_type': 'cdTypeOfText',
 
     'subject': 'docSubject',
