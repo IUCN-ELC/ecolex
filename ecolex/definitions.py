@@ -15,6 +15,7 @@ DOC_SOURCES = {
 TREATY_FILTERS = {
     'trTypeOfText': 'tr_type',
     'trFieldOfApplication': 'tr_field',
+    'trStatus': 'tr_status',
     'trPlaceOfAdoption': 'tr_place_of_adoption',
     'trDepository': 'tr_depository',
 }
@@ -46,6 +47,7 @@ DOC_TYPE_FILTER_MAPPING = {
 FIELD_TO_FACET_MAPPING = {
     'tr_type': 'trTypeOfText',
     'tr_field': 'trFieldOfApplication',
+    'tr_status': 'trStatus',
     'tr_place_of_adoption': 'trPlaceOfAdoption',
     'tr_depository': 'trDepository',
 
@@ -71,11 +73,12 @@ FIELD_TO_FACET_MAPPING = {
 
 OPERATION_FIELD_MAPPING = {
     'tr_depository_op': 'tr_depository',
+    'lit_author_op': 'lit_author',
 }
 
 
 SOLR_FIELDS = [
-    'id', 'type', 'source', 'trTitleOfText', 'trJurisdiction',
+    'id', 'type', 'source', 'trTitleOfText', 'trJurisdiction', 'trStatus',
     'trPlaceOfAdoption', 'trDateOfText', 'trDateOfEntry',
     'trDateOfModification', 'trPaperTitleOfText', 'trPaperTitleOfTextFr',
     'trPaperTitleOfTextSp', 'trPaperTitleOfTextOther', 'trTitleOfTextShort',

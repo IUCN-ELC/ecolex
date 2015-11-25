@@ -231,6 +231,7 @@ def get_fq(filters):
     FACETS_MAP = {
         'trTypeOfText': 'treaty',
         'trFieldOfApplication': 'treaty',
+        'trStatus': 'treaty',
         'trPlaceOfAdoption': 'treaty',
         'trDepository': 'treaty',
 
@@ -240,8 +241,8 @@ def get_fq(filters):
 
         'litTypeOfText': 'literature',
         'litAuthor': 'literature',
-        'lit_serial': 'literature',
-        'lit_publisher': 'literature',
+        'litSerialTitle': 'literature',
+        'litPublisher': 'literature',
 
         'cdTypeOfText': 'court_decision',
         'cdJurisdiction': 'court_decision',
@@ -250,6 +251,7 @@ def get_fq(filters):
     AND_FILTERS = [
         'docKeyword',
         'trDepository'
+        'litAuthor'
     ]
 
     def multi_filter(filter, values):

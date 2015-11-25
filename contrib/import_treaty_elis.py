@@ -1,4 +1,5 @@
 import requests
+import sys
 from bs4 import BeautifulSoup
 
 from utils import EcolexSolr, get_file_from_url, DEC_TREATY_FIELDS
@@ -305,7 +306,34 @@ def add_treaties(treaties):
     print('Already indexed treaties %d' % (already_indexed,))
 
 
+def update_treaties_status():
+    """Updates the status of already indexed treaties"""
+    solr = EcolexSolr()
+    rows = 50
+    start = 0
+    treaties_updated = []
+    while True:
+        print(start)
+        treaties = solr.solr.search('type:treaty', rows=rows, start=start)
+        for treaty in treaties:
+            if 'trEntryIntoForceDate' not in treaty:
+                treaty['trStatus'] = 'Not in force'
+            else:
+                if 'trSupersededBy' in treaty:
+                    treaty['trStatus'] = 'Superseded'
+                else:
+                    treaty['trStatus'] = 'In force'
+            treaties_updated.append(treaty)
+
+        if len(treaties) < rows:
+            break
+        start += rows
+    solr.add_bulk(treaties_updated)
+
 if __name__ == '__main__':
-    raw_treaties = fetch_treaties()
-    treaties = parse_treatries(raw_treaties)
-    add_treaties(treaties)
+    if len(sys.argv) > 1 and 'update_status' in sys.argv:
+        update_treaties_status()
+    else:
+        raw_treaties = fetch_treaties()
+        treaties = parse_treatries(raw_treaties)
+        add_treaties(treaties)

@@ -15,6 +15,7 @@ class SearchForm(Form):
 
     tr_type = MultipleChoiceField()
     tr_field = MultipleChoiceField()
+    tr_status = MultipleChoiceField()
     tr_place_of_adoption = MultipleChoiceField()
     tr_depository = MultipleChoiceField()
     tr_depository_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
@@ -28,6 +29,7 @@ class SearchForm(Form):
 
     lit_type = MultipleChoiceField()
     lit_author = MultipleChoiceField()
+    lit_author_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
     lit_serial = MultipleChoiceField()
     lit_publisher = MultipleChoiceField()
 

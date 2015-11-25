@@ -18,6 +18,11 @@
         {% include 'bits/checkbox_facet.html' with facet=facets.trFieldOfApplication form_field=form.tr_field show_empty=True %}
       </ul>
 
+      <h6>Status</h6>
+      <ul class="filter-treaty" data-formid="#id_tr_status">
+        {% include 'bits/checkbox_facet.html' with facet=facets.trStatus form_field=form.tr_status show_empty=True %}
+      </ul>
+
       <h6>Depository</h6>
       <ul class="filter-treaty" data-formid="#id_tr_depository_op">
         {% include 'bits/operation_facet.html' with form_field=form.tr_depository_op form_target='#id_tr_depository' %}
@@ -95,14 +100,16 @@
     <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">Literature filters</h5>
 
     <div id="filter-literatures" class="collapse {% if form.has_literature %}in{% endif %}">
-      {% if facets.litTypeOfText %}
-        <h6>Type of document</h6>
-        <ul class="filter-literature" data-formid="#id_lit_type">
-        {% include 'bits/checkbox_facet.html' with facet=facets.litTypeOfText form_field=form.lit_type %}
-        </ul>
-      {% endif %}
+       <h6>Type of document</h6>
+       <ul class="filter-literature" data-formid="#id_lit_type">
+       {% include 'bits/checkbox_facet.html' with facet=facets.litTypeOfText form_field=form.lit_type %}
+       </ul>
 
       <h6>Literature author</h6>
+      <ul class="filter-literature" data-formid="#id_lit_author_op">
+        {% include 'bits/operation_facet.html' with form_field=form.lit_author_op form_target='#id_lit_author' %}
+      </ul>
+
       <div id="lit_author" class="tag-select">
         <select class="tag-options" hidden>
           {% include 'bits/fancy_select.html' with facet=facets.litAuthor form_field=form.lit_author %}
