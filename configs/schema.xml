@@ -298,7 +298,7 @@
     <field name="cdJustices" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdKeywords" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdNumberOfPages" type="int" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdOriginalId" type="string" indexed="false" stored="false" multiValued="false"/>
+    <field name="cdOriginalId" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdReferenceNumber" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdReferenceToLegislation" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdRelatedUrl" type="string" indexed="false" stored="false" multiValued="false"/>
@@ -512,7 +512,9 @@
     <copyField source="litKeyword_sp" dest="docKeyword"/>
 
     <copyField source="partyCountry" dest="docCountry"/>
-    <copyField source="cdCountry" dest="docCountry"/>
+    <copyField source="cdCountry_en" dest="docCountry"/>
+    <copyField source="cdCountry_es" dest="docCountry"/>
+    <copyField source="cdCountry_fr" dest="docCountry"/>
     <copyField source="litCountry" dest="docCountry"/>
     <copyField source="litCountry_fr" dest="docCountry"/>
     <copyField source="litCountry_sp" dest="docCountry"/>

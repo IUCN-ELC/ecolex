@@ -336,7 +336,6 @@ class CourtDecision(ObjectNormalizer):
     def get_references(self):
         from ecolex.search import get_documents_by_field
         references = {}
-        import pdb; pdb.set_trace()  # BREAKPOINT
         for doc_type, ref_field in self.REFERENCE_FIELDS.items():
             ref_id = first(self.solr.get(ref_field))
             if not ref_id:
