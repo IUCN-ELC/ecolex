@@ -118,14 +118,20 @@
       </div>
 
       <h6>Journal/Series</h6>
-      <ul class="filter-literature" data-formid="#id_lit_serial">
-        {% include 'bits/checkbox_facet.html' with facet=facets.litSerialTitle form_field=form.lit_serial %}
-      </ul>
+      <div id="lit_serial" class="tag-select">
+        <select class="tag-options" hidden>
+          {% include 'bits/fancy_select.html' with facet=facets.litSerialTitle form_field=form.lit_serial %}
+        </select>
+        <input type="text" class="tm-input" placeholder="Add journal/series" data-formid="#id_lit_serial"/>
+      </div>
 
       <h6>Publisher</h6>
-      <ul class="filter-literature" data-formid="#id_lit_publisher">
-        {% include 'bits/checkbox_facet.html' with facet=facets.litPublisher form_field=form.lit_publisher %}
-      </ul>
+      <div id="lit_publisher" class="tag-select">
+        <select class="tag-options" hidden>
+          {% include 'bits/fancy_select.html' with facet=facets.litPublisher form_field=form.lit_publisher %}
+        </select>
+        <input type="text" class="tm-input" placeholder="Add publisher" data-formid="#id_lit_publisher">
+      </div>
     </div>
   </fieldset>
 {% endif %}

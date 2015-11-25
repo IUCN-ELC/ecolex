@@ -48,7 +48,7 @@
       <dt>Language of document</dt>
       <dd>{{ document.solr.litLanguageOfDocument }}</dd>
       <dt>Country & Region</dt>
-      <dd>{{ document.solr.litCountry }} - {{ document.solr.litDisplayRegion }}</dd>
+      <dd>{{ document.country }} - {{ document.solr.litDisplayRegion }}</dd>
 
       <dt>Subjects</dt>
       <dd>{% for subject in document.solr.litSubject %}
@@ -85,8 +85,8 @@
   </section>
 
   <section id="other-references">
-    <h2 class="section-title">Other references</h2>
-    {% for doc_type, docs in references.items %}
+    <h2 class="section-title">References to</h2>
+    {% for doc_type, docs in references_to.items %}
       <dl>
         <dt>{{ doc_type|capfirst }}</dt>
         {% for doc in docs %}
@@ -94,7 +94,19 @@
         {% endfor %}
       </dl>
     {% empty %}
-      <h3>No references</h3>
+      <span class="na">No references</span>
+    {% endfor %}
+
+    <h2 class="section-title">References from</h2>
+    {% for doc_type, docs in references_from.items %}
+      <dl>
+        <dt>{{ doc_type|capfirst }}</dt>
+        {% for doc in docs %}
+          <dd><a href="{{ doc.details_url }}">{{ doc }}</a></dd>
+        {% endfor %}
+      </dl>
+    {% empty %}
+      <span class="na">No references</span>
     {% endfor %}
   </section>
 

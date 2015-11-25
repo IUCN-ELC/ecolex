@@ -266,18 +266,23 @@ class Literature(ObjectNormalizer):
                     'litTitleOfTextTransl_sp']
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
     DOCTYPE_FIELD = 'litTypeOfText'
-    REFERENCE_FIELDS = {
+    REFERENCE_TO_FIELDS = {
         'litTreatyReference': 'treaty',
         'litLiteratureReference': 'literature',
+        'litCourtDecisionReference': 'court_decision',
     }
     REFERENCE_MAPPING = {
         'treaty': 'trElisId',
         'literature': 'litId',
+        'court_decision': 'cdOriginalId',
+    }
+    REFERENCE_FROM_FIELDS = {
+        'litLiteratureReference': 'literature',
     }
 
     def get_references_ids_dict(self):
         ids_dict = {}
-        for field, doc_type in self.REFERENCE_FIELDS.items():
+        for field, doc_type in self.REFERENCE_TO_FIELDS.items():
             values = [v for v in self.solr.get(field, [])]
             if values and any(values):
                 ids_dict[doc_type] = values
@@ -293,6 +298,17 @@ class Literature(ObjectNormalizer):
                 references[doc_type] = results
         return references
 
+    def get_references_from(self):
+        from ecolex.search import get_documents_by_field
+        lit_id = self.document_id()
+        references = {}
+
+        for field, doc_type in self.REFERENCE_FROM_FIELDS.items():
+            results = get_documents_by_field(field, [lit_id])
+            if results:
+                references[doc_type] = results
+        return references
+
     def details_url(self):
         return reverse('literature_details', kwargs={'id': self.id()})
 
@@ -304,6 +320,9 @@ class Literature(ObjectNormalizer):
         if not authors:
             authors = self.solr.get('litCorpAuthor')
         return authors
+
+    def country(self):
+        return first(self.solr.get('litCountry'))
 
     def publisher(self):
         return first(self.solr.get('litPublisher'))
