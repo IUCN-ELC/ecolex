@@ -1,5 +1,79 @@
 {% load tags %}
 
+<fieldset class="global-filter">
+  <h5 data-toggle="collapse"
+      data-target="#filter-global">Common filters</h5>
+
+  <div id="filter-global" class="collapse in">
+    <h6>Subject</h6>
+    <div id="subject-filter" class="tag-select">
+      <select class="tag-options" hidden>
+        {% include 'bits/fancy_select.html' with facet=facets.docSubject form_field=form.subject %}
+      </select>
+      <input type="text" class="tm-input full-match" placeholder="Add subjects" data-formid="#id_subject"/>
+    </div>
+
+    <h6>Keywords</h6>
+    <div id="keyword-filter" class="tag-select">
+      <select class="tag-options" hidden>
+        {% include 'bits/fancy_select.html' with facet=facets.docKeyword form_field=form.keyword %}
+      </select>
+      <input type="text" class="tm-input full-match" placeholder="Add keywords" data-formid="#id_keyword"/>
+    </div>
+
+    <h6>Country</h6>
+    <div id="country-filter" class="tag-select">
+      <select class="tag-options" hidden>
+        {% include 'bits/fancy_select.html' with facet=facets.docCountry form_field=form.country %}
+      </select>
+      <input type="text" class="tm-input full-match" placeholder="Add countries" data-formid="#id_country"/>
+    </div>
+
+    <h6>Geographical Area</h6>
+    <div id="region-filter" class="tag-select">
+      <select class="tag-options" hidden>
+        {% include 'bits/fancy_select.html' with facet=facets.docRegion form_field=form.region %}
+      </select>
+      <input type="text" class="tm-input full-match" placeholder="Add geographical areas" data-formid="#id_region"/>
+    </div>
+
+    {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
+      <h6>Year</h6>
+      <input id="slider-years" type="text"
+             data-slider-min="1860"
+             data-slider-max="2015"
+             data-slider-value="[{{ form.yearmin.data|default:1860 }},{{ form.yearmax.data|default:2015 }}]"
+             data-slider-tooltip="hide"/>
+      <div class="slider-years">
+        <div class="slider-min">
+          <!-- <label for="year-min">From</label> -->
+          <input id="year-min" type="number"
+                 data-formid="#id_yearmin"
+                 value="{{ form.yearmin.data }}"
+                 min="1860"
+                 placeholder="From {{ stats_fields.docDate.min|just_year }}">
+        </div>
+        <div class="slider-max">
+          <!-- <label for="year-max">To</label> -->
+          <input id="year-max" type="number"
+                 data-formid="#id_yearmax"
+                 value="{{ form.yearmax.data }}"
+                 max="2015"
+                 placeholder="To {{ stats_fields.docDate.max|just_year }}">
+        </div>
+      </div>
+    {% endif %}
+
+    <h6>Language</h6>
+    <div id="language-filter" class="tag-select">
+      <select class="tag-options" hidden>
+        {% include 'bits/fancy_select.html' with facet=facets.docLanguage form_field=form.language %}
+      </select>
+      <input type="text" class="tm-input full-match" placeholder="Add languages" data-formid="#id_language"/>
+    </div>
+  </div>
+</fieldset>
+
 {% if not form.type.data or form.has_treaty %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_treaty %}class="collapsed"{% endif %}
@@ -135,79 +209,5 @@
     </div>
   </fieldset>
 {% endif %}
-
-<fieldset class="global-filter">
-  <h5 data-toggle="collapse"
-      data-target="#filter-global">Common filters</h5>
-
-  <div id="filter-global" class="collapse in">
-    <h6>Subject</h6>
-    <div id="subject-filter" class="tag-select">
-      <select class="tag-options" hidden>
-        {% include 'bits/fancy_select.html' with facet=facets.docSubject form_field=form.subject %}
-      </select>
-      <input type="text" class="tm-input full-match" placeholder="Add subjects" data-formid="#id_subject"/>
-    </div>
-
-    <h6>Keywords</h6>
-    <div id="keyword-filter" class="tag-select">
-      <select class="tag-options" hidden>
-        {% include 'bits/fancy_select.html' with facet=facets.docKeyword form_field=form.keyword %}
-      </select>
-      <input type="text" class="tm-input full-match" placeholder="Add keywords" data-formid="#id_keyword"/>
-    </div>
-
-    <h6>Country</h6>
-    <div id="country-filter" class="tag-select">
-      <select class="tag-options" hidden>
-        {% include 'bits/fancy_select.html' with facet=facets.docCountry form_field=form.country %}
-      </select>
-      <input type="text" class="tm-input full-match" placeholder="Add countries" data-formid="#id_country"/>
-    </div>
-
-    <h6>Geographical Area</h6>
-    <div id="region-filter" class="tag-select">
-      <select class="tag-options" hidden>
-        {% include 'bits/fancy_select.html' with facet=facets.docRegion form_field=form.region %}
-      </select>
-      <input type="text" class="tm-input full-match" placeholder="Add geographical areas" data-formid="#id_region"/>
-    </div>
-
-    {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
-      <h6>Year</h6>
-      <input id="slider-years" type="text"
-             data-slider-min="1860"
-             data-slider-max="2015"
-             data-slider-value="[{{ form.yearmin.data|default:1860 }},{{ form.yearmax.data|default:2015 }}]"
-             data-slider-tooltip="hide"/>
-      <div class="slider-years">
-        <div class="slider-min">
-          <!-- <label for="year-min">From</label> -->
-          <input id="year-min" type="number"
-                 data-formid="#id_yearmin"
-                 value="{{ form.yearmin.data }}"
-                 min="1860"
-                 placeholder="From {{ stats_fields.docDate.min|just_year }}">
-        </div>
-        <div class="slider-max">
-          <!-- <label for="year-max">To</label> -->
-          <input id="year-max" type="number"
-                 data-formid="#id_yearmax"
-                 value="{{ form.yearmax.data }}"
-                 max="2015"
-                 placeholder="To {{ stats_fields.docDate.max|just_year }}">
-        </div>
-      </div>
-    {% endif %}
-
-    <h6>Language</h6>
-    <div id="language-filter" class="tag-select">
-      <select class="tag-options" hidden>
-        {% include 'bits/fancy_select.html' with facet=facets.docLanguage form_field=form.language %}
-      </select>
-      <input type="text" class="tm-input full-match" placeholder="Add languages" data-formid="#id_language"/>
-    </div>
-  </div>
-</fieldset>
 
 <input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">
