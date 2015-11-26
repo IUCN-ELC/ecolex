@@ -250,8 +250,12 @@ def get_fq(filters):
 
     AND_FILTERS = [
         'docKeyword',
-        'trDepository'
-        'litAuthor'
+        'docSubject',
+        'docCountry',
+        'docRegion',
+        'docLanguage',
+        'trDepository',
+        'litAuthor',
     ]
 
     def multi_filter(filter, values):

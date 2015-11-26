@@ -74,6 +74,11 @@ FIELD_TO_FACET_MAPPING = {
 OPERATION_FIELD_MAPPING = {
     'tr_depository_op': 'tr_depository',
     'lit_author_op': 'lit_author',
+    'subject_op': 'subject',
+    'keyword_op': 'keyword',
+    'country_op': 'country',
+    'region_op': 'region',
+    'language_op': 'language',
 }
 
 

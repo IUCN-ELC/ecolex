@@ -6,6 +6,9 @@
 
   <div id="filter-global" class="collapse in">
     <h6>Subject</h6>
+    <ul class="filter-global" data-formid="#id_subject_op">
+      {% include 'bits/operation_facet.html' with form_field=form.subject_op form_target='#id_subject' %}
+    </ul>
     <div id="subject-filter" class="tag-select">
       <select class="tag-options" hidden>
         {% include 'bits/fancy_select.html' with facet=facets.docSubject form_field=form.subject %}
@@ -14,6 +17,9 @@
     </div>
 
     <h6>Keywords</h6>
+    <ul class="filter-global" data-formid="#id_keyword_op">
+      {% include 'bits/operation_facet.html' with form_field=form.keyword_op form_target='#id_keyword' %}
+    </ul>
     <div id="keyword-filter" class="tag-select">
       <select class="tag-options" hidden>
         {% include 'bits/fancy_select.html' with facet=facets.docKeyword form_field=form.keyword %}
@@ -22,6 +28,9 @@
     </div>
 
     <h6>Country</h6>
+    <ul class="filter-global" data-formid="#id_country_op">
+      {% include 'bits/operation_facet.html' with form_field=form.country_op form_target='#id_country' %}
+    </ul>
     <div id="country-filter" class="tag-select">
       <select class="tag-options" hidden>
         {% include 'bits/fancy_select.html' with facet=facets.docCountry form_field=form.country %}
@@ -30,6 +39,9 @@
     </div>
 
     <h6>Geographical Area</h6>
+    <ul class="filter-global" data-formid="#id_region_op">
+      {% include 'bits/operation_facet.html' with form_field=form.region_op form_target='#id_region' %}
+    </ul>
     <div id="region-filter" class="tag-select">
       <select class="tag-options" hidden>
         {% include 'bits/fancy_select.html' with facet=facets.docRegion form_field=form.region %}
@@ -65,6 +77,9 @@
     {% endif %}
 
     <h6>Language</h6>
+    <ul class="filter-global" data-formid="#id_language_op">
+      {% include 'bits/operation_facet.html' with form_field=form.language_op form_target='#id_language' %}
+    </ul>
     <div id="language-filter" class="tag-select">
       <select class="tag-options" hidden>
         {% include 'bits/fancy_select.html' with facet=facets.docLanguage form_field=form.language %}

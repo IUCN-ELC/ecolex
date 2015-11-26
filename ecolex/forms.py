@@ -34,10 +34,15 @@ class SearchForm(Form):
     lit_publisher = MultipleChoiceField()
 
     subject = MultipleChoiceField()
+    subject_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
     keyword = MultipleChoiceField()
+    keyword_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
     country = MultipleChoiceField()
+    country_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
     region = MultipleChoiceField()
+    region_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
     language = MultipleChoiceField()
+    language_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
     yearmin = CharField()
     yearmax = CharField()
 
