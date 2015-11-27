@@ -1,8 +1,13 @@
+<!-- FlipSwitch from https://proto.io/freebies/onoff/-->
 <li>
-  <label class="facet-checkbox" for="{{ form_field.name }}_AND">
-    <input type="checkbox" id="{{ form_field.name }}_AND" value="AND"
+  <div class="onoffswitch">
+    <input type="checkbox" class="onoffswitch-checkbox"
            name="{{ form_field.name }}" data-target="{{ form_target }}"
+           id="{{ form_field.name }}_AND" value="AND"
            {% if form_field.data %}checked{% endif %}>
-    <span class="facet-text">Apply AND</span>
-  </label>
+    <label class="onoffswitch-label" for="{{ form_field.name }}_AND">
+      <span class="onoffswitch-inner"></span>
+      <span class="onoffswitch-switch"></span>
+    </label>
+  </div>
 </li>
