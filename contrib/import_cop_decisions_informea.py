@@ -115,7 +115,7 @@ def parse_files(solr, files):
 
         file_obj = get_file_from_url(file_dict['url'])
         text += solr.extract(file_obj)
-    return languages, text
+    return text, languages
 
 
 def parse_decisions(raw_decisions):
