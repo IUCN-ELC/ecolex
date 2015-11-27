@@ -101,7 +101,7 @@ DATE_FIELDS = [
 INTEGER_FIELDS = ['field_number_of_pages']
 COUNTRY_FIELDS = ['field_country']
 CONTENT_FIELDS = ['field_url']
-REFERENCE_FIELDS = ['field_treaty']
+REFERENCE_FIELDS = {'field_treaty': 'original_id'}
 
 
 def get_content(url, headers={}):
@@ -200,7 +200,8 @@ def parse_decision(decision, leo_id, solr_id):
                 key = '{}_{}'.format(solr_field, lang)
                 solr_decision[key] = get_value(json_field, value)
         elif json_field in REFERENCE_FIELDS:
-            solr_decision[solr_field] = json_value[0].get('uuid')
+            solr_decision[solr_field] = [e.get(REFERENCE_FIELDS[json_field])
+                                         for e in json_value]
         else:
             solr_decision[solr_field] = get_value(json_field, json_value)
 

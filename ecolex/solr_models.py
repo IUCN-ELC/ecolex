@@ -347,7 +347,7 @@ class CourtDecision(ObjectNormalizer):
     DATE_FIELDS = ['cdDateOfText']
     DOCTYPE_FIELD = 'cdTypeOfText'
     REFERENCE_FIELDS = {'treaty': 'cdTreatyReference'}
-    SOURCE_REF_FIELDS = {'treaty': 'trInformeaId'}
+    SOURCE_REF_FIELDS = {'treaty': 'trElisId'}
 
     def details_url(self):
         return reverse('court_decision_details', kwargs={'id': self.id()})

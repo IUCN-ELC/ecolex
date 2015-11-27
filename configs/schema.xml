@@ -324,7 +324,7 @@
     <field name="cdRegion" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdTitleOfTextOther" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdTitleOfTextShort" type="string" indexed="true" stored="false" multiValued="false"/>
-    <field name="cdTreatyReference" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdTreatyReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdUrlOther" type="string" indexed="true" stored="false" multiValued="false"/>
 
     <!-- Document text field -->
