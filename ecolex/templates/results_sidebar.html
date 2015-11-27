@@ -49,6 +49,17 @@
       <input type="text" class="tm-input full-match" placeholder="Add geographical areas" data-formid="#id_region"/>
     </div>
 
+    <h6>Language</h6>
+    <ul class="filter-global" data-formid="#id_language_op">
+      {% include 'bits/operation_facet.html' with form_field=form.language_op form_target='#id_language' %}
+    </ul>
+    <div id="language-filter" class="tag-select">
+      <select class="tag-options" hidden>
+        {% include 'bits/fancy_select.html' with facet=facets.docLanguage form_field=form.language %}
+      </select>
+      <input type="text" class="tm-input full-match" placeholder="Add languages" data-formid="#id_language"/>
+    </div>
+
     {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
       <h6>Year</h6>
       <input id="slider-years" type="text"
@@ -75,17 +86,6 @@
         </div>
       </div>
     {% endif %}
-
-    <h6>Language</h6>
-    <ul class="filter-global" data-formid="#id_language_op">
-      {% include 'bits/operation_facet.html' with form_field=form.language_op form_target='#id_language' %}
-    </ul>
-    <div id="language-filter" class="tag-select">
-      <select class="tag-options" hidden>
-        {% include 'bits/fancy_select.html' with facet=facets.docLanguage form_field=form.language %}
-      </select>
-      <input type="text" class="tm-input full-match" placeholder="Add languages" data-formid="#id_language"/>
-    </div>
   </div>
 </fieldset>
 
@@ -177,8 +177,11 @@
       </ul>
 
       <h6>Sub-national/state level</h6>
-      <ul class="filter-decision" data-formid="#id_cd_territorial_subdivision">
-        {% include 'bits/checkbox_facet.html' with facet=facets.cdTerritorialSubdivision form_field=form.cd_territorial_subdivision show_empty=True %}
+      <div id="cd_territorial_subdivision" class="tag-select">
+        <select class="tag-options" hidden>
+          {% include 'bits/fancy_select.html' with facet=facets.cdTerritorialSubdivision form_field=form.cd_territorial_subdivision %}
+        </select>
+        <input type="text" class="tm-input" placeholder="Add territory" data-formid="#id_cd_territorial_subdivision"/>
       </ul>
     </div>
   </fieldset>
