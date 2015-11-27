@@ -185,6 +185,11 @@ def fetch_literature():
 
         page += 1
 
+        if page % 10 == 0:
+            parsed_literatures = parse_literatures(literatures)
+            add_literature(parsed_literatures)
+            literatures = []
+
     return literatures
 
 

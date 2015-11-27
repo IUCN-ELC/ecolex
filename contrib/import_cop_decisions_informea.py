@@ -78,6 +78,11 @@ def fetch_decisions(limit=100, days_ago=7):
             decisions.extend(results)
         skip += limit
 
+        if skip % 1000 == 0:
+            parsed_decisions = parse_decisions(decisions)
+            add_decisions(parsed_decisions)
+            decisions = []
+
     return decisions
 
 
