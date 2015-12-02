@@ -197,6 +197,18 @@
       </dd>
     </dl>
 
+    <dl>
+      <dt>Court Decision</dt>
+      <dd>
+        {% if court_decisions|length %}
+          <strong>{{ court_decisions|length }} court decisions</strong> related to this treaty.
+          <a href="{% url 'resultCourtDecisions' document.id %}">View court decisions</a>
+        {% else %}
+          <span class="na">Not available</span>
+        {% endif %}
+      </dd>
+    </dl>
+
   </section>
 
 </article>

@@ -243,6 +243,7 @@ class TreatyDetails(DetailsView):
         if context['document'].informea_id():
             context['decisions'] = context['document'].get_decisions()
         context['literatures'] = context['document'].get_literatures()
+        context['court_decisions'] = context['document'].get_court_decisions()
 
         return context
 
@@ -269,7 +270,9 @@ class CourtDecisionDetails(DetailsView):
     def get_context_data(self, **kwargs):
         context = super(CourtDecisionDetails, self).get_context_data(**kwargs)
         references = context['document'].get_references()
+        referenced_by = context['document'].get_referenced_by()
         context['references'] = references
+        context['referenced_by'] = referenced_by
         return context
 
 
@@ -312,6 +315,22 @@ class ResultDetailsLiteratures(SearchView):
         context['treaty'] = results.first()
         context['page_type'] = 'homepage'
         context['literatures'] = context['treaty'].get_literatures()
+        return context
+
+
+class ResultDetailsCourtDecisions(SearchView):
+
+    template_name = 'details_court_decisions.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ResultDetailsCourtDecisions, self).get_context_data(**kwargs)
+        results = get_document(kwargs['id'])
+        if not results.count():
+            raise Http404
+
+        context['treaty'] = results.first()
+        context['page_type'] = 'homepage'
+        context['court_decisions'] = context['treaty'].get_court_decisions()
         return context
 
 

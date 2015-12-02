@@ -54,7 +54,19 @@
         {% endfor %}
       </dl>
     {% empty %}
-      <h3>No references</h3>
+      <h4>No references</h4>
+    {% endfor %}
+
+    <h2 class="section-title">Referenced by</h2>
+    {% for doc_type, docs in referenced_by.items %}
+      <dl>
+        <dt>{{ doc_type|capfirst }}</dt>
+        {% for doc in docs %}
+          <dd><a href="{{ doc.details_url }}">{{ doc }}</a></dd>
+        {% endfor %}
+      </dl>
+    {% empty %}
+      <h4>No references</h4>
     {% endfor %}
   </section>
 

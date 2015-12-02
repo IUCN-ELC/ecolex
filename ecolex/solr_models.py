@@ -217,6 +217,11 @@ class Treaty(ObjectNormalizer):
         return get_documents_by_field('litTreatyReference',
                                       [self.solr.get('trElisId')], rows=100)
 
+    def get_court_decisions(self):
+        from ecolex.search import get_documents_by_field
+        return get_documents_by_field('cdTreatyReference',
+                                      [self.solr.get('trElisId')], rows=100)
+
     def full_title(self):
         return '{} ({})'.format(self.title(), self.date())
 
@@ -342,6 +347,7 @@ class CourtDecision(ObjectNormalizer):
     DOCTYPE_FIELD = 'cdTypeOfText'
     REFERENCE_FIELDS = {'treaty': 'cdTreatyReference'}
     SOURCE_REF_FIELDS = {'treaty': 'trElisId'}
+    REFERENCED_BY_FIELDS = {'literature': 'litCourtDecisionReference'}
 
     def details_url(self):
         return reverse('court_decision_details', kwargs={'id': self.id()})
@@ -353,9 +359,20 @@ class CourtDecision(ObjectNormalizer):
             ref_id = first(self.solr.get(ref_field))
             if not ref_id:
                 continue
+            docs = get_documents_by_field(self.SOURCE_REF_FIELDS[doc_type],
+                                          [ref_id], rows=100)
+            if docs:
+                references[doc_type] = docs
+        return references
 
-            references[doc_type] = get_documents_by_field(
-                self.SOURCE_REF_FIELDS[doc_type], [ref_id], rows=100)
+    def get_referenced_by(self):
+        from ecolex.search import get_documents_by_field
+        references = {}
+        original_id = first(self.solr.get('cdOriginalId'))
+        for doc_type, ref_field in self.REFERENCED_BY_FIELDS.items():
+            docs = get_documents_by_field(ref_field, [original_id], rows=100)
+            if docs:
+                references[doc_type] = docs
         return references
 
     def language(self):

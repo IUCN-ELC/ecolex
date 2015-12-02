@@ -216,6 +216,11 @@ def fetch_treaties():
 
         treaties.append(response.content)
 
+        if page % 10 == 0:
+            parsed_treaties = parse_treatries(treaties)
+            add_treaties(parsed_treaties)
+            treaties = []
+
         page += 1
 
     return treaties
