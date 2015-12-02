@@ -9,7 +9,7 @@
   <header>
     <div class="record-title">
       <div class="record-icon">
-          <span class="icon icon-literature" title="COP Decision"></span>
+          <span class="icon icon-literature" title="Literature"></span>
       </div>
       <h1>{{ document.title }}</h1>
     </div>
@@ -78,9 +78,23 @@
         {% endif %}
       </dd>
       <dt>Link to full text</dt>
-      <dd><a class="decision-link" href="{{ document.solr.litLinkToFullText }}" target="_blank">{{ document.solr.litLinkToFullText }}</a></dd>
+      <dd>
+        {% if document.solr.litLinkToFullText %}
+          <a class="decision-link" href="{{ document.solr.litLinkToFullText }}" target="_blank">
+            <span class="icon icon-literature" title="Literature"></span>
+          </a>
+        {% else %}
+          <p class="na">Not available</p>
+        {% endif %}
+      </dd>
       <dt>Available web site</dt>
-      <dd><a class="decision-link" href="{{ document.solr.litRelatedWebSite }}">{{ document.solr.litRelatedWebSite }}</a></dd>
+      <dd>
+        {% if document.solr.litRelatedWebSite %}
+          <a class="decision-link" href="{{ document.solr.litRelatedWebSite }}">{{ document.solr.litRelatedWebSite }}</a>
+        {% else %}
+          <p class="na">Not available</p>
+        {% endif %}
+      </dd>
     </dl>
   </section>
 

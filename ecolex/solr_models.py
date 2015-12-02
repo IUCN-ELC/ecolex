@@ -234,12 +234,6 @@ class Decision(ObjectNormalizer):
     DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
     DOCTYPE_FIELD = 'decType'
     OPTIONAL_INFO_FIELDS = [
-        #('decMeetingTitle', 'Meeting Title', ''),
-        #('decMeetingUrl', 'Meeting URL', 'url'),
-        ('decLink', 'Link to decision', 'url-tracked'),
-        #('decSummary', 'Summary', 'text'),
-        #('decBody', 'Decision Body', 'text'),
-        #('decKeyword', 'Keywords', 'keyword'),
         ('decUpdateDate', 'Date of Update', 'date'),
     ]
 

@@ -57,13 +57,16 @@
         {% endif %}
       </dd>
 
+      <dt>Link to decision</dt>
+      <dd>
+        <a target="_blank" href="{{ document.url }}">
+          <span class="icon icon-cop-decision" title="COP Decision"></span>
+        </a>
+      </dd>
+
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>
-        {% if "url" in entry.type %}
-          <dd><a target="_blank" {% if "tracked" in entry.type %} class="decision-link" {% endif %} href="{{ entry.value }}">{{ entry.value }}</a></dd>
-        {% else %}
-          <dd>{{ entry.value | join_by:", " }}</dd>
-        {% endif %}
+        <dd>{{ entry.value | join_by:", " }}</dd>
       {% endfor %}
 
       <dt>Keywords</dt>

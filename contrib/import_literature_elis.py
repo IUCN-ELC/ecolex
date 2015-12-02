@@ -284,9 +284,9 @@ def add_literature(literatures):
             print('Added %s' % (lit_id,))
     solr.add_bulk(new_literatures)
     solr.add_bulk(updated_literatures)
-    print('Added %d new treaties' % (len(new_literatures)))
-    print('Updated %d treaties' % (len(updated_literatures)))
-    print('Already indexed treaties %d' % (already_indexed,))
+    print('Added %d new literatures' % (len(new_literatures)))
+    print('Updated %d literatures' % (len(updated_literatures)))
+    print('Already indexed literatures %d' % (already_indexed,))
 
 if __name__ == '__main__':
     raw_literatures = fetch_literature()
