@@ -264,6 +264,18 @@ class Literature(ObjectNormalizer):
                     'litTitleOfTextTransl', 'litTitleOfTextTransl_fr',
                     'litTitleOfTextTransl_sp']
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
+    OPTIONAL_INFO_FIELDS = [
+        ('litISBN', 'ISBN', ''),
+        ('litVolumeNo', 'Volume', ''),
+        ('litPublisher', 'Publisher', ''),
+        ('litPublPlace', 'Place of publication', ''),
+        ('litCollation', 'Pages', ''),
+        ('litDateOfText', 'Date of publication', ''),
+        ('litSeriesFlag', 'Series', ''),
+        ('litLanguageOfDocument', 'Language of document', ''),
+        ('litCountry', 'Country', ''),
+        ('litDisplayRegion', 'Region', ''),
+    ]
     DOCTYPE_FIELD = 'litTypeOfText'
     REFERENCE_TO_FIELDS = {
         'litTreatyReference': 'treaty',

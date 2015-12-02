@@ -10,6 +10,8 @@ DEC_TREATY_FIELDS = ['partyCountry', 'trSubject']
 
 
 def get_file_from_url(url):
+    if 'http' not in url:
+        url = 'http://' + url
     response = requests.get(url)
     if response.status_code != 200:
         raise ValueError('Invalid return code {}'.format(response.status_code))
@@ -58,7 +60,7 @@ class EcolexSolr(object):
         solr_uri = os.environ.get('SOLR_URI')
         if not solr_uri:
             raise RuntimeError('SOLR_URI environment variable not set.')
-        self.solr = pysolr.Solr(solr_uri, timeout=10)
+        self.solr = pysolr.Solr(solr_uri, timeout=30)
 
     def search(self, obj_type, id_value):
         id_field = self.ID_MAPPING.get(obj_type)
