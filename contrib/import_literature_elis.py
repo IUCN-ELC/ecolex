@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 
-from utils import EcolexSolr, valid_date, format_date, get_file_from_url
+from .utils import EcolexSolr, valid_date, format_date, get_file_from_url
 
 ELIS_URL = "http://ecolex.ecolex.org:8083/ecolex/ledge/view/ExportResult"
 EXPORT = "?exportType=xml&index=literature"

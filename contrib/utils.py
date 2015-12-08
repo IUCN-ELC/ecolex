@@ -4,6 +4,8 @@ import pysolr
 import os
 import re
 import requests
+import hashlib
+import random
 
 
 DEC_TREATY_FIELDS = ['partyCountry', 'trSubject']
@@ -42,11 +44,17 @@ def format_date(date):
     return date + "T00:00:00Z"
 
 
+def generate_fao_api_key():
+    seed = str(random.getrandbits(256)).encode('utf-8')
+    return hashlib.sha256(seed).hexdigest()
+
+
 class EcolexSolr(object):
     COP_DECISION = 'COP Decision'
     COURT_DECISION = 'Court Decision'
     TREATY = 'Treaty'
     LITERATURE = 'Literature'
+    LEGISLATION = 'Legislation'
 
     # This is just an idea, might not be accurate
     ID_MAPPING = {
@@ -54,6 +62,7 @@ class EcolexSolr(object):
         COURT_DECISION: 'cdLeoId',
         TREATY: 'trElisId',
         LITERATURE: 'litId',
+        LEGISLATION: 'legId',
     }
 
     def __init__(self):

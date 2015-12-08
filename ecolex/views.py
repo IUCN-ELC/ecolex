@@ -1,8 +1,13 @@
 from django.http import Http404, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from django.views.generic import TemplateView
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView, View
 from django.conf import settings
+import logging
+
+from contrib.import_legislation_fao import harvest_file
 from ecolex.search import (
     search, get_document, get_all_treaties, get_documents_by_field,
     get_treaty_by_informea_id
@@ -14,6 +19,9 @@ from ecolex.definitions import (
 )
 
 from uuid import uuid4
+
+
+logger = logging.getLogger(__name__)
 
 
 class SearchView(TemplateView):
@@ -346,6 +354,31 @@ class ResultDetailsParticipants(SearchView):
         context['treaty'] = results.first()
 
         return context
+
+
+class FaoFeedView(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        key = request.META.get('HTTP_API_KEY', None)
+        api_key = getattr(settings, 'FAOLEX_API_KEY')
+        if not key or key != api_key:
+            logger.error('No API KEY!')
+            raise Http404
+        return super(FaoFeedView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        legislation_file = request.FILES.get('file', None)
+        if legislation_file:
+            response = harvest_file(legislation_file, logger)
+            logger.info(response)
+        else:
+            logger.error('No attached file!')
+            response = 'You have to attach an XML file!'
+        data = {
+            'message': response
+        }
+        return JsonResponse(data)
 
 
 def debug(request):

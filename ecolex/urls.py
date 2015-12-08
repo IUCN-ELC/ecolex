@@ -3,11 +3,13 @@ from .views import (
     SearchResults, PageView, ResultDetailsDecisions, Homepage,
     ResultDetailsParticipants, debug, SearchResultsAjax, DecMeetingView,
     TreatyParticipantView, DecisionDetails, TreatyDetails, LiteratureDetails,
-    CourtDecisionDetails, ResultDetailsLiteratures, ResultDetailsCourtDecisions
+    CourtDecisionDetails, ResultDetailsLiteratures, FaoFeedView,
+    ResultDetailsCourtDecisions
 )
 
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^$', Homepage.as_view(), name="homepage"),
     url(r'^result/$', SearchResults.as_view(),
         name="results"),
@@ -17,12 +19,12 @@ urlpatterns = patterns('',
         name="meeting_details"),
     url(r'^participant/(?P<id>[a-z\-]+)/', TreatyParticipantView.as_view(),
         name="participant_details"),
-    url(r'^details/(?P<id>[^/]+)/decisions/$', ResultDetailsDecisions.as_view(),
-        name="resultDecisions"),
-    url(r'^details/(?P<id>[^/]+)/literatures/$', ResultDetailsLiteratures.as_view(),
-        name="resultLiteratures"),
-    url(r'^details/(?P<id>[^/]+)/court-decisions/$', ResultDetailsCourtDecisions.as_view(),
-        name="resultCourtDecisions"),
+    url(r'^details/(?P<id>[^/]+)/decisions/$',
+        ResultDetailsDecisions.as_view(), name="resultDecisions"),
+    url(r'^details/(?P<id>[^/]+)/literatures/$',
+        ResultDetailsLiteratures.as_view(), name="resultLiteratures"),
+    url(r'^details/(?P<id>[^/]+)/court-decisions/$',
+        ResultDetailsCourtDecisions.as_view(), name="resultCourtDecisions"),
     url(r'^details/(?P<id>[^/]+)/participants/$',
         ResultDetailsParticipants.as_view(), name="resultParticipants"),
     url(r'^details/decision/(?P<id>[^/]+)/$', DecisionDetails.as_view(),
@@ -35,5 +37,6 @@ urlpatterns = patterns('',
         CourtDecisionDetails.as_view(), name="court_decision_details"),
     url(r'^p/(?P<slug>\w+)/', PageView.as_view(),
         name="page"),
+    url(r'^fao/$', FaoFeedView.as_view(), name='fao_feeder'),
     url(r'^_debug', debug, name="debug"),
 )

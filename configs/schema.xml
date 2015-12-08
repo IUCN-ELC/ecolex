@@ -327,6 +327,57 @@
     <field name="cdTreatyReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdUrlOther" type="string" indexed="true" stored="false" multiValued="false"/>
 
+    <!-- Legislation fields -->
+    <field name="legId" type="string" indexed="true" stored="true"/>
+    <field name="legTitle" type="string" indexed="true" stored="true"/>
+    <field name="legLongTitle" type="string" indexed="true" stored="true"/>
+    <field name="legSource" type="string" indexed="true" stored="true"/>
+    <field name="legDate" type="tdate" indexed="true" stored="true"/>
+    <field name="legOriginalDate" type="tdate" indexed="true" stored="true"/>
+    <field name="legModificationDate" type="tdate" indexed="true" stored="true"/>
+    <field name="legConsolidationDate" type="tdate" indexed="true" stored="true"/>
+    <field name="legEntryDate" type="tdate" indexed="true" stored="true"/>
+    <field name="legSearchDate" type="tdate" indexed="true" stored="true"/>
+    <field name="legStatus" type="string" indexed="true" stored="true"/>
+
+    <field name="legEntryIntoForce" type="string" indexed="true" stored="true"/>
+    <field name="legCountry_iso" type="string" indexed="true" stored="true"/>
+    <field name="legCountry_en" type="string" indexed="true" stored="true"/>
+    <field name="legCountry_fr" type="string" indexed="true" stored="true"/>
+    <field name="legCountry_es" type="string" indexed="true" stored="true"/>
+
+    <field name="legTerritorialSubdivision" type="string" indexed="true" stored="true"/>
+    <field name="legGeoArea_en" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legGeoArea_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legGeoArea_es" type="string" indexed="true" stored="true" multiValued="true"/>
+
+    <field name="legTypeCode" type="string" indexed="true" stored="true"/>
+    <field name="legType_en" type="string" indexed="true" stored="true"/>
+    <field name="legType_fr" type="string" indexed="true" stored="true"/>
+    <field name="legType_es" type="string" indexed="true" stored="true"/>
+
+    <field name="legRelatedWebSite" type="string" indexed="true" stored="true"/>
+    <field name="legLinkToFullText" type="string" indexed="true" stored="true"/>
+    <field name="legLanguage_code" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legLanguage_en" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legLanguage_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legLanguage_es" type="string" indexed="true" stored="true" multiValued="true"/>
+
+    <field name="legAbstract" type="string" indexed="true" stored="true"/>
+    <field name="legSubject_code" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legSubject_en" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legSubject_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legSubject_es" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legKeyword_code" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legKeyword_en" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legKeyword_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legKeyword_es" type="string" indexed="true" stored="true" multiValued="true"/>
+
+    <field name="legImplement" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legAmends" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legRepeals" type="string" indexed="true" stored="true" multiValued="true"/>
+
+
     <!-- Document text field -->
     <field name="doc_content" type="text_general" indexed="false" stored="true" multiValued="true"/>
 
@@ -503,6 +554,9 @@
     <copyField source="litSubject" dest="docSubject"/>
     <copyField source="litSubject_fr" dest="docSubject"/>
     <copyField source="litSubject_sp" dest="docSubject"/>
+    <copyField source="legSubject_en" dest="docSubject"/>
+    <copyField source="legSubject_fr" dest="docSubject"/>
+    <copyField source="legSubject_es" dest="docSubject"/>
 
     <copyField source="trKeyword" dest="docKeyword"/>
     <copyField source="decKeyword" dest="docKeyword"/>
@@ -510,6 +564,9 @@
     <copyField source="litKeyword" dest="docKeyword"/>
     <copyField source="litKeyword_fr" dest="docKeyword"/>
     <copyField source="litKeyword_sp" dest="docKeyword"/>
+    <copyField source="legKeyword_en" dest="docKeyword"/>
+    <copyField source="legKeyword_fr" dest="docKeyword"/>
+    <copyField source="legKeyword_es" dest="docKeyword"/>
 
     <copyField source="partyCountry" dest="docCountry"/>
     <copyField source="cdCountry_en" dest="docCountry"/>
@@ -518,22 +575,32 @@
     <copyField source="litCountry" dest="docCountry"/>
     <copyField source="litCountry_fr" dest="docCountry"/>
     <copyField source="litCountry_sp" dest="docCountry"/>
+    <copyField source="legCountry_en" dest="docCountry"/>
+    <copyField source="legCountry_fr" dest="docCountry"/>
+    <copyField source="legCountry_es" dest="docCountry"/>
 
     <copyField source="trRegion" dest="docRegion"/>
     <copyField source="cdRegion" dest="docRegion"/>
     <copyField source="litRegion" dest="docRegion"/>
     <copyField source="litRegion_fr" dest="docRegion"/>
     <copyField source="litRegion_sp" dest="docRegion"/>
+    <copyField source="legGeoArea_en" dest="docRegion"/>
+    <copyField source="legGeoArea_fr" dest="docRegion"/>
+    <copyField source="legGeoArea_es" dest="docRegion"/>
 
     <copyField source="trDateOfText" dest="docDate"/>
     <copyField source="decPublishDate" dest="docDate"/>
     <copyField source="cdDateOfText" dest="docDate"/>
+    <copyField source="legDate" dest="docDate"/>
 
     <copyField source="trLanguageOfDocument" dest="docLanguage"/>
     <copyField source="cdLanguageOfDocument" dest="docLanguage"/>
     <copyField source="litLanguageOfDocument" dest="docLanguage"/>
     <copyField source="litLanguageOfDocument_fr" dest="docLanguage"/>
     <copyField source="litLanguageOfDocument_sp" dest="docLanguage"/>
+    <copyField source="legLanguage_en" dest="docLanguage"/>
+    <copyField source="legLanguage_fr" dest="docLanguage"/>
+    <copyField source="legLanguage_es" dest="docLanguage"/>
 
     <!-- Full search field -->
     <copyField source="trTitleAbbreviation" dest="text"/>
