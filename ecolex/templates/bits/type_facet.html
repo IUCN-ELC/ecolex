@@ -34,15 +34,17 @@
 
   <!-- Legislation filter -->
   <button type="button"
-          class="btn btn-default"
-          data-filter
+          class="btn btn-default {% if 'legislation' in form.type.data %}active{% endif %}"
+          data-filter="#legislation-fieldset"
           data-toggle="tooltip"
           data-placement="bottom"
           data-container="body"
-          title="Hide Legislation"
-          disabled>
+          data-value="legislation"
+          title="{% if not form.type.data %}Show only Legislation{% elif 'legislation' in form.type.data %}{% if form.type.data|length == 1 %}Show all{% else %}Hide Legislation{% endif %}{% else %}Show Legislation{% endif %}">
     <span class="icon icon-legislation"></span>
-    <span class="badge"></span>
+    {% if facets.type.legislation > 0 %}
+      <span class="badge">{{ facets.type.legislation }}</span>
+    {% endif %}
     <span class="btn-label">Legislation</span>
   </button>
 

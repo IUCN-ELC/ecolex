@@ -3,6 +3,7 @@ DOC_TYPE = (
     ('decision', "Decision"),
     ('literature', "Literature"),
     ('court_decision', "Court Decision"),
+    ('legislation', "Legislation"),
 )
 
 DOC_SOURCES = {
@@ -10,6 +11,7 @@ DOC_SOURCES = {
     'decision': 'InforMEA',
     'literature': 'IUCN',
     'court_decision': 'InforMEA',
+    'legislation': 'FAO',
 }
 
 TREATY_FILTERS = {
@@ -32,9 +34,14 @@ LITERATURE_FILTERS = {
     'litSerialTitle': 'lit_serial',
     'litPublisher': 'lit_publisher',
 }
+
 COURT_DECISION_FILTERS = {
     'cdTerritorialSubdivision': 'cd_territorial_subdivision',
     'cdTypeOfText': 'cd_type',
+}
+
+LEGISLATION_FILTERS = {
+
 }
 
 DOC_TYPE_FILTER_MAPPING = {
@@ -42,6 +49,7 @@ DOC_TYPE_FILTER_MAPPING = {
     'decision': DECISION_FILTERS,
     'literature': LITERATURE_FILTERS,
     'court_decision': COURT_DECISION_FILTERS,
+    'legislation': LEGISLATION_FILTERS,
 }
 
 FIELD_TO_FACET_MAPPING = {
@@ -104,7 +112,8 @@ SOLR_FIELDS = [
     'litKeyword', 'litSeriesFlag',
     'litCountry', 'litRegion', 'litSubject', 'litLanguageOfDocument',
     'decNumber', 'cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr',
-    'cdDateOfText',
+    'cdDateOfText', 'legTitle', 'legLongTitle', 'legCountry_en',
+    'legDate', 'legStatus', 'legTerritorialSubdivision'
 ]
 
 LANGUAGE_MAP = {

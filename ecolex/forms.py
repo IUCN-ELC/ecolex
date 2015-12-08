@@ -64,3 +64,6 @@ class SearchForm(Form):
 
     def has_court_decision(self):
         return self._has_document_type('court_decision')
+
+    def has_legislation(self):
+        return self._has_document_type('legislation')

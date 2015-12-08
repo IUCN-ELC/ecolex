@@ -2,7 +2,9 @@ from collections import OrderedDict
 import pysolr
 from django.conf import settings
 
-from ecolex.solr_models import Treaty, Decision, Literature, CourtDecision
+from ecolex.solr_models import (
+    Treaty, Decision, Literature, CourtDecision, Legislation
+)
 
 
 HIGHLIGHT_FIELDS = []
@@ -124,6 +126,8 @@ def parse_result(hit, responses):
         return Literature(hit, hl)
     elif hit['type'] == 'court_decision':
         return CourtDecision(hit, hl)
+    elif hit['type'] == 'legislation':
+        return Legislation(hit, hl)
     return hit
 
 
@@ -192,6 +196,9 @@ def get_relevancy():
         'decShortTitle_ru': 100,
         'decShortTitle_ar': 100,
         'decShortTitle_zh': 100,
+
+        'legTitle': 100,
+        'legLongTitle': 100,
 
         'litLongTitle': 100,
         'litLongTitle_fr': 100,
@@ -275,7 +282,7 @@ def get_fq(filters):
             return 'type:' + type
 
     enabled_types = filters.get('type', []) or \
-        ['treaty', 'decision', 'literature', 'court_decision']
+        ['treaty', 'decision', 'literature', 'court_decision', 'legislation']
     type_filters = {f: [] for f in enabled_types}
     global_filters = []
     for filter, values in filters.items():

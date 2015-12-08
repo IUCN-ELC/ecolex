@@ -4,7 +4,7 @@ from .views import (
     ResultDetailsParticipants, debug, SearchResultsAjax, DecMeetingView,
     TreatyParticipantView, DecisionDetails, TreatyDetails, LiteratureDetails,
     CourtDecisionDetails, ResultDetailsLiteratures, FaoFeedView,
-    ResultDetailsCourtDecisions
+    ResultDetailsCourtDecisions, LegislationDetails
 )
 
 
@@ -35,6 +35,8 @@ urlpatterns = patterns(
         name="literature_details"),
     url(r'^details/court-decision/(?P<id>[^/]+)/$',
         CourtDecisionDetails.as_view(), name="court_decision_details"),
+    url(r'^details/legislation/(?P<id>[^/]+)/$',
+        LegislationDetails.as_view(), name="legislation_details"),
     url(r'^p/(?P<slug>\w+)/', PageView.as_view(),
         name="page"),
     url(r'^fao/$', FaoFeedView.as_view(), name='fao_feeder'),

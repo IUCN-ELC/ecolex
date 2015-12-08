@@ -284,6 +284,15 @@ class CourtDecisionDetails(DetailsView):
         return context
 
 
+class LegislationDetails(DetailsView):
+
+    template_name = 'details/legislation.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(LegislationDetails, self).get_context_data(**kwargs)
+        return context
+
+
 class ResultDetailsDecisions(SearchView):
     template_name = 'details_decisions.html'
 

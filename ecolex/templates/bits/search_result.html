@@ -96,5 +96,26 @@
     <p class="search-result-description">{# result.summary|safe #}</p>
     <p class="search-result-source">Source: {{ result.source }}</p>
 
+  {% elif result.type == "legislation" %}
+    <div class="search-result-details">
+      <strong class="sr-type">Legislation</strong>
+      {% if result.country %}
+        |
+        <span class="sr-jurisdiction">{{ result.country }}</span>
+      {% endif %}
+      {% if result.date %}
+        |
+        <time class="sr-date" tile="Date of document: {{ result.date }}">
+         {{ result.date }}
+        </time>
+      {% endif %}
+      {% if result.status %}
+        |
+        <span class="sr-status" title="Status: {{ result.status|capfirst }}">
+          {{ result.status|capfirst }}
+        </span>
+      {% endif %}
+    </div>
+    <p class="search-result-source">Source: {{ result.source }}</p>
   {% endif %}
 </li>

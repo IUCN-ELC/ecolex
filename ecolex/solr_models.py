@@ -390,3 +390,26 @@ class CourtDecision(ObjectNormalizer):
     def language(self):
         langcodes = self.solr.get('cdLanguageOfDocument')
         return ', '.join([LANGUAGE_MAP.get(code, code) for code in langcodes])
+
+
+class Legislation(ObjectNormalizer):
+    ID_FIELD = 'legId'
+    SUMMARY_FIELD = 'legAbstract'
+    TITLE_FIELDS = ['legTitle', 'legLongTitle']
+    DATE_FIELDS = ['legDate', ]
+
+    def details_url(self):
+        return reverse('legislation_details', kwargs={'id': self.id()})
+
+    def country(self):
+        return first(self.solr.get('legCountry_en'))
+
+    def status(self):
+        return first(self.solr.get('legStatus'))
+
+    def type(self):
+        return first(self.solr.get('legType'))
+
+    def language(self):
+        languages = self.solr.get('legLanguage_en')
+        return '/'.join(languages)
