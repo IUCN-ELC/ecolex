@@ -1,0 +1,10 @@
+[default]
+SOLR_TIMEOUT = 10
+
+[court_decision]
+BASEDIR = path where contrib directory is found
+COUNTRIES_JSON = %(basedir)s/config/countries.json
+TEST_INPUT_FILE = %(basedir)s/testing/court_decision_in.json
+TEST_OUTPUT_FILE = %(basedir)s/testing/court_decision_out.json
+COURT_DECISIONS_URL = http://leo.informea.org/ws/court-decisions
+DAYS_AGO = 7
