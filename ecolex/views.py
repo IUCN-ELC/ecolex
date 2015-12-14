@@ -290,6 +290,9 @@ class LegislationDetails(DetailsView):
 
     def get_context_data(self, **kwargs):
         context = super(LegislationDetails, self).get_context_data(**kwargs)
+        leg = context['document']
+        context['leg_references'] = leg.get_legislation_references()
+        context['leg_back_references'] = leg.get_legislation_back_references()
         return context
 
 

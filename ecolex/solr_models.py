@@ -171,7 +171,7 @@ class Treaty(ObjectNormalizer):
             ('partyDateOfWithdrawal', 'withdrawal'),
         ))
 
-        clean = lambda d: d if d != '0002-11-30T00:00:00Z' else None
+        clean = lambda d: d if d != '0002-11-30T00:00:00Z' else Nogetne
         data = OrderedDict()
         for field, event in PARTY_MAP.items():
             values = [clean(v) for v in self.solr.get(field, [])]
@@ -397,6 +397,38 @@ class Legislation(ObjectNormalizer):
     SUMMARY_FIELD = 'legAbstract'
     TITLE_FIELDS = ['legTitle', 'legLongTitle']
     DATE_FIELDS = ['legDate', 'legOriginalDate']
+
+    LEGISLATION_REFERENCE_FIELDS = {
+        'legImplement': 'Implements:',
+        'legAmends': 'Amends:',
+        'legRepeals': 'Repeals:'
+    }
+
+    LEGISLATION_BACK_REFERENCE = {
+        'legImplement': 'Implemented by:',
+        'legAmends': 'Amended by:',
+        'legRepeals': 'Repealed by:',
+    }
+
+    def get_legislation_references(self):
+        from ecolex.search import get_documents_by_field
+        references = {}
+        for field, label in self.LEGISLATION_REFERENCE_FIELDS.items():
+            ids = [v for v in self.solr.get(field, [])]
+            results = get_documents_by_field(self.ID_FIELD, ids, rows=100)
+            if results:
+                references[label] = results
+        return references
+
+    def get_legislation_back_references(self):
+        from ecolex.search import get_documents_by_field
+        references = {}
+        leg_id = first(self.solr.get('legId'))
+        for field, label in self.LEGISLATION_BACK_REFERENCE.items():
+            results = get_documents_by_field(field, [leg_id], rows=100)
+            if results:
+                references[label] = results
+        return references
 
     def details_url(self):
         return reverse('legislation_details', kwargs={'id': self.id()})

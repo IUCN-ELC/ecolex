@@ -95,13 +95,27 @@
 
   <section id="other-references">
     <h2 class="section-title">Legislation references</h2>
-    {% for label, legislations in legislation_refs.items %}
+    {% for label, legislations in leg_references.items %}
       <dl class="dl-horizontal references">
         <dt>{{ label }}</dt>
         {% for legislation in legislations %}
           <dd>
             <div class="treaty-link-container">
-              <a href="#">{{ legislation.title }}</a>
+              <a href="{% url 'legislation_details' legislation.id %}">{{ legislation.title }}</a>
+            </div>
+            <time>{{ legislation.date }}</time>
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endfor %}
+
+    {% for label, legislations in leg_back_references.items %}
+      <dl class="dl-horizontal references">
+        <dt>{{ label }}</dt>
+        {% for legislation in legislations %}
+          <dd>
+            <div class="treaty-link-container">
+              <a href="{% url 'legislation_details' legislation.id %}">{{ legislation.title }}</a>
             </div>
             <time>{{ legislation.date }}</time>
           </dd>
