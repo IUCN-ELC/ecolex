@@ -113,7 +113,8 @@ def harvest_file(uploaded_file, logger):
             legislation['legLinkToFullText'] = url_value
             # legislation['text'] = get_file_from_url(url_value)
 
-        if REPEALED in get_content(document.findAll(META, {'name': REPEALED})):
+        if (REPEALED.upper() in
+                get_content(document.findAll(META, {'name': REPEALED}))):
             legislation['legStatus'] = REPEALED
         else:
             legislation['legStatus'] = IN_FORCE

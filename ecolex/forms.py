@@ -33,6 +33,10 @@ class SearchForm(Form):
     lit_serial = MultipleChoiceField()
     lit_publisher = MultipleChoiceField()
 
+    leg_type = MultipleChoiceField()
+    leg_territorial = MultipleChoiceField()
+    leg_status = MultipleChoiceField()
+
     subject = MultipleChoiceField()
     subject_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
     keyword = MultipleChoiceField()
@@ -62,8 +66,8 @@ class SearchForm(Form):
     def has_literature(self):
         return self._has_document_type('literature')
 
-    def has_court_decision(self):
-        return self._has_document_type('court_decision')
-
     def has_legislation(self):
         return self._has_document_type('legislation')
+
+    def has_court_decision(self):
+        return self._has_document_type('court_decision')

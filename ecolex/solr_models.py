@@ -396,7 +396,7 @@ class Legislation(ObjectNormalizer):
     ID_FIELD = 'legId'
     SUMMARY_FIELD = 'legAbstract'
     TITLE_FIELDS = ['legTitle', 'legLongTitle']
-    DATE_FIELDS = ['legDate', ]
+    DATE_FIELDS = ['legDate', 'legOriginalDate']
 
     def details_url(self):
         return reverse('legislation_details', kwargs={'id': self.id()})

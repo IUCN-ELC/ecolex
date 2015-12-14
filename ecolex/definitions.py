@@ -41,7 +41,9 @@ COURT_DECISION_FILTERS = {
 }
 
 LEGISLATION_FILTERS = {
-
+    'legType_en': 'leg_type',
+    'legTerritorialSubdivision': 'leg_territorial',
+    'legStatus': 'leg_status',
 }
 
 DOC_TYPE_FILTER_MAPPING = {
@@ -70,6 +72,10 @@ FIELD_TO_FACET_MAPPING = {
 
     'cd_territorial_subdivision': 'cdTerritorialSubdivision',
     'cd_type': 'cdTypeOfText',
+
+    'leg_type': 'legType_en',
+    'leg_territorial': 'legTerritorialSubdivision',
+    'leg_status': 'legStatus',
 
     'subject': 'docSubject',
     'keyword': 'docKeyword',
