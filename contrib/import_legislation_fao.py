@@ -153,6 +153,8 @@ def add_legislation(legislations, logger):
         leg_result = solr.search('Legislation', leg_id)
         if leg_result:
             if legislation_needs_update(leg_result, legislation, logger):
+                legislation['updatedDate'] = (datetime.now()
+                                              .strftime('%Y-%m-%dT%H:%M:%SZ'))
                 updated_legislations.append(legislation)
             else:
                 already_indexed += 1
