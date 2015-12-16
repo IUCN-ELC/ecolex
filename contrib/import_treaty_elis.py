@@ -1,5 +1,6 @@
 import requests
 import sys
+from binascii import hexlify
 from bs4 import BeautifulSoup
 
 from utils import EcolexSolr, get_file_from_url, DEC_TREATY_FIELDS
@@ -11,6 +12,7 @@ ORDER = "sortField=searchDate"
 PAGE = "page=%d"
 
 STOP_STRING = 'java.lang.NegativeArraySizeException'
+NO_MATCHES = 'No matches found'
 
 FIELD_MAP = {
     'recid': 'trElisId',
@@ -221,6 +223,53 @@ def fetch_treaties():
     return treaties
 
 
+def fetch_treaties_2():
+    URL = 'http://www.ecolex.org/elis_isis3w.php'
+    EXPORT = '?database=tre&search_type=page_search&table=all'
+    query_filter = '&spage_query=%s'
+    query_format = 'ES:I AND STAT:C AND DE:%d*'
+
+    FORMAT = '&format_name=@xmlexp&lang=xmlf&page_header=@xmlh'
+    page_filter = '&spage_first=%d'
+    per_page = 20
+
+    start_year = 1981
+    end_year = 2015
+
+    treaties = []
+    for year in range(start_year, end_year):
+        skip = 0
+        query_year = query_format % (year)
+        query_hex = hexlify(str.encode(query_year)).decode()
+        query = query_filter % (query_hex)
+        page = page_filter % (skip)
+
+        url = '%s%s%s%s%s' % (URL, EXPORT, query, FORMAT, page)
+        response = requests.get(url)
+        if response.status_code != 200:
+            raise ValueError('Invalid return code %d' % response.status_code)
+        bs = BeautifulSoup(response.content)
+        if bs.find('error'):
+            continue
+
+        treaties.append(response.content)
+        documents_found = int(bs.find('result').attrs['numberresultsfound'])
+        if documents_found > per_page:
+            while skip < documents_found - per_page:
+                skip += 20
+                page = page_filter % (skip)
+                url = '%s%s%s%s%s' % (URL, EXPORT, query, FORMAT, page)
+                response = requests.get(url)
+                if response.status_code != 200:
+                    raise ValueError('Invalid return code %d'
+                                     % response.status_code)
+                treaties.append(response.content)
+
+        print(year, documents_found)
+
+    return treaties
+
+
 def parse_treatries(raw_treaties):
     treaties = {}
     solr = EcolexSolr()
@@ -331,9 +380,10 @@ def update_treaties_status():
     solr.add_bulk(treaties_updated)
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1 and 'update_status' in sys.argv:
-        update_treaties_status()
-    else:
-        raw_treaties = fetch_treaties()
-        treaties = parse_treatries(raw_treaties)
-        add_treaties(treaties)
+    fetch_treaties_2()
+    # if len(sys.argv) > 1 and 'update_status' in sys.argv:
+    #     update_treaties_status()
+    # else:
+    #     raw_treaties = fetch_treaties()
+    #     treaties = parse_treatries(raw_treaties)
+    #     add_treaties(treaties)

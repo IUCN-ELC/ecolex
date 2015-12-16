@@ -248,6 +248,7 @@ class CourtDecisionImporter(object):
         return get_json_from_url(self.court_decisions_url)
 
     def _get_countries(self):
+        print(self.countries_json)
         with open(self.countries_json) as f:
             codes_countries = json.load(f)
         codes = codes_countries['code_corresp']
