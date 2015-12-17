@@ -60,6 +60,13 @@ def get_json_from_url(url, headers={}):
         print(url, ex)
 
 
+def get_content_from_url(url):
+    resp = requests.get(url)
+    if not resp.status_code == 200:
+        raise RuntimeError('Unexpected request status code')
+    return resp.content
+
+
 class EcolexSolr(object):
 
     # This is just an idea, might not be accurate

@@ -1,11 +1,13 @@
 import argparse
 import configparser
 
-from utils import OBJ_TYPES, COURT_DECISION
+from utils import OBJ_TYPES, COURT_DECISION, TREATY
 from court_decision import CourtDecisionImporter
+from treaty import TreatyImporter
 
 CLASS_MAPPING = {
     COURT_DECISION: CourtDecisionImporter,
+    TREATY: TreatyImporter,
 }
 
 
@@ -18,7 +20,7 @@ if __name__ == '__main__':
     parser.set_defaults(test=False, batch_size=1)
     args = parser.parse_args()
 
-    config = configparser.ConfigParser()
+    config = configparser.RawConfigParser()
     config.read(args.config)
 
     importer_config = config['default']

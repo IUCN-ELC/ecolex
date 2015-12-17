@@ -227,7 +227,7 @@ def fetch_treaties_2():
     URL = 'http://www.ecolex.org/elis_isis3w.php'
     EXPORT = '?database=tre&search_type=page_search&table=all'
     query_filter = '&spage_query=%s'
-    query_format = 'ES:I AND STAT:C AND DE:%d*'
+    query_format = 'ES:I AND STAT:C AND DM:%d*'
 
     FORMAT = '&format_name=@xmlexp&lang=xmlf&page_header=@xmlh'
     page_filter = '&spage_first=%d'
@@ -237,7 +237,7 @@ def fetch_treaties_2():
     end_year = 2015
 
     treaties = []
-    for year in range(start_year, end_year):
+    for year in range(end_year, start_year, -1):
         skip = 0
         query_year = query_format % (year)
         query_hex = hexlify(str.encode(query_year)).decode()
@@ -254,16 +254,16 @@ def fetch_treaties_2():
 
         treaties.append(response.content)
         documents_found = int(bs.find('result').attrs['numberresultsfound'])
-        if documents_found > per_page:
-            while skip < documents_found - per_page:
-                skip += 20
-                page = page_filter % (skip)
-                url = '%s%s%s%s%s' % (URL, EXPORT, query, FORMAT, page)
-                response = requests.get(url)
-                if response.status_code != 200:
-                    raise ValueError('Invalid return code %d'
-                                     % response.status_code)
-                treaties.append(response.content)
+        # if documents_found > per_page:
+        #     while skip < documents_found - per_page:
+        #         skip += 20
+        #         page = page_filter % (skip)
+        #         url = '%s%s%s%s%s' % (URL, EXPORT, query, FORMAT, page)
+        #         response = requests.get(url)
+        #         if response.status_code != 200:
+        #             raise ValueError('Invalid return code %d'
+        #                              % response.status_code)
+        #         treaties.append(response.content)
 
         print(year, documents_found)
 
