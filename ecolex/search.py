@@ -179,7 +179,9 @@ def get_sortby(sortby):
 
 def get_relevancy():
     RELEVANCY_FIELDS = {
-        'trPaperTitleOfText': 100,
+        'trPaperTitleOfText_en': 100,
+        'trPaperTitleOfText_es': 100,
+        'trPaperTitleOfText_fr': 100,
         'decLongTitle_en': 100,
         'decLongTitle_es': 100,
         'decLongTitle_fr': 100,
@@ -205,11 +207,15 @@ def get_relevancy():
         'trTitleAbbreviation': 75,
         'decSummary': 50,
         'decBody': 50,
-        'trAbstract': 50,
+        'trAbstract_en': 50,
+        'trAbstract_es': 50,
+        'trAbstract_fr': 50,
         'cdAbstract_en': 50,
         'cdAbstract_es': 50,
         'cdAbstract_fr': 50,
-        'trKeyword': 30,
+        'trKeyword_en': 30,
+        'trKeyword_fr': 30,
+        'trKeyword_es': 30,
         'decKeyword': 30,
         'litKeyword': 30,
         'text': 20,
@@ -230,10 +236,10 @@ def get_relevancy():
 def get_fq(filters):
     FACETS_MAP = {
         'trTypeOfText': 'treaty',
-        'trFieldOfApplication': 'treaty',
+        'trFieldOfApplication_en': 'treaty',
         'trStatus': 'treaty',
         'trPlaceOfAdoption': 'treaty',
-        'trDepository': 'treaty',
+        'trDepository_en': 'treaty',
 
         'decType': 'decision',
         'decStatus': 'decision',
@@ -254,7 +260,7 @@ def get_fq(filters):
         'docCountry',
         'docRegion',
         'docLanguage',
-        'trDepository',
+        'trDepository_en',
         'litAuthor',
     ]
 

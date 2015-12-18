@@ -14,7 +14,7 @@ LITERATURE = 'literature'
 
 OBJ_TYPES = [TREATY, COP_DECISION, LEGISLATION, COURT_DECISION, LITERATURE]
 
-DEC_TREATY_FIELDS = ['partyCountry', 'trSubject']
+DEC_TREATY_FIELDS = ['partyCountry', 'trSubject_en']
 
 
 def get_file_from_url(url):

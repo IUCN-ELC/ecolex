@@ -61,35 +61,50 @@
     <field name="trTitleOfText" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trTitleAbbreviation" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trTitleOfTextShort" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trPaperTitleOfText" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trPaperTitleOfTextSp" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trPaperTitleOfTextFr" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trPaperTitleOfTextOther" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trPaperTitleOfTextStatement" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trPaperTitleOfText_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trPaperTitleOfText_es" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trPaperTitleOfText_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trPaperTitleOfText_other" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="trIntroText" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trAbstract" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trAbstract_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trAbstract_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trAbstract_es" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trComment" type="text" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trTypeOfText" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trTypeOfText_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trTypeOfText_es" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trTypeOfText_fr" type="text" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trFieldOfApplication" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trFieldOfApplication_en" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trFieldOfApplication_es" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trFieldOfApplication_fr" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="trPlaceOfAdoption" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trDepository" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trDepository_en" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trDepository_es" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trDepository_fr" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trSubject" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trSubject_en" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trSubject_es" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trSubject_fr" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trKeyword" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trKeyword_en" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trKeyword_es" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trKeyword_fr" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trLanguageOfDocument" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trLanguageOfDocument_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trLanguageOfDocument_es" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trLanguageOfDocument_fr" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="trSeatOfCourt" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="trCourtName" type="text" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trJurisdiction" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trJurisdiction_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trJurisdiction_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trJurisdiction_es" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="trPublisher" type="text" indexed="true" stored="false" multiValued="true"/>
 
@@ -103,13 +118,15 @@
     <field name="trAuthor" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trAuthorWhole" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trLinkToFullText" type="string" indexed="false" stored="true" multiValued="true"/>
-    <field name="trLinkToFullTextSp" type="string" indexed="false" stored="true" multiValued="true"/>
-    <field name="trLinkToFullTextFr" type="string" indexed="false" stored="true" multiValued="true"/>
+    <field name="trLinkToFullText_en" type="string" indexed="false" stored="true" multiValued="true"/>
+    <field name="trLinkToFullText_es" type="string" indexed="false" stored="true" multiValued="true"/>
+    <field name="trLinkToFullText_fr" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="trLinkToFullTextOther" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="trLinkToAbstract" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="trRegion" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trBasin" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trBasin_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trBasin_es" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trBasin_fr" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trScope" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trIntoForceTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trRelevantTextTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -134,7 +151,10 @@
     <field name="trLanguageOfTranslation" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trNumberOfPages" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trOfficialPublication" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="trInternetReference" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trInternetReference_en" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trInternetReference_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trInternetReference_es" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trInternetReferenceOther" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trDateOfConsolidation" type="tdate" indexed="true" stored="true" multiValued="true"/>
 
     <!-- Field that holds all searchable data -->
@@ -471,14 +491,13 @@
 
     <copyField source="trTitleAbbreviation" dest="trTitleOfText"/>
     <copyField source="trTitleOfTextShort" dest="trTitleOfText"/>
-    <copyField source="trPaperTitleOfText" dest="trTitleOfText"/>
-    <copyField source="trPaperTitleOfTextSp" dest="trTitleOfText"/>
-    <copyField source="trPaperTitleOfTextFr" dest="trTitleOfText"/>
-    <copyField source="trPaperTitleOfTextOther" dest="trTitleOfText"/>
-    <copyField source="trPaperTitleOfTextStatement" dest="trTitleOfText"/>
+    <copyField source="trPaperTitleOfText_en" dest="trTitleOfText"/>
+    <copyField source="trPaperTitleOfText_es" dest="trTitleOfText"/>
+    <copyField source="trPaperTitleOfText_fr" dest="trTitleOfText"/>
+    <copyField source="trPaperTitleOfText_other" dest="trTitleOfText"/>
 
     <copyField source="trComment" dest="trIntroText"/>
-    <copyField source="trAbstract" dest="trIntroText"/>
+    <copyField source="trAbstract_en" dest="trIntroText"/>
 
     <copyField source="decShortTitle_en" dest="decTitleOfText"/>
     <copyField source="decShortTitle_fr" dest="decTitleOfText"/>
@@ -498,54 +517,45 @@
     <copyField source="decBody" dest="decText"/>
 
     <!-- Copy fields for common filters -->
-    <copyField source="trSubject" dest="docSubject"/>
+    <copyField source="trSubject_en" dest="docSubject"/>
     <copyField source="cdSubject" dest="docSubject"/>
     <copyField source="litSubject" dest="docSubject"/>
-    <copyField source="litSubject_fr" dest="docSubject"/>
-    <copyField source="litSubject_sp" dest="docSubject"/>
 
-    <copyField source="trKeyword" dest="docKeyword"/>
+    <copyField source="trKeyword_en" dest="docKeyword"/>
     <copyField source="decKeyword" dest="docKeyword"/>
     <copyField source="cdKeywords" dest="docKeyword"/>
     <copyField source="litKeyword" dest="docKeyword"/>
-    <copyField source="litKeyword_fr" dest="docKeyword"/>
-    <copyField source="litKeyword_sp" dest="docKeyword"/>
 
     <copyField source="partyCountry" dest="docCountry"/>
     <copyField source="cdCountry_en" dest="docCountry"/>
     <copyField source="cdCountry_es" dest="docCountry"/>
     <copyField source="cdCountry_fr" dest="docCountry"/>
     <copyField source="litCountry" dest="docCountry"/>
-    <copyField source="litCountry_fr" dest="docCountry"/>
-    <copyField source="litCountry_sp" dest="docCountry"/>
 
     <copyField source="trRegion" dest="docRegion"/>
     <copyField source="cdRegion" dest="docRegion"/>
     <copyField source="litRegion" dest="docRegion"/>
-    <copyField source="litRegion_fr" dest="docRegion"/>
-    <copyField source="litRegion_sp" dest="docRegion"/>
 
     <copyField source="trDateOfText" dest="docDate"/>
     <copyField source="decPublishDate" dest="docDate"/>
     <copyField source="cdDateOfText" dest="docDate"/>
 
-    <copyField source="trLanguageOfDocument" dest="docLanguage"/>
+    <copyField source="trLanguageOfDocument_en" dest="docLanguage"/>
     <copyField source="cdLanguageOfDocument" dest="docLanguage"/>
     <copyField source="litLanguageOfDocument" dest="docLanguage"/>
-    <copyField source="litLanguageOfDocument_fr" dest="docLanguage"/>
-    <copyField source="litLanguageOfDocument_sp" dest="docLanguage"/>
 
     <!-- Full search field -->
     <copyField source="trTitleAbbreviation" dest="text"/>
     <copyField source="trTitleOfTextShort" dest="text"/>
-    <copyField source="trPaperTitleOfText" dest="text"/>
-    <copyField source="trPaperTitleOfTextSp" dest="text"/>
-    <copyField source="trPaperTitleOfTextFr" dest="text"/>
-    <copyField source="trPaperTitleOfTextOther" dest="text"/>
-    <copyField source="trPaperTitleOfTextStatement" dest="text"/>
+    <copyField source="trPaperTitleOfText_en" dest="text"/>
+    <copyField source="trPaperTitleOfText_es" dest="text"/>
+    <copyField source="trPaperTitleOfText_fr" dest="text"/>
+    <copyField source="trPaperTitleOfText_other" dest="text"/>
 
     <copyField source="trComment" dest="text"/>
-    <copyField source="trAbstract" dest="text"/>
+    <copyField source="trAbstract_en" dest="text"/>
+    <copyField source="trAbstract_es" dest="text"/>
+    <copyField source="trAbstract_fr" dest="text"/>
 
     <copyField source="decShortTitle_en" dest="text"/>
     <copyField source="decLongTitle_en" dest="text"/>
@@ -553,8 +563,12 @@
     <copyField source="decBody" dest="text"/>
     <copyField source="decKeyword" dest="text"/>
 
-    <copyField source="trSubject" dest="text"/>
-    <copyField source="trKeyword" dest="text"/>
+    <copyField source="trSubject_en" dest="text"/>
+    <copyField source="trSubject_es" dest="text"/>
+    <copyField source="trSubject_fr" dest="text"/>
+    <copyField source="trKeyword_en" dest="text"/>
+    <copyField source="trKeyword_es" dest="text"/>
+    <copyField source="trKeyword_fr" dest="text"/>
     <copyField source="doc_content" dest="text"/>
 
     <copyField source="litLongTitle" dest="text"/>

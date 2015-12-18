@@ -16,38 +16,69 @@ FIELD_MAP = {
     'dateofmodification': 'trDateOfModification',
     'dateoftext': 'trDateOfText',
     'searchdate': 'trSearchDate',
-    'titleoftext': 'trPaperTitleOfText',
-    'titleoftextsp': 'trPaperTitleOfTextSp',
-    'titleoftextfr': 'trPaperTitleOfTextFr',
-    'titleoftextother': 'trPaperTitleOfTextOther',
-    'typeoftext': 'trTypeOfText',
-    'jurisdiction': 'trJurisdiction',
-    'fieldofapplication': 'trFieldOfApplication',
-    'subject': 'trSubject',
-    'languageofdocument': 'trLanguageOfDocument',
+
+    'titleoftext': 'trPaperTitleOfText_en',
+    'titleoftextsp': 'trPaperTitleOfText_es',
+    'titleoftextfr': 'trPaperTitleOfText_fr',
+    'titleoftextother': 'trPaperTitleOfText_other',
+
+    'typeoftext': 'trTypeOfText_en',
+    'typeoftext_es_es': 'trTypeOfText_es',
+    'typeoftext_fr_fr': 'trTypeOfText_fr',
+
+    'jurisdiction': 'trJurisdiction_en',
+    'jurisdiction_es_es': 'trJurisdiction_es',
+    'jurisdiction_fr_fr': 'trJurisdiction_fr',
+
+    'fieldofapplication': 'trFieldOfApplication_en',
+    'fieldofapplication_fr_fr': 'trFieldOfApplication_fr',
+    'fieldofapplication_es_es': 'trFieldOfApplication_es',
+
+    'subject': 'trSubject_en',
+    'subject_es_es': 'trSubject_es',
+    'subject_fr_fr': 'trSubject_fr',
+
+    'languageofdocument': 'trLanguageOfDocument_en',
+    'languageofdocument_es_es': 'trLanguageOfDocument_es',
+    'languageofdocument_fr_fr': 'trLanguageOfDocument_fr',
     'obsolete': 'trObsolete',
     'enabledbytreaty': 'trEnabledByTreaty',
     'placeofadoption': 'trPlaceOfAdoption',
-    'depository': 'trDepository',
+
+    'depository': 'trDepository_en',
+    'depository_fr': 'trDepository_fr',
+    'depository_es': 'trDepository_es',
+
     'entryintoforcedate': 'trEntryIntoForceDate',
-    'keyword': 'trKeyword',
-    'abstract': 'trAbstract',
+    'keyword': 'trKeyword_en',
+    'keyword_es_es': 'trKeyword_es',
+    'keyword_fr_fr': 'trKeyword_fr',
+
+    'abstract': 'trAbstract_en',
+    'abstractEs': 'trAbstract_es',
+    'abstractFr': 'trAbstract_fr',
+
     'comment': 'trComment',
     'titleoftextshort': 'trTitleOfTextShort',
     'author': 'trAuthor',
     'titleabbreviation': 'trTitleAbbreviation',
-    'fieldofapplication': 'trFieldOfApplication',
     'placeofadoption': 'trPlaceOfAdoption',
-    'basin': 'trBasin',
+
+    'basin': 'trBasin_en',
+    'basin_fr_fr': 'trBasin_fr',
+    'basin_es_es': 'trBasin_es',
+
     'citiestreaty': 'trCitiesTreaty',
     'confname': 'trConfName',
     'contributor': 'trContributor',
     'courtname': 'trCourtName',
     'dateoflastlegalaction': 'trDateOfLastLegalAction',
-    'linktofulltext': 'trLinkToFullText',
-    'linktofulltextsp': 'trLinkToFullTextSp',
-    'linktofulltextfr': 'trLinkToFullTextFr',
+
+    'linktofulltext': 'trLinkToFullText_en',
+    'linktofulltextsp': 'trLinkToFullText_es',
+    'linktofulltextfr': 'trLinkToFullText_fr',
     'linktofulltextother': 'trLinkToFullTextOther',
+
     'linktoabstract': 'trLinkToAbstract',
     'obsolete': 'trObsolete',
     'region': 'trRegion',
@@ -62,7 +93,11 @@ FIELD_MAP = {
     'languageoftranslation': 'trLanguageOfTranslation',
     'numberofpages': 'trNumberOfPages',
     'officialPublication': 'trOfficialPublication',
-    'InternetReference': 'trInternetReference',
+    'InternetReference': 'trInternetReference_en',
+    'InternetReferenceFr': 'trInternetReference_fr',
+    'InternetReferenceEs': 'trInternetReference_es',
+    'InternetReferenceOther': 'trInternetReferenceOther',
+
     'dateofconsolidation': 'trDateOfConsolidation',
 }
 
@@ -232,8 +267,8 @@ class TreatyImporter(object):
 
                 elis_id = data['trElisId'][0]
                 if elis_id == 'TRE-146817':
-                    data['trFieldOfApplication'] = ['Global',
-                                                    'Regional/restricted']
+                    data['trFieldOfApplication_en'] = ['Global',
+                                                       'Regional/restricted']
                 elif elis_id == 'TRE-149349':
                     data['trDateOfText'] = self._format_date('2009-10-02')
                 data['trElisId'] = elis_id
@@ -300,6 +335,9 @@ class TreatyImporter(object):
                               self.query_type, page)
         print(url)
         return url
+
+    def _check_treaty_month(self, treaty, month):
+        pass
 
     def test(self):
         pass

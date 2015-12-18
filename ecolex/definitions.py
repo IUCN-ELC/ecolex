@@ -14,7 +14,7 @@ DOC_SOURCES = {
 
 TREATY_FILTERS = {
     'trTypeOfText': 'tr_type',
-    'trFieldOfApplication': 'tr_field',
+    'trFieldOfApplication_en': 'tr_field',
     'trStatus': 'tr_status',
     'trPlaceOfAdoption': 'tr_place_of_adoption',
     'trDepository': 'tr_depository',
@@ -46,7 +46,7 @@ DOC_TYPE_FILTER_MAPPING = {
 
 FIELD_TO_FACET_MAPPING = {
     'tr_type': 'trTypeOfText',
-    'tr_field': 'trFieldOfApplication',
+    'tr_field': 'trFieldOfApplication_en',
     'tr_status': 'trStatus',
     'tr_place_of_adoption': 'trPlaceOfAdoption',
     'tr_depository': 'trDepository',
@@ -83,10 +83,10 @@ OPERATION_FIELD_MAPPING = {
 
 
 SOLR_FIELDS = [
-    'id', 'type', 'source', 'trTitleOfText', 'trJurisdiction', 'trStatus',
+    'id', 'type', 'source', 'trTitleOfText', 'trJurisdiction_en', 'trStatus',
     'trPlaceOfAdoption', 'trDateOfText', 'trDateOfEntry',
-    'trDateOfModification', 'trPaperTitleOfText', 'trPaperTitleOfTextFr',
-    'trPaperTitleOfTextSp', 'trPaperTitleOfTextOther', 'trTitleOfTextShort',
+    'trDateOfModification', 'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
+    'trPaperTitleOfText_sp', 'trPaperTitleOfText_other', 'trTitleOfTextShort',
     'decTitleOfText', 'decStatus', 'decPublishDate', 'decUpdateDate',
     'decNumber',
     'litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp', 'litLongTitle_other',
