@@ -13,11 +13,11 @@ DOC_SOURCES = {
 }
 
 TREATY_FILTERS = {
-    'trTypeOfText': 'tr_type',
+    'trTypeOfText_en': 'tr_type',
     'trFieldOfApplication_en': 'tr_field',
     'trStatus': 'tr_status',
     'trPlaceOfAdoption': 'tr_place_of_adoption',
-    'trDepository': 'tr_depository',
+    'trDepository_en': 'tr_depository',
 }
 
 DECISION_FILTERS = {
@@ -45,11 +45,11 @@ DOC_TYPE_FILTER_MAPPING = {
 }
 
 FIELD_TO_FACET_MAPPING = {
-    'tr_type': 'trTypeOfText',
+    'tr_type': 'trTypeOfText_en',
     'tr_field': 'trFieldOfApplication_en',
     'tr_status': 'trStatus',
     'tr_place_of_adoption': 'trPlaceOfAdoption',
-    'tr_depository': 'trDepository',
+    'tr_depository': 'trDepository_en',
 
     'dec_type': 'decType',
     'dec_status': 'decStatus',

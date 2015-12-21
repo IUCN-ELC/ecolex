@@ -336,6 +336,28 @@ class TreatyImporter(object):
         print(url)
         return url
 
+    def update_status(self):
+        rows = 50
+        index = 0
+        treaties = []
+        while True:
+            print(index)
+            docs = self.solr.solr.search('type:treaty', rows=rows, start=index)
+            for treaty in docs:
+                if 'trEntryIntoForceDate' not in treaty:
+                    treaty['trStatus'] = 'Not in force'
+                else:
+                    if 'trSupersededBy' in treaty:
+                        treaty['trStatus'] = 'Superseded'
+                    else:
+                        treaty['trStatus'] = 'In force'
+                treaties.append(treaty)
+
+            if len(docs) < rows:
+                break
+            index += rows
+        self.solr.add_bulk(treaties)
+
     def _check_treaty_month(self, treaty, month):
         pass
 

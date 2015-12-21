@@ -17,6 +17,7 @@ if __name__ == '__main__':
     parser.add_argument('--config', required=True)
     parser.add_argument('--test', action='store_true')
     parser.add_argument('--batch-size', type=int)
+    parser.add_argument('--update-status', action='store_true')
     parser.set_defaults(test=False, batch_size=1)
     args = parser.parse_args()
 
@@ -32,5 +33,7 @@ if __name__ == '__main__':
             print('Text passed')
         else:
             print('Text failed')
+    elif args.update_status:
+        importer.update_status()
     else:
         importer.harvest(args.batch_size)

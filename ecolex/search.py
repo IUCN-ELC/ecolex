@@ -235,7 +235,7 @@ def get_relevancy():
 
 def get_fq(filters):
     FACETS_MAP = {
-        'trTypeOfText': 'treaty',
+        'trTypeOfText_en': 'treaty',
         'trFieldOfApplication_en': 'treaty',
         'trStatus': 'treaty',
         'trPlaceOfAdoption': 'treaty',

@@ -8,3 +8,13 @@ TEST_INPUT_FILE = %(basedir)s/testing/court_decision_in.json
 TEST_OUTPUT_FILE = %(basedir)s/testing/court_decision_out.json
 COURT_DECISIONS_URL = http://leo.informea.org/ws/court-decisions
 DAYS_AGO = 7
+
+[treaty]
+TREATIES_URL = http://www.ecolex.org/elis_isis3w.php
+START_YEAR = 1981
+QUERY_EXPORT = ?database=tre&search_type=page_search&table=all
+QUERY_FORMAT = ES:I AND STAT:C AND DE:%d%02d
+QUERY_FILTER = &spage_query=%s
+QUERY_SKIP = &spage_first=%d
+QUERY_TYPE = &format_name=@xmlexp&lang=xmlf&page_header=@xmlh
+PER_PAGE = 20
