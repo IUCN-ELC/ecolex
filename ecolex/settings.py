@@ -90,18 +90,28 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
+        'fao_file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR, 'fao_import.log'),
             'formatter': 'verbose',
         },
+        'elis_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'elis_import.log'),
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         'ecolex': {
-            'handlers': ['file'],
+            'handlers': ['fao_file'],
             'level': 'INFO',
         },
+        'treaty': {
+            'handlers': ['elis_file'],
+            'level': 'INFO',
+        }
     }
 }
 
@@ -139,6 +149,6 @@ TEXT_SUGGESTION = True
 
 # Local settings
 try:
-    from .local_settings import *
+    from ecolex.local_settings import *
 except ImportError:
     pass

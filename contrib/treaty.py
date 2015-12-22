@@ -1,9 +1,19 @@
 from binascii import hexlify
 from bs4 import BeautifulSoup
 from datetime import datetime
+from django.conf import settings
 
 from utils import EcolexSolr, get_content_from_url, TREATY, get_file_from_url
 
+import logging
+import logging.config
+import os
+import sys
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
+sys.path.append('/ecolex/ecolex')
+logging.config.dictConfig(getattr(settings, 'LOGGING', {}))
+logger = logging.getLogger(TREATY)
 
 DOCUMENT = 'document'
 PARTY = 'party'
@@ -171,9 +181,9 @@ class Treaty(object):
         new_date = datetime.strptime(self.data[self.update_field][0],
                                      self.date_format)
         if old_date < new_date:
-            print('Update on %s' % (self.data['trElisId']))
+            logger.info('Update on %s' % (self.data['trElisId']))
             return True
-        print('No update on %s' % (self.data['trElisId']))
+        logger.info('No update on %s' % (self.data['trElisId']))
         return False
 
     def get_solr_format(self, elid_id, solr_id):
@@ -194,11 +204,12 @@ class TreatyImporter(object):
         self.query_type = config.get('query_type')
         self.per_page = int(config.get('per_page'))
         self.start_year = int(config.get('start_year'))
-        self.end_year = datetime.now().year
-        current_month = datetime.now().month
-        self.start_month = int(config.get('start_month', current_month))
-        self.end_month = int(config.get('end_month', current_month + 1))
+        now = datetime.now()
+        self.end_year = now.year
+        self.start_month = int(config.get('start_month', now.month))
+        self.end_month = int(config.get('end_month', now.month + 1))
         self.solr = EcolexSolr(self.solr_timeout)
+        logger.info('Started treaty impoter')
 
     def harvest(self, batch_size):
 
@@ -211,13 +222,16 @@ class TreatyImporter(object):
                 content = get_content_from_url(url)
                 bs = BeautifulSoup(content)
                 if bs.find('error'):
-                    print(year, month, 0)
+                    logger.error(url)
+                    logger.error('For %d/%d found 0 treaties' % (month, year))
                     continue
 
                 total_docs = int(bs.find('result').attrs[TOTAL_DOCS])
                 found_docs = len(bs.findAll(DOCUMENT))
                 raw_treaties.append(content)
-                print(year, month, total_docs, found_docs)
+                logger.info(url)
+                logger.info('For: %d/%d found: %d treaties' %
+                            (month, year, total_docs))
                 if total_docs > found_docs:
                     while skip < total_docs - found_docs:
                         skip += found_docs
@@ -225,7 +239,7 @@ class TreatyImporter(object):
                         content = get_content_from_url(url)
                         bs = BeautifulSoup(content)
                         if bs.find('error'):
-                            print('erorr')
+                            logger.error(url)
                         raw_treaties.append(content)
 
             treaties = self._parse(raw_treaties)
@@ -234,6 +248,7 @@ class TreatyImporter(object):
             new_treaties = filter(bool, [self._get_solr_treaty(treaty) for
                                          treaty in treaties.values()])
             self.solr.add_bulk(new_treaties)
+        logger.info('Finished harvesting')
 
     def _parse(self, raw_treaties):
         treaties = {}
@@ -346,7 +361,6 @@ class TreatyImporter(object):
 
         url = '%s%s%s%s%s' % (self.treaties_url, self.query_export, query,
                               self.query_type, page)
-        print(url)
         return url
 
     def update_status(self):
