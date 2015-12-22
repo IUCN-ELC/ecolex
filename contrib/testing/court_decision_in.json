@@ -1,0 +1,231 @@
+{
+  "field_original_id": {
+    "und": [
+      {
+        "value": "COU-143675",
+        "format": null,
+        "safe_value": "COU-143675"
+      }
+    ]
+  },
+  "field_court_decision_id_number": [],
+  "changed": "1445006658",
+  "field_reference_to_legislation": [],
+  "field_alternative_record_id": {
+    "und": [
+      {
+        "value": "807625+V-997082800+",
+        "format": null,
+        "safe_value": "807625+V-997082800+"
+      }
+    ]
+  },
+  "field_instance": [],
+  "field_country": [
+    "BGD"
+  ],
+  "field_abstract": {
+    "en": [
+      {
+        "value": "The petitioners questioned the activities and implementation of a flood control programme undertaken in the District of Tangail. The petitioners feared environmental damage from the flood control plan which would affect the life, property, livelihood, vocation and environmental security of more than one million people.\nThe petitioners had been authorized by a resolution of the Executive Committee of the Bangladesh Environmental Lawyers Association (BELA) to represent the association.\nThe court held that the flood control programme (FAP-20) was a development project aimed at controlling floods, which regularly brought misery to the flood-prone areas of Tangail and any interference with the project would deprive the country of the benefits of the scheme and foreign assistance.\nAlthough the court found it impractical to stop the work, the court ordered the respondents to comply with the law on drainage and resettlement of displaced persons and not to implement the scheme with impunity.\n",
+        "format": "full_html",
+        "safe_value": "<p>The petitioners questioned the activities and implementation of a flood control programme undertaken in the District of Tangail. The petitioners feared environmental damage from the flood control plan which would affect the life, property, livelihood, vocation and environmental security of more than one million people.<br />\nThe petitioners had been authorized by a resolution of the Executive Committee of the Bangladesh Environmental Lawyers Association (BELA) to represent the association.<br />\nThe court held that the flood control programme (FAP-20) was a development project aimed at controlling floods, which regularly brought misery to the flood-prone areas of Tangail and any interference with the project would deprive the country of the benefits of the scheme and foreign assistance.<br />\nAlthough the court found it impractical to stop the work, the court ordered the respondents to comply with the law on drainage and resettlement of displaced persons and not to implement the scheme with impunity.</p>\n"
+      }
+    ]
+  },
+  "field_jurisdiction": [],
+  "field_official_publication": [],
+  "field_available_in": {
+    "und": [
+      {
+        "value": "UNEP/UNDP/Dutch Government Joint Project on Environmental Law in Africa, Compendium of Judicial Decisions on Matters related to Environment, National Decisions, Volume II, Page 112",
+        "format": null,
+        "safe_value": "UNEP/UNDP/Dutch Government Joint Project on Environmental Law in Africa, Compendium of Judicial Decisions on Matters related to Environment, National Decisions, Volume II, Page 112"
+      }
+    ]
+  },
+  "field_isis_number": {
+    "und": [
+      {
+        "value": "000023",
+        "format": null,
+        "safe_value": "000023"
+      }
+    ]
+  },
+  "field_informea_tags": [
+    {
+      "url": "http://leo.informea.org/terms/flood-control",
+      "label": "flood control"
+    },
+    {
+      "url": "http://leo.informea.org/terms/drainage",
+      "label": "drainage"
+    }
+  ],
+  "field_faolex_reference": [],
+  "field_source_language": {
+    "und": [
+      {
+        "value": "en"
+      }
+    ]
+  },
+  "field_justices": {
+    "und": [
+      {
+        "value": "Hoque, K.",
+        "format": null,
+        "safe_value": "Hoque, K."
+      },
+      {
+        "value": "Huq, A., K.",
+        "format": null,
+        "safe_value": "Huq, A., K."
+      }
+    ]
+  },
+  "title_field": {
+    "en": [
+      {
+        "value": "Dr. Mohiuddin Farooque (Petitioner in Writ Petition No. 998 of 1994) and Sekandar Ali Mondol (Petitioner in Writ Petition No. 1576 of 1994) v. Bangladesh, represented by the Secretary, Ministry of Irrigation, Water Development and Flood Control",
+        "format": null,
+        "safe_value": "Dr. Mohiuddin Farooque (Petitioner in Writ Petition No. 998 of 1994) and Sekandar Ali Mondol (Petitioner in Writ Petition No. 1576 of 1994) v. Bangladesh, represented by the Secretary, Ministry of Irrigation, Water Development and Flood Control"
+      }
+    ]
+  },
+  "field_title_of_text_short": [],
+  "field_territorial_subdivision": [],
+  "field_title_of_text_other": [],
+  "field_related_url": {
+    "en": [
+      {
+        "url": "http://www.unep.org/padelia/publications/Compendium_Vol__II.pdf",
+        "attributes": [],
+        "title": null
+      }
+    ]
+  },
+  "field_notes": [],
+  "field_faolex_url": {
+    "en": [
+      {
+        "url": "http://faolex.fao.org/cgi-bin/faolex.exe?database=faolex&search_type=link&table=result&lang=eng&format_name=@ERALL&rec_id=000023",
+        "attributes": [],
+        "title": null
+      }
+    ]
+  },
+  "field_type_of_text": [
+    {
+      "url": "http://leo.informea.org/type-document/judicial-decision-higher-court",
+      "label": "Judicial decision of a higher court",
+      "id": "955"
+    }
+  ],
+  "field_ecolex_decision_status": [],
+  "field_abstract_other": [],
+  "field_url_other": [],
+  "field_court_decision": [
+    {
+      "url": "http://leo.informea.org/uuid/node/cff4313a-1ac1-4d01-bcc2-8955891f51b7",
+      "uuid": "cff4313a-1ac1-4d01-bcc2-8955891f51b7"
+    }
+  ],
+  "field_treaty": [],
+  "field_date_of_entry": {
+    "und": [
+      {
+        "timezone_db": "Europe/Zurich",
+        "value": "2006-11-22 00:00:00",
+        "timezone": "Europe/Zurich",
+        "date_type": "datetime"
+      }
+    ]
+  },
+  "field_date_of_modification": {
+    "und": [
+      {
+        "timezone_db": "Europe/Zurich",
+        "value": "2013-02-26 00:00:00",
+        "timezone": "Europe/Zurich",
+        "date_type": "datetime"
+      }
+    ]
+  },
+  "field_court_decision_subdivision": [],
+  "field_ecolex_url": {
+    "en": [
+      {
+        "url": "http://www.ecolex.org/ecolex/ledge/view/RecordDetails?index=courtdecisions&id=COU-143675",
+        "attributes": [],
+        "title": null
+      }
+    ]
+  },
+  "field_internet_reference_url": {
+    "en": [
+      {
+        "url": "http://www.unep.org/padelia/publications/Compendium_Vol__II.pdf",
+        "attributes": [],
+        "title": null
+      }
+    ]
+  },
+  "field_ecolex_keywords": [
+    {
+      "url": "http://leo.informea.org/thesaurus-ecolex/flood",
+      "label": "flood"
+    },
+    {
+      "url": "http://leo.informea.org/thesaurus-ecolex/drainageland-reclamation",
+      "label": "drainage/land reclamation"
+    }
+  ],
+  "field_city": [],
+  "field_sorting_date": {
+    "und": [
+      {
+        "timezone_db": "Europe/Zurich",
+        "value": "1997-08-28 00:00:00",
+        "timezone": "Europe/Zurich",
+        "date_type": "datetime"
+      }
+    ]
+  },
+  "uuid": "76ad40cb-e7c8-4028-abee-956fe7cde58d",
+  "field_ecolex_tags": [
+    {
+      "url": "http://leo.informea.org/thesaurus-ecolex/environment-gen",
+      "label": "Environment gen."
+    }
+  ],
+  "field_url": [],
+  "field_region": [],
+  "field_court_name": {
+    "und": [
+      {
+        "value": "Supreme Court of Bangladesh High Court Division",
+        "format": null,
+        "safe_value": "Supreme Court of Bangladesh High Court Division"
+      }
+    ]
+  },
+  "field_files": [],
+  "field_number_of_pages": {
+    "und": [
+      {
+        "value": "15"
+      }
+    ]
+  },
+  "field_reference_number": {
+    "und": [
+      {
+        "value": "Writ Petition No. 998 of 1994 with Writ Petition No. 1576 of 1994",
+        "format": null,
+        "safe_value": "Writ Petition No. 998 of 1994 with Writ Petition No. 1576 of 1994"
+      }
+    ]
+  }
+}

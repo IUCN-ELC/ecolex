@@ -52,8 +52,8 @@
 
       <dt>Subject</dt>
       <dd>
-        {% if document.solr.trSubject %}
-          {{ document.solr.trSubject | join_by:", " | safe }}
+        {% if document.solr.trSubject_en %}
+          {{ document.solr.trSubject_en | join_by:", " | safe }}
         {% else %}
           <span class="na">Not available</span>
         {% endif %}
@@ -71,7 +71,7 @@
 
       <dt>Keywords</dt>
       <dd>
-        {% for keyword in document.solr.trKeyword %}
+        {% for keyword in document.solr.trKeyword_en %}
           <span class="tag">{{ keyword }}</span>
         {% empty %}
           <span class="na">Not available</span>
@@ -86,7 +86,7 @@
     <dl>
       <dt>Abstract</dt>
       <dd>
-        {% for abs in document.solr.trAbstract %}
+        {% for abs in document.solr.trAbstract_en %}
           <p class="abstract">{{ abs|safe }}</p>
         {% empty %}
           <span class="na">Not available</span>

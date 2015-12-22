@@ -104,7 +104,7 @@
 
       <h6>Field of application</h6>
       <ul class="filter-treaty" data-formid="#id_tr_field">
-        {% include 'bits/checkbox_facet.html' with facet=facets.trFieldOfApplication form_field=form.tr_field show_empty=True %}
+        {% include 'bits/checkbox_facet.html' with facet=facets.trFieldOfApplication_en form_field=form.tr_field show_empty=True %}
       </ul>
 
       <h6>Status</h6>
@@ -119,7 +119,7 @@
 
       <div id="tr_depository" class="tag-select">
         <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.trDepository form_field=form.tr_depository %}
+          {% include 'bits/fancy_select.html' with facet=facets.trDepository_en form_field=form.tr_depository %}
         </select>
         <input type="text" class="tm-input" placeholder="Add depository" data-formid="#id_tr_depository"/>
       </div>

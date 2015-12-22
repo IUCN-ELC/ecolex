@@ -51,9 +51,6 @@ class ObjectNormalizer:
                 continue
         return ""
 
-    def jurisdiction(self):
-        return first(self.solr.get('trJurisdiction', "International"))
-
     def summary(self):
         return first(self.solr.get(self.SUMMARY_FIELD), "")
 
@@ -91,36 +88,25 @@ class Treaty(ObjectNormalizer):
     ID_FIELD = 'trElisId'
     SUMMARY_FIELD = 'trIntroText'
     TITLE_FIELDS = [
-        'trPaperTitleOfText', 'trPaperTitleOfTextFr', 'trPaperTitleOfTextSp',
-        'trPaperTitleOfTextOther', 'trTitleOfTextShort',
+        'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
+        'trPaperTitleOfText_sp', 'trPaperTitleOfText_other',
+        'trTitleOfTextShort',
     ]
     DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
     DOCTYPE_FIELD = 'trTypeOfText'
     OPTIONAL_INFO_FIELDS = [
         # (solr field, display text, type=text)
         ('trTitleAbbreviation', 'Title Abbreviation', ''),
-        #('trEntryIntoForceDate', 'Entry into force', 'date'),
         ('trPlaceOfAdoption', 'Place of adoption', ''),
         ('trAvailableIn', 'Available in', ''),
         ('trRegion', 'Geographical area', ''),
-        ('trBasin', 'Basin', ''),
-        ('trDepository', 'Depository', ''),
+        ('trBasin_en', 'Basin', ''),
+        ('trDepository_en', 'Depository', ''),
         ('trUrl', 'Available web site', 'url'),
-        #('trLinkToFullText', 'Link to full text', 'url'),
-        #('trLinkToFullTextSp', 'Link to full text (spanish)', 'url'),
-        #('trLinkToFullTextFr', 'Link to full text (french)', 'url'),
-        #('trLinkToFullTextOther', 'Link to full text (other)', 'url'),
-        ('trLanguageOfDocument', 'Language', ''),
+        ('trLanguageOfDocument_en', 'Language', ''),
         ('trLanguageOfTranslation', 'Translation', ''),
-        #('trAbstract', 'Abstract', 'text'),
-        # display comments the same way as texts
-        #('trComment', 'Comment', 'text'),
-        # keywords are considered safe.
-        #('trSubject', 'Subject', 'keyword'),
-        # ('trKeyword', 'Keywords', 'keyword'),
-        #('trNumberOfPages', 'Number of pages', ''),
         ('trOfficialPublication', 'Official publication', ''),
-        ('trInternetReference', 'Internet Reference', ''),
+        ('trInternetReference_en', 'Internet Reference', ''),
         ('trDateOfConsolidation', 'Consolidation Date', 'date')
     ]
 
@@ -136,13 +122,13 @@ class Treaty(ObjectNormalizer):
     }
 
     def jurisdiction(self):
-        return first(self.solr.get('trJurisdiction'))
+        return first(self.solr.get('trJurisdiction_en'))
 
     def place_of_adoption(self):
         return first(self.solr.get('trPlaceOfAdoption'))
 
     def field_of_application(self):
-        return first(self.solr.get('trFieldOfApplication'))
+        return first(self.solr.get('trFieldOfApplication_en'))
 
     def url(self):
         return first(self.solr.get('trUrlTreatyText'))

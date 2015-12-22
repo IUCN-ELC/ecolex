@@ -1,5 +1,6 @@
 from datetime import datetime
 from io import BytesIO
+import json
 import pysolr
 import os
 import re
@@ -7,8 +8,15 @@ import requests
 import hashlib
 import random
 
+TREATY = 'treaty'
+COP_DECISION = 'decision'
+LEGISLATION = 'legislation'
+COURT_DECISION = 'court_decision'
+LITERATURE = 'literature'
 
-DEC_TREATY_FIELDS = ['partyCountry', 'trSubject']
+OBJ_TYPES = [TREATY, COP_DECISION, LEGISLATION, COURT_DECISION, LITERATURE]
+
+DEC_TREATY_FIELDS = ['partyCountry', 'trSubject_en']
 
 
 def get_file_from_url(url):
@@ -49,12 +57,26 @@ def generate_fao_api_key():
     return hashlib.sha256(seed).hexdigest()
 
 
+def get_json_from_url(url, headers={}):
+    resp = requests.get(url, headers=headers)
+    if not resp.status_code == 200:
+        raise RuntimeError('Unexpected request status code')
+
+    try:
+        return json.loads(resp.text)
+    except ValueError as ex:
+        # TODO: replace this with logging
+        print(url, ex)
+
+
+def get_content_from_url(url):
+    resp = requests.get(url)
+    if not resp.status_code == 200:
+        raise RuntimeError('Unexpected request status code')
+    return resp.content
+
+
 class EcolexSolr(object):
-    COP_DECISION = 'COP Decision'
-    COURT_DECISION = 'Court Decision'
-    TREATY = 'Treaty'
-    LITERATURE = 'Literature'
-    LEGISLATION = 'Legislation'
 
     # This is just an idea, might not be accurate
     ID_MAPPING = {
@@ -65,11 +87,12 @@ class EcolexSolr(object):
         LEGISLATION: 'legId',
     }
 
-    def __init__(self):
+    def __init__(self, timeout=10):
         solr_uri = os.environ.get('SOLR_URI')
         if not solr_uri:
             raise RuntimeError('SOLR_URI environment variable not set.')
-        self.solr = pysolr.Solr(solr_uri, timeout=30)
+
+        self.solr = pysolr.Solr(solr_uri, timeout=timeout)
 
     def search(self, obj_type, id_value):
         id_field = self.ID_MAPPING.get(obj_type)
@@ -84,9 +107,11 @@ class EcolexSolr(object):
 
     def add(self, obj):
         self.solr.add([obj])
+        self.solr.optimize()
 
     def add_bulk(self, bulk_obj):
         self.solr.add(bulk_obj)
+        self.solr.optimize()
 
     def extract(self, file):
         # TODO should probably catch and log it in the caller
@@ -95,6 +120,3 @@ class EcolexSolr(object):
         except pysolr.SolrError:
             return ''
         return response['contents']
-
-    def __del__(self):
-        self.solr.optimize()
