@@ -8,6 +8,7 @@ from utils import EcolexSolr, get_content_from_url, TREATY, get_file_from_url
 DOCUMENT = 'document'
 PARTY = 'party'
 COUNTRY = 'country'
+TOTAL_DOCS = 'numberresultsfound'
 
 FIELD_MAP = {
     'recid': 'trElisId',
@@ -162,10 +163,17 @@ class Treaty(object):
         self.data = data
         self.solr = solr
         self.update_field = 'trDateOfModification'
+        self.date_format = '%Y-%m-%dT%H:%M:%SZ'
 
     def is_modified(self, old_treaty):
-        if self.data[self.update_field] != old_treaty[self.update_field]:
+        old_date = datetime.strptime(old_treaty[self.update_field],
+                                     self.date_format)
+        new_date = datetime.strptime(self.data[self.update_field][0],
+                                     self.date_format)
+        if old_date < new_date:
+            print('Update on %s' % (self.data['trElisId']))
             return True
+        print('No update on %s' % (self.data['trElisId']))
         return False
 
     def get_solr_format(self, elid_id, solr_id):
@@ -178,6 +186,7 @@ class TreatyImporter(object):
     def __init__(self, config):
         self.solr_timeout = config.getint('solr_timeout')
         self.treaties_url = config.get('treaties_url')
+        self.import_field = config.get('import_field')
         self.query_format = config.get('query_format')
         self.query_filter = config.get('query_filter')
         self.query_export = config.get('query_export')
@@ -185,15 +194,18 @@ class TreatyImporter(object):
         self.query_type = config.get('query_type')
         self.per_page = int(config.get('per_page'))
         self.start_year = int(config.get('start_year'))
-        self.end_year = datetime.now().year + 1
+        self.end_year = datetime.now().year
+        current_month = datetime.now().month
+        self.start_month = int(config.get('start_month', current_month))
+        self.end_month = int(config.get('end_month', current_month + 1))
         self.solr = EcolexSolr(self.solr_timeout)
 
     def harvest(self, batch_size):
 
-        for year in range(self.start_year, self.end_year):
+        for year in range(self.end_year, self.start_year, -1):
             raw_treaties = []
 
-            for month in range(1, 13):
+            for month in range(self.start_month, self.end_month):
                 skip = 0
                 url = self._create_url(year, month, skip)
                 content = get_content_from_url(url)
@@ -202,13 +214,13 @@ class TreatyImporter(object):
                     print(year, month, 0)
                     continue
 
-                docs_found = int(bs.find('result').attrs['numberresultsfound'])
-            # CHECK HERE IF THERE ARE LESS DOCUMENTS INDEXED IN SOLR FOR THIS YEAR
+                total_docs = int(bs.find('result').attrs[TOTAL_DOCS])
+                found_docs = len(bs.findAll(DOCUMENT))
                 raw_treaties.append(content)
-                print(year, month, docs_found)
-                if docs_found > self.per_page:
-                    while skip < docs_found - self.per_page:
-                        skip += 20
+                print(year, month, total_docs, found_docs)
+                if total_docs > found_docs:
+                    while skip < total_docs - found_docs:
+                        skip += found_docs
                         url = self._create_url(year, month, skip)
                         content = get_content_from_url(url)
                         bs = BeautifulSoup(content)
@@ -280,7 +292,7 @@ class TreatyImporter(object):
         new_treaty = Treaty(treaty_data, self.solr)
         existing_treaty = self.solr.search(TREATY, treaty_data['trElisId'])
         if existing_treaty and not new_treaty.is_modified(existing_treaty):
-            return
+            return None
         solr_id = existing_treaty['id'] if existing_treaty else None
         return new_treaty.get_solr_format(treaty_data['trElisId'], solr_id)
 
@@ -291,7 +303,8 @@ class TreatyImporter(object):
         date_info = date.split('-')
         if len(date_info) != 3:
             return False
-        if date_info[0] == '0000' or date_info[1] == '00' or date_info[2] == '00':
+        if (date_info[0] == '0000' or date_info[1] == '00'
+                or date_info[2] == '00'):
             return False
         return True
 
@@ -320,10 +333,10 @@ class TreatyImporter(object):
         for elis_id, doc in solr_docs.items():
             for orig_field, backlink_field in REFERENCE_MAPPING.items():
                 if orig_field in doc:
-                    for reference in doc[orig_field]:
-                        if reference in solr_docs:
-                            solr_docs[reference].setdefault(backlink_field, [])
-                            solr_docs[reference][backlink_field].append(elis_id)
+                    for ref in doc[orig_field]:
+                        if ref in solr_docs:
+                            solr_docs[ref].setdefault(backlink_field, [])
+                            solr_docs[ref][backlink_field].append(elis_id)
 
     def _create_url(self, year, month, skip):
         query_year = self.query_format % (year, month)
@@ -357,9 +370,6 @@ class TreatyImporter(object):
                 break
             index += rows
         self.solr.add_bulk(treaties)
-
-    def _check_treaty_month(self, treaty, month):
-        pass
 
     def test(self):
         pass
