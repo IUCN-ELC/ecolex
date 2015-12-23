@@ -210,7 +210,7 @@ class TreatyImporter(object):
         self.start_month = int(config.get('start_month', now.month))
         self.end_month = int(config.get('end_month', now.month + 1))
         self.solr = EcolexSolr(self.solr_timeout)
-        logger.info('Started treaty impoter')
+        logger.info('Started treaty importer')
 
     def harvest(self, batch_size):
 

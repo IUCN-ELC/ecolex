@@ -1,15 +1,17 @@
 import argparse
 import configparser
 
-from utils import OBJ_TYPES, COURT_DECISION, TREATY, LITERATURE
+from utils import OBJ_TYPES, COURT_DECISION, TREATY, LITERATURE, COP_DECISION
 from court_decision import CourtDecisionImporter
 from treaty import TreatyImporter
 from literature import LiteratureImporter
+from cop_decision import CopDecisionImporter
 
 CLASS_MAPPING = {
     COURT_DECISION: CourtDecisionImporter,
     TREATY: TreatyImporter,
     LITERATURE: LiteratureImporter,
+    COP_DECISION: CopDecisionImporter,
 }
 
 

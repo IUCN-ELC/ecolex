@@ -59,3 +59,14 @@ QUERY_FILTER = &spage_query=%s
 QUERY_SKIP = &spage_first=%d
 QUERY_TYPE = &format_name=@xmlexp&lang=xmlf&page_header=@xmlh
 PER_PAGE = 20
+
+
+[decision]
+COP_DECISION_URL = http://odata.informea.org/informea.svc/Decisions
+QUERY_SKIP = $top=%d&$skip=%d
+QUERY_FILTER = $filter=updated gt datetime'%s'
+QUERY_FORMAT = $format=json
+QUERY_EXPAND = $expand=title,longTitle,keywords,content,files
+QUERY_ORDER = $orderby=updated asc
+PER_PAGE = 100
+DAYS_AGO = 7
