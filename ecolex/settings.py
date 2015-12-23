@@ -111,6 +111,10 @@ LOGGING = {
         'treaty': {
             'handlers': ['elis_file'],
             'level': 'INFO',
+        },
+        'literature': {
+            'handlers': ['elis_file'],
+            'level': 'INFO',
         }
     }
 }

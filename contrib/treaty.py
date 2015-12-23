@@ -174,6 +174,7 @@ class Treaty(object):
         self.solr = solr
         self.update_field = 'trDateOfModification'
         self.date_format = '%Y-%m-%dT%H:%M:%SZ'
+        self.elis_id = 'trElisId'
 
     def is_modified(self, old_treaty):
         old_date = datetime.strptime(old_treaty[self.update_field],
@@ -181,12 +182,12 @@ class Treaty(object):
         new_date = datetime.strptime(self.data[self.update_field][0],
                                      self.date_format)
         if old_date < new_date:
-            logger.info('Update on %s' % (self.data['trElisId']))
+            logger.info('Update on %s' % (self.data[self.elis_id]))
             return True
-        logger.info('No update on %s' % (self.data['trElisId']))
+        logger.info('No update on %s' % (self.data[self.elis_id]))
         return False
 
-    def get_solr_format(self, elid_id, solr_id):
+    def get_solr_format(self, elis_id, solr_id):
         if solr_id:
             self.data['id'] = solr_id
         return self.data
@@ -248,7 +249,7 @@ class TreatyImporter(object):
             new_treaties = filter(bool, [self._get_solr_treaty(treaty) for
                                          treaty in treaties.values()])
             self.solr.add_bulk(new_treaties)
-        logger.info('Finished harvesting')
+        logger.info('Finished harvesting treaties')
 
     def _parse(self, raw_treaties):
         treaties = {}
