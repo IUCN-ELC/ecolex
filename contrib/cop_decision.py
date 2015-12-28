@@ -1,19 +1,14 @@
 from datetime import date, datetime, timedelta
-from django.conf import settings
-
-from utils import EcolexSolr, COP_DECISION, get_date, get_file_from_url
-from utils import DEC_TREATY_FIELDS
-
 import logging
 import logging.config
-import os
 import re
 import requests
-import sys
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
-sys.path.append('/ecolex/ecolex')
-logging.config.dictConfig(getattr(settings, 'LOGGING', {}))
+from utils import EcolexSolr, get_date, get_file_from_url
+from utils import COP_DECISION, DEC_TREATY_FIELDS
+from config.logging import LOG_DICT
+
+logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger(COP_DECISION)
 regex = re.compile(r'[\n\t\r]')
 

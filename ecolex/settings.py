@@ -96,36 +96,12 @@ LOGGING = {
             'filename': os.path.join(BASE_DIR, 'fao_import.log'),
             'formatter': 'verbose',
         },
-        'elis_file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'elis_import.log'),
-            'formatter': 'verbose',
-        },
-        'informea_file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'informea_import.log'),
-            'formatter': 'verbose',
-        },
     },
     'loggers': {
         'ecolex': {
             'handlers': ['fao_file'],
             'level': 'INFO',
         },
-        'treaty': {
-            'handlers': ['elis_file'],
-            'level': 'INFO',
-        },
-        'literature': {
-            'handlers': ['elis_file'],
-            'level': 'INFO',
-        },
-        'decision': {
-            'handlers': ['informea_file'],
-            'level': 'INFO',
-        }
     }
 }
 

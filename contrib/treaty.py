@@ -1,18 +1,13 @@
 from binascii import hexlify
 from bs4 import BeautifulSoup
 from datetime import datetime
-from django.conf import settings
-
-from utils import EcolexSolr, get_content_from_url, TREATY, get_file_from_url
-
 import logging
 import logging.config
-import os
-import sys
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
-sys.path.append('/ecolex/ecolex')
-logging.config.dictConfig(getattr(settings, 'LOGGING', {}))
+from config.logging import LOG_DICT
+from utils import EcolexSolr, TREATY, get_content_from_url, get_file_from_url
+
+logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger(TREATY)
 
 DOCUMENT = 'document'

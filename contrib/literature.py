@@ -1,20 +1,14 @@
 from binascii import hexlify
 from bs4 import BeautifulSoup
 from datetime import datetime
-from django.conf import settings
+import logging
+import logging.config
 
+from config.logging import LOG_DICT
 from utils import EcolexSolr, LITERATURE, get_content_from_url, valid_date
 from utils import format_date, get_file_from_url
 
-import logging
-import logging.config
-import os
-import sys
-
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
-sys.path.append('/ecolex/ecolex')
-logging.config.dictConfig(getattr(settings, 'LOGGING', {}))
+logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger(LITERATURE)
 
 TOTAL_DOCS = 'numberresultsfound'
