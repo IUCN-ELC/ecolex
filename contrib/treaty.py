@@ -8,7 +8,7 @@ from config.logging import LOG_DICT
 from utils import EcolexSolr, TREATY, get_content_from_url, get_file_from_url
 
 logging.config.dictConfig(LOG_DICT)
-logger = logging.getLogger(TREATY)
+logger = logging.getLogger('import')
 
 DOCUMENT = 'document'
 PARTY = 'party'

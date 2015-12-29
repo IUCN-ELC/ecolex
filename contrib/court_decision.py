@@ -1,9 +1,14 @@
 from datetime import datetime, timedelta
 import json
+import logging
+import logging.config
 
+from config.logging import LOG_DICT
 from utils import EcolexSolr, get_json_from_url, get_file_from_url
 from utils import COURT_DECISION
 
+logging.config.dictConfig(LOG_DICT)
+logger = logging.getLogger('import')
 
 JSON_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
@@ -103,11 +108,11 @@ REFERENCE_FIELDS = {'field_treaty': 'original_id',
 
 def get_country_value(countries, value):
     if len(value) != 1:
-        print('Unexpected value: {}!'.format(value))
+        logger.error('Unexpected value: {}!'.format(value))
         return {}
     country = countries.get(value[0], {})
     if not country:
-        print('Country code {} not found!'.format(value))
+        logger.error('Country code {} not found!'.format(value))
     return country
 
 
@@ -204,6 +209,7 @@ class CourtDecisionImporter(object):
         self.test_output_file = config.get('test_output_file')
         self.countries = self._get_countries()
         self.solr = EcolexSolr(self.solr_timeout)
+        logger.info('Started Court Decision importer')
 
     def test(self):
         with open(self.test_input_file) as fi, open(self.test_output_file) as fo:
@@ -224,6 +230,7 @@ class CourtDecisionImporter(object):
             new_decisions = filter(bool,
                                    [self._get_solr_decision(decision)
                                     for decision in decisions[start:end]])
+            logger.info('Adding {} court decisions'.format(len(new_decisions)))
             self.solr.add_bulk(new_decisions)
             start = end
 
@@ -248,7 +255,6 @@ class CourtDecisionImporter(object):
         return get_json_from_url(self.court_decisions_url)
 
     def _get_countries(self):
-        print(self.countries_json)
         with open(self.countries_json) as f:
             codes_countries = json.load(f)
         codes = codes_countries['code_corresp']

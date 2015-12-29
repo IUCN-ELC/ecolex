@@ -7,36 +7,32 @@ LOG_DICT = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'format': "[%(asctime)s] %(levelname)s "
+                      "[%(filename)s:%(lineno)s] %(message)s",
             'datefmt': "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': "[%(asctime)s] %(levelname)s %(message)s",
+            'datefmt': "%H:%M:%S"
         },
     },
     'handlers': {
-        'elis_file': {
+        'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': str(BASE_DIR / 'elis_import.log'),
+            'filename': str(BASE_DIR / 'import.log'),
             'formatter': 'verbose',
         },
-        'informea_file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': str(BASE_DIR / 'informea_import.log'),
-            'formatter': 'verbose',
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
         },
     },
     'loggers': {
-        'treaty': {
-            'handlers': ['elis_file'],
-            'level': 'INFO',
+        'import': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
         },
-        'literature': {
-            'handlers': ['elis_file'],
-            'level': 'INFO',
-        },
-        'decision': {
-            'handlers': ['informea_file'],
-            'level': 'INFO',
-        }
     }
 }

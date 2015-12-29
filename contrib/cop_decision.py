@@ -9,7 +9,7 @@ from utils import COP_DECISION, DEC_TREATY_FIELDS
 from config.logging import LOG_DICT
 
 logging.config.dictConfig(LOG_DICT)
-logger = logging.getLogger(COP_DECISION)
+logger = logging.getLogger('import')
 regex = re.compile(r'[\n\t\r]')
 
 LANGUAGES = ['en', 'es', 'fr', 'ar', 'ru', 'zh']

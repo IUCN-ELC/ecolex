@@ -9,7 +9,7 @@ from utils import EcolexSolr, LITERATURE, get_content_from_url, valid_date
 from utils import format_date, get_file_from_url
 
 logging.config.dictConfig(LOG_DICT)
-logger = logging.getLogger(LITERATURE)
+logger = logging.getLogger('import')
 
 TOTAL_DOCS = 'numberresultsfound'
 DOCUMENT = 'document'

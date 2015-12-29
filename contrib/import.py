@@ -1,11 +1,17 @@
 import argparse
 import configparser
+import logging
+import logging.config
 
 from utils import OBJ_TYPES, COURT_DECISION, TREATY, LITERATURE, COP_DECISION
 from court_decision import CourtDecisionImporter
 from treaty import TreatyImporter
 from literature import LiteratureImporter
 from cop_decision import CopDecisionImporter
+from config.logging import LOG_DICT
+
+logging.config.dictConfig(LOG_DICT)
+logger = logging.getLogger(__name__)
 
 CLASS_MAPPING = {
     COURT_DECISION: CourtDecisionImporter,
@@ -34,9 +40,9 @@ if __name__ == '__main__':
 
     if args.test:
         if importer.test():
-            print('Text passed')
+            logger.info('Test for {} passed.'.format(args.obj_type))
         else:
-            print('Text failed')
+            logger.warn('Test for {} failed.'.format(args.obj_type))
     elif args.update_status:
         importer.update_status()
     else:
