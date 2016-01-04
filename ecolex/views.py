@@ -10,7 +10,7 @@ import logging
 from contrib.import_legislation_fao import harvest_file
 from ecolex.search import (
     search, get_document, get_all_treaties, get_documents_by_field,
-    get_treaty_by_informea_id
+    get_treaty_by_informea_id, get_referenced_treaties
 )
 from ecolex.forms import SearchForm
 from ecolex.definitions import (
@@ -137,10 +137,11 @@ class SearchResults(SearchView):
 
         # a map of (treatyId -> treatyNames) for treaties which are referenced
         # by decisions in the current result set
-        all_treaties = get_all_treaties()
-        ctx['dec_treaty_names'] = {
-            t.informea_id(): t for t in all_treaties if t.informea_id()
-        }
+        if 'decision' in self.request.GET.getlist('type', []):
+            all_treaties = get_referenced_treaties()
+            ctx['dec_treaty_names'] = {
+                t.informea_id(): t for t in all_treaties
+            }
 
         ctx['page'] = self.page_details(page, results)
         self.update_form_choices(ctx['facets'])
