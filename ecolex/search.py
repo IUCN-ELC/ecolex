@@ -382,9 +382,3 @@ def get_treaty_by_informea_id(informea_id):
 def get_all_treaties():
     result = search('type:treaty', raw=True, rows=10000)
     return result
-
-
-def get_referenced_treaties():
-    result = search('type:treaty AND trInformeaId:[* TO *]', raw=True,
-                    rows=2000)
-    return result
