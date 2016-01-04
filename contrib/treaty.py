@@ -83,7 +83,7 @@ FIELD_MAP = {
     'linktofulltext': 'trLinkToFullText_en',
     'linktofulltextsp': 'trLinkToFullText_es',
     'linktofulltextfr': 'trLinkToFullText_fr',
-    'linktofulltextother': 'trLinkToFullTextOther',
+    'linktofulltextother': 'trLinkToFullText_other',
 
     'linktoabstract': 'trLinkToAbstract',
     'obsolete': 'trObsolete',
@@ -102,7 +102,7 @@ FIELD_MAP = {
     'InternetReference': 'trInternetReference_en',
     'InternetReferenceFr': 'trInternetReference_fr',
     'InternetReferenceEs': 'trInternetReference_es',
-    'InternetReferenceOther': 'trInternetReferenceOther',
+    'InternetReferenceOther': 'trInternetReference_other',
 
     'dateofconsolidation': 'trDateOfConsolidation',
 }

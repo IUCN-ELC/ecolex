@@ -123,7 +123,7 @@
     <field name="trLinkToFullText_en" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="trLinkToFullText_es" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="trLinkToFullText_fr" type="string" indexed="false" stored="true" multiValued="true"/>
-    <field name="trLinkToFullTextOther" type="string" indexed="false" stored="true" multiValued="true"/>
+    <field name="trLinkToFullText_other" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="trLinkToAbstract" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="trRegion" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trBasin_en" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -156,7 +156,7 @@
     <field name="trInternetReference_en" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trInternetReference_fr" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trInternetReference_es" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="trInternetReferenceOther" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trInternetReference_other" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trDateOfConsolidation" type="tdate" indexed="true" stored="true" multiValued="true"/>
 
     <!-- Field that holds all searchable data -->
