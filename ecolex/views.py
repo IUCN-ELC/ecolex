@@ -137,7 +137,8 @@ class SearchResults(SearchView):
 
         # a map of (treatyId -> treatyNames) for treaties which are referenced
         # by decisions in the current result set
-        if 'decision' in self.request.GET.getlist('type', []):
+        types = self.request.GET.getlist('type', [])
+        if 'decision' in types or types == []:
             all_treaties = results.get_facet_treaty_names()
             ctx['dec_treaty_names'] = {
                 t.informea_id(): t for t in all_treaties

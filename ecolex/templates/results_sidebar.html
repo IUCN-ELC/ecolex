@@ -95,12 +95,10 @@
         data-target="#filter-treaties">Treaty filters</h5>
 
     <div id="filter-treaties" class="collapse {% if form.has_treaty %}in{% endif %}">
-      {% if facets.trTypeOfText %}
         <h6>Type of document</h6>
         <ul class="filter-treaty" data-formid="#id_tr_type">
           {% include 'bits/checkbox_facet.html' with facet=facets.trTypeOfText form_field=form.tr_type show_empty=True %}
         </ul>
-      {% endif %}
 
       <h6>Field of application</h6>
       <ul class="filter-treaty" data-formid="#id_tr_field">
@@ -157,7 +155,7 @@
       <h6>Treaty</h6>
       <div id="dec_treaty" class="tag-select">
         <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.decTreatyId type_map=dec_treaty_names form_field=form.dec_treaty %}
+          {% include 'bits/fancy_select_map.html' with facet=facets.decTreatyId type_map=dec_treaty_names form_field=form.dec_treaty %}
         </select>
         <input type="text" class="tm-input" placeholder="Add treaties" data-formid="#id_dec_treaty"/>
       </div>
