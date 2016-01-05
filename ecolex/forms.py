@@ -1,6 +1,6 @@
 from django.forms import Form, CharField, MultipleChoiceField, TextInput
 
-from ecolex.definitions import DOC_TYPE, DOC_TYPE_FILTER_MAPPING
+from ecolex.definitions import DOC_TYPE
 
 
 class SearchForm(Form):
@@ -53,9 +53,7 @@ class SearchForm(Form):
     sortby = CharField(initial='')
 
     def _has_document_type(self, doctype):
-        return (not self.data.get('type') and any(
-            self.data.get(f) for f in DOC_TYPE_FILTER_MAPPING[doctype].values()
-        )) or (doctype in self.data.get('type', []))
+        return doctype in self.data.get('type', [])
 
     def has_treaty(self):
         return self._has_document_type('treaty')
