@@ -4,7 +4,8 @@ from .views import (
     ResultDetailsParticipants, debug, SearchResultsAjax, DecMeetingView,
     TreatyParticipantView, DecisionDetails, TreatyDetails, LiteratureDetails,
     CourtDecisionDetails, ResultDetailsLiteratures, FaoFeedView,
-    ResultDetailsCourtDecisions, LegislationDetails
+    ResultDetailsCourtDecisions, LegislationDetails,
+    SelectFacetsAjax,
 )
 
 
@@ -15,6 +16,8 @@ urlpatterns = patterns(
         name="results"),
     url(r'^result/ajax/', SearchResultsAjax.as_view(),
         name="results_ajax"),
+    url(r'^facets/ajax/', SelectFacetsAjax.as_view(),
+        name="facets_ajax"),
     url(r'^meeting/(?P<id>[^/]+)/', DecMeetingView.as_view(),
         name="meeting_details"),
     url(r'^participant/(?P<id>[a-z\-]+)/', TreatyParticipantView.as_view(),

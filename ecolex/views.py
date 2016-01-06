@@ -9,13 +9,12 @@ import logging
 
 from contrib.import_legislation_fao import harvest_file
 from ecolex.search import (
-    search, get_document, get_all_treaties, get_documents_by_field,
-    get_treaty_by_informea_id
+    search, get_document, get_documents_by_field, get_treaty_by_informea_id
 )
 from ecolex.forms import SearchForm
 from ecolex.definitions import (
     DOC_TYPE, DOC_TYPE_FILTER_MAPPING, FIELD_TO_FACET_MAPPING, SOLR_FIELDS,
-    OPERATION_FIELD_MAPPING
+    OPERATION_FIELD_MAPPING, SELECT_FACETS
 )
 
 from uuid import uuid4
@@ -161,6 +160,28 @@ class SearchResultsAjax(SearchResults):
         search_form_inputs = render_to_string('bits/hidden_form.html', ctx)
         return JsonResponse(dict(main=main, sidebar=sidebar,
                                  form_inputs=search_form_inputs))
+
+
+class SelectFacetsAjax(SearchView):
+
+    def get(self, request, **kwargs):
+        ctx = super(SelectFacetsAjax, self).get_context_data(**kwargs)
+        fields = SOLR_FIELDS
+        results = search(self.query, filters=self.filters, sortby=self.sortby,
+                         fields=fields)
+        facets = results.get_facets()
+        data = {}
+        print(facets.keys())
+        for k, v in SELECT_FACETS.items():
+            if k not in facets:
+                continue
+            context = {
+                'facet': facets[k],
+                'form_field': ctx['form'][v]
+            }
+            data[v] = render_to_string('bits/fancy_select.html', context)
+
+        return JsonResponse(data)
 
 
 class DecMeetingView(SearchView):

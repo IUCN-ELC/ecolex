@@ -85,6 +85,24 @@ FIELD_TO_FACET_MAPPING = {
 }
 
 
+SELECT_FACETS = {
+    'docSubject': 'subject',
+    'docKeyword': 'keyword',
+    'docCountry': 'country',
+    'docRegion': 'region',
+    'docLanguage': 'language',
+
+    'trDepository_en': 'tr_depository',
+    'trPlaceOfAdoption': 'tr_place_of_adoption',
+
+    'cdTerritorialSubdivision': 'cd_territorial_subdivision',
+
+    'litAuthor': 'lit_author',
+    'litSerialTitle': 'lit_serial',
+    'litPublisher': 'lit_publisher',
+}
+
+
 OPERATION_FIELD_MAPPING = {
     'tr_depository_op': 'tr_depository',
     'lit_author_op': 'lit_author',

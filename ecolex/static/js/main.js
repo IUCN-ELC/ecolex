@@ -94,7 +94,7 @@ $(document).ready(function () {
         if (serialized_form_data != _initial_form_data) {
             block_ui();
             $.ajax({
-                url: '/result/ajax?' + serialized_form_data,
+                url: '/result/ajax/?' + serialized_form_data,
                 format: 'JSON',
                 success: function (data) {
                     $('#layout-main').html(data.main);
@@ -102,7 +102,7 @@ $(document).ready(function () {
                     $("#search-form-inputs").html(data.form_inputs);
                     _initial_form_data = serialized_form_data;
                     $(".search-form").deserialize(serialized_form_data);
-                    init_all();
+                    get_select_facets();
                     unblock_ui();
                     // for bootstrap tour
                     $("body").trigger('onajax');
@@ -114,6 +114,21 @@ $(document).ready(function () {
         } else {
             console.log('No new data, not submitting.');
         }
+    }
+
+    function get_select_facets() {
+        var data = $('.search-form').serialize();
+        $.ajax({
+            url: '/facets/ajax/?' + data,
+            format: 'JSON',
+            success: function (data) {
+                $.each(data, function(k, v) {
+                    var id_select = '#' + k + '-filter select';
+                    $(id_select).html(v);
+                });
+                init_all();
+            },
+        });
     }
 
     function init_all() {
@@ -395,6 +410,5 @@ $(document).ready(function () {
         });
 
     }
-
-    init_all();
+    get_select_facets();
 });

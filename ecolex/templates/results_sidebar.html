@@ -11,7 +11,6 @@
     </ul>
     <div id="subject-filter" class="tag-select">
       <select class="tag-options" hidden>
-        {% include 'bits/fancy_select.html' with facet=facets.docSubject form_field=form.subject %}
       </select>
       <input type="text" class="tm-input full-match" placeholder="Add subjects" data-formid="#id_subject"/>
     </div>
@@ -22,7 +21,6 @@
     </ul>
     <div id="keyword-filter" class="tag-select">
       <select class="tag-options" hidden>
-        {% include 'bits/fancy_select.html' with facet=facets.docKeyword form_field=form.keyword %}
       </select>
       <input type="text" class="tm-input full-match" placeholder="Add keywords" data-formid="#id_keyword"/>
     </div>
@@ -33,7 +31,6 @@
     </ul>
     <div id="country-filter" class="tag-select">
       <select class="tag-options" hidden>
-        {% include 'bits/fancy_select.html' with facet=facets.docCountry form_field=form.country %}
       </select>
       <input type="text" class="tm-input full-match" placeholder="Add countries" data-formid="#id_country"/>
     </div>
@@ -44,7 +41,6 @@
     </ul>
     <div id="region-filter" class="tag-select">
       <select class="tag-options" hidden>
-        {% include 'bits/fancy_select.html' with facet=facets.docRegion form_field=form.region %}
       </select>
       <input type="text" class="tm-input full-match" placeholder="Add geographical areas" data-formid="#id_region"/>
     </div>
@@ -55,7 +51,6 @@
     </ul>
     <div id="language-filter" class="tag-select">
       <select class="tag-options" hidden>
-        {% include 'bits/fancy_select.html' with facet=facets.docLanguage form_field=form.language %}
       </select>
       <input type="text" class="tm-input full-match" placeholder="Add languages" data-formid="#id_language"/>
     </div>
@@ -115,17 +110,15 @@
         {% include 'bits/operation_facet.html' with form_field=form.tr_depository_op form_target='#id_tr_depository' %}
       </ul>
 
-      <div id="tr_depository" class="tag-select">
+      <div id="tr_depository-filter" class="tag-select">
         <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.trDepository_en form_field=form.tr_depository %}
         </select>
         <input type="text" class="tm-input" placeholder="Add depository" data-formid="#id_tr_depository"/>
       </div>
 
       <h6>Place of adoption</h6>
-      <div id="tr_place_of_adoption" class="tag-select">
+      <div id="tr_place_of_adoption-filter" class="tag-select">
         <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.trPlaceOfAdoption form_field=form.tr_place_of_adoption %}
         </select>
         <input type="text" class="tm-input" placeholder="Add place" data-formid="#id_tr_place_of_adoption"/>
       </div>
@@ -175,9 +168,8 @@
       </ul>
 
       <h6>Sub-national/state level</h6>
-      <div id="cd_territorial_subdivision" class="tag-select">
+      <div id="cd_territorial_subdivision-filter" class="tag-select">
         <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.cdTerritorialSubdivision form_field=form.cd_territorial_subdivision %}
         </select>
         <input type="text" class="tm-input" placeholder="Add territory" data-formid="#id_cd_territorial_subdivision"/>
       </ul>
@@ -206,7 +198,6 @@
       </ul>
 
   </fieldset>
-
 {% endif %}
 
 {% if not form.type.data or form.has_literature %}
@@ -224,25 +215,22 @@
         {% include 'bits/operation_facet.html' with form_field=form.lit_author_op form_target='#id_lit_author' %}
       </ul>
 
-      <div id="lit_author" class="tag-select">
+      <div id="lit_author-filter" class="tag-select">
         <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.litAuthor form_field=form.lit_author %}
         </select>
         <input type="text" class="tm-input" placeholder="Add author" data-formid="#id_lit_author"/>
       </div>
 
       <h6>Journal/Series</h6>
-      <div id="lit_serial" class="tag-select">
+      <div id="lit_serial-filter" class="tag-select">
         <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.litSerialTitle form_field=form.lit_serial %}
         </select>
         <input type="text" class="tm-input" placeholder="Add journal/series" data-formid="#id_lit_serial"/>
       </div>
 
       <h6>Publisher</h6>
-      <div id="lit_publisher" class="tag-select">
+      <div id="lit_publisher-filter" class="tag-select">
         <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.litPublisher form_field=form.lit_publisher %}
         </select>
         <input type="text" class="tm-input" placeholder="Add publisher" data-formid="#id_lit_publisher">
       </div>
