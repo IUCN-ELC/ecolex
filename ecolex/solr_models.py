@@ -157,7 +157,7 @@ class Treaty(ObjectNormalizer):
             ('partyDateOfWithdrawal', 'withdrawal'),
         ))
 
-        clean = lambda d: d if d != '0002-11-30T00:00:00Z' else Nogetne
+        clean = lambda d: d if d != '0002-11-30T00:00:00Z' else None
         data = OrderedDict()
         for field, event in PARTY_MAP.items():
             values = [clean(v) for v in self.solr.get(field, [])]
