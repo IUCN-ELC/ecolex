@@ -26,11 +26,9 @@ $(document).ready(function () {
         if (!history.state || history.state.tag !== "ecolex") {
             return;
         }
-        // $(".search-form").deserialize(location.search.substring(1));
         $(".search-form").deserialize(history.state.data);
         submit(history.state.data);
     });
-
 
     // initial form value
     var _initial_form_data = $('.search-form').serialize();
@@ -103,7 +101,6 @@ $(document).ready(function () {
                     _initial_form_data = serialized_form_data;
                     $(".search-form").deserialize(serialized_form_data);
                     get_select_facets();
-                    unblock_ui();
                     // for bootstrap tour
                     $("body").trigger('onajax');
                 },
@@ -127,6 +124,7 @@ $(document).ready(function () {
                     $(id_select).html(v);
                 });
                 init_all();
+                unblock_ui();
             },
         });
     }
@@ -188,7 +186,7 @@ $(document).ready(function () {
         // Multiselect
         $('select[multiple]').multiselect({
             buttonClass: '',
-            buttonContainer: '<div class="multiselect-wrapper" />', // '<div class="btn-group multiselect-wrapper" />',
+            buttonContainer: '<div class="multiselect-wrapper" />',
             disableIfEmpty: true,
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
@@ -207,7 +205,7 @@ $(document).ready(function () {
             },
             onDropdownShown: function (e) {
                 search = $(e.target).find('.multiselect-search').focus();
-            }
+            },
         });
 
         $('.filter-type button').click(function (e) {
@@ -327,6 +325,12 @@ $(document).ready(function () {
             }
         };
 
+        $(".tm-input").on("input", function(e) {
+            var val = $(this).val();
+            var values = $(this).parent().find('.tt-suggestion p').text();
+            console.log(values);
+        });
+
         $(".tag-select").each(function () {
             var suggestions = [];
             var preselected = [];
@@ -364,7 +368,8 @@ $(document).ready(function () {
                     tagsContainer: $('<ul/>', { class: 'tm-taglist' }),
                     tagCloseIcon: '',
                     prefilled: preselected,
-                    validator: tagValidator(suggestions)
+                    validator: tagValidator(suggestions),
+                    deleteTagsOnBackspace: false,
                 }).on("tm:spliced",function (e) {
                     var formid = $(this).data('formid');
                     var value = $(this).tagsManager('tags');
@@ -383,9 +388,20 @@ $(document).ready(function () {
                 labelFor = labelFor.substr(1, labelFor.length); // remove #
                 label = $('<label/>', {
                     'class': 'tm-label',
-                    'for': labelFor
+                    'for': labelFor,
                 });
                 $(this).before(label);
+                $(self).on("focus", function(e) {
+                    var ev = $.Event("keydown");
+                    ev.keyCode = ev.which = 40;
+                    $(self).trigger(ev);
+                    return true;
+                });
+
+                $(label).on("click", function(e) {
+                    $(self).focus();
+                    return true;
+                });
 
                 var regex_prefix = '';
                 if (!$(this).hasClass('full-match')) {
