@@ -236,7 +236,6 @@ $(document).ready(function () {
                 var value = $(this).val();
                 if (value == 'AND' && $(this).is(':checked')) {
                     var target_id = $(this).data('target');
-                    $('.search-form select' + target_id).val('');
                     current.push('AND');
                 }
                 ul.find('input:checked').each(function () {
