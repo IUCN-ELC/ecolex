@@ -376,6 +376,7 @@ $(document).ready(function () {
                     push_and_submit(true);
                 }).bind('typeahead:selected', function(e ,v, r) {
                     $(this).tagsManager('pushTag', v.value);
+                    $(this).blur();
                 });;
 
                 $(this).wrap($('<div/>', { class: 'tm-wrapper' }));
@@ -403,6 +404,10 @@ $(document).ready(function () {
                 if (!$(this).hasClass('full-match')) {
                     regex_prefix = '^';
                 }
+
+                suggestions = suggestions.filter(function(item) {
+                    return preselected.indexOf(item) ===  -1;
+                });
 
                 $(this).typeahead({
                         hint: false,
