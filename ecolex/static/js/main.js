@@ -325,12 +325,6 @@ $(document).ready(function () {
             }
         };
 
-        $(".tm-input").on("input", function(e) {
-            var val = $(this).val();
-            var values = $(this).parent().find('.tt-suggestion p').text();
-            console.log(values);
-        });
-
         $(".tag-select").each(function () {
             var suggestions = [];
             var preselected = [];
@@ -380,7 +374,9 @@ $(document).ready(function () {
                     var value = $(this).tagsManager('tags');
                     $(formid).val(get_values(value, options));
                     push_and_submit(true);
-                });
+                }).bind('typeahead:selected', function(e ,v, r) {
+                    $(this).tagsManager('pushTag', v.value);
+                });;
 
                 $(this).wrap($('<div/>', { class: 'tm-wrapper' }));
 
@@ -422,6 +418,7 @@ $(document).ready(function () {
                 $(this).on('blur', function () {
                     $(this).val('');
                 });
+
             });
         });
 
