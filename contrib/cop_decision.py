@@ -61,9 +61,9 @@ class CopDecision(object):
         new_date = datetime.strptime(self.data[self.update_field],
                                      self.date_format)
         if old_date < new_date:
-            logger.info('Update on %s' % (self.data[self.elis_id]))
+            logger.info('Update on %s' % (self.data[self.informea_id]))
             return True
-        logger.info('No update on %s' % (self.data[self.elis_id]))
+        logger.info('No update on %s' % (self.data[self.informea_id]))
         return False
 
     def get_solr_format(self, informea_id, solr_id):
