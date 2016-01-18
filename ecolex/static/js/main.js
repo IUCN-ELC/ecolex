@@ -441,5 +441,10 @@ $(document).ready(function () {
         });
 
     }
-    get_select_facets();
+    if ($('.search-form').hasClass('homepage')) {
+        init_all();
+    }
+    else {
+        get_select_facets();
+    }
 });
