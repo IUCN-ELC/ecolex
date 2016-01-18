@@ -9,8 +9,7 @@ class SearchForm(Form):
     )
     q = CharField(initial='', widget=TextInput(
         attrs={'id': 'search', 'class': 'form-control', 'autofocus': True,
-               'placeholder': "Search for Treaties, Legislation, Court "
-                              "decisions, Literature, COP decisions"}))
+               'placeholder': "Search in record and full text"}))
     type = MultipleChoiceField(choices=DOC_TYPE)
 
     tr_type = MultipleChoiceField()
