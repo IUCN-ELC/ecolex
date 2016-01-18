@@ -121,19 +121,21 @@ $(document).ready(function () {
     }
 
     function get_select_facets() {
-        var data = $('.search-form').serialize();
-        $.ajax({
-            url: '/facets/ajax/?' + data,
-            format: 'JSON',
-            success: function (data) {
-                $.each(data, function(k, v) {
-                    var id_select = '#' + k + '-filter select';
-                    $(id_select).html(v);
-                });
-                init_all();
-                unblock_ui();
-            },
-        });
+        if ($('.tag-options').length > 0) {
+            var data = $('.search-form').serialize();
+            $.ajax({
+                url: '/facets/ajax/?' + data,
+                format: 'JSON',
+                success: function (data) {
+                    $.each(data, function(k, v) {
+                        var id_select = '#' + k + '-filter select';
+                        $(id_select).html(v);
+                    });
+                    init_all();
+                    unblock_ui();
+                },
+            });
+        }
     }
 
     function init_all() {
@@ -187,8 +189,6 @@ $(document).ready(function () {
 
             $("#slider-years").slider('setValue', [min, max]);
         }
-
-        $('#year-min, #year-max').on('change', updateYear);
 
         // Multiselect
         $('select[multiple]').multiselect({
@@ -258,6 +258,10 @@ $(document).ready(function () {
 
         // Year controls
         $('.global-filter input[type=number]').change(function (e) {
+            $(this).focus();
+        });
+
+        $('.global-filter input[type=number]').on('blur', function (e) {
             var form_id = $(this).data('formid');
             $(form_id).val($(this).val());
             // submit le form

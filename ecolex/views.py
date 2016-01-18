@@ -171,7 +171,6 @@ class SelectFacetsAjax(SearchView):
                          fields=fields)
         facets = results.get_facets()
         data = {}
-        print(facets.keys())
         for k, v in SELECT_FACETS.items():
             if k not in facets:
                 continue
