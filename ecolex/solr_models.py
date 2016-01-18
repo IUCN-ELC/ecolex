@@ -377,7 +377,10 @@ class CourtDecision(ObjectNormalizer):
 
     def language(self):
         langcodes = self.solr.get('cdLanguageOfDocument')
-        return ', '.join([LANGUAGE_MAP.get(code, code) for code in langcodes])
+        if langcodes:
+            return ', '.join([LANGUAGE_MAP.get(code, code)
+                             for code in langcodes])
+        return 'Not available'
 
 
 class Legislation(ObjectNormalizer):
