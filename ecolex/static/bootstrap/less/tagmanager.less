@@ -1,0 +1,151 @@
+/*! 
+ * tagmanager v3.0.2
+ * https://github.com/max-favilli/tagmanager
+ * Copyright 2012 MaxFavilli.com
+ */
+
+// Completely obliterated (in terms of .less) by Valentin Popescu
+
+.tag {
+  .label();
+  .btn-xs(); // used for padding, font-size, line-height and border-radius
+  .text-overflow();
+  background-color: #d5d5d5;
+  box-shadow: 0 1px 4px -2px @darker;
+}
+
+.tm-tag {
+  .label();
+  .btn-xs(); // used for padding, font-size, line-height and border-radius
+  .text-overflow();
+  position:relative;
+  text-transform: capitalize;
+  background-color: #d5d5d5;
+  box-shadow: 0 1px 4px -2px @darker;
+  padding-right: (@line-height-small * 1em);
+  max-width: 100%;
+  &:hover {
+    cursor: help;
+  }
+  // .btn-xs();
+  // .button-variant(darken(@text-color, 5%), @gray-light, darken(@gray-light, 5%));
+
+  // &.tm-tag-disabled {
+  //   color: @tagDisabledText;
+  //   background-color: @tagDisabledBackground;
+  //   border-color: @tagDisabledBorder;
+  //   box-shadow: none;
+  //   .tm-tag-remove {
+  //     display: none;
+  //   }
+  // }
+}
+
+.tm-tag-remove {
+  // remove <button/> defaults
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  position: absolute;
+  top: 1px;
+  right: 0;
+
+  width: (@line-height-small * 1em);
+  text-align: center;
+  opacity: 0.6;
+
+  &:before {
+    .icon-base();
+    content: "\e607";
+  }
+
+  &:hover {
+    cursor: pointer;
+    opacity: 1;
+  }
+}
+
+.tm-taglist {
+  .list-unstyled();
+  padding-left: @aside-indent;
+  li {
+    margin-bottom: @padding-small-vertical;
+  }
+}
+
+.tm-wrapper {
+  position: relative;
+  margin: 0 @aside-indent @padding-base-vertical;
+  // &:before {
+  //   .icon-base();
+  //   content: "\e60a";
+  //   height: @input-height-small;
+  //   line-height: @input-height-small;
+  //   width: @aside-indent;
+  //   margin-left: -@aside-indent;
+  //   float: left;
+  //   font-size: 125%;
+  // }
+}
+
+.tm-label {
+  float: left;
+  display: block;
+  margin-left: -@aside-indent;
+  margin-bottom: 0;
+
+  &:before {
+    .icon-base();
+    content: "\e60a";
+    height: @input-height-small;
+    line-height: @input-height-small;
+    width: @aside-indent;
+    font-size: 125%;
+    text-align: center;
+  }
+  // .btn();
+  // .btn-sm();
+  // .btn-default();
+  // display: none; // block;
+  // margin-bottom: -@input-height-small;
+  // position: relative;
+  // z-index: 2;
+}
+
+
+.tm-tt() {
+  display: block;
+  width: 100%;
+  padding: @padding-small-vertical @padding-small-horizontal;
+  font-size: @font-size-small;
+  height: @input-height-small;
+  line-height: @input-height-small;
+  border: 0;
+  border-bottom: 2px solid transparent; // @input-border;
+  padding-left: 0;
+  transition: padding-left 300ms ease;
+  &:focus {
+    padding-left: @padding-small-horizontal;
+  }
+}
+
+.tm-input {
+  .tm-tt();
+  // border-radius: @border-radius-small;
+  color: @input-color;
+  background-color: @input-bg;
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  // .form-control-focus();
+
+
+  &:focus {
+    // padding-left: @padding-small-horizontal;
+    // border-bottom-width: 2px;
+    border-bottom-color: @input-border-focus;
+    // margin-bottom: -1px;
+    outline: none;
+    background-color: #fff;
+  }
+}
