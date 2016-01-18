@@ -1,6 +1,8 @@
 {% load tags %}
 
 <fieldset class="global-filter">
+  <input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">
+
   <h5 data-toggle="collapse"
       data-target="#filter-global">Common filters</h5>
 
@@ -56,7 +58,7 @@
     </div>
 
     {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
-      <h6>Year</h6>
+      <h6>Year Period</h6>
       <input id="slider-years" type="text"
              data-slider-min="1860"
              data-slider-max="2015"

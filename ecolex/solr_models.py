@@ -367,6 +367,8 @@ class CourtDecision(ObjectNormalizer):
         from ecolex.search import get_documents_by_field
         references = {}
         original_id = first(self.solr.get('cdOriginalId'))
+        if not original_id:
+            return []
         for doc_type, ref_field in self.REFERENCED_BY_FIELDS.items():
             docs = get_documents_by_field(ref_field, [original_id], rows=100)
             if docs:
