@@ -88,8 +88,15 @@ $(document).ready(function () {
         $('main').unblock();
     }
 
-    function submit(serialized_form_data) {
+    function is_changed(serialized_form_data) {
         if (serialized_form_data != _initial_form_data) {
+            return true;
+        }
+        return false;
+    }
+
+    function submit(serialized_form_data) {
+        if (is_changed(serialized_form_data)) {
             block_ui();
             $.ajax({
                 url: '/result/ajax/?' + serialized_form_data,
@@ -243,6 +250,9 @@ $(document).ready(function () {
                 });
                 $(form_id).val(current);
                 // submit now for now
+                if (form_id.indexOf("_op") > 0 && $(form_id.replace("_op", "")).val().length < 2) {
+                    return;
+                }
                 push_and_submit(true);
             });
 
