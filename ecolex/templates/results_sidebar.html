@@ -71,6 +71,7 @@
                  data-formid="#id_yearmin"
                  value="{{ form.yearmin.data }}"
                  min="1860"
+                 max="2016"
                  placeholder="From {{ stats_fields.docDate.min|just_year }}">
         </div>
         <div class="slider-max">
@@ -78,7 +79,8 @@
           <input id="year-max" type="number"
                  data-formid="#id_yearmax"
                  value="{{ form.yearmax.data }}"
-                 max="2015"
+                 min="1860"
+                 max="{% now "Y" %}"
                  placeholder="To {{ stats_fields.docDate.max|just_year }}">
         </div>
       </div>

@@ -276,7 +276,7 @@ $(document).ready(function () {
             push_and_submit(true);
         });
 
-        $('button[type=submit]').click(function (e) {
+        $('button[type=submit').off("click").on("click", function (e) {
             e.preventDefault();
             var is_homepage = $(this).parents().hasClass('homepage');
             if (is_homepage)
@@ -390,7 +390,7 @@ $(document).ready(function () {
                 }).bind('typeahead:selected', function(e ,v, r) {
                     $(this).tagsManager('pushTag', v.value);
                     $(this).blur();
-                });;
+                });
 
                 $(this).wrap($('<div/>', { class: 'tm-wrapper' }));
 
