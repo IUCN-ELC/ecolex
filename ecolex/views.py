@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, View
 from django.conf import settings
 import logging
+from urllib.parse import urlencode
 
 from contrib.import_legislation_fao import harvest_file
 from ecolex.search import (
@@ -72,6 +73,8 @@ class SearchView(TemplateView):
         ctx['debug'] = settings.DEBUG
         ctx['text_suggestion'] = settings.TEXT_SUGGESTION
         self.query = self.form.data.get('q', '').strip() or '*'
+        ctx['query'] = urlencode({'q': self.query})
+
         # Compute filters
         self.filters = self._set_filters(data)
         self.sortby = data['sortby']
@@ -222,7 +225,7 @@ class DetailsView(SearchView):
     def get_context_data(self, **kwargs):
         context = super(DetailsView, self).get_context_data(**kwargs)
 
-        results = get_document(kwargs['id'])
+        results = get_document(document_id=kwargs['id'], query=self.query)
         if not results:
             raise Http404()
         context['document'] = results.first()

@@ -364,9 +364,8 @@ def get_documents_by_field(id_name, treaty_ids, rows=None):
     return result
 
 
-def get_document(document_id):
-    result = search('id:' + document_id, raw=True,
-                    filters={'decTreatyId': ''})
+def get_document(document_id, query):
+    result = search(query, raw=True, filters={'id': [document_id]})
     if not len(result):
         return None
     return result

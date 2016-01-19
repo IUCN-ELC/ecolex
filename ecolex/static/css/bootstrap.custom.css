@@ -5377,10 +5377,6 @@ button.close {
   font-size: 14px;
   line-height: 1.4;
 }
-.search-result .hl {
-  font-style: normal;
-  font-weight: bold;
-}
 .search-result-title {
   margin-top: auto;
   margin-bottom: 1px;
@@ -6188,5 +6184,9 @@ fieldset h6 {
 .popover-navigation {
   border-top: 1px solid #ccc;
   margin-top: 8px;
+}
+.hl {
+  font-style: normal;
+  font-weight: bold;
 }
 /*# sourceMappingURL=bootstrap.custom.css.map */
