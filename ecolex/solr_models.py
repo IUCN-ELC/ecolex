@@ -277,7 +277,6 @@ class Literature(ObjectNormalizer):
         ('litDateOfText', 'Date of publication', ''),
         ('litSeriesFlag', 'Series', ''),
         ('litLanguageOfDocument', 'Language of document', ''),
-        ('litCountry', 'Country', ''),
         ('litDisplayRegion', 'Region', ''),
     ]
     DOCTYPE_FIELD = 'litTypeOfText'

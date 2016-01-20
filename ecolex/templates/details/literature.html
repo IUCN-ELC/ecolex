@@ -37,6 +37,11 @@
         <dd>{{ entry.value }}</dd>
       {% endfor %}
 
+      {% if document.solr.litCountry %}
+        <dt>Country</dt>
+        <dd>{{ document.solr.litCountry.0 }}</dd>
+      {% endif %}
+
       <dt>Subjects</dt>
       <dd>{% for subject in document.solr.litSubject %}
             {{ subject|safe }}
