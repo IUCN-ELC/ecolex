@@ -220,6 +220,7 @@ def get_relevancy():
         'cdAbstract_en': 50,
         'cdAbstract_es': 50,
         'cdAbstract_fr': 50,
+        'litAbstract': 50,
         'trKeyword_en': 30,
         'trKeyword_fr': 30,
         'trKeyword_es': 30,
