@@ -409,7 +409,6 @@ class CourtDecision(ObjectNormalizer):
         return first(self.solr.get('cdAbstract_en'))
 
 
-
 class Legislation(ObjectNormalizer):
     ID_FIELD = 'legId'
     SUMMARY_FIELD = 'legAbstract'
@@ -463,3 +462,6 @@ class Legislation(ObjectNormalizer):
     def language(self):
         languages = self.solr.get('legLanguage_en')
         return '/'.join(languages)
+
+    def abstract(self):
+        return first(self.solr.get('legAbstract'))

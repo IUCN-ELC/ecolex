@@ -74,8 +74,8 @@
     <dl>
       <dt>Abstract</dt>
       <dd>
-        {% if document.solr.legAbstract %}
-          <p class="abstract">{{ document.solr.legAbstract }}</p>
+        {% if document.abstract %}
+          <p class="abstract">{{ document.abstract|safe }}</p>
         {% else %}
           <p class="na">Not available</p>
         {% endif %}
