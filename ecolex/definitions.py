@@ -116,11 +116,11 @@ OPERATION_FIELD_MAPPING = {
 
 SOLR_FIELDS = [
     'id', 'type', 'source', 'trTitleOfText', 'trJurisdiction_en', 'trStatus',
-    'trPlaceOfAdoption', 'trDateOfText', 'trDateOfEntry',
+    'trPlaceOfAdoption', 'trDateOfText', 'trDateOfEntry', 'trKeyword_en',
     'trDateOfModification', 'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
     'trPaperTitleOfText_sp', 'trPaperTitleOfText_other', 'trTitleOfTextShort',
     'decTitleOfText', 'decStatus', 'decPublishDate', 'decUpdateDate',
-    'decNumber',
+    'decNumber', 'decKeyword',
     'litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp', 'litLongTitle_other',
     'litPaperTitleOfText', 'litPaperTitleOfText_fr', 'litPaperTitleOfText_sp',
     'litPaperTitleOfText_other',

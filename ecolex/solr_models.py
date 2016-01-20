@@ -231,6 +231,9 @@ class Treaty(ObjectNormalizer):
             if link:
                 return link[0], LANGUAGE_MAP[langcode]
 
+    def get_keywords(self):
+        return self.solr.get('trKeyword_en')
+
 
 class Decision(ObjectNormalizer):
     ID_FIELD = 'decNumber'
@@ -253,6 +256,9 @@ class Decision(ObjectNormalizer):
 
     def get_language(self):
         return first(self.solr.get('decLanguage')) or 'Document language'
+
+    def get_keywords(self):
+        return self.solr.get('decKeyword')
 
 
 class Literature(ObjectNormalizer):
@@ -408,6 +414,8 @@ class CourtDecision(ObjectNormalizer):
     def abstract(self):
         return first(self.solr.get('cdAbstract_en'))
 
+    def get_keywords(self):
+        return self.solr.get('cdKeywords')
 
 class Legislation(ObjectNormalizer):
     ID_FIELD = 'legId'
