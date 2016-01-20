@@ -101,7 +101,7 @@
     <div id="filter-treaties" class="collapse {% if form.has_treaty %}in{% endif %}">
         <h6>Type of document</h6>
         <ul class="filter-treaty" data-formid="#id_tr_type">
-          {% include 'bits/checkbox_facet.html' with facet=facets.trTypeOfText form_field=form.tr_type show_empty=True %}
+          {% include 'bits/checkbox_facet.html' with facet=facets.trTypeOfText_en form_field=form.tr_type show_empty=True %}
         </ul>
 
       <h6>Field of application</h6>

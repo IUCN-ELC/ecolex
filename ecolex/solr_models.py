@@ -99,7 +99,7 @@ class Treaty(ObjectNormalizer):
         'trTitleOfText', 'trTitleOfTextShort',
     ]
     DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
-    DOCTYPE_FIELD = 'trTypeOfText'
+    DOCTYPE_FIELD = 'trTypeOfText_en'
     OPTIONAL_INFO_FIELDS = [
         # (solr field, display text, type=text)
         ('trTitleAbbreviation', 'Title Abbreviation', ''),
