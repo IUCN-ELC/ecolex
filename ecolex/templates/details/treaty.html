@@ -8,7 +8,7 @@
   <header>
     <div class="record-title">
       <div class="record-icon">
-        <span class="icon icon-treaty" title="Treaty"></span>
+        <a class="btn btn-sm btn-default" href="{% url 'results' %}?{{ query }}">Back to search results</a>
       </div>
       <h1>{{ document.title|safe }}</h1>
     </div>
@@ -111,7 +111,7 @@
   <section id="participants">
     <div class="clearfix">
       <a id="participants-extras"
-         href="{% url 'resultParticipants' document.id %}"
+        href="{% url 'resultParticipants' document.id %}?{{query}}"
          class="pull-right btn btn-link">See Expanded View</a>
       <h2 class="section-title">Country/Participant</h2>
     </div>

@@ -9,7 +9,7 @@
   <header>
     <div class="record-title">
       <div class="record-icon">
-          <span class="icon icon-cop-decision" title="COP Decision"></span>
+        <a class="btn btn-sm btn-default" href="{% url 'results' %}?{{ query }}">Back to search results</a>
       </div>
       <h1>{{ document.title|safe }}</h1>
     </div>

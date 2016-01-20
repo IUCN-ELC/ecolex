@@ -8,7 +8,7 @@
   <header>
     <div class="record-title">
       <div class="record-icon">
-        <span class="icon icon-legislation" title="Legislation"></span>
+        <a class="btn btn-sm btn-default" href="{% url 'results' %}?{{ query }}">Back to search results</a>
       </div>
       <h1>{{ document.title|safe }}</h1>
     </div>

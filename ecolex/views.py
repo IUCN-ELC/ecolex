@@ -72,13 +72,13 @@ class SearchView(TemplateView):
         ctx['form'] = self.form = SearchForm(data=data)
         ctx['debug'] = settings.DEBUG
         ctx['text_suggestion'] = settings.TEXT_SUGGESTION
-        query = self.form.data.get('q', '').strip()
-        ctx['query'] = urlencode({'q': query})
-        self.query = query or '*'
+        ctx['query'] = urlencode(self.request.GET)
 
+        self.query = self.form.data.get('q', '').strip() or '*'
         # Compute filters
         self.filters = self._set_filters(data)
         self.sortby = data['sortby']
+
         return ctx
 
     def update_form_choices(self, facets):
@@ -384,7 +384,7 @@ class ResultDetailsParticipants(SearchView):
 
     def get_context_data(self, **kwargs):
         context = super(ResultDetailsParticipants, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'])
+        results = get_document(kwargs['id'], self.query)
         if not results:
             raise Http404()
 

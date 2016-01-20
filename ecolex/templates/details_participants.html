@@ -4,9 +4,9 @@
 {% block content %}
 
 <p>
-  <span class="treaty-name">{{ treaty.full_title }}</span>
+  <span class="treaty-name">{{ treaty.full_title|safe }}</span>
   <br>
-  <a href="{% url 'treaty_details' treaty.id %}">Back to treaty details</a>
+  <a href="{% url 'treaty_details' treaty.id %}?{{ query }}">Back to treaty details</a>
 </p>
 
 <hr>
@@ -47,7 +47,9 @@
 
   <hr>
 
-  <p><a class="btn btn-sm btn-default" href="{% url 'treaty_details' treaty.id %}">Back to treaty details</a></p>
+  <p><a class="btn btn-sm btn-default" href="{% url 'treaty_details' treaty.id %}?{{ query }}">
+      Back to treaty details
+  </a></p>
 
 </article>
 {% endblock %}
