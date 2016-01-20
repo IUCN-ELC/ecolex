@@ -95,8 +95,8 @@ class Treaty(ObjectNormalizer):
     SUMMARY_FIELD = 'trIntroText'
     TITLE_FIELDS = [
         'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
-        'trPaperTitleOfText_sp', 'trPaperTitleOfText_other',
-        'trTitleOfTextShort',
+        'trPaperTitleOfText_es', 'trPaperTitleOfText_other',
+        'trTitleOfText', 'trTitleOfTextShort',
     ]
     DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
     DOCTYPE_FIELD = 'trTypeOfText'
