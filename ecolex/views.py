@@ -178,12 +178,13 @@ class SelectFacetsAjax(SearchView):
         for k, v in SELECT_FACETS.items():
             if k not in facets:
                 continue
+            show_empty = True if len(results) == 0 else False
             context = {
                 'facet': facets[k],
-                'form_field': ctx['form'][v]
+                'form_field': ctx['form'][v],
+                'show_empty': show_empty
             }
             data[v] = render_to_string('bits/fancy_select.html', context)
-
         return JsonResponse(data)
 
 
