@@ -73,9 +73,7 @@
       {% if document.solr.litLinkToFullText %}
       <dt>Link to full text</dt>
       <dd>
-        <a class="decision-link" href="{{ document.solr.litLinkToFullText }}" target="_blank">
-            <span class="icon icon-literature" title="Literature">{{ document.get_language }}</span>
-          </a>
+        <a class="decision-link" href="{{ document.solr.litLinkToFullText }}" target="_blank">{{ document.get_language }}</a>
       </dd>
       {% endif %}
       <dt>Available web site</dt>
