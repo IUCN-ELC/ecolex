@@ -316,6 +316,7 @@ $(document).ready(function () {
             });
             var tag_selector = 'input.tm-input[data-formid="' + target + '"]';
             $(tag_selector).tagsManager('empty');
+            push_and_submit(true);
         });
 
         // Tag manager
