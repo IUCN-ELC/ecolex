@@ -351,8 +351,8 @@
 
     <!-- Legislation fields -->
     <field name="legId" type="string" indexed="true" stored="true"/>
-    <field name="legTitle" type="string" indexed="true" stored="true"/>
-    <field name="legLongTitle" type="string" indexed="true" stored="true"/>
+    <field name="legTitle" type="text" indexed="true" stored="true"/>
+    <field name="legLongTitle" type="text" indexed="true" stored="true"/>
     <field name="legSource" type="string" indexed="true" stored="true"/>
     <field name="legDate" type="tdate" indexed="true" stored="true"/>
     <field name="legOriginalDate" type="tdate" indexed="true" stored="true"/>
@@ -385,7 +385,7 @@
     <field name="legLanguage_fr" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="legLanguage_es" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="legAbstract" type="string" indexed="true" stored="true"/>
+    <field name="legAbstract" type="text" indexed="true" stored="true"/>
     <field name="legSubject_code" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="legSubject_en" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="legSubject_fr" type="string" indexed="true" stored="true" multiValued="true"/>
