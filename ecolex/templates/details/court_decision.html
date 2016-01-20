@@ -22,7 +22,6 @@
   </header>
 
   <section id="details">
-    <h2 class="section-title">Details</h2>
     <dl>
       <dt>Country</dt> <dd>{{ document.solr.cdCountry_en }}</dd>
       <dt>Court name</dt> <dd>{{ document.solr.cdCourtName }}</dd>
@@ -35,7 +34,6 @@
   </header>
 
   <section id="text">
-    <h2 class="section-title">Text</h2>
     <dl>
       <dt>Abstract</dt>
       {% for abs in document.solr.cdAbstract_en %}
