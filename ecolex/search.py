@@ -164,7 +164,7 @@ def escape_query(query):
 
 def get_hl():
     fields = HIGHLIGHT_FIELDS
-    for t in Decision, Treaty, Literature, CourtDecision:
+    for t in Decision, Treaty, Literature, CourtDecision, Legislation:
         fields += [t.SUMMARY_FIELD] + t.TITLE_FIELDS
     fields = set(fields)
     HIGHLIGHT_PARAMS['hl.fl'] = ','.join(fields)

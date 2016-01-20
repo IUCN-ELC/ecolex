@@ -92,7 +92,7 @@ class ObjectNormalizer:
 
 class Treaty(ObjectNormalizer):
     ID_FIELD = 'trElisId'
-    SUMMARY_FIELD = 'trIntroText'
+    SUMMARY_FIELD = 'trAbstract_en'
     TITLE_FIELDS = [
         'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
         'trPaperTitleOfText_es', 'trPaperTitleOfText_other',
