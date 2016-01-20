@@ -72,3 +72,11 @@
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px;
 }
+
+ul.filter-global {
+    margin-bottom: 15px;
+}
+
+.reset-multiple {
+    border-radius: 30px;
+}

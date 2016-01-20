@@ -292,7 +292,7 @@ $(document).ready(function () {
             push_and_submit(true);
         });
 
-        // Reset button
+        // Global reset button
         $('input[type=reset]').click(function (e) {
             e.preventDefault();
             var data = {
@@ -306,6 +306,16 @@ $(document).ready(function () {
             $('#id_type').val(data.type);
 
             push_and_submit(true);
+        });
+
+        //Multiple select facet reset button
+        $('button.reset-multiple').on("click", function (e){
+            var target = $(this).data('target');
+            $('select' + target).each(function () {
+                $(this).val('');
+            });
+            var tag_selector = 'input.tm-input[data-formid="' + target + '"]';
+            $(tag_selector).tagsManager('empty');
         });
 
         // Tag manager

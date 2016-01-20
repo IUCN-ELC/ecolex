@@ -1,6 +1,7 @@
 <!-- FlipSwitch from https://proto.io/freebies/onoff/-->
 <li>
-  <div class="onoffswitch">
+<div style="display:block;">
+  <div class="onoffswitch" style="display:inline;float:left;">
     <input type="checkbox" class="onoffswitch-checkbox"
            name="{{ form_field.name }}" data-target="{{ form_target }}"
            id="{{ form_field.name }}_AND" value="AND"
@@ -10,4 +11,12 @@
       <span class="onoffswitch-switch"></span>
     </label>
   </div>
+
+  <div class="reset-multiple-container" style="display:inline;float:right;">
+    <button class="reset-multiple"
+           name="{{ form_field.name }}" data-target="{{ form_target }}"
+            value="AND">RESET
+    </button>
+  </div>
+</div>
 </li>
