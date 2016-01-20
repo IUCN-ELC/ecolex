@@ -141,6 +141,14 @@
     <h5 data-toggle="collapse" {% if not form.has_decision %}class="collapsed"{% endif %}
         data-target="#filter-cop-decisions">COP Decision filters</h5>
 
+      <h6>Treaty</h6>
+      <div id="dec_treaty" class="tag-select">
+        <select class="tag-options" hidden>
+          {% include 'bits/fancy_select_map.html' with facet=facets.decTreatyId type_map=dec_treaty_names form_field=form.dec_treaty %}
+        </select>
+        <input type="text" class="tm-input" placeholder="Add treaties" data-formid="#id_dec_treaty"/>
+      </div>
+
     <div id="filter-cop-decisions" class="collapse {% if form.has_decision %}in{% endif %}">
       {% if facets.decType %}
         <h6>Type of document</h6>
@@ -153,14 +161,6 @@
       <ul class="filter-decision" data-formid="#id_dec_status">
         {% include 'bits/checkbox_facet.html' with facet=facets.decStatus form_field=form.dec_status show_empty=True %}
       </ul>
-
-      <h6>Treaty</h6>
-      <div id="dec_treaty" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select_map.html' with facet=facets.decTreatyId type_map=dec_treaty_names form_field=form.dec_treaty %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add treaties" data-formid="#id_dec_treaty"/>
-      </div>
     </div>
   </fieldset>
 {% endif %}
