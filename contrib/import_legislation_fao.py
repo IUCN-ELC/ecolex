@@ -150,7 +150,7 @@ def add_legislation(legislations, logger):
 
     for legislation in legislations:
         leg_id = legislation['legId']
-        leg_result = solr.search('Legislation', leg_id)
+        leg_result = solr.search('legislation', leg_id)
         if leg_result:
             if legislation_needs_update(leg_result, legislation, logger):
                 legislation['updatedDate'] = (datetime.now()
