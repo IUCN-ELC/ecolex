@@ -45,10 +45,12 @@
         </dd>
       {% endif %}
 
+      {% if document.solr.legLinkToFullText %}
       <dt>Link to full text</dt>
       <dd>
-        <a href="{{ document.solr.legLinkToFullText }}" target="_blank">{{ document.solr.legLinkToFullText }}</a>
+        <a href="{{ document.solr.legLinkToFullText }}" target="_blank">{{ document.language }}</a>
       </dd>
+      {% endif %}
 
       <dt>Subjects</dt>
       <dd>

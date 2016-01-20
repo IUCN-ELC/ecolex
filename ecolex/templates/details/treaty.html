@@ -97,11 +97,11 @@
         </dd>
         {% endfor %}
       {% endif %}
-      {% if document.solr.trLinkToFullText %}
+      {% if document.get_link_to_full_text %}
         <dt>Link to full text</dt>
         <dd>
-            <a href="{{ document.solr.trLinkToFullText.0 }}" class="treaty-link"
-             target="_blank"><span class="icon icon-treaty" title="Treaty"></span></a>
+            <a href="{{ document.get_link_to_full_text.0 }}", class="treaty-link"
+             target="_blank">{{ document.get_link_to_full_text.1 }}</a>
         </dd>
       {% endif %}
     </dl>

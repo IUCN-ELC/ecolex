@@ -62,16 +62,15 @@
           <p class="na">Not available</p>
         {% endif %}
       </dd>
+
+      {% if document.solr.litLinkToFullText %}
       <dt>Link to full text</dt>
       <dd>
-        {% if document.solr.litLinkToFullText %}
-          <a class="decision-link" href="{{ document.solr.litLinkToFullText }}" target="_blank">
-            <span class="icon icon-literature" title="Literature"></span>
+        <a class="decision-link" href="{{ document.solr.litLinkToFullText }}" target="_blank">
+            <span class="icon icon-literature" title="Literature">{{ document.get_language }}</span>
           </a>
-        {% else %}
-          <p class="na">Not available</p>
-        {% endif %}
       </dd>
+      {% endif %}
       <dt>Available web site</dt>
       <dd>
         {% if document.solr.litRelatedWebSite %}

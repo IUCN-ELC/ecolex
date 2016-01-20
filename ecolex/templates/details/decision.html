@@ -55,12 +55,12 @@
         {% endif %}
       </dd>
 
+      {% if document.url %}
       <dt>Link to decision</dt>
       <dd>
-        <a target="_blank" href="{{ document.url }}">
-          <span class="icon icon-cop-decision" title="COP Decision"></span>
-        </a>
+        <a target="_blank" href="{{ document.url }}">{{ document.get_language }}</a>
       </dd>
+      {% endif %}
 
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>

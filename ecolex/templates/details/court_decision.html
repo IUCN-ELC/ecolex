@@ -36,11 +36,10 @@
   <section id="text">
     <dl>
       <dt>Abstract</dt>
-      {% for abs in document.solr.cdAbstract_en %}
-        <dd>{{ abs|safe }}</dd>
+        {{ document.solr.cdAbstract_en|safe }}</dd>
       {% endfor %}
       {% with document.solr.cdLinkToFullText_en as url %}
-        <dt>Link to full text</dt> <dd><a href="{{ url }}"><span class="icon icon-court-decision" title="Court Decision"></span></a></dd>
+        <dt>Link to full text</dt> <dd><a href="{{ url }}">{{ document.language }}</a></dd>
       {% endwith %}
     </dl>
   </section>

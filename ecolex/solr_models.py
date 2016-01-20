@@ -81,6 +81,12 @@ class ObjectNormalizer:
         source = DOC_SOURCES.get(self.type, "Unknown source")
         return source
 
+    def get_link_to_full_text(self):
+        pass
+
+    def get_language(self):
+        pass
+
     __repr__ = title
 
 
@@ -109,6 +115,8 @@ class Treaty(ObjectNormalizer):
         ('trInternetReference_en', 'Internet Reference', ''),
         ('trDateOfConsolidation', 'Consolidation Date', 'date')
     ]
+
+    FULL_TEXT = 'trLinkToFullText'  ## multilangual
 
     REFERENCE_FIELDS = {
         'trAmendsTreaty': 'Amends:',
@@ -217,6 +225,12 @@ class Treaty(ObjectNormalizer):
     def details_url(self):
         return reverse('treaty_details', kwargs={'id': self.id()})
 
+    def get_link_to_full_text(self):
+        for langcode in LANGUAGE_MAP.keys():
+            link = self.solr.get(self.FULL_TEXT + '_' + langcode)
+            if link:
+                return link[0], LANGUAGE_MAP[langcode]
+
 
 class Decision(ObjectNormalizer):
     ID_FIELD = 'decNumber'
@@ -237,9 +251,13 @@ class Decision(ObjectNormalizer):
     def status(self):
         return first(self.solr.get('decStatus'), "unknown")
 
+    def get_language(self):
+        return first(self.solr.get('decLanguage')) or 'Document language'
+
 
 class Literature(ObjectNormalizer):
     ID_FIELD = 'litId'
+    LANGUAGE_FIELD = 'litLanguageOfDocument'
     SUMMARY_FIELD = 'litAbstract'
     TITLE_FIELDS = ['litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp',
                     'litLongTitle_other',
@@ -335,6 +353,12 @@ class Literature(ObjectNormalizer):
 
     def abstract(self):
         return first(self.solr.get('litAbstract'))
+
+    def get_language(self):
+        return (first(self.solr.get('litLanguageOfDocument') or
+                      self.solr.get('litLanguageOfDocument_fr') or
+                      self.solr.get('litLanguageOfDocument_sp')) or
+                'Document language')
 
 
 class CourtDecision(ObjectNormalizer):
