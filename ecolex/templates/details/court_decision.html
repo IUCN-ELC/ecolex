@@ -36,8 +36,7 @@
   <section id="text">
     <dl>
       <dt>Abstract</dt>
-        {{ document.solr.cdAbstract_en|safe }}</dd>
-      {% endfor %}
+      <dd>{{ document.abstract|safe }}</dd>
       {% with document.solr.cdLinkToFullText_en as url %}
         <dt>Link to full text</dt> <dd><a href="{{ url }}">{{ document.language }}</a></dd>
       {% endwith %}

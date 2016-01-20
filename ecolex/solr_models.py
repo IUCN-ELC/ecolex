@@ -405,6 +405,10 @@ class CourtDecision(ObjectNormalizer):
                              for code in langcodes])
         return 'Not available'
 
+    def abstract(self):
+        return first(self.solr.get('cdAbstract_en'))
+
+
 
 class Legislation(ObjectNormalizer):
     ID_FIELD = 'legId'
