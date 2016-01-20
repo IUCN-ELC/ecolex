@@ -133,7 +133,7 @@
           {% for event in document.participants.events %}
           <td>
             {% if country|lookup:event %}
-              <time title="{{ event|capfirst }} date">{{ country|lookup:event|default:"-"|parse_date }}</time>
+              <time title="{{ event|capfirst }} date">{{ country|lookup:event|default:"-"|parse_date|date:"b j, Y"|capfirst }}</time>
             {% else %}
               <span class="text-muted" title="Not available">-</span>
             {% endif %}

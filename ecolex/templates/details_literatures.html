@@ -27,7 +27,7 @@
             <a href="{{ literature.details_url }}" title="See literature details">{{ literature }}</a>
           </td>
           <td class="text-right">
-            <time class="small text-muted">{{ literature.date }}</time>
+            <time class="small text-muted">{{ literature.date|date:"b j, Y"|capfirst }}</time>
           </td>
         </tr>
         {% endfor %}

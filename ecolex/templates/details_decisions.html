@@ -35,7 +35,7 @@
             <a href="{{ decision.detail_url }}" title="See decision details">{{ decision }}</a>
           </td>
           <td class="text-right">
-            <time class="small text-muted">{{ decision.date }}</time>
+            <time class="small text-muted">{{ decision.date|date:"b j, Y"|capfirst }}</time>
           </td>
         </tr>
         {% endfor %}
