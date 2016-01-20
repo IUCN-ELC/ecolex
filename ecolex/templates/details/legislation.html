@@ -15,7 +15,7 @@
 
     <dl>
       <dt>Document type</dt><dd>{{ document.type|capfirst }}</dd>
-      <dt>Date of text</dt><dd>{{ document.date }}</dd>
+      <dt>Date of text</dt><dd>{{ document.date|date:"b j, Y"|capfirst }}</dd>
       <dt>Source</dt><dd>{{ document.source }}</dd>
     </dl>
   </header>
@@ -102,7 +102,7 @@
             <div class="treaty-link-container">
               <a href="{% url 'legislation_details' legislation.id %}">{{ legislation.title }}</a>
             </div>
-            <time>{{ legislation.date }}</time>
+            <time>{{ legislation.date|date:"b j, Y"|capfirst  }}</time>
           </dd>
         {% endfor %}
       </dl>
@@ -116,7 +116,7 @@
             <div class="treaty-link-container">
               <a href="{% url 'legislation_details' legislation.id %}">{{ legislation.title }}</a>
             </div>
-            <time>{{ legislation.date }}</time>
+            <time>{{ legislation.date|date:"b j, Y"|capfirst  }}</time>
           </dd>
         {% endfor %}
       </dl>

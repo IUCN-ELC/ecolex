@@ -17,7 +17,7 @@
       {% if result.date %}
         |
         <time class="sr-date" title="Date of document: {{ result.date }}">
-          {{ result.date }}
+          {{ result.date|date:"b j, Y"|capfirst  }}
         </time>
       {% endif %}
     </div>
@@ -51,7 +51,7 @@
       {% if result.date %}
         |
         <time class="sr-date" title="Date of document: {{ result.date }}">
-          {{ result.date }}
+          {{ result.date|date:"b j, Y"|capfirst  }}
         </time>
       {% endif %}
     </div>
@@ -76,7 +76,7 @@
       {% if result.date %}
         |
         <time class="sr-date" title="Date of document: {{ result.date }}">
-          {{ result.date }}
+          {{ result.date|date:"b j, Y"|capfirst }}
         </time>
       {% endif %}
     </div>
@@ -89,7 +89,7 @@
       {% if result.date %}
         |
         <time class="sr-date" title="Date of document: {{ result.date }}">
-          {{ result.date }}
+          {{ result.date|date:"b j, Y"|capfirst  }}
         </time>
       {% endif %}
     </div>
@@ -106,7 +106,7 @@
       {% if result.date %}
         |
         <time class="sr-date" tile="Date of document: {{ result.date }}">
-         {{ result.date }}
+         {{ result.date|date:"b j, Y"|capfirst }}
         </time>
       {% endif %}
       {% if result.status %}
