@@ -34,11 +34,14 @@ main {
   color: @text-muted;
 
   .img {
-    height: 2em;
-    margin-top: -.3em;
+    height: 3em;
+    margin: -.8em 0;
     img {
       height: 100%;
       width: auto;
+    }
+    @media (max-width: @screen-xs-max) {
+      margin-bottom: @line-height-computed;
     }
   }
 
