@@ -1,61 +1,67 @@
 {% load tags %}
 
+<input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">
+
 <fieldset class="global-filter">
-  <input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">
 
   <h5 data-toggle="collapse"
       data-target="#filter-global">Common filters</h5>
 
   <div id="filter-global" class="collapse in">
-    <h6>Subject</h6>
-    <ul class="filter-global" data-formid="#id_subject_op">
-      {% include 'bits/operation_facet.html' with form_field=form.subject_op form_target='#id_subject' %}
-    </ul>
-    <br>
+    <div class="clearfix filter-header">
+      <h6 class="pull-left">Subject</h6>
+      <span class="pull-right" data-formid="#id_subject_op">
+        {% include 'bits/operation_facet.html' with form_field=form.subject_op form_target='#id_subject' %}
+      </span>
+    </div>
     <div id="subject-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>
       <input type="text" class="tm-input full-match" placeholder="Add subjects" data-formid="#id_subject"/>
     </div>
 
-    <h6>Keywords</h6>
-    <ul class="filter-global" data-formid="#id_keyword_op">
-      {% include 'bits/operation_facet.html' with form_field=form.keyword_op form_target='#id_keyword' %}
-    </ul>
-    <br>
+    <div class="clearfix filter-header">
+      <h6 class="pull-left">Keywords</h6>
+      <span class="pull-right" data-formid="#id_keyword_op">
+        {% include 'bits/operation_facet.html' with form_field=form.keyword_op form_target='#id_keyword' %}
+      </span>
+    </div>
     <div id="keyword-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>
       <input type="text" class="tm-input full-match" placeholder="Add keywords" data-formid="#id_keyword"/>
     </div>
 
-    <h6>Country</h6>
-    <ul class="filter-global" data-formid="#id_country_op">
-      {% include 'bits/operation_facet.html' with form_field=form.country_op form_target='#id_country' %}
-    </ul>
-    <br>
+    <div class="clearfix filter-header">
+      <h6 class="pull-left">Country</h6>
+      <span class="pull-right" data-formid="#id_country_op">
+        {% include 'bits/operation_facet.html' with form_field=form.country_op form_target='#id_country' %}
+      </span>
+    </div>
     <div id="country-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>
       <input type="text" class="tm-input" placeholder="Add countries" data-formid="#id_country"/>
     </div>
 
-    <h6>Geographical Area</h6>
-    <ul class="filter-global" data-formid="#id_region_op">
-      {% include 'bits/operation_facet.html' with form_field=form.region_op form_target='#id_region' %}
-    </ul>
-    <br>
+    <div class="clearfix filter-header">
+      <h6 class="pull-left">Geographical Area</h6>
+      <span class="pull-right" data-formid="#id_region_op">
+        {% include 'bits/operation_facet.html' with form_field=form.region_op form_target='#id_region' %}
+      </span>
+    </div>
     <div id="region-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>
       <input type="text" class="tm-input" placeholder="Add geographical areas" data-formid="#id_region"/>
     </div>
 
-    <h6>Language</h6>
-    <ul class="filter-global" data-formid="#id_language_op">
-      {% include 'bits/operation_facet.html' with form_field=form.language_op form_target='#id_language' %}
-    </ul>
-    <br>
+    <div class="clearfix filter-header">
+      <h6 class="pull-left">Language</h6>
+      <span class="pull-right" data-formid="#id_language_op">
+        {% include 'bits/operation_facet.html' with form_field=form.language_op form_target='#id_language' %}
+      </span>
+    </div>
     <div id="language-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>

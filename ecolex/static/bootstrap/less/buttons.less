@@ -160,3 +160,30 @@ input[type="button"] {
     width: 100%;
   }
 }
+
+// button like link
+.no-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: @link-color;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: @link-hover-color;
+    text-decoration: @link-hover-decoration;
+  }
+
+  &:focus {
+    .tab-focus();
+  }
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    cursor: @cursor-disabled;
+    pointer-events: none;
+    color: @gray-muted!important;
+  }
+}
