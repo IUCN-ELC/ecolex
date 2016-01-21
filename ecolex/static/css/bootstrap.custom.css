@@ -5753,9 +5753,6 @@ fieldset ul label input {
 }
 fieldset ul label .facet-text {
   float: left;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 fieldset ul label .facet-counter {
   float: right;
