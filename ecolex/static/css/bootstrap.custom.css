@@ -5752,7 +5752,7 @@ fieldset ul label input {
   text-align: center;
 }
 fieldset ul label .facet-text {
-  float: left;
+  margin: 0 22px;
 }
 fieldset ul label .facet-counter {
   float: right;
