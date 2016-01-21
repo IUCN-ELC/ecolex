@@ -447,9 +447,12 @@ $(document).ready(function() {
                     return true;
                 });
 
-                var regex_prefix = '';
-                if (!$(this).hasClass('full-match')) {
-                    regex_prefix = '^';
+                var regex_prefix = '^';
+                if ($(this).hasClass('full-match')) {
+                    regex_prefix = '';
+                }
+                else if ($(this).hasClass('word-match')) {
+                    regex_prefix = '\\b';
                 }
 
                 suggestions = suggestions.filter(function(item) {

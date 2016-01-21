@@ -147,7 +147,7 @@
         <select class="tag-options" hidden>
           {% include 'bits/fancy_select_map.html' with facet=facets.decTreatyId type_map=dec_treaty_names form_field=form.dec_treaty %}
         </select>
-        <input type="text" class="tm-input" placeholder="Add treaties" data-formid="#id_dec_treaty"/>
+        <input type="text" class="tm-input word-match" placeholder="Add treaties" data-formid="#id_dec_treaty"/>
       </div>
 
       {% if facets.decType %}
