@@ -116,7 +116,7 @@
           {{ keyword }},
         {%endfor%}
       </p>
-    {% endfor %}
+    {% endif %}
     <p class="search-result-source">Source: {{ result.source }}</p>
 
   {% elif result.type == "legislation" %}
