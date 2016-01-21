@@ -87,6 +87,9 @@ class ObjectNormalizer:
     def get_language(self):
         pass
 
+    def get_keywords(self):
+        return self.solr.get('docKeyword')
+
     __repr__ = title
 
 
@@ -232,7 +235,7 @@ class Treaty(ObjectNormalizer):
                 return link[0], LANGUAGE_MAP[langcode]
 
     def get_keywords(self):
-        return self.solr.get('trKeyword_en')
+        return self.solr.get('docKeyword')
 
 
 class Decision(ObjectNormalizer):
@@ -416,6 +419,7 @@ class CourtDecision(ObjectNormalizer):
 
     def get_keywords(self):
         return self.solr.get('cdKeywords')
+
 
 class Legislation(ObjectNormalizer):
     ID_FIELD = 'legId'

@@ -120,7 +120,7 @@ SOLR_FIELDS = [
     'trDateOfModification', 'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
     'trPaperTitleOfText_sp', 'trPaperTitleOfText_other', 'trTitleOfTextShort',
     'decTitleOfText', 'decStatus', 'decPublishDate', 'decUpdateDate',
-    'decNumber', 'decKeyword',
+    'decNumber', 'decKeyword', 'docKeyword', 'cdKeywords',
     'litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp', 'litLongTitle_other',
     'litPaperTitleOfText', 'litPaperTitleOfText_fr', 'litPaperTitleOfText_sp',
     'litPaperTitleOfText_other',

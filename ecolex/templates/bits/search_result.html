@@ -21,9 +21,8 @@
         </time>
       {% endif %}
     </div>
-    <p class="search-result-description">{# result.summary|safe #}</p>
     {% if result.get_keywords %}
-      <p><strong>Keywords:</strong>
+      <p class="search-result-description"><strong>Keywords:</strong>
         {% for keyword in result.get_keywords %}
           {{ keyword }},
         {%endfor%}
@@ -89,8 +88,8 @@
     </div>
     <p class="search-result-description">{{ result.summary|safe }}</p>
     {% if result.get_keywords %}
-      <p>
-      <strong>Keywords:</strong>
+      <p  class="search-result-description">
+        <strong>Keywords:</strong>
         {% for keyword in result.get_keywords %}
           {{ keyword }},
         {%endfor%}
@@ -139,6 +138,14 @@
         </span>
       {% endif %}
     </div>
+    {% if result.get_keywords %}
+      <p class="search-result-description">
+      <strong>Keywords:</strong>
+        {% for keyword in result.get_keywords %}
+          {{ keyword }},
+        {%endfor%}
+      </p>
+    {% endif %}
     <p class="search-result-source">Source: {{ result.source }}</p>
   {% endif %}
 </li>
