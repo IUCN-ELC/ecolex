@@ -227,9 +227,9 @@ class CourtDecisionImporter(object):
         start = 0
         while start < len(decisions):
             end = min(start + batch_size, len(decisions))
-            new_decisions = filter(bool,
-                                   [self._get_solr_decision(decision)
-                                    for decision in decisions[start:end]])
+            new_decisions = list(
+                filter(bool, [self._get_solr_decision(decision)
+                              for decision in decisions[start:end]]))
             logger.info('Adding {} court decisions'.format(len(new_decisions)))
             self.solr.add_bulk(new_decisions)
             start = end
