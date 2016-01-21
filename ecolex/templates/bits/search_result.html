@@ -109,7 +109,7 @@
     </div>
     <p class="search-result-description">{# result.summary|safe #}</p>
     {% if result.get_keywords %}
-      <p>
+      <p class="search-result-description">
       <strong>Keywords:</strong>
         {% for keyword in result.get_keywords %}
           {{ keyword }},
