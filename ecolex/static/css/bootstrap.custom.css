@@ -5369,6 +5369,7 @@ button.close {
   word-spacing: 0;
   white-space: nowrap;
   text-indent: 0;
+  background-color: #fff;
   -webkit-transition: text-indent 0.2s ease-in-out;
   -o-transition: text-indent 0.2s ease-in-out;
   transition: text-indent 0.2s ease-in-out;
