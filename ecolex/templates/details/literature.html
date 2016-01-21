@@ -64,7 +64,7 @@
       <dt>Abstract</dt>
       <dd>
         {% if document.abstract %}
-          <p class="abstract">{{ document.abstract }}</p>
+          <p class="abstract">{{ document.abstract|safe }}</p>
         {% else %}
           <p class="na">Not available</p>
         {% endif %}
