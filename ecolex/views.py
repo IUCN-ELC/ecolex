@@ -1,15 +1,27 @@
 from django.http import Http404, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from django.views.generic import TemplateView
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView, View
 from django.conf import settings
+import logging
+from urllib.parse import urlencode
+
+from contrib.import_legislation_fao import harvest_file
 from ecolex.search import (
-    search, get_document, get_all_treaties, get_documents_by_field,
+    search, get_document, get_documents_by_field, get_treaty_by_informea_id
 )
 from ecolex.forms import SearchForm
 from ecolex.definitions import (
-    DOC_TYPE, DOC_TYPE_FILTER_MAPPING, FIELD_TO_FACET_MAPPING, SOLR_FIELDS
+    DOC_TYPE, DOC_TYPE_FILTER_MAPPING, FIELD_TO_FACET_MAPPING, SOLR_FIELDS,
+    OPERATION_FIELD_MAPPING, SELECT_FACETS
 )
+
+from uuid import uuid4
+
+
+logger = logging.getLogger(__name__)
 
 
 class SearchView(TemplateView):
@@ -32,14 +44,24 @@ class SearchView(TemplateView):
         filters = {
             'type': data['type'] or dict(DOC_TYPE).keys(),
             'docKeyword': data['keyword'],
+            'docSubject': data['subject'],
+            'docCountry': data['country'],
+            'docRegion': data['region'],
+            'docLanguage': data['language'],
             'docDate': (data['yearmin'], data['yearmax']),
         }
-
         for doc_type in filters['type']:
             mapping = DOC_TYPE_FILTER_MAPPING[doc_type]
             for k, v in mapping.items():
                 filters[k] = data[v]
 
+        for field in OPERATION_FIELD_MAPPING.keys():
+            field_name = OPERATION_FIELD_MAPPING[field]
+            facet_name = FIELD_TO_FACET_MAPPING[field_name]
+            if not data[field] and facet_name in filters:
+                values = filters.pop(facet_name)
+                facet_name = '{!ex=%s}' % str(uuid4())[:8] + facet_name
+                filters[facet_name] = values
         return filters
 
     def get_context_data(self, **kwargs):
@@ -50,11 +72,13 @@ class SearchView(TemplateView):
         ctx['form'] = self.form = SearchForm(data=data)
         ctx['debug'] = settings.DEBUG
         ctx['text_suggestion'] = settings.TEXT_SUGGESTION
+        ctx['query'] = urlencode(self.request.GET)
+
         self.query = self.form.data.get('q', '').strip() or '*'
         # Compute filters
         self.filters = self._set_filters(data)
-
         self.sortby = data['sortby']
+
         return ctx
 
     def update_form_choices(self, facets):
@@ -116,11 +140,12 @@ class SearchResults(SearchView):
 
         # a map of (treatyId -> treatyNames) for treaties which are referenced
         # by decisions in the current result set
-        all_treaties = get_all_treaties()
-        ctx['dec_treaty_names'] = {
-            t.informea_id(): t for t in all_treaties
-        }
-
+        types = self.request.GET.getlist('type', [])
+        if 'decision' in types or types == []:
+            all_treaties = results.get_facet_treaty_names()
+            ctx['dec_treaty_names'] = {
+                t.informea_id(): t for t in all_treaties
+            }
         ctx['page'] = self.page_details(page, results)
         self.update_form_choices(ctx['facets'])
         return ctx
@@ -139,6 +164,28 @@ class SearchResultsAjax(SearchResults):
         search_form_inputs = render_to_string('bits/hidden_form.html', ctx)
         return JsonResponse(dict(main=main, sidebar=sidebar,
                                  form_inputs=search_form_inputs))
+
+
+class SelectFacetsAjax(SearchView):
+
+    def get(self, request, **kwargs):
+        ctx = super(SelectFacetsAjax, self).get_context_data(**kwargs)
+        fields = SOLR_FIELDS
+        results = search(self.query, filters=self.filters, sortby=self.sortby,
+                         fields=fields)
+        facets = results.get_facets()
+        data = {}
+        for k, v in SELECT_FACETS.items():
+            if k not in facets:
+                continue
+            show_empty = True if len(results) == 0 else False
+            context = {
+                'facet': facets[k],
+                'form_field': ctx['form'][v],
+                'show_empty': show_empty
+            }
+            data[v] = render_to_string('bits/fancy_select.html', context)
+        return JsonResponse(data)
 
 
 class DecMeetingView(SearchView):
@@ -179,7 +226,8 @@ class DetailsView(SearchView):
 
     def get_context_data(self, **kwargs):
         context = super(DetailsView, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'])
+
+        results = get_document(document_id=kwargs['id'], query=self.query)
         if not results:
             raise Http404()
         context['document'] = results.first()
@@ -196,11 +244,11 @@ class DecisionDetails(DetailsView):
 
     def get_context_data(self, **kwargs):
         context = super(DecisionDetails, self).get_context_data(**kwargs)
+        treaty_id = context['document'].solr.get('decTreatyId', None)
 
-        treaties = context['document'].solr.get('decTreatyId', [])
-        all_treaties = get_all_treaties()
-        context['all_treaties'] = [t for t in all_treaties
-                                   if t.solr['trInformeaId'] in treaties]
+        if treaty_id:
+            treaty = get_treaty_by_informea_id(treaty_id)
+            context['treaty'] = treaty
 
         return context
 
@@ -228,7 +276,49 @@ class TreatyDetails(DetailsView):
                         sort(key=lambda x: x.date(), reverse=True)
         if context['document'].informea_id():
             context['decisions'] = context['document'].get_decisions()
+        context['literatures'] = context['document'].get_literatures()
+        context['court_decisions'] = context['document'].get_court_decisions()
 
+        return context
+
+
+class LiteratureDetails(DetailsView):
+
+    template_name = 'details/literature.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(LiteratureDetails, self).get_context_data(**kwargs)
+        document = context['document']
+        reference_ids = document.get_references_ids_dict()
+        references_to = document.get_references_from_ids(reference_ids)
+        references_from = document.get_references_from()
+        context['references_to'] = references_to
+        context['references_from'] = references_from
+        return context
+
+
+class CourtDecisionDetails(DetailsView):
+
+    template_name = 'details/court_decision.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CourtDecisionDetails, self).get_context_data(**kwargs)
+        references = context['document'].get_references()
+        referenced_by = context['document'].get_referenced_by()
+        context['references'] = references
+        context['referenced_by'] = referenced_by
+        return context
+
+
+class LegislationDetails(DetailsView):
+
+    template_name = 'details/legislation.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(LegislationDetails, self).get_context_data(**kwargs)
+        leg = context['document']
+        context['leg_references'] = leg.get_legislation_references()
+        context['leg_back_references'] = leg.get_legislation_back_references()
         return context
 
 
@@ -251,9 +341,42 @@ class ResultDetailsDecisions(SearchView):
             x = meetings.get(decId, [])
             x.append(decision)
             meetings[decId] = x
-            meetingNames[decId] = decision.solr['decMeetingTitle'][0]
+            if 'decMeetingTitle' in decision.solr:
+                meetingNames[decId] = decision.solr['decMeetingTitle'][0]
         context['meetings'] = meetings
         context['meetingNames'] = meetingNames
+        return context
+
+
+class ResultDetailsLiteratures(SearchView):
+
+    template_name = 'details_literatures.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ResultDetailsLiteratures, self).get_context_data(**kwargs)
+        results = get_document(kwargs['id'])
+        if not results.count():
+            raise Http404
+
+        context['treaty'] = results.first()
+        context['page_type'] = 'homepage'
+        context['literatures'] = context['treaty'].get_literatures()
+        return context
+
+
+class ResultDetailsCourtDecisions(SearchView):
+
+    template_name = 'details_court_decisions.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ResultDetailsCourtDecisions, self).get_context_data(**kwargs)
+        results = get_document(kwargs['id'])
+        if not results.count():
+            raise Http404
+
+        context['treaty'] = results.first()
+        context['page_type'] = 'homepage'
+        context['court_decisions'] = context['treaty'].get_court_decisions()
         return context
 
 
@@ -262,13 +385,38 @@ class ResultDetailsParticipants(SearchView):
 
     def get_context_data(self, **kwargs):
         context = super(ResultDetailsParticipants, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'])
+        results = get_document(kwargs['id'], self.query)
         if not results:
             raise Http404()
 
         context['treaty'] = results.first()
 
         return context
+
+
+class FaoFeedView(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        key = request.META.get('HTTP_API_KEY', None)
+        api_key = getattr(settings, 'FAOLEX_API_KEY')
+        if not key or key != api_key:
+            logger.error('No API KEY!')
+            raise Http404
+        return super(FaoFeedView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        legislation_file = request.FILES.get('file', None)
+        if legislation_file:
+            response = harvest_file(legislation_file, logger)
+            logger.info(response)
+        else:
+            logger.error('No attached file!')
+            response = 'You have to attach an XML file!'
+        data = {
+            'message': response
+        }
+        return JsonResponse(data)
 
 
 def debug(request):
@@ -283,6 +431,5 @@ def debug(request):
         'debug': settings.DEBUG,
         'endpoint': settings.SOLR_URI,
         'last_update': last_update,
-
     }
     return JsonResponse(data)

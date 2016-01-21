@@ -1,4 +1,4 @@
-{% for type,count in facet.items %}
+{% for type, count in facet.items %}
   {% if show_empty or count > 0 %}
   <li>
     <label class="facet-checkbox {% if not count %}disabled{% endif %}" for="{{ form_field.name }}_{{ type }}">
@@ -8,7 +8,7 @@
              value="{{ type }}"
              {% if type in form_field.data %}checked{% endif %}
              {% if not count %}disabled{% endif %}>
-      <span class="facet-text">{{ type|capfirst }}</span>
+      <span class="facet-text">{{ type|truncatechars:28|capfirst }}</span>
       <span class="facet-counter">{{ count }}</span>
     </label>
   </li>

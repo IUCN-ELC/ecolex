@@ -2,22 +2,21 @@
 {% load tags %}
 
 {% block content %}
-{% informea_url_id document %}
 
 <article class="record-details">
 
   <header>
     <div class="record-title">
       <div class="record-icon">
-        <span class="icon icon-treaty" title="Treaty"></span>
+        <a class="btn btn-sm btn-default" href="{% url 'results' %}?{{ query }}">Back to search results</a>
       </div>
-      <h1>{{ document.title }}</h1>
+      <h1>{{ document.title|safe }}</h1>
     </div>
 
     <dl>
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
       <dt>Field of application</dt> <dd>{{ document.field_of_application }}</dd>
-      <dt>Date of document</dt> <dd>{{ document.date }}</dd>
+      <dt>Date of document</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
       <dt>Source</dt>
       <dd>{{ document.source }}</dd>
     </dl>
@@ -38,7 +37,6 @@
   {% endif %}
 
   <section id="details">
-    <h2 class="section-title">Details</h2>
     <dl>
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>
@@ -53,12 +51,14 @@
 
       <dt>Subject</dt>
       <dd>
-        {% if document.solr.trSubject %}
-          {{ document.solr.trSubject | join_by:", " | safe }}
+        {% if document.solr.trSubject_en %}
+          {{ document.solr.trSubject_en | join_by:", " | safe }}
         {% else %}
           <span class="na">Not available</span>
         {% endif %}
       </dd>
+      <dt>Status</dt>
+      <dd>{{ document.solr.trStatus }}</dd>
       <dt>Entry into force</dt>
       <dd>
         {% if document.solr.trEntryIntoForceDate %}
@@ -80,12 +80,10 @@
   </section>
 
   <section id="text">
-    <h2 class="section-title">Text</h2>
-
     <dl>
       <dt>Abstract</dt>
       <dd>
-        {% for abs in document.solr.trAbstract %}
+        {% for abs in document.solr.trAbstract_en %}
           <p class="abstract">{{ abs|safe }}</p>
         {% empty %}
           <span class="na">Not available</span>
@@ -99,11 +97,11 @@
         </dd>
         {% endfor %}
       {% endif %}
-      {% if document.solr.trLinkToFullText %}
+      {% if document.get_link_to_full_text %}
         <dt>Link to full text</dt>
         <dd>
-            <a href="{{ document.solr.trLinkToFullText.0 }}" class="treaty-link"
-             target="_blank">{{ document.solr.trLinkToFullText.0 }}</a>
+            <a href="{{ document.get_link_to_full_text.0 }}", class="treaty-link"
+             target="_blank">{{ document.get_link_to_full_text.1 }}</a>
         </dd>
       {% endif %}
     </dl>
@@ -113,9 +111,9 @@
   <section id="participants">
     <div class="clearfix">
       <a id="participants-extras"
-         href="{% url 'resultParticipants' document.id %}"
+        href="{% url 'resultParticipants' document.id %}?{{query}}"
          class="pull-right btn btn-link">See Expanded View</a>
-      <h2 class="section-title">Participants</h2>
+      <h2 class="section-title">Country/Participant</h2>
     </div>
 
     <table class="participants">
@@ -135,7 +133,7 @@
           {% for event in document.participants.events %}
           <td>
             {% if country|lookup:event %}
-              <time title="{{ event|capfirst }} date">{{ country|lookup:event|default:"-"|parse_date }}</time>
+              <time title="{{ event|capfirst }} date">{{ country|lookup:event|default:"-"|parse_date|date:"b j, Y"|capfirst }}</time>
             {% else %}
               <span class="text-muted" title="Not available">-</span>
             {% endif %}
@@ -161,7 +159,7 @@
                 <a href="{% url 'treaty_details' treaty.id %}"
                    title="See treaty details">{{ treaty.title }}</a>
                </div>
-              <time>{{ treaty.date }}</time>
+              <time>{{ treaty.date|date:"b j, Y"|capfirst  }}</time>
             </dd>
             {% endfor %}
         </dl>
@@ -178,6 +176,30 @@
         {% if decisions|length %}
           <strong>{{ decisions|length }} decisions</strong> related to this treaty.
           <a href="{% url 'resultDecisions' document.id %}">View decisions</a>
+        {% else %}
+          <span class="na">Not available</span>
+        {% endif %}
+      </dd>
+    </dl>
+
+    <dl>
+      <dt>Literature</dt>
+      <dd>
+        {% if literatures|length %}
+          <strong>{{ literatures|length }} literatures</strong> related to this treaty.
+          <a href="{% url 'resultLiteratures' document.id %}">View literatures</a>
+        {% else %}
+          <span class="na">Not available</span>
+        {% endif %}
+      </dd>
+    </dl>
+
+    <dl>
+      <dt>Court Decision</dt>
+      <dd>
+        {% if court_decisions|length %}
+          <strong>{{ court_decisions|length }} court decisions</strong> related to this treaty.
+          <a href="{% url 'resultCourtDecisions' document.id %}">View court decisions</a>
         {% else %}
           <span class="na">Not available</span>
         {% endif %}

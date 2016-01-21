@@ -1,0 +1,117 @@
+{% extends 'layout.html' %}
+{% load tags %}
+
+{% block content %}
+{% informea_url_id document %}
+
+<article class="record-details">
+
+  <header>
+    <div class="record-title">
+      <div class="record-icon">
+        <a class="btn btn-sm btn-default" href="{% url 'results' %}?{{ query }}">Back to search results</a>
+      </div>
+      <h1>{{ document.title|safe }}</h1>
+    </div>
+
+    <dl>
+      <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
+      <dt>Date of document</dt> <dd>{{ document.date|date:"b j, Y"|capfirst }}</dd>
+      <dt>Source</dt>
+      <dd>{{ document.source }}</dd>
+      <dt>Elis ID</dt>
+      <dd>{{ document.solr.litId.0 }}</dd>
+    </dl>
+  </header>
+
+  <section id="details">
+    <dl>
+      <dt>Authors</dt>
+      <dd>{% for author in document.solr.litAuthor %}
+            {{ author }}{%if not forloop.last%};{% endif %}
+          {% empty %}
+            <span class="na">Not available</span>
+          {% endfor %}
+      </dd>
+
+      {% for entry in document.optional_fields %}
+        <dt>{{ entry.label }}</dt>
+        <dd>{{ entry.value }}</dd>
+      {% endfor %}
+
+      {% if document.solr.litCountry %}
+        <dt>Country</dt>
+        <dd>{{ document.solr.litCountry.0 }}</dd>
+      {% endif %}
+
+      <dt>Subjects</dt>
+      <dd>{% for subject in document.solr.litSubject %}
+            {{ subject|safe }}
+          {% endfor %}
+      </dd>
+      <dt>Keywords</dt>
+      <dd>{% for keyword in document.solr.litKeyword %}
+            <span class="tag">{{ keyword|capfirst }}</span>
+          {% empty %}
+            <span class="na">Not available</span>
+          {% endfor %}
+      </dd>
+    </dl>
+  </section>
+
+  <section id="text">
+    <dl>
+      <dt>Abstract</dt>
+      <dd>
+        {% if document.abstract %}
+          <p class="abstract">{{ document.abstract|safe }}</p>
+        {% else %}
+          <p class="na">Not available</p>
+        {% endif %}
+      </dd>
+
+      {% if document.solr.litLinkToFullText %}
+      <dt>Link to full text</dt>
+      <dd>
+        <a class="decision-link" href="{{ document.solr.litLinkToFullText }}" target="_blank">{{ document.get_language }}</a>
+      </dd>
+      {% endif %}
+      <dt>Available web site</dt>
+      <dd>
+        {% if document.solr.litRelatedWebSite %}
+          <a class="decision-link" href="{{ document.solr.litRelatedWebSite }}">{{ document.solr.litRelatedWebSite }}</a>
+        {% else %}
+          <p class="na">Not available</p>
+        {% endif %}
+      </dd>
+    </dl>
+  </section>
+
+  <section id="other-references">
+    <h2 class="section-title">References to</h2>
+    {% for doc_type, docs in references_to.items %}
+      <dl>
+        <dt>{{ doc_type|capfirst }}</dt>
+        {% for doc in docs %}
+          <dd><a href="{{ doc.details_url }}">{{ doc }}</a></dd>
+        {% endfor %}
+      </dl>
+    {% empty %}
+      <span class="na">No references</span>
+    {% endfor %}
+
+    <h2 class="section-title">References from</h2>
+    {% for doc_type, docs in references_from.items %}
+      <dl>
+        <dt>{{ doc_type|capfirst }}</dt>
+        {% for doc in docs %}
+          <dd><a href="{{ doc.details_url }}">{{ doc }}</a></dd>
+        {% endfor %}
+      </dl>
+    {% empty %}
+      <span class="na">No references</span>
+    {% endfor %}
+  </section>
+
+</article>
+{% endblock content %}

@@ -1,7 +1,7 @@
 var _form_data = null;
 
-$(document).ready(function () {
-    $('[data-filter]').on('click', function () {
+$(document).ready(function() {
+    $('[data-filter]').on('click', function() {
         target = $(this).data('filter')
         target = $(target);
         $(this).toggleClass('active');
@@ -16,30 +16,32 @@ $(document).ready(function () {
     // set initial history entry
     if (!history.state) {
         var data = $('.search-form').serialize();
-        history.replaceState({data: data, tag: 'ecolex'}, '', '?' + data);
+        history.replaceState({
+            data: data,
+            tag: 'ecolex'
+        }, '', '?' + data);
     }
 
     // reload results when the back button was pressed
-    $(window).on("popstate", function (e) {
+    $(window).on("popstate", function(e) {
         // history states are tagged in order to ignore popstate events
         // triggered on page load.
         if (!history.state || history.state.tag !== "ecolex") {
             return;
         }
-        // $(".search-form").deserialize(location.search.substring(1));
         $(".search-form").deserialize(history.state.data);
         submit(history.state.data);
     });
-
 
     // initial form value
     var _initial_form_data = $('.search-form').serialize();
 
     function debounce(func, wait, immediate) {
         var timeout;
-        return function () {
-            var context = this, args = arguments;
-            var later = function () {
+        return function() {
+            var context = this,
+                args = arguments;
+            var later = function() {
                 timeout = null;
                 if (!immediate) func.apply(context, args);
             };
@@ -51,7 +53,7 @@ $(document).ready(function () {
     }
 
     function push_and_submit(ajax) {
-        return debounce(function () {
+        return debounce(function() {
             _push_and_submit(ajax);
         }, 500)();
     }
@@ -59,7 +61,10 @@ $(document).ready(function () {
     function _push_and_submit(ajax) {
         if (ajax) {
             var data = $('.search-form').serialize();
-            history.pushState({data: data, tag: 'ecolex'}, '', '?' + data);
+            history.pushState({
+                data: data,
+                tag: 'ecolex'
+            }, '', '?' + data);
             submit(data);
         } else {
             $('.search-form').submit();
@@ -80,8 +85,8 @@ $(document).ready(function () {
                 backgroundColor: 'transparent',
             },
             overlayCSS: {
-                backgroundColor:  '#ccc',
-                opacity:          0.9,
+                backgroundColor: '#ccc',
+                opacity: 0.9,
             }
         });
     }
@@ -90,29 +95,53 @@ $(document).ready(function () {
         $('main').unblock();
     }
 
-    function submit(serialized_form_data) {
+    function is_changed(serialized_form_data) {
         if (serialized_form_data != _initial_form_data) {
+            return true;
+        }
+        return false;
+    }
+
+    function submit(serialized_form_data) {
+        if (is_changed(serialized_form_data)) {
             block_ui();
             $.ajax({
-                url: '/result/ajax?' + serialized_form_data,
+                url: '/result/ajax/?' + serialized_form_data,
                 format: 'JSON',
-                success: function (data) {
+                success: function(data) {
                     $('#layout-main').html(data.main);
                     $('#filters').html(data.sidebar);
                     $("#search-form-inputs").html(data.form_inputs);
                     _initial_form_data = serialized_form_data;
                     $(".search-form").deserialize(serialized_form_data);
-                    init_all();
-                    unblock_ui();
+                    get_select_facets();
                     // for bootstrap tour
                     $("body").trigger('onajax');
                 },
-                error: function (e) {
+                error: function(e) {
                     unblock_ui();
                 }
             });
         } else {
             console.log('No new data, not submitting.');
+        }
+    }
+
+    function get_select_facets() {
+        if ($('.tag-options').length > 0) {
+            var data = $('.search-form').serialize();
+            $.ajax({
+                url: '/facets/ajax/?' + data,
+                format: 'JSON',
+                success: function(data) {
+                    $.each(data, function(k, v) {
+                        var id_select = '#' + k + '-filter select';
+                        $(id_select).html(v);
+                    });
+                    init_all();
+                    unblock_ui();
+                },
+            });
         }
     }
 
@@ -122,21 +151,21 @@ $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
 
         // prevent disabled pagination anchor to trigger page reload
-        $('.pagination').on('click', '.disabled', function (e) {
+        $('.pagination').on('click', '.disabled', function(e) {
             e.preventDefault();
         });
 
         // Slider
         $("#slider-years")
             .slider()
-            .on('slide', function (event) {
+            .on('slide', function(event) {
                 var min = $('#year-min'),
                     max = $('#year-max');
 
                 min.val(event.value[0]);
                 max.val(event.value[1]);
             })
-            .on('slideStop', function (event) {
+            .on('slideStop', function(event) {
                 var min = $('#year-min'),
                     max = $('#year-max');
 
@@ -153,7 +182,7 @@ $(document).ready(function () {
             });
 
         // Year inputs
-        updateYear = function (e) {
+        updateYear = function(e) {
             minEl = $('#year-min');
             maxEl = $('#year-max');
 
@@ -168,12 +197,10 @@ $(document).ready(function () {
             $("#slider-years").slider('setValue', [min, max]);
         }
 
-        $('#year-min, #year-max').on('change', updateYear);
-
         // Multiselect
         $('select[multiple]').multiselect({
             buttonClass: '',
-            buttonContainer: '<div class="multiselect-wrapper" />', // '<div class="btn-group multiselect-wrapper" />',
+            buttonContainer: '<div class="multiselect-wrapper" />',
             disableIfEmpty: true,
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
@@ -182,7 +209,7 @@ $(document).ready(function () {
             nonSelectedText: 'Nothing selected',
             enableCaseInsensitiveFiltering: true,
             maxHeight: 240,
-            onDropdownHidden: function (e) {
+            onDropdownHidden: function(e) {
                 var select = $(this.$select);
                 var formid = select.data('formid');
 
@@ -190,12 +217,12 @@ $(document).ready(function () {
                 // submit now for now
                 push_and_submit(true);
             },
-            onDropdownShown: function (e) {
+            onDropdownShown: function(e) {
                 search = $(e.target).find('.multiselect-search').focus();
-            }
+            },
         });
 
-        $('.filter-type button').click(function (e) {
+        $('.filter-type button').click(function(e) {
             var current = $('#id_type').val() || [];
             var toggle_value = $(this).data('value');
             var is_homepage = $(this).parents().hasClass('homepage');
@@ -215,36 +242,58 @@ $(document).ready(function () {
         // Treaty -> Type of Document/Field of application filter
         // COP Decision -> Decision Type, Decision Status /Decision Treaty
         $('input[type=checkbox]',
-            $('.filter-decision, .filter-treaty')).change(function (e) {
+                $('.filter-decision, .filter-treaty, .filter-literature, .filter-global, .filter-legislation'))
+            .change(function(e) {
                 var current = [];
                 var ul = $(this).parents('ul');
                 var form_id = ul.data('formid');
-
-                ul.find('input:checked').each(function () {
+                var value = $(this).val();
+                if (value == 'AND' && $(this).is(':checked')) {
+                    var target_id = $(this).data('target');
+                    current.push('AND');
+                }
+                ul.find('input:checked').each(function() {
                     current.push($(this).val());
                 });
                 $(form_id).val(current);
                 // submit now for now
+                if (form_id.indexOf("_op") > 0 && $(form_id.replace("_op", "")).val().length < 2) {
+                    return;
+                }
                 push_and_submit(true);
             });
 
         // Year controls
-        $('.global-filter input[type=number]').change(function (e) {
+        $('.global-filter input[type=number]').change(function(e) {
+            $(this).focus();
+        });
+
+        $('.global-filter input[type=number]').on('blur', function(e) {
             var form_id = $(this).data('formid');
             $(form_id).val($(this).val());
             // submit le form
             push_and_submit(true);
         });
 
+        // Lose focus on enter on number inputs
+        $('input[type=number]').keypress(function(e) {
+            var key = e.which;
+            if (key == 13) // the enter key code
+            {
+                $(this).blur();
+                return false;
+            }
+        });
+
         // Sortby controls
-        $('.sortby').click(function (e) {
+        $('.sortby').click(function(e) {
             e.preventDefault();
             var value = $(this).data('sortby');
             $('#id_sortby').val(value);
             push_and_submit(true);
         });
 
-        $('button[type=submit]').click(function (e) {
+        $('button[type=submit]').off("click").on("click", function(e) {
             e.preventDefault();
             var is_homepage = $(this).parents().hasClass('homepage');
             if (is_homepage)
@@ -253,22 +302,22 @@ $(document).ready(function () {
                 push_and_submit(true);
         });
 
-        $('#suggestion-link').click(function (e) {
+        $('#suggestion-link').click(function(e) {
             e.preventDefault();
             var value = $(this).text();
             $('#search').val(value);
             push_and_submit(true);
         });
 
-        // Reset button
-        $('input[type=reset]').click(function (e) {
+        // Global reset button
+        $('input[type=reset]').click(function(e) {
             e.preventDefault();
             var data = {
                 'q': $('#id_q').val(),
                 'type': $('#id_type').val()
             };
-            $('.search-form select, .search-form input').each(function () {
-                $(this).val('')
+            $('.search-form select, .search-form input').each(function() {
+                $(this).val('');
             });
             $('#id_q').val(data.q);
             $('#id_type').val(data.type);
@@ -276,8 +325,19 @@ $(document).ready(function () {
             push_and_submit(true);
         });
 
+        //Multiple select facet reset button
+        $('button.reset-multiple').on("click", function(e) {
+            var target = $(this).data('target');
+            $('select' + target).each(function() {
+                $(this).val('');
+            });
+            var tag_selector = 'input.tm-input[data-formid="' + target + '"]';
+            $(tag_selector).tagsManager('empty');
+            push_and_submit(true);
+        });
+
         // Tag manager
-        var substringMatcher = function (strs, regex_prefix) {
+        var substringMatcher = function(strs, regex_prefix) {
             return function findMatches(q, cb) {
                 var matches, substrRegex;
                 // an array that will be populated with substring matches
@@ -288,11 +348,13 @@ $(document).ready(function () {
 
                 // iterate through the pool of strings and for any string that
                 // contains the substring `q`, add it to the `matches` array
-                $.each(strs, function (i, str) {
+                $.each(strs, function(i, str) {
                     if (substrRegex.test(str)) {
                         // the typeahead jQuery plugin expects suggestions to a
                         // JavaScript object, refer to typeahead docs for more info
-                        matches.push({'value': str});
+                        matches.push({
+                            'value': str
+                        });
                     }
                 });
 
@@ -300,16 +362,16 @@ $(document).ready(function () {
             };
         };
 
-        var tagValidator = function (strs) {
-            return function (tag) {
+        var tagValidator = function(strs) {
+            return function(tag) {
                 return (strs.indexOf(tag) !== -1);
             }
         };
 
-        $(".tag-select").each(function () {
+        $(".tag-select").each(function() {
             var suggestions = [];
             var preselected = [];
-            $(".tag-options option", this).each(function (i, opt) {
+            $(".tag-options option", this).each(function(i, opt) {
                 var selected = $(opt).attr("selected");
                 var entry = $(opt).text();
                 if (selected)
@@ -320,7 +382,7 @@ $(document).ready(function () {
             function get_values(tags, options) {
                 var result = [];
                 var fixed_tags = {};
-                options.each(function () {
+                options.each(function() {
                     text = $(this).text();
                     val = $(this).val();
                     fixed_tags[text] = val;
@@ -334,60 +396,87 @@ $(document).ready(function () {
                 return result;
             }
 
-            $('.tm-input', this).each(function () {
+            $('.tm-input', this).each(function() {
                 var self = this;
                 var options = $('option', $(this).parents('.tag-select').children('.tag-options')[0]);
 
                 $(this).tagsManager({
-                    tagsContainer: $('<ul/>', { class: 'tm-taglist' }),
+                    delimiters: [9, 13],
+                    tagsContainer: $('<ul/>', {
+                        class: 'tm-taglist'
+                    }),
                     tagCloseIcon: '',
                     prefilled: preselected,
-                    validator: tagValidator(suggestions)
-                }).on("tm:spliced",function (e) {
+                    validator: tagValidator(suggestions),
+                    deleteTagsOnBackspace: false,
+                }).on("tm:spliced", function(e) {
                     var formid = $(this).data('formid');
                     var value = $(this).tagsManager('tags');
                     $(formid).val(get_values(value, options));
                     push_and_submit(true);
-                }).on("tm:pushed", function (e) {
+                }).on("tm:pushed", function(e) {
                     var formid = $(this).data('formid');
                     var value = $(this).tagsManager('tags');
                     $(formid).val(get_values(value, options));
                     push_and_submit(true);
+                }).bind('typeahead:selected', function(e, v, r) {
+                    $(this).tagsManager('pushTag', v.value);
+                    $(this).blur();
                 });
 
-                $(this).wrap($('<div/>', { class: 'tm-wrapper' }));
+                $(this).wrap($('<div/>', {
+                    class: 'tm-wrapper'
+                }));
 
                 labelFor = $(this).attr('data-formid');
                 labelFor = labelFor.substr(1, labelFor.length); // remove #
                 label = $('<label/>', {
                     'class': 'tm-label',
-                    'for': labelFor
-                    // 'text': $(this).attr('placeholder')
+                    'for': labelFor,
                 });
                 $(this).before(label);
+                $(self).on("focus", function(e) {
+                    var ev = $.Event("keydown");
+                    ev.keyCode = ev.which = 40;
+                    $(self).trigger(ev);
+                    return true;
+                });
+
+                $(label).on("click", function(e) {
+                    $(self).focus();
+                    return true;
+                });
 
                 var regex_prefix = '';
                 if (!$(this).hasClass('full-match')) {
                     regex_prefix = '^';
                 }
-                $(this).typeahead({
-                        hint: false,
-                        highlight: true,
-                        minLength: 0
-                    },
-                    {
-                        name: 'states',
-                        displayKey: 'value',
-                        source: substringMatcher(suggestions, regex_prefix)
-                    });
 
-                $(this).on('blur', function () {
+                suggestions = suggestions.filter(function(item) {
+                    return preselected.indexOf(item) === -1;
+                });
+
+                $(this).typeahead({
+                    hint: false,
+                    highlight: true,
+                    minLength: 0
+                }, {
+                    name: 'states',
+                    displayKey: 'value',
+                    source: substringMatcher(suggestions, regex_prefix)
+                });
+
+                $(this).on('blur', function() {
                     $(this).val('');
                 });
+
             });
         });
 
     }
-
-    init_all();
+    if ($('.search-form').hasClass('homepage')) {
+        init_all();
+    } else {
+        get_select_facets();
+    }
 });

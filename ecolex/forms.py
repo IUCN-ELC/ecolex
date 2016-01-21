@@ -4,44 +4,67 @@ from ecolex.definitions import DOC_TYPE
 
 
 class SearchForm(Form):
+    OPERATION_OPTIONS = (
+        ('AND', 'AND'),
+    )
     q = CharField(initial='', widget=TextInput(
         attrs={'id': 'search', 'class': 'form-control', 'autofocus': True,
-               'placeholder': "Search for Treaties, Legislation, Court decisions, Literature, COP decisions"}))
+               'placeholder': "Search in record and full text"}))
     type = MultipleChoiceField(choices=DOC_TYPE)
 
     tr_type = MultipleChoiceField()
     tr_field = MultipleChoiceField()
-    tr_party = MultipleChoiceField()
-    tr_region = MultipleChoiceField()
-    tr_basin = MultipleChoiceField()
-    tr_subject = MultipleChoiceField()
-    tr_language = MultipleChoiceField()
-
-    keyword = MultipleChoiceField()
-    yearmin = CharField()
-    yearmax = CharField()
+    tr_status = MultipleChoiceField()
+    tr_place_of_adoption = MultipleChoiceField()
+    tr_depository = MultipleChoiceField()
+    tr_depository_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
 
     dec_type = MultipleChoiceField()
     dec_status = MultipleChoiceField()
     dec_treaty = MultipleChoiceField()
 
+    cd_type = MultipleChoiceField()
+    cd_territorial_subdivision = MultipleChoiceField()
+
+    lit_type = MultipleChoiceField()
+    lit_author = MultipleChoiceField()
+    lit_author_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
+    lit_serial = MultipleChoiceField()
+    lit_publisher = MultipleChoiceField()
+
+    leg_type = MultipleChoiceField()
+    leg_territorial = MultipleChoiceField()
+    leg_status = MultipleChoiceField()
+
+    subject = MultipleChoiceField()
+    subject_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
+    keyword = MultipleChoiceField()
+    keyword_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
+    country = MultipleChoiceField()
+    country_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
+    region = MultipleChoiceField()
+    region_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
+    language = MultipleChoiceField()
+    language_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
+    yearmin = CharField()
+    yearmax = CharField()
+
     sortby = CharField(initial='')
 
-    def has_treaty(self):
-        TREATY_FACETS = (
-            'tr_type', 'tr_field', 'tr_party', 'tr_subject',
-            'tr_basin', 'tr_region', 'tr_language'
-        )
+    def _has_document_type(self, doctype):
+        return doctype in self.data.get('type', [])
 
-        return (not self.data.get('type') and any(
-            self.data.get(f) for f in TREATY_FACETS
-        )) or ('treaty' in self.data.get('type', []))
+    def has_treaty(self):
+        return self._has_document_type('treaty')
 
     def has_decision(self):
-        DECISION_FACETS = (
-            'dec_type', 'dec_status', 'dec_treaty'
-        )
+        return self._has_document_type('decision')
 
-        return (not self.data.get('type') and any(
-            self.data.get(f) for f in DECISION_FACETS
-        )) or ('decision' in self.data.get('type', []))
+    def has_literature(self):
+        return self._has_document_type('literature')
+
+    def has_legislation(self):
+        return self._has_document_type('legislation')
+
+    def has_court_decision(self):
+        return self._has_document_type('court_decision')

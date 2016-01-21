@@ -9,16 +9,16 @@
   <header>
     <div class="record-title">
       <div class="record-icon">
-          <span class="icon icon-cop-decision" title="COP Decision"></span>
+        <a class="btn btn-sm btn-default" href="{% url 'results' %}?{{ query }}">Back to search results</a>
       </div>
-      <h1>{{ document.title }}</h1>
+      <h1>{{ document.title|safe }}</h1>
     </div>
 
     <dl>
       <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
-      <dt>Status</dt> <dd>{{ document.solr.decStatus.0|capfirst }}</dd>
-      <dt>Date of document</dt> <dd>{{ document.date }}</dd>
+      <dt>Status</dt> <dd>{{ document.solr.decStatus|capfirst }}</dd>
+      <dt>Date of document</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
       <dt>Source</dt>
       <dd>{{ document.source }}</dd>
     </dl>
@@ -39,31 +39,32 @@
   {% endif %}
 
   <section id="details">
-    <h2 class="section-title">Details</h2>
     <dl>
-      {% for treaty in all_treaties %}
-      <dt>Treaty</dt>
-      <dd><a href="{% url 'treaty_details' treaty.id %}">{{ treaty.full_title }}</a></dd>
-      {% endfor %}
+      {% if treaty %}
+        <dt>Treaty</dt>
+        <dd><a href="{{ treaty.details_url }}">{{ treaty }} ({{ treaty.date|date:"b j, Y"|capfirst  }})</a></dd>
+      {% endif %}
+
       <dt>Meeting</dt>
       <dd>
         {% if document.solr.decMeetingUrl %}
-          <a href="{{ document.solr.decMeetingUrl.0 }}"
-             rel="external">{{ document.solr.decMeetingTitle.0 | safe }}</a>
+          <a href="{{ document.solr.decMeetingUrl }}"
+             rel="external">{{ document.solr.decMeetingTitle | safe }}</a>
         {% else %}
-          {{ document.solr.decMeetingTitle.0 | safe }}
+          {{ document.solr.decMeetingTitle | safe }}
         {% endif %}
       </dd>
 
+      {% if document.url %}
+      <dt>Link to decision</dt>
+      <dd>
+        <a target="_blank" href="{{ document.url }}">{{ document.get_language }}</a>
+      </dd>
+      {% endif %}
+
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>
-        {% if "url" in entry.type %}
-          {% for url in entry.value %}
-            <dd><a target="_blank" {% if "tracked" in entry.type %} class="decision-link" {% endif %} href="{{ url }}">{{ url }}</a></dd>
-          {% endfor %}
-        {% else %}
-          <dd>{{ entry.value | join_by:", " }}</dd>
-        {% endif %}
+        <dd>{{ entry.value | join_by:", " }}</dd>
       {% endfor %}
 
       <dt>Keywords</dt>
@@ -78,8 +79,6 @@
   </section>
 
   <section id="text">
-    <h2 class="section-title">Text</h2>
-
     <dl>
       <dt>Summary</dt>
       <dd>

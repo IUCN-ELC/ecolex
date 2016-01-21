@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'cm32+t-u1nb=x7_gc3(rcs)6@#e=hn$ww0@l$^1^^6x6jv)u@t'
-
+FAOLEX_API_KEY = 'tay'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -27,7 +27,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-#Selenium
+# Selenium
 TEST_RUNNER = 'django_selenium.selenium_runner.SeleniumTestRunner'
 
 
@@ -64,6 +64,19 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "ecolex.global_config",
 )
 
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': [os.path.join(BASE_DIR, 'templates')],
+    'OPTIONS': {
+        'loaders': [
+            ('django.template.loaders.cached.Loader', [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ]),
+        ],
+    },
+}]
+
 ROOT_URLCONF = 'ecolex.urls'
 
 WSGI_APPLICATION = 'ecolex.wsgi.application'
@@ -76,6 +89,32 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt': "%d/%b/%Y %H:%M:%S"
+        },
+    },
+    'handlers': {
+        'fao_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'fao_import.log'),
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'ecolex': {
+            'handlers': ['fao_file'],
+            'level': 'INFO',
+        },
     }
 }
 
@@ -111,10 +150,8 @@ GA_CODE = ''
 
 TEXT_SUGGESTION = True
 
-TREATIES_JSON = './contrib/treaties.json'
-
 # Local settings
 try:
-    from local_settings import *
+    from ecolex.local_settings import *
 except ImportError:
     pass

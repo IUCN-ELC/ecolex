@@ -1,9 +1,10 @@
 from collections import OrderedDict
 from datetime import datetime
+from html import unescape
 
 from django.core.urlresolvers import reverse
 
-from ecolex.definitions import DOC_SOURCES
+from ecolex.definitions import DOC_SOURCES, LANGUAGE_MAP
 
 
 def first(obj, default=None):
@@ -20,11 +21,8 @@ class ObjectNormalizer:
             self.solr.update(hl)
 
     def type_of_document(self):
-        if self.solr.get('trTypeOfText'):
-            return first(self.solr.get('trTypeOfText'))
-        if self.solr.get('decType'):
-            return first(self.solr.get('decType'))
-        return "Unknown type of document"
+        type_of_doc = self.solr.get(self.DOCTYPE_FIELD)
+        return first(type_of_doc, "Unknown type of document")
 
     def id(self):
         return self.solr.get('id')
@@ -34,11 +32,14 @@ class ObjectNormalizer:
 
     def title(self):
         for title_field in self.TITLE_FIELDS:
-            if not self.solr.get(title_field):
+            title = self.solr.get(title_field)
+            if not title:
                 continue
-            t = max(self.solr.get(title_field), key=lambda i: len(i))
-            if len(t):
-                return t
+
+            if isinstance(title, list):
+                title = max(title, key=lambda x: len(x))
+            if len(title):
+                return unescape(title)
         return "Unknown Document"
 
     def date(self):
@@ -49,9 +50,6 @@ class ObjectNormalizer:
             except:
                 continue
         return ""
-
-    def jurisdiction(self):
-        return first(self.solr.get('trJurisdiction', "International"))
 
     def summary(self):
         return first(self.solr.get(self.SUMMARY_FIELD), "")
@@ -83,44 +81,45 @@ class ObjectNormalizer:
         source = DOC_SOURCES.get(self.type, "Unknown source")
         return source
 
+    def get_link_to_full_text(self):
+        pass
+
+    def get_language(self):
+        pass
+
+    def get_keywords(self):
+        return self.solr.get('docKeyword')
+
     __repr__ = title
 
 
 class Treaty(ObjectNormalizer):
     ID_FIELD = 'trElisId'
-    SUMMARY_FIELD = 'trIntroText'
+    SUMMARY_FIELD = 'trAbstract_en'
     TITLE_FIELDS = [
-        'trPaperTitleOfText', 'trPaperTitleOfTextFr', 'trPaperTitleOfTextSp',
-        'trPaperTitleOfTextOther', 'trTitleOfTextShort',
+        'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
+        'trPaperTitleOfText_es', 'trPaperTitleOfText_other',
+        'trTitleOfText', 'trTitleOfTextShort',
     ]
     DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
+    DOCTYPE_FIELD = 'trTypeOfText_en'
     OPTIONAL_INFO_FIELDS = [
         # (solr field, display text, type=text)
         ('trTitleAbbreviation', 'Title Abbreviation', ''),
-        #('trEntryIntoForceDate', 'Entry into force', 'date'),
         ('trPlaceOfAdoption', 'Place of adoption', ''),
         ('trAvailableIn', 'Available in', ''),
         ('trRegion', 'Geographical area', ''),
-        ('trBasin', 'Basin', ''),
-        ('trDepository', 'Depository', ''),
+        ('trBasin_en', 'Basin', ''),
+        ('trDepository_en', 'Depository', ''),
         ('trUrl', 'Available web site', 'url'),
-        #('trLinkToFullText', 'Link to full text', 'url'),
-        #('trLinkToFullTextSp', 'Link to full text (spanish)', 'url'),
-        #('trLinkToFullTextFr', 'Link to full text (french)', 'url'),
-        #('trLinkToFullTextOther', 'Link to full text (other)', 'url'),
-        ('trLanguageOfDocument', 'Language', ''),
+        ('trLanguageOfDocument_en', 'Language', ''),
         ('trLanguageOfTranslation', 'Translation', ''),
-        #('trAbstract', 'Abstract', 'text'),
-        # display comments the same way as texts
-        #('trComment', 'Comment', 'text'),
-        # keywords are considered safe.
-        #('trSubject', 'Subject', 'keyword'),
-        # ('trKeyword', 'Keywords', 'keyword'),
-        #('trNumberOfPages', 'Number of pages', ''),
         ('trOfficialPublication', 'Official publication', ''),
-        ('trInternetReference', 'Internet Reference', ''),
+        ('trInternetReference_en', 'Internet Reference', ''),
         ('trDateOfConsolidation', 'Consolidation Date', 'date')
     ]
+
+    FULL_TEXT = 'trLinkToFullText'  ## multilangual
 
     REFERENCE_FIELDS = {
         'trAmendsTreaty': 'Amends:',
@@ -134,13 +133,13 @@ class Treaty(ObjectNormalizer):
     }
 
     def jurisdiction(self):
-        return first(self.solr.get('trJurisdiction'))
+        return first(self.solr.get('trJurisdiction_en'))
 
     def place_of_adoption(self):
         return first(self.solr.get('trPlaceOfAdoption'))
 
     def field_of_application(self):
-        return first(self.solr.get('trFieldOfApplication'))
+        return first(self.solr.get('trFieldOfApplication_en'))
 
     def url(self):
         return first(self.solr.get('trUrlTreatyText'))
@@ -156,8 +155,8 @@ class Treaty(ObjectNormalizer):
             ('partyPotentialParty', 'potential party'),
             ('partyEntryIntoForce', 'entry into force'),
             ('partyDateOfRatification', 'ratification'),
-            ('partyDateOfAccessionApprobation', 'accession approbation'),
-            ('partyDateOfAcceptanceApproval', 'acceptance approval'),
+            ('partyDateOfAccessionApprobation', 'accession/approbation'),
+            ('partyDateOfAcceptanceApproval', 'acceptance/approval'),
             ('partyDateOfConsentToBeBound', 'consent to be bound'),
             ('partyDateOfSuccession', 'succession'),
             ('partyDateOfDefiniteSignature', 'definite signature'),
@@ -205,11 +204,20 @@ class Treaty(ObjectNormalizer):
 
     def get_decisions(self):
         from ecolex.search import get_documents_by_field
-
         if not self.informea_id():
             return []
         return get_documents_by_field('decTreatyId',
                                       [self.informea_id()], rows=100)
+
+    def get_literatures(self):
+        from ecolex.search import get_documents_by_field
+        return get_documents_by_field('litTreatyReference',
+                                      [self.solr.get('trElisId')], rows=100)
+
+    def get_court_decisions(self):
+        from ecolex.search import get_documents_by_field
+        return get_documents_by_field('cdTreatyReference',
+                                      [self.solr.get('trElisId')], rows=100)
 
     def full_title(self):
         return '{} ({})'.format(self.title(), self.date())
@@ -220,20 +228,23 @@ class Treaty(ObjectNormalizer):
     def details_url(self):
         return reverse('treaty_details', kwargs={'id': self.id()})
 
+    def get_link_to_full_text(self):
+        for langcode in LANGUAGE_MAP.keys():
+            link = self.solr.get(self.FULL_TEXT + '_' + langcode)
+            if link:
+                return link[0], LANGUAGE_MAP[langcode]
+
+    def get_keywords(self):
+        return self.solr.get('docKeyword')
+
 
 class Decision(ObjectNormalizer):
     ID_FIELD = 'decNumber'
     SUMMARY_FIELD = 'decBody'
     TITLE_FIELDS = ['decTitleOfText']
     DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
+    DOCTYPE_FIELD = 'decType'
     OPTIONAL_INFO_FIELDS = [
-        #('decMeetingTitle', 'Meeting Title', ''),
-        #('decMeetingUrl', 'Meeting URL', 'url'),
-        ('decLink', 'Link to decision', 'url-tracked'),
-        #('decSummary', 'Summary', 'text'),
-        #('decBody', 'Decision Body', 'text'),
-        ('decDocUrls', 'Documents', 'url'),
-        #('decKeyword', 'Keywords', 'keyword'),
         ('decUpdateDate', 'Date of Update', 'date'),
     ]
 
@@ -245,3 +256,224 @@ class Decision(ObjectNormalizer):
 
     def status(self):
         return first(self.solr.get('decStatus'), "unknown")
+
+    def get_language(self):
+        return first(self.solr.get('decLanguage')) or 'Document language'
+
+    def get_keywords(self):
+        return self.solr.get('decKeyword')
+
+
+class Literature(ObjectNormalizer):
+    ID_FIELD = 'litId'
+    LANGUAGE_FIELD = 'litLanguageOfDocument'
+    SUMMARY_FIELD = 'litAbstract'
+    TITLE_FIELDS = ['litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp',
+                    'litLongTitle_other',
+                    'litPaperTitleOfText', 'litPaperTitleOfText_fr',
+                    'litPaperTitleOfText_sp', 'litPaperTitleOfText_other',
+                    'litTitleOfTextShort', 'litTitleOfTextShort_fr',
+                    'litTitleOfTextShort_sp', 'litTitleOfTextShort_other',
+                    'litTitleOfTextTransl', 'litTitleOfTextTransl_fr',
+                    'litTitleOfTextTransl_sp']
+    DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
+    OPTIONAL_INFO_FIELDS = [
+        ('litISBN', 'ISBN', ''),
+        ('litVolumeNo', 'Volume', ''),
+        ('litPublisher', 'Publisher', ''),
+        ('litPublPlace', 'Place of publication', ''),
+        ('litCollation', 'Pages', ''),
+        ('litDateOfText', 'Date of publication', ''),
+        ('litSeriesFlag', 'Series', ''),
+        ('litLanguageOfDocument', 'Language of document', ''),
+        ('litDisplayRegion', 'Region', ''),
+    ]
+    DOCTYPE_FIELD = 'litTypeOfText'
+    REFERENCE_TO_FIELDS = {
+        'litTreatyReference': 'treaty',
+        'litLiteratureReference': 'literature',
+        'litCourtDecisionReference': 'court_decision',
+    }
+    REFERENCE_MAPPING = {
+        'treaty': 'trElisId',
+        'literature': 'litId',
+        'court_decision': 'cdOriginalId',
+    }
+    REFERENCE_FROM_FIELDS = {
+        'litLiteratureReference': 'literature',
+    }
+
+    def get_references_ids_dict(self):
+        ids_dict = {}
+        for field, doc_type in self.REFERENCE_TO_FIELDS.items():
+            values = [v for v in self.solr.get(field, [])]
+            if values and any(values):
+                ids_dict[doc_type] = values
+        return ids_dict
+
+    def get_references_from_ids(self, ids_dict):
+        from ecolex.search import get_documents_by_field
+        references = {}
+        for doc_type, ids in ids_dict.items():
+            results = get_documents_by_field(self.REFERENCE_MAPPING[doc_type],
+                                             ids, rows=10)
+            if results:
+                references[doc_type] = results
+        return references
+
+    def get_references_from(self):
+        from ecolex.search import get_documents_by_field
+        lit_id = self.document_id()
+        references = {}
+
+        for field, doc_type in self.REFERENCE_FROM_FIELDS.items():
+            results = get_documents_by_field(field, [lit_id])
+            if results:
+                references[doc_type] = results
+        return references
+
+    def details_url(self):
+        return reverse('literature_details', kwargs={'id': self.id()})
+
+    def jurisdiction(self):
+        return first(self.solr.get('litScope'))
+
+    def authors(self):
+        authors = self.solr.get('litAuthor')
+        if not authors:
+            authors = self.solr.get('litCorpAuthor')
+        return authors
+
+    def country(self):
+        return first(self.solr.get('litCountry'))
+
+    def publisher(self):
+        return first(self.solr.get('litPublisher'))
+
+    def publication_place(self):
+        return first(self.solr.get('litPublPlace'))
+
+    def publication_date(self):
+        return first(self.solr.get('litDateOfText'))
+
+    def keywords(self):
+        return first(self.solr.get('litKeyword'))
+
+    def abstract(self):
+        return first(self.solr.get('litAbstract'))
+
+    def get_language(self):
+        return (first(self.solr.get('litLanguageOfDocument') or
+                      self.solr.get('litLanguageOfDocument_fr') or
+                      self.solr.get('litLanguageOfDocument_sp')) or
+                'Document language')
+
+
+class CourtDecision(ObjectNormalizer):
+    ID_FIELD = 'cdLeoId'
+    SUMMARY_FIELD = 'cdAbstract_en'
+    TITLE_FIELDS = ['cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr']
+    DATE_FIELDS = ['cdDateOfText']
+    DOCTYPE_FIELD = 'cdTypeOfText'
+    REFERENCE_FIELDS = {'treaty': 'cdTreatyReference'}
+    SOURCE_REF_FIELDS = {'treaty': 'trElisId'}
+    REFERENCED_BY_FIELDS = {'literature': 'litCourtDecisionReference'}
+
+    def details_url(self):
+        return reverse('court_decision_details', kwargs={'id': self.id()})
+
+    def get_references(self):
+        from ecolex.search import get_documents_by_field
+        references = {}
+        for doc_type, ref_field in self.REFERENCE_FIELDS.items():
+            ref_id = first(self.solr.get(ref_field))
+            if not ref_id:
+                continue
+            docs = get_documents_by_field(self.SOURCE_REF_FIELDS[doc_type],
+                                          [ref_id], rows=100)
+            if docs:
+                references[doc_type] = docs
+        return references
+
+    def get_referenced_by(self):
+        from ecolex.search import get_documents_by_field
+        references = {}
+        original_id = first(self.solr.get('cdOriginalId'))
+        if not original_id:
+            return []
+        for doc_type, ref_field in self.REFERENCED_BY_FIELDS.items():
+            docs = get_documents_by_field(ref_field, [original_id], rows=100)
+            if docs:
+                references[doc_type] = docs
+        return references
+
+    def language(self):
+        langcodes = self.solr.get('cdLanguageOfDocument')
+        if langcodes:
+            return ', '.join([LANGUAGE_MAP.get(code, code)
+                             for code in langcodes])
+        return 'Not available'
+
+    def abstract(self):
+        return first(self.solr.get('cdAbstract_en'))
+
+    def get_keywords(self):
+        return self.solr.get('cdKeywords')
+
+
+class Legislation(ObjectNormalizer):
+    ID_FIELD = 'legId'
+    SUMMARY_FIELD = 'legAbstract'
+    TITLE_FIELDS = ['legTitle', 'legLongTitle']
+    DATE_FIELDS = ['legDate', 'legOriginalDate']
+
+    LEGISLATION_REFERENCE_FIELDS = {
+        'legImplement': 'Implements:',
+        'legAmends': 'Amends:',
+        'legRepeals': 'Repeals:'
+    }
+
+    LEGISLATION_BACK_REFERENCE = {
+        'legImplement': 'Implemented by:',
+        'legAmends': 'Amended by:',
+        'legRepeals': 'Repealed by:',
+    }
+
+    def get_legislation_references(self):
+        from ecolex.search import get_documents_by_field
+        references = {}
+        for field, label in self.LEGISLATION_REFERENCE_FIELDS.items():
+            ids = [v for v in self.solr.get(field, [])]
+            results = get_documents_by_field(self.ID_FIELD, ids, rows=100)
+            if results:
+                references[label] = results
+        return references
+
+    def get_legislation_back_references(self):
+        from ecolex.search import get_documents_by_field
+        references = {}
+        leg_id = first(self.solr.get('legId'))
+        for field, label in self.LEGISLATION_BACK_REFERENCE.items():
+            results = get_documents_by_field(field, [leg_id], rows=100)
+            if results:
+                references[label] = results
+        return references
+
+    def details_url(self):
+        return reverse('legislation_details', kwargs={'id': self.id()})
+
+    def country(self):
+        return first(self.solr.get('legCountry_en'))
+
+    def status(self):
+        return first(self.solr.get('legStatus'))
+
+    def type(self):
+        return first(self.solr.get('legType'))
+
+    def language(self):
+        languages = self.solr.get('legLanguage_en')
+        return '/'.join(languages)
+
+    def abstract(self):
+        return first(self.solr.get('legAbstract'))

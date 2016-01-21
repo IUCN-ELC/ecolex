@@ -4,16 +4,16 @@
 {% block content %}
 
 <p>
-  <span class="treaty-name">{{ treaty.full_title }}</span>
+  <span class="treaty-name">{{ treaty.full_title|safe }}</span>
   <br>
-  <a href="{% url 'treaty_details' treaty.id %}">Back to treaty details</a>
+  <a href="{% url 'treaty_details' treaty.id %}?{{ query }}">Back to treaty details</a>
 </p>
 
 <hr>
 
 <article class="record-details-participants">
   <header>
-    <h1>Treaty participants</h1>
+    <h1>Country/Participant</h1>
   </header>
 
   <div class="table-wrapper">
@@ -33,7 +33,7 @@
             {% for event in treaty.participants.events %}
               <td>
                 {% if country|lookup:event %}
-                  <time title="{{ event|capfirst }} date">{{ country|lookup:event|parse_date }}</time>
+                  <time title="{{ event|capfirst }} date">{{ country|lookup:event|parse_date|date:"b j, Y"|capfirst }}</time>
                 {% else %}
                   <span class="na" title="Not available">-</span>
                 {% endif %}
@@ -47,7 +47,9 @@
 
   <hr>
 
-  <p><a class="btn btn-sm btn-default" href="{% url 'treaty_details' treaty.id %}">Back to treaty details</a></p>
+  <p><a class="btn btn-sm btn-default" href="{% url 'treaty_details' treaty.id %}?{{ query }}">
+      Back to treaty details
+  </a></p>
 
 </article>
 {% endblock %}

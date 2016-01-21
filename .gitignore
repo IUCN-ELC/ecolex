@@ -8,3 +8,4 @@ supervisord.conf
 env27/
 local_settings.py
 contrib/treaties.json
+fao_import.log

@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+{% load tags %}
+
+{% block content %}
+{% informea_url_id document %}
+
+<article class="record-details">
+
+  <header>
+    <div class="record-title">
+      <div class="record-icon">
+        <a class="btn btn-sm btn-default" href="{% url 'results' %}?{{ query }}">Back to search results</a>
+      </div>
+      <h1>{{ document.title|safe }}</h1>
+    </div>
+
+    <dl>
+      <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
+      <dt>Date of document</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
+      <dt>Source</dt> <dd>{{ document.source }}</dd>
+    </dl>
+  </header>
+
+  <section id="details">
+    <dl>
+      <dt>Country</dt> <dd>{{ document.solr.cdCountry_en }}</dd>
+      <dt>Court name</dt> <dd>{{ document.solr.cdCourtName }}</dd>
+      <dt>Justices</dt> <dd>{{ document.solr.cdJustices|join:"<br>" }}</dd>
+      <dt>Reference number</dt> <dd>{{ document.solr.cdReferenceNumber }}</dd>
+      <dt>Language of document</dt> <dd>{{ document.language }}</dd>
+      <dt>Keywords</dt> <dd>{{ document.solr.cdKeywords|join:", " }}</dd>
+      <dt>Subjects</dt> <dd>{{ document.solr.cdSubject|join:", " }}</dd>
+    </dl>
+  </header>
+
+  <section id="text">
+    <dl>
+      <dt>Abstract</dt>
+      <dd>{{ document.abstract|safe }}</dd>
+      {% with document.solr.cdLinkToFullText_en as url %}
+        <dt>Link to full text</dt> <dd><a href="{{ url }}">{{ document.language }}</a></dd>
+      {% endwith %}
+    </dl>
+  </section>
+
+  <section id="other-references">
+    <h2 class="section-title">Other references</h2>
+    {% for doc_type, docs in references.items %}
+      <dl>
+        <dt>{{ doc_type|capfirst }}</dt>
+        {% for doc in docs %}
+          <dd><a href="{{ doc.details_url }}">{{ doc }}</a></dd>
+        {% endfor %}
+      </dl>
+    {% empty %}
+      <h4>No references</h4>
+    {% endfor %}
+
+    <h2 class="section-title">Referenced by</h2>
+    {% for doc_type, docs in referenced_by.items %}
+      <dl>
+        <dt>{{ doc_type|capfirst }}</dt>
+        {% for doc in docs %}
+          <dd><a href="{{ doc.details_url }}">{{ doc }}</a></dd>
+        {% endfor %}
+      </dl>
+    {% empty %}
+      <h4>No references</h4>
+    {% endfor %}
+  </section>
+
+</article>
+{% endblock content %}

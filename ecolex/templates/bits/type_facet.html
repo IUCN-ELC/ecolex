@@ -34,43 +34,49 @@
 
   <!-- Legislation filter -->
   <button type="button"
-          class="btn btn-default"
-          data-filter
+          class="btn btn-default {% if 'legislation' in form.type.data %}active{% endif %}"
+          data-filter="#legislation-fieldset"
           data-toggle="tooltip"
           data-placement="bottom"
           data-container="body"
-          title="Hide Legislation"
-          disabled>
+          data-value="legislation"
+          title="{% if not form.type.data %}Show only Legislation{% elif 'legislation' in form.type.data %}{% if form.type.data|length == 1 %}Show all{% else %}Hide Legislation{% endif %}{% else %}Show Legislation{% endif %}">
     <span class="icon icon-legislation"></span>
-    <span class="badge"></span>
+    {% if facets.type.legislation > 0 %}
+      <span class="badge">{{ facets.type.legislation }}</span>
+    {% endif %}
     <span class="btn-label">Legislation</span>
   </button>
 
   <!-- Court decision filter -->
   <button type="button"
-          class="btn btn-default"
-          data-filter
+          class="btn btn-default {% if 'court_decision' in form.type.data %}active{% endif %}"
+          data-filter="#courtdecision-fieldset"
           data-toggle="tooltip"
           data-placement="bottom"
           data-container="body"
-          title="Hide Court Decisions"
-          disabled>
+          data-value="court_decision"
+          title="{% if not form.type.data %}Show only Court Decisions{% elif 'court_decision' in form.type.data %}{% if form.type.data|length == 1 %}Show all{% else %}Hide Court Decisions{% endif %}{% else %}Show Court Decisions{% endif %}">
     <span class="icon icon-court-decision"></span>
-    <span class="badge"></span>
+    {% if facets.type.court_decision > 0 %}
+      <span class="badge">{{ facets.type.court_decision }}</span>
+    {% endif %}
     <span class="btn-label">Court Decisions</span>
   </button>
 
   <!-- Literature filter -->
   <button type="button"
-          class="btn btn-default"
-          data-filter
+          class="btn btn-default {% if 'literature' in form.type.data %}active{% endif %}"
+          data-filter="#literature-fieldset"
           data-toggle="tooltip"
           data-placement="bottom"
           data-container="body"
-          title="Hide Literature"
-          disabled>
+          data-value="literature"
+          title="{% if not form.type.data %}Show only Literature{% elif 'literature' in form.type.data %}{% if form.type.data|length == 1 %}Show all{% else %}Hide Literature{% endif %}{% else %}Show Literature{% endif %}">
     <span class="icon icon-literature"></span>
-    <span class="badge"></span>
+    {% if facets.type.literature > 0 %}
+      <span class="badge">{{ facets.type.literature }}</span>
+    {% endif %}
     <span class="btn-label">Literature</span>
   </button>
 </div>

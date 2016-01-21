@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta charset="utf-8">
-  <title>Ecolex</title>
+  <title>ECOLEX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/static/css/bootstrap.custom.css">
   <link rel="stylesheet" href="/static/css/bootstrap-tour.min.css">
@@ -17,7 +17,7 @@
 <div class="navbar navbar-default">
   <div class="container">
     <div class="navbar-header">
-      <a href="{% url 'homepage' %}" class="navbar-brand">Ecolex</a>
+      <a href="{% url 'homepage' %}" class="navbar-brand">ECOLEX</a>
       <button class="navbar-toggle" type="button" data-toggle="collapse"
               data-target="#navbar-main">
         <span class="icon icon-menu"></span>
@@ -83,7 +83,7 @@
 
 <main>
   <div class="container">
-    {% block content %} 
+    {% block content %}
     {% endblock %}
   </div>
 </main>
@@ -109,6 +109,7 @@
 <script src="/static/js/jquery.deserialize.js"></script>
 <script src="/static/js/jquery.blockUI.js"></script>
 <script src="/static/js/main.js"></script>
+<script src="/static/js/facets.js"></script>
 <script src="/static/js/tour.js"></script>
 {% if GA_CODE %}{% include 'bits/ga.html' %}{% endif %}
 </body>

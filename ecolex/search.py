@@ -1,10 +1,10 @@
-import os
 from collections import OrderedDict
-import json
 import pysolr
 from django.conf import settings
 
-from ecolex.solr_models import Treaty, Decision
+from ecolex.solr_models import (
+    Treaty, Decision, Literature, CourtDecision, Legislation
+)
 
 
 HIGHLIGHT_FIELDS = []
@@ -59,9 +59,9 @@ class Queryset(object):
         if not self._facets:
             self.fetch()
 
-        def _prepare(v):
+        def _prepare(val):
             # data = [(k.capitalize(), v) for k, v in v.items()]
-            data = [(k, v) for k, v in v.items()]
+            data = [(k, v) for k, v in val.items()]
             return OrderedDict(
                 sorted(data, key=lambda v: v[0].lower())
             )
@@ -99,7 +99,8 @@ class Queryset(object):
         return self._hits
 
     def pages(self):
-        return self.rows and int(len(self) / self.rows)
+        number_of_pages = (len(self) // self.rows) + 1
+        return number_of_pages
 
     def first(self):
         if not self._hits:
@@ -121,6 +122,12 @@ def parse_result(hit, responses):
         return Treaty(hit, hl)
     elif hit['type'] == 'decision':
         return Decision(hit, hl)
+    elif hit['type'] == 'literature':
+        return Literature(hit, hl)
+    elif hit['type'] == 'court_decision':
+        return CourtDecision(hit, hl)
+    elif hit['type'] == 'legislation':
+        return Legislation(hit, hl)
     return hit
 
 
@@ -141,7 +148,7 @@ def escape_query(query):
     escapeRules = {
         '+': r'\+', '-': r'\-', '&': r'\&', '|': r'\|', '!': r'\!', '(': r'\(',
         ')': r'\)', '{': r'\{', '}': r'\}', '[': r'\[', ']': r'\]', '^': r'\^',
-        '~': r'\~', '*': r'\*', '?': r'\?', ':': r'\:', '"': r'\"', ';': r'\;',
+        '~': r'\~', '*': r'\*', '?': r'\?', ':': r'\:', ';': r'\;',
     }
 
     def _esc(term):
@@ -157,7 +164,7 @@ def escape_query(query):
 
 def get_hl():
     fields = HIGHLIGHT_FIELDS
-    for t in Decision, Treaty:
+    for t in Decision, Treaty, Literature, CourtDecision, Legislation:
         fields += [t.SUMMARY_FIELD] + t.TITLE_FIELDS
     fields = set(fields)
     HIGHLIGHT_PARAMS['hl.fl'] = ','.join(fields)
@@ -176,18 +183,50 @@ def get_sortby(sortby):
 
 def get_relevancy():
     RELEVANCY_FIELDS = {
-        'trPaperTitleOfText': 100,
-        'trPaperTitleOfTextSp': 100,
-        'trPaperTitleOfTextFr': 100,
-        'trPaperTitleOfTextOther': 100,
-        'decLongTitle': 100,
-        'decShortTitle': 100,
+        'trPaperTitleOfText_en': 100,
+        'trPaperTitleOfText_es': 100,
+        'trPaperTitleOfText_fr': 100,
+        'decLongTitle_en': 100,
+        'decLongTitle_es': 100,
+        'decLongTitle_fr': 100,
+        'decLongTitle_ru': 100,
+        'decLongTitle_ar': 100,
+        'decLongTitle_zh': 100,
+        'decShortTitle_en': 100,
+        'decShortTitle_es': 100,
+        'decShortTitle_fr': 100,
+        'decShortTitle_ru': 100,
+        'decShortTitle_ar': 100,
+        'decShortTitle_zh': 100,
+
+        'legTitle': 100,
+        'legLongTitle': 100,
+
+        'litLongTitle': 100,
+        'litLongTitle_fr': 100,
+        'litLongTitle_sp': 100,
+        'litLongTitle_other': 100,
+
+        'cdTitleOfText_en': 100,
+        'cdTitleOfText_es': 100,
+        'cdTitleOfText_fr': 100,
+
         'trTitleAbbreviation': 75,
         'decSummary': 50,
         'decBody': 50,
-        'trAbstract': 50,
-        'trKeyword': 30,
+        'trAbstract_en': 50,
+        'trAbstract_es': 50,
+        'trAbstract_fr': 50,
+        'cdAbstract_en': 50,
+        'cdAbstract_es': 50,
+        'cdAbstract_fr': 50,
+        'litAbstract': 50,
+        'trKeyword_en': 30,
+        'trKeyword_fr': 30,
+        'trKeyword_es': 30,
         'decKeyword': 30,
+        'litKeyword': 30,
+        'text': 20,
         'doc_content': 10,
     }
 
@@ -204,20 +243,33 @@ def get_relevancy():
 
 def get_fq(filters):
     FACETS_MAP = {
-        'trTypeOfText': 'treaty',
-        'trFieldOfApplication': 'treaty',
-        'partyCountry': 'treaty',
-        'trRegion': 'treaty',
-        'trBasin': 'treaty',
-        'trSubject': 'treaty',
-        'trLanguageOfDocument': 'treaty',
+        'trTypeOfText_en': 'treaty',
+        'trFieldOfApplication_en': 'treaty',
+        'trStatus': 'treaty',
+        'trPlaceOfAdoption': 'treaty',
+        'trDepository_en': 'treaty',
+
         'decType': 'decision',
         'decStatus': 'decision',
         'decTreatyId': 'decision',
+
+        'litTypeOfText': 'literature',
+        'litAuthor': 'literature',
+        'litSerialTitle': 'literature',
+        'litPublisher': 'literature',
+
+        'cdTypeOfText': 'court_decision',
+        'cdTerritorialSubdivision': 'court_decision',
     }
 
     AND_FILTERS = [
         'docKeyword',
+        'docSubject',
+        'docCountry',
+        'docRegion',
+        'docLanguage',
+        'trDepository_en',
+        'litAuthor',
     ]
 
     def multi_filter(filter, values):
@@ -236,10 +288,13 @@ def get_fq(filters):
         else:
             return 'type:' + type
 
-    enabled_types = filters.get('type', []) or ['treaty', 'decision']
+    enabled_types = filters.get('type', []) or \
+        ['treaty', 'decision', 'literature', 'court_decision', 'legislation']
     type_filters = {f: [] for f in enabled_types}
     global_filters = []
     for filter, values in filters.items():
+        if '!ex' in filter:
+            filter = filter.replace('!ex', '!tag')
         values = [v for v in values if v or filter == 'docDate']
         if not values or filter == 'type' or not any(values):
             continue
@@ -288,7 +343,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         params.update(get_hl())
     params['sort'] = get_sortby(sortby)
     params.update(get_relevancy())
-    #add spellcheck
+    # add spellcheck
     params.update({
         'spellcheck': 'true',
         'spellcheck.collate': 'true',
@@ -298,7 +353,6 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
 
     if settings.DEBUG:
         params['debug'] = True
-
     return solr.search(solr_query, **params)
 
 
@@ -311,39 +365,20 @@ def get_documents_by_field(id_name, treaty_ids, rows=None):
     return result
 
 
-def get_document(document_id):
-    result = search('id:' + document_id, raw=True,
-                    filters={'decTreatyId': ''})
+def get_document(document_id, query='*'):
+    result = search(query, raw=True, filters={'id': [document_id]})
     if not len(result):
         return None
     return result
 
 
-def load_treaties_cache():
-    if not os.path.exists(settings.TREATIES_JSON):
-        print("Missing {}. Please run ./manage.py treaties_cache".format(
-            settings.TREATIES_JSON)
-        )
+def get_treaty_by_informea_id(informea_id):
+    result = search('trInformeaId:' + informea_id, raw=True)
+    if not len(result):
         return None
-    try:
-        data = json.load(open(settings.TREATIES_JSON, encoding='utf-8'))
-    except:
-        data = json.load(open(settings.TREATIES_JSON))
-    response = data['response']
-    result_kwargs = {}
-    numFound = response.get('numFound', 0)
-    results = pysolr.Results(response.get('docs', ()), numFound,
-                             **result_kwargs)
-    qs = Queryset()
-    qs._fetch(results)
-    return qs
-
-
-_treaties = None
+    return result.first()
 
 
 def get_all_treaties():
-    global _treaties
-    if _treaties is None:
-        _treaties = load_treaties_cache()
-    return _treaties
+    result = search('type:treaty', raw=True, rows=10000)
+    return result

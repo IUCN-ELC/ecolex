@@ -18,6 +18,10 @@
       <span id="number-of-results">{{ facets.type.treaty }}</span> treaties
     {% elif 'decision' in form.type.data %}
       <span id="number-of-results">{{ facets.type.decision }}</span> COP decisions
+    {% elif 'literature' in form.type.data %}
+      <span id="number-of-results">{{ facets.type.literature }}</span> literatures
+    {% elif 'court_decision' in form.type.data %}
+      <span id="number-of-results">{{ facets.type.court_decision }}</span> court decisions
     {% endif %}
   </span>
 
@@ -27,9 +31,6 @@
 </p>
 
 <hr>
-
-<!-- To do -->
-<!-- <button data-toggle="offcanvas" data-target="#filters" data-canvas="body"></button> -->
 
 <ul class="search-results">
   {% for result in results %}

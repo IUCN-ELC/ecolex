@@ -1,0 +1,129 @@
+{% extends 'layout.html' %}
+{% load tags %}
+
+
+{% block content %}
+
+<article class="record-details">
+  <header>
+    <div class="record-title">
+      <div class="record-icon">
+        <a class="btn btn-sm btn-default" href="{% url 'results' %}?{{ query }}">Back to search results</a>
+      </div>
+      <h1>{{ document.title|safe }}</h1>
+    </div>
+
+    <dl>
+      <dt>Document type</dt><dd>{{ document.type|capfirst }}</dd>
+      <dt>Date of text</dt><dd>{{ document.date|date:"b j, Y"|capfirst }}</dd>
+      <dt>Source</dt><dd>{{ document.source }}</dd>
+    </dl>
+  </header>
+
+  <section id="details">
+    <dl>
+      <dt>Country</dt>
+      <dd>{{ document.country }}</dd>
+
+      {% if document.solr.legTerritorialSubdivision %}
+        <dt>Territorial subdivision</dt>
+        <dd>{{ document.solr.legTerritorialSubdivision }}</dd>
+      {% endif %}
+
+      {% if document.solr.legEntryIntoForce %}
+        <dt>Entry into force notes</dt>
+        <dd>{{ document.solr.legEntryIntoForce }}</dd>
+      {% endif %}
+
+      <dt>Language</dt>
+      <dd>{{ document.language }}</dd>
+
+      {% if document.solr.legRelatedWebSite %}
+        <dt>Available web site</dt>
+        <dd>
+          <a href="{{ document.solr.legRelatedWebSite }}" target="_blank">{{ document.solr.legRelatedWebSite }}</a>
+        </dd>
+      {% endif %}
+
+      {% if document.solr.legLinkToFullText %}
+      <dt>Link to full text</dt>
+      <dd>
+        <a href="{{ document.solr.legLinkToFullText }}" target="_blank">{{ document.language }}</a>
+      </dd>
+      {% endif %}
+
+      <dt>Subjects</dt>
+      <dd>
+        {% for subject in document.solr.legSubject_en %}
+          {{ subject|safe }}
+        {% endfor %}
+      </dd>
+
+      <dt>Keywords</dt>
+      <dd>
+        {% for keyword in document.solr.legKeyword_en %}
+          <span class="tag">{{ keyword|capfirst }}</span>
+        {% empty %}
+          <span class="na">Not available</span>
+        {% endfor %}
+      </dd>
+    </dl>
+  </section>
+
+  <section id="text">
+    <dl>
+      <dt>Abstract</dt>
+      <dd>
+        {% if document.abstract %}
+          <p class="abstract">{{ document.abstract|safe }}</p>
+        {% else %}
+          <p class="na">Not available</p>
+        {% endif %}
+      </dd>
+
+      <dt>Comment</dt>
+      <dd>
+        {% if document.solr.legComment %}
+          <p class="abstract">{{ document.solr.legComment }}</p>
+        {% else %}
+          <p class="na">Not available</p>
+        {% endif %}
+      </dd>
+    </dl>
+  </section>
+
+  <section id="other-references">
+    <h2 class="section-title">Legislation references</h2>
+    {% for label, legislations in leg_references.items %}
+      <dl class="dl-horizontal references">
+        <dt>{{ label }}</dt>
+        {% for legislation in legislations %}
+          <dd>
+            <div class="treaty-link-container">
+              <a href="{% url 'legislation_details' legislation.id %}">{{ legislation.title }}</a>
+            </div>
+            <time>{{ legislation.date|date:"b j, Y"|capfirst  }}</time>
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endfor %}
+
+    {% for label, legislations in leg_back_references.items %}
+      <dl class="dl-horizontal references">
+        <dt>{{ label }}</dt>
+        {% for legislation in legislations %}
+          <dd>
+            <div class="treaty-link-container">
+              <a href="{% url 'legislation_details' legislation.id %}">{{ legislation.title }}</a>
+            </div>
+            <time>{{ legislation.date|date:"b j, Y"|capfirst  }}</time>
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endfor %}
+
+  </section>
+
+</article>
+
+{% endblock %}

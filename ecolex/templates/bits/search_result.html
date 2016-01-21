@@ -1,7 +1,7 @@
 <li class="search-result">
 
   <h3 class="search-result-title">
-    <a href="{{ result.details_url }}"
+    <a href="{{ result.details_url }}?{{ query }}"
        title="{{ result.title|safe|striptags }}">{{ result.title|safe }}</a>
   </h3>
 
@@ -17,22 +17,64 @@
       {% if result.date %}
         |
         <time class="sr-date" title="Date of document: {{ result.date }}">
-          {{ result.date }}
+          {{ result.date|date:"b j, Y"|capfirst  }}
         </time>
       {% endif %}
     </div>
-    <p class="search-result-description">{# result.summary|safe #}</p>
+    {% if result.get_keywords %}
+      <p class="search-result-description"><strong>Keywords:</strong>
+        {% for keyword in result.get_keywords %}
+          {{ keyword }},
+        {%endfor%}
+      </p>
+    {% endif %}
     <p class="search-result-source">Source: {{ result.source }}</p>
 
-  {% else %}
+  {% elif result.type == "literature" %}
+
+    <div class="search-result-details">
+      <strong class="sr-type">{{ result.type|capfirst }}</strong>
+      {% for author in result.authors %}
+        {% if forloop.first %}
+        |
+        {% endif %}
+        <span>{{ author }} </span>
+        {% if not forloop.last %}
+        ,
+        {% endif %}
+      {% endfor %}
+
+      {% if result.publisher %}
+        |
+        <span>{{ result.publisher }}</span>
+      {% endif %}
+
+      {% if result.publication_place %}
+        |
+        <span>{{ result.publication_place }}</span>
+      {% endif %}
+
+      {% if result.date %}
+        |
+        <time class="sr-date" title="Date of document: {{ result.date }}">
+          {{ result.date|date:"b j, Y"|capfirst  }}
+        </time>
+      {% endif %}
+    </div>
+    <p class="search-result-description"><strong>Keywords:</strong>{{ result.keywords }}</p>
+    <p class="search-result-source">Source: {{ result.source }}</p>
+
+  {% elif result.type == 'treaty' %}
 
     <div class="search-result-details">
       <strong class="sr-type">{{ result.type|capfirst }}</strong>
       {% if result.document_id %}
         <span class="sr-id"> {{ result.document_id }} </span>
       {% endif %}
+      {% if result.jurisdiction %}
         |
       <span class="sr-jurisdiction">{{ result.jurisdiction }}</span>
+      {% endif %}
       {% if result.place_of_adoption %}
         |
         <span class="sr-jurisdiction"> {{ result.place_of_adoption }}</span>
@@ -40,11 +82,70 @@
       {% if result.date %}
         |
         <time class="sr-date" title="Date of document: {{ result.date }}">
-          {{ result.date }}
+          {{ result.date|date:"b j, Y"|capfirst }}
         </time>
       {% endif %}
     </div>
     <p class="search-result-description">{{ result.summary|safe }}</p>
+    {% if result.get_keywords %}
+      <p  class="search-result-description">
+        <strong>Keywords:</strong>
+        {% for keyword in result.get_keywords %}
+          {{ keyword }},
+        {%endfor%}
+      </p>
+    {% endif %}
+    <p class="search-result-source">Source: {{ result.source }}</p>
+
+  {% elif result.type == "court_decision" %}
+    <div class="search-result-details">
+      <strong class="sr-type">Court Decision</strong>
+      {% if result.date %}
+        |
+        <time class="sr-date" title="Date of document: {{ result.date }}">
+          {{ result.date|date:"b j, Y"|capfirst  }}
+        </time>
+      {% endif %}
+    </div>
+    <p class="search-result-description">{# result.summary|safe #}</p>
+    {% if result.get_keywords %}
+      <p class="search-result-description">
+      <strong>Keywords:</strong>
+        {% for keyword in result.get_keywords %}
+          {{ keyword }},
+        {%endfor%}
+      </p>
+    {% endif %}
+    <p class="search-result-source">Source: {{ result.source }}</p>
+
+  {% elif result.type == "legislation" %}
+    <div class="search-result-details">
+      <strong class="sr-type">Legislation</strong>
+      {% if result.country %}
+        |
+        <span class="sr-jurisdiction">{{ result.country }}</span>
+      {% endif %}
+      {% if result.date %}
+        |
+        <time class="sr-date" tile="Date of document: {{ result.date }}">
+         {{ result.date|date:"b j, Y"|capfirst }}
+        </time>
+      {% endif %}
+      {% if result.status %}
+        |
+        <span class="sr-status" title="Status: {{ result.status|capfirst }}">
+          {{ result.status|capfirst }}
+        </span>
+      {% endif %}
+    </div>
+    {% if result.get_keywords %}
+      <p class="search-result-description">
+      <strong>Keywords:</strong>
+        {% for keyword in result.get_keywords %}
+          {{ keyword }},
+        {%endfor%}
+      </p>
+    {% endif %}
     <p class="search-result-source">Source: {{ result.source }}</p>
   {% endif %}
 </li>

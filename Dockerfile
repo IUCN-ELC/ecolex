@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.4
 RUN apt-get -y update
 
 RUN mkdir /ecolex
