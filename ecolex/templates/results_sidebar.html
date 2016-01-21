@@ -141,6 +141,7 @@
     <h5 data-toggle="collapse" {% if not form.has_decision %}class="collapsed"{% endif %}
         data-target="#filter-cop-decisions">COP Decision filters</h5>
 
+    <div id="filter-cop-decisions" class="collapse {% if form.has_decision %}in{% endif %}">
       <h6>Treaty</h6>
       <div id="dec_treaty" class="tag-select">
         <select class="tag-options" hidden>
@@ -149,7 +150,6 @@
         <input type="text" class="tm-input" placeholder="Add treaties" data-formid="#id_dec_treaty"/>
       </div>
 
-    <div id="filter-cop-decisions" class="collapse {% if form.has_decision %}in{% endif %}">
       {% if facets.decType %}
         <h6>Type of document</h6>
         <ul class="filter-decision" data-formid="#id_dec_type">
