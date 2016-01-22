@@ -38,6 +38,7 @@ class SearchView(TemplateView):
         data.setdefault('sortby', [''])
         for y in ('yearmin', 'yearmax', 'sortby'):
             data[y] = data[y][0] if y in data else None
+
         return data
 
     def _set_filters(self, data):

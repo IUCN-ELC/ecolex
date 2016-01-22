@@ -171,11 +171,11 @@ def get_hl():
     return HIGHLIGHT_PARAMS
 
 
-def get_sortby(sortby):
-    if sortby == 'last':
-        return 'docDate desc'
-    elif sortby == 'first':
+def get_sortby(sortby, has_search_term):
+    if sortby == 'first':
         return 'docDate asc'
+    elif sortby == 'last' or not has_search_term:
+        return 'docDate desc'
     elif sortby == '':
         return ''
     return settings.SOLR_SORTING
@@ -341,7 +341,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     params['fq'] = get_fq(filters)
     if highlight:
         params.update(get_hl())
-    params['sort'] = get_sortby(sortby)
+    params['sort'] = get_sortby(sortby, highlight)
     params.update(get_relevancy())
     # add spellcheck
     params.update({
