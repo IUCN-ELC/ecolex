@@ -62,15 +62,12 @@
       {% endif %}
     </div>
     <p class="search-result-description"><strong>Keywords:</strong>{{ result.keywords }}</p>
-    <p class="search-result-source">Source: {{ result.source }}</p>
+    <p class="search-result-source">Source: <a target="_blank" href="http://iucn.org">{{ result.source }}</a> (ID: {{ result.document_id }})</p>
 
   {% elif result.type == 'treaty' %}
 
     <div class="search-result-details">
       <strong class="sr-type">{{ result.type|capfirst }}</strong>
-      {% if result.document_id %}
-        <span class="sr-id"> {{ result.document_id }} </span>
-      {% endif %}
       {% if result.jurisdiction %}
         |
       <span class="sr-jurisdiction">{{ result.jurisdiction }}</span>
@@ -95,7 +92,7 @@
         {%endfor%}
       </p>
     {% endif %}
-    <p class="search-result-source">Source: {{ result.source }}</p>
+    <p class="search-result-source">Source: <a target="_blank" href="http://iucn.org">{{ result.source }}</a> (ID: {{ result.document_id }})</p>
 
   {% elif result.type == "court_decision" %}
     <div class="search-result-details">
@@ -146,6 +143,6 @@
         {%endfor%}
       </p>
     {% endif %}
-    <p class="search-result-source">Source: {{ result.source }}</p>
+    <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://faolex.fao.org/">FAOLEX</a> (ID: {{ result.document_id }})</p>
   {% endif %}
 </li>

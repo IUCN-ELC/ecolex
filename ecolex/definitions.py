@@ -119,11 +119,12 @@ SOLR_FIELDS = [
     'trPlaceOfAdoption', 'trDateOfText', 'trDateOfEntry', 'trKeyword_en',
     'trDateOfModification', 'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
     'trPaperTitleOfText_sp', 'trPaperTitleOfText_other', 'trTitleOfTextShort',
+    'trElisId',
     'decTitleOfText', 'decStatus', 'decPublishDate', 'decUpdateDate',
     'decNumber', 'decKeyword', 'docKeyword', 'cdKeywords',
     'litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp', 'litLongTitle_other',
     'litPaperTitleOfText', 'litPaperTitleOfText_fr', 'litPaperTitleOfText_sp',
-    'litPaperTitleOfText_other',
+    'litPaperTitleOfText_other', 'litId',
     'litTitleOfTextShort', 'litTitleOfTextShort_fr', 'litTitleOfTextShort_sp',
     'litTitleOfTextShort_other',
     'litTitleOfTextTransl', 'litTitleOfTextTransl_fr',
@@ -137,7 +138,7 @@ SOLR_FIELDS = [
     'litCountry', 'litRegion', 'litSubject', 'litLanguageOfDocument',
     'decNumber', 'cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr',
     'cdDateOfText', 'legTitle', 'legLongTitle', 'legCountry_en',
-    'legDate', 'legStatus', 'legTerritorialSubdivision'
+    'legDate', 'legStatus', 'legTerritorialSubdivision', 'legId',
 ]
 
 LANGUAGE_MAP = {

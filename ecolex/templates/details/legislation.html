@@ -16,7 +16,9 @@
     <dl>
       <dt>Document type</dt><dd>{{ document.type|capfirst }}</dd>
       <dt>Date of text</dt><dd>{{ document.date|date:"b j, Y"|capfirst }}</dd>
-      <dt>Source</dt><dd>{{ document.source }}</dd>
+
+      <dt>Source</dt>
+      <dd>{{ document.source }}, <a target="_blank" href="http://faolex.fao.org/">FAOLEX</a> (ID: {{ document.document_id }})</dd>
     </dl>
   </header>
 

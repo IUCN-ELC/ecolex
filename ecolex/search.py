@@ -361,7 +361,7 @@ def get_documents_by_field(id_name, treaty_ids, rows=None):
     rows = len(treaty_ids) if rows is None else rows
     result = search(solr_query, rows=rows, raw=True)
     if not len(result):
-        return None
+        return []
     return result
 
 
