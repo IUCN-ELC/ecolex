@@ -70,7 +70,7 @@
 
       <dt>Keywords</dt>
       <dd>
-        {% for keyword in document.solr.trKeyword %}
+        {% for keyword in document.get_keywords %}
           <span class="tag">{{ keyword }}</span>
         {% empty %}
           <span class="na">Not available</span>
