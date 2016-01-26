@@ -245,14 +245,14 @@ $(document).ready(function() {
                 $('.filter-decision, .filter-treaty, .filter-literature, .filter-global, .filter-legislation'))
             .change(function(e) {
                 var current = [];
-                var ul = $(this).parents('ul');
-                var form_id = ul.data('formid');
+                var span = $(this).parents('span');
+                var form_id = span.data('formid');
                 var value = $(this).val();
                 if (value == 'AND' && $(this).is(':checked')) {
                     var target_id = $(this).data('target');
                     current.push('AND');
                 }
-                ul.find('input:checked').each(function() {
+                span.find('input:checked').each(function() {
                     current.push($(this).val());
                 });
                 $(form_id).val(current);

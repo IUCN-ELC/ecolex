@@ -10,7 +10,7 @@
   <div id="filter-global" class="collapse in">
     <div class="clearfix filter-header">
       <h6 class="pull-left">Subject</h6>
-      <span class="pull-right" data-formid="#id_subject_op">
+      <span class="filter-global pull-right" data-formid="#id_subject_op">
         {% include 'bits/operation_facet.html' with form_field=form.subject_op form_target='#id_subject' %}
       </span>
     </div>
@@ -22,7 +22,7 @@
 
     <div class="clearfix filter-header">
       <h6 class="pull-left">Keywords</h6>
-      <span class="pull-right" data-formid="#id_keyword_op">
+      <span class="filter-global pull-right" data-formid="#id_keyword_op">
         {% include 'bits/operation_facet.html' with form_field=form.keyword_op form_target='#id_keyword' %}
       </span>
     </div>
@@ -34,7 +34,7 @@
 
     <div class="clearfix filter-header">
       <h6 class="pull-left">Country</h6>
-      <span class="pull-right" data-formid="#id_country_op">
+      <span class="filter-global pull-right" data-formid="#id_country_op">
         {% include 'bits/operation_facet.html' with form_field=form.country_op form_target='#id_country' %}
       </span>
     </div>
@@ -46,7 +46,7 @@
 
     <div class="clearfix filter-header">
       <h6 class="pull-left">Geographical Area</h6>
-      <span class="pull-right" data-formid="#id_region_op">
+      <span class="filter-global pull-right" data-formid="#id_region_op">
         {% include 'bits/operation_facet.html' with form_field=form.region_op form_target='#id_region' %}
       </span>
     </div>
@@ -58,7 +58,7 @@
 
     <div class="clearfix filter-header">
       <h6 class="pull-left">Language</h6>
-      <span class="pull-right" data-formid="#id_language_op">
+      <span class="filter-global pull-right" data-formid="#id_language_op">
         {% include 'bits/operation_facet.html' with form_field=form.language_op form_target='#id_language' %}
       </span>
     </div>
