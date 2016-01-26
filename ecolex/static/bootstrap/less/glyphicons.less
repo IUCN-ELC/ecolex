@@ -1,0 +1,53 @@
+//
+// Glyphicons for Bootstrap
+//
+// Since icons are fonts, they can be placed anywhere text is placed and are
+// thus automatically sized to match the surrounding child. To use, create an
+// inline element with the appropriate classes, like so:
+//
+// <a href="#"><span class="glyphicon glyphicon-star"></span> Star</a>
+
+// Import the fonts
+@font-face {
+  font-family: @icon-font-name;
+  src: url('@{icon-font-path}@{icon-font-name}.eot');
+  src: url('@{icon-font-path}@{icon-font-name}.eot?#iefix') format('embedded-opentype'),
+       // url('@{icon-font-path}@{icon-font-name}.woff2') format('woff2'),
+       url('@{icon-font-path}@{icon-font-name}.woff') format('woff'),
+       url('@{icon-font-path}@{icon-font-name}.ttf') format('truetype'),
+       url('@{icon-font-path}@{icon-font-name}.svg#@{icon-font-svg-id}') format('svg');
+}
+
+.icon-base() {
+  font-family: @icon-font-name;
+  font-style: normal;
+  font-weight: normal;
+  // line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Catchall baseclass
+@{icon-class} {
+  .icon-base();
+  display: inline-block;
+  vertical-align: 1px;
+}
+
+// Individual icons
+@{icon-class}-cop-decision:before         { content: "\e600"; }
+@{icon-class}-court-decision:before       { content: "\e601"; }
+@{icon-class}-legislation:before          { content: "\e602"; }
+@{icon-class}-literature:before           { content: "\e603"; }
+@{icon-class}-treaty:before               { content: "\e604"; }
+@{icon-class}-drop-down:before            { content: "\e605"; }
+@{icon-class}-drop-up:before              { content: "\e606"; }
+@{icon-class}-close:before                { content: "\e607"; }
+@{icon-class}-menu:before                 { content: "\e608"; }
+@{icon-class}-search:before               { content: "\e609"; }
+@{icon-class}-list-add:before             { content: "\e60a"; }
+@{icon-class}-vellip:before               { content: "\e60b"; }
+@{icon-class}-pointer:before              { content: "\e610"; }
+@{icon-class}-time:before                 { content: "\e60d"; }
+@{icon-class}-globe:before                { content: "\e60e"; }
+@{icon-class}-new-window:before           { content: "\e60f"; }

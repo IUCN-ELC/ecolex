@@ -1,61 +1,67 @@
 {% load tags %}
 
+<input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">
+
 <fieldset class="global-filter">
-  <input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">
 
   <h5 data-toggle="collapse"
       data-target="#filter-global">Common filters</h5>
 
   <div id="filter-global" class="collapse in">
-    <h6>Subject</h6>
-    <ul class="filter-global" data-formid="#id_subject_op">
-      {% include 'bits/operation_facet.html' with form_field=form.subject_op form_target='#id_subject' %}
-    </ul>
-    <br>
+    <div class="clearfix filter-header">
+      <h6 class="pull-left">Subject</h6>
+      <span class="pull-right" data-formid="#id_subject_op">
+        {% include 'bits/operation_facet.html' with form_field=form.subject_op form_target='#id_subject' %}
+      </span>
+    </div>
     <div id="subject-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>
       <input type="text" class="tm-input full-match" placeholder="Add subjects" data-formid="#id_subject"/>
     </div>
 
-    <h6>Keywords</h6>
-    <ul class="filter-global" data-formid="#id_keyword_op">
-      {% include 'bits/operation_facet.html' with form_field=form.keyword_op form_target='#id_keyword' %}
-    </ul>
-    <br>
+    <div class="clearfix filter-header">
+      <h6 class="pull-left">Keywords</h6>
+      <span class="pull-right" data-formid="#id_keyword_op">
+        {% include 'bits/operation_facet.html' with form_field=form.keyword_op form_target='#id_keyword' %}
+      </span>
+    </div>
     <div id="keyword-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>
       <input type="text" class="tm-input full-match" placeholder="Add keywords" data-formid="#id_keyword"/>
     </div>
 
-    <h6>Country</h6>
-    <ul class="filter-global" data-formid="#id_country_op">
-      {% include 'bits/operation_facet.html' with form_field=form.country_op form_target='#id_country' %}
-    </ul>
-    <br>
+    <div class="clearfix filter-header">
+      <h6 class="pull-left">Country</h6>
+      <span class="pull-right" data-formid="#id_country_op">
+        {% include 'bits/operation_facet.html' with form_field=form.country_op form_target='#id_country' %}
+      </span>
+    </div>
     <div id="country-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>
       <input type="text" class="tm-input" placeholder="Add countries" data-formid="#id_country"/>
     </div>
 
-    <h6>Geographical Area</h6>
-    <ul class="filter-global" data-formid="#id_region_op">
-      {% include 'bits/operation_facet.html' with form_field=form.region_op form_target='#id_region' %}
-    </ul>
-    <br>
+    <div class="clearfix filter-header">
+      <h6 class="pull-left">Geographical Area</h6>
+      <span class="pull-right" data-formid="#id_region_op">
+        {% include 'bits/operation_facet.html' with form_field=form.region_op form_target='#id_region' %}
+      </span>
+    </div>
     <div id="region-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>
       <input type="text" class="tm-input" placeholder="Add geographical areas" data-formid="#id_region"/>
     </div>
 
-    <h6>Language</h6>
-    <ul class="filter-global" data-formid="#id_language_op">
-      {% include 'bits/operation_facet.html' with form_field=form.language_op form_target='#id_language' %}
-    </ul>
-    <br>
+    <div class="clearfix filter-header">
+      <h6 class="pull-left">Language</h6>
+      <span class="pull-right" data-formid="#id_language_op">
+        {% include 'bits/operation_facet.html' with form_field=form.language_op form_target='#id_language' %}
+      </span>
+    </div>
     <div id="language-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>
@@ -63,7 +69,9 @@
     </div>
 
     {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
-      <h6>Year Period</h6>
+      <div class="filter-header">
+        <h6>Year Period</h6>
+      </div>
       <input id="slider-years" type="text"
              data-slider-min="1860"
              data-slider-max="2015"
@@ -99,22 +107,30 @@
         data-target="#filter-treaties">Treaty filters</h5>
 
     <div id="filter-treaties" class="collapse {% if form.has_treaty %}in{% endif %}">
-        <h6>Type of document</h6>
+        <div class="filter-header">
+          <h6>Type of document</h6>
+        </div>
         <ul class="filter-treaty" data-formid="#id_tr_type">
           {% include 'bits/checkbox_facet.html' with facet=facets.trTypeOfText_en form_field=form.tr_type show_empty=True %}
         </ul>
 
-      <h6>Field of application</h6>
+      <div class="filter-header">
+        <h6>Field of application</h6>
+      </div>
       <ul class="filter-treaty" data-formid="#id_tr_field">
         {% include 'bits/checkbox_facet.html' with facet=facets.trFieldOfApplication_en form_field=form.tr_field show_empty=True %}
       </ul>
 
-      <h6>Status</h6>
+      <div class="filter-header">
+        <h6>Status</h6>
+      </div>
       <ul class="filter-treaty" data-formid="#id_tr_status">
         {% include 'bits/checkbox_facet.html' with facet=facets.trStatus form_field=form.tr_status show_empty=True %}
       </ul>
 
-      <h6>Depository</h6>
+      <div class="filter-header">
+        <h6>Depository</h6>
+      </div>
       <ul class="filter-treaty" data-formid="#id_tr_depository_op">
         {% include 'bits/operation_facet.html' with form_field=form.tr_depository_op form_target='#id_tr_depository' %}
       </ul>
@@ -125,7 +141,9 @@
         <input type="text" class="tm-input" placeholder="Add depository" data-formid="#id_tr_depository"/>
       </div>
 
-      <h6>Place of adoption</h6>
+      <div class="filter-header">
+        <h6>Place of adoption</h6>
+      </div>
       <div id="tr_place_of_adoption-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
@@ -142,7 +160,9 @@
         data-target="#filter-cop-decisions">COP Decision filters</h5>
 
     <div id="filter-cop-decisions" class="collapse {% if form.has_decision %}in{% endif %}">
-      <h6>Treaty</h6>
+      <div class="filter-header">
+        <h6>Treaty</h6>
+      </div>
       <div id="dec_treaty" class="tag-select">
         <select class="tag-options" hidden>
           {% include 'bits/fancy_select_map.html' with facet=facets.decTreatyId type_map=dec_treaty_names form_field=form.dec_treaty %}
@@ -151,13 +171,17 @@
       </div>
 
       {% if facets.decType %}
-        <h6>Type of document</h6>
+        <div class="filter-header">
+          <h6>Type of document</h6>
+        </div>
         <ul class="filter-decision" data-formid="#id_dec_type">
           {% include 'bits/checkbox_facet.html' with facet=facets.decType form_field=form.dec_type %}
         </ul>
       {% endif %}
 
-      <h6>Decision status</h6>
+      <div class="filter-header">
+        <h6>Decision status</h6>
+      </div>
       <ul class="filter-decision" data-formid="#id_dec_status">
         {% include 'bits/checkbox_facet.html' with facet=facets.decStatus form_field=form.dec_status show_empty=True %}
       </ul>
@@ -171,12 +195,16 @@
         data-target="#filter-court-decisions">Court decision filters</h5>
 
     <div id="filter-court-decisions" class="collapse {% if form.has_court_decision %}in{% endif %}">
-      <h6>Type of court</h6>
+      <div class="filter-header">
+        <h6>Type of court</h6>
+      </div>
       <ul class="filter-decision" data-formid="#id_cd_type">
         {% include 'bits/checkbox_facet.html' with facet=facets.cdTypeOfText form_field=form.cd_type show_empty=True %}
       </ul>
 
-      <h6>Sub-national/state level</h6>
+      <div class="filter-header">
+        <h6>Sub-national/state level</h6>
+      </div>
       <div id="cd_territorial_subdivision-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
@@ -191,17 +219,23 @@
     <h5 data-toggle="collapse" {% if not form.has_legislation %}class="collapsed"{% endif %}data-target="#filter-legislation">Legislation filters</h5>
 
     <div id="filter-legislation" class="collapse {% if form.has_legislation %}in{% endif %}">
-      <h6>Type of legislation</h6>
+      <div class="filter-header">
+        <h6>Type of legislation</h6>
+      </div>
       <ul class="filter-legislation" data-formid="#id_leg_type">
         {% include 'bits/checkbox_facet.html' with facet=facets.legType_en form_field=form.leg_type show_empty=True %}
       </ul>
 
-      <h6>Sub-national/state level</h6>
+      <div class="filter-header">
+        <h6>Sub-national/state level</h6>
+      </div>
       <ul class="filter-legislation" data-formid="#id_leg_territorial">
         {% include 'bits/checkbox_facet.html' with facet=facets.legTerritorialSubdivision form_field=form.leg_territorial show_empty=True %}
       </ul>
 
-      <h6>Legislation status</h6>
+      <div class="filter-header">
+        <h6>Legislation status</h6>
+      </div>
       <ul class="filter-legislation" data-formid="#id_leg_status">
         {% include 'bits/checkbox_facet.html' with facet=facets.legStatus form_field=form.leg_status show_empty=True %}
       </ul>
@@ -214,12 +248,16 @@
     <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">Literature filters</h5>
 
     <div id="filter-literatures" class="collapse {% if form.has_literature %}in{% endif %}">
-       <h6>Type of document</h6>
+       <div class="filter-header">
+        <h6>Type of document</h6>
+       </div>
        <ul class="filter-literature" data-formid="#id_lit_type">
        {% include 'bits/checkbox_facet.html' with facet=facets.litTypeOfText form_field=form.lit_type %}
        </ul>
 
-      <h6>Literature author</h6>
+      <div class="filter-header">
+        <h6>Literature author</h6>
+      </div>
       <ul class="filter-literature" data-formid="#id_lit_author_op">
         {% include 'bits/operation_facet.html' with form_field=form.lit_author_op form_target='#id_lit_author' %}
       </ul>
@@ -230,14 +268,18 @@
         <input type="text" class="tm-input" placeholder="Add author" data-formid="#id_lit_author"/>
       </div>
 
-      <h6>Journal/Series</h6>
+      <div class="filter-header">
+        <h6>Journal/Series</h6>
+      </div>
       <div id="lit_serial-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
         <input type="text" class="tm-input" placeholder="Add journal/series" data-formid="#id_lit_serial"/>
       </div>
 
-      <h6>Publisher</h6>
+      <div class="filter-header">
+        <h6>Publisher</h6>
+      </div>
       <div id="lit_publisher-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
