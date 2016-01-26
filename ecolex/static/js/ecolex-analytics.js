@@ -10,9 +10,22 @@ window.addEventListener('load', function () {
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-58379026-1', 'auto');
-  
+  ga('create','UA-49257525-1', 'auto', {'name': 'faolex'});
+  ga('create','UA-16957552-1', 'auto', {'name': 'allSites'});
+
   count_searches();
   ga('send', 'pageview');
+
+  faolex_legislation_views();
+  if (document.faolex_url) {
+    ga('faolex.set', 'referrer', "http://" + document.domain);
+    ga('faolex.set', 'location', document.faolex_url);
+    ga('faolex.send', 'pageview');
+
+    ga('allSites.set', 'referrer', "http://" + document.domain);
+    ga('allSites.set', 'location', document.faolex_url);
+    ga('allSites.send', 'pageview');
+  }
 
   setup_handlers();
 }, false);
@@ -36,8 +49,24 @@ function get_fancy_name(str) {
     return "Legislation";
   if (str === "courtdecisions")
     return "CourtDecisions";
-  
   return str;
+}
+
+function faolex_legislation_views() {
+  var params = window.location.search.substring(1).split('&');
+  $.each(params, function(i, str) {
+    kv = str.split('=');
+    if (kv[0] !== "id") {
+      return;
+    }
+    var id = kv[1];
+    matches = id.match(/LEX-FAOC([0-9]+)/);
+    if (!matches || matches.length !== 2) {
+      return;
+    }
+    var url = "http://faolex.fao.org/cgi-bin/faolex.exe?database=faolex&search_type=link&table=result&lang=eng&format_name=%40ERALL&rec_id=" + matches[1];
+    document.faolex_url = url;
+  });
 }
 
 function count_searches() {
