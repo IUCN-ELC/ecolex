@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from datetime import datetime
 from html import unescape
+import functools
 
 from django.core.urlresolvers import reverse
 
@@ -149,6 +150,8 @@ class Treaty(ObjectNormalizer):
             first(self.solr.get(
                 'trEntryIntoForceDate')), '%Y-%m-%dT%H:%M:%SZ').date()
 
+    @property
+    @functools.lru_cache()
     def participants(self):
         PARTY_MAP = OrderedDict((
             ('partyCountry', 'country'),
@@ -167,21 +170,48 @@ class Treaty(ObjectNormalizer):
             ('partyDateOfReservation', 'reservation'),
             ('partyDateOfWithdrawal', 'withdrawal'),
         ))
+        MANDATORY_FIELDS = ['entry into force']
+        FIELD_GROUPS = {
+            'date of ratification *': [
+                'ratification',
+                'accession/approbation',
+                'acceptance/approval',
+                'succession',
+                'consent to be bound',
+            ],
+            'signature **': [
+                'simple signature',
+                'definite signature',
+            ],
+        }
+        GROUPED_FIELDS = {field: group
+                          for group, fields in FIELD_GROUPS.items()
+                          for field in fields}
 
         clean = lambda d: d if d != '0002-11-30T00:00:00Z' else None
         data = OrderedDict()
         for field, event in PARTY_MAP.items():
             values = [clean(v) for v in self.solr.get(field, [])]
-            if values and any(values):
+            if values and any(values) or event in MANDATORY_FIELDS:
                 data[event] = values
         results = []
         for i, country in enumerate(data['country']):
-            results.append(
-                OrderedDict((v, data[v][i]) for v in data.keys())
-            )
+            r = OrderedDict((v, data[v][i]) for v in data.keys())
+            result = OrderedDict()
+            for k, v in r.items():
+                if k in GROUPED_FIELDS:
+                    if not v:
+                        continue
+                    group = GROUPED_FIELDS[k]
+                    idx = FIELD_GROUPS[group].index(k) + 1
+                    k = group
+                else:
+                    idx = 0
+                result[k] = (v, idx)
+            results.append(result)
         ret = {
             'countries': results,
-            'events': [c for c in data.keys() if c != 'country'],
+            'events': [ev for ev in results[0].keys() if ev != 'country'],
         }
         return ret
 

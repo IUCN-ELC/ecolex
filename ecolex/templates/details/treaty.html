@@ -129,20 +129,27 @@
       <tbody class="body">
         {% for country in document.participants.countries %}
         <tr class="country">
-          <th>{{ country.country }}</th>
+          <th>{{ country.country.0 }}</th>
           {% for event in document.participants.events %}
           <td>
-            {% if country|lookup:event %}
-              <time title="{{ event|capfirst }} date">{{ country|lookup:event|default:"-"|parse_date|date:"b j, Y"|capfirst }}</time>
-            {% else %}
-              <span class="text-muted" title="Not available">-</span>
-            {% endif %}
+            {% with country|lookup:event as event_date %}
+              {% if event_date.0 %}
+                <time title="{{ event|capfirst }} date">
+                {{ event_date.0|parse_date|date:"b j, Y"|capfirst }}
+                </time>
+                {% if event_date.1 %}[{{ event_date.1 }}]{% endif %}
+              {% else %}
+                <span class="text-muted" title="Not available">-</span>
+              {% endif %}
+            {% endwith %}
           </td>
           {% endfor %}
         </tr>
         {% endfor %}
       </tbody>
     </table>
+
+    {% include 'bits/participants_legend.html' with events=document.participants.events %}
 
   </section>
   {% endif %}

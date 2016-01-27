@@ -1,6 +1,10 @@
 {% extends 'layout.html' %}
 {% load tags %}
 
+{% block style %}
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
+{% endblock %}
+
 {% block content %}
 
 <p>
@@ -17,7 +21,7 @@
   </header>
 
   <div class="table-wrapper">
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="country-party">
       <thead>
         <tr>
           <th class="col-country">Countries</th>
@@ -29,15 +33,19 @@
       <tbody>
         {% for country in treaty.participants.countries %}
           <tr>
-            <th>{{ country.country }}</th>
+            <th>{{ country.country.0 }}</th>
             {% for event in treaty.participants.events %}
-              <td>
-                {% if country|lookup:event %}
-                  <time title="{{ event|capfirst }} date">{{ country|lookup:event|parse_date|date:"b j, Y"|capfirst }}</time>
+              {% with country|lookup:event as event_date %}
+                {% if event_date.0 %}
+                  <td data-order="{{ event_date.0|parse_date|date:"U" }}"
+                      title="{{ event|capfirst }} date">
+                    {{ event_date.0|parse_date|date:"b j, Y"|capfirst }}
+                    {% if event_date.1 %}[{{ event_date.1 }}]{% endif %}
+                  </td>
                 {% else %}
-                  <span class="na" title="Not available">-</span>
+                  <td title="Not available">-</td>
                 {% endif %}
-              </td>
+              {% endwith %}
             {% endfor %}
           </tr>
         {% endfor %}
@@ -45,6 +53,8 @@
     </table>
   </div>
 
+  <br>
+  {% include 'bits/participants_legend.html' with events=treaty.participants.events %}
   <hr>
 
   <p><a class="btn btn-sm btn-default" href="{% url 'treaty_details' treaty.id %}?{{ query }}">
@@ -52,4 +62,17 @@
   </a></p>
 
 </article>
+{% endblock %}
+
+{% block scripts %}
+  <script src="/static/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('#country-party').DataTable( {
+        "paging":  false,
+        "info":    false,
+        "bFilter": false,
+      });
+    });
+  </script>
 {% endblock %}

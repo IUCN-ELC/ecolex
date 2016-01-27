@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="/static/css/bootstrap.custom.css">
   <link rel="stylesheet" href="/static/css/bootstrap-tour.min.css">
   <link rel="stylesheet" href="/static/css/main.css">
+  {% block css %}
+  {% endblock %}
   {% include 'bits/favicon.html' %}
 </head>
 
@@ -113,6 +115,8 @@
 <script src="/static/js/facets.js"></script>
 <script src="/static/js/tour.js"></script>
 {% if GA_CODE %}{% include 'bits/ga.html' %}{% endif %}
+{% block scripts %}
+{% endblock %}
 </body>
 
 </html>
