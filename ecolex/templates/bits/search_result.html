@@ -69,7 +69,7 @@
     <div class="search-result-details">
       <strong class="sr-type">{{ result.type|capfirst }}</strong>
         |
-      <span class="sr-doctype">{{ result.type_of_document }}</span>
+        <span class="sr-doctype">{{ result.type_of_document }}</span>
       {% if result.place_of_adoption %}
         |
         <span class="sr-place"> {{ result.place_of_adoption }}</span>
@@ -95,6 +95,12 @@
   {% elif result.type == "court_decision" %}
     <div class="search-result-details">
       <strong class="sr-type">Court Decision</strong>
+        |
+        <span class="sr-doctype">{{ result.type_of_document }}</span>
+      {% if result.country %}
+        |
+        <span class="sr-country">{{ result.country }}</span>
+      {% endif %}
       {% if result.date %}
         |
         <time class="sr-date" title="Date of document: {{ result.date }}">

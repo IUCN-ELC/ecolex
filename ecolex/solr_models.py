@@ -450,6 +450,9 @@ class CourtDecision(ObjectNormalizer):
     def get_keywords(self):
         return self.solr.get('cdKeywords')
 
+    def country(self):
+        return first(self.solr.get('cdCountry_en'))
+
 
 class Legislation(ObjectNormalizer):
     ID_FIELD = 'legId'

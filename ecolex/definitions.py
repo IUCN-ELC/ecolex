@@ -136,8 +136,9 @@ SOLR_FIELDS = [
     'litPublisher', 'litPublPlace', 'litDateOfText',
     'litKeyword', 'litSeriesFlag',
     'litCountry', 'litRegion', 'litSubject', 'litLanguageOfDocument',
-    'decNumber', 'cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr',
-    'cdDateOfText', 'legTitle', 'legLongTitle', 'legCountry_en',
+    'cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr',
+    'cdTypeOfText', 'cdCountry_en', 'cdDateOfText',
+    'legTitle', 'legLongTitle', 'legCountry_en',
     'legDate', 'legStatus', 'legTerritorialSubdivision', 'legId',
 ]
 
