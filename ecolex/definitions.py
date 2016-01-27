@@ -115,7 +115,7 @@ OPERATION_FIELD_MAPPING = {
 
 
 SOLR_FIELDS = [
-    'id', 'type', 'source', 'trTitleOfText', 'trJurisdiction_en', 'trStatus',
+    'id', 'type', 'source', 'trTitleOfText', 'trTypeOfText_en', 'trStatus',
     'trPlaceOfAdoption', 'trDateOfText', 'trDateOfEntry', 'trKeyword_en',
     'trDateOfModification', 'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
     'trPaperTitleOfText_sp', 'trPaperTitleOfText_other', 'trTitleOfTextShort',
