@@ -28,7 +28,7 @@
         {%endfor%}
       </p>
     {% endif %}
-    <p class="search-result-source">Source: {{ result.source }}</p>
+    <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></p>
 
   {% elif result.type == "literature" %}
 
@@ -111,7 +111,7 @@
         {%endfor%}
       </p>
     {% endif %}
-    <p class="search-result-source">Source: {{ result.source }}</p>
+    <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></p>
 
   {% elif result.type == "legislation" %}
     <div class="search-result-details">

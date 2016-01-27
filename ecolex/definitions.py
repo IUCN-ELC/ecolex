@@ -8,9 +8,9 @@ DOC_TYPE = (
 
 DOC_SOURCES = {
     'treaty': 'IUCN',
-    'decision': 'InforMEA',
+    'decision': 'UNEP',
     'literature': 'IUCN',
-    'court_decision': 'InforMEA',
+    'court_decision': 'UNEP',
     'legislation': 'FAO',
 }
 
