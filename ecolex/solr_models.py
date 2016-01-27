@@ -209,6 +209,8 @@ class Treaty(ObjectNormalizer):
                     idx = 0
                 result[k] = (v, idx)
             results.append(result)
+        #sort by country name
+        results.sort(key=lambda k: k['country'][0].lower())
         ret = {
             'countries': results,
             'events': [ev for ev in results[0].keys() if ev != 'country'],
