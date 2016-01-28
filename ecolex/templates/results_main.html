@@ -22,6 +22,8 @@
       <span id="number-of-results">{{ facets.type.literature }}</span> literatures
     {% elif 'court_decision' in form.type.data %}
       <span id="number-of-results">{{ facets.type.court_decision }}</span> court decisions
+    {% elif 'legislation' in form.type.data %}
+      <span id="number-of-results">{{ facets.type.legislation }}</span> legislation records
     {% endif %}
   </span>
 
