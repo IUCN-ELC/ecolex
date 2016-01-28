@@ -64,7 +64,7 @@
 
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>
-        <dd>{{ entry.value | join_by:", " }}</dd>
+        <dd> {{ entry.value | date:"b j, Y" | capfirst | join_by:", " }}</dd>
       {% endfor %}
 
       <dt>Keywords</dt>
