@@ -138,8 +138,7 @@ def parse_facets(facets):
 def parse_suggestions(solr_suggestions):
     if not solr_suggestions or not any(solr_suggestions['suggestions']):
         return ''
-
-    return solr_suggestions['suggestions'][-1]
+    return solr_suggestions['collations'][-1]
 
 
 def escape_query(query):
