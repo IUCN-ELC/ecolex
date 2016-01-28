@@ -43,7 +43,7 @@
       {% if document.solr.legRelatedWebSite %}
         <dt>Available web site</dt>
         <dd>
-          <a href="{{ document.solr.legRelatedWebSite }}" target="_blank">{{ document.solr.legRelatedWebSite }}</a>
+          <a href="{{ document.solr.legRelatedWebSite | url_normalize}}" target="_blank">{{ document.solr.legRelatedWebSite }}</a>
         </dd>
       {% endif %}
 
