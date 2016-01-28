@@ -89,11 +89,8 @@ class ObjectNormalizer:
         pass
 
     def get_keywords(self):
-        keywords = self.solr.get(self.get_keywords_field()) or []
+        keywords = self.solr.get('docKeyword') or []
         return sorted(set(keywords)) if type(keywords) is list else set([keywords])
-
-    def get_keywords_field(self):
-        return 'docKeyword'
 
     __repr__ = title
 
@@ -270,9 +267,6 @@ class Treaty(ObjectNormalizer):
             if link:
                 return link[0], LANGUAGE_MAP[langcode]
 
-    def get_keywords_field(self):
-        return 'docKeyword'
-
 
 class Decision(ObjectNormalizer):
     ID_FIELD = 'decNumber'
@@ -295,9 +289,6 @@ class Decision(ObjectNormalizer):
 
     def get_language(self):
         return first(self.solr.get('decLanguage')) or 'Document language'
-
-    def get_keywords_field(self):
-        return 'decKeyword'
 
 
 class Literature(ObjectNormalizer):
@@ -452,9 +443,6 @@ class CourtDecision(ObjectNormalizer):
 
     def abstract(self):
         return first(self.solr.get('cdAbstract_en'))
-
-    def get_keywords_field(self):
-        return 'cdKeywords'
 
     def country(self):
         return first(self.solr.get('cdCountry_en'))
