@@ -17,7 +17,7 @@ def just_year(value):
 
 @register.filter
 def join_by(lst, arg):
-    if lst and type(lst) is list:
+    if lst and (type(lst) is list or type(lst) is set):
         return arg.join(lst)
     return lst
 

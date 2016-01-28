@@ -63,7 +63,7 @@
 
       <dt>Keywords</dt>
       <dd>
-        {% for keyword in document.solr.legKeyword_en %}
+        {% for keyword in document.get_keywords %}
           <span class="tag">{{ keyword|capfirst }}</span>
         {% empty %}
           <span class="na">Not available</span>

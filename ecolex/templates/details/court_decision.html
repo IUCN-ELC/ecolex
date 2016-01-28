@@ -30,7 +30,14 @@
       <dt>Reference number</dt> <dd>{{ document.solr.cdReferenceNumber }}</dd>
       <dt>Language of document</dt> <dd>{{ document.language }}</dd>
       <dt>Subjects</dt> <dd>{{ document.solr.cdSubject|join:", " }}</dd>
-      <dt>Keywords</dt> <dd>{{ document.solr.cdKeywords|join:", " }}</dd>
+      <dt>Keywords</dt>
+      <dd>
+        {% for keyword in document.get_keywords %}
+          <span class="tag">{{ keyword|capfirst }}</span>
+        {% empty %}
+          <span class="na">Not available</span>
+        {% endfor %}
+      </dd>
     </dl>
   </header>
 

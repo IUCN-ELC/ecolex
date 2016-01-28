@@ -23,9 +23,7 @@
     </div>
     {% if result.get_keywords %}
       <p class="search-result-description"><strong>Keywords:</strong>
-        {% for keyword in result.get_keywords %}
-          {{ keyword }},
-        {%endfor%}
+        {{ result.get_keywords | join:", " }}
       </p>
     {% endif %}
     <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></p>
@@ -61,7 +59,9 @@
         </time>
       {% endif %}
     </div>
-    <p class="search-result-description"><strong>Keywords:</strong>{{ result.keywords }}</p>
+    <p class="search-result-description"><strong>Keywords:</strong>
+        {{ result.get_keywords | join:", " }}
+    </p>
     <p class="search-result-source">Source: <a target="_blank" href="http://iucn.org">{{ result.source }}</a> (ID: {{ result.document_id }})</p>
 
   {% elif result.type == 'treaty' %}
@@ -85,9 +85,7 @@
     {% if result.get_keywords %}
       <p  class="search-result-description">
         <strong>Keywords:</strong>
-        {% for keyword in result.get_keywords %}
-          {{ keyword }},
-        {%endfor%}
+        {{ result.get_keywords | join:", " }}
       </p>
     {% endif %}
     <p class="search-result-source">Source: <a target="_blank" href="http://iucn.org">{{ result.source }}</a> (ID: {{ result.document_id }})</p>
@@ -112,9 +110,7 @@
     {% if result.get_keywords %}
       <p class="search-result-description">
       <strong>Keywords:</strong>
-        {% for keyword in result.get_keywords %}
-          {{ keyword }},
-        {%endfor%}
+        {{ result.get_keywords | join:", " }}
       </p>
     {% endif %}
     <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></p>
@@ -142,9 +138,7 @@
     {% if result.get_keywords %}
       <p class="search-result-description">
       <strong>Keywords:</strong>
-        {% for keyword in result.get_keywords %}
-          {{ keyword }},
-        {%endfor%}
+        {{ result.get_keywords | join:", " | capfirst}}
       </p>
     {% endif %}
     <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://faolex.fao.org/">FAOLEX</a> (ID: {{ result.document_id }})</p>

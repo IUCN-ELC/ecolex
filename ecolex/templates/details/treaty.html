@@ -71,7 +71,7 @@
       <dt>Keywords</dt>
       <dd>
         {% for keyword in document.get_keywords %}
-          <span class="tag">{{ keyword }}</span>
+          <span class="tag">{{ keyword|capfirst }}</span>
         {% empty %}
           <span class="na">Not available</span>
         {% endfor %}
