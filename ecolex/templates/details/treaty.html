@@ -49,14 +49,6 @@
         {% endif %}
       {% endfor %}
 
-      <dt>Subject</dt>
-      <dd>
-        {% if document.solr.trSubject_en %}
-          {{ document.solr.trSubject_en | join_by:", " | safe }}
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
       <dt>Status</dt>
       <dd>{{ document.solr.trStatus }}</dd>
       <dt>Entry into force</dt>
@@ -68,6 +60,14 @@
         {% endif %}
       </dd>
 
+      <dt>Subject</dt>
+      <dd>
+        {% if document.solr.trSubject_en %}
+          {{ document.solr.trSubject_en | join_by:", " | safe }}
+        {% else %}
+          <span class="na">Not available</span>
+        {% endif %}
+      </dd>
       <dt>Keywords</dt>
       <dd>
         {% for keyword in document.get_keywords %}
