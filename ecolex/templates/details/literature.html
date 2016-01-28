@@ -79,7 +79,7 @@
       <dt>Available web site</dt>
       <dd>
         {% if document.solr.litRelatedWebSite %}
-          <a class="decision-link" href="{{ document.solr.litRelatedWebSite }}">{{ document.solr.litRelatedWebSite }}</a>
+          <a class="decision-link" href="{{ document.solr.litRelatedWebSite | url_normalize }}">{{ document.solr.litRelatedWebSite }}</a>
         {% else %}
           <p class="na">Not available</p>
         {% endif %}

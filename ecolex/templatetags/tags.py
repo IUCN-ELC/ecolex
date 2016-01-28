@@ -1,5 +1,6 @@
 from django import template
 from datetime import datetime
+from urllib import parse
 
 register = template.Library()
 
@@ -27,6 +28,11 @@ def parse_date(d):
         return datetime.strptime(d, '%Y-%m-%dT%H:%M:%SZ').date()
     except:
         return d
+
+
+@register.filter
+def url_normalize(value):
+    return value if value.startswith('http') else 'http://' + value
 
 
 @register.simple_tag()
