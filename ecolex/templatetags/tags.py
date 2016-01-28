@@ -1,6 +1,5 @@
 from django import template
 from datetime import datetime
-from urllib import parse
 
 register = template.Library()
 
