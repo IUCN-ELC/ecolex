@@ -280,6 +280,13 @@ class TreatyImporter(object):
                         else:
                             data[v].append(self._format_date('0000-00-00'))
 
+                for party_field in PARTICIPANT_FIELDS.values():
+                    if party_field not in data:
+                        continue
+                    null_date = '0000-00-00T00:00:00Z'
+                    if all([d == null_date for d in data[party_field]]):
+                        data[party_field] = None
+
                 data['text'] = ''
                 for field in URL_FIELDS:
                     value = document.find(field)

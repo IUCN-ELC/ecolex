@@ -111,7 +111,7 @@
   <section id="participants">
     <div class="clearfix">
       <a id="participants-extras"
-        href="{% url 'resultParticipants' document.id %}?{{query}}"
+        href="{% url 'resultParticipants' document.id %}?{{ query }}"
          class="pull-right btn btn-link">See Expanded View</a>
       <h2 class="section-title">Country/Participant</h2>
     </div>
@@ -120,24 +120,24 @@
       <thead>
         <tr>
           <th>Countries</th>
-          {% for event in document.participants.events %}
-          <th nowrap="nowrap">{{ event|capfirst }}</th>
+          {% for event_name in document.participants.events %}
+          <th nowrap="nowrap">{{ event_name|capfirst }}</th>
           {% endfor %}
         </tr>
       </thead>
 
       <tbody class="body">
-        {% for country in document.participants.countries %}
+        {% for participant in document.participants.participants %}
         <tr class="country">
-          <th>{{ country.country.0 }}</th>
-          {% for event in document.participants.events %}
+          <th>{{ participant.country }}</th>
+          {% for event_name in document.participants.events %}
           <td>
-            {% with country|lookup:event as event_date %}
-              {% if event_date.0 %}
-                <time title="{{ event|capfirst }} date">
-                {{ event_date.0|parse_date|date:"b j, Y"|capfirst }}
+            {% with participant.events|lookup:event_name as event %}
+              {% if event.date %}
+                <time title="{{ event.subgroup|default:event_name|capfirst }} date">
+                {{ event.date|parse_date|date:"b j, Y"|capfirst }}
+                {% if event.idx %}[{{ event.idx }}]{% endif %}
                 </time>
-                {% if event_date.1 %}[{{ event_date.1 }}]{% endif %}
               {% else %}
                 <span class="text-muted" title="Not available">-</span>
               {% endif %}

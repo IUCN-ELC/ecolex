@@ -25,22 +25,22 @@
       <thead>
         <tr>
           <th class="col-country">Countries</th>
-          {% for event in treaty.participants.events %}
-          <th>{{ event|capfirst }}</th>
+          {% for event_name in treaty.participants.events %}
+          <th>{{ event_name|capfirst }}</th>
           {% endfor %}
         </tr>
       </thead>
       <tbody>
-        {% for country in treaty.participants.countries %}
+        {% for participant in treaty.participants.participants %}
           <tr>
-            <th>{{ country.country.0 }}</th>
-            {% for event in treaty.participants.events %}
-              {% with country|lookup:event as event_date %}
-                {% if event_date.0 %}
-                  <td data-order="{{ event_date.0|parse_date|date:"U" }}"
-                      title="{{ event|capfirst }} date">
-                    {{ event_date.0|parse_date|date:"b j, Y"|capfirst }}
-                    {% if event_date.1 %}[{{ event_date.1 }}]{% endif %}
+            <th>{{ participant.country }}</th>
+            {% for event_name in treaty.participants.events %}
+              {% with participant.events|lookup:event_name as event %}
+                {% if event.date %}
+                  <td data-order="{{ event.date|parse_date|date:"U" }}"
+                      title="{{ event.subgroup|default:event_name|capfirst }} date">
+                    {{ event.date|parse_date|date:"b j, Y"|capfirst }}
+                    {% if event.idx %}[{{ event.idx }}]{% endif %}
                   </td>
                 {% else %}
                   <td title="Not available">-</td>

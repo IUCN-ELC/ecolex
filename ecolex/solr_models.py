@@ -95,6 +95,86 @@ class ObjectNormalizer:
     __repr__ = title
 
 
+class TreatyParticipant(object):
+    FIELD_MAP = {
+        'partyCountry': 'country',
+        'partyPotentialParty': 'potential party',
+        'partyEntryIntoForce': 'entry into force',
+        'partyDateOfRatification': 'ratification',
+        'partyDateOfAccessionApprobation': 'accession/approbation',
+        'partyDateOfAcceptanceApproval': 'acceptance/approval',
+        'partyDateOfConsentToBeBound': 'consent to be bound',
+        'partyDateOfSuccession': 'succession',
+        'partyDateOfDefiniteSignature': 'definite signature',
+        'partyDateOfSimpleSignature': 'simple signature',
+        'partyDateOfProvisionalApplication': 'provisional application',
+        'partyDateOfDeclaration': 'declaration',
+        'partyDateOfParticipation': 'participation',
+        'partyDateOfReservation': 'reservation',
+        'partyDateOfWithdrawal': 'withdrawal',
+    }
+    MANDATORY_FIELDS = ['entry into force']
+    FIELD_GROUPS = {
+        'date of ratification *': [
+            'ratification',
+            'accession/approbation',
+            'acceptance/approval',
+            'succession',
+            'consent to be bound',
+        ],
+        'signature **': [
+            'simple signature',
+            'definite signature',
+        ],
+    }
+    EVENTS_ORDER = [
+        'potential party',
+        'entry into force',
+        'date of ratification *',
+        'signature **',
+        'provisional application',
+        'declaration',
+        'participation',
+        'reservation',
+        'withdrawal',
+    ]
+    GROUPED_FIELDS = {field: group
+                      for group, fields in FIELD_GROUPS.items()
+                      for field in fields}
+    EMPTY_VAL = {'date': None}
+
+    def __init__(self, events, values):
+        events = dict(zip(events, values))
+        self.country = events.pop('country')
+
+        self.events = {}
+        for event, value in events.items():
+            self._add_event(event, value)
+
+        for field in self.MANDATORY_FIELDS:
+            if field not in self.events:
+                self.events[field] = None
+
+    def _add_event(self, event, value):
+        date = self._clean_date(value)
+        group = self.GROUPED_FIELDS.get(event)
+        if group and self.events.get(group, self.EMPTY_VAL) == self.EMPTY_VAL:
+            self.events[group] = {'date': date}
+            if date:
+                self.events[group]['subgroup'] = event
+                self.events[group]['idx'] = (
+                    self.FIELD_GROUPS[group].index(event) + 1)
+        else:
+            self.events[event] = {'date': date}
+
+    def _clean_date(self, d):
+        return d if d != '0002-11-30T00:00:00Z' else None
+
+    @property
+    def available_events(self):
+        return [event for event in self.EVENTS_ORDER if event in self.events]
+
+
 class Treaty(ObjectNormalizer):
     ID_FIELD = 'trElisId'
     SUMMARY_FIELD = 'trAbstract_en'
@@ -154,69 +234,16 @@ class Treaty(ObjectNormalizer):
     @property
     @functools.lru_cache()
     def participants(self):
-        PARTY_MAP = OrderedDict((
-            ('partyCountry', 'country'),
-            ('partyPotentialParty', 'potential party'),
-            ('partyEntryIntoForce', 'entry into force'),
-            ('partyDateOfRatification', 'ratification'),
-            ('partyDateOfAccessionApprobation', 'accession/approbation'),
-            ('partyDateOfAcceptanceApproval', 'acceptance/approval'),
-            ('partyDateOfConsentToBeBound', 'consent to be bound'),
-            ('partyDateOfSuccession', 'succession'),
-            ('partyDateOfDefiniteSignature', 'definite signature'),
-            ('partyDateOfSimpleSignature', 'simple signature'),
-            ('partyDateOfProvisionalApplication', 'provisional application'),
-            ('partyDateOfDeclaration', 'declaration'),
-            ('partyDateOfParticipation', 'participation'),
-            ('partyDateOfReservation', 'reservation'),
-            ('partyDateOfWithdrawal', 'withdrawal'),
-        ))
-        MANDATORY_FIELDS = ['entry into force']
-        FIELD_GROUPS = {
-            'date of ratification *': [
-                'ratification',
-                'accession/approbation',
-                'acceptance/approval',
-                'succession',
-                'consent to be bound',
-            ],
-            'signature **': [
-                'simple signature',
-                'definite signature',
-            ],
-        }
-        GROUPED_FIELDS = {field: group
-                          for group, fields in FIELD_GROUPS.items()
-                          for field in fields}
-
-        clean = lambda d: d if d != '0002-11-30T00:00:00Z' else None
-        data = OrderedDict()
-        for field, event in PARTY_MAP.items():
-            values = [clean(v) for v in self.solr.get(field, [])]
-            if values and any(values) or event in MANDATORY_FIELDS:
-                data[event] = values
-        results = []
-        for i, country in enumerate(data['country']):
-            r = OrderedDict((v, data[v][i]) for v in data.keys())
-            result = OrderedDict()
-            for k, v in r.items():
-                if k in GROUPED_FIELDS:
-                    if not v:
-                        continue
-                    group = GROUPED_FIELDS[k]
-                    idx = FIELD_GROUPS[group].index(k) + 1
-                    k = group
-                else:
-                    idx = 0
-                result[k] = (v, idx)
-            results.append(result)
-        #sort by country name
-        results.sort(key=lambda k: k['country'][0].lower())
-        ret = {
-            'countries': results,
-            'events': [ev for ev in results[0].keys() if ev != 'country'],
-        }
-        return ret
+        party_dict = OrderedDict(
+            (event, self.solr.get(field))
+            for field, event in TreatyParticipant.FIELD_MAP.items()
+            if self.solr.get(field))
+        participants = [TreatyParticipant(list(party_dict.keys()), values)
+                        for values in zip(*(list(party_dict.values())))]
+        if participants:
+            participants.sort(key=lambda p: p.country)
+            return {'events': participants[0].available_events,
+                    'participants': participants}
 
     def get_references_ids_set(self):
         ids = set()
