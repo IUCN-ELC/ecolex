@@ -7,6 +7,7 @@ import html
 
 from config.logging import LOG_DICT
 from utils import EcolexSolr, TREATY, get_content_from_url, get_file_from_url
+from utils import format_date
 
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('import')
@@ -15,6 +16,7 @@ DOCUMENT = 'document'
 PARTY = 'party'
 COUNTRY = 'country'
 TOTAL_DOCS = 'numberresultsfound'
+NULL_DATE = format_date('0000-00-00')
 
 FIELD_MAP = {
     'recid': 'trElisId',
@@ -262,9 +264,8 @@ class TreatyImporter(object):
                         data[v] = [self._clean_text(f.text) for
                                    f in field_values]
                         if v in DATE_FIELDS:
-                            data[v] = [self._format_date(date) for
-                                       date in data[v] if
-                                       self._valid_date(date)]
+                            data[v] = [format_date(date) for date in data[v]
+                                       if self._valid_date(date)]
 
                 for party in document.findAll(PARTY):
                     if not getattr(party, COUNTRY):
@@ -279,13 +280,12 @@ class TreatyImporter(object):
                                            if v in DATE_FIELDS
                                            else clean_field)
                         else:
-                            data[v].append(self._format_date('0000-00-00'))
+                            data[v].append(NULL_DATE)
 
                 for party_field in PARTICIPANT_FIELDS.values():
                     if party_field not in data:
                         continue
-                    null_date = '0000-00-00T00:00:00Z'
-                    if all([d == null_date for d in data[party_field]]):
+                    if all([d == NULL_DATE for d in data[party_field]]):
                         data[party_field] = None
 
                 data['text'] = ''
@@ -301,7 +301,7 @@ class TreatyImporter(object):
                     data['trFieldOfApplication_en'] = ['Global',
                                                        'Regional/restricted']
                 elif elis_id == 'TRE-149349':
-                    data['trDateOfText'] = self._format_date('2009-10-02')
+                    data['trDateOfText'] = format_date('2009-10-02')
                 data['trElisId'] = elis_id
                 treaties[elis_id] = data
 
@@ -327,16 +327,13 @@ class TreatyImporter(object):
             return False
         return True
 
-    def _format_date(self, date):
-        return date + "T00:00:00Z"
-
     def _party_format_date(self, date):
         if date == '':
             return date
         date_fields = date.split('-')
         for i in range(3 - len(date_fields)):
             date += "-01"
-        return self._format_date(date)
+        return format_date(date)
 
     def _clean_referred_treaties(self, solr_docs):
         for elis_id, doc in solr_docs.items():
