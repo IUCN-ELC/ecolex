@@ -24,28 +24,36 @@
 .tt-dropdown-menu {
   width: 100%;
   min-width: 160px;
-  max-height: (5 * (@line-height-computed + @padding-base-vertical * 2) + 10px);
+  max-height: (10 * (@line-height-computed + @padding-base-vertical * 2) + 10px);
   overflow-x: hidden;
   overflow-y: auto;
   margin-top: 2px;
-  padding: 5px 0;
+  padding: 5px @padding-base-horizontal;
   background-color: @dropdown-bg;
   border: 1px solid @dropdown-border;
   border-radius: @border-radius-base;
   box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
   background-clip: padding-box;
+  box-sizing: content-box;
+  .global-filter &,
+  .special-filter & {
+    left: -24px!important;
+    right: -24px!important;
+    width: auto;
+  }
 }
 
 .tt-suggestion {
   display: block;
-  padding: @padding-base-vertical @padding-base-horizontal;
-  padding-left: (@padding-base-horizontal - 3px);
-  border-left: solid transparent;
+  margin: 0 -@padding-base-horizontal;
+  padding: @padding-base-vertical @padding-small-horizontal;
+  font-size: @font-size-small;
+  line-height: 1.2;
 
   &.tt-cursor {
     color: @dropdown-link-hover-color;
     background-color: @dropdown-link-hover-bg;
-    border-left-color: @component-active-bg;
+    box-shadow: inset 2px 0 0 @component-active-bg;
     cursor: pointer;
   }
 
