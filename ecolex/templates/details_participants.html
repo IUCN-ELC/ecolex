@@ -37,7 +37,7 @@
             {% for event_name in treaty.participants.events %}
               {% with participant.events|lookup:event_name as event %}
                 {% if event.date %}
-                  <td data-order="{{ event.date|parse_date|date:"U" }}"
+                  <td data-order="{{ event.date|parse_date|total_seconds }}"
                       title="{{ event.subgroup|default:event_name|capfirst }} date">
                     {{ event.date|parse_date|date:"b j, Y"|capfirst }}
                     {% if event.idx %}[{{ event.idx }}]{% endif %}

@@ -1,7 +1,8 @@
 from django import template
-from datetime import datetime
+import datetime
 
 register = template.Library()
+INITIAL_DATE = datetime.date(1, 1, 1)
 
 
 @register.filter
@@ -24,9 +25,14 @@ def join_by(lst, arg):
 @register.filter
 def parse_date(d):
     try:
-        return datetime.strptime(d, '%Y-%m-%dT%H:%M:%SZ').date()
+        return datetime.datetime.strptime(d, '%Y-%m-%dT%H:%M:%SZ').date()
     except:
         return d
+
+
+@register.filter
+def total_seconds(d):
+    return (d - INITIAL_DATE).total_seconds() if d else 0
 
 
 @register.filter
