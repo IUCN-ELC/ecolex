@@ -64,7 +64,7 @@
     display: table;
     table-layout: auto;
     border-collapse: collapse;
-    margin: @line-height-computed auto;
+    margin: 0 auto @line-height-computed;
   }
   .logo-ecolex,
   .logo-credits,
@@ -89,18 +89,20 @@
     border-right: 1px solid lighten(#0076C0, 10%);
   }
 
-  @media (max-width: 720px) {
+  @media (max-width: @grid-float-breakpoint-max) {
     .jumbotron-brand {
+      margin: (@line-height-computed / 2) (-@grid-gutter-width / 2);
       font-size: @font-size-small;
-      display: inline-block;
+      display: block;
+      text-align: left;
     }
     .logo-ecolex {
       float: left;
       padding: 0;
-      margin-top: -14px;
+      margin-top: -12px;
       img {
         margin: 0;
-        height: 48px;
+        height: 60px;
       }
     }
     .logo-credits {
@@ -108,7 +110,7 @@
     }
     .slogan,
     .credits {
-      margin-left: 60px;
+      margin-left: 66px;
       padding: 0;
       display: block;
       border: 0;
@@ -119,6 +121,18 @@
     }
     br {
       display: none;
+    }
+  }
+  @media (min-width: @screen-lg) {
+    .jumbotron-brand {
+      margin-bottom: @line-height-computed;
+    }
+    .logo-ecolex {
+      img {
+        height: 5em;
+        margin-top: -1.5em;
+        margin-bottom: -1.5em;
+      }
     }
   }
 }
