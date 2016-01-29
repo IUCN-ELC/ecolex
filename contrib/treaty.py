@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import logging
 import logging.config
+import html
 
 from config.logging import LOG_DICT
 from utils import EcolexSolr, TREATY, get_content_from_url, get_file_from_url
@@ -315,7 +316,7 @@ class TreatyImporter(object):
         return new_treaty.get_solr_format(treaty_data['trElisId'], solr_id)
 
     def _clean_text(self, text):
-        return text.strip()
+        return html.unescape(text.strip())
 
     def _valid_date(self, date):
         date_info = date.split('-')
