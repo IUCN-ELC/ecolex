@@ -123,16 +123,29 @@
       display: none;
     }
   }
-  @media (min-width: @screen-lg) {
+  @media (min-width: @screen-sm) {
     .jumbotron-brand {
-      margin-bottom: @line-height-computed;
+      position: relative;
+      display: block;
+      margin: 0;
+      margin-left: 180px
     }
     .logo-ecolex {
+      position: absolute;
+      right: 100%;
+      top: 0;
       img {
-        height: 5em;
-        margin-top: -1.5em;
-        margin-bottom: -1.5em;
+        margin: 0;
+        height: 105px;
       }
+    }
+    .slogan {
+      padding-left: 0;
+    }
+  }
+  @media (min-width: @screen-md) {
+    .jumbotron-brand {
+      margin: 0 180px;
     }
   }
 }
