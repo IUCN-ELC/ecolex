@@ -210,9 +210,12 @@ def get_relevancy():
         'cdTitleOfText_es': 100,
         'cdTitleOfText_fr': 100,
 
+        'litId': 100,
+        'legId': 100,
+        'trElisId': 100,
+
         'trTitleAbbreviation': 75,
         'decSummary': 50,
-        'decBody': 50,
         'trAbstract_en': 50,
         'trAbstract_es': 50,
         'trAbstract_fr': 50,
@@ -225,6 +228,8 @@ def get_relevancy():
         'trKeyword_es': 30,
         'decKeyword': 30,
         'litKeyword': 30,
+
+        'decBody': 20,
         'text': 20,
         'doc_content': 10,
     }
