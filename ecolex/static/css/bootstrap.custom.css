@@ -2612,6 +2612,52 @@ fieldset[disabled] .btn-danger.active {
   color: #d9534f;
   background-color: #ffffff;
 }
+.btn-search {
+  color: #ffffff;
+  background-color: #0077c0;
+  border-color: #0077c0;
+}
+.btn-search:hover,
+.btn-search:focus,
+.btn-search.focus,
+.btn-search:active,
+.btn-search.active,
+.open > .dropdown-toggle.btn-search {
+  color: #ffffff;
+  background-color: #00629f;
+  border-color: #005e97;
+}
+.btn-search:active,
+.btn-search.active,
+.open > .dropdown-toggle.btn-search {
+  background-image: none;
+}
+.btn-search.disabled,
+.btn-search[disabled],
+fieldset[disabled] .btn-search,
+.btn-search.disabled:hover,
+.btn-search[disabled]:hover,
+fieldset[disabled] .btn-search:hover,
+.btn-search.disabled:focus,
+.btn-search[disabled]:focus,
+fieldset[disabled] .btn-search:focus,
+.btn-search.disabled.focus,
+.btn-search[disabled].focus,
+fieldset[disabled] .btn-search.focus,
+.btn-search.disabled:active,
+.btn-search[disabled]:active,
+fieldset[disabled] .btn-search:active,
+.btn-search.disabled.active,
+.btn-search[disabled].active,
+fieldset[disabled] .btn-search.active {
+  color: #808080;
+  background-color: #eeeeee;
+  border-color: transparent;
+}
+.btn-search .badge {
+  color: #0077c0;
+  background-color: #ffffff;
+}
 .btn-link {
   color: #0066cc;
   font-weight: normal;
