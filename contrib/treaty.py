@@ -4,6 +4,7 @@ from datetime import datetime
 import logging
 import logging.config
 import html
+import re
 
 from config.logging import LOG_DICT
 from utils import EcolexSolr, TREATY, get_content_from_url, get_file_from_url
@@ -17,6 +18,7 @@ PARTY = 'party'
 COUNTRY = 'country'
 TOTAL_DOCS = 'numberresultsfound'
 NULL_DATE = format_date('0000-00-00')
+B7 = 'International Environmental Law – Multilateral Agreements'
 
 FIELD_MAP = {
     'recid': 'trElisId',
@@ -192,6 +194,33 @@ class Treaty(object):
 
 
 class TreatyImporter(object):
+    CUSTOM_RULES = [
+        {
+            'condition_field': 'trElisId',
+            'condition_pattern': '^TRE-146817$',
+            'action_field': 'trFieldOfApplication_en',
+            'action_value': ['Global', 'Regional/restricted'],
+        },
+        {
+            'condition_field': 'trElisId',
+            'condition_pattern': '^TRE-149349$',
+            'action_field': 'trDateOfText',
+            'action_value': format_date('2009-10-02'),
+        },
+        {
+            'condition_field': 'trAvailableIn',
+            'condition_pattern': '^B7',
+            'action_field': 'trAvailableIn',
+            'action_value': B7,
+        },
+        {
+            'condition_field': 'trAvailableIn',
+            'condition_pattern': '^(?!B7|{}$)'.format(B7),
+            'action_field': 'trAvailableIn',
+            'action_value': None,
+        },
+    ]
+
     def __init__(self, config):
         self.solr_timeout = config.getint('solr_timeout')
         self.treaties_url = config.get('treaties_url')
@@ -297,15 +326,33 @@ class TreatyImporter(object):
                         data['text'] += self.solr.extract(file_obj)
 
                 elis_id = data['trElisId'][0]
-                if elis_id == 'TRE-146817':
-                    data['trFieldOfApplication_en'] = ['Global',
-                                                       'Regional/restricted']
-                elif elis_id == 'TRE-149349':
-                    data['trDateOfText'] = format_date('2009-10-02')
                 data['trElisId'] = elis_id
+
+                data = self._apply_custom_rules(data)
+
                 treaties[elis_id] = data
 
         return treaties
+
+    def _apply_custom_rules(self, data):
+        for rule in self.CUSTOM_RULES:
+            condition_field = rule['condition_field']
+            value = data.get(condition_field, '')
+            is_list = False
+            if isinstance(value, list):
+                if len(value) == 1:
+                    value = value[0]
+                    is_list = True
+                else:
+                    logger.warning('Custom rule does not apply to {}: {}'
+                                   .format(condition_field, value))
+
+            if re.match(rule['condition_pattern'], value):
+                new_value = rule['action_value']
+                if is_list and new_value:
+                    new_value = [new_value]
+                data[rule['action_field']] = new_value
+        return data
 
     def _get_solr_treaty(self, treaty_data):
         new_treaty = Treaty(treaty_data, self.solr)
