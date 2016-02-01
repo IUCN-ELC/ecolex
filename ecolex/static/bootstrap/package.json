@@ -79,5 +79,8 @@
     "buildConfig": {
       "uglify": true
     }
+  },
+  "dependencies": {
+    "slick-carousel": "^1.5.9"
   }
 }

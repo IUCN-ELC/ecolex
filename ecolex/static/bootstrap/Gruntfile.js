@@ -102,7 +102,7 @@ module.exports = function (grunt) {
           'js/transition.js',
           'js/alert.js',
           'js/button.js',
-          'js/carousel.js',
+          // 'js/carousel.js',
           'js/collapse.js',
           'js/dropdown.js',
           'js/modal.js',
@@ -116,7 +116,8 @@ module.exports = function (grunt) {
           'js/multiselect.js',
           'js/offcanvas.js',
           'js/typeahead.js',
-          'js/tagmanager.js'
+          'js/tagmanager.js',
+          'node_modules/slick-carousel/slick/slick.js'
           // 'js/tokenfield.js'
         ],
         dest: '../js/<%= pkg.name %>.js'
