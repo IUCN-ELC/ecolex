@@ -1,12 +1,13 @@
+from django.conf import settings
 from django.http import Http404, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
-from django.conf import settings
-import logging
 from urllib.parse import urlencode
+from uuid import uuid4
+import logging
 
 from contrib.import_legislation_fao import harvest_file
 from ecolex.search import (
@@ -17,8 +18,6 @@ from ecolex.definitions import (
     DOC_TYPE, DOC_TYPE_FILTER_MAPPING, FIELD_TO_FACET_MAPPING, SOLR_FIELDS,
     OPERATION_FIELD_MAPPING, SELECT_FACETS
 )
-
-from uuid import uuid4
 
 
 logger = logging.getLogger(__name__)
@@ -434,3 +433,7 @@ def debug(request):
         'last_update': last_update,
     }
     return JsonResponse(data)
+
+
+class DesignPlayground(TemplateView):
+    template_name = 'playground.html'

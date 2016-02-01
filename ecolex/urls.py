@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls import patterns, url
 from .views import (
     SearchResults, PageView, ResultDetailsDecisions, Homepage,
@@ -5,7 +6,7 @@ from .views import (
     TreatyParticipantView, DecisionDetails, TreatyDetails, LiteratureDetails,
     CourtDecisionDetails, ResultDetailsLiteratures, FaoFeedView,
     ResultDetailsCourtDecisions, LegislationDetails,
-    SelectFacetsAjax,
+    SelectFacetsAjax, DesignPlayground,
 )
 
 
@@ -43,5 +44,11 @@ urlpatterns = patterns(
     url(r'^p/(?P<slug>\w+)/', PageView.as_view(),
         name="page"),
     url(r'^fao/$', FaoFeedView.as_view(), name='fao_feeder'),
-    url(r'^_debug', debug, name="debug"),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns(
+        '',
+        url(r'^_debug', debug, name="debug"),
+        url(r'^playground/$', DesignPlayground.as_view(), name="playground"),
+    )
