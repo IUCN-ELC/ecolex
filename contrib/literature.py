@@ -1,6 +1,7 @@
 from binascii import hexlify
 from bs4 import BeautifulSoup
 from datetime import datetime
+import html
 import logging
 import logging.config
 
@@ -296,7 +297,7 @@ class LiteratureImporter(object):
     def _clean_text(self, text):
         if AUTHOR_START in text:
             text = text.replace(AUTHOR_START, '').replace(AUTHOR_SPACE, ' ')
-        return text.strip()
+        return html.unescape(text.strip())
 
     def _create_url(self, year, month, skip):
         query_year = self.query_format % (year, month)

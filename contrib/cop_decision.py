@@ -1,6 +1,7 @@
 from datetime import date, datetime, timedelta
 import logging
 import logging.config
+import html
 import re
 import requests
 
@@ -199,7 +200,7 @@ class CopDecisionImporter(object):
 
     def _clean(self, text):
         try:
-            text = text.strip()
+            text = html.unescape(text.strip())
         except:
             pass
         return text

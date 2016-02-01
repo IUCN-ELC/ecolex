@@ -130,17 +130,6 @@ def legislation_needs_update(old, new, logger):
         return True
     return False
 
-    # for field in FIELD_MAP.values():
-    #     old_value = old.get(field, None)
-    #     new_value = new.get(field, None)
-
-    #     if new_value and isinstance(new_value, str):
-    #         new_value = new_value.strip()
-
-    #     if (old_value != new_value and old_value != [new_value]):
-    #         return True
-    # return False
-
 
 def add_legislation(legislations, logger):
     solr = EcolexSolr()
