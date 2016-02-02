@@ -18,7 +18,7 @@ DEFAULT_LANG = 'en'
 
 BASE_FIELDS = [
     'id', 'link', 'type', 'status', 'number', 'treaty', 'published', 'updated',
-    'meetingId', 'meetingTitle', 'meetingUrl', 'treatyUUID'
+    'meetingId', 'meetingTitle', 'meetingUrl', 'TreatyUUID'
 ]
 MULTILANGUAL_FIELDS = ['title', 'longTitle']
 
@@ -36,7 +36,7 @@ FIELD_MAP = {
     'number': 'decNumber',
 
     'treaty': 'decTreaty',
-    'treatyUUID': 'decTreatyId',
+    'TreatyUUID': 'decTreatyId',
 
     'published': 'decPublishDate',
     'updated': 'decUpdateDate',
@@ -102,7 +102,7 @@ class CopDecisionImporter(object):
             response = requests.get(url)
             if response.status_code != 200:
                 logger.error('Invalid return code %d' % response.status_code)
-
+            print(url)
             results = response.json()['d']['results']
             if not results:
                 break
@@ -158,7 +158,7 @@ class CopDecisionImporter(object):
                                                 data['decTreatyId'])
                 if treaties:
                     for field in DEC_TREATY_FIELDS:
-                        data[field] = [tr[field] for tr in treaties]
+                        data[field] = [x for tr in treaties for x in tr[field]]
             decisions.append(data)
         return decisions
 
