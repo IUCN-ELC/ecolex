@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from datetime import datetime
-from .utils import EcolexSolr, get_file_from_url
+from contrib.utils import EcolexSolr
 
 
 DOCUMENT = 'record'
@@ -111,7 +111,6 @@ def harvest_file(uploaded_file, logger):
         url_value = document.attrs.get('url', None)
         if url_value:
             legislation['legLinkToFullText'] = url_value
-            # legislation['text'] = get_file_from_url(url_value)
 
         if (REPEALED.upper() in
                 get_content(document.findAll(META, {'name': REPEALED}))):

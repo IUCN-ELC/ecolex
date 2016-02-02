@@ -9,7 +9,7 @@ from urllib.parse import urlencode
 from uuid import uuid4
 import logging
 
-from contrib.import_legislation_fao import harvest_file
+from ecolex.legislation import harvest_file
 from ecolex.search import (
     search, get_document, get_documents_by_field, get_treaty_by_informea_id
 )
