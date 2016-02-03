@@ -82,7 +82,6 @@
         </time>
       {% endif %}
     </div>
-    <p class="search-result-description">{{ result.summary|safe }}</p>
     {% if result.keywords %}
       <p class="search-result-description"><strong>Keywords:</strong>
         {{ result.keywords | join_by:", " | safe }}
