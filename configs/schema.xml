@@ -88,13 +88,13 @@
     <field name="trDepository_es" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trDepository_fr" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trSubject_en" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="trSubject_es" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="trSubject_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trSubject_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trSubject_es" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trSubject_fr" type="text" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trKeyword_en" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="trKeyword_es" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="trKeyword_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trKeyword_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trKeyword_es" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trKeyword_fr" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="trLanguageOfDocument_en" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trLanguageOfDocument_es" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -213,7 +213,7 @@
     <field name="decLongTitle_ru" type="string" indexed="true" stored="true"/>
     <field name="decLongTitle_zh" type="string" indexed="true" stored="true"/>
 
-    <field name="decKeyword" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="decKeyword" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="decSummary" type="string" indexed="true" stored="true"/>
     <field name="decBody" type="text" indexed="true" stored="true" multiValued="true"/>
 
@@ -297,7 +297,7 @@
     <field name="cdDateOfModification" type="tdate" indexed="true" stored="true" multiValued="false"/>
     <field name="cdDateOfText" type="tdate" indexed="true" stored="true" multiValued="false"/>
     <field name="cdStatusOfDecision" type="string" indexed="false" stored="true" multiValued="false"/>
-    <field name="cdSubject" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="cdSubject" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="cdEcolexUrl" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdEcolexUrl_en" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdEcolexUrl_es" type="string" indexed="false" stored="false" multiValued="false"/>
@@ -318,7 +318,7 @@
     <field name="cdIsisNumber" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdJurisdiction" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdJustices" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="cdKeywords" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="cdKeywords" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="cdNumberOfPages" type="int" indexed="false" stored="false" multiValued="false"/>
     <field name="cdOriginalId" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdReferenceNumber" type="string" indexed="false" stored="true" multiValued="false"/>
@@ -387,13 +387,13 @@
 
     <field name="legAbstract" type="text" indexed="true" stored="true"/>
     <field name="legSubject_code" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="legSubject_en" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="legSubject_fr" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="legSubject_es" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legSubject_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="legSubject_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="legSubject_es" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="legKeyword_code" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="legKeyword_en" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="legKeyword_fr" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="legKeyword_es" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legKeyword_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="legKeyword_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="legKeyword_es" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="legImplement" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="legAmends" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -456,9 +456,9 @@
     <field name="litLanguageOfDocument_fr" type="string" indexed="true" stored="true"/>
     <field name="litLanguageOfDocument_sp" type="string" indexed="true" stored="true"/>
 
-    <field name="litSubject" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="litSubject_fr" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="litSubject_sp" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litSubject" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="litSubject_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="litSubject_sp" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="litKeyword" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="litKeyword_fr" type="text" indexed="true" stored="true" multiValued="true"/>

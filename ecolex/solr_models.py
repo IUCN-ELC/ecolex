@@ -4,6 +4,7 @@ from html import unescape
 import functools
 
 from django.core.urlresolvers import reverse
+from django.utils.html import strip_tags
 
 from ecolex.definitions import DOC_SOURCES, LANGUAGE_MAP
 
@@ -15,11 +16,23 @@ def first(obj, default=None):
 
 
 class ObjectNormalizer:
+    KEYWORD_FIELD = 'docKeyword'
+    SUBJECT_FIELD = 'docSubject'
+
     def __init__(self, solr, hl):
         self.type = solr['type']
         self.solr = solr
         if hl:
-            self.solr.update(hl)
+            for field, hl_values in hl.items():
+                if field not in self.solr:
+                    continue
+                initial_value = self.solr[field]
+                if isinstance(initial_value, list):
+                    for hl_value in hl_values:
+                        idx = initial_value.index(strip_tags(hl_value))
+                        initial_value[idx] = hl_value
+                else:
+                    self.solr[field] = hl_values
 
     def type_of_document(self):
         type_of_doc = self.solr.get(self.DOCTYPE_FIELD)
@@ -88,9 +101,18 @@ class ObjectNormalizer:
     def get_language(self):
         pass
 
-    def get_keywords(self):
-        keywords = self.solr.get('docKeyword') or []
-        return sorted(set(keywords)) if type(keywords) is list else set([keywords])
+    @property
+    def keywords(self):
+        return self.solr.get(self.KEYWORD_FIELD, [])
+
+    @property
+    def subjects(self):
+        return self.solr.get(self.SUBJECT_FIELD, [])
+
+    @classmethod
+    def get_highlight_fields(cls):
+        return cls.TITLE_FIELDS + [cls.SUMMARY_FIELD, cls.KEYWORD_FIELD,
+                                   cls.SUBJECT_FIELD]
 
     __repr__ = title
 
@@ -185,6 +207,8 @@ class Treaty(ObjectNormalizer):
     ]
     DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
     DOCTYPE_FIELD = 'trTypeOfText_en'
+    KEYWORD_FIELD = 'trKeyword_en'
+    SUBJECT_FIELD = 'trSubject_en'
     OPTIONAL_INFO_FIELDS = [
         # (solr field, display text, type=text)
         ('trTitleAbbreviation', 'Title Abbreviation', ''),
@@ -201,7 +225,7 @@ class Treaty(ObjectNormalizer):
         ('trDateOfConsolidation', 'Consolidation Date', 'date')
     ]
 
-    FULL_TEXT = 'trLinkToFullText'  ## multilangual
+    FULL_TEXT = 'trLinkToFullText'  # multilangual
 
     REFERENCE_FIELDS = {
         'trAmendsTreaty': 'Amends:',
@@ -301,6 +325,7 @@ class Decision(ObjectNormalizer):
     TITLE_FIELDS = ['decTitleOfText']
     DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
     DOCTYPE_FIELD = 'decType'
+    KEYWORD_FIELD = 'decKeyword'
     OPTIONAL_INFO_FIELDS = [
         ('decUpdateDate', 'Date of Update', 'date'),
     ]
@@ -343,6 +368,8 @@ class Literature(ObjectNormalizer):
         ('litDisplayRegion', 'Region', ''),
     ]
     DOCTYPE_FIELD = 'litTypeOfText'
+    KEYWORD_FIELD = 'litKeyword'
+    SUBJECT_FIELD = 'litSubject'
     REFERENCE_TO_FIELDS = {
         'litTreatyReference': 'treaty',
         'litLiteratureReference': 'literature',
@@ -410,9 +437,6 @@ class Literature(ObjectNormalizer):
     def publication_date(self):
         return first(self.solr.get('litDateOfText'))
 
-    def keywords(self):
-        return first(self.solr.get('litKeyword'))
-
     def abstract(self):
         return first(self.solr.get('litAbstract'))
 
@@ -429,6 +453,8 @@ class CourtDecision(ObjectNormalizer):
     TITLE_FIELDS = ['cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr']
     DATE_FIELDS = ['cdDateOfText']
     DOCTYPE_FIELD = 'cdTypeOfText'
+    KEYWORD_FIELD = 'cdKeywords'
+    SUBJECT_FIELD = 'cdSubject'
     REFERENCE_FIELDS = {'treaty': 'cdTreatyReference'}
     SOURCE_REF_FIELDS = {'treaty': 'trElisId'}
     REFERENCED_BY_FIELDS = {'literature': 'litCourtDecisionReference'}
@@ -480,6 +506,8 @@ class Legislation(ObjectNormalizer):
     SUMMARY_FIELD = 'legAbstract'
     TITLE_FIELDS = ['legTitle', 'legLongTitle']
     DATE_FIELDS = ['legDate', 'legOriginalDate']
+    KEYWORD_FIELD = 'legKeyword_en'
+    SUBJECT_FIELD = 'legSubject_en'
 
     LEGISLATION_REFERENCE_FIELDS = {
         'legImplement': 'Implements:',

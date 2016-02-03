@@ -164,7 +164,7 @@ def escape_query(query):
 def get_hl():
     fields = HIGHLIGHT_FIELDS
     for t in Decision, Treaty, Literature, CourtDecision, Legislation:
-        fields += [t.SUMMARY_FIELD] + t.TITLE_FIELDS
+        fields += t.get_highlight_fields()
     fields = set(fields)
     HIGHLIGHT_PARAMS['hl.fl'] = ','.join(fields)
     return HIGHLIGHT_PARAMS
@@ -357,6 +357,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
 
     if settings.DEBUG:
         params['debug'] = True
+
     return solr.search(solr_query, **params)
 
 

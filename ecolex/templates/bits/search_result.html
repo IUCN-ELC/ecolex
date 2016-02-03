@@ -1,3 +1,4 @@
+{% load tags %}
 <li class="search-result">
 
   <h3 class="search-result-title">
@@ -21,9 +22,9 @@
         </time>
       {% endif %}
     </div>
-    {% if result.get_keywords %}
+    {% if result.keywords %}
       <p class="search-result-description"><strong>Keywords:</strong>
-        {{ result.get_keywords | join:", " }}
+        {{ result.keywords | join_by:", " | safe }}
       </p>
     {% endif %}
     <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></p>
@@ -60,7 +61,7 @@
       {% endif %}
     </div>
     <p class="search-result-description"><strong>Keywords:</strong>
-        {{ result.get_keywords | join:", " }}
+      {{ result.keywords | join_by:", " | safe }}
     </p>
     <p class="search-result-source">Source: <a target="_blank" href="http://iucn.org">{{ result.source }}</a> (ID: {{ result.document_id }})</p>
 
@@ -82,10 +83,9 @@
       {% endif %}
     </div>
     <p class="search-result-description">{{ result.summary|safe }}</p>
-    {% if result.get_keywords %}
-      <p  class="search-result-description">
-        <strong>Keywords:</strong>
-        {{ result.get_keywords | join:", " }}
+    {% if result.keywords %}
+      <p class="search-result-description"><strong>Keywords:</strong>
+        {{ result.keywords | join_by:", " | safe }}
       </p>
     {% endif %}
     <p class="search-result-source">Source: <a target="_blank" href="http://iucn.org">{{ result.source }}</a> (ID: {{ result.document_id }})</p>
@@ -107,10 +107,9 @@
       {% endif %}
     </div>
     <p class="search-result-description">{# result.summary|safe #}</p>
-    {% if result.get_keywords %}
-      <p class="search-result-description">
-      <strong>Keywords:</strong>
-        {{ result.get_keywords | join:", " }}
+    {% if result.keywords %}
+      <p class="search-result-description"><strong>Keywords:</strong>
+        {{ result.keywords | join_by:", " | safe }}
       </p>
     {% endif %}
     <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></p>
@@ -135,10 +134,9 @@
         </span>
       {% endif %}
     </div>
-    {% if result.get_keywords %}
-      <p class="search-result-description">
-      <strong>Keywords:</strong>
-        {{ result.get_keywords | join:", " | capfirst}}
+    {% if result.keywords %}
+      <p class="search-result-description"><strong>Keywords:</strong>
+        {{ result.keywords | join_by:", " | safe }}
       </p>
     {% endif %}
     <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://faolex.fao.org/">FAOLEX</a> (ID: {{ result.document_id }})</p>
