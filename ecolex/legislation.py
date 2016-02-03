@@ -45,6 +45,7 @@ FIELD_MAP = {
     'documentLanguage_es': 'legLanguage_es',
 
     'textAbstract': 'legAbstract',
+    'abstract': 'legAbstract',
     'subjectSelectionCode': 'legSubject_code',
     'subjectSelection_en': 'legSubject_en',
     'subjectSelection_fr': 'legSubject_fr',
