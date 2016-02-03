@@ -175,7 +175,6 @@
     <field name="partyDateOfSimpleSignature" type="tdate" indexed="true" stored="true" multiValued="true"/>
     <field name="partyDateOfProvisionalApplication" type="tdate" indexed="true" stored="true" multiValued="true"/>
     <field name="partyDateOfParticipation" type="tdate" indexed="true" stored="true" multiValued="true"/>
-    <field name="partyDateOfDeclaration" type="tdate" indexed="true" stored="true" multiValued="true"/>
     <field name="partyDateOfReservation" type="tdate" indexed="true" stored="true" multiValued="true"/>
     <field name="partyDateOfWithdrawal" type="tdate" indexed="true" stored="true" multiValued="true"/>
 
