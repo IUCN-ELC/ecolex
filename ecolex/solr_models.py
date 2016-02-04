@@ -113,9 +113,11 @@ class ObjectNormalizer:
         return self.solr.get(self.SUBJECT_FIELD, [])
 
     @classmethod
-    def get_highlight_fields(cls):
-        return cls.TITLE_FIELDS + [cls.SUMMARY_FIELD, cls.KEYWORD_FIELD,
-                                   cls.SUBJECT_FIELD]
+    def get_highlight_fields(cls, hl_details=False):
+        hl_fields = cls.TITLE_FIELDS + [cls.SUMMARY_FIELD]
+        if hl_details:
+            hl_fields.extend([cls.KEYWORD_FIELD, cls.SUBJECT_FIELD])
+        return hl_fields
 
     __repr__ = title
 

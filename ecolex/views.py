@@ -227,7 +227,8 @@ class DetailsView(SearchView):
     def get_context_data(self, **kwargs):
         context = super(DetailsView, self).get_context_data(**kwargs)
 
-        results = get_document(document_id=kwargs['id'], query=self.query)
+        results = get_document(document_id=kwargs['id'], query=self.query,
+                               hl_details=True)
         if not results:
             raise Http404()
         context['document'] = results.first()

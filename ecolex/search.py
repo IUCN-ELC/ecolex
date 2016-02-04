@@ -161,10 +161,10 @@ def escape_query(query):
     return "".join(c for c in _esc(query))
 
 
-def get_hl():
+def get_hl(hl_details=False):
     fields = HIGHLIGHT_FIELDS
     for t in Decision, Treaty, Literature, CourtDecision, Legislation:
-        fields += t.get_highlight_fields()
+        fields += t.get_highlight_fields(hl_details=hl_details)
     fields = set(fields)
     HIGHLIGHT_PARAMS['hl.fl'] = ','.join(fields)
     return HIGHLIGHT_PARAMS
@@ -322,7 +322,7 @@ def search(user_query, filters=None, sortby=None, raw=None,
 
 
 def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
-            sortby=None, raw=None, facets=None, fields=None):
+            sortby=None, raw=None, facets=None, fields=None, hl_details=False):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     if user_query == '*':
         solr_query = '*:*'
@@ -344,7 +344,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     })
     params['fq'] = get_fq(filters)
     if highlight:
-        params.update(get_hl())
+        params.update(get_hl(hl_details=hl_details))
     params['sort'] = get_sortby(sortby, highlight)
     params.update(get_relevancy())
     # add spellcheck
@@ -370,8 +370,8 @@ def get_documents_by_field(id_name, treaty_ids, rows=None):
     return result
 
 
-def get_document(document_id, query='*'):
-    result = search(query, raw=True, filters={'id': [document_id]})
+def get_document(document_id, query='*', **kwargs):
+    result = search(query, raw=True, filters={'id': [document_id]}, **kwargs)
     if not len(result):
         return None
     return result
