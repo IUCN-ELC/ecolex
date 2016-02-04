@@ -23,7 +23,7 @@
       {% endif %}
     </div>
     {% if result.keywords %}
-      <p class="search-result-description"><strong>Keywords:</strong>
+      <p class="search-result-keywords"><strong>Keywords:</strong>
         {{ result.keywords | join_by:", " | safe }}
       </p>
     {% endif %}
@@ -60,7 +60,7 @@
         </time>
       {% endif %}
     </div>
-    <p class="search-result-description"><strong>Keywords:</strong>
+    <p class="search-result-keywords"><strong>Keywords:</strong>
       {{ result.keywords | join_by:", " | safe }}
     </p>
     <p class="search-result-source">Source: <a target="_blank" href="http://iucn.org">{{ result.source }}</a> (ID: {{ result.document_id }})</p>
@@ -83,7 +83,7 @@
       {% endif %}
     </div>
     {% if result.keywords %}
-      <p class="search-result-description"><strong>Keywords:</strong>
+      <p class="search-result-keywords"><strong>Keywords:</strong>
         {{ result.keywords | join_by:", " | safe }}
       </p>
     {% endif %}
@@ -107,7 +107,7 @@
     </div>
     <p class="search-result-description">{# result.summary|safe #}</p>
     {% if result.keywords %}
-      <p class="search-result-description"><strong>Keywords:</strong>
+      <p class="search-result-keywords"><strong>Keywords:</strong>
         {{ result.keywords | join_by:", " | safe }}
       </p>
     {% endif %}
@@ -134,7 +134,7 @@
       {% endif %}
     </div>
     {% if result.keywords %}
-      <p class="search-result-description"><strong>Keywords:</strong>
+      <p class="search-result-keywords"><strong>Keywords:</strong>
         {{ result.keywords | join_by:", " | safe }}
       </p>
     {% endif %}
