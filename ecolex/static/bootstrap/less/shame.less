@@ -76,6 +76,16 @@
       background: linear-gradient(to top, @color, transparent);
     }
   }
+  &:hover {
+    @hover: lighten(@color, 5%);
+    cursor: pointer;
+    background-color: @hover;
+    .related-description {
+      &::after {
+        background: linear-gradient(to top, @hover, transparent);
+      }
+    }
+  }
 }
 
 #related-items {
@@ -84,6 +94,8 @@
     padding: 0 (@grid-gutter-width / 2);
   }
   .related-website {
+    display: block;
+    text-decoration: none;
     padding: @padding-large-vertical @padding-large-horizontal;
     border-radius: @border-radius-base;
     color: #fff;
@@ -131,17 +143,76 @@
 }
 
 .clip-paragraph {
-  position: relative;
-  height: (3em * @line-height-base);
-  overflow: hidden;
-  &::after {
-    display: block;
-    content: "";
-    position: absolute;
-    bottom: -.2em;
-    right: 0;
-    height: (1em * @line-height-base);
-    width: 4em;
-    background: linear-gradient(to left, #fff, transparent);
+  // position: relative;
+  // height: (2em * @line-height-base);
+  // overflow: hidden;
+  // &::after {
+  //   display: block;
+  //   content: "";
+  //   position: absolute;
+  //   bottom: -.2em;
+  //   right: 0;
+  //   height: (1em * @line-height-base);
+  //   width: 4em;
+  //   background: linear-gradient(to left, #fff, transparent);
+  // }
+}
+
+
+.homepage-tour-themes-wrapper {
+  @media (min-width: @screen-md) {
+    margin: 0 (-@grid-gutter-width / 2);
+  }
+}
+
+.homepage-tour {
+  text-align: center;
+  h4 {
+    color: #0077C0;
+  }
+  svg {
+    width: 120px;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    path {
+      fill: #0077C0;
+    }
+  }
+}
+
+.homepage-tour,
+.homepage-themes {
+  border: 1px solid @gray-light;
+  border-radius: @border-radius-base;
+  padding: 19px;
+}
+.homepage-tour {
+  border: 2px solid #0077C0;
+}
+
+.homepage-tour-themes {
+  @media (min-width: @screen-md) {
+    display: table;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: (@grid-gutter-width / 2) 0;
+    .homepage-tour,
+    .homepage-themes {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .homepage-tour {
+      width: 33.333%;
+    }
+    .homepage-themes {
+      width: 66.6666%;
+    }
+  }
+  @media (max-width: @screen-md-max) {
+    .homepage-tour,
+    .homepage-themes {
+      margin-bottom: (@grid-gutter-width / 2);
+    }
   }
 }
