@@ -23,16 +23,19 @@ class ObjectNormalizer:
         self.type = solr['type']
         self.solr = solr
         if hl:
-            for field, hl_values in hl.items():
-                if field not in self.solr:
-                    continue
-                initial_value = self.solr[field]
-                if isinstance(initial_value, list):
-                    for hl_value in hl_values:
-                        idx = initial_value.index(strip_tags(hl_value))
-                        initial_value[idx] = hl_value
-                else:
-                    self.solr[field] = hl_values
+            self._set_highlight(hl)
+
+    def _set_highlight(self, hl):
+        for field, hl_values in hl.items():
+            if field not in self.solr:
+                continue
+            initial_value = self.solr[field]
+            if isinstance(initial_value, list) and len(initial_value) > 1:
+                for hl_value in hl_values:
+                    idx = initial_value.index(strip_tags(hl_value))
+                    initial_value[idx] = hl_value
+            else:
+                self.solr[field] = hl_values
 
     def type_of_document(self):
         type_of_doc = self.solr.get(self.DOCTYPE_FIELD)
