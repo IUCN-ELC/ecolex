@@ -56,9 +56,11 @@
 
       <dt>Subjects</dt>
       <dd>
-        {% for subject in document.subjects %}
-          {{ subject|safe }}
-        {% endfor %}
+        {% if document.subjects %}
+          {{ document.subjects | join_by:", " | safe }}
+        {% else %}
+          <span class="na">Not available</span>
+        {% endif %}
       </dd>
 
       <dt>Keywords</dt>
