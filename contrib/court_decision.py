@@ -78,7 +78,6 @@ FALSE_MULTILINGUAL_FIELDS = [
     'field_number_of_pages',
     'field_original_id',
     'field_reference_number',
-    'field_source_language',
     'field_available_in',
     'field_court_decision_subdivision',
     'field_title_of_text_short',
@@ -101,6 +100,7 @@ DATE_FIELDS = [
 ]
 INTEGER_FIELDS = ['field_number_of_pages']
 COUNTRY_FIELDS = ['field_country']
+LANGUAGE_FIELDS = ['field_source_language']
 CONTENT_FIELDS = ['field_url']
 REFERENCE_FIELDS = {'field_treaty': 'original_id',
                     'field_court_decision': 'uuid'}
@@ -148,9 +148,10 @@ def get_value_from_dict(valdict):
 
 
 class CourtDecision(object):
-    def __init__(self, data, countries, solr):
+    def __init__(self, data, countries, languages, solr):
         self.data = data
         self.countries = countries
+        self.languages = languages
         self.solr = solr
 
     def is_recent(self, days_ago):
@@ -186,6 +187,10 @@ class CourtDecision(object):
             elif json_field in REFERENCE_FIELDS:
                 solr_decision[solr_field] = [e.get(REFERENCE_FIELDS[json_field])
                                              for e in json_value]
+            elif json_field in LANGUAGE_FIELDS:
+                language_code = get_value(json_field, json_value['und'])
+                language = self.languages.get(language_code, language_code)
+                solr_decision[solr_field] = language
             else:
                 solr_decision[solr_field] = get_value(json_field, json_value)
 
@@ -204,10 +209,12 @@ class CourtDecisionImporter(object):
         self.solr_timeout = config.getint('solr_timeout')
         self.days_ago = config.getint('days_ago')
         self.countries_json = config.get('countries_json')
+        self.languages_json = config.get('languages_json')
         self.court_decisions_url = config.get('court_decisions_url')
         self.test_input_file = config.get('test_input_file')
         self.test_output_file = config.get('test_output_file')
         self.countries = self._get_countries()
+        self.languages = self._get_languages()
         self.solr = EcolexSolr(self.solr_timeout)
         logger.info('Started Court Decision importer')
 
@@ -216,7 +223,8 @@ class CourtDecisionImporter(object):
             init_decision = json.load(fi)
             expected_decision = json.load(fo)
 
-        decision = CourtDecision(init_decision, self.countries, self.solr)
+        decision = CourtDecision(init_decision, self.countries, self.languages,
+                                 self.solr)
         solr_decision = decision.get_solr_format(None, None)
 
         return solr_decision == expected_decision
@@ -238,7 +246,8 @@ class CourtDecisionImporter(object):
         data = self._get_decision(decision['data_url'])
         if not data:
             return
-        new_decision = CourtDecision(data, self.countries, self.solr)
+        new_decision = CourtDecision(data, self.countries, self.languages,
+                                     self.solr)
 
         existing_decision = self.solr.search(COURT_DECISION, decision['uuid'])
         if existing_decision and not new_decision.is_recent(self.days_ago):
@@ -261,3 +270,8 @@ class CourtDecisionImporter(object):
         countries = codes_countries['official_names']
         reverse_codes = {v: k for k, v in codes.items()}
         return {reverse_codes.get(k, k): v for k, v in countries.items()}
+
+    def _get_languages(self):
+        with open(self.languages_json) as f:
+            languages_codes = json.load(f)
+        return languages_codes['languages']
