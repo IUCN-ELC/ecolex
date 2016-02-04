@@ -223,11 +223,15 @@ def get_relevancy():
         'cdAbstract_es': 50,
         'cdAbstract_fr': 50,
         'litAbstract': 50,
+        'legAbstract': 50,
+
         'trKeyword_en': 30,
         'trKeyword_fr': 30,
         'trKeyword_es': 30,
         'decKeyword': 30,
         'litKeyword': 30,
+        'legKeyword_en': 30,
+        'cdKeywords': 30,
 
         'decBody': 20,
         'text': 20,
