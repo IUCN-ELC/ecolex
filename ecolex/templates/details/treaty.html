@@ -50,7 +50,13 @@
       {% endfor %}
 
       <dt>Status</dt>
-      <dd>{{ document.solr.trStatus }}</dd>
+      <dd>
+        {% if document.solr.trStatus %}
+          {{ document.solr.trStatus }}
+        {% else %}
+          <span class="na">Not available</span>
+        {% endif %}
+      </dd>
       <dt>Entry into force</dt>
       <dd>
         {% if document.solr.trEntryIntoForceDate %}

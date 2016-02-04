@@ -108,6 +108,10 @@
             </div>
             <time>{{ legislation.date|date:"b j, Y"|capfirst  }}</time>
           </dd>
+          {% empty %}
+          <dd>
+            <span class="na">Not available</span>
+          </dd>
         {% endfor %}
       </dl>
     {% endfor %}
@@ -121,6 +125,10 @@
               <a href="{% url 'legislation_details' legislation.id %}">{{ legislation.title }}</a>
             </div>
             <time>{{ legislation.date|date:"b j, Y"|capfirst  }}</time>
+          </dd>
+        {% empty %}
+          <dd>
+            <span class="na">Not available</span>
           </dd>
         {% endfor %}
       </dl>
