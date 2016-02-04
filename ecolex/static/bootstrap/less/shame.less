@@ -209,10 +209,75 @@
       width: 66.6666%;
     }
   }
-  @media (max-width: @screen-md-max) {
+  @media (max-width: @screen-sm-max) {
     .homepage-tour,
     .homepage-themes {
       margin-bottom: (@grid-gutter-width / 2);
+    }
+  }
+}
+
+
+
+.related-websites {
+  @media (min-width: @screen-md) {
+    display: table;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0 @grid-gutter-width;
+    .related-website {
+      display: table-row;
+    }
+    .related-header,
+    .related-description {
+      display: table-cell;
+      vertical-align: top;
+      position: relative;
+    }
+    .related-header {
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background-color: fade(#222, 30%);
+        z-index: 1;
+      }
+      h4 {
+        position: absolute;
+        bottom: @padding-large-vertical;
+        left: @padding-large-horizontal;
+        right: @padding-large-horizontal;
+        margin: 0;
+        color: #fff;
+        z-index: 2;
+      }
+    }
+    .related-description {
+      vertical-align: top;
+      padding: @padding-large-vertical @padding-large-horizontal;
+      padding-bottom: (2 * @padding-large-vertical) + @line-height-computed;
+      a {
+        position: absolute;
+        bottom: @padding-large-vertical;
+        left: @padding-large-horizontal
+      }
+    }
+  }
+  @media (max-width: @screen-sm-max) {
+    img {
+      display: block;
+      margin: 0 auto @line-height-computed;
+      border-radius: @border-radius-large;
+    }
+    .related-website {
+      padding: @line-height-computed 0;
+      border-top: 1px solid @gray-light;
+      &:last-child {
+        border-bottom: 1px solid @gray-light;
+      }
     }
   }
 }

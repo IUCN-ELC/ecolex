@@ -1,5 +1,7 @@
 {% extends 'layout.html' %}
 
+{% load staticfiles %}
+
 {% block content %}
   <h1>Related websites design proposals</h1>
   <h2>A. Carousel</h2>
@@ -109,6 +111,73 @@
       </div>
     </div>
   </div>
+
+  <br>
+  <br>
+  <br>
+
+
+  <h2>C. Full section</h2>
+  <hr>
+
+  <div class="related-websites">
+
+    <h3>Other websites</h3>
+
+    <div class="related-website">
+      <header class="related-header">
+        <img src="{% static 'img/lfs.jpg' %}" width="240" height="240">
+        <h4 class="related-title">Protected Areas Law</h4>
+      </header>
+      <div class="related-description">
+        <p>This project represents a collaboration between the IUCN Environmental Law Centre, the IUCN World Commission on Environmental Law, and the IUCN Academy of Environmental Law, working with the World Commission on Protected Areas, the IUCN Global Protected Areas Programme, and IUCN regional offices for Eastern and Southern Africa (ESARO), West and Central Africa (PACO), and Mexico, Central America and the Caribbean (ORMACC). It is generously supported by the Aage V. Jensen Charity Foundation.</p>
+
+        <a href="http://www.protectedareaslaw.org/">Protected Areas Law website</a>  
+      </div>
+    </div>
+
+
+    <div class="related-website">
+      <header class="related-header">
+        <img src="{% static 'img/mesolex.jpg' %}" width="240" height="240">
+        <h4 class="related-title">Law for Sustainability</h4>
+      </header>
+      <div class="related-description">
+        <p>This project represents a collaboration between the IUCN Environmental Law Centre, the IUCN World Commission on Environmental Law, and the IUCN Academy of Environmental Law. It is generously supported by the German Federal Ministry for Economic Cooperation and Development (BMZ).</p>
+        <p>This project forms part of the larger initiative to develop a Natural Resource Governance Framework, led by the IUCN Commission on Environmental Economic and Social Policy.</p>
+
+        <a href="http://www.lawforsustainability.org/">Law for Sustainability website</a>
+      </div>
+    </div>
+
+    <div class="related-website">
+      <header class="related-header">
+        <img src="{% static 'img/pal.jpg' %}" width="240" height="240">
+        <h4 class="related-title">Water Law &amp; Governance Support Platform</h4>
+      </header>
+      <div class="related-description">
+        <p>The Water Law and Governance Support Platform (WLGSP) offers legal expertise and ad hoc technical support on water governance issues in transboundary basins.</p>
+
+        <a href="http://www.waterlawandgovernance.org/">Water Law &amp; Governance Support Platform</a>
+      </div>
+    </div>
+
+    <div class="related-website">
+      <header class="related-header">
+        <img src="{% static 'img/wlgsp.jpg' %}" width="240" height="240">
+        <h4 class="related-title">Mesolex</h4>
+      </header>
+      <div class="related-description">
+        <p>This database has been designed as a regional platform ECOLEX. Here you will find updated information related to environmental governance instruments that affect natural resources information.</p>
+
+        <a href="http://live-elc-mesolex.pantheon.io/">Mesolex website</a>
+      </div>
+    </div>
+
+  </div>
+
+
+
 
 {% endblock %}
 
