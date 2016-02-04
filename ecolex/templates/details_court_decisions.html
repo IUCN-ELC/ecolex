@@ -1,11 +1,15 @@
 {% extends 'layout.html' %}
 {% load tags %}
 
+{% block breadcrumbs %}
+  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "Treaty" 'treaty_details' query id=treaty.id %}
+  {% breadcrumb "Court decisions" %}
+{% endblock %}
+
 {% block content %}
 <p>
   <span class="treaty-name">{{ treaty.full_title }}</span>
-  <br>
-  <a href="{% url 'treaty_details' treaty.id %}">Back to treaty details</a>
 </p>
 
 <hr>
@@ -24,7 +28,8 @@
         {% for court_decision in court_decisions %}
         <tr>
           <td>
-            <a href="{{ court_decision.details_url }}" title="See court decision details">{{ court_decision }}</a>
+            <a href="{{ court_decision.details_url }}?{{ query }}"
+               title="See court decision details">{{ court_decision }}</a>
           </td>
           <td class="text-right">
             <time class="small text-muted">{{ court_decision.date }}</time>
@@ -33,10 +38,6 @@
         {% endfor %}
       </tbody>
   </table>
-
-  <hr>
-
-  <p><a class="btn btn-sm btn-default" href="{% url 'treaty_details' treaty.id %}">Back to treaty details</a></p>
 
 </article>
 {% endblock %}

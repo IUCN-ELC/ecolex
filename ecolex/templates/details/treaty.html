@@ -1,14 +1,18 @@
 {% extends 'layout.html' %}
 {% load tags %}
 
-{% block content %}
+{% block breadcrumbs %}
+  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "Treaty" %}
+{% endblock %}
 
+{% block content %}
 <article class="record-details">
 
   <header>
     <div class="record-title">
       <div class="record-icon">
-        <a class="btn btn-sm btn-default" href="{% url 'results' %}?{{ query }}">Back to search results</a>
+        <span class="icon icon-treaty" title="Treaty"></span>
       </div>
       <h1>{{ document.title|safe }}</h1>
     </div>
@@ -170,7 +174,7 @@
             {% for treaty in treaties %}
             <dd>
               <div class="treaty-link-container">
-                <a href="{% url 'treaty_details' treaty.id %}"
+                <a href="{% url 'treaty_details' treaty.id %}?{{ query }}"
                    title="See treaty details">{{ treaty.title }}</a>
                </div>
               <time>{{ treaty.date|date:"b j, Y"|capfirst  }}</time>
@@ -189,7 +193,7 @@
       <dd>
         {% if decisions|length %}
           <strong>{{ decisions|length }} decisions</strong> related to this treaty.
-          <a href="{% url 'resultDecisions' document.id %}">View decisions</a>
+          <a href="{% url 'resultDecisions' document.id %}?{{ query }}">View decisions</a>
         {% else %}
           <span class="na">Not available</span>
         {% endif %}
@@ -201,7 +205,7 @@
       <dd>
         {% if literatures|length %}
           <strong>{{ literatures|length }} literatures</strong> related to this treaty.
-          <a href="{% url 'resultLiteratures' document.id %}">View literatures</a>
+          <a href="{% url 'resultLiteratures' document.id %}?{{ query }}">View literatures</a>
         {% else %}
           <span class="na">Not available</span>
         {% endif %}
@@ -213,7 +217,7 @@
       <dd>
         {% if court_decisions|length %}
           <strong>{{ court_decisions|length }} court decisions</strong> related to this treaty.
-          <a href="{% url 'resultCourtDecisions' document.id %}">View court decisions</a>
+          <a href="{% url 'resultCourtDecisions' document.id %}?{{ query }}">View court decisions</a>
         {% else %}
           <span class="na">Not available</span>
         {% endif %}

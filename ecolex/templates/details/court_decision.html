@@ -1,6 +1,11 @@
 {% extends 'layout.html' %}
 {% load tags %}
 
+{% block breadcrumbs %}
+  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "Court decision" %}
+{% endblock %}
+
 {% block content %}
 {% informea_url_id document %}
 
@@ -9,7 +14,7 @@
   <header>
     <div class="record-title">
       <div class="record-icon">
-        <a class="btn btn-sm btn-default" href="{% url 'results' %}?{{ query }}">Back to search results</a>
+        <span class="icon icon-court-decision" title="Court Decision"></span>
       </div>
       <h1>{{ document.title|safe }}</h1>
     </div>
@@ -53,7 +58,8 @@
       <dt>Abstract</dt>
       <dd>{{ document.abstract|safe }}</dd>
       {% with document.solr.cdLinkToFullText_en as url %}
-        <dt>Link to full text</dt> <dd><a href="{{ url }}">{{ document.language }}</a></dd>
+        <dt>Link to full text</dt>
+        <dd><a target="_blank" href="{{ url }}">{{ document.language }}</a></dd>
       {% endwith %}
     </dl>
   </section>

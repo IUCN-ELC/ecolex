@@ -1,11 +1,15 @@
 {% extends 'layout.html' %}
 {% load tags %}
 
+{% block breadcrumbs %}
+  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "Treaty" 'treaty_details' query id=treaty.id %}
+  {% breadcrumb "COP decisions" %}
+{% endblock %}
+
 {% block content %}
 <p>
   <span class="treaty-name">{{ treaty.full_title }}</span>
-  <br>
-  <a href="{% url 'treaty_details' treaty.id %}">Back to treaty details</a>
 </p>
 
 <hr>
@@ -32,7 +36,8 @@
             <span title="Decision number">{{ decision.document_id }}</span>
           </td>
           <td>
-            <a href="{{ decision.detail_url }}" title="See decision details">{{ decision }}</a>
+            <a href="{{ decision.detail_url }}?{{ query }}"
+               title="See decision details">{{ decision }}</a>
           </td>
           <td class="text-right">
             <time class="small text-muted">{{ decision.date|date:"b j, Y"|capfirst }}</time>
@@ -42,10 +47,6 @@
       </tbody>
     {% endfor %}
   </table>
-
-  <hr>
-
-  <p><a class="btn btn-sm btn-default" href="{% url 'treaty_details' treaty.id %}">Back to treaty details</a></p>
 
 </article>
 {% endblock %}

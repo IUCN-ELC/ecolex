@@ -1,4 +1,5 @@
 from django import template
+from django.core.urlresolvers import reverse
 import datetime
 
 register = template.Library()
@@ -51,3 +52,13 @@ def informea_url_id(document):
     return """<script>
         document.informea_url = "http://www.informea.org/treaties/{url_id}/decision/{dec_id}";
     </script>""".format(url_id=treaty_name, dec_id=document.solr['decId'])
+
+
+@register.simple_tag()
+def breadcrumb(label, viewname='', query='', *args, **kwargs):
+    if not viewname:
+        return label
+    url = reverse(viewname, args=args, kwargs=kwargs)
+    if query:
+        url = '{url}?{query}'.format(url=url, query=query)
+    return '<a href="{url}">{label}</a> &raquo;'.format(url=url, label=label)

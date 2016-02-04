@@ -1,6 +1,11 @@
 {% extends 'layout.html' %}
 {% load tags %}
 
+{% block breadcrumbs %}
+  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "Literature" %}
+{% endblock %}
+
 {% block content %}
 {% informea_url_id document %}
 
@@ -9,7 +14,7 @@
   <header>
     <div class="record-title">
       <div class="record-icon">
-        <a class="btn btn-sm btn-default" href="{% url 'results' %}?{{ query }}">Back to search results</a>
+        <span class="icon icon-literature" title="Literature"></span>
       </div>
       <h1>{{ document.title|safe }}</h1>
     </div>

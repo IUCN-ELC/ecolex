@@ -1,6 +1,11 @@
 {% extends 'layout.html' %}
 {% load tags %}
 
+{% block breadcrumbs %}
+  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "COP decision" %}
+{% endblock %}
+
 {% block content %}
 {% informea_url_id document %}
 
@@ -9,7 +14,7 @@
   <header>
     <div class="record-title">
       <div class="record-icon">
-        <a class="btn btn-sm btn-default" href="{% url 'results' %}?{{ query }}">Back to search results</a>
+        <span class="icon icon-cop-decision" title="COP Decision"></span>
       </div>
       <h1>{{ document.title|safe }}</h1>
     </div>
@@ -42,14 +47,19 @@
     <dl>
       {% if treaty %}
         <dt>Treaty</dt>
-        <dd><a href="{{ treaty.details_url }}">{{ treaty }} ({{ treaty.date|date:"b j, Y"|capfirst  }})</a></dd>
+        <dd>
+          <a href="{{ treaty.details_url }}?{{ query }}">
+            {{ treaty }} ({{ treaty.date|date:"b j, Y"|capfirst  }})
+          </a>
+        </dd>
       {% endif %}
 
       <dt>Meeting</dt>
       <dd>
         {% if document.solr.decMeetingUrl %}
-          <a href="{{ document.solr.decMeetingUrl }}"
-             rel="external">{{ document.solr.decMeetingTitle | safe }}</a>
+          <a href="{{ document.solr.decMeetingUrl }}" target="_blank">
+            {{ document.solr.decMeetingTitle | safe }}
+          </a>
         {% else %}
           {{ document.solr.decMeetingTitle | safe }}
         {% endif %}

@@ -5,12 +5,15 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
 {% endblock %}
 
-{% block content %}
+{% block breadcrumbs %}
+  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "Treaty" 'treaty_details' query id=treaty.id %}
+  {% breadcrumb "Country/Participant" %}
+{% endblock %}
 
+{% block content %}
 <p>
   <span class="treaty-name">{{ treaty.full_title|safe }}</span>
-  <br>
-  <a href="{% url 'treaty_details' treaty.id %}?{{ query }}">Back to treaty details</a>
 </p>
 
 <hr>
@@ -55,11 +58,6 @@
 
   <br>
   {% include 'bits/participants_legend.html' with events=treaty.participants.events %}
-  <hr>
-
-  <p><a class="btn btn-sm btn-default" href="{% url 'treaty_details' treaty.id %}?{{ query }}">
-      Back to treaty details
-  </a></p>
 
 </article>
 {% endblock %}
