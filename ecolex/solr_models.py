@@ -9,6 +9,10 @@ from django.utils.html import strip_tags
 from ecolex.definitions import DOC_SOURCES, LANGUAGE_MAP
 
 
+def cached_property(func):
+    return property(functools.lru_cache()(func))
+
+
 def first(obj, default=None):
     if obj and type(obj) is list:
         return obj[0]
@@ -258,8 +262,7 @@ class Treaty(ObjectNormalizer):
             first(self.solr.get(
                 'trEntryIntoForceDate')), '%Y-%m-%dT%H:%M:%SZ').date()
 
-    @property
-    @functools.lru_cache()
+    @cached_property
     def participants(self):
         party_dict = OrderedDict(
             (event, self.solr.get(field))
@@ -315,11 +318,14 @@ class Treaty(ObjectNormalizer):
     def details_url(self):
         return reverse('treaty_details', kwargs={'id': self.id()})
 
-    def get_link_to_full_text(self):
-        for langcode in LANGUAGE_MAP.keys():
-            link = self.solr.get(self.FULL_TEXT + '_' + langcode)
-            if link:
-                return link[0], LANGUAGE_MAP[langcode]
+    @cached_property
+    def link_to_full_text(self):
+        links = []
+        for code, language in LANGUAGE_MAP.items():
+            url = self.solr.get('{}_{}'.format(self.FULL_TEXT, code))
+            if url:
+                links.append({'url': first(url), 'language': language})
+        return links
 
 
 class Decision(ObjectNormalizer):

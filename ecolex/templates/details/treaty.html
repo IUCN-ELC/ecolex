@@ -108,11 +108,12 @@
         </dd>
         {% endfor %}
       {% endif %}
-      {% if document.get_link_to_full_text %}
+      {% if document.link_to_full_text %}
         <dt>Link to full text</dt>
         <dd>
-            <a href="{{ document.get_link_to_full_text.0 }}", class="treaty-link"
-             target="_blank">{{ document.get_link_to_full_text.1 }}</a>
+          {% for link in document.link_to_full_text %}
+            <a href="{{ link.url }}" target="_blank">{{ link.language }}</a>
+          {% endfor %}
         </dd>
       {% endif %}
     </dl>
@@ -136,8 +137,7 @@
           {% endfor %}
         </tr>
       </thead>
-
-      <tbody class="body">
+    <tbody class="body">
         {% for participant in document.participants.participants %}
         <tr class="country">
           <th>{{ participant.country }}</th>
