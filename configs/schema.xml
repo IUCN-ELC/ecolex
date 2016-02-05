@@ -592,12 +592,12 @@
     <copyField source="cdCountry_en" dest="docCountry"/>
 
     <copyField source="litCountry" dest="docCountry"/>
-    <copyField source="litCountry_fr" dest="docCountry"/>
-    <copyField source="litCountry_sp" dest="docCountry"/>
+    <copyField source="litCountry_fr" dest="docCountry_fr"/>
+    <copyField source="litCountry_sp" dest="docCountry_es"/>
 
     <copyField source="legCountry_en" dest="docCountry"/>
-    <copyField source="legCountry_fr" dest="docCountry"/>
-    <copyField source="legCountry_es" dest="docCountry"/>
+    <copyField source="legCountry_fr" dest="docCountry_fr"/>
+    <copyField source="legCountry_es" dest="docCountry_es"/>
 
     <copyField source="trRegion" dest="docRegion"/>
     <copyField source="cdRegion" dest="docRegion"/>
