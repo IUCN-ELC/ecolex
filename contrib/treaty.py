@@ -4,7 +4,6 @@ from datetime import datetime
 import logging
 import logging.config
 import html
-import re
 
 from config.logging import LOG_DICT
 from utils import EcolexSolr, TREATY, get_content_from_url, get_file_from_url
@@ -197,27 +196,15 @@ class TreatyImporter(object):
     CUSTOM_RULES = [
         {
             'condition_field': 'trElisId',
-            'condition_pattern': '^TRE-146817$',
+            'condition_value': 'TRE-146817',
             'action_field': 'trFieldOfApplication_en',
             'action_value': ['Global', 'Regional/restricted'],
         },
         {
             'condition_field': 'trElisId',
-            'condition_pattern': '^TRE-149349$',
+            'condition_value': 'TRE-149349',
             'action_field': 'trDateOfText',
             'action_value': format_date('2009-10-02'),
-        },
-        {
-            'condition_field': 'trAvailableIn',
-            'condition_pattern': '^B7',
-            'action_field': 'trAvailableIn',
-            'action_value': B7,
-        },
-        {
-            'condition_field': 'trAvailableIn',
-            'condition_pattern': '^(?!B7|{}$)'.format(B7),
-            'action_field': 'trAvailableIn',
-            'action_value': None,
         },
     ]
 
@@ -336,22 +323,17 @@ class TreatyImporter(object):
 
     def _apply_custom_rules(self, data):
         for rule in self.CUSTOM_RULES:
-            condition_field = rule['condition_field']
-            value = data.get(condition_field, '')
-            is_list = False
-            if isinstance(value, list):
-                if len(value) == 1:
-                    value = value[0]
-                    is_list = True
-                else:
-                    logger.warning('Custom rule does not apply to {}: {}'
-                                   .format(condition_field, value))
+            value = data.get(rule['condition_field'], '')
+            if value == rule['condition_value']:
+                data[rule['action_field']] = rule['action_value']
 
-            if re.match(rule['condition_pattern'], value):
-                new_value = rule['action_value']
-                if is_list and new_value:
-                    new_value = [new_value]
-                data[rule['action_field']] = new_value
+        available_in = data.get('trAvailableIn', [])
+        new_available_in = []
+        for publication in available_in:
+            if publication.startswith('B7'):
+                new_available_in.append(publication.replace('B7', B7))
+        data['trAvailableIn'] = new_available_in
+
         return data
 
     def _get_solr_treaty(self, treaty_data):
