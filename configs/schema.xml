@@ -406,9 +406,17 @@
     <field name="docSubject" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="docKeyword" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="docCountry" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="docCountry_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="docCountry_es" type="string" indexed="true" stored="true" multiValued="true"/>
+
     <field name="docRegion" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="docRegion_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="docRegion_es" type="string" indexed="true" stored="true" multiValued="true"/>
+
     <field name="docDate" type="tdate" indexed="true" stored="false" multiValued="false"/>
     <field name="docLanguage" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="docLanguage_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="docLanguage_es" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <!-- ELIS Literature -->
     <field name="litId" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -594,11 +602,11 @@
     <copyField source="trRegion" dest="docRegion"/>
     <copyField source="cdRegion" dest="docRegion"/>
     <copyField source="litRegion" dest="docRegion"/>
-    <copyField source="litRegion_fr" dest="docRegion"/>
-    <copyField source="litRegion_sp" dest="docRegion"/>
+    <copyField source="litRegion_fr" dest="docRegion_fr"/>
+    <copyField source="litRegion_sp" dest="docRegion_es"/>
     <copyField source="legGeoArea_en" dest="docRegion"/>
-    <copyField source="legGeoArea_fr" dest="docRegion"/>
-    <copyField source="legGeoArea_es" dest="docRegion"/>
+    <copyField source="legGeoArea_fr" dest="docRegion_fr"/>
+    <copyField source="legGeoArea_es" dest="docRegion_es"/>
 
     <copyField source="trDateOfText" dest="docDate"/>
     <copyField source="decPublishDate" dest="docDate"/>
@@ -608,11 +616,11 @@
     <copyField source="trLanguageOfDocument_en" dest="docLanguage"/>
     <copyField source="cdLanguageOfDocument" dest="docLanguage"/>
     <copyField source="litLanguageOfDocument" dest="docLanguage"/>
-    <copyField source="litLanguageOfDocument_fr" dest="docLanguage"/>
-    <copyField source="litLanguageOfDocument_sp" dest="docLanguage"/>
+    <copyField source="litLanguageOfDocument_fr" dest="docLanguage_fr"/>
+    <copyField source="litLanguageOfDocument_sp" dest="docLanguage_es"/>
     <copyField source="legLanguage_en" dest="docLanguage"/>
-    <copyField source="legLanguage_fr" dest="docLanguage"/>
-    <copyField source="legLanguage_es" dest="docLanguage"/>
+    <copyField source="legLanguage_fr" dest="docLanguage_fr"/>
+    <copyField source="legLanguage_es" dest="docLanguage_es"/>
 
     <!-- Full search field -->
     <copyField source="trTitleAbbreviation" dest="text"/>
