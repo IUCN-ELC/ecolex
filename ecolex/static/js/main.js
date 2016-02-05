@@ -314,13 +314,11 @@ $(document).ready(function() {
             e.preventDefault();
             var data = {
                 'q': $('#id_q').val(),
-                'type': $('#id_type').val()
             };
             $('.search-form select, .search-form input').each(function() {
                 $(this).val('');
             });
             $('#id_q').val(data.q);
-            $('#id_type').val(data.type);
 
             push_and_submit(true);
         });
