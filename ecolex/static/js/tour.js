@@ -41,7 +41,7 @@ var tourSteps = [
     title: "Interactive categories",
     content: "<p>This approach allows you to filter results from more than category, meaning you can search for Treaties and COP Decisions simultaneously.</p>"
   },
-  // Highlighted results 
+  // Highlighted results
   {
     element: ".search-result:first-child .search-result-title a",
     placement: "right",
@@ -59,7 +59,7 @@ var tourSteps = [
       $('body').on('onajax', function() {
         if (tour.getCurrentStep() < 6) {
           tour.next();
-          
+
         }
       });
     }
@@ -97,7 +97,7 @@ var tourSteps = [
   },
   // The details page
   {
-    path: "/details/a8e9582a-60d1-4495-aa17-530fbec287f4/",
+    path: "/details/treaty/686c51e6-420e-4722-a189-9e8ba7dc06f9/",
     element: ".record-title",
     placement: "top",
     title: "The details page",
@@ -154,7 +154,7 @@ var tour = new Tour({
 
 $(document).ready(function() {
 
-  
+
   if (!tour.ended()) {
     tour.init();
   }
