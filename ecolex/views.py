@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.http import Http404, HttpResponseForbidden, JsonResponse
+from django.http import Http404, HttpResponseForbidden, HttpResponseServerError, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
@@ -408,17 +408,20 @@ class FaoFeedView(View):
 
     def post(self, request):
         legislation_file = request.FILES.get('file', None)
-        if legislation_file:
-            response = harvest_file(legislation_file, logger)
-            logger.info(response)
-        else:
+        if not legislation_file:
             logger.error('No attached file!')
             response = 'You have to attach an XML file!'
-        data = {
-            'message': response
-        }
-        return JsonResponse(data)
-
+        else:
+            try:
+                response = harvest_file(legislation_file, logger)
+                logger.info(response)
+                data = {
+                    'message': response
+                }
+                return JsonResponse(data)
+            except:
+                logger.exception('Error harvesting file')
+        return HttpResponseServerError('Internal server error during harvesting')
 
 def debug(request):
     import subprocess
