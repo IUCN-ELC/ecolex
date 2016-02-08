@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.http import Http404, JsonResponse
+from django.http import Http404, HttpResponseForbidden, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
@@ -402,8 +402,8 @@ class FaoFeedView(View):
         key = request.META.get('HTTP_API_KEY', None)
         api_key = getattr(settings, 'FAOLEX_API_KEY')
         if not key or key != api_key:
-            logger.error('No API KEY!')
-            raise Http404
+            logger.error('Bad API KEY!')
+            return HttpResponseForbidden('Bad API key')
         return super(FaoFeedView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request):
