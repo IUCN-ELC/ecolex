@@ -328,7 +328,9 @@
     <field name="cdRelatedUrl_fr" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdRelatedUrl_ru" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdLanguageOfDocument" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="cdTerritorialSubdivision" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdTerritorialSubdivision_en" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdTerritorialSubdivision_fr" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdTerritorialSubdivision_es" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTypeOfText" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdLinkToFullText" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdLinkToFullText_en" type="string" indexed="false" stored="true" multiValued="false"/>

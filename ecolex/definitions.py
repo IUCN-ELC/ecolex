@@ -36,7 +36,7 @@ LITERATURE_FILTERS = {
 }
 
 COURT_DECISION_FILTERS = {
-    'cdTerritorialSubdivision': 'cd_territorial_subdivision',
+    'cdTerritorialSubdivision_en': 'cd_territorial_subdivision',
     'cdTypeOfText': 'cd_type',
 }
 
@@ -70,7 +70,7 @@ FIELD_TO_FACET_MAPPING = {
     'lit_serial': 'litSerialTitle',
     'lit_publisher': 'litPublisher',
 
-    'cd_territorial_subdivision': 'cdTerritorialSubdivision',
+    'cd_territorial_subdivision': 'cdTerritorialSubdivision_en',
     'cd_type': 'cdTypeOfText',
 
     'leg_type': 'legType_en',
@@ -95,7 +95,7 @@ SELECT_FACETS = {
     'trDepository_en': 'tr_depository',
     'trPlaceOfAdoption': 'tr_place_of_adoption',
 
-    'cdTerritorialSubdivision': 'cd_territorial_subdivision',
+    'cdTerritorialSubdivision_en': 'cd_territorial_subdivision',
 
     'litAuthor': 'lit_author',
     'litSerialTitle': 'lit_serial',

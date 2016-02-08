@@ -267,7 +267,7 @@ def get_fq(filters):
         'litPublisher': 'literature',
 
         'cdTypeOfText': 'court_decision',
-        'cdTerritorialSubdivision': 'court_decision',
+        'cdTerritorialSubdivision_en': 'court_decision',
     }
 
     AND_FILTERS = [
