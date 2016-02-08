@@ -14,6 +14,11 @@ HIGHLIGHT_PARAMS = {
     'hl.fragsize': '0',
 }
 PERPAGE = 20
+ESCAPE_RULES = {
+    '+': r'\+', '-': r'\-', '&': r'\&', '|': r'\|', '!': r'\!', '(': r'\(',
+    ')': r'\)', '{': r'\{', '}': r'\}', '[': r'\[', ']': r'\]', '^': r'\^',
+    '~': r'\~', '*': r'\*', '?': r'\?', ':': r'\:', ';': r'\;',
+}
 
 
 class Queryset(object):
@@ -138,27 +143,28 @@ def parse_facets(facets):
 def parse_suggestions(solr_suggestions):
     if not solr_suggestions or not any(solr_suggestions['suggestions']):
         return ''
-    return solr_suggestions['collations'][-1]
+    return unescape_string(solr_suggestions['collations'][-1])
 
 
 def escape_query(query):
     """ Code from: http://opensourceconnections.com/blog/2013/01/17/escaping-solr-query-characters-in-python/
     """
-    escapeRules = {
-        '+': r'\+', '-': r'\-', '&': r'\&', '|': r'\|', '!': r'\!', '(': r'\(',
-        ')': r'\)', '{': r'\{', '}': r'\}', '[': r'\[', ']': r'\]', '^': r'\^',
-        '~': r'\~', '*': r'\*', '?': r'\?', ':': r'\:', ';': r'\;',
-    }
 
     def _esc(term):
         for char in query:
-            if char in escapeRules.keys():
-                yield escapeRules[char]
+            if char in ESCAPE_RULES.keys():
+                yield ESCAPE_RULES[char]
             else:
                 yield char
 
     query = query.replace('\\', r'\\')
     return "".join(c for c in _esc(query))
+
+
+def unescape_string(string):
+    for char, escaped_char in ESCAPE_RULES.items():
+        string = string.replace(escaped_char, char)
+    return string
 
 
 def get_hl(hl_details=False):
