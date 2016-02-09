@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from datetime import datetime
-from contrib.utils import EcolexSolr
+from ecolex.management.utils import EcolexSolr
 
 
 DOCUMENT = 'record'
