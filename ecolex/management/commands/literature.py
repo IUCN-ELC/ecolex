@@ -5,9 +5,10 @@ import html
 import logging
 import logging.config
 
-from config.logging import LOG_DICT
-from utils import EcolexSolr, LITERATURE, get_content_from_url, valid_date
-from utils import format_date, get_file_from_url
+from ecolex.management.commands.logging import LOG_DICT
+from ecolex.management.utils import EcolexSolr, LITERATURE
+from ecolex.management.utils import get_content_from_url, valid_date
+from ecolex.management.utils import format_date, get_file_from_url
 
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('import')

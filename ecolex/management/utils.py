@@ -1,12 +1,16 @@
 from datetime import datetime
 from io import BytesIO
 import json
+import logging
 import pysolr
 import os
 import re
 import requests
 import hashlib
 import random
+
+from ecolex.management.commands.logging import LOG_DICT
+
 
 TREATY = 'treaty'
 COP_DECISION = 'decision'
@@ -15,17 +19,23 @@ COURT_DECISION = 'court_decision'
 LITERATURE = 'literature'
 LEGISLATION = 'legislation'
 
+
 OBJ_TYPES = [TREATY, COP_DECISION, LEGISLATION, COURT_DECISION, LITERATURE]
 
 DEC_TREATY_FIELDS = ['partyCountry', 'trSubject_en']
+
+logging.config.dictConfig(LOG_DICT)
+logger = logging.getLogger('import')
 
 
 def get_file_from_url(url):
     if 'http' not in url:
         url = 'http://' + url
-    response = requests.get(url)
+    response = requests.get(url, timeout=2)
+    response.status_code = 1
     if response.status_code != 200:
-        raise ValueError('Invalid return code {}'.format(response.status_code))
+        logger.error('Invalid return code {} for {}'.format(
+            response.status_code, url))
 
     doc_content_bytes = response.content
     file_obj = BytesIO()

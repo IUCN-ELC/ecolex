@@ -5,9 +5,9 @@ import html
 import re
 import requests
 
-from utils import EcolexSolr, get_date, get_file_from_url
-from utils import COP_DECISION, DEC_TREATY_FIELDS
-from config.logging import LOG_DICT
+from ecolex.management.utils import EcolexSolr, get_date, get_file_from_url
+from ecolex.management.utils import COP_DECISION, DEC_TREATY_FIELDS
+from ecolex.management.commands.logging import LOG_DICT
 
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('import')
@@ -99,10 +99,10 @@ class CopDecisionImporter(object):
         while True:
             skip_filter = self.query_skip % (self.per_page, skip)
             url = self._create_url(date_filter, skip_filter)
+            print(url)
             response = requests.get(url)
             if response.status_code != 200:
                 logger.error('Invalid return code %d' % response.status_code)
-            print(url)
             results = response.json()['d']['results']
             if not results:
                 break
@@ -194,8 +194,10 @@ class CopDecisionImporter(object):
         for file_dict in files:
             lang = file_dict.get('language')
             languages.add(lang if lang not in (None, 'und') else DEFAULT_LANG)
-            file_obj = get_file_from_url(file_dict['url'])
-            text += self.solr.extract(file_obj)
+            url = file_dict.get('url')
+            # if url:
+            #     file_obj = get_file_from_url(url)
+            #     text += self.solr.extract(file_obj)
         return text, languages
 
     def _clean(self, text):

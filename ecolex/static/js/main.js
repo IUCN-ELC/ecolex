@@ -134,10 +134,9 @@ $(document).ready(function() {
                 url: '/facets/ajax/?' + data,
                 format: 'JSON',
                 success: function(data) {
-                    $.each(data, function(k, v) {
-                        var id_select = '#' + k + '-filter select';
-                        $(id_select).html(v);
-                    });
+                    for (var k in data) {
+                        $('#' + k + '-filter select').html(data[k]);
+                    }
                     init_all();
                     unblock_ui();
                 },

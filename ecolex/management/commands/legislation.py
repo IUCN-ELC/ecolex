@@ -1,14 +1,4 @@
-import os
-import sys
-
-from django.core.wsgi import get_wsgi_application
-
-from utils import EcolexSolr, get_file_from_url
-
-project_path = "/ecolex/"
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ecolex.settings")
-sys.path.append(project_path)
-application = get_wsgi_application()
+from ecolex.management.utils import EcolexSolr, get_file_from_url
 
 
 def update_legislation_full_text():
