@@ -32,7 +32,6 @@ def get_file_from_url(url):
     if 'http' not in url:
         url = 'http://' + url
     response = requests.get(url, timeout=2)
-    response.status_code = 1
     if response.status_code != 200:
         logger.error('Invalid return code {} for {}'.format(
             response.status_code, url))
