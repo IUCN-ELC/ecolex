@@ -1,2 +1,2 @@
-cnf.in
-logs/*
+cnf.ini
+logs/*.log
