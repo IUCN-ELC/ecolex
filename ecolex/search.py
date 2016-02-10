@@ -143,8 +143,11 @@ def parse_facets(facets):
 def parse_suggestions(solr_suggestions):
     if not solr_suggestions or not any(solr_suggestions['suggestions']):
         return ''
-    return unescape_string(solr_suggestions['collations'][-1])
-
+    if 'collations' in solr_suggestions:
+        return unescape_string(solr_suggestions['collations'][-1])
+    if 'collation' in solr_suggestions['suggestions']:
+        return unescape_string(solr_suggestions['suggestions'][-1])
+    return ''
 
 def escape_query(query):
     """ Code from: http://opensourceconnections.com/blog/2013/01/17/escaping-solr-query-characters-in-python/
