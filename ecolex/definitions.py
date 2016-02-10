@@ -138,7 +138,7 @@ SOLR_FIELDS = [
     'litCountry', 'litRegion', 'litSubject', 'litLanguageOfDocument',
     'cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr',
     'cdTypeOfText', 'cdCountry_en', 'cdDateOfText',
-    'legTitle', 'legLongTitle', 'legCountry_en',
+    'legTitle', 'legLongTitle', 'legCountry_en', 'legKeyword_en',
     'legDate', 'legStatus', 'legTerritorialSubdivision', 'legId',
 ]
 
