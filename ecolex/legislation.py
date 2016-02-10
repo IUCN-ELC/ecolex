@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from datetime import datetime
 from ecolex.management.utils import EcolexSolr
-
+from collections import OrderedDict
 
 DOCUMENT = 'record'
 META = 'meta'
@@ -108,6 +108,12 @@ def harvest_file(uploaded_file, logger):
 
             if field_values:
                 legislation[v] = field_values
+
+        #remove duplicates
+        for field_name in MULTIVALUED_FIELDS:
+            field_values = legislation.get(field_name)
+            if field_values:
+                legislation[field_name] = list(OrderedDict.fromkeys(field_values).keys())
 
         url_value = document.attrs.get('url', None)
         if url_value:
