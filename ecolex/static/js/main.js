@@ -312,12 +312,12 @@ $(document).ready(function() {
         $('input[type=reset]').click(function(e) {
             e.preventDefault();
             var data = {
-                'q': $('#id_q').val(),
+                'q': $('#search').val(),
             };
             $('.search-form select, .search-form input').each(function() {
                 $(this).val('');
             });
-            $('#id_q').val(data.q);
+            $('#search').val(data.q);
 
             push_and_submit(true);
         });
