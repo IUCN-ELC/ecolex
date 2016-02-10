@@ -335,6 +335,14 @@ class TreatyImporter(object):
                 new_available_in.append(publication.replace('B7', B7))
         data['trAvailableIn'] = new_available_in
 
+        # fix server2.php/server2neu.php in full text links
+        field_names = ['trLinkToFullText_en', 'trLinkToFullText_es', 'trLinkToFullText_fr', 'trLinkToFullText_other']
+        change_from = 'http://www.ecolex.org/server2.php/server2neu.php/'
+        change_to = 'http://www.ecolex.org/server2neu.php/'
+        replace_url = lambda text: (change_to + text.split(change_from)[-1]) if text.startswith(change_from) else text
+        for key, value in data.items():
+            if key in field_names:
+                data[key] = list(map(replace_url, data[key]))
         return data
 
     def _get_solr_treaty(self, treaty_data):
