@@ -227,12 +227,8 @@ class LiteratureImporter(object):
                 url = self._create_url(year, month, skip)
                 content = get_content_from_url(url)
                 bs = BeautifulSoup(content)
-                if bs.find('No matches found'):
-                    logger.info('For %d/%d found 0 literatures' % (month, year))
-                    continue
                 if bs.find('error'):
-                    logger.error(url)
-                    logger.error('Unknown error for %d/%d' % (month, year))
+                    logger.info('For %d/%d found 0 literatures' % (month, year))
                     continue
 
                 total_docs = int(bs.find('result').attrs[TOTAL_DOCS])
