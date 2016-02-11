@@ -133,7 +133,7 @@ SOLR_FIELDS = [
     'litDateOfEntry', 'litDateOfModifcation', 'litAbstract',
     'litTypeOfText',
     'litScope', 'litScope_fr', 'litScope_sp',
-    'litAuthor', 'litCorpAuthor',
+    'litAuthorArticle', 'litCorpAuthorArticle', 'litAuthor', 'litCorpAuthor',
     'litPublisher', 'litPublPlace', 'litDateOfText',
     'litKeyword', 'litSeriesFlag',
     'litCountry', 'litRegion', 'litSubject', 'litLanguageOfDocument',

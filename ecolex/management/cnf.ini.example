@@ -13,7 +13,7 @@ DAYS_AGO = 7
 TREATIES_URL = http://www.ecolex.org/elis_isis3w.php
 START_YEAR = 1981
 START_MONTH = 1
-END_MONTH = 13
+END_MONTH = 12
 QUERY_EXPORT = ?database=tre&search_type=page_search&table=all
 QUERY_FORMAT = ES:I AND STAT:C AND DE:%d%02d
 IMPORT_FIELD = dateofentry
@@ -39,7 +39,7 @@ PER_PAGE = 20
 LITERATURE_URL = http://www.ecolex.org/elis_isis3w.php
 START_YEAR = 1980
 START_MONTH = 1
-END_MONTH = 13
+END_MONTH = 12
 QUERY_EXPORT = ?database=libcat&search_type=page_search&table=all
 QUERY_FORMAT = ES:I AND STAT:C AND DE:%d%02d
 IMPORT_FIELD = dateofentry

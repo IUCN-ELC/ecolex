@@ -49,6 +49,7 @@ class ObjectNormalizer:
         return self.solr.get('id')
 
     def document_id(self):
+        #TODO: remove first() after re-import of literature with litId.multiValued=false
         return first(self.solr.get(self.ID_FIELD))
 
     def title(self):
@@ -423,6 +424,7 @@ class Literature(ObjectNormalizer):
 
     def document_id(self):
         obj = self.solr.get(self.ID_FIELD)
+        #TODO remove after re-import of literature using single value litId
         if obj and type(obj) is list:
             return obj[-1]
         return obj
@@ -434,7 +436,11 @@ class Literature(ObjectNormalizer):
         return first(self.solr.get('litScope'))
 
     def authors(self):
-        authors = self.solr.get('litAuthor')
+        authors = self.solr.get('litAuthorArticle')
+        if not authors:
+            authors = self.solr.get('litCorpAuthorArticle')
+        if not authors:
+            authors = self.solr.get('litAuthor')
         if not authors:
             authors = self.solr.get('litCorpAuthor')
         return authors
@@ -458,7 +464,10 @@ class Literature(ObjectNormalizer):
         return first(self.solr.get('litDateOfTextSer')) or first(self.solr.get('litDateOfText'))
 
     def parent_title(self):
-        return first(self.solr.get('litLongTitle')) or first(self.solr.get('litSerialTitle'))
+        parent_title = first(self.solr.get('litLongTitle')) or first(self.solr.get('litSerialTitle'))
+        if not parent_title or parent_title == self.title():
+            return None
+        return parent_title
 
     def abstract(self):
         return first(self.solr.get('litAbstract'))

@@ -424,9 +424,12 @@
     <field name="docLanguage_es" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <!-- ELIS Literature -->
-    <field name="litId" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litId" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="litId2" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litAuthor" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litAuthorArticle" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litCorpAuthor" type="string" indexed="false" stored="true" multiValued="true"/>
+    <field name="litCorpAuthorArticle" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="litDateOfEntry" type="tdate" indexed="true" stored="true"/>
     <field name="litDateOfModification" type="tdate" indexed="true" stored="true"/>
     <field name="litTitleAbbreviation" type="string" indexed="true" stored="true"/>
@@ -459,6 +462,7 @@
     <field name="litCollation" type="string" indexed="false" stored="true"/>
     <field name="litDateOfText" type="string" indexed="false" stored="true"/>
     <field name="litLinkToFullText" type="string" indexed="false" stored="true"/>
+    <field name="litLinkDOI" type="string" indexed="false" stored="true"/>
 
     <field name="litTypeOfText" type="string" indexed="true" stored="true"/>
     <field name="litTypeOfText_fr" type="string" indexed="true" stored="true"/>

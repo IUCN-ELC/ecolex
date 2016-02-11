@@ -42,6 +42,12 @@
           <a class="decision-link" href="{{ document.solr.litRelatedWebSite | url_normalize }}">{{ document.solr.litRelatedWebSite }}</a>
       </dd>
       {% endif %}
+      {% if document.solr.litLinkDOI %}
+      <dt>DOI</dt>
+      <dd>
+          <a class="decision-link" href="{{ document.solr.litLinkDOI | url_normalize }}">{{ document.solr.litLinkDOI }}</a>
+      </dd>
+      {% endif %}
     </dl>
   </section>
 

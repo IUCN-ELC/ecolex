@@ -20,10 +20,10 @@ AUTHOR_SPACE = '^b'
 
 FIELD_MAP = {
     'id': 'litId',
-    'id2': 'litId', #TODO - we might need different fields
-    'authora': 'litAuthor', #TODO - we need different fields
+    'id2': 'litId2',
+    'authora': 'litAuthorArticle',
     'authorm': 'litAuthor',
-    'corpauthora': 'litCorpAuthor',
+    'corpauthora': 'litCorpAuthorArticle',
     'corpauthorm': 'litCorpAuthor',
     'dateofentry': 'litDateOfEntry',
     'dateofmodification': 'litDateOfModification',
@@ -57,6 +57,7 @@ FIELD_MAP = {
     # TODO CLEAN dateoftext field
     'dateoftext': 'litDateOfText',
     'linktofulltext': 'litLinkToFullText',
+    'doi': 'litLinkDOI',
     'typeoftext': 'litTypeOfText',
     'typeoftext_fr_fr': 'litTypeOfText_fr',
     'typeoftext_es_es': 'litTypeOfText_sp',
@@ -155,9 +156,12 @@ DATE_FIELDS = [
 ]
 
 MULTIVALUED_FIELDS = [
-    'litId', 'litAuthor', 'litCorpAuthor', 'litSubject', 'litSubject_fr',
-    'litSubject_sp', 'litKeyword', 'litKeyword_fr', 'litKeyword_sp',
-    'litContributor', 'litTypeOfText', 'litTypeOfText_sp', 'litTypeOfText_fr',
+    'litId2',
+    'litAuthor', 'litCorpAuthor', 'litAuthorArticle', 'litCorpAuthorArticle',
+    'litSubject', 'litSubject_fr', 'litSubject_sp',
+    'litKeyword', 'litKeyword_fr', 'litKeyword_sp',
+    'litContributor',
+    'litTypeOfText', 'litTypeOfText_sp', 'litTypeOfText_fr',
 ]
 
 
@@ -166,15 +170,19 @@ class Literature(object):
     def __init__(self, data, solr):
         self.data = data
         self.solr = solr
-        self.update_field = 'litDateOfModification'
         self.date_format = '%Y-%m-%dT%H:%M:%SZ'
         self.elis_id = 'litId'
 
-    def is_modified(self, old_treaty):
-        old_date = datetime.strptime(old_treaty[self.update_field],
-                                     self.date_format)
-        new_date = datetime.strptime(self.data[self.update_field],
-                                     self.date_format)
+    def is_modified(self, old_record):
+        if 'litDateOfModification' in old_record:
+            update_field = 'litDateOfModification'
+        elif 'litDateOfEntry' in old_record:
+            update_field = 'litDateOfEntry'
+        else:
+            return True
+        old_date = datetime.strptime(old_record[update_field], self.date_format)
+        new_date = datetime.strptime(self.data[update_field],self.date_format)
+
         if old_date < new_date:
             logger.info('Update on %s' % (self.data[self.elis_id]))
             return True
@@ -201,10 +209,11 @@ class LiteratureImporter(object):
         self.per_page = config.getint('per_page')
         self.start_year = config.getint('start_year')
         now = datetime.now()
-        self.end_year = now.year
+        self.end_year = config.getint('end_year', now.year)
         self.start_month = config.getint('start_month', now.month)
-        self.end_month = config.getint('end_month', now.month + 1)
+        self.end_month = config.getint('end_month', now.month)
         self.solr = EcolexSolr(self.solr_timeout)
+        self.force_import_all = config.getboolean('force_import_all', False)
         logger.info('Started literature importer')
 
     def harvest(self, batch_size):
@@ -212,15 +221,17 @@ class LiteratureImporter(object):
         for year in range(self.end_year, self.start_year, -1):
             raw_literatures = []
 
-            for month in range(self.start_month, self.end_month):
+            for month in range(self.start_month, self.end_month+1):
                 skip = 0
                 url = self._create_url(year, month, skip)
                 content = get_content_from_url(url)
                 bs = BeautifulSoup(content)
+                if bs.find('No matches found'):
+                    logger.info('For %d/%d found 0 literatures' % (month, year))
+                    continue
                 if bs.find('error'):
                     logger.error(url)
-                    logger.error('For %d/%d found 0 literatures' %
-                                 (month, year))
+                    logger.error('Unknown error for %d/%d' % (month, year))
                     continue
 
                 total_docs = int(bs.find('result').attrs[TOTAL_DOCS])
@@ -280,6 +291,14 @@ class LiteratureImporter(object):
                         len(data['litTypeOfText_sp']) > 1):
                     data['litTypeOfText_sp'] = ' '.join(data['litTypeOfText_sp'])
 
+                # fix server2.php/server2neu.php in full text links
+                field_names = ['litLinkToFullText', 'litLinkToAbstract']
+                change_from = 'http://www.ecolex.org/server2.php/server2neu.php/'
+                change_to = 'http://www.ecolex.org/server2neu.php/'
+                for field_name in field_names:
+                    if data.get(field_name) and data[field_name].startswith(change_from):
+                        data[field_name] = change_to + data[field_name].split(change_from)[-1]
+
                 value = doc.find(URL_FIELD)
                 if value:
                     file_obj = get_file_from_url(value.text)
@@ -289,8 +308,10 @@ class LiteratureImporter(object):
 
     def _get_solr_lit(self, lit_data):
         new_lit = Literature(lit_data, self.solr)
-        existing_lit = self.solr.search(LITERATURE, lit_data['litId'][0])
-        if existing_lit and not new_lit.is_modified(existing_lit):
+        existing_lit = self.solr.search(LITERATURE, lit_data['litId'])
+        if self.force_import_all or not existing_lit:
+            logger.info('Importing new record %s' % (lit_data['litId']))
+        elif not new_lit.is_modified(existing_lit):
             return None
         solr_id = existing_lit['id'] if existing_lit else None
         return new_lit.get_solr_format(lit_data['litId'], solr_id)

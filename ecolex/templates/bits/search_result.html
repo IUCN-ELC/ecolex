@@ -30,23 +30,21 @@
     <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></p>
 
   {% elif result.type == "literature" %}
-    {% if result.parent_title %}
-        <p class="search-result-details">
-            <strong>In:</strong> {{ result.parent_title | safe }}
-        </p>
+    {% if result.authors %}
+        <p class="search-result-details"><strong>Author(s): </strong><span>{{ result.authors | join_by:", " | safe }}</span></p>
     {% endif %}
 
-    <div class="search-result-details">
-      {% if result.authors %}
-        <span>{{ result.authors | join_by:", " | safe }}</span>
+    <p class="search-result-details">
+      {% if result.parent_title %}
+          <strong>In: </strong><span>{{ result.parent_title | safe }}</span> |
       {% endif %}
       {% if result.publisher %}
-        | <span>{{ result.publisher }}</span>
+        <span>{{ result.publisher }}</span>
       {% endif %}
       {% if result.publication_place %}
         | <span>{{ result.publication_place }}</span>
       {% endif %}
-    </div>
+    </p>
     <p class="search-result-details">
       <strong class="sr-type">{{ result.type|capfirst }}</strong>
       {% if result.jurisdiction %}

@@ -221,9 +221,9 @@ class TreatyImporter(object):
         self.per_page = int(config.get('per_page'))
         self.start_year = int(config.get('start_year'))
         now = datetime.now()
-        self.end_year = now.year
+        self.end_year = config.getint('end_year', now.year)
         self.start_month = int(config.get('start_month', now.month))
-        self.end_month = int(config.get('end_month', now.month + 1))
+        self.end_month = int(config.get('end_month', now.month))
         self.solr = EcolexSolr(self.solr_timeout)
         logger.info('Started treaty importer')
 
@@ -232,7 +232,7 @@ class TreatyImporter(object):
         for year in range(self.end_year, self.start_year, -1):
             raw_treaties = []
 
-            for month in range(self.start_month, self.end_month):
+            for month in range(self.start_month, self.end_month+1):
                 skip = 0
                 url = self._create_url(year, month, skip)
                 content = get_content_from_url(url)
