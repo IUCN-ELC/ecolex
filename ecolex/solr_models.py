@@ -366,15 +366,14 @@ class Literature(ObjectNormalizer):
     ]
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
     OPTIONAL_INFO_FIELDS = [
-        ('litISBN', 'ISBN', ''),
         ('litVolumeNo', 'Volume', ''),
         ('litPublisher', 'Publisher', ''),
         ('litPublPlace', 'Place of publication', ''),
-        ('litCollation', 'Pages', ''),
         ('litDateOfText', 'Date of publication', ''),
+        ('litISBN', 'ISBN', ''),
+        ('litCollation', 'Pages', ''),
         ('litSeriesFlag', 'Series', ''),
         ('litLanguageOfDocument', 'Language of document', ''),
-        ('litDisplayRegion', 'Region', ''),
     ]
     DOCTYPE_FIELD = 'litTypeOfText'
     KEYWORD_FIELD = 'litKeyword'
@@ -445,6 +444,12 @@ class Literature(ObjectNormalizer):
 
     def publisher(self):
         return first(self.solr.get('litPublisher'))
+
+    def region(self):
+        return first(self.solr.get('litRegion'))
+
+    def basin(self):
+        return first(self.solr.get('litBasin'))
 
     def publication_place(self):
         return first(self.solr.get('litPublPlace'))
