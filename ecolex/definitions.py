@@ -25,7 +25,7 @@ TREATY_FILTERS = {
 DECISION_FILTERS = {
     'decType': 'dec_type',
     'decStatus': 'dec_status',
-    'decTreatyId': 'dec_treaty',
+    'decTreatyName_en': 'dec_treaty',
 }
 
 LITERATURE_FILTERS = {
@@ -63,7 +63,7 @@ FIELD_TO_FACET_MAPPING = {
 
     'dec_type': 'decType',
     'dec_status': 'decStatus',
-    'dec_treaty': 'decTreatyId',
+    'dec_treaty': 'decTreatyName_en',
 
     'lit_type': 'litTypeOfText',
     'lit_author': 'litAuthor',
@@ -97,6 +97,8 @@ SELECT_FACETS = {
 
     'cdTerritorialSubdivision_en': 'cd_territorial_subdivision',
 
+    'decTreatyName_en': 'dec_treaty',
+
     'litAuthor': 'lit_author',
     'litSerialTitle': 'lit_serial',
     'litPublisher': 'lit_publisher',
@@ -119,7 +121,7 @@ SOLR_FIELDS = [
     'trPlaceOfAdoption', 'trDateOfText', 'trDateOfEntry', 'trKeyword_en',
     'trDateOfModification', 'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
     'trPaperTitleOfText_sp', 'trPaperTitleOfText_other', 'trTitleOfTextShort',
-    'trElisId',
+    'trElisId', 'decTreatyName_en',
     'decTitleOfText', 'decStatus', 'decPublishDate', 'decUpdateDate',
     'decNumber', 'decKeyword', 'docKeyword', 'cdKeywords',
     'litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp', 'litLongTitle_other',

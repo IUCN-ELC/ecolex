@@ -86,15 +86,6 @@ class Queryset(object):
             return {}
         return get_documents_by_field(id_name, ids_list)
 
-    def get_facet_treaty_names(self):
-        """ Returns map of names for treaties returned by the decTreaty facet.
-        """
-        facets = self.get_facets()
-        if not facets.get('decTreatyId'):
-            return []
-        return get_documents_by_field('trInformeaId',
-                                      facets['decTreatyId'].keys())
-
     def get_suggested_text(self):
         return self._suggested_text
 
@@ -273,7 +264,7 @@ def get_fq(filters):
 
         'decType': 'decision',
         'decStatus': 'decision',
-        'decTreatyId': 'decision',
+        'decTreatyName_en': 'decision',
 
         'litTypeOfText': 'literature',
         'litAuthor': 'literature',

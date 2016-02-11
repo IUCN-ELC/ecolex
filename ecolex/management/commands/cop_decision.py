@@ -46,6 +46,12 @@ FIELD_MAP = {
     'meetingUrl': 'decMeetingUrl',
 }
 
+TREATY_FIELDS_MAP = {
+    'trPaperTitleOfText_en': 'decTreatyName_en',
+    'trPaperTitleOfText_fr': 'decTreatyName_fr',
+    'trPaperTitleOfText_es': 'decTreatyName_es',
+}
+
 
 class CopDecision(object):
 
@@ -159,6 +165,9 @@ class CopDecisionImporter(object):
                 if treaties:
                     for field in DEC_TREATY_FIELDS:
                         data[field] = [x for tr in treaties for x in tr[field]]
+                    for k, v in TREATY_FIELDS_MAP.items():
+                        if k in treaties[0]:
+                            data[v] = treaties[0][k]
             decisions.append(data)
         return decisions
 

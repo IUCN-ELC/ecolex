@@ -137,15 +137,6 @@ class SearchResults(SearchView):
         ctx['results'] = results
         ctx['facets'] = results.get_facets()
         ctx['stats_fields'] = results.get_field_stats()
-
-        # a map of (treatyId -> treatyNames) for treaties which are referenced
-        # by decisions in the current result set
-        types = self.request.GET.getlist('type', [])
-        if 'decision' in types or types == []:
-            all_treaties = results.get_facet_treaty_names()
-            ctx['dec_treaty_names'] = {
-                t.informea_id(): t for t in all_treaties
-            }
         ctx['page'] = self.page_details(page, results)
         self.update_form_choices(ctx['facets'])
         return ctx
@@ -184,7 +175,8 @@ class SelectFacetsAjax(SearchView):
                 'form_field': ctx['form'][v],
                 'show_empty': show_empty
             }
-            data[v] = render_to_string('bits/fancy_select.html', context)
+            html = render_to_string('bits/fancy_select.html', context)
+            data[v] = html
         return JsonResponse(data)
 
 

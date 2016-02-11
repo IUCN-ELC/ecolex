@@ -163,9 +163,8 @@
       <div class="filter-header">
         <h6>Treaty</h6>
       </div>
-      <div id="dec_treaty" class="tag-select">
+      <div id="dec_treaty-filter" class="tag-select">
         <select class="tag-options" hidden>
-          {% include 'bits/fancy_select_map.html' with facet=facets.decTreatyId type_map=dec_treaty_names form_field=form.dec_treaty %}
         </select>
         <input type="text" class="tm-input word-match" placeholder="Add treaties" data-formid="#id_dec_treaty"/>
       </div>

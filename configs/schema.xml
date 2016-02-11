@@ -222,6 +222,9 @@
 
     <field name="decTreatyId" type="string" indexed="true" stored="true"/>
     <field name="decTreaty" type="string" indexed="true" stored="true"/>
+    <field name="decTreatyName_en" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="decTreatyName_es" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="decTreatyName_fr" type="string" indexed="true" stored="true" multiValued="false"/>
 
     <field name="decPublishDate" type="tdate" indexed="false" stored="true"/>
     <field name="decUpdateDate" type="tdate" indexed="false" stored="true"/>
