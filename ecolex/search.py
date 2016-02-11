@@ -182,9 +182,9 @@ def get_sortby(sortby, has_search_term):
 
 def get_relevancy():
     RELEVANCY_FIELDS = {
-        'trPaperTitleOfText_en': 100,
-        'trPaperTitleOfText_es': 100,
-        'trPaperTitleOfText_fr': 100,
+        'trPaperTitleOfText_en': 110,
+        'trPaperTitleOfText_es': 110,
+        'trPaperTitleOfText_fr': 110,
         'decLongTitle_en': 100,
         'decLongTitle_es': 100,
         'decLongTitle_fr': 100,

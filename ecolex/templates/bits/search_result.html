@@ -52,7 +52,8 @@
       <strong class="sr-type">{{ result.type|capfirst }}</strong>
       {% if result.jurisdiction %}
         | <span>{{ result.jurisdiction }}</span>
-      {% elif result.countries %}
+      {% endif %}
+      {% if result.countries %}
         | <span>{{ result.countries | join_by:", " | safe }}</span>
       {% endif %}
       {% if result.publication_date %}
