@@ -229,7 +229,7 @@ class TreatyImporter(object):
 
     def harvest(self, batch_size):
 
-        for year in range(self.end_year, self.start_year, -1):
+        for year in range(self.end_year, self.start_year-1, -1):
             raw_treaties = []
 
             for month in range(self.start_month, self.end_month+1):

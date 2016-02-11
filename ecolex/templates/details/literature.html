@@ -24,8 +24,14 @@
     <dl>
       <dt>Document type</dt>
       <dd>{{ document.type_of_document|capfirst }}</dd>
-      <dt>Author(s)</dt>
-      <dd>{{ document.authors | join_by:", " | safe }}</dd>
+      {% if document.corp_authors %}
+        <dt>Corporate author{{ document.corp_authors|length|pluralize:",s" }}</dt>
+        <dd>{{ document.corp_authors | join_by:", " | safe }}</dd>
+      {% endif %}
+      {% if document.people_authors %}
+        <dt>Author{{ document.people_authors|length|pluralize:",s" }}</dt>
+        <dd>{{ document.people_authors | join_by:", " | safe }}</dd>
+      {% endif %}
       {% if document.parent_title %}
         <dt>In</dt>
         <dd>{{ document.parent_title | safe }}</dd>
@@ -43,7 +49,7 @@
       </dd>
       {% endif %}
       {% if document.solr.litLinkDOI %}
-      <dt>DOI</dt>
+      <dt>Available DOI</dt>
       <dd>
           <a class="decision-link" href="{{ document.solr.litLinkDOI | url_normalize }}">{{ document.solr.litLinkDOI }}</a>
       </dd>
@@ -65,9 +71,9 @@
         <dt>Field of application</dt>
         <dd>{{ document.jurisdiction }}</dd>
       {% endif %}
-      {% if document.country %}
-        <dt>Country</dt>
-        <dd>{{ document.country }}</dd>
+      {% if document.countries %}
+        <dt>Countr{{ document.countries|length|pluralize:"y,ies" }}</dt>
+        <dd>{{ document.countries | join_by:", " | safe }}</dd>
       {% endif %}
 
       <dt>Subjects</dt>

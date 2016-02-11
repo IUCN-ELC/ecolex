@@ -162,6 +162,7 @@ MULTIVALUED_FIELDS = [
     'litKeyword', 'litKeyword_fr', 'litKeyword_sp',
     'litContributor',
     'litTypeOfText', 'litTypeOfText_sp', 'litTypeOfText_fr',
+    'litCountry', 'litCountry_sp', 'litCountry_fr',
 ]
 
 
@@ -218,7 +219,7 @@ class LiteratureImporter(object):
 
     def harvest(self, batch_size):
         total = 0
-        for year in range(self.end_year, self.start_year, -1):
+        for year in range(self.end_year, self.start_year-1, -1):
             raw_literatures = []
 
             for month in range(self.start_month, self.end_month+1):

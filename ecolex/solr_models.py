@@ -2,6 +2,7 @@ from collections import OrderedDict
 from datetime import datetime
 from html import unescape
 import functools
+import itertools
 
 from django.core.urlresolvers import reverse
 from django.utils.html import strip_tags
@@ -435,18 +436,26 @@ class Literature(ObjectNormalizer):
     def jurisdiction(self):
         return first(self.solr.get('litScope'))
 
-    def authors(self):
-        authors = self.solr.get('litAuthorArticle')
+    def corp_authors(self):
+        authors = self.solr.get('litCorpAuthorArticle', [])
         if not authors:
-            authors = self.solr.get('litCorpAuthorArticle')
-        if not authors:
-            authors = self.solr.get('litAuthor')
-        if not authors:
-            authors = self.solr.get('litCorpAuthor')
+            authors = self.solr.get('litCorpAuthor', [])
         return authors
 
-    def country(self):
-        return first(self.solr.get('litCountry'))
+    def people_authors(self):
+        authors = self.solr.get('litAuthorArticle', [])
+        if not authors:
+            authors = self.solr.get('litAuthor', [])
+        return authors
+
+    def authors(self):
+        return [item for item in itertools.chain(
+            self.corp_authors(),
+            self.people_authors(),
+        )]
+
+    def countries(self):
+        return self.solr.get('litCountry')
 
     def publisher(self):
         return first(self.solr.get('litPublisher'))

@@ -31,7 +31,10 @@
 
   {% elif result.type == "literature" %}
     {% if result.authors %}
-        <p class="search-result-details"><strong>Author(s): </strong><span>{{ result.authors | join_by:", " | safe }}</span></p>
+        <p class="search-result-details">
+            <strong>Author{{ result.authors|length|pluralize:",s" }}: </strong>
+            <span>{{ result.authors | join_by:", " | safe }}</span>
+        </p>
     {% endif %}
 
     <p class="search-result-details">
@@ -49,8 +52,8 @@
       <strong class="sr-type">{{ result.type|capfirst }}</strong>
       {% if result.jurisdiction %}
         | <span>{{ result.jurisdiction }}</span>
-      {% elif result.country %}
-        | <span>{{ result.country }}</span>
+      {% elif result.countries %}
+        | <span>{{ result.countries | join_by:", " | safe }}</span>
       {% endif %}
       {% if result.publication_date %}
         |
