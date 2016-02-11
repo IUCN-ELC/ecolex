@@ -23,44 +23,45 @@
       {% endif %}
     </div>
     {% if result.keywords %}
-      <p class="search-result-keywords"><strong>Keywords:</strong>
+      <p class="search-result-details"><strong>Keywords:</strong>
         {{ result.keywords | join_by:", " | safe }}
       </p>
     {% endif %}
     <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></p>
 
   {% elif result.type == "literature" %}
+    {% if result.parent_title %}
+        <p class="search-result-details">
+            <strong>In:</strong> {{ result.parent_title | safe }}
+        </p>
+    {% endif %}
 
     <div class="search-result-details">
-      <strong class="sr-type">{{ result.type|capfirst }}</strong>
-      {% for author in result.authors %}
-        {% if forloop.first %}
-        |
-        {% endif %}
-        <span>{{ author }} </span>
-        {% if not forloop.last %}
-        ,
-        {% endif %}
-      {% endfor %}
-
+      {% if result.authors %}
+        <span>{{ result.authors | join_by:", " | safe }}</span>
+      {% endif %}
       {% if result.publisher %}
-        |
-        <span>{{ result.publisher }}</span>
+        | <span>{{ result.publisher }}</span>
       {% endif %}
-
       {% if result.publication_place %}
-        |
-        <span>{{ result.publication_place }}</span>
-      {% endif %}
-
-      {% if result.date %}
-        |
-        <time class="sr-date" title="Date of document: {{ result.date }}">
-          {{ result.date|date:"b j, Y"|capfirst  }}
-        </time>
+        | <span>{{ result.publication_place }}</span>
       {% endif %}
     </div>
-    <p class="search-result-keywords"><strong>Keywords:</strong>
+    <p class="search-result-details">
+      <strong class="sr-type">{{ result.type|capfirst }}</strong>
+      {% if result.jurisdiction %}
+        | <span>{{ result.jurisdiction }}</span>
+      {% elif result.country %}
+        | <span>{{ result.country }}</span>
+      {% endif %}
+      {% if result.publication_date %}
+        |
+        <time class="sr-date" title="Publication date: {{ result.publication_date }}">
+          {{ result.publication_date }}
+        </time>
+      {% endif %}
+    </p>
+    <p class="search-result-details"><strong>Keywords:</strong>
       {{ result.keywords | join_by:", " | safe }}
     </p>
     <p class="search-result-source">Source: <a target="_blank" href="http://iucn.org">{{ result.source }}</a> (ID: {{ result.document_id }})</p>
@@ -83,7 +84,7 @@
       {% endif %}
     </div>
     {% if result.keywords %}
-      <p class="search-result-keywords"><strong>Keywords:</strong>
+      <p class="search-result-details"><strong>Keywords:</strong>
         {{ result.keywords | join_by:", " | safe }}
       </p>
     {% endif %}
@@ -107,7 +108,7 @@
     </div>
     <p class="search-result-description">{# result.summary|safe #}</p>
     {% if result.keywords %}
-      <p class="search-result-keywords"><strong>Keywords:</strong>
+      <p class="search-result-details"><strong>Keywords:</strong>
         {{ result.keywords | join_by:", " | safe }}
       </p>
     {% endif %}
@@ -134,7 +135,7 @@
       {% endif %}
     </div>
     {% if result.keywords %}
-      <p class="search-result-keywords"><strong>Keywords:</strong>
+      <p class="search-result-details"><strong>Keywords:</strong>
         {{ result.keywords | join_by:", " | safe }}
       </p>
     {% endif %}

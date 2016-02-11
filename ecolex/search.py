@@ -215,6 +215,11 @@ def get_relevancy():
         'litLongTitle_sp': 100,
         'litLongTitle_other': 100,
 
+        'litPaperTitleOfText': 100,
+        'litPaperTitleOfText_fr': 100,
+        'litPaperTitleOfText_sp': 100,
+        'litPaperTitleOfText_other': 100,
+
         'cdTitleOfText_en': 100,
         'cdTitleOfText_es': 100,
         'cdTitleOfText_fr': 100,

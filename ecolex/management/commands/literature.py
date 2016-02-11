@@ -20,8 +20,8 @@ AUTHOR_SPACE = '^b'
 
 FIELD_MAP = {
     'id': 'litId',
-    'id2': 'litId',
-    'authora': 'litAuthor',
+    'id2': 'litId', #TODO - we might need different fields
+    'authora': 'litAuthor', #TODO - we need different fields
     'authorm': 'litAuthor',
     'corpauthora': 'litCorpAuthor',
     'corpauthorm': 'litCorpAuthor',

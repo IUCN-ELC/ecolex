@@ -356,14 +356,14 @@ class Literature(ObjectNormalizer):
     ID_FIELD = 'litId'
     LANGUAGE_FIELD = 'litLanguageOfDocument'
     SUMMARY_FIELD = 'litAbstract'
-    TITLE_FIELDS = ['litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp',
-                    'litLongTitle_other',
-                    'litPaperTitleOfText', 'litPaperTitleOfText_fr',
-                    'litPaperTitleOfText_sp', 'litPaperTitleOfText_other',
-                    'litTitleOfTextShort', 'litTitleOfTextShort_fr',
-                    'litTitleOfTextShort_sp', 'litTitleOfTextShort_other',
-                    'litTitleOfTextTransl', 'litTitleOfTextTransl_fr',
-                    'litTitleOfTextTransl_sp']
+    TITLE_FIELDS = [
+        'litPaperTitleOfText', 'litPaperTitleOfText_fr',
+        'litPaperTitleOfText_sp', 'litPaperTitleOfText_other',
+        'litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp', 'litLongTitle_other',
+        'litTitleOfTextShort', 'litTitleOfTextShort_fr',
+        'litTitleOfTextShort_sp', 'litTitleOfTextShort_other',
+        'litTitleOfTextTransl', 'litTitleOfTextTransl_fr', 'litTitleOfTextTransl_sp'
+    ]
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
     OPTIONAL_INFO_FIELDS = [
         ('litISBN', 'ISBN', ''),
@@ -422,6 +422,12 @@ class Literature(ObjectNormalizer):
                 references[doc_type] = results
         return references
 
+    def document_id(self):
+        obj = self.solr.get(self.ID_FIELD)
+        if obj and type(obj) is list:
+            return obj[-1]
+        return obj
+
     def details_url(self):
         return reverse('literature_details', kwargs={'id': self.id()})
 
@@ -444,7 +450,10 @@ class Literature(ObjectNormalizer):
         return first(self.solr.get('litPublPlace'))
 
     def publication_date(self):
-        return first(self.solr.get('litDateOfText'))
+        return first(self.solr.get('litDateOfTextSer')) or first(self.solr.get('litDateOfText'))
+
+    def parent_title(self):
+        return first(self.solr.get('litLongTitle')) or first(self.solr.get('litSerialTitle'))
 
     def abstract(self):
         return first(self.solr.get('litAbstract'))
