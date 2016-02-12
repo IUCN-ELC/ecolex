@@ -22,8 +22,6 @@
 
   <section id="details">
     <dl>
-      <dt>Document type</dt>
-      <dd>{{ document.type_of_document|capfirst }}</dd>
       {% if document.corp_authors %}
         <dt>Corporate author{{ document.corp_authors|length|pluralize:",s" }}</dt>
         <dd>{{ document.corp_authors | join_by:", " | safe }}</dd>
@@ -41,7 +39,8 @@
         <dt>{{ entry.label }}</dt>
         <dd>{{ entry.value }}</dd>
       {% endfor %}
-
+      <dt>Document type</dt>
+      <dd>{{ document.type_of_document|capfirst }}</dd>
       {% if document.solr.litRelatedWebSite %}
       <dt>Available web site</dt>
       <dd>
