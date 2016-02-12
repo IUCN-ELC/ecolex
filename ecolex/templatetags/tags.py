@@ -1,5 +1,6 @@
 from django import template
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import resolve, reverse
+from django.utils import translation
 import datetime
 
 register = template.Library()
@@ -62,3 +63,13 @@ def breadcrumb(label, viewname='', query='', *args, **kwargs):
     if query:
         url = '{url}?{query}'.format(url=url, query=query)
     return '<a href="{url}">{label}</a> &raquo;'.format(url=url, label=label)
+
+
+@register.simple_tag(takes_context=True)
+def translate_url(context, language):
+    view = resolve(context['view'].request.path)
+    request_language = translation.get_language()
+    translation.activate(language)
+    url = reverse(view.url_name, args=view.args, kwargs=view.kwargs)
+    translation.activate(request_language)
+    return url
