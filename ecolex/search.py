@@ -348,7 +348,8 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     params.update({
         'facet': 'on',
         'facet.field': facets or filters.keys(),
-        'facet.limit': '-1',
+        'facet.limit': -1,
+        'facet.mincount': 1,
         'facet.method': 'enum',
     })
     params['fq'] = get_fq(filters)
