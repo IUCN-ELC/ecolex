@@ -1,7 +1,8 @@
+{% spaceless %}
 {% load tags %}
-
 {% for type, count in facet.items %}
   {% if show_empty or count > 0 %}
   <option value="{{ type }}" {% if type in form_field.data %}selected{% endif %}>{{ type|safe }} ({{ count }})</option>
   {% endif %}
 {% endfor %}
+{% endspaceless %}
