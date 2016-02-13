@@ -484,9 +484,9 @@
     <field name="litScope_fr" type="text" indexed="true" stored="true"/>
     <field name="litScope_sp" type="text" indexed="true" stored="true"/>
 
-    <field name="litIntOrg" type="string" indexed="false" stored="true"/>
-    <field name="litIntOrg_fr" type="string" indexed="false" stored="true"/>
-    <field name="litIntOrg_sp" type="string" indexed="false" stored="true"/>
+    <field name="litIntOrg" type="string" indexed="true" stored="true"/>
+    <field name="litIntOrg_fr" type="string" indexed="true" stored="true"/>
+    <field name="litIntOrg_sp" type="string" indexed="true" stored="true"/>
 
     <field name="litCountry" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litCountry_fr" type="string" indexed="true" stored="true" multiValued="true"/>
