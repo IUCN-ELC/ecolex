@@ -228,9 +228,9 @@ $(document).ready(function() {
             var toggle_value = $(this).data('value');
             var is_homepage = $(this).parents().hasClass('homepage');
             if (current.indexOf(toggle_value) == -1) {
-                current.push(toggle_value);
+                current = [toggle_value];
             } else {
-                current.splice(current.indexOf(toggle_value), 1);
+                current = []
             }
             $('#id_type').val(current);
             // submit now for now
