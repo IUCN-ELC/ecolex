@@ -349,6 +349,8 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         'facet': 'on',
         'facet.field': facets or filters.keys(),
         'facet.limit': -1,
+        # TODO: mincount should be 0 when facet_filter.op = OR
+        # check show_empty parameter in SelectFacetsAjax
         'facet.mincount': 1,
         'facet.method': 'enum',
     })

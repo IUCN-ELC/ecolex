@@ -99,6 +99,7 @@ SELECT_FACETS = {
 
     'decTreatyName_en': 'dec_treaty',
 
+    'litTypeOfText': 'lit_type',
     'litAuthor': 'lit_author',
     'litSerialTitle': 'lit_serial',
     'litPublisher': 'lit_publisher',

@@ -277,17 +277,6 @@ class LiteratureImporter(object):
                         if v in data and v not in MULTIVALUED_FIELDS:
                             data[v] = data[v][0]
 
-                if 'litTypeOfText' in data and len(data['litTypeOfText']) > 1:
-                    data['litTypeOfText'] = ' '.join(data['litTypeOfText'])
-
-                if ('litTypeOfText_fr' in data and
-                        len(data['litTypeOfText_fr']) > 1):
-                    data['litTypeOfText_fr'] = ' '.join(data['litTypeOfText_fr'])
-
-                if ('litTypeOfText_sp' in data and
-                        len(data['litTypeOfText_sp']) > 1):
-                    data['litTypeOfText_sp'] = ' '.join(data['litTypeOfText_sp'])
-
                 # fix server2.php/server2neu.php in full text links
                 field_names = ['litLinkToFullText', 'litLinkToAbstract']
                 change_from = 'http://www.ecolex.org/server2.php/server2neu.php/'

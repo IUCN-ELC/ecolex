@@ -18,6 +18,11 @@ def first(obj, default=None):
         return obj[0]
     return obj if obj else default
 
+def all(obj, default=None):
+    if obj and type(obj) is list:
+        return '; '.join(obj)
+    return obj if obj else default
+
 
 class ObjectNormalizer:
     KEYWORD_FIELD = 'docKeyword'
@@ -43,7 +48,7 @@ class ObjectNormalizer:
 
     def type_of_document(self):
         type_of_doc = self.solr.get(self.DOCTYPE_FIELD)
-        return first(type_of_doc, "Unknown type of document")
+        return all(type_of_doc, "Unknown type of document")
 
     def id(self):
         return self.solr.get('id')

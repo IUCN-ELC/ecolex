@@ -464,9 +464,9 @@
     <field name="litLinkToFullText" type="string" indexed="false" stored="true"/>
     <field name="litLinkDOI" type="string" indexed="false" stored="true"/>
 
-    <field name="litTypeOfText" type="string" indexed="true" stored="true"/>
-    <field name="litTypeOfText_fr" type="string" indexed="true" stored="true"/>
-    <field name="litTypeOfText_sp" type="string" indexed="true" stored="true"/>
+    <field name="litTypeOfText" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litTypeOfText_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litTypeOfText_sp" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="litLanguageOfDocument" type="string" indexed="true" stored="true"/>
     <field name="litLanguageOfDocument_fr" type="string" indexed="true" stored="true"/>

@@ -130,11 +130,10 @@
 
       <div class="filter-header">
         <h6>Depository</h6>
+        <span class="filter-treaty pull-right" data-formid="#id_tr_depository_op">
+          {% include 'bits/operation_facet.html' with form_field=form.tr_depository_op form_target='#id_tr_depository' %}
+        </span>
       </div>
-      <ul class="filter-treaty" data-formid="#id_tr_depository_op">
-        {% include 'bits/operation_facet.html' with form_field=form.tr_depository_op form_target='#id_tr_depository' %}
-      </ul>
-      <br>
       <div id="tr_depository-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
@@ -250,17 +249,18 @@
        <div class="filter-header">
         <h6>Type of document</h6>
        </div>
-       <ul class="filter-literature" data-formid="#id_lit_type">
-       {% include 'bits/checkbox_facet.html' with facet=facets.litTypeOfText form_field=form.lit_type %}
-       </ul>
+      <div id="lit_type-filter" class="tag-select">
+        <select class="tag-options" hidden>
+        </select>
+        <input type="text" class="tm-input word-match" placeholder="Add type of document" data-formid="#id_lit_type"/>
+      </div>
 
       <div class="filter-header">
         <h6>Literature author</h6>
+        <span class="filter-literature pull-right" data-formid="#id_lit_author_op">
+          {% include 'bits/operation_facet.html' with form_field=form.lit_author_op form_target='#id_lit_author' %}
+        </span>
       </div>
-      <ul class="filter-literature" data-formid="#id_lit_author_op">
-        {% include 'bits/operation_facet.html' with form_field=form.lit_author_op form_target='#id_lit_author' %}
-      </ul>
-      <br>
       <div id="lit_author-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
