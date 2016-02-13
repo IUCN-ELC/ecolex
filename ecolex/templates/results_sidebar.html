@@ -224,12 +224,13 @@
         {% include 'bits/checkbox_facet.html' with facet=facets.legType_en form_field=form.leg_type show_empty=True %}
       </ul>
 
-      <div class="filter-header">
+       <div class="filter-header">
         <h6>Sub-national/state level</h6>
+       </div>
+      <div id="leg_territorial-filter" class="tag-select">
+        <select class="tag-options" hidden></select>
+        <input type="text" class="tm-input word-match" placeholder="Add sub-national/state level" data-formid="#id_leg_territorial"/>
       </div>
-      <ul class="filter-legislation" data-formid="#id_leg_territorial">
-        {% include 'bits/checkbox_facet.html' with facet=facets.legTerritorialSubdivision form_field=form.leg_territorial show_empty=True %}
-      </ul>
   </fieldset>
 {% endif %}
 

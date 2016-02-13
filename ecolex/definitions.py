@@ -97,6 +97,8 @@ SELECT_FACETS = {
 
     'decTreatyName_en': 'dec_treaty',
 
+    'legTerritorialSubdivision': 'leg_territorial',
+
     'litTypeOfText': 'lit_type',
     'litAuthor': 'lit_author',
     'litSerialTitle': 'lit_serial',
