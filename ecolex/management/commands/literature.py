@@ -251,7 +251,12 @@ class LiteratureImporter(object):
             literatures = self._parse(raw_literatures)
             new_literatures = filter(bool, [self._get_solr_lit(lit) for
                                      lit in literatures])
-            self.solr.add_bulk(new_literatures)
+            try:
+                self.solr.add_bulk(new_literatures)
+            except:
+                logger.exception('Error updating records, retrying')
+                year = year + 1
+
         logger.info('Finished harvesting literatures')
 
     def _parse(self, raw_literatures):
