@@ -230,14 +230,6 @@
       <ul class="filter-legislation" data-formid="#id_leg_territorial">
         {% include 'bits/checkbox_facet.html' with facet=facets.legTerritorialSubdivision form_field=form.leg_territorial show_empty=True %}
       </ul>
-
-      <div class="filter-header">
-        <h6>Legislation status</h6>
-      </div>
-      <ul class="filter-legislation" data-formid="#id_leg_status">
-        {% include 'bits/checkbox_facet.html' with facet=facets.legStatus form_field=form.leg_status show_empty=True %}
-      </ul>
-
   </fieldset>
 {% endif %}
 
