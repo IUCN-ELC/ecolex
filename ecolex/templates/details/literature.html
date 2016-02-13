@@ -22,13 +22,12 @@
 
   <section id="details">
     <dl>
-      {% if document.corp_authors %}
-        <dt>Corporate author{{ document.corp_authors|length|pluralize:",s" }}</dt>
-        <dd>{{ document.corp_authors | join_by:", " | safe }}</dd>
-      {% endif %}
       {% if document.people_authors %}
         <dt>Author{{ document.people_authors|length|pluralize:",s" }}</dt>
         <dd>{{ document.people_authors | join_by:", " | safe }}</dd>
+      {% elif document.corp_authors %}
+        <dt>Corporate author{{ document.corp_authors|length|pluralize:",s" }}</dt>
+        <dd>{{ document.corp_authors | join_by:", " | safe }}</dd>
       {% endif %}
       {% if document.parent_title %}
         <dt>In</dt>
