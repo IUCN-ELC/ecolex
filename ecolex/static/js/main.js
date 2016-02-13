@@ -14,7 +14,7 @@ $(document).ready(function() {
     });
 
     // set initial history entry
-    if (!history.state) {
+    if (!history.state && Modernizr.history) {
         var data = $('.search-form').serialize();
         history.replaceState({
             data: data,
@@ -61,10 +61,12 @@ $(document).ready(function() {
     function _push_and_submit(ajax) {
         if (ajax) {
             var data = $('.search-form').serialize();
-            history.pushState({
-                data: data,
-                tag: 'ecolex'
-            }, '', '?' + data);
+            if (Modernizr.history) {
+              history.pushState({
+                  data: data,
+                  tag: 'ecolex'
+              }, '', '?' + data);
+            }
             submit(data);
         } else {
             $('.search-form').submit();
