@@ -18,16 +18,6 @@
     </div>
 
     <dl>
-      <dt>Document type</dt><dd>{{ document.type|capfirst }}</dd>
-      <dt>Date of text</dt><dd>{{ document.date|date:"b j, Y"|capfirst }}</dd>
-
-      <dt>Source</dt>
-      <dd>{{ document.source }}, <a target="_blank" href="http://faolex.fao.org/">FAOLEX</a> (ID: {{ document.document_id }})</dd>
-    </dl>
-  </header>
-
-  <section id="details">
-    <dl>
       <dt>Country</dt>
       <dd>{{ document.country }}</dd>
 
@@ -35,14 +25,17 @@
         <dt>Territorial subdivision</dt>
         <dd>{{ document.solr.legTerritorialSubdivision }}</dd>
       {% endif %}
+      <dt>Document type</dt><dd>{{ document.type|capfirst }}</dd>
+      <dt>Date of text</dt><dd>{{ document.date|date:"b j, Y"|capfirst }}</dd>
+    </dl>
+  </header>
 
+  <section id="details">
+    <dl>
       {% if document.solr.legEntryIntoForce %}
         <dt>Entry into force notes</dt>
         <dd>{{ document.solr.legEntryIntoForce }}</dd>
       {% endif %}
-
-      <dt>Language</dt>
-      <dd>{{ document.language }}</dd>
 
       {% if document.solr.legRelatedWebSite %}
         <dt>Available web site</dt>
@@ -80,26 +73,21 @@
 
   <section id="text">
     <dl>
+      {% if document.abstract %}
       <dt>Abstract</dt>
-      <dd>
-        {% if document.abstract %}
-          <p class="abstract">{{ document.abstract|safe }}</p>
-        {% else %}
-          <p class="na">Not available</p>
-        {% endif %}
-      </dd>
+      <dd><p class="abstract">{{ document.abstract|safe }}</p></dd>
+      {% endif %}
 
+      {% if document.solr.legComment %}
       <dt>Comment</dt>
-      <dd>
-        {% if document.solr.legComment %}
-          <p class="abstract">{{ document.solr.legComment }}</p>
-        {% else %}
-          <p class="na">Not available</p>
-        {% endif %}
-      </dd>
+      <dd><p class="abstract">{{ document.solr.legComment }}</p></dd>
+      {% endif %}
+      <dt>Source</dt>
+      <dd>{{ document.source }}, <a target="_blank" href="http://faolex.fao.org/">FAOLEX</a> (ID: {{ document.document_id }})</dd>
     </dl>
   </section>
 
+{% if leg_references.items or leg_back_references.items %}
   <section id="other-references">
     <h2 class="section-title">Legislation references</h2>
     {% for label, legislations in leg_references.items %}
@@ -139,6 +127,7 @@
     {% endfor %}
 
   </section>
+{% endif %}
 
 </article>
 
