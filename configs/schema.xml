@@ -13,15 +13,17 @@
     <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
     <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
     <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
-        <analyzer type="index">
-          <tokenizer class="solr.StandardTokenizerFactory"/>
-          <filter class="solr.StandardFilterFactory"/>
-          <filter class="solr.LowerCaseFilterFactory"/>
-          <!-- <filter class="solr.StopFilterFactory"/> -->
-        </analyzer>
+      <analyzer type="index">
+        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-FoldToASCII.txt"/>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.StandardFilterFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <!-- <filter class="solr.StopFilterFactory"/> -->
+      </analyzer>
     </fieldType>
     <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
       <analyzer type="index">
+        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-FoldToASCII.txt"/>
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt,lang/stopwords_es.txt,lang/stopwords_fr.txt" />
         <!-- in this example, we will only use synonyms at query time
