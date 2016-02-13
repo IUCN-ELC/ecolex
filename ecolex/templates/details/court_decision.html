@@ -64,7 +64,9 @@
     </dl>
   </section>
 
+{% if references.items or referenced_by.items %} 
   <section id="other-references">
+    {% if references.items %}
     <h2 class="section-title">Other references</h2>
     {% for doc_type, docs in references.items %}
       <dl>
@@ -73,10 +75,10 @@
           <dd><a href="{{ doc.details_url }}">{{ doc }}</a></dd>
         {% endfor %}
       </dl>
-    {% empty %}
-      <span class="na">No references</span>
     {% endfor %}
+    {% endif %}
 
+    {% if referenced_by.items %}
     <h2 class="section-title">Referenced by</h2>
     {% for doc_type, docs in referenced_by.items %}
       <dl>
@@ -85,10 +87,10 @@
           <dd><a href="{{ doc.details_url }}">{{ doc }}</a></dd>
         {% endfor %}
       </dl>
-    {% empty %}
-      <span class="na">No references</span>
     {% endfor %}
+    {% endif %}
   </section>
+{% endif %}
 
 </article>
 {% endblock content %}
