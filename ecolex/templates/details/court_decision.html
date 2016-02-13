@@ -59,7 +59,7 @@
       <dd>{{ document.abstract|safe }}</dd>
       {% with document.solr.cdLinkToFullText_en as url %}
         <dt>Link to full text</dt>
-        <dd><a target="_blank" href="{{ url }}">{{ document.language }}</a></dd>
+        <dd><a target="_blank" href="{{ url | url_normalize }}">{{ document.language }}</a></dd>
       {% endwith %}
     </dl>
   </section>
