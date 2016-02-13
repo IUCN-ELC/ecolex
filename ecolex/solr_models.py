@@ -379,6 +379,10 @@ class Literature(ObjectNormalizer):
         ('litISBN', 'ISBN', ''),
         ('litCollation', 'Pages', ''),
         ('litSeriesFlag', 'Series', ''),
+        ('litConfName', 'Conference name', ''), # TODO: This is translatable field
+        ('litConfNo', 'Conference no', ''),
+        ('litConfPlace', 'Conference place', ''),
+        ('litConfDate', 'Conference date', ''),
         ('litLanguageOfDocument', 'Language of document', ''),
     ]
     DOCTYPE_FIELD = 'litTypeOfText'
