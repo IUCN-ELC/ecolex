@@ -1,7 +1,10 @@
+import json
 from bs4 import BeautifulSoup
 from datetime import datetime
-from ecolex.management.utils import EcolexSolr
 from collections import OrderedDict
+
+from ecolex.management.utils import EcolexSolr
+from ecolex.models import DocumentText
 
 DOCUMENT = 'record'
 META = 'meta'
@@ -109,7 +112,7 @@ def harvest_file(uploaded_file, logger):
             if field_values:
                 legislation[v] = field_values
 
-        #remove duplicates
+        #  remove duplicates
         for field_name in MULTIVALUED_FIELDS:
             field_values = legislation.get(field_name)
             if field_values:
@@ -139,6 +142,8 @@ def legislation_needs_update(old, new, logger):
 
 def add_legislation(legislations, logger):
     solr = EcolexSolr()
+    new_docs = []
+    updated_docs = []
     new_legislations = []
     updated_legislations = []
     already_indexed = 0
@@ -151,13 +156,44 @@ def add_legislation(legislations, logger):
                 legislation['updatedDate'] = (datetime.now()
                                               .strftime('%Y-%m-%dT%H:%M:%SZ'))
                 updated_legislations.append(legislation)
+
+                doc, _ = DocumentText.objects.get_or_create(doc_id=leg_id)
+                doc.status = DocumentText.INDEXED
+                doc.parsed_data = json.dumps(legislation)
+                doc.url = legislation['legLinkToFullText']
+                updated_docs.append(doc)
             else:
                 already_indexed += 1
         else:
             new_legislations.append(legislation)
+            doc = DocumentText(doc_id=leg_id,
+                               url=legislation['legLinkToFullText'],
+                               parsed_data=json.dumps(legislation),
+                               status=DocumentText.INDEXED)
+            new_docs.append(doc)
 
-    solr.add_bulk(new_legislations)
-    solr.add_bulk(updated_legislations)
-    response = 'Added %d. Updated %d. Already indexed %d' % (
-        len(new_legislations), len(updated_legislations), already_indexed)
+    result = solr.add_bulk(new_legislations)
+    new_docs = index_is_failed(new_docs, result)
+
+    result = solr.add_bulk(updated_legislations)
+    updated_docs = index_is_failed(updated_docs, result)
+
+    for doc in new_docs + updated_docs:
+        doc.save()
+
+    response = 'Total %d. Added %d. Updated %d. Already indexed %d' % (
+        len(legislation),
+        len(new_legislations),
+        len(updated_legislations),
+        already_indexed)
     return response
+
+
+def index_is_failed(docs, index_result):
+    if not index_result:
+        for doc in docs:
+            doc.status = DocumentText.INDEX_FAIL
+    else:
+        for doc in docs:
+            doc.parsed_data = ''
+    return docs

@@ -31,10 +31,14 @@ logger = logging.getLogger('import')
 def get_file_from_url(url):
     if 'http' not in url:
         url = 'http://' + url
-    response = requests.get(url, timeout=60)
+    try:
+        response = requests.get(url, timeout=10)
+    except:
+        return None
     if response.status_code != 200:
         logger.error('Invalid return code {} for {}'.format(
             response.status_code, url))
+        return None
 
     doc_content_bytes = response.content
     file_obj = BytesIO()
@@ -116,12 +120,20 @@ class EcolexSolr(object):
             return result.docs
 
     def add(self, obj):
-        self.solr.add([obj])
-        self.solr.optimize()
+        try:
+            self.solr.add([obj])
+            self.solr.optimize()
+        except:
+            return False
+        return True
 
     def add_bulk(self, bulk_obj):
-        self.solr.add(bulk_obj)
-        self.solr.optimize()
+        try:
+            self.solr.add(bulk_obj)
+            self.solr.optimize()
+        except:
+            return False
+        return True
 
     def extract(self, file):
         # TODO should probably catch and log it in the caller

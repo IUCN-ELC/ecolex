@@ -404,7 +404,7 @@
     <field name="legImplement" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="legAmends" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="legRepeals" type="string" indexed="true" stored="true" multiValued="true"/>
-
+    <field name="legText" type="text" indexed="true" stored="true"/>
 
     <!-- Document text field -->
     <field name="doc_content" type="text_general" indexed="false" stored="true" multiValued="true"/>
@@ -659,6 +659,15 @@
     <copyField source="trKeyword_es" dest="text"/>
     <copyField source="trKeyword_fr" dest="text"/>
     <copyField source="doc_content" dest="text"/>
+
+    <copyField source="legTitle" dest="text"/>
+    <copyField source="legSubject_en" dest="text"/>
+    <copyField source="legSubject_es" dest="text"/>
+    <copyField source="legSubject_fr" dest="text"/>
+    <copyField source="legKeyword_en" dest="text"/>
+    <copyField source="legKeyword_es" dest="text"/>
+    <copyField source="legKeyword_fr" dest="text"/>
+    <copyField source="legText" dest="text"/>
 
     <copyField source="litLongTitle" dest="text"/>
     <copyField source="litLongTitle_fr" dest="text"/>

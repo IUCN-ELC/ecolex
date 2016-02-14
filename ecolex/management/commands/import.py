@@ -11,9 +11,9 @@ from ecolex.management.utils import OBJ_TYPES, COURT_DECISION, TREATY
 from ecolex.management.utils import LITERATURE, COP_DECISION, LEGISLATION
 from ecolex.management.commands.court_decision import CourtDecisionImporter
 from ecolex.management.commands.treaty import TreatyImporter
+from ecolex.management.commands.legislation import LegislationImporter
 from ecolex.management.commands.literature import LiteratureImporter
 from ecolex.management.commands.cop_decision import CopDecisionImporter
-from ecolex.management.commands.legislation import update_legislation_full_text
 from ecolex.management.commands.logging import LOG_DICT
 
 logging.config.dictConfig(LOG_DICT)
@@ -24,7 +24,7 @@ CLASS_MAPPING = {
     TREATY: TreatyImporter,
     LITERATURE: LiteratureImporter,
     COP_DECISION: CopDecisionImporter,
-    LEGISLATION: CopDecisionImporter,
+    LEGISLATION: LegislationImporter,
 }
 
 
@@ -40,7 +40,7 @@ class Command(BaseCommand):
         make_option('--batch-size', type=int, default=10),
         make_option('--update-status', action='store_true'),
         make_option('--update-text', action='store_true'),
-
+        make_option('--reindex', action='store_true')
     )
 
     def handle(self, *args, **options):
@@ -52,6 +52,7 @@ class Command(BaseCommand):
         parser.add_argument('--batch-size', type=int)
         parser.add_argument('--update-status', action='store_true')
         parser.add_argument('--update-text', action='store_true')
+        parser.add_argument('--reindex', action='store_true')
         parser.set_defaults(test=False, batch_size=1)
         args = parser.parse_args()
 
@@ -70,6 +71,8 @@ class Command(BaseCommand):
         elif args.update_status:
             importer.update_status()
         elif args.update_text:
-            update_legislation_full_text()
+            importer.update_legislation_full_text()
+        elif args.reindex:
+            importer.reindex_failed_legislations()
         else:
             importer.harvest(args.batch_size)
