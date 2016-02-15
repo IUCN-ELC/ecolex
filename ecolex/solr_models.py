@@ -356,7 +356,10 @@ class Decision(ObjectNormalizer):
         return first(self.solr.get('decStatus'), "unknown")
 
     def get_language(self):
-        return first(self.solr.get('decLanguage')) or 'Document language'
+        lang_code = first(self.solr.get('decLanguage'))
+        if lang_code:
+            return LANGUAGE_MAP.get(lang_code, lang_code)
+        return 'Document language'
 
 
 class Literature(ObjectNormalizer):

@@ -204,10 +204,10 @@ class CopDecisionImporter(object):
             lang = file_dict.get('language')
             languages.add(lang if lang not in (None, 'und') else DEFAULT_LANG)
             url = file_dict.get('url')
-            # if url:
-            #     file_obj = get_file_from_url(url)
-            #     text += self.solr.extract(file_obj)
-        return text, languages
+            if url:
+                file_obj = get_file_from_url(url)
+                text += self.solr.extract(file_obj)
+        return text, list(languages)
 
     def _clean(self, text):
         try:
