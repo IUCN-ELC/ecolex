@@ -155,6 +155,7 @@ def add_legislation(legislations, logger):
             if legislation_needs_update(leg_result, legislation, logger):
                 legislation['updatedDate'] = (datetime.now()
                                               .strftime('%Y-%m-%dT%H:%M:%SZ'))
+                legislation['id'] = leg_result['id']
                 updated_legislations.append(legislation)
 
                 doc, _ = DocumentText.objects.get_or_create(doc_id=leg_id)
@@ -182,7 +183,7 @@ def add_legislation(legislations, logger):
         doc.save()
 
     response = 'Total %d. Added %d. Updated %d. Already indexed %d' % (
-        len(legislation),
+        len(legislations),
         len(new_legislations),
         len(updated_legislations),
         already_indexed)
