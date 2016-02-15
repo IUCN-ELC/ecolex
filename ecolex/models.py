@@ -1,11 +1,7 @@
 from django.db import models
 
-from bulk_update.manager import BulkUpdateManager
-
 
 class DocumentText(models.Model):
-
-    objects = BulkUpdateManager()
 
     INDEXED = 'indexed'  # Indexed, but pdf not indexed
     FULL_INDEXED = 'full_index'  # Indexed and pdf indexed
