@@ -139,11 +139,11 @@ class CopDecisionImporter(object):
                 data[FIELD_MAP[field]] = self._clean(decision[field])
 
             if data['decPublishDate']:
-                date = get_date(data['decPublishDate'])
-                data['decPublishDate'] = date.strftime("%Y-%m-%dT%H:%M:%SZ")
+                data['decPublishDate'] = get_date(data['decPublishDate'])
             if data['decUpdateDate']:
-                date = get_date(data['decUpdateDate'])
-                data['decUpdateDate'] = date.strftime("%Y-%m-%dT%H:%M:%SZ")
+                data['decUpdateDate'] = get_date(data['decUpdateDate'])
+                if not data['decPublishDate']:
+                    data['decPublishDate'] = data['decUpdateDate']
 
             data['decKeyword'] = self._parse_keywords(decision['keywords'])
             for multi_field in MULTILANGUAL_FIELDS:

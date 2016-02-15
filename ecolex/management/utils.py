@@ -50,7 +50,8 @@ def get_file_from_url(url):
 
 def get_date(text):
     datestr = re.findall("Date\((.*)\)", text)[0][:-3]
-    return datetime.fromtimestamp(int(datestr))
+    dt = datetime.fromtimestamp(int(datestr))
+    return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def valid_date(date):
