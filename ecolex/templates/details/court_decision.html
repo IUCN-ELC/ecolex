@@ -57,14 +57,22 @@
     <dl>
       <dt>Abstract</dt>
       <dd>{{ document.abstract|safe }}</dd>
-      {% with document.solr.cdLinkToFullText_en as url %}
+
+
+      {% if document.solr.cdLinkToFullText_en %}
         <dt>Link to full text</dt>
-        <dd><a target="_blank" href="{{ url | url_normalize }}">{{ document.language }}</a></dd>
-      {% endwith %}
+        <dd><a target="_blank" href="{{ document.solr.cdLinkToFullText_en | url_normalize }}">{{ document.language }}</a></dd>
+      {% endif %}
+      {% if document.solr.cdFiles %}
+        <dt>Files</dt>
+        {% for link in document.solr.cdFiles %}
+          <dd><a href="{{ link }}">{{ document.title|safe }}</a></dd>
+        {% endfor %}
+      {% endif %}
     </dl>
   </section>
 
-{% if references.items or referenced_by.items %} 
+{% if references.items or referenced_by.items %}
   <section id="other-references">
     {% if references.items %}
     <h2 class="section-title">Other references</h2>

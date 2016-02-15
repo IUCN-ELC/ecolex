@@ -312,7 +312,7 @@
     <field name="cdFaolexUrl_es" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdFaolexUrl_fr" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdFaolexUrl_ru" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdFiles" type="string" indexed="false" stored="false" multiValued="true"/>
+    <field name="cdFiles" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="cdInformeaTags" type="string" indexed="false" stored="false" multiValued="true"/>
     <field name="cdInternetReference" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdInternetReference_en" type="string" indexed="false" stored="true" multiValued="false"/>

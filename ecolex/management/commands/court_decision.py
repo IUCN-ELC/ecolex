@@ -102,7 +102,8 @@ DATE_FIELDS = [
 INTEGER_FIELDS = ['field_number_of_pages']
 COUNTRY_FIELDS = ['field_country']
 LANGUAGE_FIELDS = ['field_source_language']
-CONTENT_FIELDS = ['field_url']
+FILES_FIELDS = ['field_files']
+FULL_TEXT_FIELDS = ['field_url']
 REGION_FIELDS = ['field_territorial_subdivision']
 REFERENCE_FIELDS = {'field_treaty': 'original_id',
                     'field_court_decision': 'uuid'}
@@ -204,13 +205,18 @@ class CourtDecision(object):
             else:
                 solr_decision[solr_field] = get_value(json_field, json_value)
 
-            if json_field in CONTENT_FIELDS and json_value:
+            if json_field in FILES_FIELDS and json_value:
+                urls = [d.get('url') for d in json_value]
+                files = [get_file_from_url(url) for url in urls if url]
+                solr_decision['text'] += '\n'.join(self.solr.extract(f)
+                                                   for f in files)
+
+            if json_field in FULL_TEXT_FIELDS and json_value:
                 urls = [d.get('url') for val in json_value.values()
                         for d in val]
                 files = [get_file_from_url(url) for url in urls if url]
                 solr_decision['text'] += '\n'.join(self.solr.extract(f)
                                                    for f in files)
-
         return solr_decision
 
 
