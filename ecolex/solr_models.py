@@ -5,6 +5,7 @@ import functools
 
 from django.core.urlresolvers import reverse
 from django.utils.html import strip_tags
+from django.template.defaultfilters import date as django_date_filter
 
 from ecolex.definitions import DOC_SOURCES, LANGUAGE_MAP
 
@@ -613,14 +614,16 @@ class Legislation(ObjectNormalizer):
     def date(self):
         text_date = first(self.solr.get('legDate'))
         if text_date:
-            return (datetime.strptime(text_date, '%Y-%m-%dT%H:%M:%SZ')
-                    .strftime('%b %-d, %Y'))
-        original_date = first(self.solr.get('legOridingalDate'))
-        consolidation_date = first(self.solr.get('legOridingalDate'))
-        if original_date and consolidation_date:
-            original_date = (datetime.strptime(original_date,
-                             '%Y-%m-%dT%H:%M:%SZ').strftime('%b %-d, %Y'))
-            consolidation_date = (datetime.strptime(consolidation_date,
-                                  '%Y-%m-%dT%H:%M:%SZ').strftime('%b %-d, %Y'))
-            return '%s (%s)' % (original_date, consolidation_date)
+            return django_date_filter(datetime.strptime(
+                   text_date, '%Y-%m-%dT%H:%M:%SZ'), 'b j, Y').title()
+        original_date = first(self.solr.get('legOriginalDate'))
+        consolidation_date = first(self.solr.get('legConsolidationDate'))
+        #import pdb;pdb.set_trace()
+        if original_date:
+            original_date = django_date_filter(datetime.strptime(original_date,
+                            '%Y-%m-%dT%H:%M:%SZ'), 'b j, Y').title()
+            if consolidation_date:
+                consolidation_date = django_date_filter(datetime.strptime(
+                    consolidation_date,'%Y-%m-%dT%H:%M:%SZ'), ' (b j, Y)').title()
+            return '%s %s' % (original_date, consolidation_date or '')
         return ""
