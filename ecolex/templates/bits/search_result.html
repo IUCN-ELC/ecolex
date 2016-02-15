@@ -126,7 +126,7 @@
       {% if result.date %}
         |
         <time class="sr-date" tile="Date of document: {{ result.date }}">
-         {{ result.date|date:"b j, Y"|capfirst }}
+         {{ result.date }}
         </time>
       {% endif %}
       {% if result.status and result.status != "in force" %}

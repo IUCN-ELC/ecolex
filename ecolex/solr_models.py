@@ -609,3 +609,18 @@ class Legislation(ObjectNormalizer):
 
     def abstract(self):
         return first(self.solr.get('legAbstract'))
+
+    def date(self):
+        text_date = first(self.solr.get('legDate'))
+        if text_date:
+            return (datetime.strptime(text_date, '%Y-%m-%dT%H:%M:%SZ')
+                    .strftime('%b %-d, %Y'))
+        original_date = first(self.solr.get('legOridingalDate'))
+        consolidation_date = first(self.solr.get('legOridingalDate'))
+        if original_date and consolidation_date:
+            original_date = (datetime.strptime(original_date,
+                             '%Y-%m-%dT%H:%M:%SZ').strftime('%b %-d, %Y'))
+            consolidation_date = (datetime.strptime(consolidation_date,
+                                  '%Y-%m-%dT%H:%M:%SZ').strftime('%b %-d, %Y'))
+            return '%s (%s)' % (original_date, consolidation_date)
+        return ""
