@@ -542,7 +542,7 @@ class CourtDecision(ObjectNormalizer):
         if langcodes:
             return ', '.join([LANGUAGE_MAP.get(code, code)
                              for code in langcodes])
-        return 'Not available'
+        return 'Document language'
 
     def abstract(self):
         return first(self.solr.get('cdAbstract_en'))
