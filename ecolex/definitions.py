@@ -124,6 +124,8 @@ SOLR_FIELDS = [
     'trPaperTitleOfText_sp', 'trPaperTitleOfText_other', 'trTitleOfTextShort',
     'trElisId', 'decTreatyName_en',
     'decTitleOfText', 'decStatus', 'decPublishDate', 'decUpdateDate',
+    'decShortTitle_en', 'decShortTitle_fr', 'decShortTitle_es',
+    'decShortTitle_ru', 'decShortTitle_ar', 'decShortTitle_zh',
     'decNumber', 'decKeyword', 'docKeyword', 'cdKeywords',
     'litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp', 'litLongTitle_other',
     'litPaperTitleOfText', 'litPaperTitleOfText_fr', 'litPaperTitleOfText_sp', 'litPaperTitleOfText_other',
