@@ -45,7 +45,7 @@ class LegislationImporter(object):
                 obj.text = text
                 obj.save()
             else:
-                logger.info('Failed doc exctact %s %s' % (obj.url,
+                logger.info('Failed doc extract %s %s' % (obj.url,
                                                           legislation['id']))
 
 
@@ -53,7 +53,6 @@ class LegislationImporter(object):
         objs = DocumentText.objects.filter(status=DocumentText.INDEX_FAIL)
         if objs.count() > 0:
             for obj in objs:
-                import pdb; pdb.set_trace()
                 legislation = json.loads(obj.parsed_data)
                 result = self.solr.add(legislation)
                 if result:
