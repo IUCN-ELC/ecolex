@@ -24,13 +24,17 @@ BASE_FIELDS = [
 ]
 MULTILINGUAL_FIELDS = ['title', 'longTitle', 'summary', 'content']
 
+# TODO Harvest French and Spanish translations for the following fields:
+#   - decKeyword
+#   - decLanguage
+
 FIELD_MAP = {
     'id': 'decId',
     'link': 'decLink',
 
     'title': 'decShortTitle',
     'longTitle': 'decLongTitle',
-    'keywords': 'decKeyword',
+    'keywords': 'decKeyword_en',
     'summary': 'decSummary',
     'content': 'decBody',
     'type': 'decType',
@@ -163,7 +167,7 @@ class CopDecisionImporter(object):
                 if not data['decPublishDate']:
                     data['decPublishDate'] = data['decUpdateDate']
 
-            data['decKeyword'] = self._parse_keywords(decision['keywords'])
+            data['decKeyword_en'] = self._parse_keywords(decision['keywords'])
             languages = set()
             for multi_field in MULTILINGUAL_FIELDS:
                 multi_values = self._parse_multilingual(decision[multi_field])
@@ -172,7 +176,7 @@ class CopDecisionImporter(object):
                 for k, v in multi_values.items():
                     field_name = field + '_' + k
                     data[field_name] = v
-            data['decLanguage'] = list(languages) or ['en']
+            data['decLanguage_en'] = list(languages) or ['en']
 
             files = decision['files']['results']
             if files:

@@ -28,6 +28,10 @@ URL_CHANGE_FROM = 'http://www.ecolex.org/server2.php/server2neu.php/'
 URL_CHANGE_TO = 'http://www.ecolex.org/server2neu.php/'
 replace_url = lambda text: (URL_CHANGE_TO + text.split(URL_CHANGE_FROM)[-1]) if text.startswith(URL_CHANGE_FROM) else text
 
+# TODO Harvest French and Spanish translations for the following fields:
+#   - trRegion
+#   - partyCountry
+
 FIELD_MAP = {
     'recid': 'trElisId',
     'informeauid': 'trInformeaId',
@@ -100,7 +104,7 @@ FIELD_MAP = {
 
     'linktoabstract': 'trLinkToAbstract',
     'obsolete': 'trObsolete',
-    'region': 'trRegion',
+    'region': 'trRegion_en',
     'relevanttexttreaty': 'trRelevantTextTreaty',
     'scope': 'trScope',
     'searchdate': 'trSearchDate',

@@ -23,7 +23,7 @@ LEGISLATION = 'legislation'
 
 OBJ_TYPES = [TREATY, COP_DECISION, LEGISLATION, COURT_DECISION, LITERATURE]
 
-DEC_TREATY_FIELDS = ['partyCountry', 'trSubject_en']
+DEC_TREATY_FIELDS = ['partyCountry_en', 'trSubject_en']
 
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('import')

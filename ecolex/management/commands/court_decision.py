@@ -11,6 +11,12 @@ from ecolex.management.utils import COURT_DECISION
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('import')
 
+# TODO Harvest French and Spanish translations for the following fields:
+#   - cdSubject
+#   - cdKeyword
+#   - cdLanguageOfDocument
+#   - cdRegion
+
 JSON_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 FIELD_MAP = {
@@ -25,7 +31,7 @@ FIELD_MAP = {
     'field_date_of_entry': 'cdDateOfEntry',
     'field_date_of_modification': 'cdDateOfModification',
     'field_ecolex_decision_status': 'cdStatusOfDecision',
-    'field_ecolex_tags': 'cdSubject',
+    'field_ecolex_tags': 'cdSubject_en',
     'field_ecolex_url': 'cdEcolexUrl',
     'field_faolex_url': 'cdFaolexUrl',
     'field_files': 'cdFiles',
@@ -39,7 +45,7 @@ FIELD_MAP = {
     'field_reference_number': 'cdReferenceNumber',
     'field_reference_to_legislation': 'cdReferenceToLegislation',
     'field_related_url': 'cdRelatedUrl',  # relatedWebsite
-    'field_source_language': 'cdLanguageOfDocument',
+    'field_source_language': 'cdLanguageOfDocument_en',
     'field_territorial_subdivision': 'cdTerritorialSubdivision',
     'field_type_of_text': 'cdTypeOfText',
     'field_url': 'cdLinkToFullText',
@@ -47,11 +53,11 @@ FIELD_MAP = {
     'field_abstract_other': 'cdAbstractOther',
     'field_available_in': 'cdAvailableIn',
     'field_court_decision': 'cdCourtDecisionReference',
-    'field_ecolex_keywords': 'cdKeywords',
+    'field_ecolex_keywords': 'cdKeyword_en',
     'field_faolex_reference': 'cdFaolexReference',
     'field_instance': 'cdInstance',
     'field_official_publication': 'cdOfficialPublication',
-    'field_region': 'cdRegion',
+    'field_region': 'cdRegion_en',
     'field_title_of_text_other': 'cdTitleOfTextOther',
     'field_title_of_text_short': 'cdTitleOfTextShort',
     'field_treaty': 'cdTreatyReference',

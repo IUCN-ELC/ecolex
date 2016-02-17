@@ -20,7 +20,7 @@
   "cdCourtName": "Supreme Court of Bangladesh High Court Division",
   "cdDateOfModification": "2013-02-26T00:00:00Z",
   "cdTitleOfText_en": "Dr. Mohiuddin Farooque (Petitioner in Writ Petition No. 998 of 1994) and Sekandar Ali Mondol (Petitioner in Writ Petition No. 1576 of 1994) v. Bangladesh, represented by the Secretary, Ministry of Irrigation, Water Development and Flood Control",
-  "cdRegion": null,
+  "cdRegion_en": null,
   "cdInternetReference_en": "http://www.unep.org/padelia/publications/Compendium_Vol__II.pdf",
   "cdCourtDecisionReference": [
     "cff4313a-1ac1-4d01-bcc2-8955891f51b7"
@@ -35,7 +35,7 @@
   "type": "court_decision",
   "cdTitleOfTextShort": null,
   "cdFiles": null,
-  "cdKeywords": [
+  "cdKeyword_en": [
     "flood",
     "drainage/land reclamation"
   ],
@@ -43,7 +43,7 @@
   "cdAlternativeRecordId": "807625+V-997082800+",
   "cdStatusOfDecision": null,
   "text": "",
-  "cdLanguageOfDocument": "en",
+  "cdLanguageOfDocument_en": "en",
   "cdUrlOther": null,
   "cdRelatedUrl_en": "http://www.unep.org/padelia/publications/Compendium_Vol__II.pdf",
   "cdReferenceToLegislation": null,
@@ -55,7 +55,7 @@
     "Hoque, K.",
     "Huq, A., K."
   ],
-  "cdSubject": [
+  "cdSubject_en": [
     "Environment gen."
   ],
   "cdTitleOfTextOther": null,
