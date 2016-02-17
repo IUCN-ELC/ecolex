@@ -18,7 +18,7 @@ LOG_DICT = {
     },
     'handlers': {
         'file': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': str(BASE_DIR / 'import.log'),
             'formatter': 'verbose',

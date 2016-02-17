@@ -229,7 +229,8 @@ class TreatyImporter(object):
 
     def harvest(self, batch_size):
 
-        for year in range(self.end_year, self.start_year-1, -1):
+        year = self.end_year
+        while year >= self.start_year:
             raw_treaties = []
 
             for month in range(self.start_month, self.end_month+1):
@@ -238,8 +239,7 @@ class TreatyImporter(object):
                 content = get_content_from_url(url)
                 bs = BeautifulSoup(content)
                 if bs.find('error'):
-                    logger.error(url)
-                    logger.error('For %d/%d found 0 treaties' % (month, year))
+                    logger.info('For %d/%d found 0 treaties' % (month, year))
                     continue
 
                 total_docs = int(bs.find('result').attrs[TOTAL_DOCS])
@@ -258,12 +258,20 @@ class TreatyImporter(object):
                             logger.error(url)
                         raw_treaties.append(content)
 
+            logger.debug('Parsing %d pages' % (len(raw_treaties)))
             treaties = self._parse(raw_treaties)
+            logger.debug('Pre-processing %d treaties' % (len(treaties)))
             self._clean_referred_treaties(treaties)
             self._add_back_links(treaties)
             new_treaties = filter(bool, [self._get_solr_treaty(treaty) for
                                          treaty in treaties.values()])
-            self.solr.add_bulk(new_treaties)
+            logger.debug('Adding treaties')
+            try:
+                self.solr.add_bulk(new_treaties)
+                year -= 1
+            except:
+                logger.exception('Error updating records, retrying')
+
         logger.info('Finished harvesting treaties')
 
     def _parse(self, raw_treaties):
@@ -348,7 +356,9 @@ class TreatyImporter(object):
     def _get_solr_treaty(self, treaty_data):
         new_treaty = Treaty(treaty_data, self.solr)
         existing_treaty = self.solr.search(TREATY, treaty_data['trElisId'])
-        if existing_treaty and not new_treaty.is_modified(existing_treaty):
+        if not existing_treaty:
+            logger.info('Insert on %s' % (treaty_data['trElisId']))
+        elif not new_treaty.is_modified(existing_treaty):
             return None
         solr_id = existing_treaty['id'] if existing_treaty else None
         return new_treaty.get_solr_format(treaty_data['trElisId'], solr_id)
@@ -375,10 +385,12 @@ class TreatyImporter(object):
 
     def _clean_referred_treaties(self, solr_docs):
         for elis_id, doc in solr_docs.items():
-            for field_name in REFERENCE_MAPPING:
-                if field_name in doc:
-                    doc[field_name] = [ref for ref in doc[field_name]
-                                       if ref in solr_docs]
+            # Remove references not present in solr_docs
+            # for field_name in REFERENCE_MAPPING:
+            #     if field_name in doc:
+            #         doc[field_name] = [ref for ref in doc[field_name]
+            #                            if ref in solr_docs]
+            # Remove empty properties
             solr_docs[elis_id] = dict((k, v)
                                       for k, v in solr_docs[elis_id].items()
                                       if not isinstance(v, list) or any(v))
@@ -391,6 +403,14 @@ class TreatyImporter(object):
                         if ref in solr_docs:
                             solr_docs[ref].setdefault(backlink_field, [])
                             solr_docs[ref][backlink_field].append(elis_id)
+                        else:
+                            # TODO: what if link is not present in solr_docs?
+                            existing_treaty = self.solr.search(TREATY, ref)
+                            if existing_treaty:
+                                logger.warn('Backlink on %s to %s should be updated' % (ref, elis_id))
+                                # TODO
+                            else:
+                                logger.warn('%s does not exist in Solr in order to update backlink to %s' % (ref, elis_id))
 
     def _create_url(self, year, month, skip):
         query_year = self.query_format % (year, month)

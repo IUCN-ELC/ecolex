@@ -219,7 +219,8 @@ class LiteratureImporter(object):
 
     def harvest(self, batch_size):
         total = 0
-        for year in range(self.end_year, self.start_year-1, -1):
+        year = self.end_year
+        while year >= self.start_year:
             raw_literatures = []
 
             for month in range(self.start_month, self.end_month+1):
@@ -253,9 +254,9 @@ class LiteratureImporter(object):
                                      lit in literatures])
             try:
                 self.solr.add_bulk(new_literatures)
+                year -= 1
             except:
                 logger.exception('Error updating records, retrying')
-                year = year + 1
 
         logger.info('Finished harvesting literatures')
 
