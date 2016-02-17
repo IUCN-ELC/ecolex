@@ -2,7 +2,6 @@ from binascii import hexlify
 from bs4 import BeautifulSoup
 from datetime import datetime
 import html
-import json
 import logging
 import logging.config
 
@@ -31,24 +30,24 @@ FIELD_MAP = {
     'dateofmodification': 'litDateOfModification',
 
     'titleabbreviation': 'litTitleAbbreviation',
-    'titleoftext': 'litLongTitle',
+    'titleoftext': 'litLongTitle_en',
     'titleoftextfr': 'litLongTitle_fr',
-    'titleoftextsp': 'litLongTitle_sp',
+    'titleoftextsp': 'litLongTitle_es',
     'titleoftextother': 'litLongTitle_other',
 
-    'papertitleoftext': 'litPaperTitleOfText',
+    'papertitleoftext': 'litPaperTitleOfText_en',
     'papertitleoftextfr': 'litPaperTitleOfText_fr',
-    'papertitleoftextsp': 'litPaperTitleOfText_sp',
+    'papertitleoftextsp': 'litPaperTitleOfText_es',
     'papertitleoftextother': 'litPaperTitleOfText_other',
 
-    'titleoftextshort': 'litTitleOfTextShort',
+    'titleoftextshort': 'litTitleOfTextShort_en',
     'titleoftextshortfr': 'litTitleOfTextShort_fr',
-    'titleoftextshortsp': 'litTitleOfTextShort_sp',
+    'titleoftextshortsp': 'litTitleOfTextShort_es',
     'titleoftextshortother': 'litTitleOfTextShort_other',
 
-    'titleoftexttransl': 'litTitleOfTextTransl',
+    'titleoftexttransl': 'litTitleOfTextTransl_en',
     'titleoftexttranslfr': 'litTitleOfTextTransl_fr',
-    'titleoftexttranslsp': 'litTitleOfTextTransl_sp',
+    'titleoftexttranslsp': 'litTitleOfTextTransl_es',
 
     'serialtitle': 'litSerialTitle',
     'isbn': 'litISBN',
@@ -60,50 +59,50 @@ FIELD_MAP = {
     'dateoftext': 'litDateOfText',
     'linktofulltext': 'litLinkToFullText',
     'doi': 'litLinkDOI',
-    'typeoftext': 'litTypeOfText',
+    'typeoftext': 'litTypeOfText_en',
     'typeoftext_fr_fr': 'litTypeOfText_fr',
-    'typeoftext_es_es': 'litTypeOfText_sp',
+    'typeoftext_es_es': 'litTypeOfText_es',
 
-    'languageofdocument': 'litLanguageOfDocument',
+    'languageofdocument': 'litLanguageOfDocument_en',
     'languageofdocument_fr_fr': 'litLanguageOfDocument_fr',
-    'languageofdocument_es_es': 'litLanguageOfDocument_sp',
+    'languageofdocument_es_es': 'litLanguageOfDocument_es',
 
-    'subject': 'litSubject',
+    'subject': 'litSubject_en',
     'subject_fr_fr': 'litSubject_fr',
-    'subject_es_es': 'litSubject_sp',
+    'subject_es_es': 'litSubject_es',
 
-    'keyword': 'litKeyword',
+    'keyword': 'litKeyword_en',
     'keyword_fr_fr': 'litKeyword_fr',
-    'keyword_es_es': 'litKeyword_sp',
+    'keyword_es_es': 'litKeyword_es',
 
-    'scope': 'litScope',
+    'scope': 'litScope_en',
     'scope_fr_fr': 'litScope_fr',
-    'scope_es_es': 'litScope_sp',
+    'scope_es_es': 'litScope_es',
 
-    'intorg': 'litIntOrg',
+    'intorg': 'litIntOrg_en',
     'intorg_fr_fr': 'litIntOrg_fr',
-    'intorg_es_es': 'litIntOrg_sp',
+    'intorg_es_es': 'litIntOrg_es',
 
-    'country': 'litCountry',
+    'country': 'litCountry_en',
     'country_fr_fr': 'litCountry_fr',
-    'country_es_es': 'litCountry_sp',
+    'country_es_es': 'litCountry_es',
     'displaytitle': 'litDisplayTitle',
     'displaydetails': 'litDisplayDetails',
-    'displayregion': 'litDisplayRegion',
+    'displayregion': 'litDisplayRegion_en',
     'displayregion_fr_fr': 'litDisplayRegion_fr',
-    'displayregion_es_es': 'litDisplayRegion_sp',
+    'displayregion_es_es': 'litDisplayRegion_es',
 
-    'languageoftranslation': 'litLanguageOfTranslation',
+    'languageoftranslation': 'litLanguageOfTranslation_en',
     'languageoftranslation_fr_fr': 'litLanguageOfTranslation_fr',
-    'languageoftranslation_es_es': 'litLanguageOfTranslation_sp',
+    'languageoftranslation_es_es': 'litLanguageOfTranslation_es',
 
-    'region': 'litRegion',
+    'region': 'litRegion_en',
     'region_fr_fr': 'litRegion_fr',
-    'region_es_es': 'litRegion_sp',
+    'region_es_es': 'litRegion_es',
 
-    'abstract': 'litAbstract',
+    'abstract': 'litAbstract_en',
     'abstractfr': 'litAbstract_fr',
-    'abstractsp': 'litAbstract_sp',
+    'abstractsp': 'litAbstract_es',
     'abstractother': 'litAbstract_other',
     'linktoabstract': 'litLinkToAbstract',
 
@@ -121,25 +120,25 @@ FIELD_MAP = {
     'contributor': 'litContributor',
     'issn': 'litISSN',
 
-    'confname': 'litConfName',
+    'confname': 'litConfName_en',
     'confname_fr_fr': 'litConfName_fr',
-    'confname_es_es': 'litConfName_sp',
+    'confname_es_es': 'litConfName_es',
     'confnameOther': 'litConfName_other',
     'confno': 'litConfNo',
     'confplace': 'litConfPlace',
     'confdate': 'litConfDate',
 
     'dateoftextser': 'litDateOfTextSer',
-    'territorialsubdivision': 'litTerritorialSubdivision',
+    'territorialsubdivision': 'litTerritorialSubdivision_en',
     'territorialsubdivision_fr_fr': 'litTerritorialSubdivision_fr',
-    'territorialsubdivision_es_es': 'litTerritorialSubdivision_sp',
+    'territorialsubdivision_es_es': 'litTerritorialSubdivision_es',
     'edition': 'litEdition',
     'callno': 'litCallNo',
     'relatedmonograph': 'litRelatedMonograph',
 
-    'basin': 'litBasin',
+    'basin': 'litBasin_en',
     'basin_fr_fr': 'litBasin_fr',
-    'basin_es_es': 'litBasin_sp',
+    'basin_es_es': 'litBasin_es',
 
     'internetreference': 'litInternetReference',
     'referencetotreaties': 'litTreatyReference',
@@ -160,14 +159,17 @@ DATE_FIELDS = [
 MULTIVALUED_FIELDS = [
     'litId2',
     'litAuthor', 'litCorpAuthor', 'litAuthorArticle', 'litCorpAuthorArticle',
-    'litSubject', 'litSubject_fr', 'litSubject_sp',
-    'litKeyword', 'litKeyword_fr', 'litKeyword_sp',
+    'litSubject_en', 'litSubject_fr', 'litSubject_es',
+    'litKeyword_en', 'litKeyword_fr', 'litKeyword_es',
     'litContributor',
-    'litTypeOfText', 'litTypeOfText_sp', 'litTypeOfText_fr',
-    'litCountry', 'litCountry_sp', 'litCountry_fr',
-    'litRegion', 'litRegion_fr', 'litRegion_sp',
-    'litLanguageOfDocument', 'litLanguageOfDocument_fr', 'litLanguageOfDocument_sp',
+    'litTypeOfText_en', 'litTypeOfText_sp', 'litTypeOfText_fr',
+    'litCountry_en', 'litCountry_sp', 'litCountry_fr',
+    'litRegion_en', 'litRegion_fr', 'litRegion_sp',
+    'litLanguageOfDocument_en', 'litLanguageOfDocument_fr',
+    'litLanguageOfDocument_sp',
     'litLinkToFullText',
+    'litTypeOfText_en', 'litTypeOfText_fr', 'litTypeOfText_es',
+    'litCountry_en', 'litCountry_fr', 'litCountry_es',
 ]
 
 DOCUMENT_TYPE_MAP = {
@@ -187,6 +189,7 @@ URL_CHANGE_FROM = 'http://www.ecolex.org/server2.php/server2neu.php/'
 URL_CHANGE_TO = 'http://www.ecolex.org/server2neu.php/'
 replace_url = lambda text: (URL_CHANGE_TO + text.split(URL_CHANGE_FROM)[-1]) if text.startswith(URL_CHANGE_FROM) else text
 
+
 class Literature(object):
 
     def __init__(self, data, solr):
@@ -203,7 +206,7 @@ class Literature(object):
         else:
             return True
         old_date = datetime.strptime(old_record[update_field], self.date_format)
-        new_date = datetime.strptime(self.data[update_field],self.date_format)
+        new_date = datetime.strptime(self.data[update_field], self.date_format)
 
         if old_date < new_date:
             logger.info('Update on %s' % (self.data[self.elis_id]))
@@ -273,7 +276,7 @@ class LiteratureImporter(object):
             try:
                 literatures = self._parse(raw_literatures)
                 new_literatures = list(filter(bool, [self._get_solr_lit(lit) for
-                                            lit in literatures]))
+                                                     lit in literatures]))
                 self._index_files(new_literatures)
                 logger.debug('Adding literatures')
                 self.solr.add_bulk(new_literatures)
@@ -308,7 +311,7 @@ class LiteratureImporter(object):
                 # compute litDisplayType
                 id = data.get('litId')
                 if id and id[:3] in DOCUMENT_TYPE_MAP:
-                    for k,v in DOCUMENT_TYPE_MAP[id[:3]].items():
+                    for k, v in DOCUMENT_TYPE_MAP[id[:3]].items():
                         data[k] = v
 
                 literatures.append(data)
