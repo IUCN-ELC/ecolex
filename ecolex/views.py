@@ -6,78 +6,34 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
 from urllib.parse import urlencode
-from uuid import uuid4
 import logging
 
 from ecolex.legislation import harvest_file
 from ecolex.search import (
-    search, get_document, get_documents_by_field, get_treaty_by_informea_id
+    search, get_document, get_documents_by_field, get_treaty_by_informea_id,
+    SearchMixin,
 )
-from ecolex.forms import SearchForm
 from ecolex.definitions import (
-    DOC_TYPE, DOC_TYPE_FILTER_MAPPING, FIELD_TO_FACET_MAPPING, SOLR_FIELDS,
-    OPERATION_FIELD_MAPPING, SELECT_FACETS
+    FIELD_TO_FACET_MAPPING, SELECT_FACETS
 )
 
 
 logger = logging.getLogger(__name__)
 
 
-class SearchView(TemplateView):
+class SearchView(TemplateView, SearchMixin):
     template_name = 'homepage.html'
-
-    def _set_form_defaults(self, data):
-        exclude_fields = ['q', 'sortby', 'yearmin', 'yearmax']
-        fields = [x for x in SearchForm.base_fields if x not in exclude_fields]
-        for field in fields:
-            data.setdefault(field, [])
-        if 'q' in data:
-            data['q'] = data['q'][0]
-
-        data.setdefault('sortby', [''])
-        for y in ('yearmin', 'yearmax', 'sortby'):
-            data[y] = data[y][0] if y in data else None
-
-        return data
-
-    def _set_filters(self, data):
-        filters = {
-            'type': data['type'] or dict(DOC_TYPE).keys(),
-            'docKeyword': data['keyword'],
-            'docSubject': data['subject'],
-            'docCountry': data['country'],
-            'docRegion': data['region'],
-            'docLanguage': data['language'],
-            'docDate': (data['yearmin'], data['yearmax']),
-        }
-        for doc_type in filters['type']:
-            mapping = DOC_TYPE_FILTER_MAPPING[doc_type]
-            for k, v in mapping.items():
-                filters[k] = data[v]
-
-        for field in OPERATION_FIELD_MAPPING.keys():
-            field_name = OPERATION_FIELD_MAPPING[field]
-            facet_name = FIELD_TO_FACET_MAPPING[field_name]
-            if not data[field] and facet_name in filters:
-                values = filters.pop(facet_name)
-                facet_name = '{!ex=%s}' % str(uuid4())[:8] + facet_name
-                filters[facet_name] = values
-        return filters
 
     def get_context_data(self, **kwargs):
         ctx = super(SearchView, self).get_context_data(**kwargs)
-        # Prepare query
-        data = self._set_form_defaults(dict(self.request.GET))
 
-        ctx['form'] = self.form = SearchForm(data=data)
+        # Prepare query
+        self._prepare(self.request.GET)
+
+        ctx['form'] = self.form # set by _prepare above
         ctx['debug'] = settings.DEBUG
         ctx['text_suggestion'] = settings.TEXT_SUGGESTION
         ctx['query'] = urlencode(self.request.GET)
-
-        self.query = self.form.data.get('q', '').strip() or '*'
-        # Compute filters
-        self.filters = self._set_filters(data)
-        self.sortby = data['sortby']
 
         return ctx
 
@@ -129,9 +85,8 @@ class SearchResults(SearchView):
     def get_context_data(self, **kwargs):
         ctx = super(SearchResults, self).get_context_data(**kwargs)
         page = int(self.request.GET.get('page', 1))
-        fields = SOLR_FIELDS
-        results = search(self.query, filters=self.filters,
-                         sortby=self.sortby, fields=fields)
+        results = self.search()
+
         results.set_page(page)
         results.fetch()
         ctx['results'] = results
@@ -161,9 +116,8 @@ class SelectFacetsAjax(SearchView):
 
     def get(self, request, **kwargs):
         ctx = super(SelectFacetsAjax, self).get_context_data(**kwargs)
-        fields = SOLR_FIELDS
-        results = search(self.query, filters=self.filters, sortby=self.sortby,
-                         fields=fields)
+        results = self.search()
+
         facets = results.get_facets()
         data = {}
         for k, v in SELECT_FACETS.items():
