@@ -1,10 +1,12 @@
-from collections import OrderedDict
 import pysolr
+from collections import OrderedDict
+from uuid import uuid4
 from django.conf import settings
-
+from ecolex import definitions
 from ecolex.solr_models import (
     Treaty, Decision, Literature, CourtDecision, Legislation
 )
+from ecolex.forms import SearchForm
 
 
 HIGHLIGHT_FIELDS = []
@@ -399,3 +401,77 @@ def get_treaty_by_informea_id(informea_id):
 def get_all_treaties():
     result = search('type:treaty', raw=True, rows=10000)
     return result
+
+
+class SearchMixin(object):
+    """
+    Useful as a mixin for objects that perform search, e.g. views.
+    """
+
+    def _set_form_defaults(self, data):
+        """
+        This alters `data` in place with... some... defaults.
+        """
+        # TODO: why is this necessary?
+
+        exclude_fields = ['q', 'sortby', 'yearmin', 'yearmax']
+        fields = [x for x in SearchForm.base_fields if x not in exclude_fields]
+        for field in fields:
+            data.setdefault(field, [])
+        if 'q' in data:
+            data['q'] = data['q'][0]
+
+        data.setdefault('sortby', [''])
+        for y in ('yearmin', 'yearmax', 'sortby'):
+            data[y] = data[y][0] if y in data else None
+
+        return data
+
+    def _get_filters(self, data):
+        filters = {
+            'type': data['type'] or dict(definitions.DOC_TYPE).keys(),
+            'docKeyword': data['keyword'],
+            'docSubject': data['subject'],
+            'docCountry': data['country'],
+            'docRegion': data['region'],
+            'docLanguage': data['language'],
+            'docDate': (data['yearmin'], data['yearmax']),
+        }
+        for doc_type in filters['type']:
+            mapping = definitions.DOC_TYPE_FILTER_MAPPING[doc_type]
+            for k, v in mapping.items():
+                filters[k] = data[v]
+
+        for field in definitions.OPERATION_FIELD_MAPPING.keys():
+            field_name = definitions.OPERATION_FIELD_MAPPING[field]
+            facet_name = definitions.FIELD_TO_FACET_MAPPING[field_name]
+            if not data[field] and facet_name in filters:
+                values = filters.pop(facet_name)
+                facet_name = '{!ex=%s}' % str(uuid4())[:8] + facet_name
+                filters[facet_name] = values
+        return filters
+
+    def _prepare(self, data):
+        """
+        This has the side effects of setting object attributes.
+        Must be called before search.
+        """
+        # TODO: this. is. so. ugly. Must... refactor...
+
+        data = dict(data)
+        self._set_form_defaults(data)
+        self.form = SearchForm(data=data)
+
+        # TODO: seriously, don't fetch the entire database on missing query
+        self.query = self.form.data.get('q', '').strip() or '*'
+        self.filters = self._get_filters(data)
+        self.sortby = data['sortby']
+
+    def search(self, **kwargs):
+        query = kwargs.pop('query', self.query)
+
+        kwargs.setdefault('filters', self.filters)
+        kwargs.setdefault('sortby', self.sortby)
+        kwargs.setdefault('fields', definitions.SOLR_FIELDS)
+
+        return search(query, **kwargs)
