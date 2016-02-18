@@ -605,7 +605,7 @@ class Legislation(ObjectNormalizer):
         return first(self.solr.get('legType'))
 
     def language(self):
-        languages = self.solr.get('legLanguage_en')
+        languages = self.solr.get('legLanguage_en', [])
         return '/'.join(languages)
 
     def abstract(self):
