@@ -1,5 +1,6 @@
 from django.conf import settings
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
+from rest_framework import routers
 from .views import (
     SearchResults, PageView, ResultDetailsDecisions, Homepage,
     ResultDetailsParticipants, debug, SearchResultsAjax, DecMeetingView,
@@ -8,7 +9,7 @@ from .views import (
     ResultDetailsCourtDecisions, LegislationDetails,
     SelectFacetsAjax, DesignPlayground,
 )
-
+from .api import urls as api_urls
 
 urlpatterns = patterns(
     '',
@@ -45,6 +46,12 @@ urlpatterns = patterns(
         name="page"),
     url(r'^fao/$', FaoFeedView.as_view(), name='fao_feeder'),
 )
+
+urlpatterns += patterns(
+    '',
+    url(r'^api/v1.0/', include(api_urls, namespace="api")),
+)
+
 
 if settings.DEBUG:
     urlpatterns += patterns(
