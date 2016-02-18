@@ -324,10 +324,11 @@ class TreatyImporter(object):
                         # PDF's should not be parsed and indexed at this stage
                         url = replace_url(value.text)
                         logger.debug('Getting file %s.' %url)
-                        if "TRE-148890" in url:
-                            import pdb;pdb.set_trace()
-                        file_obj = get_file_from_url(url)
-                        data['text'] += self.solr.extract(file_obj)
+                        try:
+                            file_obj = get_file_from_url(url)
+                            data['text'] += self.solr.extract(file_obj)
+                        except:
+                            logger.exception('Error indexing file %s.' %url)
 
                 elis_id = data['trElisId'][0]
                 data['trElisId'] = elis_id
