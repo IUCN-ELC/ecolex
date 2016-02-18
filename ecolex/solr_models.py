@@ -614,9 +614,8 @@ class Legislation(ObjectNormalizer):
     def date(self):
         text_date = first(self.solr.get('legDate'))
         if text_date:
-            return datetime.strptime(text_date, '%Y-%m-%dT%H:%M:%SZ').date()
-
-        # TODO: handle this part in template
+            return django_date_filter(datetime.strptime(
+                   text_date, '%Y-%m-%dT%H:%M:%SZ'), 'b j, Y').title()
         original_date = first(self.solr.get('legOriginalDate'))
         consolidation_date = first(self.solr.get('legConsolidationDate'))
         #import pdb;pdb.set_trace()
