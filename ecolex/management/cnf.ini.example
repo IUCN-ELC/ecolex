@@ -19,19 +19,21 @@ QUERY_FORMAT = ES:I AND STAT:C AND DE:%d%02d
 IMPORT_FIELD = dateofentry
 QUERY_FILTER = &spage_query=%s
 QUERY_SKIP = &spage_first=%d
-QUERY_TYPE = &format_name=@xmlexp&lang=xmlf&page_header=@xmlh
+QUERY_TYPE = &format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD
 PER_PAGE = 20
 
 
 [treaty-update]
 TREATIES_URL = http://www.ecolex.org/elis_isis3w.php
-START_YEAR = 2014
+START_YEAR = 1981
+START_MONTH = 1
+END_MONTH = 12
 QUERY_EXPORT = ?database=tre&search_type=page_search&table=all
 QUERY_FORMAT = ES:I AND STAT:C AND DM:%d%02d
 IMPORT_FIELD = dateofmodification
 QUERY_FILTER = &spage_query=%s
 QUERY_SKIP = &spage_first=%d
-QUERY_TYPE = &format_name=@xmlexp&lang=xmlf&page_header=@xmlh
+QUERY_TYPE = &format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD
 PER_PAGE = 20
 
 
@@ -45,7 +47,7 @@ QUERY_FORMAT = ES:I AND STAT:C AND DE:%d%02d
 IMPORT_FIELD = dateofentry
 QUERY_FILTER = &spage_query=%s
 QUERY_SKIP = &spage_first=%d
-QUERY_TYPE = &format_name=@xmlexp&lang=xmlf&page_header=@xmlh
+QUERY_TYPE = &format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD
 PER_PAGE = 20
 
 
@@ -57,7 +59,7 @@ QUERY_FORMAT = ES:I AND STAT:C AND DM:%d%02d
 IMPORT_FIELD = dateofmodification
 QUERY_FILTER = &spage_query=%s
 QUERY_SKIP = &spage_first=%d
-QUERY_TYPE = &format_name=@xmlexp&lang=xmlf&page_header=@xmlh
+QUERY_TYPE = &format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD
 PER_PAGE = 20
 
 

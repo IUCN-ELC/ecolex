@@ -151,4 +151,5 @@ LANGUAGE_MAP = {
     'es': 'Spanish',
     'fr': 'French',
     'ru': 'Russian',
+    'other': 'Other',
 }

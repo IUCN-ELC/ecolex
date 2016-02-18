@@ -19,6 +19,9 @@ COUNTRY = 'country'
 TOTAL_DOCS = 'numberresultsfound'
 NULL_DATE = format_date('0000-00-00')
 B7 = 'International Environmental Law – Multilateral Agreements'
+URL_CHANGE_FROM = 'http://www.ecolex.org/server2.php/server2neu.php/'
+URL_CHANGE_TO = 'http://www.ecolex.org/server2neu.php/'
+replace_url = lambda text: (URL_CHANGE_TO + text.split(URL_CHANGE_FROM)[-1]) if text.startswith(URL_CHANGE_FROM) else text
 
 FIELD_MAP = {
     'recid': 'trElisId',
@@ -317,9 +320,15 @@ class TreatyImporter(object):
                 for field in URL_FIELDS:
                     value = document.find(field)
                     if value:
-                        url = value.text
-                        file_obj = get_file_from_url(url)
-                        data['text'] += self.solr.extract(file_obj)
+                        # TODO: this is duplicated code (see _apply_custom_rules).
+                        # PDF's should not be parsed and indexed at this stage
+                        url = replace_url(value.text)
+                        logger.debug('Getting file %s.' %url)
+                        try:
+                            file_obj = get_file_from_url(url)
+                            data['text'] += self.solr.extract(file_obj)
+                        except:
+                            logger.exception('Error indexing file %s.' %url)
 
                 elis_id = data['trElisId'][0]
                 data['trElisId'] = elis_id
@@ -345,9 +354,6 @@ class TreatyImporter(object):
 
         # fix server2.php/server2neu.php in full text links
         field_names = ['trLinkToFullText_en', 'trLinkToFullText_es', 'trLinkToFullText_fr', 'trLinkToFullText_other']
-        change_from = 'http://www.ecolex.org/server2.php/server2neu.php/'
-        change_to = 'http://www.ecolex.org/server2neu.php/'
-        replace_url = lambda text: (change_to + text.split(change_from)[-1]) if text.startswith(change_from) else text
         for key, value in data.items():
             if key in field_names:
                 data[key] = list(map(replace_url, data[key]))
