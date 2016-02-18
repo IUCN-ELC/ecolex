@@ -40,6 +40,10 @@ def get_file_from_url(url):
             response.status_code, url))
         return None
 
+    if response.headers['Content-Length'] == '675' and '404' in response.content.decode('UTF-8'):
+        logger.error('Potential soft 404 for {}'.format(url))
+        return None
+
     doc_content_bytes = response.content
     file_obj = BytesIO()
     file_obj.write(doc_content_bytes)
