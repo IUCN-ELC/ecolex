@@ -10,6 +10,7 @@ import hashlib
 import random
 
 from ecolex.management.commands.logging import LOG_DICT
+from django.conf import settings
 
 
 TREATY = 'treaty'
@@ -27,6 +28,16 @@ DEC_TREATY_FIELDS = ['partyCountry', 'trSubject_en']
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('import')
 
+def get_content_length_from_url(url):
+    if 'http' not in url:
+        url = 'http://' + url
+    try:
+        response = requests.head(url, timeout=10)
+        return int(response.headers['Content-Length'])
+    except:
+        if settings.DEBUG:
+            logger.exception('Error checking file {}'.format(url))
+        return None
 
 def get_file_from_url(url):
     if 'http' not in url:
@@ -34,13 +45,15 @@ def get_file_from_url(url):
     try:
         response = requests.get(url, timeout=10)
     except:
+        if settings.DEBUG:
+            logger.exception('Error downloading file {}'.format(url))
         return None
     if response.status_code != 200:
         logger.error('Invalid return code {} for {}'.format(
             response.status_code, url))
         return None
 
-    if response.headers['Content-Length'] == '675' and '404' in response.content.decode('UTF-8'):
+    if response.headers.get('Content-Length') == '675' and '404' in response.content.decode('UTF-8'):
         logger.error('Potential soft 404 for {}'.format(url))
         return None
 
@@ -128,7 +141,9 @@ class EcolexSolr(object):
         try:
             self.solr.add([obj])
             self.solr.optimize()
-        except:
+        except pysolr.SolrError as e:
+            if settings.DEBUG:
+                logging.getLogger('solr').exception(e)
             return False
         return True
 
@@ -136,14 +151,18 @@ class EcolexSolr(object):
         try:
             self.solr.add(bulk_obj)
             self.solr.optimize()
-        except:
+        except pysolr.SolrError as e:
+            if settings.DEBUG:
+                logging.getLogger('solr').exception(e)
             return False
         return True
 
     def extract(self, file):
-        # TODO should probably catch and log it in the caller
         try:
             response = self.solr.extract(file)
-        except pysolr.SolrError:
+        except pysolr.SolrError as e:
+            logger.error('Error indexing file %s' % (file.name,) )
+            if settings.DEBUG:
+                logging.getLogger('solr').exception(e)
             return ''
         return response['contents']

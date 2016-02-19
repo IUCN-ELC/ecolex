@@ -5,7 +5,7 @@ class DocumentText(models.Model):
 
     INDEXED = 'indexed'  # Indexed, but pdf not indexed
     FULL_INDEXED = 'full_index'  # Indexed and pdf indexed
-    INDEX_FAIL = 'index_fail'  # Failed to index (solr related)
+    INDEX_FAIL = 'index_fail'  # Failed to index during FAO service call (solr related)
 
     STATUS_TYPES = (
         (INDEXED, INDEXED),
@@ -14,6 +14,7 @@ class DocumentText(models.Model):
     )
 
     doc_id = models.CharField(max_length=128, null=False, blank=False)
+    doc_type = models.CharField(max_length=16, null=False, blank=False)
     url = models.CharField(max_length=128, null=True, blank=True)
     text = models.TextField(null=True, blank=True)
     parsed_data = models.TextField(null=True, blank=True)

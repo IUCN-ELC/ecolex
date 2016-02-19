@@ -17,7 +17,7 @@ from ecolex.management.commands.cop_decision import CopDecisionImporter
 from ecolex.management.commands.logging import LOG_DICT
 
 logging.config.dictConfig(LOG_DICT)
-logger = logging.getLogger(__name__)
+import_logger = logging.getLogger(__name__)
 
 CLASS_MAPPING = {
     COURT_DECISION: CourtDecisionImporter,
@@ -65,14 +65,14 @@ class Command(BaseCommand):
 
         if args.test:
             if importer.test():
-                logger.info('Test for {} passed.'.format(args.obj_type))
+                import_logger.info('Test for {} passed.'.format(args.obj_type))
             else:
-                logger.warn('Test for {} failed.'.format(args.obj_type))
+                import_logger.warn('Test for {} failed.'.format(args.obj_type))
         elif args.update_status:
             importer.update_status()
         elif args.update_text:
-            importer.update_legislation_full_text()
+            importer.update_full_text()
         elif args.reindex:
-            importer.reindex_failed_legislations()
+            importer.reindex_failed()
         else:
             importer.harvest(args.batch_size)

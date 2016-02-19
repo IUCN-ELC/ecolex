@@ -7,8 +7,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
 from urllib.parse import urlencode
 import logging
-
 from ecolex.legislation import harvest_file
+
 from ecolex.search import (
     search, get_document, get_documents_by_field, get_treaty_by_informea_id,
     SearchMixin,
@@ -359,7 +359,7 @@ class FaoFeedView(View):
             response = 'You have to attach an XML file!'
         else:
             try:
-                response = harvest_file(legislation_file, logger)
+                response = harvest_file(legislation_file)
                 logger.info(response)
                 data = {
                     'message': response

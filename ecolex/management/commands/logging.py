@@ -1,6 +1,8 @@
-from pathlib import Path
+#from pathlib import Path
+from os import path
+from ecolex.settings import BASE_DIR
 
-BASE_DIR = (Path(__file__).parent.parent / 'logs').absolute()
+#BASE_DIR = (Path(__file__).parent.parent / 'logs').absolute()
 
 LOG_DICT = {
     'version': 1,
@@ -17,10 +19,22 @@ LOG_DICT = {
         },
     },
     'handlers': {
-        'file': {
+        'import_file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': str(BASE_DIR / 'import.log'),
+            'filename': path.join(BASE_DIR, 'import.log'),
+            'formatter': 'verbose',
+        },
+        'legislation_import': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': path.join(BASE_DIR, 'legislation_import.log'),
+            'formatter': 'verbose',
+        },
+        'solr': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': path.join(BASE_DIR, 'solr.log'),
             'formatter': 'verbose',
         },
         'console': {
@@ -31,7 +45,15 @@ LOG_DICT = {
     },
     'loggers': {
         'import': {
-            'handlers': ['file', 'console'],
+            'handlers': ['import_file', 'console'],
+            'level': 'DEBUG',
+        },
+        'legislation_import': {
+            'handlers': ['legislation_import', 'console'],
+            'level': 'DEBUG',
+        },
+        'solr': {
+            'handlers': ['solr', 'console'],
             'level': 'DEBUG',
         },
     }
