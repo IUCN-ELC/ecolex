@@ -55,7 +55,6 @@ class LegislationImporter(object):
                     logger.warn('Nothing to index for %s'  % (obj.url,))
 
             # Load record and store text
-            import pdb;pdb.set_trace()
             try:
                 legislation = self.solr.search(LEGISLATION, obj.doc_id)
             except SolrError as e:
