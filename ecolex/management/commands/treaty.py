@@ -323,7 +323,7 @@ class TreatyImporter(object):
                         # TODO: this is duplicated code (see _apply_custom_rules).
                         # PDF's should not be parsed and indexed at this stage
                         url = replace_url(value.text)
-                        logger.debug('Getting file %s.' %url)
+                        logger.debug('Downloading: %s.' %url)
                         try:
                             file_obj = get_file_from_url(url)
                             data['text'] += self.solr.extract(file_obj)

@@ -1,10 +1,19 @@
 import json
+import logging
+import logging.config
+import tempfile
 from bs4 import BeautifulSoup
 from datetime import datetime
 from collections import OrderedDict
+from django.conf import settings
+from pysolr import SolrError
 
-from ecolex.management.utils import EcolexSolr
+from ecolex.management.commands.logging import LOG_DICT
+from ecolex.management.utils import EcolexSolr, LEGISLATION
 from ecolex.models import DocumentText
+
+logging.config.dictConfig(LOG_DICT)
+logger = logging.getLogger('legislation_import')
 
 DOCUMENT = 'record'
 META = 'meta'
@@ -89,14 +98,21 @@ def get_date_format(value):
     return date.strftime('%Y-%m-%dT%H:%M:%SZ')
 
 
-def harvest_file(uploaded_file, logger):
+def harvest_file(uploaded_file):
+    if settings.DEBUG:
+        with tempfile.NamedTemporaryFile(prefix=uploaded_file.name, delete=False) as f:
+            logger.debug('Dumping data to %s' %(f.name))
+            for chunk in uploaded_file.chunks():
+                f.write(chunk)
+            uploaded_file.seek(0)
+
     bs = BeautifulSoup(uploaded_file)
     documents = bs.findAll(DOCUMENT)
     legislations = []
 
     for document in documents:
         legislation = {
-            'type': 'legislation',
+            'type': LEGISLATION,
             'source': 'fao',
         }
 
@@ -130,71 +146,79 @@ def harvest_file(uploaded_file, logger):
 
         legislations.append(legislation)
 
-    response = add_legislation(legislations, logger)
+    response = add_legislations(legislations)
     return response
 
 
-def legislation_needs_update(old, new, logger):
+def legislation_needs_update(old, new):
     if old['legModificationDate'] != new['legModificationDate']:
         return True
     return False
 
 
-def add_legislation(legislations, logger):
+def add_legislations(legislations):
     solr = EcolexSolr()
     new_docs = []
     updated_docs = []
     new_legislations = []
     updated_legislations = []
+    failed_docs = []
     already_indexed = 0
 
     for legislation in legislations:
         leg_id = legislation['legId']
-        leg_result = solr.search('legislation', leg_id)
-        if leg_result:
-            if legislation_needs_update(leg_result, legislation, logger):
+        doc, _ = DocumentText.objects.get_or_create(doc_id=leg_id)
+        doc.doc_type = LEGISLATION
+        doc.status = DocumentText.INDEX_FAIL
+        try:
+            leg_result = solr.search(LEGISLATION, leg_id)
+            if leg_result:
                 legislation['updatedDate'] = (datetime.now()
                                               .strftime('%Y-%m-%dT%H:%M:%SZ'))
-                legislation['id'] = leg_result['id']
-                updated_legislations.append(legislation)
-
-                doc, _ = DocumentText.objects.get_or_create(doc_id=leg_id)
-                doc.status = DocumentText.INDEXED
-                doc.parsed_data = json.dumps(legislation)
-                doc.url = legislation['legLinkToFullText']
-                updated_docs.append(doc)
+                if legislation_needs_update(leg_result, legislation):
+                    legislation['id'] = leg_result['id']
+                    updated_legislations.append(legislation)
+                    updated_docs.append(doc)
+                else:
+                    already_indexed += 1
             else:
-                already_indexed += 1
-        else:
-            new_legislations.append(legislation)
-            doc = DocumentText(doc_id=leg_id,
-                               url=legislation['legLinkToFullText'],
-                               parsed_data=json.dumps(legislation),
-                               status=DocumentText.INDEXED)
-            new_docs.append(doc)
+                new_legislations.append(legislation)
+                new_docs.append(doc)
+        except SolrError as e:
+            logger.error('Error importing legislation %s' % (leg_id,) )
+            failed_docs.append(doc)
+            if settings.DEBUG:
+                logger.exception(e)
 
-    result = solr.add_bulk(new_legislations)
-    new_docs = index_is_failed(new_docs, result)
+        doc.parsed_data=json.dumps(legislation)
+        if ( doc.url != legislation['legLinkToFullText']):
+            doc.url=legislation['legLinkToFullText']
+            # will not re-parse if same url and doc_size
+            doc.doc_size = None
 
-    result = solr.add_bulk(updated_legislations)
-    updated_docs = index_is_failed(updated_docs, result)
-
-    for doc in new_docs + updated_docs:
+    # Mix of exceptions and True/False return status
+    # hoping that add_bulk has better performance than add
+    count_new = index_and_log(solr, new_legislations, new_docs)
+    count_updated = index_and_log(solr, updated_legislations, updated_docs)
+    for doc in new_docs + updated_docs + failed_docs:
         doc.save()
 
-    response = 'Total %d. Added %d. Updated %d. Already indexed %d' % (
+    response = 'Total %d. Added %d. Updated %d. Not modified %d. Failed %d.' % (
         len(legislations),
-        len(new_legislations),
-        len(updated_legislations),
-        already_indexed)
+        count_new,
+        count_updated,
+        already_indexed,
+        len(legislations)-count_new-count_updated-already_indexed
+    )
     return response
 
+def index_and_log(solr, legislations, docs):
+    # solr.add_bulk returns False on fail
+    if not solr.add_bulk(legislations):
+        return 0
+    for doc in docs:
+        doc.status = DocumentText.INDEXED
+        # no need to store what is already indexed in Solr
+        doc.parsed_data = ''
+    return len(legislations)
 
-def index_is_failed(docs, index_result):
-    if not index_result:
-        for doc in docs:
-            doc.status = DocumentText.INDEX_FAIL
-    else:
-        for doc in docs:
-            doc.parsed_data = ''
-    return docs
