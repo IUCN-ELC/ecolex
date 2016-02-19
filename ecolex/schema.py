@@ -1,43 +1,51 @@
-from marshmallow import Schema, fields, missing as missing_
+"""
+Usage:
 
+>>> lschema = schema.LegislationSchema(context={'lang': 'fr'})
+>>> result = lschema.load({'id': 'abc', 'legCountry_fr': 'xyz'})
+>>> result.data
+{'country': 'xyz', 'id': 'abc'}
+
+"""
+
+from marshmallow import Schema, fields
+
+
+'''
+Note that this implementation is backwards. It is load oriented,
+while it should instead be dump oriented.
+'''
 
 # monkey patch default Field implementation to support mutilingual fields
 # (it's simpler than extending every needed field type)
 if not getattr(fields.Field, '_patched', False):
-    def _patched_init(self, multilingual=False, fallback=True, **kwargs):
-        self.multilingual = multilingual
-        self.fallback = fallback
+    def _new__init__(self, *args, **kwargs):
+        self.multilingual = kwargs.pop('multilingual', False)
+        self._orig__init__(**kwargs)
 
-        self._orig_init(**kwargs)
+    def _new_add_to_schema(self, field_name, schema):
+        self._orig_add_to_schema(field_name, schema)
 
-    def _patched_get_value(self, attr, obj, accessor=None, default=missing_):
-        # this logic is copy/paste from upstream
-        attribute = getattr(self, 'attribute', None)
-        accessor_func = accessor or fields.utils.get_value
-        check_key = attr if attribute is None else attribute
+        # we now have access to context,
+        # so alter the field to load from {key}_{lang} instead
 
-        # TODO: raise error if multilingual and no language?
-        lang = self.context.get('lang') if self.multilingual else None
+        if not self.multilingual:
+            return
 
-        if not self.multilingual or not lang:
-            ck = check_key
-        elif not self.fallback:
-            ck = "%s_%s" % (check_key, lang)
+        lang = self.context.get('lang')
 
-        if not self.multilingual or not lang or not self.fallback:
-            return accessor_func(ck, obj, default)
+        if not lang:
+            return
 
-        # if multilingual and fallback, try in order key_{lang}, key, key_en
-        for ck in (
-                "%s_%s" % (check_key, lang), check_key, "%s_en" % check_key):
-            retval = accessor_func(ck, obj, default)
-            if retval is not default:
-                break
-        return retval
+        load_from = self.load_from or self.name
+        self.load_from = "%s_%s" % (load_from, lang)
 
-    fields.Field._orig_init = fields.Field.__init__
-    fields.Field.__init__ = _patched_init
-    fields.Field.get_value = _patched_get_value
+    fields.Field._orig__init__ = fields.Field.__init__
+    fields.Field._orig_add_to_schema = fields.Field._add_to_schema
+
+    fields.Field.__init__ = _new__init__
+    fields.Field._add_to_schema = _new_add_to_schema
+
     fields.Field._patched = True
 
 
@@ -123,9 +131,6 @@ class BaseSchema(Schema):
     indexed_at = fields.DateTime(load_from='indexedDate')
     updated_at = fields.DateTime(load_from='updatedDate')
 
-
-    def load(self, *args, **kwargs):
-        super().load(*args, **kwargs)
 
 # partyCountry string
 # partyDateOfAcceptanceApproval tdate
