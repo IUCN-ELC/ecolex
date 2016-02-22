@@ -387,7 +387,7 @@ def get_documents_by_field(id_name, treaty_ids, rows=None):
 def get_document(document_id, query='*', **kwargs):
     result = search(query, raw=True, filters={'id': [document_id]}, **kwargs)
     if not len(result):
-        return None
+        result = search('*', raw=True, filters={'id': [document_id]}, **kwargs)
     return result
 
 
