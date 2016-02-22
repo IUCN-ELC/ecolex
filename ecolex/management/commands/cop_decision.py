@@ -20,7 +20,7 @@ BASE_FIELDS = [
     'id', 'link', 'type', 'status', 'number', 'treaty', 'published', 'updated',
     'meetingId', 'meetingTitle', 'meetingUrl', 'TreatyUUID'
 ]
-MULTILANGUAL_FIELDS = ['title', 'longTitle']
+MULTILANGUAL_FIELDS = ['title', 'longTitle', 'summary']
 
 FIELD_MAP = {
     'id': 'decId',
@@ -146,9 +146,11 @@ class CopDecisionImporter(object):
                     data['decPublishDate'] = data['decUpdateDate']
 
             data['decKeyword'] = self._parse_keywords(decision['keywords'])
+            languages = set()
             for multi_field in MULTILANGUAL_FIELDS:
                 multi_values = self._parse_multilingual(decision[multi_field])
                 field = FIELD_MAP[multi_field]
+                languages.update(multi_values.keys())
                 for k, v in multi_values.items():
                     field_name = field + '_' + k
                     data[field_name] = v
@@ -157,7 +159,10 @@ class CopDecisionImporter(object):
             data['decBody'] = list(dec_body.values())
             files = decision['files']['results']
             if files:
-                data['text'], data['decLanguage'] = self._parse_files(files)
+                text, langs = self._parse_files(files)
+                data['text'] = text
+                languages.update(langs)
+            data['decLanguage'] = list(languages) or ['en']
 
             if data['decTreatyId']:
                 treaties = self.solr.search_all('trInformeaId',

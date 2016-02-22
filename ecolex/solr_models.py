@@ -337,7 +337,7 @@ class Treaty(ObjectNormalizer):
 
 class Decision(ObjectNormalizer):
     ID_FIELD = 'decNumber'
-    SUMMARY_FIELD = 'decBody'
+    SUMMARY_FIELD = 'decSummary_en'
     TITLE_FIELDS = ['decShortTitle_en', 'decShortTitle_fr', 'decShortTitle_es',
                     'decShortTitle_ru', 'decShortTitle_ar', 'decShortTitle_zh']
     DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
@@ -361,6 +361,12 @@ class Decision(ObjectNormalizer):
         if lang_code:
             return LANGUAGE_MAP.get(lang_code, lang_code)
         return 'Document language'
+
+    def summary(self):
+        return (first(self.solr.get('decSummary_en') or
+                      self.solr.get('decSummary_es') or
+                      self.solr.get('decSummary_fr')) or
+                '')
 
 
 class Literature(ObjectNormalizer):

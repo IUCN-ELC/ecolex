@@ -92,11 +92,11 @@
     <dl>
       <dt>Summary</dt>
       <dd>
-        {% for summary in document.solr.decSummary %}
-          <p class="summary">{{ summary|safe }}</p>
-        {% empty %}
+        {% if document.summary %}
+          <p class="summary">{{ document.summary|safe }}</p>
+        {% else %}
           <span class="na">Not available</span>
-        {% endfor %}
+        {% endif %}
       </dd>
       <dt>Decision Body</dt>
       {% for body in document.solr.decBody %}
