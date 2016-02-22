@@ -119,7 +119,7 @@ class EcolexSolr(object):
         LEGISLATION: 'legId',
     }
 
-    def __init__(self, timeout=10):
+    def __init__(self, timeout=60):
         solr_uri = os.environ.get('SOLR_URI')
         if not solr_uri:
             raise RuntimeError('SOLR_URI environment variable not set.')
