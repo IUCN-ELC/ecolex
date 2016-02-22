@@ -22,6 +22,7 @@ def first(obj, default=None):
         return obj[0]
     return obj if obj else default
 
+
 def all(obj, default=None):
     if obj and type(obj) is list:
         return '; '.join(obj)
@@ -32,8 +33,8 @@ def all(obj, default=None):
 
 
 class ObjectNormalizer:
-    KEYWORD_FIELD = 'docKeyword'
-    SUBJECT_FIELD = 'docSubject_en'
+    KEYWORD_FIELD = 'docKeyword' #del
+    SUBJECT_FIELD = 'docSubject' #del
 
     def __init__(self, solr, hl):
         self.type = solr['type']
@@ -645,8 +646,8 @@ class Legislation(ObjectNormalizer):
     SUMMARY_FIELD = 'legAbstract'
     TITLE_FIELDS = ['legTitle', 'legLongTitle']
     DATE_FIELDS = ['legDate', 'legOriginalDate']
-    KEYWORD_FIELD = 'legKeyword_en'
-    SUBJECT_FIELD = 'legSubject_en'
+    KEYWORD_FIELD = 'legKeyword_en' #del
+    SUBJECT_FIELD = 'legSubject_en' #del
     DOCTYPE_FIELD = 'legType_en'
     OPTIONAL_INFO_FIELDS = []
 
