@@ -337,7 +337,7 @@ class Treaty(ObjectNormalizer):
 
 class Decision(ObjectNormalizer):
     ID_FIELD = 'decNumber'
-    SUMMARY_FIELD = 'decSummary_en'
+    SUMMARY_FIELD = 'decBody'
     TITLE_FIELDS = ['decShortTitle_en', 'decShortTitle_fr', 'decShortTitle_es',
                     'decShortTitle_ru', 'decShortTitle_ar', 'decShortTitle_zh']
     DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
