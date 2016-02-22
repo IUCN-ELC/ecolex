@@ -25,9 +25,12 @@ def all(obj, default=None):
     return obj if obj else default
 
 
+# NOTE: code covered in schema marked with '#del'
+
+
 class ObjectNormalizer:
-    KEYWORD_FIELD = 'docKeyword'
-    SUBJECT_FIELD = 'docSubject'
+    KEYWORD_FIELD = 'docKeyword' #del
+    SUBJECT_FIELD = 'docSubject' #del
 
     def __init__(self, solr, hl):
         self.type = solr['type']
@@ -116,11 +119,11 @@ class ObjectNormalizer:
         pass
 
     @property
-    def keywords(self):
+    def keywords(self): #del
         return self.solr.get(self.KEYWORD_FIELD, [])
 
     @property
-    def subjects(self):
+    def subjects(self): #del
         return self.solr.get(self.SUBJECT_FIELD, [])
 
     @classmethod
@@ -221,8 +224,8 @@ class Treaty(ObjectNormalizer):
     ]
     DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
     DOCTYPE_FIELD = 'trTypeOfText_en'
-    KEYWORD_FIELD = 'trKeyword_en'
-    SUBJECT_FIELD = 'trSubject_en'
+    KEYWORD_FIELD = 'trKeyword_en' #del
+    SUBJECT_FIELD = 'trSubject_en' #del
     OPTIONAL_INFO_FIELDS = [
         # (solr field, display text, type=text)
         ('trTitleAbbreviation', 'Title Abbreviation', ''),
@@ -391,8 +394,8 @@ class Literature(ObjectNormalizer):
         ('litLanguageOfDocument', 'Language of document', ''),
     ]
     DOCTYPE_FIELD = 'litTypeOfText'
-    KEYWORD_FIELD = 'litKeyword'
-    SUBJECT_FIELD = 'litSubject'
+    KEYWORD_FIELD = 'litKeyword' #del
+    SUBJECT_FIELD = 'litSubject' #del
     REFERENCE_TO_FIELDS = {
         'litTreatyReference': 'treaty',
         'litLiteratureReference': 'literature',
@@ -557,8 +560,8 @@ class Legislation(ObjectNormalizer):
     SUMMARY_FIELD = 'legAbstract'
     TITLE_FIELDS = ['legTitle', 'legLongTitle']
     DATE_FIELDS = ['legDate', 'legOriginalDate']
-    KEYWORD_FIELD = 'legKeyword_en'
-    SUBJECT_FIELD = 'legSubject_en'
+    KEYWORD_FIELD = 'legKeyword_en' #del
+    SUBJECT_FIELD = 'legSubject_en' #del
 
     LEGISLATION_REFERENCE_FIELDS = {
         'legImplement': 'Implements:',

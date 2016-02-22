@@ -1,52 +1,16 @@
 """
 Usage:
 
->>> lschema = schema.LegislationSchema(context={'lang': 'fr'})
->>> result = lschema.load({'id': 'abc', 'legCountry_fr': 'xyz'})
->>> result.data
+>>> lschema = schema.LegislationSchema()
+>>> lschema.context={'language': 'fr'}
+>>> result, errors = lschema.load({'id': 'abc', 'legCountry_fr': 'xyz'})
+>>> result
 {'country': 'xyz', 'id': 'abc'}
 
 """
 
-from marshmallow import Schema, fields
 
-
-'''
-Note that this implementation is backwards. It is load oriented,
-while it should instead be dump oriented.
-'''
-
-# monkey patch default Field implementation to support mutilingual fields
-# (it's simpler than extending every needed field type)
-if not getattr(fields.Field, '_patched', False):
-    def _new__init__(self, *args, **kwargs):
-        self.multilingual = kwargs.pop('multilingual', False)
-        self._orig__init__(**kwargs)
-
-    def _new_add_to_schema(self, field_name, schema):
-        self._orig_add_to_schema(field_name, schema)
-
-        # we now have access to context,
-        # so alter the field to load from {key}_{lang} instead
-
-        if not self.multilingual:
-            return
-
-        lang = self.context.get('lang')
-
-        if not lang:
-            return
-
-        load_from = self.load_from or self.name
-        self.load_from = "%s_%s" % (load_from, lang)
-
-    fields.Field._orig__init__ = fields.Field.__init__
-    fields.Field._orig_add_to_schema = fields.Field._add_to_schema
-
-    fields.Field.__init__ = _new__init__
-    fields.Field._add_to_schema = _new_add_to_schema
-
-    fields.Field._patched = True
+from ecolex.lib.schema import Schema, fields
 
 
 '''
@@ -126,10 +90,27 @@ class BaseSchema(Schema):
     """
     Inherited by all main object schemas.
     """
+
     id = fields.String()
     type = fields.String()
     indexed_at = fields.DateTime(load_from='indexedDate')
     updated_at = fields.DateTime(load_from='updatedDate')
+
+
+class WithKWSSchema(BaseSchema):
+    """
+    For schemas with keywords and subjects.
+    """
+
+    #KEYWORDS_FIELD = 'docKeyword'
+    #SUBJECTS_FIELD = 'docSubject'
+
+    keywords = fields.List(fields.String(),
+                           multilingual=True,
+                           load_from_attribute='KEYWORDS_FIELD')
+    subjects = fields.List(fields.String(),
+                           multilingual=True,
+                           load_from_attribute='SUBJECTS_FIELD')
 
 
 # partyCountry string
@@ -278,10 +259,15 @@ class TreatyPartySchema(Schema):
 # trUrlTreatyText text
 # trUrlWikipedia text
 
-class TreatySchema(BaseSchema):
+class TreatySchema(WithKWSSchema):
+    KEYWORDS_FIELD = 'trKeyword'
+    SUBJECTS_FIELD = 'trSubject'
+
     # setting these requires special handling, TODO
-    parties = fields.Nested(TreatyPartySchema, many=True)
-    abstract = fields.String(load_from='trAbstract', multilingual=True)
+    parties = fields.Nested(TreatyPartySchema,
+                            many=True)
+    abstract = fields.String(load_from='trAbstract',
+                             multilingual=True)
     '''
     # TO BE CONTINUED
     trAmendedBy string
@@ -333,9 +319,6 @@ class TreatySchema(BaseSchema):
     trJurisdiction_en text
     trJurisdiction_es text
     trJurisdiction_fr text
-    trKeyword_en text
-    trKeyword_es text
-    trKeyword_fr text
     trLanguageOfDocument_en text
     trLanguageOfDocument_es text
     trLanguageOfDocument_fr text
@@ -367,9 +350,6 @@ class TreatySchema(BaseSchema):
     trSearchDate tdate
     trSeatOfCourt text
     trStatus string
-    trSubject_en text
-    trSubject_es text
-    trSubject_fr text
     trSupersededBy string
     trSupersedesTreaty string
     trThemeSecondary text
@@ -423,7 +403,7 @@ class TreatySchema(BaseSchema):
 
 class DecisionSchema(BaseSchema):
     body = fields.String(load_from='decBody')
-    # TODO: move this to base
+    # decision keywords are not localized
     keywords = fields.List(fields.String(), load_from='decKeyword')
     '''
     # TO BE CONTINUED
@@ -568,9 +548,13 @@ class DecisionSchema(BaseSchema):
 # litTypeOfText_sp string
 # litVolumeNo string
 
-class LiteratureSchema(BaseSchema):
+class LiteratureSchema(WithKWSSchema):
+    KEYWORDS_FIELD = 'litKeyword'
+    SUBJECTS_FIELD = 'litSubject'
+
     # TODO: what kind of multilingual is this?
-    abstract = fields.String(load_from='litAbstract', multilingual=True)
+    abstract = fields.String(load_from='litAbstract',
+                             multilingual=True)
     '''
     # TO BE CONTINUED
     litAbstract text
@@ -622,9 +606,6 @@ class LiteratureSchema(BaseSchema):
     litIntOrg_fr string
     litIntOrg_sp string
     litInternetReference string
-    litKeyword text
-    litKeyword_fr text
-    litKeyword_sp text
     litLanguageOfDocument string
     litLanguageOfDocument_fr string
     litLanguageOfDocument_sp string
@@ -660,9 +641,6 @@ class LiteratureSchema(BaseSchema):
     litSerialStatus string
     litSerialTitle string
     litSeriesFlag string
-    litSubject text
-    litSubject_fr text
-    litSubject_sp text
     litTerritorialSubdivision string
     litTerritorialSubdivision_fr string
     litTerritorialSubdivision_sp string
@@ -679,6 +657,7 @@ class LiteratureSchema(BaseSchema):
     litTypeOfText_fr string
     litTypeOfText_sp string
     litVolumeNo string
+    '''
 
 
 # cdAbstract text
@@ -761,12 +740,16 @@ class LiteratureSchema(BaseSchema):
 # cdTreatyReference string
 # cdTypeOfText string
 # cdUrlOther string
-    '''
 
-class CourtDecisionSchema(BaseSchema):
+class CourtDecisionSchema(WithKWSSchema):
+    # NOTE: cou KWSs are not localized, but let them fallback
+    KEYWORDS_FIELD = 'cdKeywords'
+    SUBJECTS_FIELD = 'cdSubject'
+
     # TODO: what kind of multilingual is this?
     # TODO: this is common to more. group together?
-    abstract = fields.String(load_from='cdAbstract', multilingual=True)
+    abstract = fields.String(load_from='cdAbstract',
+                             multilingual=True)
     '''
     # TO BE CONTINUED
     cdAbstract text
@@ -809,7 +792,6 @@ class CourtDecisionSchema(BaseSchema):
     cdIsisNumber string
     cdJurisdiction string
     cdJustices string
-    cdKeywords text
     cdLanguageOfDocument string
     cdLeoId string
     cdLinkToFullText string
@@ -835,7 +817,6 @@ class CourtDecisionSchema(BaseSchema):
     cdSeatOfCourt_fr string
     cdSeatOfCourt_ru string
     cdStatusOfDecision string
-    cdSubject text
     cdTerritorialSubdivision_en string
     cdTerritorialSubdivision_es string
     cdTerritorialSubdivision_fr string
@@ -896,11 +877,15 @@ class CourtDecisionSchema(BaseSchema):
 # legType_fr string
 
 class LegislationSchema(BaseSchema):
+    KEYWORDS_FIELD = 'legKeyword'
+    SUBJECTS_FIELD = 'legSubject'
+
     abstract = fields.String(load_from='legAbstract')
     consolidation_date = fields.Date(load_from='legConsolidationDate')
     date = fields.Date(load_from='legDate')
     entry_date = fields.Date(load_from='legEntryDate')
-    country = fields.String(load_from='legCountry', multilingual=True)
+    country = fields.String(load_from='legCountry',
+                            multilingual=True)
     country_iso = fields.String(load_from='legCountry_iso')
     '''
     # TO BE CONTINUED
@@ -913,9 +898,6 @@ class LegislationSchema(BaseSchema):
     legId string
     legImplement string
     legKeyword_code string
-    legKeyword_en text
-    legKeyword_es text
-    legKeyword_fr text
     legLanguage_code string
     legLanguage_en string
     legLanguage_es string
@@ -930,9 +912,6 @@ class LegislationSchema(BaseSchema):
     legSource string
     legStatus string
     legSubject_code string
-    legSubject_en text
-    legSubject_es text
-    legSubject_fr text
     legTerritorialSubdivision string
     legTitle text
     legTypeCode string
