@@ -218,7 +218,7 @@
 
     <div id="filter-legislation" class="collapse {% if form.has_legislation %}in{% endif %}">
       <div class="filter-header">
-        <h6>Type of legislation</h6>
+        <h6>Document type</h6>
       </div>
       <ul class="filter-legislation" data-formid="#id_leg_type">
         {% include 'bits/checkbox_facet.html' with facet=facets.legType_en form_field=form.leg_type show_empty=True %}
