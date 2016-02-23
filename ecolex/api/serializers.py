@@ -52,3 +52,8 @@ class SearchResultSerializer(BaseResultSerializer):
             return super().to_representation(instance)
         else:
             return s.to_representation(instance)
+
+
+class SearchFacetSerializer(Serializer):
+    item = fields.CharField()
+    count = fields.IntegerField()
