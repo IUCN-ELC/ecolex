@@ -50,11 +50,19 @@ class BaseFacetViewSet(ListModelMixin,
 
         search = self.request.query_params.get('search', '').strip()
         if search:
-            _re = re.compile(r'\b%s' % unaccent(search),
-                             re.I)
+            def _matches(item):
+                item = unaccent(item)
+                terms = (t for t in search.split(" ") if t)
+
+                return all(map(
+                    lambda term: re.search(r'\b%s' % unaccent(term),
+                                           item, re.I),
+                    terms
+                ))
+
             return [
                 obj_type(*item) for item in results.items()
-                if _re.search(unaccent(item[0]))
+                if _matches(item[0])
             ]
         else:
             return [
