@@ -217,6 +217,9 @@ class TreatyParticipant(object):
 class Treaty(ObjectNormalizer):
     ID_FIELD = 'trElisId'
     SUMMARY_FIELD = 'trAbstract_en'
+    TITLE_FIELD = 'trPaperTitleOfText'  # multilangual
+    # IUCN asked to show all translations of the title
+    # TODO: do not repeat the title of the current language
     TITLE_FIELDS = [
         'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
         'trPaperTitleOfText_es', 'trPaperTitleOfText_other',
@@ -228,9 +231,7 @@ class Treaty(ObjectNormalizer):
     SUBJECT_FIELD = 'trSubject_en' #del
     OPTIONAL_INFO_FIELDS = [
         # (solr field, display text, type=text)
-        ('trTitleAbbreviation', 'Title Abbreviation', ''),
         ('trPlaceOfAdoption', 'Place of adoption', ''),
-        ('trAvailableIn', 'Available in', ''),
         ('trRegion', 'Geographical area', ''),
         ('trBasin_en', 'Basin', ''),
         ('trDepository_en', 'Depository', ''),
@@ -325,6 +326,14 @@ class Treaty(ObjectNormalizer):
 
     def details_url(self):
         return reverse('treaty_details', kwargs={'id': self.id()})
+
+    def title_translations(self):
+        titles = []
+        for code, language in LANGUAGE_MAP.items():
+            title = self.solr.get('{}_{}'.format(self.TITLE_FIELD, code))
+            if title:
+                titles.append({'alttitle': first(title), 'language': language})
+        return titles
 
     @cached_property
     def link_to_full_text(self):
