@@ -74,21 +74,19 @@
         <dd>{{ document.countries | join_by:", " | safe }}</dd>
       {% endif %}
 
-      <dt>Subjects</dt>
-      <dd>
-        {% if document.subjects %}
-          {{ document.subjects | join_by:", " | safe }}
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
+      {% if document.subjects %}
+        <dt>Subjects</dt>
+        <dd>{{ document.subjects | join_by:", " | safe }}</dd>
+      {% endif %}
+
+      {% if document.keywords %}
       <dt>Keywords</dt>
       <dd>{% for keyword in document.keywords %}
             <span class="tag">{{ keyword|capfirst|safe }}</span>
-          {% empty %}
-            <span class="na">Not available</span>
           {% endfor %}
       </dd>
+      {% endif %}
+
       {% if document.abstract %}
         <dt>Abstract</dt>
         <dd><p class="abstract">{{ document.abstract|safe }}</p></dd>

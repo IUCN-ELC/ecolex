@@ -77,27 +77,23 @@
         <dd> {{ entry.value | date:"b j, Y" | capfirst | join_by:", " }}</dd>
       {% endfor %}
 
-      <dt>Keywords</dt>
-      <dd>
-        {% for keyword in document.keywords %}
-          <span class="tag">{{ keyword|capfirst|safe }}</span>
-        {% empty %}
-          <span class="na">Not available</span>
-        {% endfor %}
-      </dd>
+      {% if document.keywords %}
+        <dt>Keywords</dt>
+        <dd>
+          {% for keyword in document.keywords %}
+            <span class="tag">{{ keyword|capfirst|safe }}</span>
+          {% endfor %}
+        </dd>
+      {% endif %}
     </dl>
   </section>
 
   <section id="text">
     <dl>
-      <dt>Summary</dt>
-      <dd>
-        {% if document.summary %}
-          <p class="summary">{{ document.summary|safe }}</p>
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
+      {% if document.summary %}
+        <dt>Summary</dt>
+        <dd><p class="summary">{{ document.summary|safe }}</p></dd>
+      {% endif %}
       <dt>Decision Body</dt>
       {% for body in document.solr.decBody %}
         <dd>
@@ -105,28 +101,22 @@
           </div>
           <div class="html">{{ body|safe }}</div>
         </dd>
-      {% empty %}
-        <dd><span class="na">Not available</span></dd>
       {% endfor %}
     </dl>
   </section>
 
-  <section id="other-references">
-    <h2 class="section-title">Other references</h2>
-
-    <dl>
-      <dt>COP decisions</dt>
-      <dd>
-        {% if decisions|length %}
-          <strong>{{ decisions|length }} decisions</strong> related to this treaty.
-          <a href="{% url 'resultDecisions' document.id %}">View decisions</a>
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
-    </dl>
-
-  </section>
+  {% if decisions|length %}
+    <section id="other-references">
+      <h2 class="section-title">Other references</h2>
+      <dl>
+        <dt>COP decisions</dt>
+        <dd>
+            <strong>{{ decisions|length }} decisions</strong> related to this treaty.
+            <a href="{% url 'resultDecisions' document.id %}">View decisions</a>
+        </dd>
+      </dl>
+    </section>
+  {% endif %}
 
 </article>
 {% endblock content %}
