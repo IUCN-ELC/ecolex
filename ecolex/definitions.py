@@ -1,3 +1,5 @@
+import collections
+
 DOC_TYPE = (
     ('treaty', "Treaty"),
     ('decision', "Decision"),
@@ -146,10 +148,10 @@ SOLR_FIELDS = [
     'legDate', 'legOriginalDate', 'legConsolidationDate', 'legStatus', 'legTerritorialSubdivision', 'legId',
 ]
 
-LANGUAGE_MAP = {
-    'en': 'English',
-    'es': 'Spanish',
-    'fr': 'French',
-    'ru': 'Russian',
-    'other': 'Other',
-}
+LANGUAGE_MAP = collections.OrderedDict([
+    ('en', 'English'),
+    ('fr', 'French'),
+    ('es', 'Spanish'),
+    ('ru', 'Russian'),
+    ('other', 'Other'),
+])
