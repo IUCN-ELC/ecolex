@@ -34,22 +34,18 @@
       <dt>Justices</dt> <dd>{{ document.solr.cdJustices|join:"<br>" }}</dd>
       <dt>Reference number</dt> <dd>{{ document.solr.cdReferenceNumber }}</dd>
       <dt>Language of document</dt> <dd>{{ document.language }}</dd>
-      <dt>Subjects</dt>
-      <dd>
-        {% if document.subjects %}
-          {{ document.subjects | join_by:", " | safe }}
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
-      <dt>Keywords</dt>
-      <dd>
+      {% if document.subjects %}
+        <dt>Subjects</dt>
+        <dd>{{ document.subjects | join_by:", " | safe }}</dd>
+      {% endif %}
+      {% if document.keywords %}
+        <dt>Keywords</dt>
+        <dd>
         {% for keyword in document.keywords %}
           <span class="tag">{{ keyword|capfirst|safe }}</span>
-        {% empty %}
-          <span class="na">Not available</span>
         {% endfor %}
-      </dd>
+        </dd>
+      {% endif %}
     </dl>
   </header>
 
