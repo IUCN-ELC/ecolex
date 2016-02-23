@@ -232,8 +232,6 @@ class Treaty(ObjectNormalizer):
         ('trBasin_en', 'Basin', ''),
         ('trDepository_en', 'Depository', ''),
         ('trUrl', 'Available web site', 'url'),
-        ('trLanguageOfDocument_en', 'Language', ''),
-        ('trLanguageOfTranslation', 'Translation', ''),
         ('trOfficialPublication', 'Official publication', ''),
         ('trInternetReference_en', 'Internet Reference', ''),
         ('trDateOfConsolidation', 'Consolidation Date', 'date')
