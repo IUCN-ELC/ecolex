@@ -70,7 +70,7 @@
 
     {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
       <div class="filter-header">
-        <h6>Year Period</h6>
+        <h6>Year / Period</h6>
       </div>
       <input id="slider-years" type="text"
              data-slider-min="1860"
@@ -108,7 +108,7 @@
 
     <div id="filter-treaties" class="collapse {% if form.has_treaty %}in{% endif %}">
         <div class="filter-header">
-          <h6>Type of document</h6>
+          <h6>Document type</h6>
         </div>
         <ul class="filter-treaty" data-formid="#id_tr_type">
           {% include 'bits/checkbox_facet.html' with facet=facets.trTypeOfText_en form_field=form.tr_type show_empty=True %}
