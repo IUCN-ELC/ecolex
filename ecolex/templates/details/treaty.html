@@ -21,8 +21,6 @@
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
       <dt>Field of application</dt> <dd>{{ document.field_of_application }}</dd>
       <dt>Date</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
-      <dt>Source</dt>
-      <dd><a target="_blank" href="http://iucn.org">{{ document.source }}</a> (ID: {{ document.document_id }})</dd>
     </dl>
   </header>
 
@@ -42,6 +40,20 @@
 
   <section id="details">
     <dl>
+      {% if document.solr.trTitleAbbreviation %}
+        <dt>Title abbreviation</dt>
+        <dd><p class="alttitle">{{ document.solr.trTitleAbbreviation | join_by:", " |safe }}</p></dd>
+      {% endif %}
+
+      {% if document.title_translations %}
+        <dt>Title (translation)</dt>
+        <dd>
+          {% for title in document.title_translations %}
+            <p class="alttitle"><span>{{ title.language }} : </span>{{ title.alttitle | safe}}</p>
+          {% endfor %}
+        </dd>
+      {% endif %}
+
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>
         {% if "url" in entry.type %}
@@ -108,6 +120,12 @@
           {% endfor %}
         </dd>
       {% endif %}
+      {% if document.solr.trAvailableIn %}
+        <dt>Available in</dt>
+        <dd>{{ document.solr.trAvailableIn | join_by:", " | safe }}</dd>
+      {% endif %}
+      <dt>Source</dt>
+      <dd><a target="_blank" href="http://iucn.org">{{ document.source }}</a> (ID: {{ document.document_id }})</dd>
     </dl>
   </section>
 
