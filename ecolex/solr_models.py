@@ -85,20 +85,30 @@ class ObjectNormalizer:
     def optional_fields(self):
         res = []
         for field, label, type in self.OPTIONAL_INFO_FIELDS:
-            if not self.solr.get(field):
-                continue
             entry = {}
-            entry['type'] = first(type, 'text')
             entry['label'] = label
-            value = self.solr.get(field)
+            if isinstance(field, list):
+                values = []
+                for f in field:
+                    value = self.solr.get(f)
+                    if value:
+                        values.append(value)
+                if not values:
+                    continue
+                entry['value'] = type.join(values)
+            else:
+                if not self.solr.get(field):
+                    continue
+                entry['type'] = first(type, 'text')
+                value = self.solr.get(field)
 
-            if 'date' in type:
-                try:
-                    value = datetime.strptime(first(value),
-                                              '%Y-%m-%dT%H:%M:%SZ').date()
-                except:
-                    pass
-            entry['value'] = value
+                if 'date' in type:
+                    try:
+                        value = datetime.strptime(first(value),
+                                                '%Y-%m-%dT%H:%M:%SZ').date()
+                    except:
+                        pass
+                entry['value'] = value
             res.append(entry)
         return res
 
@@ -393,16 +403,13 @@ class Literature(ObjectNormalizer):
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
     OPTIONAL_INFO_FIELDS = [
         ('litVolumeNo', 'Volume', ''),
-        ('litPublisher', 'Publisher', ''),
-        ('litPublPlace', 'Place of publication', ''),
+        (['litPublisher', 'litPublPlace'], 'Publisher', ' | '),
         ('litDateOfText', 'Date of publication', ''),
         ('litISBN', 'ISBN', ''),
         ('litCollation', 'Pages', ''),
         ('litSeriesFlag', 'Series', ''),
-        ('litConfName', 'Conference name', ''), # TODO: This is translatable field
-        ('litConfNo', 'Conference no', ''),
-        ('litConfPlace', 'Conference place', ''),
-        ('litConfDate', 'Conference date', ''),
+         # TODO: litConfName is a translatable field
+        (['litConfName', 'litConfNo', 'litConfDate', 'litConfPlace'], 'Conference', ' | '),
         ('litLanguageOfDocument', 'Language of document', ''),
     ]
     DOCTYPE_FIELD = 'litTypeOfText'
