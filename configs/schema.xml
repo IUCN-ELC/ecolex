@@ -564,6 +564,7 @@
     <field name="litEULegislationReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litNationalLegislationReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litFaolexReference" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litText" type="text" indexed="true" stored="false"/>
 
     <uniqueKey>id</uniqueKey>
 
@@ -689,5 +690,6 @@
     <copyField source="litLongTitle_fr" dest="text"/>
     <copyField source="litLongTitle_sp" dest="text"/>
     <copyField source="litLongTitle_other" dest="text"/>
+    <copyField source="litText" dest="text"/>
 
 </schema>

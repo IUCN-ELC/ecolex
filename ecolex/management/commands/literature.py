@@ -2,6 +2,7 @@ from binascii import hexlify
 from bs4 import BeautifulSoup
 from datetime import datetime
 import html
+import json
 import logging
 import logging.config
 
@@ -9,6 +10,7 @@ from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.utils import EcolexSolr, LITERATURE
 from ecolex.management.utils import get_content_from_url, valid_date
 from ecolex.management.utils import format_date, get_file_from_url
+from ecolex.models import DocumentText
 
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('import')
@@ -149,7 +151,7 @@ FIELD_MAP = {
 
 }
 
-URL_FIELD = 'linktofulltext'
+URL_FIELD = 'litLinkToFullText'
 
 DATE_FIELDS = [
     'litDateOfEntry', 'litDateOfModification'
@@ -212,7 +214,7 @@ class LiteratureImporter(object):
         now = datetime.now()
         self.end_year = config.getint('end_year', now.year)
         self.start_month = config.getint('start_month', now.month)
-        self.end_month = config.getint('end_month', now.month)
+        self.end_month = 2
         self.solr = EcolexSolr(self.solr_timeout)
         self.force_import_all = config.getboolean('force_import_all', False)
         logger.info('Started literature importer')
@@ -223,7 +225,7 @@ class LiteratureImporter(object):
         while year >= self.start_year:
             raw_literatures = []
 
-            for month in range(self.start_month, self.end_month+1):
+            for month in range(self.start_month, self.end_month + 1):
                 skip = 0
                 url = self._create_url(year, month, skip)
                 content = get_content_from_url(url)
@@ -250,8 +252,10 @@ class LiteratureImporter(object):
                         raw_literatures.append(content)
 
             literatures = self._parse(raw_literatures)
-            new_literatures = filter(bool, [self._get_solr_lit(lit) for
-                                     lit in literatures])
+            new_literatures = list(filter(bool, [self._get_solr_lit(lit) for
+                                          lit in literatures]))
+            self._index_files(new_literatures)
+            logger.debug('Adding literatures')
             try:
                 self.solr.add_bulk(new_literatures)
                 year -= 1
@@ -269,8 +273,8 @@ class LiteratureImporter(object):
 
                 for k, v in FIELD_MAP.items():
                     field_values = doc.findAll(k)
-                    if (v in DATE_FIELDS and field_values
-                            and valid_date(field_values[0].text)):
+                    if (v in DATE_FIELDS and field_values and
+                            valid_date(field_values[0].text)):
                         data[v] = format_date(
                             self._clean_text(field_values[0].text))
                     elif field_values:
@@ -291,12 +295,40 @@ class LiteratureImporter(object):
                     if data.get(field_name) and data[field_name].startswith(change_from):
                         data[field_name] = change_to + data[field_name].split(change_from)[-1]
 
-                value = doc.find(URL_FIELD)
-                if value:
-                    file_obj = get_file_from_url(value.text)
-                    data['text'] = self.solr.extract(file_obj)
                 literatures.append(data)
         return literatures
+
+    def _index_files(self, literatures):
+        for literature in literatures:
+            url = literature.get(URL_FIELD, None)
+            if url:
+                logger.info('Downloading: %s' % url)
+                file_obj = get_file_from_url(url)
+                if file_obj:
+                    literature['litText'] = self.solr.extract(file_obj)
+                    self._document_text_pdf_success(literature)
+                    logger.info('Success on file download %s' %
+                                literature['litId'])
+                else:
+                    # Download failed
+                    self._document_text_pdf_error(literature, url)
+            else:
+                # Nothing to download
+                self._document_text_pdf_success(literature)
+
+    def _document_text_pdf_error(self, literature, url):
+        doc, _ = DocumentText.objects.get_or_create(
+            doc_id=literature['litId'], doc_type=LITERATURE)
+        doc.url = url
+        doc.parsed_data = json.dumps(literature)
+        doc.status = DocumentText.INDEXED
+        doc.save()
+
+    def _document_text_pdf_success(self, literature):
+        doc, _ = DocumentText.objects.get_or_create(
+            doc_id=literature['litId'], doc_type=LITERATURE)
+        doc.status = DocumentText.FULL_INDEXED
+        doc.save()
 
     def _get_solr_lit(self, lit_data):
         new_lit = Literature(lit_data, self.solr)
