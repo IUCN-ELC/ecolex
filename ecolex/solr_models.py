@@ -158,10 +158,10 @@ class TreatyParticipant(object):
             'acceptance/approval',
             'succession',
             'consent to be bound',
+            'definite signature',
         ],
         'signature **': [
             'simple signature',
-            'definite signature',
         ],
     }
     EVENTS_ORDER = [
