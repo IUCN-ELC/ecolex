@@ -351,7 +351,6 @@ class Decision(ObjectNormalizer):
     DOCTYPE_FIELD = 'decType'
     KEYWORD_FIELD = 'decKeyword'
     OPTIONAL_INFO_FIELDS = [
-        ('decUpdateDate', 'Date of Update', 'date'),
     ]
 
     def url(self):
