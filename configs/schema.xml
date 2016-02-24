@@ -81,6 +81,7 @@
     <field name="trAbstract_fr" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trAbstract_es" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trComment" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trText" type="text" indexed="true" stored="false"/>
 
     <field name="trTypeOfText_en" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trTypeOfText_es" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -414,7 +415,7 @@
     <field name="legImplement" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="legAmends" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="legRepeals" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="legText" type="text" indexed="true" stored="true"/>
+    <field name="legText" type="text" indexed="true" stored="false"/>
 
     <!-- Document text field -->
     <field name="doc_content" type="text_general" indexed="false" stored="true" multiValued="true"/>
@@ -657,6 +658,7 @@
     <copyField source="trAbstract_en" dest="text"/>
     <copyField source="trAbstract_es" dest="text"/>
     <copyField source="trAbstract_fr" dest="text"/>
+    <copyField source="trText" dest="text"/>
 
     <copyField source="decShortTitle_en" dest="text"/>
     <copyField source="decLongTitle_en" dest="text"/>

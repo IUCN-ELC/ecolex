@@ -43,7 +43,7 @@ def get_file_from_url(url):
     if 'http' not in url:
         url = 'http://' + url
     try:
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=60)
     except:
         if settings.DEBUG:
             logger.exception('Error downloading file {}'.format(url))
