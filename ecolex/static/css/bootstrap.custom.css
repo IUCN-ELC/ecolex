@@ -6254,6 +6254,7 @@ fieldset .filter-header {
   padding-bottom: 10px;
   border-bottom: 1px solid #dddddd;
   margin-bottom: -1px;
+  padding-top: 10px;
 }
 @media (max-width: 767px) {
   .record-details header {
