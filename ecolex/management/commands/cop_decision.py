@@ -1,4 +1,5 @@
 from datetime import date, datetime, timedelta
+from django.conf import settings
 import logging
 import logging.config
 import html
@@ -108,11 +109,18 @@ class CopDecisionImporter(object):
             skip_filter = self.query_skip % (self.per_page, skip)
             url = self._create_url(date_filter, skip_filter)
             logger.debug(url)
-            response = requests.get(url)
-            if response.status_code != 200:
-                logger.error('Invalid return code HTTP %d, retrying.' % response.status_code)
-                # Retry forever
+            try:
+                response = requests.get(url)
+                if response.status_code != 200:
+                    logger.error('Invalid return code HTTP %d, retrying.' % response.status_code)
+                    # Retry forever
+                    continue
+            except requests.exceptions.RequestException as e:
+                logger.error('Connection error, retrying')
+                if settings.DEBUG:
+                    logger.exception(e)
                 continue
+
             results = response.json()['d']['results']
             if not results:
                 break
