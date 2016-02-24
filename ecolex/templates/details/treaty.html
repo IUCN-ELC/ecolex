@@ -49,7 +49,7 @@
         <dt>Title (translation)</dt>
         <dd>
           {% for title in document.title_translations %}
-            <p class="alttitle"><span>{{ title.language }} : </span>{{ title.alttitle | safe}}</p>
+            <p class="alttitle">{{ title.alttitle | safe}}<sup>{{ title.language }}</sup></p>
           {% endfor %}
         </dd>
       {% endif %}

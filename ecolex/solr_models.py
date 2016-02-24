@@ -330,6 +330,9 @@ class Treaty(ObjectNormalizer):
     def title_translations(self):
         titles = []
         for code, language in LANGUAGE_MAP.items():
+            if code == 'en':
+                # TODO fix this when multilinguality feature is on
+                continue
             title = self.solr.get('{}_{}'.format(self.TITLE_FIELD, code))
             if title:
                 titles.append({'alttitle': first(title), 'language': language})
