@@ -38,8 +38,10 @@
         <dt>{{ entry.label }}</dt>
         <dd>{{ entry.value }}</dd>
       {% endfor %}
-      <dt>Document type</dt>
-      <dd>{{ document.type_of_document|capfirst }}</dd>
+      {% if document.type_of_document %}
+        <dt>Document type</dt>
+        <dd>{{ document.type_of_document|capfirst }}</dd>
+      {% endif %}
       {% if document.solr.litRelatedWebSite %}
       <dt>Available web site</dt>
       <dd>
