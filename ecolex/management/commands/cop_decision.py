@@ -10,7 +10,7 @@ from ecolex.management.utils import COP_DECISION, DEC_TREATY_FIELDS
 from ecolex.management.commands.logging import LOG_DICT
 
 logging.config.dictConfig(LOG_DICT)
-logger = logging.getLogger('import')
+logger = logging.getLogger('cop_decision_import')
 regex = re.compile(r'[\n\t\r]')
 
 LANGUAGES = ['en', 'es', 'fr', 'ar', 'ru', 'zh']
@@ -20,7 +20,7 @@ BASE_FIELDS = [
     'id', 'link', 'type', 'status', 'number', 'treaty', 'published', 'updated',
     'meetingId', 'meetingTitle', 'meetingUrl', 'TreatyUUID'
 ]
-MULTILANGUAL_FIELDS = ['title', 'longTitle', 'summary']
+MULTILINGUAL_FIELDS = ['title', 'longTitle', 'summary']
 
 FIELD_MAP = {
     'id': 'decId',
@@ -36,6 +36,8 @@ FIELD_MAP = {
     'number': 'decNumber',
 
     'treaty': 'decTreaty',
+    'treatyUUID': 'decTreatyId',
+    # Field name is different on cray.edw.ro
     'TreatyUUID': 'decTreatyId',
 
     'published': 'decPublishDate',
@@ -105,10 +107,12 @@ class CopDecisionImporter(object):
         while True:
             skip_filter = self.query_skip % (self.per_page, skip)
             url = self._create_url(date_filter, skip_filter)
-            print(url)
+            logger.debug(url)
             response = requests.get(url)
             if response.status_code != 200:
-                logger.error('Invalid return code %d' % response.status_code)
+                logger.error('Invalid return code HTTP %d, retrying.' % response.status_code)
+                # Retry forever
+                continue
             results = response.json()['d']['results']
             if not results:
                 break
@@ -134,9 +138,13 @@ class CopDecisionImporter(object):
 
         for decision in raw_decisions:
             data = {'type': COP_DECISION}
-
+            logger.info('Parsing decision %s' % (decision['id'],))
             for field in BASE_FIELDS:
-                data[FIELD_MAP[field]] = self._clean(decision[field])
+                # TODO - make sure TreatyUUID is the same on all odata servers
+                data[FIELD_MAP[field]] = self._clean(
+                    decision.get(field) or
+                    decision.get(field[0].lower() + field[1:])
+                )
 
             if data['decPublishDate']:
                 data['decPublishDate'] = get_date(data['decPublishDate'])
@@ -147,7 +155,7 @@ class CopDecisionImporter(object):
 
             data['decKeyword'] = self._parse_keywords(decision['keywords'])
             languages = set()
-            for multi_field in MULTILANGUAL_FIELDS:
+            for multi_field in MULTILINGUAL_FIELDS:
                 multi_values = self._parse_multilingual(decision[multi_field])
                 field = FIELD_MAP[multi_field]
                 languages.update(multi_values.keys())
@@ -178,10 +186,12 @@ class CopDecisionImporter(object):
 
     def _get_solr_decision(self, dec_data):
         new_dec = CopDecision(dec_data, self.solr)
-        exisiting_dec = self.solr.search(COP_DECISION, dec_data['decId'])
-        if exisiting_dec and not new_dec.is_modified(exisiting_dec):
+        existing_dec = self.solr.search(COP_DECISION, dec_data['decId'])
+        if not existing_dec:
+            logger.info('Insert on decision %s' % (dec_data['decId'],))
+        if existing_dec and not new_dec.is_modified(existing_dec):
             return None
-        solr_id = exisiting_dec['id'] if exisiting_dec else None
+        solr_id = existing_dec['id'] if existing_dec else None
         return new_dec.get_solr_format(dec_data['decId'], solr_id)
 
     def _parse_keywords(self, info):
@@ -210,6 +220,8 @@ class CopDecisionImporter(object):
             languages.add(lang if lang not in (None, 'und') else DEFAULT_LANG)
             url = file_dict.get('url')
             if url:
+                # TODO: do not download and extract files when record should not be updated
+                logger.debug('Downloading %s' % (url,))
                 file_obj = get_file_from_url(url)
                 text += self.solr.extract(file_obj)
         return text, list(languages)

@@ -31,6 +31,12 @@ LOG_DICT = {
             'filename': path.join(BASE_DIR, 'legislation_import.log'),
             'formatter': 'verbose',
         },
+        'cop_decision_import': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': path.join(BASE_DIR, 'cop_decision_import.log'),
+            'formatter': 'verbose',
+        },
         'solr': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
@@ -50,6 +56,10 @@ LOG_DICT = {
         },
         'legislation_import': {
             'handlers': ['legislation_import', 'console'],
+            'level': 'DEBUG',
+        },
+        'cop_decision_import': {
+            'handlers': ['cop_decision_import', 'console'],
             'level': 'DEBUG',
         },
         'solr': {
