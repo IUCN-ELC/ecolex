@@ -270,12 +270,12 @@ class LiteratureImporter(object):
                             logger.error(url)
                         raw_literatures.append(content)
 
-            literatures = self._parse(raw_literatures)
-            new_literatures = list(filter(bool, [self._get_solr_lit(lit) for
-                                          lit in literatures]))
-            self._index_files(new_literatures)
-            logger.debug('Adding literatures')
             try:
+                literatures = self._parse(raw_literatures)
+                new_literatures = list(filter(bool, [self._get_solr_lit(lit) for
+                                            lit in literatures]))
+                self._index_files(new_literatures)
+                logger.debug('Adding literatures')
                 self.solr.add_bulk(new_literatures)
                 year -= 1
             except:
