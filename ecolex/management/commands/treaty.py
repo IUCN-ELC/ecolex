@@ -16,7 +16,7 @@ from ecolex.management.utils import format_date
 from ecolex.models import DocumentText
 
 logging.config.dictConfig(LOG_DICT)
-logger = logging.getLogger('import')
+logger = logging.getLogger('treaty_import')
 
 DOCUMENT = 'document'
 PARTY = 'party'

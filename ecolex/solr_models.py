@@ -105,7 +105,9 @@ class ObjectNormalizer:
                 entry['type'] = first(type, 'text')
                 value = self.solr.get(field)
 
-                if 'date' in type:
+                if 'list' in type and isinstance(value, list):
+                    value = ', '.join(sorted(value))
+                elif 'date' in type:
                     try:
                         value = datetime.strptime(first(value),
                                                 '%Y-%m-%dT%H:%M:%SZ').date()
@@ -413,7 +415,7 @@ class Literature(ObjectNormalizer):
         ('litSeriesFlag', 'Series', ''),
          # TODO: litConfName is a translatable field
         (['litConfName', 'litConfNo', 'litConfDate', 'litConfPlace'], 'Conference', ' | '),
-        ('litLanguageOfDocument', 'Language of document', ''),
+        ('litLanguageOfDocument', 'Language of document', 'list'),
     ]
     DOCTYPE_FIELD = 'litTypeOfText'
     KEYWORD_FIELD = 'litKeyword' #del
@@ -516,7 +518,16 @@ class Literature(ObjectNormalizer):
     def abstract(self):
         return first(self.solr.get('litAbstract'))
 
+    @cached_property
+    def link_to_full_text(self):
+        links = []
+        languages = self.solr.get(self.LANGUAGE_FIELD)
+        for idx, link in enumerate(self.solr.get('litLinkToFullText', [])):
+            links.append((link, languages[idx]))
+        return links
+
     def get_language(self):
+        # TODO: literature can have multiple languages - see ANA-082928
         return (first(self.solr.get('litLanguageOfDocument') or
                       self.solr.get('litLanguageOfDocument_fr') or
                       self.solr.get('litLanguageOfDocument_sp')) or

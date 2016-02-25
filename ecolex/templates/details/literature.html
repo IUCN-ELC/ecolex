@@ -97,10 +97,12 @@
       <dt>Source</dt>
       <dd><a target="_blank" href="http://iucn.org">{{ document.source }}</a> (ID: {{ document.document_id }})</dd>
 
-      {% if document.solr.litLinkToFullText %}
+      {% if document.link_to_full_text %}
       <dt>Link to full text</dt>
       <dd>
-        <a class="decision-link" href="{{ document.solr.litLinkToFullText }}" target="_blank">{{ document.get_language }}</a>
+          {% for link in document.link_to_full_text %}
+            <a class="decision-link" href="{{ link.0 }}" target="_blank">{{ link.1 }}</a>
+          {% endfor %}
       </dd>
       {% endif %}
     </dl>

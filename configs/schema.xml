@@ -474,16 +474,20 @@
     <field name="litVolumeNo" type="string" indexed="false" stored="true"/>
     <field name="litCollation" type="string" indexed="false" stored="true"/>
     <field name="litDateOfText" type="string" indexed="false" stored="true"/>
-    <field name="litLinkToFullText" type="string" indexed="false" stored="true"/>
+    <field name="litLinkToFullText" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="litLinkDOI" type="string" indexed="false" stored="true"/>
 
     <field name="litTypeOfText" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litTypeOfText_fr" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litTypeOfText_sp" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="litLanguageOfDocument" type="string" indexed="true" stored="true"/>
-    <field name="litLanguageOfDocument_fr" type="string" indexed="true" stored="true"/>
-    <field name="litLanguageOfDocument_sp" type="string" indexed="true" stored="true"/>
+    <field name="litDisplayType_en" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="litDisplayType_fr" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="litDisplayType_es" type="string" indexed="true" stored="true" multiValued="false"/>
+
+    <field name="litLanguageOfDocument" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litLanguageOfDocument_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litLanguageOfDocument_sp" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="litSubject" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="litSubject_fr" type="text" indexed="true" stored="true" multiValued="true"/>
