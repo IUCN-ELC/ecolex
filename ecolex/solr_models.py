@@ -133,6 +133,9 @@ class ObjectNormalizer:
     def get_body(self):
         pass
 
+    def get_files(self):
+        pass
+
     @property
     def keywords(self): #del
         return self.solr.get(self.KEYWORD_FIELD, [])
@@ -400,6 +403,11 @@ class Decision(ObjectNormalizer):
         # TODO - Multilangual selector
         return (self.solr.get('decBody_en') or self.solr.get('decBody_es') or
                 self.solr.get('decBody_fr') or '')
+
+    def get_files(self):
+        urls = self.solr.get('decFileUrls')
+        filenames = self.solr.get('decFileNames')
+        return list(zip(urls, filenames))
 
 
 class Literature(ObjectNormalizer):

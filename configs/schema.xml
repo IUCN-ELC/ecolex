@@ -249,10 +249,12 @@
     <field name="decMeetingUrl" type="string" indexed="false" stored="true"/>
 
     <field name="decLanguage" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="decFileUrls" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="decFileNames" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <!-- Decision copyfields-->
     <field name="decTitleOfText" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="decText" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="decText" type="text" indexed="true" stored="false"/>
 
     <!-- InforMEA event -->
     <field name="evId" type="int" indexed="true" stored="true" multiValued="false"/>
@@ -602,10 +604,6 @@
     <copyField source="decLongTitle_ar" dest="decTitleOfText"/>
     <copyField source="decLongTitle_zh" dest="decTitleOfText"/>
 
-    <copyField source="decSummary_en" dest="decText"/>
-    <copyField source="decSummary_es" dest="decText"/>
-    <copyField source="decSummary_fr" dest="decText"/>
-
     <!-- Copy fields for common filters -->
     <copyField source="trSubject_en" dest="docSubject"/>
     <copyField source="cdSubject" dest="docSubject"/>
@@ -675,6 +673,7 @@
     <copyField source="decBody_es" dest="text"/>
     <copyField source="decBody_fr" dest="text"/>
     <copyField source="decKeyword" dest="text"/>
+    <copyField source="decText" dest="text"/>
 
     <copyField source="trSubject_en" dest="text"/>
     <copyField source="trSubject_es" dest="text"/>
