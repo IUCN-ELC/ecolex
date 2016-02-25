@@ -161,7 +161,7 @@ class EcolexSolr(object):
         try:
             response = self.solr.extract(file)
         except pysolr.SolrError as e:
-            logger.error('Error extrating text from file %s' % (file.name,) )
+            logger.error('Error extracting text from file %s' % (file.name,) )
             if settings.DEBUG:
                 logging.getLogger('solr').exception(e)
             return ''

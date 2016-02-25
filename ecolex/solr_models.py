@@ -130,6 +130,9 @@ class ObjectNormalizer:
     def get_language(self):
         pass
 
+    def get_body(self):
+        pass
+
     @property
     def keywords(self): #del
         return self.solr.get(self.KEYWORD_FIELD, [])
@@ -387,10 +390,16 @@ class Decision(ObjectNormalizer):
         return 'Document language'
 
     def summary(self):
+        # TODO - Multilangual selector
         return (first(self.solr.get('decSummary_en') or
                       self.solr.get('decSummary_es') or
                       self.solr.get('decSummary_fr')) or
                 '')
+
+    def get_body(self):
+        # TODO - Multilangual selector
+        return (self.solr.get('decBody_en') or self.solr.get('decBody_es') or
+                self.solr.get('decBody_fr') or '')
 
 
 class Literature(ObjectNormalizer):

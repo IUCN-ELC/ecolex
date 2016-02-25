@@ -227,7 +227,9 @@
     <field name="decSummary_es" type="string" indexed="true" stored="true"/>
     <field name="decSummary_fr" type="string" indexed="true" stored="true"/>
 
-    <field name="decBody" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="decBody_en" type="text" indexed="true" stored="true"/>
+    <field name="decBody_es" type="text" indexed="true" stored="true"/>
+    <field name="decBody_fr" type="text" indexed="true" stored="true"/>
 
     <field name="decType" type="string" indexed="true" stored="true"/>
     <field name="decStatus" type="string" indexed="true" stored="true"/>
@@ -603,7 +605,6 @@
     <copyField source="decSummary_en" dest="decText"/>
     <copyField source="decSummary_es" dest="decText"/>
     <copyField source="decSummary_fr" dest="decText"/>
-    <copyField source="decBody" dest="decText"/>
 
     <!-- Copy fields for common filters -->
     <copyField source="trSubject_en" dest="docSubject"/>
@@ -670,7 +671,9 @@
     <copyField source="decSummary_en" dest="text"/>
     <copyField source="decSummary_es" dest="text"/>
     <copyField source="decSummary_fr" dest="text"/>
-    <copyField source="decBody" dest="text"/>
+    <copyField source="decBody_en" dest="text"/>
+    <copyField source="decBody_es" dest="text"/>
+    <copyField source="decBody_fr" dest="text"/>
     <copyField source="decKeyword" dest="text"/>
 
     <copyField source="trSubject_en" dest="text"/>

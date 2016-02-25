@@ -74,16 +74,16 @@
     </dl>
   </section>
 
-  <section id="text">
-    <dl>
-      <dt>Abstract</dt>
-      {% for body in document.solr.decBody %}
+  {% if document.get_body %}
+    <section id="text">
+      <dl>
+        <dt>Abstract</dt>
         <dd>
-          <div class="html">{{ body|safe }}</div>
+          <div class="html">{{ document.get_body|safe }}</div>
         </dd>
-      {% endfor %}
-    </dl>
-  </section>
+      </dl>
+    </section>
+  {% endif %}
 
   {% if decisions|length %}
     <section id="other-references">

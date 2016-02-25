@@ -238,7 +238,9 @@ def get_relevancy():
         'legKeyword_en': 30,
         'cdKeywords': 30,
 
-        'decBody': 20,
+        'decBody_en': 20,
+        'decBody_es': 20,
+        'decBody_fr': 20,
         'text': 20,
         'doc_content': 10,
     }
