@@ -21,7 +21,7 @@ BASE_FIELDS = [
     'id', 'link', 'type', 'status', 'number', 'treaty', 'published', 'updated',
     'meetingId', 'meetingTitle', 'meetingUrl', 'TreatyUUID'
 ]
-MULTILINGUAL_FIELDS = ['title', 'longTitle', 'summary']
+MULTILINGUAL_FIELDS = ['title', 'longTitle', 'summary', 'content']
 
 FIELD_MAP = {
     'id': 'decId',
@@ -171,8 +171,6 @@ class CopDecisionImporter(object):
                     field_name = field + '_' + k
                     data[field_name] = v
 
-            dec_body = self._parse_multilingual(decision['content'])
-            data['decBody'] = list(dec_body.values())
             files = decision['files']['results']
             if files:
                 text, langs = self._parse_files(files)
