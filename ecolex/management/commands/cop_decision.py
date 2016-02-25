@@ -9,6 +9,7 @@ import requests
 from ecolex.management.utils import EcolexSolr, get_date, get_file_from_url
 from ecolex.management.utils import COP_DECISION, DEC_TREATY_FIELDS
 from ecolex.management.commands.logging import LOG_DICT
+from ecolex.models import DocumentText
 
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('cop_decision_import')
@@ -137,8 +138,9 @@ class CopDecisionImporter(object):
 
     def _index_decisions(self, raw_decisions):
         decisions = self._parse(raw_decisions)
-        new_decisions = filter(bool, [self._get_solr_decision(d) for
-                               d in decisions])
+        new_decisions = list(filter(bool, [self._get_solr_decision(d) for
+                                    d in decisions]))
+        self._index_files(new_decisions)
         self.solr.add_bulk(new_decisions)
 
     def _parse(self, raw_decisions):
@@ -170,13 +172,13 @@ class CopDecisionImporter(object):
                 for k, v in multi_values.items():
                     field_name = field + '_' + k
                     data[field_name] = v
+            data['decLanguage'] = list(languages) or ['en']
 
             files = decision['files']['results']
             if files:
-                text, langs = self._parse_files(files)
-                data['text'] = text
-                languages.update(langs)
-            data['decLanguage'] = list(languages) or ['en']
+                urls, file_names = self._parse_files(files)
+                data['decFileUrls'] = urls
+                data['decFileNames'] = file_names
 
             if data['decTreatyId']:
                 treaties = self.solr.search_all('trInformeaId',
@@ -219,18 +221,52 @@ class CopDecisionImporter(object):
         return values
 
     def _parse_files(self, files):
-        languages = set()
-        text = ''
+        urls = []
+        filenames = []
+
         for file_dict in files:
-            lang = file_dict.get('language')
-            languages.add(lang if lang not in (None, 'und') else DEFAULT_LANG)
-            url = file_dict.get('url')
-            if url:
-                # TODO: do not download and extract files when record should not be updated
-                logger.debug('Downloading %s' % (url,))
-                file_obj = get_file_from_url(url)
-                text += self.solr.extract(file_obj)
-        return text, list(languages)
+            url = file_dict['url']
+            filename = file_dict['filename']
+            if url and filename:
+                urls.append(url)
+                filenames.append(filename)
+        return urls, filenames
+
+    def _index_files(self, decisions):
+        for decision in decisions:
+            url_list = decision.get('decFileUrls', [])
+            decId = decision['decId']
+            dec_text = ''
+            if not url_list:
+                # Nothing to download
+                doc, _ = DocumentText.objects.get_or_create(
+                    doc_id=decId, doc_type=COP_DECISION, url=None)
+                doc.status = DocumentText.INDEXED
+                doc.save()
+
+            for url in url_list:
+                doc, _ = DocumentText.objects.get_or_create(
+                    doc_id=decId, doc_type=COP_DECISION, url=url)
+                if doc.status == DocumentText.FULL_INDEXED:
+                    dec_text += doc.text
+                    logger.info('Already indexed %s' % url)
+                else:
+                    logger.info('Downloading: %s' % url)
+                    file_obj = get_file_from_url(url)
+                    if file_obj:
+                        logger.debug('Success downloading %s' % url)
+                        doc.text = self.solr.extract(file_obj)
+                        dec_text += doc.text
+                        doc.status = DocumentText.FULL_INDEXED
+                        doc.doc_size = file_obj.getbuffer().nbytes
+                        doc.save()
+                        logger.info('Success extracting %s' % decId)
+                    else:
+                        logger.error('Error on file download %s' % decId)
+                        doc.status = DocumentText.INDEXED
+                        doc.save()
+
+            decision['decText'] = dec_text
 
     def _clean(self, text):
         try:

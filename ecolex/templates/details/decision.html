@@ -58,6 +58,15 @@
       </dd>
       {% endif %}
 
+      {% if document.get_files %}
+        <dt>Files</dt>
+          {% for url, name in document.get_files %}
+            <dd>
+              <a target="_blank" href="{{ url }}">{{ name }}</a>
+            </dd>
+          {% endfor %}
+      {% endif %}
+
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>
         <dd> {{ entry.value | date:"b j, Y" | capfirst | join_by:", " }}</dd>
