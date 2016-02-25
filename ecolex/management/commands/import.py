@@ -40,7 +40,8 @@ class Command(BaseCommand):
         make_option('--batch-size', type=int, default=10),
         make_option('--update-status', action='store_true'),
         make_option('--update-text', action='store_true'),
-        make_option('--reindex', action='store_true')
+        make_option('--reindex', action='store_true'),
+        make_option('--backlinks', action='store_true')
     )
 
     def handle(self, *args, **options):
@@ -53,6 +54,7 @@ class Command(BaseCommand):
         parser.add_argument('--update-status', action='store_true')
         parser.add_argument('--update-text', action='store_true')
         parser.add_argument('--reindex', action='store_true')
+        parser.add_argument('--backlinks', action='store_true')
         parser.set_defaults(test=False, batch_size=1)
         args = parser.parse_args()
 
@@ -74,5 +76,7 @@ class Command(BaseCommand):
             importer.update_full_text()
         elif args.reindex:
             importer.reindex_failed()
+        elif args.backlinks:
+            importer.add_back_links()
         else:
             importer.harvest(args.batch_size)

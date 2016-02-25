@@ -274,7 +274,6 @@ class TreatyImporter(object):
             treaties = self._parse(raw_treaties)
             logger.debug('Pre-processing %d treaties' % (len(treaties)))
             self._clean_referred_treaties(treaties)
-            self._add_back_links(treaties)
             new_treaties = list(filter(bool, [self._get_solr_treaty(treaty) for
                                        treaty in treaties.values()]))
             self._index_files(new_treaties)
@@ -429,12 +428,6 @@ class TreatyImporter(object):
 
     def _clean_referred_treaties(self, solr_docs):
         for elis_id, doc in solr_docs.items():
-            # Remove references not present in solr_docs
-            # for field_name in REFERENCE_MAPPING:
-            #     if field_name in doc:
-            #         doc[field_name] = [ref for ref in doc[field_name]
-            #                            if ref in solr_docs]
-            # Remove empty properties
             solr_docs[elis_id] = dict((k, v)
                                       for k, v in solr_docs[elis_id].items()
                                       if not isinstance(v, list) or any(v))
@@ -465,6 +458,34 @@ class TreatyImporter(object):
         url = '%s%s%s%s%s' % (self.treaties_url, self.query_export, query,
                               self.query_type, page)
         return url
+
+    def add_back_links(self):
+        rows = 50
+        index = 0
+        while True:
+            print(index)
+            treaties = {}
+            docs = self.solr.solr.search('type:treaty', rows=rows, start=index)
+            for doc in docs:
+                elis_id = doc['trElisId']
+                for orig_field, backlink_field in REFERENCE_MAPPING.items():
+                    if orig_field in doc:
+                        for ref in doc[orig_field]:
+                            ref_doc = treaties.get(ref, self.solr.search(TREATY, ref))
+                            if ref_doc:
+                                ref_doc.setdefault(backlink_field, [])
+                                ref_doc[backlink_field].append(elis_id)
+                                logger.info('Added backlink from %s to %s' %
+                                            (ref, elis_id))
+                                treaties[ref] = ref_doc
+                            else:
+                                logger.error('Treaty %s not found' % ref)
+
+            self.solr.add_bulk(list(treaties.values()))
+
+            if len(docs) < rows:
+                break
+            index += rows
 
     def update_status(self):
         rows = 50
