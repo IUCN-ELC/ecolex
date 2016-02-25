@@ -230,6 +230,9 @@
     <field name="decBody_en" type="text" indexed="true" stored="true"/>
     <field name="decBody_es" type="text" indexed="true" stored="true"/>
     <field name="decBody_fr" type="text" indexed="true" stored="true"/>
+    <field name="decBody_ru" type="text" indexed="true" stored="true"/>
+    <field name="decBody_ar" type="text" indexed="true" stored="true"/>
+    <field name="decBody_zh" type="text" indexed="true" stored="true"/>
 
     <field name="decType" type="string" indexed="true" stored="true"/>
     <field name="decStatus" type="string" indexed="true" stored="true"/>
@@ -672,6 +675,9 @@
     <copyField source="decBody_en" dest="text"/>
     <copyField source="decBody_es" dest="text"/>
     <copyField source="decBody_fr" dest="text"/>
+    <copyField source="decBody_ru" dest="text"/>
+    <copyField source="decBody_ar" dest="text"/>
+    <copyField source="decBody_zh" dest="text"/>
     <copyField source="decKeyword" dest="text"/>
     <copyField source="decText" dest="text"/>
 
