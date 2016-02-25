@@ -405,8 +405,8 @@ class Decision(ObjectNormalizer):
                 self.solr.get('decBody_fr') or '')
 
     def get_files(self):
-        urls = self.solr.get('decFileUrls')
-        filenames = self.solr.get('decFileNames')
+        urls = self.solr.get('decFileUrls', [])
+        filenames = self.solr.get('decFileNames', [])
         return list(zip(urls, filenames))
 
 
