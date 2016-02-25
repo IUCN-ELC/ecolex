@@ -18,7 +18,7 @@ logger = logging.getLogger('legislation_import')
 
 class LegislationImporter(object):
 
-    def __init__(self, *args):
+    def __init__(self, config):
         self.solr_timeout = config.getint('solr_timeout')
         self.solr = EcolexSolr(self.solr_timeout)
     
