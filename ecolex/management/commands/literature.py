@@ -13,7 +13,7 @@ from ecolex.management.utils import format_date, get_file_from_url
 from ecolex.models import DocumentText
 
 logging.config.dictConfig(LOG_DICT)
-logger = logging.getLogger('import')
+logger = logging.getLogger('literature_import')
 
 TOTAL_DOCS = 'numberresultsfound'
 DOCUMENT = 'document'
@@ -165,8 +165,27 @@ MULTIVALUED_FIELDS = [
     'litContributor',
     'litTypeOfText', 'litTypeOfText_sp', 'litTypeOfText_fr',
     'litCountry', 'litCountry_sp', 'litCountry_fr',
+    'litRegion', 'litRegion_fr', 'litRegion_sp',
+    'litLanguageOfDocument', 'litLanguageOfDocument_fr', 'litLanguageOfDocument_sp',
+    'litLinkToFullText',
 ]
 
+DOCUMENT_TYPE_MAP = {
+    'MON': {
+        'litDisplayType_en': 'Monography/book',
+        'litDisplayType_fr': 'Monographie/livre',
+        'litDisplayType_es': 'Monografía/libro',
+    },
+    'ANA': {
+        'litDisplayType_en': 'Article in periodical',
+        'litDisplayType_fr': 'Article en publication périodique',
+        'litDisplayType_es': 'Artículo en publicación',
+    }
+}
+
+URL_CHANGE_FROM = 'http://www.ecolex.org/server2.php/server2neu.php/'
+URL_CHANGE_TO = 'http://www.ecolex.org/server2neu.php/'
+replace_url = lambda text: (URL_CHANGE_TO + text.split(URL_CHANGE_FROM)[-1]) if text.startswith(URL_CHANGE_FROM) else text
 
 class Literature(object):
 
@@ -210,11 +229,11 @@ class LiteratureImporter(object):
         self.query_skip = config.get('query_skip')
         self.query_type = config.get('query_type')
         self.per_page = config.getint('per_page')
-        self.start_year = config.getint('start_year')
         now = datetime.now()
+        self.start_year = config.getint('start_year', now.year)
         self.end_year = config.getint('end_year', now.year)
         self.start_month = config.getint('start_month', now.month)
-        self.end_month = 2
+        self.end_month = config.getint('end_month', now.month)
         self.solr = EcolexSolr(self.solr_timeout)
         self.force_import_all = config.getboolean('force_import_all', False)
         logger.info('Started literature importer')
@@ -278,57 +297,59 @@ class LiteratureImporter(object):
                         data[v] = format_date(
                             self._clean_text(field_values[0].text))
                     elif field_values:
+                        clean_values = [self._clean_text(field.text) for field in field_values]
                         if v in data:
-                            data[v].extend([self._clean_text(field.text) for
-                                           field in field_values])
+                            data[v].extend(clean_values)
                         else:
-                            data[v] = [self._clean_text(field.text) for
-                                       field in field_values]
+                            data[v] = clean_values
                         if v in data and v not in MULTIVALUED_FIELDS:
                             data[v] = data[v][0]
 
-                # fix server2.php/server2neu.php in full text links
-                field_names = ['litLinkToFullText', 'litLinkToAbstract']
-                change_from = 'http://www.ecolex.org/server2.php/server2neu.php/'
-                change_to = 'http://www.ecolex.org/server2neu.php/'
-                for field_name in field_names:
-                    if data.get(field_name) and data[field_name].startswith(change_from):
-                        data[field_name] = change_to + data[field_name].split(change_from)[-1]
+                # compute litDisplayType
+                id = data.get('litId')
+                if id and id[:3] in DOCUMENT_TYPE_MAP:
+                    for k,v in DOCUMENT_TYPE_MAP[id[:3]].items():
+                        data[k] = v
 
                 literatures.append(data)
         return literatures
 
     def _index_files(self, literatures):
         for literature in literatures:
-            url = literature.get(URL_FIELD, None)
-            if url:
-                logger.info('Downloading: %s' % url)
-                file_obj = get_file_from_url(url)
-                if file_obj:
-                    literature['litText'] = self.solr.extract(file_obj)
-                    self._document_text_pdf_success(literature)
-                    logger.info('Success on file download %s' %
-                                literature['litId'])
-                else:
-                    # Download failed
-                    self._document_text_pdf_error(literature, url)
-            else:
+            url_list = literature.get(URL_FIELD, [])
+            litId = literature['litId']
+            lit_text = ''
+            if not url_list:
                 # Nothing to download
-                self._document_text_pdf_success(literature)
+                doc, _ = DocumentText.objects.get_or_create(
+                    doc_id=litId, doc_type=LITERATURE, url=None)
+                doc.status = DocumentText.INDEXED
+                doc.save()
 
-    def _document_text_pdf_error(self, literature, url):
-        doc, _ = DocumentText.objects.get_or_create(
-            doc_id=literature['litId'], doc_type=LITERATURE)
-        doc.url = url
-        doc.parsed_data = json.dumps(literature)
-        doc.status = DocumentText.INDEXED
-        doc.save()
+            for url in url_list:
+                doc, _ = DocumentText.objects.get_or_create(
+                    doc_id=litId, doc_type=LITERATURE, url=url)
+                if doc.status == DocumentText.FULL_INDEXED:
+                    lit_text += doc.text
+                    logger.info('Already indexed %s' % url)
+                else:
+                    logger.info('Downloading: %s' % url)
+                    file_obj = get_file_from_url(url)
+                    if file_obj:
+                        logger.debug('Success downloading: %s' % url)
+                        doc.text = self.solr.extract(file_obj)
+                        lit_text += doc.text
+                        doc.status = DocumentText.FULL_INDEXED
+                        doc.doc_size = file_obj.getbuffer().nbytes
+                        doc.save()
+                        logger.info('Success extracting %s' % litId)
+                    else:
+                        # Download failed
+                        logger.error('Error on file download %s' % litId)
+                        doc.status = DocumentText.INDEXED
+                        doc.save()
 
-    def _document_text_pdf_success(self, literature):
-        doc, _ = DocumentText.objects.get_or_create(
-            doc_id=literature['litId'], doc_type=LITERATURE)
-        doc.status = DocumentText.FULL_INDEXED
-        doc.save()
+            literature['litText'] = lit_text
 
     def _get_solr_lit(self, lit_data):
         new_lit = Literature(lit_data, self.solr)
@@ -341,6 +362,9 @@ class LiteratureImporter(object):
         return new_lit.get_solr_format(lit_data['litId'], solr_id)
 
     def _clean_text(self, text):
+        if URL_CHANGE_FROM in text:
+            # fix server2.php/server2neu.php in ['litLinkToFullText', 'litLinkToAbstract']
+            return replace_url(text)
         if AUTHOR_START in text:
             text = text.replace(AUTHOR_START, '').replace(AUTHOR_SPACE, ' ')
         return html.unescape(text.strip())

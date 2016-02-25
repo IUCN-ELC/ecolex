@@ -37,6 +37,18 @@ LOG_DICT = {
             'filename': path.join(BASE_DIR, 'cop_decision_import.log'),
             'formatter': 'verbose',
         },
+        'literature_import': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': path.join(BASE_DIR, 'literature_import.log'),
+            'formatter': 'verbose',
+        },
+        'treaty_import': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': path.join(BASE_DIR, 'treaty_import.log'),
+            'formatter': 'verbose',
+        },
         'solr': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
@@ -60,6 +72,14 @@ LOG_DICT = {
         },
         'cop_decision_import': {
             'handlers': ['cop_decision_import', 'console'],
+            'level': 'DEBUG',
+        },
+        'literature_import': {
+            'handlers': ['literature_import', 'console'],
+            'level': 'DEBUG',
+        },
+        'treaty_import': {
+            'handlers': ['treaty_import', 'console'],
             'level': 'DEBUG',
         },
         'solr': {
