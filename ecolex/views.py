@@ -150,7 +150,7 @@ class TreatyParticipantView(SearchView):
 
     def get_context_data(self, **kwargs):
         ctx = super(TreatyParticipantView, self).get_context_data(**kwargs)
-        ctx['results'] = get_documents_by_field('partyCountry',
+        ctx['results'] = get_documents_by_field('partyCountry_en',
                                                 [kwargs['id']],
                                                 1000000)  # get all results
         return ctx

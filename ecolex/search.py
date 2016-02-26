@@ -280,11 +280,11 @@ def get_fq(filters):
     }
 
     AND_FILTERS = [
-        'docKeyword',
-        'docSubject',
-        'docCountry',
-        'docRegion',
-        'docLanguage',
+        'docKeyword_en',
+        'docSubject_en',
+        'docCountry_en',
+        'docRegion_en',
+        'docLanguage_en',
         'trDepository_en',
         'litAuthor',
     ]
@@ -432,11 +432,11 @@ class SearchMixin(object):
     def _get_filters(self, data):
         filters = {
             'type': data['type'] or dict(definitions.DOC_TYPE).keys(),
-            'docKeyword': data['keyword'],
-            'docSubject': data['subject'],
-            'docCountry': data['country'],
-            'docRegion': data['region'],
-            'docLanguage': data['language'],
+            'docKeyword_en': data['keyword'],
+            'docSubject_en': data['subject'],
+            'docCountry_en': data['country'],
+            'docRegion_en': data['region'],
+            'docLanguage_en': data['language'],
             'docDate': (data['yearmin'], data['yearmax']),
         }
         for doc_type in filters['type']:
