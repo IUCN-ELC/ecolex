@@ -1,0 +1,14 @@
+{% for label, treaties in links.items %}
+  <dl class="dl-horizontal references">
+    <dt>{{ label }}</dt>
+      {% for treaty in treaties %}
+      <dd>
+        <div class="treaty-link-container">
+          <a href="{% url 'treaty_details' treaty.id %}?{{ query }}"
+             title="See treaty details">{{ treaty.title }}</a>
+         </div>
+        <time>{{ treaty.date|date:"b j, Y"|capfirst  }}</time>
+      </dd>
+      {% endfor %}
+  </dl>
+{% endfor %}

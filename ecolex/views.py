@@ -204,27 +204,38 @@ class TreatyDetails(DetailsView):
 
     template_name = 'details/treaty.html'
 
+    def _sort_references(self, doc, fields, treaty_references, treaties):
+        references = {}
+        for field in fields:
+            treaties_list = treaty_references.get(field, [])
+            if treaties_list and any(treaties_list):
+                label = doc.REFERENCE_FIELDS.get(field)
+                references.setdefault(label, [])
+                references[label].extend([t for t in treaties
+                                          if t.solr.get('trElisId', -1)
+                                          in treaties_list])
+                references[label].sort(key=lambda x: x.date(),
+                                       reverse=True)
+        return references
+
     def get_context_data(self, **kwargs):
         context = super(TreatyDetails, self).get_context_data(**kwargs)
 
-        ids = context['document'].get_references_ids_set()
-        treaties_info = context['results'].get_referred_treaties('trElisId',
-                                                                 ids)
-        references_mapping = context['document'].references()
-        if references_mapping:
-            context['references'] = {}
-            for label, treaties_list in references_mapping.items():
-                if treaties_list and any(treaties_list):
-                    context['references'].setdefault(label, [])
-                    context['references'][label].\
-                        extend([t for t in treaties_info
-                                if t.solr.get('trElisId', -1) in treaties_list])
-                    context['references'][label].\
-                        sort(key=lambda x: x.date(), reverse=True)
-        if context['document'].informea_id():
-            context['decisions'] = context['document'].get_decisions()
-        context['literatures'] = context['document'].get_literatures()
-        context['court_decisions'] = context['document'].get_court_decisions()
+        doc = context['document']
+        treaty_references = doc.references()
+        treaty_ids = [v for x in treaty_references.values() for v in x]
+        treaties = context['results'].get_referred_treaties('trElisId',
+                                                            treaty_ids)
+        if treaty_references:
+            context['direct_links'] = self._sort_references(
+                doc, doc.DIRECT_LINKS, treaty_references, treaties)
+            context['back_links'] = self._sort_references(
+                doc, doc.BACK_LINKS, treaty_references, treaties)
+
+        if doc.informea_id():
+            context['decisions'] = doc.get_decisions()
+        context['literatures'] = doc.get_literatures()
+        context['court_decisions'] = doc.get_court_decisions()
 
         return context
 

@@ -175,29 +175,17 @@
   </section>
   {% endif %}
 
-  {% if references %}
+  {% if direct_links or back_links %}
   <section id="treaty-references">
     <h2 class="section-title">Treaty references</h2>
-      {% for label, treaties in references.items %}
-        <dl class="dl-horizontal references">
-          <dt>{{ label }}</dt>
-            {% for treaty in treaties %}
-            <dd>
-              <div class="treaty-link-container">
-                <a href="{% url 'treaty_details' treaty.id %}?{{ query }}"
-                   title="See treaty details">{{ treaty.title }}</a>
-               </div>
-              <time>{{ treaty.date|date:"b j, Y"|capfirst  }}</time>
-            </dd>
-            {% endfor %}
-        </dl>
-      {% endfor %}
+    {% include 'bits/treaty_references.html' with links=direct_links %}
+    {% include 'bits/treaty_references.html' with links=back_links %}
   </section>
   {% endif %}
 
+  {% if decisions|length or literatures|length or court_decisions|length %}
   <section id="other-references">
     <h2 class="section-title">Other references</h2>
-
     <dl>
       {% if decisions|length %}
         <dt>COP decisions</dt>
@@ -229,6 +217,7 @@
     </dl>
 
   </section>
+  {% endif %}
 
 </article>
 {% endblock content %}
