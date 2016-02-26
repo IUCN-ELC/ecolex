@@ -356,6 +356,9 @@ class FaoFeedView(View):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
+        logger = logging.getLogger('legislation_import')
+        #for key,val in request.META.items():
+        #    logger.debug('Header %s = %s' % (key,val))
         key = request.META.get('HTTP_API_KEY', None)
         api_key = getattr(settings, 'FAOLEX_API_KEY')
         if not key or key != api_key:
@@ -364,6 +367,8 @@ class FaoFeedView(View):
         return super(FaoFeedView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request):
+        logger = logging.getLogger('legislation_import')
+        #logger.debug(request.body)
         legislation_file = request.FILES.get('file', None)
         if not legislation_file:
             logger.error('No attached file!')
