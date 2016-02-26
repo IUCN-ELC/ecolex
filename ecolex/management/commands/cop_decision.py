@@ -20,7 +20,7 @@ DEFAULT_LANG = 'en'
 
 BASE_FIELDS = [
     'id', 'link', 'type', 'status', 'number', 'treaty', 'published', 'updated',
-    'meetingId', 'meetingTitle', 'meetingUrl', 'TreatyUUID'
+    'meetingId', 'meetingTitle', 'meetingUrl', 'treatyUUID'
 ]
 MULTILINGUAL_FIELDS = ['title', 'longTitle', 'summary', 'content']
 
@@ -43,8 +43,6 @@ FIELD_MAP = {
 
     'treaty': 'decTreaty',
     'treatyUUID': 'decTreatyId',
-    # Field name is different on cray.edw.ro
-    'TreatyUUID': 'decTreatyId',
 
     'published': 'decPublishDate',
     'updated': 'decUpdateDate',
@@ -154,11 +152,7 @@ class CopDecisionImporter(object):
             data = {'type': COP_DECISION}
             logger.info('Parsing decision %s' % (decision['id'],))
             for field in BASE_FIELDS:
-                # TODO - make sure TreatyUUID is the same on all odata servers
-                data[FIELD_MAP[field]] = self._clean(
-                    decision.get(field) or
-                    decision.get(field[0].lower() + field[1:])
-                )
+                data[FIELD_MAP[field]] = self._clean(decision.get(field))
 
             if data['decPublishDate']:
                 data['decPublishDate'] = get_date(data['decPublishDate'])
