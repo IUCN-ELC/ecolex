@@ -105,6 +105,8 @@ FIELD_MAP = {
     'linktoabstract': 'trLinkToAbstract',
     'obsolete': 'trObsolete',
     'region': 'trRegion_en',
+    'region_fr_fr': 'trRegion_fr',
+    'region_es_es': 'trRegion_es',
     'relevanttexttreaty': 'trRelevantTextTreaty',
     'scope': 'trScope',
     'searchdate': 'trSearchDate',
@@ -125,7 +127,9 @@ FIELD_MAP = {
 }
 
 PARTICIPANT_FIELDS = {
-    'country': 'partyCountry',
+    'country': 'partyCountry_en',
+    'countryfr': 'partyCountry_fr',
+    'countrysp': 'partyCountry_es',
     'entryintoforce': 'partyEntryIntoForce',
     'dateofratification': 'partyDateOfRatification',
     'dateofaccessionapprobation': 'partyDateOfAccessionApprobation',

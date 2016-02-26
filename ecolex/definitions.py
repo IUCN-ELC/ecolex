@@ -77,19 +77,19 @@ FIELD_TO_FACET_MAPPING = {
     'leg_type': 'legType_en',
     'leg_territorial': 'legTerritorialSubdivision',
 
-    'subject': 'docSubject',
-    'keyword': 'docKeyword',
-    'country': 'docCountry',
-    'region': 'docRegion',
+    'subject': 'docSubject_en',
+    'keyword': 'docKeyword_en',
+    'country': 'docCountry_en',
+    'region': 'docRegion_en',
     'language': 'docLanguage',
 }
 
 
 SELECT_FACETS = {
-    'docSubject': 'subject',
-    'docKeyword': 'keyword',
-    'docCountry': 'country',
-    'docRegion': 'region',
+    'docSubject_en': 'subject',
+    'docKeyword_en': 'keyword',
+    'docCountry_en': 'country',
+    'docRegion_en': 'region',
     'docLanguage': 'language',
 
     'trDepository_en': 'tr_depository',
