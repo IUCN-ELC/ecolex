@@ -258,15 +258,21 @@ class Treaty(ObjectNormalizer):
 
     FULL_TEXT = 'trLinkToFullText'  # multilangual
 
+    DIRECT_LINKS = ['trEnablesTreaty', 'trSupersedesTreaty', 'trCitesTreaty',
+                    'trAmendsTreaty']
+    BACK_LINKS = ['trEnabledByTreaty', 'trSupersededBy', 'trCitedBy',
+                  'trAmendedBy']
+
     REFERENCE_FIELDS = {
-        'trAmendsTreaty': 'Amends:',
+        'trEnablesTreaty': 'Enables:',
         'trSupersedesTreaty': 'Supersedes:',
         'trCitesTreaty': 'Cites:',
-        'trEnablesTreaty': 'Enables:',
+        'trAmendsTreaty': 'Amends:',
+
         'trEnabledByTreaty': 'Enabled by:',
-        'trAmendedBy': 'Amended by:',
         'trSupersededBy': 'Superseded by:',
         'trCitedBy': 'Cited by:',
+        'trAmendedBy': 'Amended by:',
     }
 
     def jurisdiction(self):
@@ -299,21 +305,12 @@ class Treaty(ObjectNormalizer):
             return {'events': participants[0].available_events,
                     'participants': participants}
 
-    def get_references_ids_set(self):
-        ids = set()
-        for field, label in self.REFERENCE_FIELDS.items():
-            values = [v for v in self.solr.get(field, [])]
-            if values and any(values):
-                ids.update(values)
-
-        return ids
-
     def references(self):
         data = {}
         for field, label in self.REFERENCE_FIELDS.items():
             values = [v for v in self.solr.get(field, [])]
             if values and any(values):
-                data[label] = values
+                data[field] = values
         return data
 
     def get_decisions(self):
