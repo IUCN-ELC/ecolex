@@ -216,6 +216,8 @@ class TreatyDetails(DetailsView):
                                           in treaties_list])
                 references[label].sort(key=lambda x: x.date(),
                                        reverse=True)
+                if len(references[label]) == 0:
+                    references.pop(label)
         return references
 
     def get_context_data(self, **kwargs):
