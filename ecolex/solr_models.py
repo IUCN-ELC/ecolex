@@ -362,7 +362,7 @@ class Treaty(ObjectNormalizer):
 
 class Decision(ObjectNormalizer):
     ID_FIELD = 'decNumber'
-    SUMMARY_FIELD = 'decBody'
+    SUMMARY_FIELD = 'decBody_en'
     TITLE_FIELDS = ['decShortTitle_en', 'decShortTitle_fr', 'decShortTitle_es',
                     'decShortTitle_ru', 'decShortTitle_ar', 'decShortTitle_zh']
     DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
@@ -395,8 +395,10 @@ class Decision(ObjectNormalizer):
 
     def get_body(self):
         # TODO - Multilangual selector
-        return (self.solr.get('decBody_en') or self.solr.get('decBody_es') or
-                self.solr.get('decBody_fr') or '')
+        return (first(self.solr.get('decBody_en') or
+                      self.solr.get('decBody_es') or
+                      self.solr.get('decBody_fr'))
+                or '')
 
     def get_files(self):
         urls = self.solr.get('decFileUrls', [])
@@ -606,6 +608,8 @@ class Legislation(ObjectNormalizer):
     DATE_FIELDS = ['legDate', 'legOriginalDate']
     KEYWORD_FIELD = 'legKeyword_en'
     SUBJECT_FIELD = 'legSubject_en'
+    DOCTYPE_FIELD = 'legType_en'
+    OPTIONAL_INFO_FIELDS = []
 
     LEGISLATION_REFERENCE_FIELDS = {
         'legImplement': 'Implements:',

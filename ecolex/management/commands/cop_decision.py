@@ -210,12 +210,13 @@ class CopDecisionImporter(object):
 
     def _parse_multilingual(self, info):
         values = {}
-        for result in info['results']:
-            language = result['language']
-            if language not in LANGUAGES:
-                continue
-            value = regex.sub('', result['value'])
-            values[language] = value.strip()
+        if 'results' in info:
+            for result in info['results']:
+                language = result['language']
+                if language not in LANGUAGES:
+                    continue
+                value = regex.sub('', result['value'])
+                values[language] = value.strip()
         return values
 
     def _parse_files(self, files):
