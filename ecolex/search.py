@@ -95,7 +95,9 @@ class Queryset(object):
         return self._hits
 
     def pages(self):
-        number_of_pages = (len(self) // self.rows) + 1
+        number_of_pages = (len(self) // self.rows)
+        if len(self) % self.rows != 0:
+            number_of_pages += 1
         return number_of_pages
 
     def first(self):
