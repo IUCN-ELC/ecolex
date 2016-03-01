@@ -23,7 +23,6 @@
     <thead>
       <th>#</th>
       <th>Title</th>
-      <th class="text-right" style="min-width: 120px;">Doc. date</th>
     </thead>
     {% for meetingId in meetings.keys %}
       <tbody>
@@ -36,11 +35,13 @@
             <span title="Decision number">{{ decision.document_id }}</span>
           </td>
           <td>
-            <a href="{{ decision.detail_url }}?{{ query }}"
-               title="See decision details">{{ decision }}</a>
-          </td>
-          <td class="text-right">
-            <time class="small text-muted">{{ decision.date|date:"b j, Y"|capfirst }}</time>
+            <div class="treaty-link-container">
+              <h3 class="search-result-title">
+                <a href="{{ decision.details_url }}?{{ query }}"
+                   title="{{ decision.title|safe|striptags }}">{{ decision.title|safe }}</a>
+              </h3>
+              {% include 'short_display/decision.html' with result=decision %}
+            </div>
           </td>
         </tr>
         {% endfor %}

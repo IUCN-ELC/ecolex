@@ -7,27 +7,8 @@
   </h3>
 
   {% if result.type == "decision" %}
-    <div class="search-result-details">
-      <strong class="sr-type">{{ result.type|capfirst }}</strong>
-      {% if result.document_id %}
-        <span class="sr-id"> {{ result.document_id }} </span>{% endif %}
-      &ndash;
-      <span class="sr-status" title="Status: {{ result.status|capfirst }}">
-        {{ result.status|capfirst }}
-      </span>
-      {% if result.date %}
-        |
-        <time class="sr-date" title="Date: {{ result.date }}">
-          {{ result.date|date:"b j, Y"|capfirst  }}
-        </time>
-      {% endif %}
-    </div>
-    {% if result.keywords %}
-      <p class="search-result-details"><strong>Keywords:</strong>
-        {{ result.keywords | join_by:", " | safe }}
-      </p>
-    {% endif %}
-    <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></p>
+
+    {% include 'short_display/decision.html' %}
 
   {% elif result.type == "literature" %}
     {% if result.authors %}
@@ -70,27 +51,7 @@
 
   {% elif result.type == 'treaty' %}
 
-    <div class="search-result-details">
-      <strong class="sr-type">{{ result.type|capfirst }}</strong>
-        |
-        <span class="sr-doctype">{{ result.type_of_document }}</span>
-      {% if result.place_of_adoption %}
-        |
-        <span class="sr-place"> {{ result.place_of_adoption }}</span>
-      {% endif %}
-      {% if result.date %}
-        |
-        <time class="sr-date" title="Date: {{ result.date }}">
-          {{ result.date|date:"b j, Y"|capfirst }}
-        </time>
-      {% endif %}
-    </div>
-    {% if result.keywords %}
-      <p class="search-result-details"><strong>Keywords:</strong>
-        {{ result.keywords | join_by:", " | safe }}
-      </p>
-    {% endif %}
-    <p class="search-result-source">Source: <a target="_blank" href="http://iucn.org">{{ result.source }}</a> (ID: {{ result.document_id }})</p>
+    {% include 'short_display/treaty.html' %}
 
   {% elif result.type == "court_decision" %}
     <div class="search-result-details">

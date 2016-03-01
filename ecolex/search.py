@@ -337,8 +337,7 @@ def search(user_query, filters=None, sortby=None, raw=None,
 
 
 def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
-            sortby=None, raw=None, facets=None, fields=None, hl_details=False,
-            details=False):
+            sortby=None, raw=None, facets=None, fields=None, hl_details=False):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
     if user_query == '*':
         solr_query = '*:*'
@@ -361,7 +360,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         'facet.mincount': 1,
         'facet.method': 'enum',
     })
-    if not details:
+    if filters:
         params['fq'] = get_fq(filters)
     if highlight:
         params.update(get_hl(hl_details=hl_details))
@@ -377,14 +376,13 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
 
     if settings.DEBUG:
         params['debug'] = True
-
     return solr.search(solr_query, **params)
 
 
 def get_documents_by_field(id_name, treaty_ids, rows=None):
     solr_query = id_name + ":(" + " ".join(treaty_ids) + ")"
     rows = len(treaty_ids) if rows is None else rows
-    result = search(solr_query, rows=rows, raw=True, details=True)
+    result = search(solr_query, rows=rows, raw=True)
     if not len(result):
         return []
     return result
