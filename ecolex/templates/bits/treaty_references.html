@@ -10,21 +10,7 @@
             <a href="{{ treaty.details_url }}?{{ query }}"
                title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
           </h3>
-        <div class="search-result-details">
-            <strong class="sr-type">{{ treaty.type|capfirst }}</strong> |
-            <span class="sr-doctype">{{ treaty.type_of_document }}</span> {% if result.place_of_adoption %} |
-            <span class="sr-place"> {{ treaty.place_of_adoption }}</span> {% endif %} {% if treaty.date %}
-            <time title="Date: {{ treaty.date }}">
-                {{ treaty.date|date:"b j, Y"|capfirst }}
-            </time>
-            {% endif %}
-        </div>
-        {% if treaty.keywords %}
-          <p class="search-result-details"><strong>Keywords:</strong>
-            {{ treaty.keywords | join_by:", " | safe }}
-          </p>
-        {% endif %}
-        <p class="search-result-source">Source: {{ treaty.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></p>
+        {% include 'short_display/treaty.html' with result=treaty %}
     </div>
 </dd>
 {% endfor %}
