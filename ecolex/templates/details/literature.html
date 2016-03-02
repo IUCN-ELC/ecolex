@@ -29,48 +29,52 @@
         <dt>Corporate author{{ document.corp_authors|length|pluralize:",s" }}</dt>
         <dd>{{ document.corp_authors | join_by:", " | safe }}</dd>
       {% endif %}
-      {% if document.parent_title %}
+      {% if document.lit_is_article and document.parent_title %}
+        <dt>In</dt>
+        <dd>{{ document.parent_title | safe }}
+            {% if document.solr.litCollation %}
+            | {{ document.solr.litCollation | safe }}
+            {% endif %}
+            {% if document.solr.litVolumeNo %}
+            | {{ document.solr.litVolumeNo | safe }}
+            {% endif %}
+        </dd>
+      {% endif %}
+      {% if document.solr.litDateOfText %}
+        <dt>Publication Date</dt>
+        <dd>{{ document.solr.litDateOfText | safe }}</dd>
+      {% endif %}
+    </dl>
+  </section>
+  <section id="details2">
+    <dl>
+      {% if not document.lit_is_article and document.parent_title %}
         <dt>In</dt>
         <dd>{{ document.parent_title | safe }}</dd>
+      {% endif %}
+      {% if document.title_translations %}
+        <dt>Title (translation)</dt>
+        <dd>
+          {% for title in document.title_translations %}
+            <p class="alttitle">{{ title.alttitle | safe}}<sup>{{ title.language }}</sup></p>
+          {% endfor %}
+        </dd>
       {% endif %}
 
       {% for entry in document.optional_fields %}
         <dt>{{ entry.label }}</dt>
         <dd>{{ entry.value }}</dd>
       {% endfor %}
-      {% if document.type_of_document %}
-        <dt>Document type</dt>
-        <dd>{{ document.type_of_document|capfirst }}</dd>
-      {% endif %}
-      {% if document.solr.litRelatedWebSite %}
-      <dt>Available web site</dt>
-      <dd>
-          <a class="decision-link" href="{{ document.solr.litRelatedWebSite | url_normalize }}">{{ document.solr.litRelatedWebSite }}</a>
-      </dd>
-      {% endif %}
-      {% if document.solr.litLinkDOI %}
-      <dt>Available DOI</dt>
-      <dd>
-          <a class="decision-link" href="{{ document.solr.litLinkDOI | url_normalize }}">{{ document.solr.litLinkDOI }}</a>
-      </dd>
-      {% endif %}
     </dl>
   </section>
 
   <section id="text">
     <dl>
-      {% if document.region %}
-        <dt>Geographical area</dt>
-        <dd>{{ document.region }}</dd>
-      {% endif %}
-      {% if document.basin %}
-        <dt>Basin</dt>
-        <dd>{{ document.basin }}</dd>
-      {% endif %}
       {% if document.jurisdiction %}
         <dt>Field of application</dt>
         <dd>{{ document.jurisdiction }}</dd>
       {% endif %}
+
       {% if document.countries %}
         <dt>Countr{{ document.countries|length|pluralize:"y,ies" }}</dt>
         <dd>{{ document.countries | join_by:", " | safe }}</dd>
@@ -89,13 +93,19 @@
       </dd>
       {% endif %}
 
+      {% if document.region %}
+        <dt>Geographical area</dt>
+        <dd>{{ document.region }}</dd>
+      {% endif %}
+      {% if document.basin %}
+        <dt>Basin</dt>
+        <dd>{{ document.basin }}</dd>
+      {% endif %}
+
       {% if document.summary %}
         <dt>Abstract</dt>
         <dd><p class="abstract">{{ document.summary|safe }}</p></dd>
       {% endif %}
-
-      <dt>Source</dt>
-      <dd><a target="_blank" href="http://iucn.org">{{ document.source }}</a> (ID: {{ document.document_id }})</dd>
 
       {% if document.link_to_full_text %}
       <dt>Link to full text</dt>
@@ -105,6 +115,20 @@
           {% endfor %}
       </dd>
       {% endif %}
+      {% if document.solr.litLinkDOI %}
+      <dt>Available DOI</dt>
+      <dd>
+          <a class="decision-link" href="{{ document.solr.litLinkDOI | url_normalize }}">{{ document.solr.litLinkDOI }}</a>
+      </dd>
+      {% endif %}
+      {% if document.solr.litRelatedWebSite %}
+      <dt>Available web site</dt>
+      <dd>
+          <a class="decision-link" href="{{ document.solr.litRelatedWebSite | url_normalize }}">{{ document.solr.litRelatedWebSite }}</a>
+      </dd>
+      {% endif %}
+      <dt>Source</dt>
+      <dd><a target="_blank" href="http://iucn.org">{{ document.source }}</a> (ID: {{ document.document_id }})</dd>
     </dl>
   </section>
 
