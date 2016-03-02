@@ -203,14 +203,14 @@ def get_relevancy():
         'legTitle': 100,
         'legLongTitle': 100,
 
-        'litLongTitle': 100,
+        'litLongTitle_en': 100,
         'litLongTitle_fr': 100,
-        'litLongTitle_sp': 100,
+        'litLongTitle_es': 100,
         'litLongTitle_other': 100,
 
-        'litPaperTitleOfText': 100,
+        'litPaperTitleOfText_en': 100,
         'litPaperTitleOfText_fr': 100,
-        'litPaperTitleOfText_sp': 100,
+        'litPaperTitleOfText_es': 100,
         'litPaperTitleOfText_other': 100,
 
         'cdTitleOfText_en': 100,
@@ -236,7 +236,9 @@ def get_relevancy():
         'trKeyword_fr': 30,
         'trKeyword_es': 30,
         'decKeyword': 30,
-        'litKeyword': 30,
+        'litKeyword_en': 30,
+        'litKeyword_fr': 30,
+        'litKeyword_es': 30,
         'legKeyword_en': 30,
         'cdKeywords': 30,
 
@@ -270,7 +272,7 @@ def get_fq(filters):
         'decStatus': 'decision',
         'decTreatyName_en': 'decision',
 
-        'litTypeOfText': 'literature',
+        'litTypeOfText_en': 'literature',
         'litAuthor': 'literature',
         'litSerialTitle': 'literature',
         'litPublisher': 'literature',
