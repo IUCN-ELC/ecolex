@@ -11,97 +11,20 @@
     {% include 'short_display/decision.html' %}
 
   {% elif result.type == "literature" %}
-    {% if result.authors %}
-        <p class="search-result-details">
-            <strong>Author{{ result.authors|length|pluralize:",s" }}: </strong>
-            <span>{{ result.authors | join_by:", " | safe }}</span>
-        </p>
-    {% endif %}
 
-    <p class="search-result-details">
-      {% if result.parent_title %}
-          <strong>In: </strong><span>{{ result.parent_title | safe }}</span> |
-      {% endif %}
-      {% if result.publisher %}
-        <span>{{ result.publisher }}</span>
-      {% endif %}
-      {% if result.publication_place %}
-        | <span>{{ result.publication_place }}</span>
-      {% endif %}
-    </p>
-    <p class="search-result-details">
-      <strong class="sr-type">{{ result.type|capfirst }}</strong>
-      {% if result.jurisdiction %}
-        | <span>{{ result.jurisdiction }}</span>
-      {% endif %}
-      {% if result.countries %}
-        | <span>{{ result.countries | join_by:", " | safe }}</span>
-      {% endif %}
-      {% if result.publication_date %}
-        |
-        <time class="sr-date" title="Publication date: {{ result.publication_date }}">
-          {{ result.publication_date }}
-        </time>
-      {% endif %}
-    </p>
-    <p class="search-result-details"><strong>Keywords:</strong>
-      {{ result.keywords | join_by:", " | safe }}
-    </p>
-    <p class="search-result-source">Source: <a target="_blank" href="http://iucn.org">{{ result.source }}</a> (ID: {{ result.document_id }})</p>
+    {% include 'short_display/literature.html' %}
 
   {% elif result.type == 'treaty' %}
 
     {% include 'short_display/treaty.html' %}
 
   {% elif result.type == "court_decision" %}
-    <div class="search-result-details">
-      <strong class="sr-type">Court Decision</strong>
-        |
-        <span class="sr-doctype">{{ result.type_of_document }}</span>
-      {% if result.country %}
-        |
-        <span class="sr-country">{{ result.country }}</span>
-      {% endif %}
-      {% if result.date %}
-        |
-        <time class="sr-date" title="Date: {{ result.date }}">
-          {{ result.date|date:"b j, Y"|capfirst  }}
-        </time>
-      {% endif %}
-    </div>
-    <p class="search-result-description">{# result.summary|safe #}</p>
-    {% if result.keywords %}
-      <p class="search-result-details"><strong>Keywords:</strong>
-        {{ result.keywords | join_by:", " | safe }}
-      </p>
-    {% endif %}
-    <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></p>
+
+    {% include 'short_display/court_decision.html' %}
 
   {% elif result.type == "legislation" %}
-    <div class="search-result-details">
-      <strong class="sr-type">Legislation</strong>
-      {% if result.country %}
-        |
-        <span class="sr-jurisdiction">{{ result.country }}</span>
-      {% endif %}
-      {% if result.date %}
-        |
-        <time class="sr-date" tile="Date: {{ result.date }}">
-         {{ result.date }}
-        </time>
-      {% endif %}
-      {% if result.status and result.status != "in force" %}
-        |
-        <span class="sr-status" title="Status: {{ result.status|capfirst }}">
-          {{ result.status|capfirst }}
-        </span>
-      {% endif %}
-    </div>
-    {% if result.keywords %}
-      <p class="search-result-details"><strong>Keywords:</strong>
-        {{ result.keywords | join_by:", " | safe }}
-      </p>
-    {% endif %}
-    <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://faolex.fao.org/">FAOLEX</a> (ID: {{ result.document_id }})</p>
+
+    {% include 'short_display/legislation.html' %}
+
   {% endif %}
 </li>

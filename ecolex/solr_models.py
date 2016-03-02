@@ -414,12 +414,14 @@ class Literature(ObjectNormalizer):
     LANGUAGE_FIELD = 'litLanguageOfDocument'
     SUMMARY_FIELD = 'litAbstract'
     TITLE_FIELDS = [
-        'litPaperTitleOfText', 'litPaperTitleOfText_fr',
+        'litPaperTitleOfText_en','litPaperTitleOfText_fr',
         'litPaperTitleOfText_sp', 'litPaperTitleOfText_other',
-        'litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp', 'litLongTitle_other',
-        'litTitleOfTextShort', 'litTitleOfTextShort_fr',
+        'litLongTitle_en', 'litLongTitle_fr', 'litLongTitle_sp',
+        'litLongTitle_other',
+        'litTitleOfTextShort_en', 'litTitleOfTextShort_fr',
         'litTitleOfTextShort_sp', 'litTitleOfTextShort_other',
-        'litTitleOfTextTransl', 'litTitleOfTextTransl_fr', 'litTitleOfTextTransl_sp'
+        'litTitleOfTextTransl', 'litTitleOfTextTransl_fr',
+        'litTitleOfTextTransl_sp'
     ]
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
     OPTIONAL_INFO_FIELDS = [
@@ -434,32 +436,34 @@ class Literature(ObjectNormalizer):
         ('litLanguageOfDocument', 'Language of document', 'list'),
     ]
     DOCTYPE_FIELD = 'litTypeOfText'
-    KEYWORD_FIELD = 'litKeyword' #del
-    SUBJECT_FIELD = 'litSubject' #del
+    KEYWORD_FIELD = 'litKeyword_en'
+    SUBJECT_FIELD = 'litSubject_en'
     REFERENCE_TO_FIELDS = {
         'litTreatyReference': 'treaty',
         'litLiteratureReference': 'literature',
         'litCourtDecisionReference': 'court_decision',
+        'litFaolexReference': 'legislation',
+        'litEULegislationReference': 'legislation',
+        'litNationalLegislationReference': 'legislation',
     }
     REFERENCE_MAPPING = {
         'treaty': 'trElisId',
         'literature': 'litId',
         'court_decision': 'cdOriginalId',
+        'legislation': 'legId',
     }
     REFERENCE_FROM_FIELDS = {
         'litLiteratureReference': 'literature',
     }
 
-    def get_references_ids_dict(self):
+    def get_references_to(self):
+        from ecolex.search import get_documents_by_field
         ids_dict = {}
         for field, doc_type in self.REFERENCE_TO_FIELDS.items():
             values = [v for v in self.solr.get(field, [])]
             if values and any(values):
                 ids_dict[doc_type] = values
-        return ids_dict
 
-    def get_references_from_ids(self, ids_dict):
-        from ecolex.search import get_documents_by_field
         references = {}
         for doc_type, ids in ids_dict.items():
             results = get_documents_by_field(self.REFERENCE_MAPPING[doc_type],

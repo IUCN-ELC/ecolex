@@ -249,8 +249,7 @@ class LiteratureDetails(DetailsView):
     def get_context_data(self, **kwargs):
         context = super(LiteratureDetails, self).get_context_data(**kwargs)
         document = context['document']
-        reference_ids = document.get_references_ids_dict()
-        references_to = document.get_references_from_ids(reference_ids)
+        references_to = document.get_references_to()
         references_from = document.get_references_from()
         context['references_to'] = references_to
         context['references_from'] = references_from
