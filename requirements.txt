@@ -6,3 +6,5 @@ marshmallow>=2.6.0,<2.7
 requests==2.5.1
 selenium==2.44.0
 django-selenium==0.9.8
+python-dateutil==2.4.2
+dateparser==0.3.3

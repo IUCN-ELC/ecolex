@@ -140,7 +140,7 @@ class EcolexSolr(object):
     def add(self, obj):
         try:
             self.solr.add([obj])
-            self.solr.optimize()
+            # self.solr.optimize()
         except pysolr.SolrError as e:
             if settings.DEBUG:
                 logging.getLogger('solr').exception(e)
@@ -150,7 +150,7 @@ class EcolexSolr(object):
     def add_bulk(self, bulk_obj):
         try:
             self.solr.add(bulk_obj)
-            self.solr.optimize()
+            # self.solr.optimize()
         except pysolr.SolrError as e:
             if settings.DEBUG:
                 logging.getLogger('solr').exception(e)

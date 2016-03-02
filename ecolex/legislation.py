@@ -2,6 +2,7 @@ import json
 import logging
 import logging.config
 import tempfile
+import dateparser
 from bs4 import BeautifulSoup
 from datetime import datetime
 from collections import OrderedDict
@@ -93,9 +94,11 @@ def get_content(values):
 
 
 def get_date_format(value):
-    value = ' '.join([x for x in value.split() if not x.isupper()])
-    date = datetime.strptime(value, '%a %b %d %H:%M:%S %Y')
-    return date.strftime('%Y-%m-%dT%H:%M:%SZ')
+    try:
+        return dateparser.parse(value).isoformat() + 'Z'
+    except Exception as e:
+        logger.exception(e)
+    return None
 
 
 def harvest_file(uploaded_file):
@@ -149,13 +152,6 @@ def harvest_file(uploaded_file):
     response = add_legislations(legislations)
     return response
 
-
-def legislation_needs_update(old, new):
-    if old['legModificationDate'] != new['legModificationDate']:
-        return True
-    return False
-
-
 def add_legislations(legislations):
     solr = EcolexSolr()
     new_docs = []
@@ -163,7 +159,6 @@ def add_legislations(legislations):
     new_legislations = []
     updated_legislations = []
     failed_docs = []
-    already_indexed = 0
 
     for legislation in legislations:
         leg_id = legislation['legId']
@@ -175,12 +170,9 @@ def add_legislations(legislations):
             if leg_result:
                 legislation['updatedDate'] = (datetime.now()
                                               .strftime('%Y-%m-%dT%H:%M:%SZ'))
-                if legislation_needs_update(leg_result, legislation):
-                    legislation['id'] = leg_result['id']
-                    updated_legislations.append(legislation)
-                    updated_docs.append(doc)
-                else:
-                    already_indexed += 1
+                legislation['id'] = leg_result['id']
+                updated_legislations.append(legislation)
+                updated_docs.append(doc)
             else:
                 new_legislations.append(legislation)
                 new_docs.append(doc)
@@ -203,12 +195,11 @@ def add_legislations(legislations):
     for doc in new_docs + updated_docs + failed_docs:
         doc.save()
 
-    response = 'Total %d. Added %d. Updated %d. Not modified %d. Failed %d.' % (
+    response = 'Total %d. Added %d. Updated %d. Failed %d.' % (
         len(legislations),
         count_new,
         count_updated,
-        already_indexed,
-        len(legislations)-count_new-count_updated-already_indexed
+        len(legislations)-count_new-count_updated
     )
     return response
 
