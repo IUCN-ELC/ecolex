@@ -255,7 +255,7 @@ class Treaty(ObjectNormalizer):
     OPTIONAL_INFO_FIELDS = [
         # (solr field, display text, type=text)
         ('trPlaceOfAdoption', 'Place of adoption', ''),
-        ('trRegion', 'Geographical area', ''),
+        ('trRegion_en', 'Geographical area', ''),
         ('trBasin_en', 'Basin', ''),
         ('trDepository_en', 'Depository', ''),
         ('trUrl', 'Available web site', 'url'),
@@ -375,7 +375,7 @@ class Decision(ObjectNormalizer):
                     'decShortTitle_ru', 'decShortTitle_ar', 'decShortTitle_zh']
     DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
     DOCTYPE_FIELD = 'decType'
-    KEYWORD_FIELD = 'decKeyword'
+    KEYWORD_FIELD = 'decKeyword_en'
     OPTIONAL_INFO_FIELDS = [
     ]
 
