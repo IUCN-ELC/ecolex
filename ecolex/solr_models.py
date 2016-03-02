@@ -97,7 +97,15 @@ class ObjectNormalizer:
                     continue
                 entry['value'] = type.join(values)
             else:
-                if not self.solr.get(field):
+                if type == 'attr':
+                    value = getattr(self, field)
+                    if value:
+                        if isinstance(value, list):
+                            value = ', '.join(sorted(value))
+                        entry['value'] = value
+                        res.append(entry)
+                    continue
+                elif not self.solr.get(field):
                     continue
                 entry['type'] = first(type, 'text')
                 value = self.solr.get(field)
@@ -422,13 +430,13 @@ class Literature(ObjectNormalizer):
     ]
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
     OPTIONAL_INFO_FIELDS = [
-        ('litDateOfText', 'Publication date', ''),
-        ('litVolumeNo', 'Volume', ''),
         (['litPublisher', 'litPublPlace'], 'Publisher', ' | '),
         ('litISBN', 'ISBN', ''),
-        ('litCollation', 'Pages', ''),
-        ('litSeriesFlag', 'Series', ''),
+        ('litISSN', 'ISSN', ''),
+        ('collation', 'Pages', 'attr'), # should exclude for article
+        ('type_of_document', 'Document type', 'attr'),
          # TODO: litConfName is a translatable field
+         # document type
         (['litConfName_en', 'litConfNo', 'litConfDate', 'litConfPlace'], 'Conference', ' | '),
         ('litLanguageOfDocument_en', 'Language', 'list'),
     ]
@@ -526,11 +534,29 @@ class Literature(ObjectNormalizer):
     def publication_date(self):
         return first(self.solr.get('litDateOfTextSer')) or first(self.solr.get('litDateOfText'))
 
+    def title_translations(self):
+        titles = []
+        for code, language in LANGUAGE_MAP.items():
+            title = self.solr.get('{}_{}'.format('litPaperTitleOfText', code))
+            if title and title != self.title():
+                titles.append({'alttitle': first(title), 'language': language})
+        return titles
+
     def parent_title(self):
         parent_title = first(self.solr.get('litLongTitle_en')) or first(self.solr.get('litSerialTitle'))
         if not parent_title or parent_title == self.title():
             return None
         return parent_title
+
+    @cached_property
+    def lit_is_article(self):
+        return bool(self.solr.get('litDateOfTextSer', '').strip())
+
+    @cached_property
+    def collation(self):
+        if not self.lit_is_article:
+            return self.solr.get('litCollation')
+        return None
 
     @cached_property
     def link_to_full_text(self):
