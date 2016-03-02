@@ -156,6 +156,9 @@ DATE_FIELDS = [
     'litDateOfEntry', 'litDateOfModification'
 ]
 
+TEXT_DATE_FIELDS = ['litDateOfText']
+SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
+
 MULTIVALUED_FIELDS = [
     'litId2',
     'litAuthor', 'litCorpAuthor', 'litAuthorArticle', 'litCorpAuthorArticle',
@@ -297,6 +300,9 @@ class LiteratureImporter(object):
                             valid_date(field_values[0].text)):
                         data[v] = format_date(
                             self._clean_text(field_values[0].text))
+                    elif v in TEXT_DATE_FIELDS and field_values:
+                        value = self._clean_text(field_values[0].text)
+                        data[v], data['docDate'] = self._clean_text_date(value)
                     elif field_values:
                         clean_values = [self._clean_text(field.text) for field in field_values]
                         if v in data:
@@ -305,6 +311,12 @@ class LiteratureImporter(object):
                             data[v] = clean_values
                         if v in data and v not in MULTIVALUED_FIELDS:
                             data[v] = data[v][0]
+
+                # litDateOfText parsing error log
+                if 'litDateOfText' in data and ('docDate' not in data or
+                                                not data['docDate']):
+                    logger.error('Invalid date format (dateoftext) %s: %s' %
+                                 (data['litId'], data['litDateOfText']))
 
                 # compute litDisplayType
                 id = data.get('litId')
@@ -351,6 +363,21 @@ class LiteratureImporter(object):
                         doc.save()
 
             literature['litText'] = lit_text
+
+    def _clean_text_date(self, value):
+        date_formats = ['%Y', '%Y-00-00', '%Y-%m', '%Y-%m-00', '%Y-%m-%d',
+                        '%Y%m00', '%Y%m%d']
+
+        def parse(value, date_format):
+            date = datetime.strptime(value, date_format)
+            return value, date.strftime(SOLR_DATE_FORMAT)
+
+        for date_format in date_formats:
+            try:
+                return parse(value, date_format)
+            except ValueError:
+                continue
+        return value, None
 
     def _get_solr_lit(self, lit_data):
         new_lit = Literature(lit_data, self.solr)
