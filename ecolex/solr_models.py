@@ -412,7 +412,7 @@ class Decision(ObjectNormalizer):
 class Literature(ObjectNormalizer):
     ID_FIELD = 'litId'
     LANGUAGE_FIELD = 'litLanguageOfDocument_en'
-    SUMMARY_FIELD = 'litAbstract'
+    SUMMARY_FIELD = 'litAbstract_en'
     TITLE_FIELDS = [
         'litPaperTitleOfText_en','litPaperTitleOfText_fr',
         'litPaperTitleOfText_es', 'litPaperTitleOfText_other',
@@ -425,15 +425,15 @@ class Literature(ObjectNormalizer):
     ]
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
     OPTIONAL_INFO_FIELDS = [
+        ('litDateOfText', 'Publication date', ''),
         ('litVolumeNo', 'Volume', ''),
         (['litPublisher', 'litPublPlace'], 'Publisher', ' | '),
-        ('litDateOfText', 'Date of publication', ''),
         ('litISBN', 'ISBN', ''),
         ('litCollation', 'Pages', ''),
         ('litSeriesFlag', 'Series', ''),
          # TODO: litConfName is a translatable field
-        (['litConfName', 'litConfNo', 'litConfDate', 'litConfPlace'], 'Conference', ' | '),
-        ('litLanguageOfDocument_en', 'Language of document', 'list'),
+        (['litConfName_en', 'litConfNo', 'litConfDate', 'litConfPlace'], 'Conference', ' | '),
+        ('litLanguageOfDocument_en', 'Language', 'list'),
     ]
     DOCTYPE_FIELD = 'litTypeOfText_en'
     KEYWORD_FIELD = 'litKeyword_en'
@@ -534,9 +534,6 @@ class Literature(ObjectNormalizer):
         if not parent_title or parent_title == self.title():
             return None
         return parent_title
-
-    def abstract(self):
-        return first(self.solr.get('litAbstract'))
 
     @cached_property
     def link_to_full_text(self):
