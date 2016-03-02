@@ -408,17 +408,17 @@ class Decision(ObjectNormalizer):
 
 class Literature(ObjectNormalizer):
     ID_FIELD = 'litId'
-    LANGUAGE_FIELD = 'litLanguageOfDocument'
+    LANGUAGE_FIELD = 'litLanguageOfDocument_en'
     SUMMARY_FIELD = 'litAbstract'
     TITLE_FIELDS = [
         'litPaperTitleOfText_en','litPaperTitleOfText_fr',
-        'litPaperTitleOfText_sp', 'litPaperTitleOfText_other',
-        'litLongTitle_en', 'litLongTitle_fr', 'litLongTitle_sp',
+        'litPaperTitleOfText_es', 'litPaperTitleOfText_other',
+        'litLongTitle_en', 'litLongTitle_fr', 'litLongTitle_es',
         'litLongTitle_other',
         'litTitleOfTextShort_en', 'litTitleOfTextShort_fr',
-        'litTitleOfTextShort_sp', 'litTitleOfTextShort_other',
-        'litTitleOfTextTransl', 'litTitleOfTextTransl_fr',
-        'litTitleOfTextTransl_sp'
+        'litTitleOfTextShort_es', 'litTitleOfTextShort_other',
+        'litTitleOfTextTransl_en', 'litTitleOfTextTransl_fr',
+        'litTitleOfTextTransl_es'
     ]
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
     OPTIONAL_INFO_FIELDS = [
@@ -430,9 +430,9 @@ class Literature(ObjectNormalizer):
         ('litSeriesFlag', 'Series', ''),
          # TODO: litConfName is a translatable field
         (['litConfName', 'litConfNo', 'litConfDate', 'litConfPlace'], 'Conference', ' | '),
-        ('litLanguageOfDocument', 'Language of document', 'list'),
+        ('litLanguageOfDocument_en', 'Language of document', 'list'),
     ]
-    DOCTYPE_FIELD = 'litTypeOfText'
+    DOCTYPE_FIELD = 'litTypeOfText_en'
     KEYWORD_FIELD = 'litKeyword_en'
     SUBJECT_FIELD = 'litSubject_en'
     REFERENCE_TO_FIELDS = {
@@ -491,7 +491,7 @@ class Literature(ObjectNormalizer):
         return reverse('literature_details', kwargs={'id': self.id()})
 
     def jurisdiction(self):
-        return first(self.solr.get('litScope'))
+        return first(self.solr.get('litScope_en'))
 
     def corp_authors(self):
         authors = self.solr.get('litCorpAuthorArticle', [])
@@ -509,7 +509,7 @@ class Literature(ObjectNormalizer):
         return self.people_authors() or self.corp_authors()
 
     def countries(self):
-        return self.solr.get('litCountry')
+        return self.solr.get('litCountry_en')
 
     def publisher(self):
         return first(self.solr.get('litPublisher'))
@@ -527,7 +527,7 @@ class Literature(ObjectNormalizer):
         return first(self.solr.get('litDateOfTextSer')) or first(self.solr.get('litDateOfText'))
 
     def parent_title(self):
-        parent_title = first(self.solr.get('litLongTitle')) or first(self.solr.get('litSerialTitle'))
+        parent_title = first(self.solr.get('litLongTitle_en')) or first(self.solr.get('litSerialTitle'))
         if not parent_title or parent_title == self.title():
             return None
         return parent_title
@@ -539,15 +539,20 @@ class Literature(ObjectNormalizer):
     def link_to_full_text(self):
         links = []
         languages = self.solr.get(self.LANGUAGE_FIELD)
+        defaultLanguage = 'English'
         for idx, link in enumerate(self.solr.get('litLinkToFullText', [])):
-            links.append((link, languages[idx]))
+            if idx < len(languages):
+                language = defaultLanguage = languages[idx]
+            else:
+                language = defaultLanguage
+            links.append((link, language))
         return links
 
     def get_language(self):
         # TODO: literature can have multiple languages - see ANA-082928
-        return (first(self.solr.get('litLanguageOfDocument') or
+        return (first(self.solr.get('litLanguageOfDocument_en') or
                       self.solr.get('litLanguageOfDocument_fr') or
-                      self.solr.get('litLanguageOfDocument_sp')) or
+                      self.solr.get('litLanguageOfDocument_es')) or
                 'Document language')
 
 
