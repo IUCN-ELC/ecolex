@@ -2,7 +2,6 @@ import json
 import logging
 import logging.config
 import tempfile
-import dateparser
 from bs4 import BeautifulSoup
 from datetime import datetime
 from collections import OrderedDict
@@ -95,9 +94,14 @@ def get_content(values):
 
 def get_date_format(value):
     try:
-        return dateparser.parse(value).isoformat() + 'Z'
-    except Exception as e:
-        logger.exception(e)
+        # Strip timezone
+        value = ' '.join([x for x in value.split() if not x.isupper()])
+        date = datetime.strptime(value, '%a %b %d %H:%M:%S %Y')
+        # Convert to ISO 8601
+        return date.strftime('%Y-%m-%dT%H:%M:%SZ')
+    except ValueError as e:
+        # Caused by invalid dates like Sun Nov 30 00:00:00 2
+        pass
     return None
 
 
