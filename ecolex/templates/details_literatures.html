@@ -20,19 +20,15 @@
   </header>
 
   <table class="table decisions-expanded">
-    <thead>
-      <th>Title</th>
-      <th class="text-right" style="min-width: 120px;">Doc. date</th>
-    </thead>
       <tbody>
         {% for literature in literatures %}
         <tr>
           <td>
-            <a href="{{ literature.details_url }}?{{ query }}"
-               title="See literature details">{{ literature }}</a>
-          </td>
-          <td class="text-right">
-            <time class="small text-muted">{{ literature.date|date:"b j, Y"|capfirst }}</time>
+            <h3 class="search-result-title">
+              <a href="{{ literature.details_url }}?{{ query }}"
+                 title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
+            </h3>
+            {% include 'short_display/literature.html' with result=literature %}
           </td>
         </tr>
         {% endfor %}

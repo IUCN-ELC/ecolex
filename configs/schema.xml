@@ -525,9 +525,9 @@
     <field name="litDisplayType_fr" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="litDisplayType_es" type="string" indexed="true" stored="true" multiValued="false"/>
 
-    <field name="litLanguageOfDocument_en" type="string" indexed="true" stored="true"/>
-    <field name="litLanguageOfDocument_fr" type="string" indexed="true" stored="true"/>
-    <field name="litLanguageOfDocument_es" type="string" indexed="true" stored="true"/>
+    <field name="litLanguageOfDocument_en" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litLanguageOfDocument_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litLanguageOfDocument_es" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="litSubject_en" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="litSubject_fr" type="text" indexed="true" stored="true" multiValued="true"/>

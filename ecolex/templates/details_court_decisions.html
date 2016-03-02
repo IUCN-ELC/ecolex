@@ -22,17 +22,16 @@
   <table class="table decisions-expanded">
     <thead>
       <th>Title</th>
-      <th class="text-right" style="min-width: 120px;">Doc. date</th>
     </thead>
       <tbody>
         {% for court_decision in court_decisions %}
         <tr>
           <td>
-            <a href="{{ court_decision.details_url }}?{{ query }}"
-               title="See court decision details">{{ court_decision }}</a>
-          </td>
-          <td class="text-right">
-            <time class="small text-muted">{{ court_decision.date }}</time>
+            <h3 class="search-result-title">
+              <a href="{{ court_decision.details_url }}?{{ query }}"
+                 title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
+            </h3>
+            {% include 'short_display/court_decision.html' with result=court_decision %}
           </td>
         </tr>
         {% endfor %}

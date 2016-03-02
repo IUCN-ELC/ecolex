@@ -94,18 +94,5 @@
     </section>
   {% endif %}
 
-  {% if decisions|length %}
-    <section id="other-references">
-      <h2 class="section-title">Other references</h2>
-      <dl>
-        <dt>COP decisions</dt>
-        <dd>
-            <strong>{{ decisions|length }} decisions</strong> related to this treaty.
-            <a href="{% url 'resultDecisions' document.id %}">View decisions</a>
-        </dd>
-      </dl>
-    </section>
-  {% endif %}
-
 </article>
 {% endblock content %}

@@ -75,9 +75,17 @@
     {% for doc_type, docs in references.items %}
       <dl>
         <dt>{{ doc_type|capfirst }}</dt>
-        {% for doc in docs %}
-          <dd><a href="{{ doc.details_url }}">{{ doc }}</a></dd>
-        {% endfor %}
+          {% for doc in docs %}
+            <dd>
+              <div class="treaty-link-container">
+                <h3 class="search-result-title">
+                  <a href="{{ doc.details_url }}?{{ query }}"
+                     title="{{ doc.title|safe|striptags }}">{{ doc.title|safe }}</a>
+                </h3>
+              </div>
+              {% include 'short_display/treaty.html' with result=doc %}
+            </dd>
+          {% endfor %}
       </dl>
     {% endfor %}
     {% endif %}
@@ -88,7 +96,15 @@
       <dl>
         <dt>{{ doc_type|capfirst }}</dt>
         {% for doc in docs %}
-          <dd><a href="{{ doc.details_url }}">{{ doc }}</a></dd>
+          <dd>
+              <div class="treaty-link-container">
+                <h3 class="search-result-title">
+                  <a href="{{ doc.details_url }}?{{ query }}"
+                     title="{{ doc.title|safe|striptags }}">{{ doc.title|safe }}</a>
+                </h3>
+              </div>
+              {% include 'short_display/literature.html' with result=doc %}
+          </dd>
         {% endfor %}
       </dl>
     {% endfor %}
