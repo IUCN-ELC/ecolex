@@ -423,6 +423,10 @@
     <field name="legGeoArea_fr" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="legGeoArea_es" type="string" indexed="true" stored="true" multiValued="true"/>
 
+    <field name="legBasin_en" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legBasin_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legBasin_es" type="string" indexed="true" stored="true" multiValued="true"/>
+
     <field name="legTypeCode" type="string" indexed="true" stored="true"/>
     <field name="legType_en" type="string" indexed="true" stored="true"/>
     <field name="legType_fr" type="string" indexed="true" stored="true"/>

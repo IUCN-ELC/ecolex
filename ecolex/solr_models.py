@@ -684,6 +684,12 @@ class Legislation(ObjectNormalizer):
     def country(self):
         return first(self.solr.get('legCountry_en'))
 
+    def region(self):
+        return self.solr.get('legGeoArea_en')
+
+    def basin(self):
+        return self.solr.get('legBasin_en')
+
     def status(self):
         return first(self.solr.get('legStatus'))
 
@@ -704,7 +710,6 @@ class Legislation(ObjectNormalizer):
                    text_date, '%Y-%m-%dT%H:%M:%SZ'), 'b j, Y').title()
         original_date = first(self.solr.get('legOriginalDate'))
         consolidation_date = first(self.solr.get('legConsolidationDate'))
-        #import pdb;pdb.set_trace()
         if original_date:
             original_date = django_date_filter(datetime.strptime(original_date,
                             '%Y-%m-%dT%H:%M:%SZ'), 'b j, Y').title()

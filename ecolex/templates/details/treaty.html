@@ -76,7 +76,7 @@
       {% endif %}
 
       {% if document.subjects %}
-        <dt>Subject</dt>
+        <dt>Subject{{ document.subjects|length|pluralize:",s" }}</dt>
         <dd>{{ document.subjects | join_by:", " | safe }}</dd>
       {% endif %}
 
@@ -113,7 +113,7 @@
       {% endif %}
 
       {% if document.link_to_full_text %}
-        <dt>Link to full text</dt>
+        <dt>Full text</dt>
         <dd>
           {% for link in document.link_to_full_text %}
             <a href="{{ link.url }}" target="_blank">{{ link.language }}</a>
