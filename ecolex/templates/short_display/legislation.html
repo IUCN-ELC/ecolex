@@ -3,9 +3,7 @@
 <div class="search-result-details">
     <strong class="sr-type">Legislation</strong> {% if result.country %} |
     <span class="sr-jurisdiction">{{ result.country }}</span> {% endif %} {% if result.date %} |
-    <time class="sr-date" tile="Date: {{ result.date }}">
-        {{ result.date }}
-    </time>
+    <span class="sr-date">{{ result.date }}</span>
     {% endif %} {% if result.status and result.status != "in force" %} |
     <span class="sr-status" title="Status: {{ result.status|capfirst }}">
           {{ result.status|capfirst }}

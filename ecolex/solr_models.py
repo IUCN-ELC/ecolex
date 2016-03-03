@@ -8,7 +8,6 @@ import functools
 
 from django.core.urlresolvers import reverse
 from django.utils.html import strip_tags
-from django.template.defaultfilters import date as django_date_filter
 
 from ecolex.definitions import DOC_SOURCES, LANGUAGE_MAP
 
@@ -645,9 +644,8 @@ class Legislation(ObjectNormalizer):
     ID_FIELD = 'legId'
     SUMMARY_FIELD = 'legAbstract'
     TITLE_FIELDS = ['legTitle', 'legLongTitle']
-    DATE_FIELDS = ['legDate', 'legOriginalDate']
-    KEYWORD_FIELD = 'legKeyword_en' #del
-    SUBJECT_FIELD = 'legSubject_en' #del
+    KEYWORD_FIELD = 'legKeyword_en'
+    SUBJECT_FIELD = 'legSubject_en'
     DOCTYPE_FIELD = 'legType_en'
     OPTIONAL_INFO_FIELDS = []
 
@@ -709,17 +707,9 @@ class Legislation(ObjectNormalizer):
         return first(self.solr.get('legAbstract'))
 
     def date(self):
-        text_date = first(self.solr.get('legDate'))
-        if text_date:
-            return django_date_filter(datetime.strptime(
-                   text_date, '%Y-%m-%dT%H:%M:%SZ'), 'b j, Y').title()
-        original_date = first(self.solr.get('legOriginalDate'))
-        consolidation_date = first(self.solr.get('legConsolidationDate'))
-        if original_date:
-            original_date = django_date_filter(datetime.strptime(original_date,
-                            '%Y-%m-%dT%H:%M:%SZ'), 'b j, Y').title()
-            if consolidation_date:
-                consolidation_date = django_date_filter(datetime.strptime(
-                    consolidation_date,'%Y-%m-%dT%H:%M:%SZ'), ' (b j, Y)').title()
-            return '%s %s' % (original_date, consolidation_date or '')
-        return ""
+        legYear = self.solr.get('legYear')
+        legOriginalYear = self.solr.get('legOriginalYear')
+        if legOriginalYear:
+            return '%s (%s)' % (legYear, legOriginalYear)
+        else:
+            return legYear
