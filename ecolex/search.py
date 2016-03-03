@@ -368,7 +368,7 @@ def search(user_query, filters=None, sortby=None, raw=None,
 
 def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
             sortby=None, raw=None, facets=None, fields=None, hl_details=False):
-    solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
+    solr = pysolr.Solr(settings.SOLR_URI, timeout=60)
     if user_query == '*':
         solr_query = '*:*'
         highlight = False
