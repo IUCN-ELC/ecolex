@@ -4,6 +4,7 @@ from datetime import datetime
 import html
 import logging
 import logging.config
+import re
 
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.utils import EcolexSolr, LITERATURE
@@ -206,6 +207,10 @@ class Literature(object):
             update_field = 'litDateOfEntry'
         else:
             return True
+        if not self.data.get(update_field):
+            logger.error('No modification date for %s' %
+                         (self.data[self.elis_id]))
+            return False
         old_date = datetime.strptime(old_record[update_field], self.date_format)
         new_date = datetime.strptime(self.data[update_field], self.date_format)
 
@@ -377,6 +382,14 @@ class LiteratureImporter(object):
                 return parse(value, date_format)
             except ValueError:
                 continue
+
+        # Year range check
+        regex = "(\d{4})-(\d{4})"
+        matches = re.search(regex, value)
+        if matches:
+            start_year, _ = matches.groups(0)
+            return parse(start_year, date_formats[0])
+
         return value, None
 
     def _get_solr_lit(self, lit_data):
