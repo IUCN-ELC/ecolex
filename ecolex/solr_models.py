@@ -529,10 +529,10 @@ class Literature(ObjectNormalizer):
         return first(self.solr.get('litPublisher'))
 
     def region(self):
-        return first(self.solr.get('litRegion'))
+        return self.solr.get('litRegion_en')
 
     def basin(self):
-        return first(self.solr.get('litBasin'))
+        return self.solr.get('litBasin_en')
 
     def publication_place(self):
         return first(self.solr.get('litPublPlace'))

@@ -95,11 +95,11 @@
 
       {% if document.region %}
         <dt>Geographical area</dt>
-        <dd>{{ document.region }}</dd>
+        <dd>{{ document.region | join_by:", " | safe }}</dd>
       {% endif %}
       {% if document.basin %}
         <dt>Basin</dt>
-        <dd>{{ document.basin }}</dd>
+        <dd>{{ document.basin | join_by:", " | safe }}</dd>
       {% endif %}
 
       {% if document.summary %}
