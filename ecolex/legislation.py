@@ -28,12 +28,8 @@ FIELD_MAP = {
     'longTitleOfText': 'legLongTitle',
     'serialImprint': 'legSource',
 
-    'dateOfText': 'legDate',
-    'dateOfOriginalText': 'legOriginalDate',
-    'dateOfModification': 'legModificationDate',
-    'dateOfConsolidation': 'legConsolidationDate',
-    'dateOfEntry': 'legEntryDate',
-    'searchDate': 'legSearchDate',
+    'year': 'legYear',
+    'originalYear': 'legOriginalYear',
 
     'entryIntoForce': 'legEntryIntoForce',
     'country_ISO3': 'legCountry_iso',
@@ -85,29 +81,9 @@ MULTIVALUED_FIELDS = [
     'legSubject_code', 'legSubject_en', 'legSubject_fr', 'legSubject_es',
 ]
 
-DATE_FIELDS = [
-    'legDate', 'legEntryDate', 'legSearchDate', 'legOriginalDate',
-    'legModificationDate', 'legConsolidationDate',
-]
-
-
 def get_content(values):
     values = [v.get(CONTENT, None) for v in values]
     return values
-
-
-def get_date_format(value):
-    try:
-        # Strip timezone
-        value = ' '.join([x for x in value.split() if not x.isupper()])
-        date = datetime.strptime(value, '%a %b %d %H:%M:%S %Y')
-        # Convert to ISO 8601
-        return date.strftime('%Y-%m-%dT%H:%M:%SZ')
-    except ValueError as e:
-        # Caused by invalid dates like Sun Nov 30 00:00:00 2
-        pass
-    return None
-
 
 def harvest_file(uploaded_file):
     if settings.DEBUG:
@@ -133,8 +109,8 @@ def harvest_file(uploaded_file):
             if field_values and v not in MULTIVALUED_FIELDS:
                 field_values = field_values[0]
 
-            if v in DATE_FIELDS and field_values:
-                field_values = get_date_format(field_values)
+            # if v in DATE_FIELDS and field_values:
+            #    field_values = get_date_format(field_values)
 
             if field_values:
                 legislation[v] = field_values
@@ -144,6 +120,11 @@ def harvest_file(uploaded_file):
             field_values = legislation.get(field_name)
             if field_values:
                 legislation[field_name] = list(OrderedDict.fromkeys(field_values).keys())
+
+        legYear = legislation.get('legYear')
+        if legYear:
+            legDate = datetime.strptime(legYear, '%Y')
+            legislation['docDate'] = legDate.strftime('%Y-%m-%dT%H:%M:%SZ')
 
         url_value = document.attrs.get('url', None)
         if url_value:
