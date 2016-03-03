@@ -32,6 +32,7 @@ DECISION_FILTERS = {
 
 LITERATURE_FILTERS = {
     'litDisplayType_en': 'lit_type',
+    'litTypeOfText_en': 'lit_type2',
     'litAuthor': 'lit_author',
     'litSerialTitle': 'lit_serial',
     'litPublisher': 'lit_publisher',
@@ -66,10 +67,11 @@ FIELD_TO_FACET_MAPPING = {
     'dec_status': 'decStatus',
     'dec_treaty': 'decTreatyName_en',
 
-    'lit_type': 'litDisplayType_en',
     'lit_author': 'litAuthor',
     'lit_serial': 'litSerialTitle',
     'lit_publisher': 'litPublisher',
+    'lit_type': 'litDisplayType_en',
+    'lit_type2': 'litTypeOfText_en',
 
     'cd_territorial_subdivision': 'cdTerritorialSubdivision_en',
     'cd_type': 'cdTypeOfText',
@@ -101,10 +103,11 @@ SELECT_FACETS = {
 
     'legTerritorialSubdivision': 'leg_territorial',
 
-    'litDisplayType_en': 'lit_type',
     'litAuthor': 'lit_author',
     'litSerialTitle': 'lit_serial',
     'litPublisher': 'lit_publisher',
+    'litDisplayType_en': 'lit_type',
+    'litTypeOfText_en': 'lit_type2',
 }
 
 
