@@ -44,6 +44,9 @@ FIELD_MAP = {
     'geographicalArea_en': 'legGeoArea_en',
     'geographicalArea_fr': 'legGeoArea_fr',
     'geographicalArea_es': 'legGeoArea_es',
+    'basin_en': 'legBasin_en',
+    'basin_fr': 'legBasin_fr',
+    'basin_es': 'legBasin_es',
 
     'typeOfTextCode': 'legTypeCode',
     'typeOfText_en': 'legType_en',
@@ -77,6 +80,7 @@ MULTIVALUED_FIELDS = [
     'legLanguage_en', 'legLanguage_fr', 'legLanguage_es',
     'legKeyword_code', 'legKeyword_en', 'legKeyword_fr', 'legKeyword_es',
     'legGeoArea_en', 'legGeoArea_fr', 'legGeoArea_es',
+    'legBasin_en', 'legBasin_fr', 'legBasin_es',
     'legImplement', 'legAmends', 'legRepeals',
     'legSubject_code', 'legSubject_en', 'legSubject_fr', 'legSubject_es',
 ]

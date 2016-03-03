@@ -1,6 +1,7 @@
 from django import template
 from django.core.urlresolvers import resolve, reverse
 from django.utils import translation
+from django.template.defaultfilters import capfirst
 import datetime
 
 register = template.Library()
@@ -21,6 +22,12 @@ def just_year(value):
 def join_by(lst, arg):
     if lst and (type(lst) is list or type(lst) is set):
         return arg.join(lst)
+    return lst
+
+@register.filter
+def capfirstseq(lst):
+    if lst and (type(lst) is list or type(lst) is set):
+        return [capfirst(item) for item in lst]
     return lst
 
 
