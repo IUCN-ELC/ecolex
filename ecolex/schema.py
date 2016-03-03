@@ -13,79 +13,6 @@ Usage:
 from ecolex.lib.schema import Schema, fields
 
 
-'''
-###
-# the fields below are obtained with:
-###
-$ ./manage.py shell --plain
->>> import urllib, json
->>> from django.conf import settings
->>> response = urllib.request.urlopen(settings.SOLR_URI + 'schema')
->>> data = json.loads(response.read().decode('utf-8'))
->>> for f in data['schema']['fields']:
-...     print(f['name'], f['type'])
-###
-# fields that don't reflect in the schema have a ! prepended
-# (except for the following, wich have yet to be put in their proper place)
-###
-
-docCountry string
-docCountry_es string
-docCountry_fr string
-docDate tdate
-docKeyword string
-docLanguage string
-docLanguage_es string
-docLanguage_fr string
-docRegion string
-docRegion_es string
-docRegion_fr string
-docSubject string
-
-evAbbreviation string
-evAccess string
-evCity text
-evCountryId int
-evDescription text
-evEnd tdate
-evEventUrl text
-evId int
-evIdEventPrevious int
-evImage string
-evImageCopyRight string
-evIsIndexed boolean
-evKind string
-evLatitude double
-evLocation string
-evLongitude double
-evOrganizationId int
-evOriginalId string
-evPersonId int
-evRecAuthor text
-evRecCreated tdate
-evRecUpdated tdate
-evRecUpdatedAuthor text
-evRepetition text
-evStart tdate
-evStatus string
-evTitle text
-evTreatyId int
-evType string
-evUseInformea boolean
-
-'''
-
-
-# id string
-# type string
-# indexedDate tdate
-# updatedDate tdate
-#!globalText text_general
-#!relatedwebsite string
-#!source string
-#!text text_general
-#!doc_content text_general
-
 class BaseSchema(Schema):
     """
     Inherited by all main object schemas.
@@ -93,39 +20,17 @@ class BaseSchema(Schema):
 
     id = fields.String()
     type = fields.String()
+    source = fields.String()
     indexed_at = fields.DateTime(load_from='indexedDate')
     updated_at = fields.DateTime(load_from='updatedDate')
 
-
-class WithKWSSchema(BaseSchema):
-    """
-    For schemas with keywords and subjects.
-    """
-
-    #KEYWORDS_FIELD = 'docKeyword'
-    #SUBJECTS_FIELD = 'docSubject'
-
-    keywords = fields.List(fields.String(),
-                           multilingual=True,
+    # Common fields that have different names in Solr
+    document_id = fields.String(load_from_attribute='ID_FIELD')
+    keywords = fields.List(fields.String(), multilingual=True,
                            load_from_attribute='KEYWORDS_FIELD')
-    subjects = fields.List(fields.String(),
-                           multilingual=True,
+    subjects = fields.List(fields.String(), multilingual=True,
                            load_from_attribute='SUBJECTS_FIELD')
 
-
-# partyCountry string
-# partyDateOfAcceptanceApproval tdate
-# partyDateOfAccessionApprobation tdate
-# partyDateOfConsentToBeBound tdate
-# partyDateOfDefiniteSignature tdate
-# partyDateOfParticipation tdate
-# partyDateOfProvisionalApplication tdate
-# partyDateOfRatification tdate
-# partyDateOfReservation tdate
-# partyDateOfSimpleSignature tdate
-# partyDateOfSuccession tdate
-# partyDateOfWithdrawal tdate
-# partyEntryIntoForce tdate
 
 class TreatyPartySchema(Schema):
     country = fields.String(load_from='partyCountry')
@@ -155,767 +60,320 @@ class TreatyPartySchema(Schema):
         load_from='partyEntryIntoForce')
 
 
-# trAbstract_en text
-# trAbstract_es text
-# trAbstract_fr text
-# trAmendedBy string
-# trAmendsTreaty string
-# trAuthor text
-# trAuthorA text
-# trAuthorM text
-# trAuthorWhole string
-# trAvailableIn string
-# trBasin_en text
-# trBasin_es text
-# trBasin_fr text
-# trCitedBy string
-# trCitesTreaty string
-# trComment text
-# trConfName text
-# trConfPlace text
-# trContributor text
-# trCourtName text
-# trDateOfConsolidation tdate
-# trDateOfEntry tdate
-# trDateOfLastLegalAction tdate
-# trDateOfModification tdate
-# trDateOfText tdate
-# trDepository_en string
-# trDepository_es string
-# trDepository_fr string
-# trDisplayDetails string
-# trDisplayTitle string
-# trDisplayTitle_En_US string
-# trDisplayTitle_Fr_FR string
-# trDisplayTitle_Sp_SP string
-# trElisId string
-# trEnabled string
-# trEnabledByTreaty string
-# trEnablesTreaty string
-# trEntryIntoForceDate tdate
-# trFieldOfApplication_en string
-# trFieldOfApplication_es string
-# trFieldOfApplication_fr string
-# trInformeaId string
-# trInternetReference_en string
-# trInternetReference_es string
-# trInternetReference_fr string
-# trInternetReference_other string
-# trIntoForceTreaty string
-# trIntroText text
-# trIsProtocol string
-# trJurisdiction_en text
-# trJurisdiction_es text
-# trJurisdiction_fr text
-# trKeyword_en text
-# trKeyword_es text
-# trKeyword_fr text
-# trLanguageOfDocument_en text
-# trLanguageOfDocument_es text
-# trLanguageOfDocument_fr text
-# trLanguageOfTranslation string
-# trLinkToAbstract string
-# trLinkToFullText_en string
-# trLinkToFullText_es string
-# trLinkToFullText_fr string
-# trLinkToFullText_other string
-# trLogoMedium text
-# trNumberOfPages string
-# trNumberOfParties text
-# trObsolete string
-# trOfficialPublication string
-# trOrder string
-# trPaperTitleOfText_en text
-# trPaperTitleOfText_es text
-# trPaperTitleOfText_fr text
-# trPaperTitleOfText_other text
-# trParentId int
-# trPlaceOfAdoption string
-# trPrimary text
-# trPublisher text
-# trReferenceToLiterature string
-# trReferenceToTreaties string
-# trRegion text
-# trRelevantTextTreaty string
-# trScope text
-# trSearchDate tdate
-# trSeatOfCourt text
-# trStatus string
-# trSubject_en text
-# trSubject_es text
-# trSubject_fr text
-# trSupersededBy string
-# trSupersedesTreaty string
-# trThemeSecondary text
-# trTitleAbbreviation text
-# trTitleOfText text
-# trTitleOfTextShort text
-# trTypeOfText_en text
-# trTypeOfText_es text
-# trTypeOfText_fr text
-# trUrl text
-# trUrlElearning text
-# trUrlParties text
-# trUrlTreatyText text
-# trUrlWikipedia text
-
-class TreatySchema(WithKWSSchema):
+class TreatySchema(BaseSchema):
+    ID_FIELD = 'trElisId'
     KEYWORDS_FIELD = 'trKeyword'
     SUBJECTS_FIELD = 'trSubject'
+
+    type_of_document = fields.List(fields.String(), load_from='trTypeOfText',
+                                   multilingual=True)  # False list (?)
 
     # setting these requires special handling, TODO
     parties = fields.Nested(TreatyPartySchema,
                             many=True)
-    abstract = fields.String(load_from='trAbstract',
+    abstract = fields.List(fields.String(), load_from='trAbstract',
+                           multilingual=True)
+    amended_by = fields.List(fields.String(), load_from='trAmendedBy')
+    amends_treaty = fields.List(fields.String(), load_from='trAmendsTreaty')
+    author = fields.List(fields.String(), load_from='trAuthor')
+    author_a = fields.List(fields.String(), load_from='trAuthorA')
+    author_m = fields.List(fields.String(), load_from='trAuthorM')
+    author_whole = fields.List(fields.String(), load_from='trAuthorWhole')
+    available_in = fields.List(fields.String(), load_from='trAvailableIn')
+    basin = fields.List(fields.String(), load_from='trBasin', multilingual=True)
+    cited_by = fields.List(fields.String(), load_from='trCitedBy')
+    cites_treaty = fields.List(fields.String(), load_from='trCitesTreaty')
+    comment = fields.List(fields.String(), load_from='trComment')
+    conf_name = fields.List(fields.String(), load_from='trConfName')
+    conf_place = fields.List(fields.String(), load_from='trConfPlace')
+    contributor = fields.List(fields.String(), load_from='trContributor')
+    court_name = fields.List(fields.String(), load_from='trCourtName')
+    date_of_consolidation = fields.List(fields.Date,
+                                        load_from='trDateOfConsolidation')
+    date_of_entry = fields.Date(load_from='trDateOfEntry')
+    date_of_last_legal_action = fields.Date(load_from='trDateOfLastLegalAction')
+    date_of_modification = fields.Date(load_from='trDateOfModification')
+    date_of_text = fields.Date(load_from='trDateOfText')
+    depository = fields.List(fields.String(), load_from='trDepository',
                              multilingual=True)
-    '''
-    # TO BE CONTINUED
-    trAmendedBy string
-    trAmendsTreaty string
-    trAuthor text
-    trAuthorA text
-    trAuthorM text
-    trAuthorWhole string
-    trAvailableIn string
-    trBasin_en text
-    trBasin_es text
-    trBasin_fr text
-    trCitedBy string
-    trCitesTreaty string
-    trComment text
-    trConfName text
-    trConfPlace text
-    trContributor text
-    trCourtName text
-    trDateOfConsolidation tdate
-    trDateOfEntry tdate
-    trDateOfLastLegalAction tdate
-    trDateOfModification tdate
-    trDateOfText tdate
-    trDepository_en string
-    trDepository_es string
-    trDepository_fr string
-    trDisplayDetails string
-    trDisplayTitle string
-    trDisplayTitle_En_US string
-    trDisplayTitle_Fr_FR string
-    trDisplayTitle_Sp_SP string
-    trElisId string
-    trEnabled string
-    trEnabledByTreaty string
-    trEnablesTreaty string
-    trEntryIntoForceDate tdate
-    trFieldOfApplication_en string
-    trFieldOfApplication_es string
-    trFieldOfApplication_fr string
-    trInformeaId string
-    trInternetReference_en string
-    trInternetReference_es string
-    trInternetReference_fr string
-    trInternetReference_other string
-    trIntoForceTreaty string
-    trIntroText text
-    trIsProtocol string
-    trJurisdiction_en text
-    trJurisdiction_es text
-    trJurisdiction_fr text
-    trLanguageOfDocument_en text
-    trLanguageOfDocument_es text
-    trLanguageOfDocument_fr text
-    trLanguageOfTranslation string
-    trLinkToAbstract string
-    trLinkToFullText_en string
-    trLinkToFullText_es string
-    trLinkToFullText_fr string
-    trLinkToFullText_other string
-    trLogoMedium text
-    trNumberOfPages string
-    trNumberOfParties text
-    trObsolete string
-    trOfficialPublication string
-    trOrder string
-    trPaperTitleOfText_en text
-    trPaperTitleOfText_es text
-    trPaperTitleOfText_fr text
-    trPaperTitleOfText_other text
-    trParentId int
-    trPlaceOfAdoption string
-    trPrimary text
-    trPublisher text
-    trReferenceToLiterature string
-    trReferenceToTreaties string
-    trRegion text
-    trRelevantTextTreaty string
-    trScope text
-    trSearchDate tdate
-    trSeatOfCourt text
-    trStatus string
-    trSupersededBy string
-    trSupersedesTreaty string
-    trThemeSecondary text
-    trTitleAbbreviation text
-    trTitleOfText text
-    trTitleOfTextShort text
-    trTypeOfText_en text
-    trTypeOfText_es text
-    trTypeOfText_fr text
-    trUrl text
-    trUrlElearning text
-    trUrlParties text
-    trUrlTreatyText text
-    trUrlWikipedia text
-    '''
+    enabled = fields.String(load_from='trEnabled')
+    enabled_by_treaty = fields.List(fields.String(),
+                                    load_from='trEnabledByTreaty')
+    enables_treaty = fields.List(fields.String(), load_from='trEnablesTreaty')
+    entry_into_force_date = fields.Date(load_from='trEntryIntoForceDate')
+    field_of_application = fields.List(fields.String(),
+                                       load_from='trFieldOfApplication',
+                                       multilingual=True)
+    informea_id = fields.String(load_from='trInformeaId')
+    internet_reference = fields.List(fields.String(),
+                                     load_from='trInternetReference',
+                                     multilingual=True)
+    internet_reference_other = fields.List(
+        fields.String(), load_from='trInternetReference_other')
+    into_force_treaty = fields.List(fields.String(),
+                                    load_from='trIntoForceTreaty')
+    intro_text = fields.List(fields.String(), load_from='trIntroText')
+    is_protocol = fields.String(load_from='trIsProtocol')
+    jurisdiction = fields.List(fields.String(), load_from='trJurisdiction',
+                               multilingual=True)
+    language_of_document = fields.List(fields.String(),
+                                       load_from='trLanguageOfDocument',
+                                       multilingual=True)
+    language_of_translation = fields.List(fields.String(),
+                                          load_from='trLanguageOfTranslation')
+    link_to_abstract = fields.List(fields.String(),
+                                   load_from='trLinkToAbstract')
+    link_to_full_text = fields.List(fields.String(),
+                                    load_from='trLinkToFullText',
+                                    multilingual=True)
+    link_to_full_text_other = fields.List(fields.String(),
+                                          load_from='trLinkToFullText_other')
+    logo_medium = fields.String(load_from='trLogoMedium')
+    number_of_pages = fields.List(fields.String(), load_from='trNumberOfPages')
+    number_of_parties = fields.List(fields.String(),
+                                    load_from='trNumberOfParties')
+    official_publication = fields.List(fields.String(),
+                                       load_from='trOfficialPublication')
+    order = fields.String(load_from='trOrder')
+    paper_title_of_text = fields.List(fields.String(),
+                                      load_from='trPaperTitleOfText',
+                                      multilingual=True)
+    paper_title_of_text_other = fields.List(
+        fields.String(), load_from='trPaperTitleOfText_other')
+    parent_id = fields.Integer(load_from='trParentId')
+    place_of_adoption = fields.List(fields.String(),
+                                    load_from='trPlaceOfAdoption')
+    primary = fields.List(fields.String(), load_from='trPrimary')
+    reference_to_literature = fields.List(fields.String(),
+                                          load_from='trReferenceToLiterature')
+    reference_to_treaties = fields.List(fields.String(),
+                                        load_from='trReferenceToTreaties')
+    region = fields.List(fields.String(), load_from='trRegion',
+                         multilingual=True)
+    relevant_text_treaty = fields.List(fields.String(),
+                                       load_from='trRelevantTextTreaty')
+    scope = fields.List(fields.String(), load_from='trScope')
+    search_date = fields.Date(load_from='trSearchDate')
+    seat_of_court = fields.List(fields.String(), load_from='trSeatOfCourt')
+    status = fields.String(load_from='trStatus')
+    superseded_by = fields.List(fields.String(), load_from='trSupersededBy')
+    supersedes_treaty = fields.List(fields.String(),
+                                    load_from='trSupersedesTreaty')
+    theme_secondary = fields.List(fields.String(), load_from='trThemeSecondary')
+    title_abbreviation = fields.List(fields.String(),
+                                     load_from='trTitleAbbreviation')
+    title_of_text = fields.List(fields.String(), load_from='trTitleOfText')
+    title_of_text_short = fields.List(fields.String(),
+                                      load_from='trTitleOfTextShort')
+    url = fields.List(fields.String(), load_from='trUrl')
+    url_elearning = fields.List(fields.String(), load_from='trUrlElearning')
+    url_parties = fields.List(fields.String(), load_from='trUrlParties')
+    url_treaty_text = fields.List(fields.String(), load_from='trUrlTreatyText')
+    url_wikipedia = fields.List(fields.String(), load_from='trUrlWikipedia')
 
-
-# decBody text
-# decId string
-# decKeyword text
-# decLanguage string
-# decLink string
-# decLongTitle_ar string
-# decLongTitle_en string
-# decLongTitle_es string
-# decLongTitle_fr string
-# decLongTitle_ru string
-# decLongTitle_zh string
-# decMeetingId string
-# decMeetingTitle string
-# decMeetingUrl string
-# decNumber string
-# decPublishDate tdate
-# decShortTitle_ar string
-# decShortTitle_en string
-# decShortTitle_es string
-# decShortTitle_fr string
-# decShortTitle_ru string
-# decShortTitle_zh string
-# decStatus string
-# decSummary string
-# decText text
-# decTitleOfText text
-# decTreaty string
-# decTreatyId string
-# decTreatyName_en string
-# decTreatyName_es string
-# decTreatyName_fr string
-# decType string
-# decUpdateDate tdate
 
 class DecisionSchema(BaseSchema):
-    body = fields.String(load_from='decBody')
-    # decision keywords are not localized
-    keywords = fields.List(fields.String(), load_from='decKeyword')
-    '''
-    # TO BE CONTINUED
-    decId string
-    decLanguage string
-    decLink string
-    decLongTitle_ar string
-    decLongTitle_en string
-    decLongTitle_es string
-    decLongTitle_fr string
-    decLongTitle_ru string
-    decLongTitle_zh string
-    decMeetingId string
-    decMeetingTitle string
-    decMeetingUrl string
-    decNumber string
-    decPublishDate tdate
-    decShortTitle_ar string
-    decShortTitle_en string
-    decShortTitle_es string
-    decShortTitle_fr string
-    decShortTitle_ru string
-    decShortTitle_zh string
-    decStatus string
-    decSummary string
-    decText text
-    decTitleOfText text
-    decTreaty string
-    decTreatyId string
-    decTreatyName_en string
-    decTreatyName_es string
-    decTreatyName_fr string
-    decType string
-    decUpdateDate tdate
-    '''
+    ID_FIELD = 'decNumber'
+    KEYWORDS_FIELD = 'decKeyword'
+    SUBJECTS_FIELD = 'docSubject'  # COP decisions don't have subjects (?)
+
+    type_of_document = fields.String(load_from='decType')
+
+    body = fields.String(load_from='decBody', multilingual=True)
+    file_names = fields.List(fields.String(), load_from='decFileNames')
+    file_urls = fields.List(fields.String(), load_from='decFileUrls')
+    # TODO: check if this is deprecated
+    decison_id = fields.String(load_from='decId')
+    language = fields.List(fields.String(), load_from='decLanguage',
+                           multilingual=True)
+    link = fields.String(load_from='decLink')
+    long_title = fields.String(load_from='decLongTitle', multilingual=True)
+    meeting_id = fields.String(load_from='decMeetingId')
+    meeting_title = fields.String(load_from='decMeetingTitle')
+    meeting_url = fields.String(load_from='decMeetingUrl')
+    publish_date = fields.Date(load_from='decPublishDate')
+    short_title = fields.String(load_from='decShortTitle', multilingual=True)
+    status = fields.String(load_from='decStatus')
+    summary = fields.String(load_from='decSummary', multilingual=True)
+    title_of_text = fields.List(fields.String(), load_from='decTitleOfText')
+    treaty = fields.String(load_from='decTreaty')
+    treaty_id = fields.String(load_from='decTreatyId')
+    treaty_name = fields.String(load_from='decTreatyName', multilingual=True)
+    update_date = fields.Date(load_from='decUpdateDate')
 
 
-# litAbstract text
-# litAbstract_fr text
-# litAbstract_other text
-# litAbstract_sp text
-# litAuthor string
-# litAuthorArticle string
-# litAvailableIn string
-# litBasin string
-# litBasin_fr string
-# litBasin_sp string
-# litCallNo string
-# litCollation string
-# litConfDate string
-# litConfName text
-# litConfName_fr text
-# litConfName_other text
-# litConfName_sp text
-# litConfNo string
-# litConfPlace string
-# litContributor text
-# litCorpAuthor string
-# litCorpAuthorArticle string
-# litCountry string
-# litCountry_fr string
-# litCountry_sp string
-# litCourtDecisionReference string
-# litDateOfEntry tdate
-# litDateOfModification tdate
-# litDateOfText string
-# litDateOfTextSer string
-# litDisplayDetails text
-# litDisplayRegion text
-# litDisplayRegion_fr text
-# litDisplayRegion_sp text
-# litDisplayTitle text
-# litEULegislationReference string
-# litEdition string
-# litFaolexReference string
-# litFormerTitle string
-# litFrequency string
-# litHoldings string
-# litISBN string
-# litISSN string
-# litId string
-# litId2 string
-# litIntOrg string
-# litIntOrg_fr string
-# litIntOrg_sp string
-# litInternetReference string
-# litKeyword text
-# litKeyword_fr text
-# litKeyword_sp text
-# litLanguageOfDocument string
-# litLanguageOfDocument_fr string
-# litLanguageOfDocument_sp string
-# litLanguageOfTranslation string
-# litLanguageOfTranslation_fr string
-# litLanguageOfTranslation_sp string
-# litLinkDOI string
-# litLinkToAbstract string
-# litLinkToFullText string
-# litLiteratureReference string
-# litLocation string
-# litLongTitle text
-# litLongTitle_fr text
-# litLongTitle_other text
-# litLongTitle_sp text
-# litModeOfAcquisition string
-# litNationalLegislationReference string
-# litPaperTitleOfText text
-# litPaperTitleOfText_fr text
-# litPaperTitleOfText_other text
-# litPaperTitleOfText_sp text
-# litPublPlace string
-# litPublisher string
-# litRegion string
-# litRegion_fr string
-# litRegion_sp string
-# litRelatedMonograph string
-# litRelatedWebSite string
-# litScope text
-# litScope_fr text
-# litScope_sp text
-# litSearchDate string
-# litSerialStatus string
-# litSerialTitle string
-# litSeriesFlag string
-# litSubject text
-# litSubject_fr text
-# litSubject_sp text
-# litTerritorialSubdivision string
-# litTerritorialSubdivision_fr string
-# litTerritorialSubdivision_sp string
-# litTitleAbbreviation string
-# litTitleOfTextShort text
-# litTitleOfTextShort_fr text
-# litTitleOfTextShort_other text
-# litTitleOfTextShort_sp text
-# litTitleOfTextTransl text
-# litTitleOfTextTransl_fr text
-# litTitleOfTextTransl_sp text
-# litTreatyReference string
-# litTypeOfText string
-# litTypeOfText_fr string
-# litTypeOfText_sp string
-# litVolumeNo string
-
-class LiteratureSchema(WithKWSSchema):
+class LiteratureSchema(BaseSchema):
+    ID_FIELD = 'litId'  # this is actually multivalued (?)
     KEYWORDS_FIELD = 'litKeyword'
     SUBJECTS_FIELD = 'litSubject'
 
-    # TODO: what kind of multilingual is this?
-    abstract = fields.String(load_from='litAbstract',
-                             multilingual=True)
-    '''
-    # TO BE CONTINUED
-    litAbstract text
-    litAbstract_fr text
-    litAbstract_other text
-    litAbstract_sp text
-    litAuthor string
-    litAuthorArticle string
-    litAvailableIn string
-    litBasin string
-    litBasin_fr string
-    litBasin_sp string
-    litCallNo string
-    litCollation string
-    litConfDate string
-    litConfName text
-    litConfName_fr text
-    litConfName_other text
-    litConfName_sp text
-    litConfNo string
-    litConfPlace string
-    litContributor text
-    litCorpAuthor string
-    litCorpAuthorArticle string
-    litCountry string
-    litCountry_fr string
-    litCountry_sp string
-    litCourtDecisionReference string
-    litDateOfEntry tdate
-    litDateOfModification tdate
-    litDateOfText string
-    litDateOfTextSer string
-    litDisplayDetails text
-    litDisplayRegion text
-    litDisplayRegion_fr text
-    litDisplayRegion_sp text
-    litDisplayTitle text
-    litEULegislationReference string
-    litEdition string
-    litFaolexReference string
-    litFormerTitle string
-    litFrequency string
-    litHoldings string
-    litISBN string
-    litISSN string
-    litId string
-    litId2 string
-    litIntOrg string
-    litIntOrg_fr string
-    litIntOrg_sp string
-    litInternetReference string
-    litLanguageOfDocument string
-    litLanguageOfDocument_fr string
-    litLanguageOfDocument_sp string
-    litLanguageOfTranslation string
-    litLanguageOfTranslation_fr string
-    litLanguageOfTranslation_sp string
-    litLinkDOI string
-    litLinkToAbstract string
-    litLinkToFullText string
-    litLiteratureReference string
-    litLocation string
-    litLongTitle text
-    litLongTitle_fr text
-    litLongTitle_other text
-    litLongTitle_sp text
-    litModeOfAcquisition string
-    litNationalLegislationReference string
-    litPaperTitleOfText text
-    litPaperTitleOfText_fr text
-    litPaperTitleOfText_other text
-    litPaperTitleOfText_sp text
-    litPublPlace string
-    litPublisher string
-    litRegion string
-    litRegion_fr string
-    litRegion_sp string
-    litRelatedMonograph string
-    litRelatedWebSite string
-    litScope text
-    litScope_fr text
-    litScope_sp text
-    litSearchDate string
-    litSerialStatus string
-    litSerialTitle string
-    litSeriesFlag string
-    litTerritorialSubdivision string
-    litTerritorialSubdivision_fr string
-    litTerritorialSubdivision_sp string
-    litTitleAbbreviation string
-    litTitleOfTextShort text
-    litTitleOfTextShort_fr text
-    litTitleOfTextShort_other text
-    litTitleOfTextShort_sp text
-    litTitleOfTextTransl text
-    litTitleOfTextTransl_fr text
-    litTitleOfTextTransl_sp text
-    litTreatyReference string
-    litTypeOfText string
-    litTypeOfText_fr string
-    litTypeOfText_sp string
-    litVolumeNo string
-    '''
+    type_of_text = fields.List(fields.String(), load_from='litTypeOfText',
+                               multilingual=True)  # False list (?)
+
+    abstract = fields.String(load_from='litAbstract', multilingual=True)
+    abstract_other = fields.String(load_from='litAbstract_other')
+    author = fields.List(fields.String(), load_from='litAuthor')
+    author_article = fields.List(fields.String(), load_from='litAuthorArticle')
+    available_in = fields.String(load_from='litAvailableIn')
+    basin = fields.List(fields.String(), load_from='litBasin',
+                        multilingual=True)
+    call_no = fields.String(load_from='litCallNo')
+    collation = fields.String(load_from='litCollation')
+    conf_date = fields.String(load_from='litConfDate')
+    conf_name = fields.String(load_from='litConfName', multilingual=True)
+    conf_name_other = fields.String(load_from='litConfName_other')
+    conf_no = fields.String(load_from='litConfNo')
+    conf_place = fields.String(load_from='litConfPlace')
+    contributor = fields.List(fields.String(), load_from='litContributor')
+    corp_author = fields.List(fields.String(), load_from='litCorpAuthor')
+    corp_author_article = fields.List(fields.String(),
+                                      load_from='litCorpAuthorArticle')
+    country = fields.List(fields.String(), load_from='litCountry',
+                          multilingual=True)
+    court_decision_reference = fields.List(
+        fields.String(),
+        load_from='litCourtDecisionReference')
+    date_of_entry = fields.Date(load_from='litDateOfEntry')
+    date_of_modification = fields.Date(load_from='litDateOfModification')
+    date_of_text = fields.String(load_from='litDateOfText')
+    date_of_text_ser = fields.String(load_from='litDateOfTextSer')
+    display_details = fields.String(load_from='litDisplayDetails')
+    display_region = fields.String(load_from='litDisplayRegion',
+                                   multilingual=True)
+    display_title = fields.String(load_from='litDisplayTitle')
+    display_type = fields.String(load_from='litDisplayType', multilingual=True)
+    eu_legislation_reference = fields.List(
+        fields.String(),
+        load_from='litEULegislationReference')
+    edition = fields.String(load_from='litEdition')
+    faolex_reference = fields.List(fields.String(),
+                                   load_from='litFaolexReference')
+    former_title = fields.String(load_from='litFormerTitle')
+    frequency = fields.String(load_from='litFrequency')
+    holdings = fields.String(load_from='litHoldings')
+    isbn = fields.String(load_from='litISBN')
+    issn = fields.String(load_from='litISSN')
+    id2 = fields.List(fields.String(), load_from='litId2')
+    int_org = fields.String(load_from='litIntOrg', multilingual=True)
+    internet_reference = fields.String(load_from='litInternetReference')
+    language_of_document = fields.String(load_from='litLanguageOfDocument',
+                                         multilingual=True)
+    language_of_translation = fields.String(
+        load_from='litLanguageOfTranslation',
+        multilingual=True)
+    link_doi = fields.String(load_from='litLinkDOI')
+    link_to_abstract = fields.String(load_from='litLinkToAbstract')
+    link_to_full_text = fields.List(fields.String(),
+                                    load_from='litLinkToFullText')
+    literature_reference = fields.List(fields.String(),
+                                       load_from='litLiteratureReference')
+    location = fields.String(load_from='litLocation')
+    long_title = fields.String(load_from='litLongTitle', multilingual=True)
+    long_title_other = fields.String(load_from='litLongTitle_other')
+    mode_of_acquisition = fields.String(load_from='litModeOfAcquisition')
+    national_legislation_reference = fields.List(
+        fields.String(),
+        load_from='litNationalLegislationReference')
+    paper_title_of_text = fields.String(load_from='litPaperTitleOfText',
+                                        multilingual=True)
+    paper_title_of_text_other = fields.String(
+        load_from='litPaperTitleOfText_other')
+    publ_place = fields.String(load_from='litPublPlace')
+    publisher = fields.String(load_from='litPublisher')
+    region = fields.List(fields.String(), load_from='litRegion',
+                         multilingual=True)
+    related_monograph = fields.String(load_from='litRelatedMonograph')
+    related_web_site = fields.String(load_from='litRelatedWebSite')
+    scope = fields.String(load_from='litScope', multilingual=True)
+    search_date = fields.String(load_from='litSearchDate')
+    serial_status = fields.String(load_from='litSerialStatus')
+    serial_title = fields.String(load_from='litSerialTitle')
+    series_flag = fields.String(load_from='litSeriesFlag')
+    territorial_subdivision = fields.String(
+        load_from='litTerritorialSubdivision',
+        multilingual=True)
+    title_abbreviation = fields.String(load_from='litTitleAbbreviation')
+    title_of_text_short = fields.String(load_from='litTitleOfTextShort',
+                                        multilingual=True)
+    title_of_text_short_other = fields.String(
+        load_from='litTitleOfTextShort_other')
+    title_of_text_transl = fields.String(load_from='litTitleOfTextTransl',
+                                         multilingual=True)
+    treaty_reference = fields.List(fields.String(),
+                                   load_from='litTreatyReference')
+    volume_no = fields.String(load_from='litVolumeNo')
 
 
-# cdAbstract text
-# cdAbstractOther string
-# cdAbstract_en text
-# cdAbstract_es text
-# cdAbstract_fr text
-# cdAbstract_ru text
-# cdAlternativeRecordId string
-# cdAvailableIn string
-# cdCountry_en string
-# cdCountry_es string
-# cdCountry_fr string
-# cdCourtDecisionIdNumber string
-# cdCourtDecisionReference string
-# cdCourtDecisionSubdivision string
-# cdCourtName string
-# cdDateOfEntry tdate
-# cdDateOfModification tdate
-# cdDateOfText tdate
-# cdEcolexUrl string
-# cdEcolexUrl_en string
-# cdEcolexUrl_es string
-# cdEcolexUrl_fr string
-# cdEcolexUrl_ru string
-# cdFaolexReference string
-# cdFaolexUrl string
-# cdFaolexUrl_en string
-# cdFaolexUrl_es string
-# cdFaolexUrl_fr string
-# cdFaolexUrl_ru string
-# cdFiles string
-# cdInformeaTags string
-# cdInstance string
-# cdInternetReference string
-# cdInternetReference_en string
-# cdInternetReference_es string
-# cdInternetReference_fr string
-# cdInternetReference_ru string
-# cdIsisNumber string
-# cdJurisdiction string
-# cdJustices string
-# cdKeywords text
-# cdLanguageOfDocument string
-# cdLeoId string
-# cdLinkToFullText string
-# cdLinkToFullText_en string
-# cdLinkToFullText_es string
-# cdLinkToFullText_fr string
-# cdLinkToFullText_ru string
-# cdNotes string
-# cdNumberOfPages int
-# cdOfficialPublication string
-# cdOriginalId string
-# cdReferenceNumber string
-# cdReferenceToLegislation string
-# cdRegion string
-# cdRelatedUrl string
-# cdRelatedUrl_en string
-# cdRelatedUrl_es string
-# cdRelatedUrl_fr string
-# cdRelatedUrl_ru string
-# cdSeatOfCourt string
-# cdSeatOfCourt_en string
-# cdSeatOfCourt_es string
-# cdSeatOfCourt_fr string
-# cdSeatOfCourt_ru string
-# cdStatusOfDecision string
-# cdSubject text
-# cdTerritorialSubdivision_en string
-# cdTerritorialSubdivision_es string
-# cdTerritorialSubdivision_fr string
-# cdTitleOfText text
-# cdTitleOfTextOther string
-# cdTitleOfTextShort string
-# cdTitleOfText_en text
-# cdTitleOfText_es text
-# cdTitleOfText_fr text
-# cdTitleOfText_ru text
-# cdTreatyReference string
-# cdTypeOfText string
-# cdUrlOther string
-
-class CourtDecisionSchema(WithKWSSchema):
-    # NOTE: cou KWSs are not localized, but let them fallback
-    KEYWORDS_FIELD = 'cdKeywords'
+class CourtDecisionSchema(BaseSchema):
+    ID_FIELD = 'cdLeoId'
+    KEYWORDS_FIELD = 'cdKeyword'
     SUBJECTS_FIELD = 'cdSubject'
 
-    # TODO: what kind of multilingual is this?
+    type_of_document = fields.String(load_from='cdTypeOfText')  # Multivalued ?
+
     # TODO: this is common to more. group together?
-    abstract = fields.String(load_from='cdAbstract',
-                             multilingual=True)
-    '''
-    # TO BE CONTINUED
-    cdAbstract text
-    cdAbstractOther string
-    cdAbstract_en text
-    cdAbstract_es text
-    cdAbstract_fr text
-    cdAbstract_ru text
-    cdAlternativeRecordId string
-    cdAvailableIn string
-    cdCountry_en string
-    cdCountry_es string
-    cdCountry_fr string
-    cdCourtDecisionIdNumber string
-    cdCourtDecisionReference string
-    cdCourtDecisionSubdivision string
-    cdCourtName string
-    cdDateOfEntry tdate
-    cdDateOfModification tdate
-    cdDateOfText tdate
-    cdEcolexUrl string
-    cdEcolexUrl_en string
-    cdEcolexUrl_es string
-    cdEcolexUrl_fr string
-    cdEcolexUrl_ru string
-    cdFaolexReference string
-    cdFaolexUrl string
-    cdFaolexUrl_en string
-    cdFaolexUrl_es string
-    cdFaolexUrl_fr string
-    cdFaolexUrl_ru string
-    cdFiles string
-    cdInformeaTags string
-    cdInstance string
-    cdInternetReference string
-    cdInternetReference_en string
-    cdInternetReference_es string
-    cdInternetReference_fr string
-    cdInternetReference_ru string
-    cdIsisNumber string
-    cdJurisdiction string
-    cdJustices string
-    cdLanguageOfDocument string
-    cdLeoId string
-    cdLinkToFullText string
-    cdLinkToFullText_en string
-    cdLinkToFullText_es string
-    cdLinkToFullText_fr string
-    cdLinkToFullText_ru string
-    cdNotes string
-    cdNumberOfPages int
-    cdOfficialPublication string
-    cdOriginalId string
-    cdReferenceNumber string
-    cdReferenceToLegislation string
-    cdRegion string
-    cdRelatedUrl string
-    cdRelatedUrl_en string
-    cdRelatedUrl_es string
-    cdRelatedUrl_fr string
-    cdRelatedUrl_ru string
-    cdSeatOfCourt string
-    cdSeatOfCourt_en string
-    cdSeatOfCourt_es string
-    cdSeatOfCourt_fr string
-    cdSeatOfCourt_ru string
-    cdStatusOfDecision string
-    cdTerritorialSubdivision_en string
-    cdTerritorialSubdivision_es string
-    cdTerritorialSubdivision_fr string
-    cdTitleOfText text
-    cdTitleOfTextOther string
-    cdTitleOfTextShort string
-    cdTitleOfText_en text
-    cdTitleOfText_es text
-    cdTitleOfText_fr text
-    cdTitleOfText_ru text
-    cdTreatyReference string
-    cdTypeOfText string
-    cdUrlOther string
-    '''
+    abstract = fields.String(load_from='cdAbstract', multilingual=True)
+    country = fields.String(load_from='cdCountry', multilingual=True)
 
+    court_name = fields.String(load_from='cdCourtName')
+    date_of_entry = fields.Date(load_from='cdDateOfEntry')
+    date_of_modification = fields.Date(load_from='cdDateOfModification')
+    date_of_text = fields.Date(load_from='cdDateOfText')
+    files = fields.List(fields.String(), load_from='cdFiles')
+    internet_reference = fields.String(load_from='cdInternetReference',
+                                       multilingual=True)
+    jurisdiction = fields.String(load_from='cdJurisdiction')
+    justices = fields.List(fields.String(), load_from='cdJustices')
+    language_of_document = fields.List(fields.String(),
+                                       load_from='cdLanguageOfDocument',
+                                       multilingual=True)
+    link_to_full_text = fields.String(load_from='cdLinkToFullText',
+                                      multilingual=True)
+    original_id = fields.String(load_from='cdOriginalId')
+    reference_number = fields.String(load_from='cdReferenceNumber')
+    seat_of_court = fields.String(load_from='cdSeatOfCourt', multilingual=True)
+    status_of_decision = fields.String(load_from='cdStatusOfDecision')
+    territorial_subdivision = fields.String(
+        load_from='cdTerritorialSubdivision',
+        multilingual=True)
+    title_of_text = fields.String(load_from='cdTitleOfText', multilingual=True)
+    treaty_reference = fields.List(fields.String(),
+                                   load_from='cdTreatyReference')
 
-# legAbstract text
-# legAmends string
-# legConsolidationDate tdate
-# legCountry_en string
-# legCountry_es string
-# legCountry_fr string
-# legCountry_iso string
-# legDate tdate
-# legEntryDate tdate
-# legEntryIntoForce string
-# legGeoArea_en string
-# legGeoArea_es string
-# legGeoArea_fr string
-# legId string
-# legImplement string
-# legKeyword_code string
-# legKeyword_en text
-# legKeyword_es text
-# legKeyword_fr text
-# legLanguage_code string
-# legLanguage_en string
-# legLanguage_es string
-# legLanguage_fr string
-# legLinkToFullText string
-# legLongTitle text
-# legModificationDate tdate
-# legOriginalDate tdate
-# legRelatedWebSite string
-# legRepeals string
-# legSearchDate tdate
-# legSource string
-# legStatus string
-# legSubject_code string
-# legSubject_en text
-# legSubject_es text
-# legSubject_fr text
-# legTerritorialSubdivision string
-# legTitle text
-# legTypeCode string
-# legType_en string
-# legType_es string
-# legType_fr string
 
 class LegislationSchema(BaseSchema):
+    ID_FIELD = 'legId'
     KEYWORDS_FIELD = 'legKeyword'
     SUBJECTS_FIELD = 'legSubject'
 
+    type_of_document = fields.String(load_from='legType', multilingual=True)
+
     abstract = fields.String(load_from='legAbstract')
+    amends = fields.List(fields.String(), load_from='legAmends')
     consolidation_date = fields.Date(load_from='legConsolidationDate')
+    country = fields.String(load_from='legCountry', multilingual=True)
+    country_iso = fields.String(load_from='legCountry_iso')
     date = fields.Date(load_from='legDate')
     entry_date = fields.Date(load_from='legEntryDate')
-    country = fields.String(load_from='legCountry',
-                            multilingual=True)
-    country_iso = fields.String(load_from='legCountry_iso')
-    '''
-    # TO BE CONTINUED
-
-    legAmends string
-    legEntryIntoForce string
-    legGeoArea_en string
-    legGeoArea_es string
-    legGeoArea_fr string
-    legId string
-    legImplement string
-    legKeyword_code string
-    legLanguage_code string
-    legLanguage_en string
-    legLanguage_es string
-    legLanguage_fr string
-    legLinkToFullText string
-    legLongTitle text
-    legModificationDate tdate
-    legOriginalDate tdate
-    legRelatedWebSite string
-    legRepeals string
-    legSearchDate tdate
-    legSource string
-    legStatus string
-    legSubject_code string
-    legTerritorialSubdivision string
-    legTitle text
-    legTypeCode string
-    legType_en string
-    legType_es string
-    legType_fr string
-    '''
+    entry_into_force = fields.String(load_from='legEntryIntoForce')
+    geo_area = fields.List(fields.String(), load_from='legGeoArea',
+                           multilingual=True)
+    implement = fields.List(fields.String(), load_from='legImplement')
+    keyword_code = fields.List(fields.String(), load_from='legKeyword_code')
+    language_code = fields.List(fields.String(), load_from='legLanguage_code')
+    language = fields.List(fields.String(), load_from='legLanguage',
+                           multilingual=True)
+    link_to_full_text = fields.String(load_from='legLinkToFullText')
+    long_title = fields.String(load_from='legLongTitle')
+    modification_date = fields.Date(load_from='legModificationDate')
+    original_date = fields.Date(load_from='legOriginalDate')
+    related_web_site = fields.String(load_from='legRelatedWebSite')
+    repeals = fields.List(fields.String(), load_from='legRepeals')
+    search_date = fields.Date(load_from='legSearchDate')
+    source = fields.String(load_from='legSource')
+    status = fields.String(load_from='legStatus')
+    subject_code = fields.List(fields.String(), load_from='legSubject_code')
+    territorial_subdivision = fields.String(
+        load_from='legTerritorialSubdivision')
+    title = fields.String(load_from='legTitle')
+    type_code = fields.String(load_from='legTypeCode')

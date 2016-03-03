@@ -304,13 +304,11 @@
     <field name="cdTitleOfText_fr" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_ru" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdLeoId" type="string" indexed="true" stored="true" multiValued="false"/>
-    <field name="cdAbstract" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_en" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_es" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_fr" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_ru" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAlternativeRecordId" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdSeatOfCourt" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdSeatOfCourt_en" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdSeatOfCourt_es" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdSeatOfCourt_fr" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -327,23 +325,24 @@
     <field name="cdDateOfModification" type="tdate" indexed="true" stored="true" multiValued="false"/>
     <field name="cdDateOfText" type="tdate" indexed="true" stored="true" multiValued="false"/>
     <field name="cdStatusOfDecision" type="string" indexed="false" stored="true" multiValued="false"/>
+
     <field name="cdSubject_en" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="cdSubject_fr" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="cdSubject_es" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="cdEcolexUrl" type="string" indexed="false" stored="false" multiValued="false"/>
+
     <field name="cdEcolexUrl_en" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdEcolexUrl_es" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdEcolexUrl_fr" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdEcolexUrl_ru" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdFaolexUrl" type="string" indexed="false" stored="false" multiValued="false"/>
+
     <field name="cdFaolexUrl_en" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdFaolexUrl_es" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdFaolexUrl_fr" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdFaolexUrl_ru" type="string" indexed="false" stored="false" multiValued="false"/>
+
     <field name="cdFiles" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="cdInformeaTags" type="string" indexed="false" stored="false" multiValued="true"/>
 
-    <field name="cdInternetReference" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdInternetReference_en" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdInternetReference_es" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdInternetReference_fr" type="string" indexed="false" stored="true" multiValued="false"/>
@@ -362,7 +361,6 @@
     <field name="cdReferenceNumber" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdReferenceToLegislation" type="string" indexed="true" stored="false" multiValued="false"/>
 
-    <field name="cdRelatedUrl" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdRelatedUrl_en" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdRelatedUrl_es" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdRelatedUrl_fr" type="string" indexed="false" stored="false" multiValued="false"/>
@@ -377,11 +375,12 @@
     <field name="cdTerritorialSubdivision_es" type="string" indexed="true" stored="true" multiValued="false"/>
 
     <field name="cdTypeOfText" type="string" indexed="true" stored="true" multiValued="false"/>
-    <field name="cdLinkToFullText" type="string" indexed="false" stored="true" multiValued="false"/>
+
     <field name="cdLinkToFullText_en" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdLinkToFullText_es" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdLinkToFullText_fr" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdLinkToFullText_ru" type="string" indexed="false" stored="true" multiValued="false"/>
+
     <field name="cdNotes" type="string" indexed="false" stored="false" multiValued="true"/>
     <field name="cdAbstractOther" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdAvailableIn" type="string" indexed="true" stored="false" multiValued="false"/>
@@ -414,11 +413,13 @@
 
     <field name="legEntryIntoForce" type="string" indexed="true" stored="true"/>
     <field name="legCountry_iso" type="string" indexed="true" stored="true"/>
+
     <field name="legCountry_en" type="string" indexed="true" stored="true"/>
     <field name="legCountry_fr" type="string" indexed="true" stored="true"/>
     <field name="legCountry_es" type="string" indexed="true" stored="true"/>
 
     <field name="legTerritorialSubdivision" type="string" indexed="true" stored="true"/>
+
     <field name="legGeoArea_en" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="legGeoArea_fr" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="legGeoArea_es" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -428,6 +429,7 @@
     <field name="legBasin_es" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="legTypeCode" type="string" indexed="true" stored="true"/>
+
     <field name="legType_en" type="string" indexed="true" stored="true"/>
     <field name="legType_fr" type="string" indexed="true" stored="true"/>
     <field name="legType_es" type="string" indexed="true" stored="true"/>
@@ -440,11 +442,15 @@
     <field name="legLanguage_es" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="legAbstract" type="text" indexed="true" stored="true"/>
+
     <field name="legSubject_code" type="string" indexed="true" stored="true" multiValued="true"/>
+
     <field name="legSubject_en" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="legSubject_fr" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="legSubject_es" type="text" indexed="true" stored="true" multiValued="true"/>
+
     <field name="legKeyword_code" type="string" indexed="true" stored="true" multiValued="true"/>
+
     <field name="legKeyword_en" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="legKeyword_fr" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="legKeyword_es" type="text" indexed="true" stored="true" multiValued="true"/>
