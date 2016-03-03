@@ -118,13 +118,13 @@
       {% if document.solr.litLinkDOI %}
       <dt>Available DOI</dt>
       <dd>
-          <a class="decision-link" href="{{ document.solr.litLinkDOI | url_normalize }}">{{ document.solr.litLinkDOI }}</a>
+          <a href="{{ document.solr.litLinkDOI | url_normalize }}" target="_blank">{{ document.solr.litLinkDOI }}</a>
       </dd>
       {% endif %}
       {% if document.solr.litRelatedWebSite %}
       <dt>Available web site</dt>
       <dd>
-          <a class="decision-link" href="{{ document.solr.litRelatedWebSite | url_normalize }}">{{ document.solr.litRelatedWebSite }}</a>
+          <a href="{{ document.solr.litRelatedWebSite | url_normalize }}" target="_blank">{{ document.solr.litRelatedWebSite }}</a>
       </dd>
       {% endif %}
       <dt>Source</dt>
