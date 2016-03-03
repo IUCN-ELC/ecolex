@@ -239,17 +239,8 @@
     <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">Literature filters</h5>
 
     <div id="filter-literatures" class="collapse {% if form.has_literature %}in{% endif %}">
-       <div class="filter-header">
-        <h6>Document type</h6>
-       </div>
-      <div id="lit_type-filter" class="tag-select">
-        <select class="tag-options" hidden>
-        </select>
-        <input type="text" class="tm-input word-match" placeholder="Add document type" data-formid="#id_lit_type"/>
-      </div>
-
-      <div class="filter-header">
-        <h6>Literature author</h6>
+      <div class="clearfix filter-header">
+        <h6 class="pull-left">Author</h6>
         <span class="filter-literature pull-right" data-formid="#id_lit_author_op">
           {% include 'bits/operation_facet.html' with form_field=form.lit_author_op form_target='#id_lit_author' %}
         </span>
@@ -276,6 +267,15 @@
         <select class="tag-options" hidden>
         </select>
         <input type="text" class="tm-input word-match" placeholder="Add publisher" data-formid="#id_lit_publisher">
+      </div>
+
+      <div class="filter-header">
+        <h6>Document type</h6>
+      </div>
+      <div id="lit_type-filter" class="tag-select">
+        <select class="tag-options" hidden>
+        </select>
+        <input type="text" class="tm-input word-match" placeholder="Add document type" data-formid="#id_lit_type"/>
       </div>
     </div>
   </fieldset>
