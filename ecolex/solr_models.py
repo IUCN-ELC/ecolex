@@ -1,6 +1,9 @@
 from collections import OrderedDict
 from datetime import datetime
 from html import unescape
+from os.path import basename
+from urllib import parse as urlparse
+
 import functools
 
 from django.core.urlresolvers import reverse
@@ -567,14 +570,9 @@ class Literature(ObjectNormalizer):
     @cached_property
     def link_to_full_text(self):
         links = []
-        languages = self.solr.get(self.LANGUAGE_FIELD)
-        defaultLanguage = 'English'
-        for idx, link in enumerate(self.solr.get('litLinkToFullText', [])):
-            if idx < len(languages):
-                language = defaultLanguage = languages[idx]
-            else:
-                language = defaultLanguage
-            links.append((link, language))
+        for link in self.solr.get('litLinkToFullText', []):
+            filename = basename(urlparse.urlparse(link).path)
+            links.append((link, filename))
         return links
 
     def get_language(self):
