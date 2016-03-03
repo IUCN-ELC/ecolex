@@ -428,15 +428,12 @@ class Literature(ObjectNormalizer):
     LANGUAGE_FIELD = 'litLanguageOfDocument_en'
     SUMMARY_FIELD = 'litAbstract_en'
     TITLE_FIELDS = [
-        'litPaperTitleOfText_en','litPaperTitleOfText_fr',
-        'litPaperTitleOfText_es', 'litPaperTitleOfText_other',
-        'litLongTitle_en', 'litLongTitle_fr', 'litLongTitle_es',
-        'litLongTitle_other',
-        'litTitleOfTextShort_en', 'litTitleOfTextShort_fr',
-        'litTitleOfTextShort_es', 'litTitleOfTextShort_other',
-        'litTitleOfTextTransl_en', 'litTitleOfTextTransl_fr',
-        'litTitleOfTextTransl_es'
+        'litPaperTitleOfText_en', 'litLongTitle_en', 'litTitleOfTextTransl_en', 'litTitleOfTextShort_en',
+        'litPaperTitleOfText_fr', 'litLongTitle_fr', 'litTitleOfTextTransl_fr', 'litTitleOfTextShort_fr',
+        'litPaperTitleOfText_es', 'litLongTitle_es', 'litTitleOfTextTransl_es', 'litTitleOfTextShort_es',
+        'litPaperTitleOfText_other', 'litLongTitle_other', 'litTitleOfTextShort_other',
     ]
+    TITLE_FIELDS_MULTILINGUAL = ['litPaperTitleOfText', 'litLongTitle', 'litTitleOfTextTransl']
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
     OPTIONAL_INFO_FIELDS = [
         (['litPublisher', 'litPublPlace'], 'Publisher', ' | '),
@@ -546,9 +543,10 @@ class Literature(ObjectNormalizer):
     def title_translations(self):
         titles = []
         for code, language in LANGUAGE_MAP.items():
-            title = self.solr.get('{}_{}'.format('litPaperTitleOfText', code))
-            if not title:
-                title = self.solr.get('{}_{}'.format('litLongTitle', code))
+            for field in self.TITLE_FIELDS_MULTILINGUAL:
+                title = self.solr.get('{}_{}'.format(field, code))
+                if title:
+                    break
             if title and title != self.title():
                 titles.append({'alttitle': first(title), 'language': language})
         return titles
