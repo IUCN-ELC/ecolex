@@ -390,9 +390,9 @@
     <field name="cdInstance" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdOfficialPublication" type="string" indexed="true" stored="false" multiValued="false"/>
 
-    <field name="cdRegion_en" type="string" indexed="true" stored="false" multiValued="false"/>
-    <field name="cdRegion_fr" type="string" indexed="true" stored="false" multiValued="false"/>
-    <field name="cdRegion_es" type="string" indexed="true" stored="false" multiValued="false"/>
+    <field name="cdRegion_en" type="text" indexed="true" stored="false" multiValued="false"/>
+    <field name="cdRegion_fr" type="text" indexed="true" stored="false" multiValued="false"/>
+    <field name="cdRegion_es" type="text" indexed="true" stored="false" multiValued="false"/>
 
     <field name="cdTitleOfTextOther" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdTitleOfTextShort" type="string" indexed="true" stored="false" multiValued="false"/>
@@ -419,13 +419,13 @@
     <field name="legCountry_es" type="string" indexed="true" stored="true"/>
 
     <field name="legTerritorialSubdivision" type="string" indexed="true" stored="true"/>
-    <field name="legGeoArea_en" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="legGeoArea_fr" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="legGeoArea_es" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legGeoArea_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="legGeoArea_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="legGeoArea_es" type="text" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="legBasin_en" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="legBasin_fr" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="legBasin_es" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legBasin_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="legBasin_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="legBasin_es" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="legTypeCode" type="string" indexed="true" stored="true"/>
     <field name="legType_en" type="string" indexed="true" stored="true"/>
@@ -564,9 +564,9 @@
     <field name="litLanguageOfTranslation_fr" type="string" indexed="false" stored="true"/>
     <field name="litLanguageOfTranslation_es" type="string" indexed="false" stored="true"/>
 
-    <field name="litRegion_en" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="litRegion_fr" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="litRegion_es" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litRegion_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="litRegion_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="litRegion_es" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="litAbstract_en" type="text" indexed="true" stored="true"/>
     <field name="litAbstract_fr" type="text" indexed="true" stored="true"/>
@@ -606,9 +606,9 @@
     <field name="litCallNo" type="string" indexed="false" stored="true"/>
     <field name="litRelatedMonograph" type="string" indexed="false" stored="true"/>
 
-    <field name="litBasin_en" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="litBasin_fr" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="litBasin_es" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litBasin_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="litBasin_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="litBasin_es" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="litInternetReference" type="string" indexed="false" stored="true"/>
     <field name="litTreatyReference" type="string" indexed="true" stored="true" multiValued="true"/>
