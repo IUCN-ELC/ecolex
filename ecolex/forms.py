@@ -27,6 +27,7 @@ class SearchForm(Form):
     cd_territorial_subdivision = MultipleChoiceField()
 
     lit_type = MultipleChoiceField()
+    lit_type2 = MultipleChoiceField()
     lit_author = MultipleChoiceField()
     lit_author_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
     lit_serial = MultipleChoiceField()
