@@ -448,7 +448,7 @@ class Literature(ObjectNormalizer):
         ('collation', 'Pages', 'attr'), # should exclude for article
         ('type_of_document', 'Document type', 'attr'),
          # TODO: litConfName is a translatable field
-         # document type
+        ('serial_title', 'Journal/Series', 'attr'),
         (['litConfName_en', 'litConfNo', 'litConfDate', 'litConfPlace'], 'Conference', ' | '),
         ('litLanguageOfDocument_en', 'Language', 'list'),
     ]
@@ -568,6 +568,17 @@ class Literature(ObjectNormalizer):
     def collation(self):
         if not self.lit_is_article:
             return self.solr.get('litCollation')
+        return None
+
+    @cached_property
+    def serial_title(self):
+        if not self.lit_is_article:
+            litSerialTitle = self.solr.get('litSerialTitle')
+            litVolumeNo = self.solr.get('litVolumeNo')
+            if litVolumeNo:
+                return ' | '.join([litSerialTitle, litVolumeNo])
+            else:
+                return litSerialTitle
         return None
 
     @cached_property
