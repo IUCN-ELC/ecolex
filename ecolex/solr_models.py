@@ -550,6 +550,8 @@ class Literature(ObjectNormalizer):
         titles = []
         for code, language in LANGUAGE_MAP.items():
             title = self.solr.get('{}_{}'.format('litPaperTitleOfText', code))
+            if not title:
+                title = self.solr.get('{}_{}'.format('litLongTitle', code))
             if title and title != self.title():
                 titles.append({'alttitle': first(title), 'language': language})
         return titles
