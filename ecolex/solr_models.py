@@ -443,7 +443,7 @@ class Literature(ObjectNormalizer):
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
     OPTIONAL_INFO_FIELDS = [
         (['litPublisher', 'litPublPlace'], 'Publisher', ' | '),
-        ('litISBN', 'ISBN', ''),
+        ('litISBN', 'ISBN', 'list'),
         ('litISSN', 'ISSN', ''),
         ('collation', 'Pages', 'attr'), # should exclude for article
         ('type_of_document', 'Document type', 'attr'),

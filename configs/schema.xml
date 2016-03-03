@@ -512,7 +512,7 @@
     <field name="litTitleOfTextTransl_es" type="text" indexed="true" stored="true"/>
 
     <field name="litSerialTitle" type="string" indexed="true" stored="true"/>
-    <field name="litISBN" type="string" indexed="false" stored="true"/>
+    <field name="litISBN" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="litPublisher" type="string" indexed="true" stored="true"/>
     <field name="litPublPlace" type="string" indexed="false" stored="true"/>
     <field name="litVolumeNo" type="string" indexed="false" stored="true"/>

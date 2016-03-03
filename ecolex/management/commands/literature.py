@@ -165,7 +165,7 @@ MULTIVALUED_FIELDS = [
     'litAuthor', 'litCorpAuthor', 'litAuthorArticle', 'litCorpAuthorArticle',
     'litSubject_en', 'litSubject_fr', 'litSubject_es',
     'litKeyword_en', 'litKeyword_fr', 'litKeyword_es',
-    'litContributor',
+    'litContributor', 'litISBN',
     'litRegion_en', 'litRegion_fr', 'litRegion_es',
     'litBasin_en', 'litBasin_fr', 'litBasin_es',
     'litLanguageOfDocument_en', 'litLanguageOfDocument_fr',
