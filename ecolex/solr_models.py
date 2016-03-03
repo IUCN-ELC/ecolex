@@ -258,13 +258,13 @@ class Treaty(ObjectNormalizer):
     OPTIONAL_INFO_FIELDS = [
         # (solr field, display text, type=text)
         ('trPlaceOfAdoption', 'Place of adoption', ''),
-        ('trRegion_en', 'Geographical area', ''),
-        ('trBasin_en', 'Basin', ''),
-        ('trDepository_en', 'Depository', ''),
-        ('trUrl', 'Available web site', 'url'),
-        ('trOfficialPublication', 'Official publication', ''),
-        ('trInternetReference_en', 'Internet Reference', ''),
-        ('trDateOfConsolidation', 'Consolidation Date', 'date')
+        ('trDepository_en', 'Depositary', ''),
+        ('trLanguageOfDocument_en', 'Language', 'list'),
+        # ('trUrl', 'Available web site', 'url'),
+        # ('trOfficialPublication', 'Official publication', ''),
+        # ('trInternetReference_en', 'Internet Reference', ''),
+        ('trEntryIntoForceDate', 'Entry into force', 'date'),
+        # ('trDateOfConsolidation', 'Consolidation Date', 'date')
     ]
 
     FULL_TEXT = 'trLinkToFullText'  # multilangual
@@ -288,6 +288,12 @@ class Treaty(ObjectNormalizer):
 
     def jurisdiction(self):
         return first(self.solr.get('trJurisdiction_en'))
+
+    def region(self):
+        return self.solr.get('trRegion_en')
+
+    def basin(self):
+        return self.solr.get('trBasin_en')
 
     def place_of_adoption(self):
         return first(self.solr.get('trPlaceOfAdoption'))

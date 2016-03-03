@@ -24,20 +24,6 @@
     </dl>
   </header>
 
-  {% if document.also or true %} {# check for alternative titles #}
-  <section id="aka">
-    <dl>
-      <dt>Also known as</dt>
-      <dd>
-        <ul>
-          <li>Convention sur la diversité biologique <sup>French</sup></li>
-          <li>other_language_title <sup>language</sup></li>
-        </ul>
-      </dd>
-    </dl>
-  </section>
-  {% endif %}
-
   <section id="details">
     <dl>
       {% if document.solr.trTitleAbbreviation %}
@@ -65,16 +51,6 @@
         {% endif %}
       {% endfor %}
 
-      {% if document.solr.trStatus %}
-        <dt>Status</dt>
-        <dd>{{ document.solr.trStatus }}</dd>
-      {% endif %}
-
-      {% if document.solr.trEntryIntoForceDate %}
-        <dt>Entry into force</dt>
-        <dd>{{ document.entry_into_force}}</dd>
-      {% endif %}
-
       {% if document.subjects %}
         <dt>Subject{{ document.subjects|length|pluralize:",s" }}</dt>
         <dd>{{ document.subjects | join_by:", " | safe }}</dd>
@@ -88,7 +64,16 @@
         {% endfor %}
         </dd>
       {% endif %}
-      </dd>
+
+      {% if document.region %}
+        <dt>Geographical area</dt>
+        <dd>{{ document.region | join_by:", " | safe }}</dd>
+      {% endif %}
+
+      {% if document.basin %}
+        <dt>Basin</dt>
+        <dd>{{ document.basin | join_by:", " | safe }}</dd>
+      {% endif %}
     </dl>
   </section>
 
@@ -124,6 +109,11 @@
         <dt>Available in</dt>
         <dd>{{ document.solr.trAvailableIn | join_by:", " | safe }}</dd>
       {% endif %}
+      {% if document.solr.trUrl %}
+        <dt>Available web site</dt>
+        <dd><a target="_blank" href="{{ document.solr.trUrl }}">{{ document.solr.trUrl }}</a></dd>
+      {% endif %}
+
       <dt>Source</dt>
       <dd><a target="_blank" href="http://iucn.org">{{ document.source }}</a> (ID: {{ document.document_id }})</dd>
     </dl>
