@@ -18,9 +18,6 @@
       </div>
       <h1>{{ document.title|safe }}</h1>
     </div>
-  </header>
-
-  <section id="details">
     <dl>
       {% if document.people_authors %}
         <dt>Author{{ document.people_authors|length|pluralize:",s" }}</dt>
@@ -45,8 +42,9 @@
         <dd>{{ document.solr.litDateOfText | safe }}</dd>
       {% endif %}
     </dl>
-  </section>
-  <section id="details2">
+  </header>
+
+  <section id="details">
     <dl>
       {% if not document.lit_is_article and document.parent_title %}
         <dt>In</dt>
