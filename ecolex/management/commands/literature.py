@@ -199,6 +199,8 @@ class Literature(object):
         self.data = data
         self.solr = solr
         self.date_format = '%Y-%m-%dT%H:%M:%SZ'
+
+        # TODO not properly used below
         self.elis_id = 'litId'
 
     def is_modified(self, old_record):
@@ -326,6 +328,9 @@ class LiteratureImporter(object):
 
                 # compute litDisplayType
                 id = data.get('litId')
+                if id and 'V;' in id:
+                    # Ignore unfinished records in ELIS, e.g. V;K1MON-079640
+                    continue
                 if id and id[:3] in DOCUMENT_TYPE_MAP:
                     for k, v in DOCUMENT_TYPE_MAP[id[:3]].items():
                         data[k] = v
