@@ -635,10 +635,9 @@ class CourtDecision(ObjectNormalizer):
         return references
 
     def language(self):
-        langcodes = self.solr.get('cdLanguageOfDocument')
-        if langcodes:
-            return ', '.join([LANGUAGE_MAP.get(code, code)
-                             for code in langcodes])
+        languages = self.solr.get('cdLanguageOfDocument_es', None)
+        if languages:
+            return ', '.join(languages)
         return 'Document language'
 
     def abstract(self):

@@ -32,7 +32,9 @@
       <dt>Country</dt> <dd>{{ document.country }}</dd>
       <dt>Court name</dt> <dd>{{ document.solr.cdCourtName }}</dd>
       <dt>Justices</dt> <dd>{{ document.solr.cdJustices|join:"<br>" }}</dd>
-      <dt>Reference number</dt> <dd>{{ document.solr.cdReferenceNumber }}</dd>
+      {% if document.solr.cdReferenceNumber %}
+        <dt>Reference number</dt> <dd>{{ document.solr.cdReferenceNumber }}</dd>
+      {% endif %}
       <dt>Language of document</dt> <dd>{{ document.language }}</dd>
       {% if document.subjects %}
         <dt>Subjects</dt>

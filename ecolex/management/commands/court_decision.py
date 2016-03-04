@@ -12,10 +12,9 @@ logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('import')
 
 # TODO Harvest French and Spanish translations for the following fields:
-#   - cdSubject
-#   - cdKeyword
-#   - cdLanguageOfDocument
-#   - cdRegion
+#   - cdSubject  (the json field for this field is not multilingual)
+#   - cdKeyword (the json field for this field is not multilingual)
+#   - cdRegion (the json field for this field is not multilingual)
 
 JSON_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
@@ -45,7 +44,7 @@ FIELD_MAP = {
     'field_reference_number': 'cdReferenceNumber',
     'field_reference_to_legislation': 'cdReferenceToLegislation',
     'field_related_url': 'cdRelatedUrl',  # relatedWebsite
-    'field_source_language': 'cdLanguageOfDocument_en',
+    'field_source_language': 'cdLanguageOfDocument',
     'field_territorial_subdivision': 'cdTerritorialSubdivision',
     'field_type_of_text': 'cdTypeOfText',
     'field_url': 'cdLinkToFullText',
@@ -113,6 +112,7 @@ FULL_TEXT_FIELDS = ['field_url']
 REGION_FIELDS = ['field_territorial_subdivision']
 REFERENCE_FIELDS = {'field_treaty': 'original_id',
                     'field_court_decision': 'uuid'}
+LANGUAGES = ['en', 'es', 'fr']
 
 
 def get_country_value(countries, value):
@@ -177,7 +177,6 @@ class CourtDecision(object):
             'cdLeoId': leo_id,
             'id': solr_id,
         }
-
         for json_field, solr_field in FIELD_MAP.items():
             json_value = self.data.get(json_field, None)
             if not json_value:
@@ -199,8 +198,10 @@ class CourtDecision(object):
                                              for e in json_value]
             elif json_field in LANGUAGE_FIELDS:
                 language_code = get_value(json_field, json_value['und'])
-                language = self.languages.get(language_code, language_code)
-                solr_decision[solr_field] = language
+                languages = self.languages.get(language_code, language_code)
+                for lang in LANGUAGES:
+                    field = '{}_{}'.format(solr_field, lang)
+                    solr_decision[field] = languages[lang]
             elif json_field in REGION_FIELDS:
                 region_en = get_value(json_field, json_value)
                 solr_decision[solr_field + '_en'] = region_en
@@ -298,7 +299,7 @@ class CourtDecisionImporter(object):
     def _get_languages(self):
         with open(self.languages_json) as f:
             languages_codes = json.load(f)
-        return languages_codes['languages']
+        return languages_codes
 
     def _get_regions(self):
         with open(self.regions_json) as f:
