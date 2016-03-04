@@ -123,8 +123,12 @@ def harvest_file(uploaded_file):
 
         legYear = legislation.get('legYear')
         if legYear:
-            legDate = datetime.strptime(legYear, '%Y')
-            legislation['docDate'] = legDate.strftime('%Y-%m-%dT%H:%M:%SZ')
+            try:
+                legDate = datetime.strptime(legYear, '%Y')
+                legislation['docDate'] = legDate.strftime('%Y-%m-%dT%H:%M:%SZ')
+            except Exception as e:
+                logger.debug('Error parsing legYear %s' %(legYear))
+                pass
 
         url_value = document.attrs.get('url', None)
         if url_value:
