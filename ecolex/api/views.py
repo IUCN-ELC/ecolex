@@ -71,16 +71,16 @@ class BaseFacetViewSet(ListModelMixin,
 
 
 class CountryFacetViewSet(BaseFacetViewSet):
-    field = 'docCountry'
+    field = 'docCountry_en'
 
 
 # not needed, there's very few of these
 #class SubjectFacetViewSet(BaseFacetViewSet):
-#    field = 'docSubject'
+#    field = 'docSubject_en'
 
 
 class KeywordFacetViewSet(BaseFacetViewSet):
-    field = 'docKeyword'
+    field = 'docKeyword_en'
 
 
 class AuthorFacetViewSet(BaseFacetViewSet):
