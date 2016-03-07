@@ -272,22 +272,22 @@ class Treaty(ObjectNormalizer):
 
     FULL_TEXT = 'trLinkToFullText'  # multilangual
 
-    DIRECT_LINKS = ['trEnablesTreaty', 'trSupersedesTreaty', 'trCitesTreaty',
-                    'trAmendsTreaty']
-    BACK_LINKS = ['trEnabledByTreaty', 'trSupersededBy', 'trCitedBy',
-                  'trAmendedBy']
-
-    REFERENCE_FIELDS = {
-        'trEnablesTreaty': 'Enables:',
-        'trSupersedesTreaty': 'Supersedes:',
-        'trCitesTreaty': 'Cites:',
-        'trAmendsTreaty': 'Amends:',
-
-        'trEnabledByTreaty': 'Enabled by:',
-        'trSupersededBy': 'Superseded by:',
-        'trCitedBy': 'Cited by:',
-        'trAmendedBy': 'Amended by:',
+    BACK_REFERENCE_LABELS = {
+        'Enables:': 'trEnabledByTreaty',
+        'Superseded by:': 'trSupersedesTreaty',
+        'Cited by:': 'trCitesTreaty',
+        'Amended by:': 'trAmendsTreaty',
     }
+
+    REFERENCE_LABELS = {
+        'Enabled by:': 'trEnabledByTreaty',
+        'Supersedes:': 'trSupersedesTreaty',
+        'Cites:': 'trCitesTreaty',
+        'Amends:': 'trAmendsTreaty',
+    }
+
+    DIRECT_LABELS = ['Enables:', 'Supersedes:', 'Cites:', 'Amends:']
+    BACK_LABELS = ['Enabled by:', 'Superseded by:', 'Cited by:', 'Amended by:']
 
     def jurisdiction(self):
         return first(self.solr.get('trJurisdiction_en'))
@@ -324,6 +324,26 @@ class Treaty(ObjectNormalizer):
             participants.sort(key=lambda p: p.country)
             return {'events': participants[0].available_events,
                     'participants': participants}
+
+    def get_treaty_references(self):
+        from ecolex.search import get_documents_by_field
+        references = {}
+        for label, field in self.REFERENCE_LABELS.items():
+            ids = [v for v in self.solr.get(field, [])]
+            results = get_documents_by_field(self.ID_FIELD, ids, rows=100)
+            if results:
+                references[label] = results
+        return references
+
+    def get_treaty_back_references(self):
+        from ecolex.search import get_documents_by_field
+        references = {}
+        tr_id = self.solr.get('trElisId')
+        for label, field in self.BACK_REFERENCE_LABELS.items():
+            results = get_documents_by_field(field, [tr_id], rows=100)
+            if results:
+                references[label] = results
+        return references
 
     def references(self):
         data = {}

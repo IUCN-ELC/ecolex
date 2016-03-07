@@ -145,14 +145,6 @@
     <field name="trAmendsTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trSupersedesTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trCitesTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
-    <!-- Backlinks-->
-    <field name="trEnablesTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="trAmendedBy" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="trSupersededBy" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="trCitedBy" type="string" indexed="true" stored="true" multiValued="true"/>
-
-    <field name="trReferenceToTreaties" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="trReferenceToLiterature" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="trObsolete" type="string" indexed="true" stored="false"/>
 
