@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.conf.urls import include, patterns, url
 from django.conf.urls.i18n import i18n_patterns
+from rest_framework import routers
 
 from .views import (
     SearchResults, PageView, ResultDetailsDecisions, Homepage,
@@ -10,7 +11,7 @@ from .views import (
     ResultDetailsCourtDecisions, LegislationDetails,
     SelectFacetsAjax, DesignPlayground,
 )
-
+from .api import urls as api_urls
 
 urlpatterns = patterns(
     '',
@@ -52,6 +53,12 @@ urlpatterns += i18n_patterns(
     url(r'^p/(?P<slug>\w+)/', PageView.as_view(),
         name="page"),
 )
+
+urlpatterns += patterns(
+    '',
+    url(r'^api/v1.0/', include(api_urls, namespace="api")),
+)
+
 
 if settings.DEBUG:
     urlpatterns += patterns(

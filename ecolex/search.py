@@ -1,4 +1,5 @@
 import pysolr
+import re
 from collections import OrderedDict
 from uuid import uuid4
 from django.conf import settings
@@ -66,12 +67,9 @@ class Queryset(object):
         if not self._facets:
             self.fetch()
 
+        # no-op
         def _prepare(val):
-            # data = [(k.capitalize(), v) for k, v in v.items()]
-            data = [(k, v) for k, v in val.items()]
-            return OrderedDict(
-                sorted(data, key=lambda v: v[0].lower())
-            )
+            return val
 
         return {
             k: _prepare(v)
@@ -132,7 +130,7 @@ def parse_result(hit, responses):
 
 
 def parse_facets(facets):
-    return {k: dict(zip(v[0::2], v[1::2])) for k, v in facets.items()}
+    return {k: OrderedDict(zip(v[0::2], v[1::2])) for k, v in facets.items()}
 
 
 def parse_suggestions(solr_suggestions):
@@ -367,31 +365,54 @@ def search(user_query, filters=None, sortby=None, raw=None,
 
 
 def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
-            sortby=None, raw=None, facets=None, fields=None, hl_details=False):
+            sortby=None, raw=None, facets=None, fields=None, hl_details=False,
+            facet_only=None):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=60)
+
     if user_query == '*':
         solr_query = '*:*'
         highlight = False
     else:
         solr_query = user_query if raw else escape_query(user_query)
+
     filters = filters or {}
+
     params = {
         'rows': rows,
         'start': start,
         'stats': 'true',
         'stats.field': 'docDate',
     }
+
+    if filters:
+        params['fq'] = get_fq(filters)
+
     params.update({
-        'facet': 'on',
-        'facet.field': facets or filters.keys(),
-        'facet.limit': -1,
+        'facet': 'true',
+        'facet.limit': settings.FACETS_PAGE_SIZE,
+        # it is always desirable to sort by index
+        'facet.sort': 'index',
+        # TODO: should this really be enum for authors?
+        'facet.method': 'enum',
         # TODO: mincount should be 0 when facet_filter.op = OR
         # check show_empty parameter in SelectFacetsAjax
         'facet.mincount': 1,
-        'facet.method': 'enum',
     })
-    if filters:
-        params['fq'] = get_fq(filters)
+
+    if facet_only:
+        params.update({
+            'facet.field': facet_only['field'],
+            'rows': 0,
+            'facet.limit': facet_only.get('limit', settings.FACETS_PAGE_SIZE),
+            'facet.offset': facet_only.get('offset', 0),
+            'facet.prefix': facet_only.get('prefix', '')
+        })
+
+        return solr.search(solr_query, **params)
+
+    else:
+        params['facet.field'] = facets or filters.keys()
+
     if highlight:
         params.update(get_hl(hl_details=hl_details))
     params['sort'] = get_sortby(sortby, highlight)
@@ -481,9 +502,21 @@ class SearchMixin(object):
             facet_name = definitions.FIELD_TO_FACET_MAPPING[field_name]
             if not data[field] and facet_name in filters:
                 values = filters.pop(facet_name)
-                facet_name = '{!ex=%s}' % str(uuid4())[:8] + facet_name
+                facet_name = self._get_tagged(facet_name)
                 filters[facet_name] = values
         return filters
+
+    @classmethod
+    def _get_tagged(cls, facet_name):
+        # this doesn't exactly return it tagged, but whatever
+        return '{!ex=%s}%s' % (
+            cls._get_tag(facet_name), facet_name)
+
+    @classmethod
+    def _get_tag(cls, facet_name):
+        return re.sub(
+            '((?<=.)[A-Z](?=[a-z0-9])|(?<=[a-z0-9])[A-Z])', r'_\1',
+            facet_name).lower()
 
     def _prepare(self, data):
         """

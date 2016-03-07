@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'ecolex',
 )
 
@@ -96,6 +97,17 @@ DATABASES = {
 }
 
 
+# Caching.
+# TODO: In production this needs to be set to something cross-processes,
+# e.g. filebased.FileBasedCache with LOCATION /dev/shm, or memcached
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
+
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -129,6 +141,15 @@ USE_I18N = True
 USE_L10N = False
 
 USE_TZ = True
+
+
+# drf
+
+REST_FRAMEWORK = {
+    'PAGE_SIZE': 20,
+}
+# used by both api and search
+FACETS_PAGE_SIZE = 100
 
 
 # Static files (CSS, JavaScript, Images)
