@@ -14,6 +14,7 @@ from ecolex.management.utils import EcolexSolr, TREATY, get_content_from_url
 from ecolex.management.utils import get_file_from_url
 from ecolex.management.utils import format_date
 from ecolex.models import DocumentText
+from ecolex.search import get_documents_by_field
 
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('treaty_import')
@@ -452,9 +453,12 @@ class TreatyImporter(object):
                 if 'trEntryIntoForceDate' not in treaty:
                     treaty['trStatus'] = 'Not in force'
                 else:
-                    # TODO: Update status based on backlink (trSuperededBy does not exist anymore)
-                    if 'trSupersededBy' in treaty:
+                    treaty_id = treaty.get('trElisId')
+                    results = get_documents_by_field('trSupersedesTreaty',
+                                                     [treaty_id], rows=100)
+                    if len(results):
                         treaty['trStatus'] = 'Superseded'
+                        print('super')
                     else:
                         treaty['trStatus'] = 'In force'
                 treaties.append(treaty)
