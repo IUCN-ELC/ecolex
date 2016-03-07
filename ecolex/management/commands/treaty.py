@@ -4,14 +4,19 @@ from datetime import datetime
 import logging
 import logging.config
 import html
+import json
+
+from django.conf import settings
+from pysolr import SolrError
 
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.utils import EcolexSolr, TREATY, get_content_from_url
 from ecolex.management.utils import get_file_from_url
 from ecolex.management.utils import format_date
+from ecolex.models import DocumentText
 
 logging.config.dictConfig(LOG_DICT)
-logger = logging.getLogger('import')
+logger = logging.getLogger('treaty_import')
 
 DOCUMENT = 'document'
 PARTY = 'party'
@@ -22,6 +27,10 @@ B7 = 'International Environmental Law – Multilateral Agreements'
 URL_CHANGE_FROM = 'http://www.ecolex.org/server2.php/server2neu.php/'
 URL_CHANGE_TO = 'http://www.ecolex.org/server2neu.php/'
 replace_url = lambda text: (URL_CHANGE_TO + text.split(URL_CHANGE_FROM)[-1]) if text.startswith(URL_CHANGE_FROM) else text
+
+# TODO Harvest French and Spanish translations for the following fields:
+#   - trRegion
+#   - partyCountry
 
 FIELD_MAP = {
     'recid': 'trElisId',
@@ -95,7 +104,9 @@ FIELD_MAP = {
 
     'linktoabstract': 'trLinkToAbstract',
     'obsolete': 'trObsolete',
-    'region': 'trRegion',
+    'region': 'trRegion_en',
+    'region_fr_fr': 'trRegion_fr',
+    'region_es_es': 'trRegion_es',
     'relevanttexttreaty': 'trRelevantTextTreaty',
     'scope': 'trScope',
     'searchdate': 'trSearchDate',
@@ -116,7 +127,9 @@ FIELD_MAP = {
 }
 
 PARTICIPANT_FIELDS = {
-    'country': 'partyCountry',
+    'country': 'partyCountry_en',
+    'countryfr': 'partyCountry_fr',
+    'countrysp': 'partyCountry_es',
     'entryintoforce': 'partyEntryIntoForce',
     'dateofratification': 'partyDateOfRatification',
     'dateofaccessionapprobation': 'partyDateOfAccessionApprobation',
@@ -236,7 +249,7 @@ class TreatyImporter(object):
         while year >= self.start_year:
             raw_treaties = []
 
-            for month in range(self.start_month, self.end_month+1):
+            for month in range(self.start_month, self.end_month + 1):
                 skip = 0
                 url = self._create_url(year, month, skip)
                 content = get_content_from_url(url)
@@ -265,9 +278,9 @@ class TreatyImporter(object):
             treaties = self._parse(raw_treaties)
             logger.debug('Pre-processing %d treaties' % (len(treaties)))
             self._clean_referred_treaties(treaties)
-            self._add_back_links(treaties)
-            new_treaties = filter(bool, [self._get_solr_treaty(treaty) for
-                                         treaty in treaties.values()])
+            new_treaties = list(filter(bool, [self._get_solr_treaty(treaty) for
+                                       treaty in treaties.values()]))
+            self._index_files(new_treaties)
             logger.debug('Adding treaties')
             try:
                 self.solr.add_bulk(new_treaties)
@@ -316,25 +329,9 @@ class TreatyImporter(object):
                     if all([d == NULL_DATE for d in data[party_field]]):
                         data[party_field] = None
 
-                data['text'] = ''
-                for field in URL_FIELDS:
-                    value = document.find(field)
-                    if value:
-                        # TODO: this is duplicated code (see _apply_custom_rules).
-                        # PDF's should not be parsed and indexed at this stage
-                        url = replace_url(value.text)
-                        logger.debug('Getting file %s.' %url)
-                        try:
-                            file_obj = get_file_from_url(url)
-                            data['text'] += self.solr.extract(file_obj)
-                        except:
-                            logger.exception('Error indexing file %s.' %url)
-
                 elis_id = data['trElisId'][0]
                 data['trElisId'] = elis_id
-
                 data = self._apply_custom_rules(data)
-
                 treaties[elis_id] = data
 
         return treaties
@@ -353,11 +350,55 @@ class TreatyImporter(object):
         data['trAvailableIn'] = new_available_in
 
         # fix server2.php/server2neu.php in full text links
-        field_names = ['trLinkToFullText_en', 'trLinkToFullText_es', 'trLinkToFullText_fr', 'trLinkToFullText_other']
+        field_names = ['trLinkToFullText_en', 'trLinkToFullText_es',
+                       'trLinkToFullText_fr', 'trLinkToFullText_other']
         for key, value in data.items():
             if key in field_names:
                 data[key] = list(map(replace_url, data[key]))
         return data
+
+    def _index_files(self, treaties):
+        for treaty in treaties:
+            full_index = True
+            treaty['trText'] = ''
+
+            for field in URL_FIELDS:
+                urls = treaty.get(FIELD_MAP[field], [])
+                for url in urls:
+                    logger.info('Downloading: %s' % url)
+                    file_obj = get_file_from_url(url)
+                    if file_obj:
+                        # Donwload successfull
+                        try:
+                            treaty['trText'] += self.solr.extract(file_obj)
+                        except:
+                            # SOLR error at pdf extraction
+                            full_index = False
+                            self._document_text_pdf_error(treaty, url)
+                            logger.error('Error extracting from doc %s' %
+                                         treaty['trElisId'])
+                    else:
+                        # Download failed
+                        full_index = False
+                        self._document_text_pdf_error(treaty, url)
+
+            if full_index:
+                logger.info('Success on file download %s' % treaty['trElisId'])
+                self._document_text_pdf_success(treaty)
+
+    def _document_text_pdf_error(self, treaty, url):
+        doc, _ = DocumentText.objects.get_or_create(
+            doc_id=treaty['trElisId'], doc_type=TREATY)
+        doc.url = url
+        doc.parsed_data = json.dumps(treaty)
+        doc.status = DocumentText.INDEXED
+        doc.save()
+
+    def _document_text_pdf_success(self, treaty):
+        doc, _ = DocumentText.objects.get_or_create(
+            doc_id=treaty['trElisId'], doc_type=TREATY)
+        doc.status = DocumentText.FULL_INDEXED
+        doc.save()
 
     def _get_solr_treaty(self, treaty_data):
         new_treaty = Treaty(treaty_data, self.solr)
@@ -376,8 +417,8 @@ class TreatyImporter(object):
         date_info = date.split('-')
         if len(date_info) != 3:
             return False
-        if (date_info[0] == '0000' or date_info[1] == '00'
-                or date_info[2] == '00'):
+        if (date_info[0] == '0000' or date_info[1] == '00' or
+                date_info[2] == '00'):
             return False
         return True
 
@@ -391,12 +432,6 @@ class TreatyImporter(object):
 
     def _clean_referred_treaties(self, solr_docs):
         for elis_id, doc in solr_docs.items():
-            # Remove references not present in solr_docs
-            # for field_name in REFERENCE_MAPPING:
-            #     if field_name in doc:
-            #         doc[field_name] = [ref for ref in doc[field_name]
-            #                            if ref in solr_docs]
-            # Remove empty properties
             solr_docs[elis_id] = dict((k, v)
                                       for k, v in solr_docs[elis_id].items()
                                       if not isinstance(v, list) or any(v))
@@ -428,6 +463,34 @@ class TreatyImporter(object):
                               self.query_type, page)
         return url
 
+    def add_back_links(self):
+        rows = 50
+        index = 0
+        while True:
+            print(index)
+            treaties = {}
+            docs = self.solr.solr.search('type:treaty', rows=rows, start=index)
+            for doc in docs:
+                elis_id = doc['trElisId']
+                for orig_field, backlink_field in REFERENCE_MAPPING.items():
+                    if orig_field in doc:
+                        for ref in doc[orig_field]:
+                            ref_doc = treaties.get(ref, self.solr.search(TREATY, ref))
+                            if ref_doc:
+                                ref_doc.setdefault(backlink_field, [])
+                                ref_doc[backlink_field].append(elis_id)
+                                logger.info('Added backlink from %s to %s' %
+                                            (ref, elis_id))
+                                treaties[ref] = ref_doc
+                            else:
+                                logger.error('Treaty %s not found' % ref)
+
+            self.solr.add_bulk(list(treaties.values()))
+
+            if len(docs) < rows:
+                break
+            index += rows
+
     def update_status(self):
         rows = 50
         index = 0
@@ -449,6 +512,51 @@ class TreatyImporter(object):
                 break
             index += rows
         self.solr.add_bulk(treaties)
+
+    def reindex_failed(self):
+        objs = DocumentText.objects.filter(status=DocumentText.INDEXED,
+                                           doc_type=TREATY)
+        for obj in objs:
+            treaty_data = json.loads(obj.parsed_data)
+            treaty_data['trText'] = ''
+            full_index = True
+
+            for field in URL_FIELDS:
+                urls = treaty_data.get(FIELD_MAP[field], [])
+                for url in urls:
+                    logger.info('Downloading: %s' % url)
+                    file_obj = get_file_from_url(url)
+                    if file_obj:
+                        # Donwload successfull
+                        try:
+                            treaty_data['trText'] += self.solr.extract(file_obj)
+                        except:
+                            # SOLR error at pdf extraction
+                            full_index = False
+                            obj.save()
+                            logger.error('Error extracting from doc %s' %
+                                         obj.doc_id)
+                    else:
+                        # Download failed
+                        full_index = False
+                        obj.save()
+                        logger.error('Error downloading url from doc %s' %
+                                     obj.doc_id)
+            try:
+                treaty = self.solr.search(TREATY, obj.doc_id)
+                treaty_data['id'] = treaty['id']
+            except SolrError as e:
+                logger.error('Error reading treaty %s' % obj.doc_id)
+                if settings.DEBUG:
+                    logging.getLogger('solr').exception(e)
+                continue
+
+            if full_index:
+                resp = self.solr.add(treaty_data)
+                if resp:
+                    obj.status = DocumentText.FULL_INDEXED
+                    obj.parsed_data = ''
+                    obj.save()
 
     def test(self):
         pass

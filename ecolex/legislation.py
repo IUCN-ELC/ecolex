@@ -1,10 +1,19 @@
 import json
+import logging
+import logging.config
+import tempfile
 from bs4 import BeautifulSoup
 from datetime import datetime
 from collections import OrderedDict
+from django.conf import settings
+from pysolr import SolrError
 
-from ecolex.management.utils import EcolexSolr
+from ecolex.management.commands.logging import LOG_DICT
+from ecolex.management.utils import EcolexSolr, LEGISLATION
 from ecolex.models import DocumentText
+
+logging.config.dictConfig(LOG_DICT)
+logger = logging.getLogger('legislation_import')
 
 DOCUMENT = 'record'
 META = 'meta'
@@ -19,12 +28,8 @@ FIELD_MAP = {
     'longTitleOfText': 'legLongTitle',
     'serialImprint': 'legSource',
 
-    'dateOfText': 'legDate',
-    'dateOfOriginalText': 'legOriginalDate',
-    'dateOfModification': 'legModificationDate',
-    'dateOfConsolidation': 'legConsolidationDate',
-    'dateOfEntry': 'legEntryDate',
-    'searchDate': 'legSearchDate',
+    'year': 'legYear',
+    'originalYear': 'legOriginalYear',
 
     'entryIntoForce': 'legEntryIntoForce',
     'country_ISO3': 'legCountry_iso',
@@ -35,6 +40,9 @@ FIELD_MAP = {
     'geographicalArea_en': 'legGeoArea_en',
     'geographicalArea_fr': 'legGeoArea_fr',
     'geographicalArea_es': 'legGeoArea_es',
+    'basin_en': 'legBasin_en',
+    'basin_fr': 'legBasin_fr',
+    'basin_es': 'legBasin_es',
 
     'typeOfTextCode': 'legTypeCode',
     'typeOfText_en': 'legType_en',
@@ -68,35 +76,30 @@ MULTIVALUED_FIELDS = [
     'legLanguage_en', 'legLanguage_fr', 'legLanguage_es',
     'legKeyword_code', 'legKeyword_en', 'legKeyword_fr', 'legKeyword_es',
     'legGeoArea_en', 'legGeoArea_fr', 'legGeoArea_es',
+    'legBasin_en', 'legBasin_fr', 'legBasin_es',
     'legImplement', 'legAmends', 'legRepeals',
     'legSubject_code', 'legSubject_en', 'legSubject_fr', 'legSubject_es',
 ]
-
-DATE_FIELDS = [
-    'legDate', 'legEntryDate', 'legSearchDate', 'legOriginalDate',
-    'legModificationDate', 'legConsolidationDate',
-]
-
 
 def get_content(values):
     values = [v.get(CONTENT, None) for v in values]
     return values
 
+def harvest_file(uploaded_file):
+    if settings.DEBUG:
+        with tempfile.NamedTemporaryFile(prefix=uploaded_file.name, delete=False) as f:
+            logger.debug('Dumping data to %s' %(f.name))
+            for chunk in uploaded_file.chunks():
+                f.write(chunk)
+            uploaded_file.seek(0)
 
-def get_date_format(value):
-    value = ' '.join([x for x in value.split() if not x.isupper()])
-    date = datetime.strptime(value, '%a %b %d %H:%M:%S %Y')
-    return date.strftime('%Y-%m-%dT%H:%M:%SZ')
-
-
-def harvest_file(uploaded_file, logger):
     bs = BeautifulSoup(uploaded_file)
     documents = bs.findAll(DOCUMENT)
     legislations = []
 
     for document in documents:
         legislation = {
-            'type': 'legislation',
+            'type': LEGISLATION,
             'source': 'fao',
         }
 
@@ -106,8 +109,8 @@ def harvest_file(uploaded_file, logger):
             if field_values and v not in MULTIVALUED_FIELDS:
                 field_values = field_values[0]
 
-            if v in DATE_FIELDS and field_values:
-                field_values = get_date_format(field_values)
+            # if v in DATE_FIELDS and field_values:
+            #    field_values = get_date_format(field_values)
 
             if field_values:
                 legislation[v] = field_values
@@ -117,6 +120,15 @@ def harvest_file(uploaded_file, logger):
             field_values = legislation.get(field_name)
             if field_values:
                 legislation[field_name] = list(OrderedDict.fromkeys(field_values).keys())
+
+        legYear = legislation.get('legYear')
+        if legYear:
+            try:
+                legDate = datetime.strptime(legYear, '%Y')
+                legislation['docDate'] = legDate.strftime('%Y-%m-%dT%H:%M:%SZ')
+            except Exception as e:
+                logger.debug('Error parsing legYear %s' %(legYear))
+                pass
 
         url_value = document.attrs.get('url', None)
         if url_value:
@@ -130,71 +142,67 @@ def harvest_file(uploaded_file, logger):
 
         legislations.append(legislation)
 
-    response = add_legislation(legislations, logger)
+    response = add_legislations(legislations)
     return response
 
-
-def legislation_needs_update(old, new, logger):
-    if old['legModificationDate'] != new['legModificationDate']:
-        return True
-    return False
-
-
-def add_legislation(legislations, logger):
+def add_legislations(legislations):
     solr = EcolexSolr()
     new_docs = []
     updated_docs = []
     new_legislations = []
     updated_legislations = []
-    already_indexed = 0
+    failed_docs = []
 
     for legislation in legislations:
         leg_id = legislation['legId']
-        leg_result = solr.search('legislation', leg_id)
-        if leg_result:
-            if legislation_needs_update(leg_result, legislation, logger):
+        doc, _ = DocumentText.objects.get_or_create(doc_id=leg_id)
+        doc.doc_type = LEGISLATION
+        doc.status = DocumentText.INDEX_FAIL
+        try:
+            leg_result = solr.search(LEGISLATION, leg_id)
+            if leg_result:
                 legislation['updatedDate'] = (datetime.now()
                                               .strftime('%Y-%m-%dT%H:%M:%SZ'))
                 legislation['id'] = leg_result['id']
                 updated_legislations.append(legislation)
-
-                doc, _ = DocumentText.objects.get_or_create(doc_id=leg_id)
-                doc.status = DocumentText.INDEXED
-                doc.parsed_data = json.dumps(legislation)
-                doc.url = legislation['legLinkToFullText']
                 updated_docs.append(doc)
             else:
-                already_indexed += 1
-        else:
-            new_legislations.append(legislation)
-            doc = DocumentText(doc_id=leg_id,
-                               url=legislation['legLinkToFullText'],
-                               parsed_data=json.dumps(legislation),
-                               status=DocumentText.INDEXED)
-            new_docs.append(doc)
+                new_legislations.append(legislation)
+                new_docs.append(doc)
+        except SolrError as e:
+            logger.error('Error importing legislation %s' % (leg_id,) )
+            failed_docs.append(doc)
+            if settings.DEBUG:
+                logger.exception(e)
 
-    result = solr.add_bulk(new_legislations)
-    new_docs = index_is_failed(new_docs, result)
+        doc.parsed_data=json.dumps(legislation)
+        if ( doc.url != legislation['legLinkToFullText']):
+            doc.url=legislation['legLinkToFullText']
+            # will not re-parse if same url and doc_size
+            doc.doc_size = None
 
-    result = solr.add_bulk(updated_legislations)
-    updated_docs = index_is_failed(updated_docs, result)
-
-    for doc in new_docs + updated_docs:
+    # Mix of exceptions and True/False return status
+    # hoping that add_bulk has better performance than add
+    count_new = index_and_log(solr, new_legislations, new_docs)
+    count_updated = index_and_log(solr, updated_legislations, updated_docs)
+    for doc in new_docs + updated_docs + failed_docs:
         doc.save()
 
-    response = 'Total %d. Added %d. Updated %d. Already indexed %d' % (
+    response = 'Total %d. Added %d. Updated %d. Failed %d.' % (
         len(legislations),
-        len(new_legislations),
-        len(updated_legislations),
-        already_indexed)
+        count_new,
+        count_updated,
+        len(legislations)-count_new-count_updated
+    )
     return response
 
+def index_and_log(solr, legislations, docs):
+    # solr.add_bulk returns False on fail
+    if not solr.add_bulk(legislations):
+        return 0
+    for doc in docs:
+        doc.status = DocumentText.INDEXED
+        # no need to store what is already indexed in Solr
+        doc.parsed_data = ''
+    return len(legislations)
 
-def index_is_failed(docs, index_result):
-    if not index_result:
-        for doc in docs:
-            doc.status = DocumentText.INDEX_FAIL
-    else:
-        for doc in docs:
-            doc.parsed_data = ''
-    return docs

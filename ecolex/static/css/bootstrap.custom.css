@@ -686,7 +686,7 @@ a.bg-danger:hover {
   color: #212121;
   margin-top: 11px;
   margin-bottom: 11px;
-  font-size: 24px;
+  font-size: 18px;
   margin-top: 0;
 }
 .page-header h1 small,
@@ -702,12 +702,6 @@ a.bg-danger:hover {
 .page-header h1 .small,
 .page-header .h1 .small {
   font-size: 75%;
-}
-@media (max-width: 767px) {
-  .page-header h1,
-  .page-header .h1 {
-    font-size: 21px;
-  }
 }
 ul,
 ol {
@@ -6260,6 +6254,7 @@ fieldset .filter-header {
   padding-bottom: 10px;
   border-bottom: 1px solid #dddddd;
   margin-bottom: -1px;
+  padding-top: 10px;
 }
 @media (max-width: 767px) {
   .record-details header {
@@ -6277,7 +6272,7 @@ fieldset .filter-header {
   color: #212121;
   margin-top: 11px;
   margin-bottom: 11px;
-  font-size: 24px;
+  font-size: 18px;
   margin-top: 0;
 }
 .record-details header h1 small,
@@ -6293,12 +6288,6 @@ fieldset .filter-header {
 .record-details header h1 .small,
 .record-details header .h1 .small {
   font-size: 75%;
-}
-@media (max-width: 767px) {
-  .record-details header h1,
-  .record-details header .h1 {
-    font-size: 21px;
-  }
 }
 .record-details header .record-title {
   margin-bottom: 22px;
@@ -6328,7 +6317,7 @@ fieldset .filter-header {
 }
 .record-details header .icon {
   color: #808080;
-  font-size: 150%;
+  font-size: 100%;
   line-height: 1;
 }
 .record-details section {

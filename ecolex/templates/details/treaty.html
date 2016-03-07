@@ -20,28 +20,26 @@
     <dl>
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
       <dt>Field of application</dt> <dd>{{ document.field_of_application }}</dd>
-      <dt>Date of document</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
-      <dt>Source</dt>
-      <dd><a target="_blank" href="http://iucn.org">{{ document.source }}</a> (ID: {{ document.document_id }})</dd>
+      <dt>Date</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
     </dl>
   </header>
 
-  {% if document.also or true %} {# check for alternative titles #}
-  <section id="aka">
-    <dl>
-      <dt>Also known as</dt>
-      <dd>
-        <ul>
-          <li>Convention sur la diversité biologique <sup>French</sup></li>
-          <li>other_language_title <sup>language</sup></li>
-        </ul>
-      </dd>
-    </dl>
-  </section>
-  {% endif %}
-
   <section id="details">
     <dl>
+      {% if document.solr.trTitleAbbreviation %}
+        <dt>Title abbreviation</dt>
+        <dd><p class="alttitle">{{ document.solr.trTitleAbbreviation | join_by:", " |safe }}</p></dd>
+      {% endif %}
+
+      {% if document.title_translations %}
+        <dt>Title (translation)</dt>
+        <dd>
+          {% for title in document.title_translations %}
+            <p class="alttitle">{{ title.alttitle | safe}}<sup>{{ title.language }}</sup></p>
+          {% endfor %}
+        </dd>
+      {% endif %}
+
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>
         {% if "url" in entry.type %}
@@ -53,53 +51,43 @@
         {% endif %}
       {% endfor %}
 
-      <dt>Status</dt>
-      <dd>
-        {% if document.solr.trStatus %}
-          {{ document.solr.trStatus }}
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
-      <dt>Entry into force</dt>
-      <dd>
-        {% if document.solr.trEntryIntoForceDate %}
-          {{ document.entry_into_force}}
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
+      {% if document.subjects %}
+        <dt>Subject{{ document.subjects|length|pluralize:",s" }}</dt>
+        <dd>{{ document.subjects | join_by:", " | safe }}</dd>
+      {% endif %}
 
-      <dt>Subject</dt>
-      <dd>
-        {% if document.subjects %}
-          {{ document.subjects | join_by:", " | safe }}
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
-
-      <dt>Keywords</dt>
-      <dd>
+      {% if document.keywords %}
+        <dt>Keywords</dt>
+        <dd>
         {% for keyword in document.keywords %}
           <span class="tag">{{ keyword | capfirst | safe }}</span>
-        {% empty %}
-          <span class="na">Not available</span>
         {% endfor %}
-      </dd>
+        </dd>
+      {% endif %}
+
+      {% if document.region %}
+        <dt>Geographical area</dt>
+        <dd>{{ document.region | join_by:", " | safe }}</dd>
+      {% endif %}
+
+      {% if document.basin %}
+        <dt>Basin</dt>
+        <dd>{{ document.basin | join_by:", " | safe }}</dd>
+      {% endif %}
     </dl>
   </section>
 
   <section id="text">
     <dl>
-      <dt>Abstract</dt>
-      <dd>
-        {% for abs in document.solr.trAbstract_en %}
-          <p class="abstract">{{ abs|safe }}</p>
-        {% empty %}
-          <span class="na">Not available</span>
-        {% endfor %}
-      </dd>
+      {% if document.solr.trAbstract_en %}
+        <dt>Abstract</dt>
+        <dd>
+          {% for abs in document.solr.trAbstract_en %}
+            <p class="abstract">{{ abs|safe }}</p>
+          {% endfor %}
+        </dd>
+      {% endif %}
+
       {% if document.solr.trComment %}
         <dt>Comment</dt>
         {% for comment in document.solr.trComment %}
@@ -108,14 +96,26 @@
         </dd>
         {% endfor %}
       {% endif %}
+
       {% if document.link_to_full_text %}
-        <dt>Link to full text</dt>
+        <dt>Full text</dt>
         <dd>
           {% for link in document.link_to_full_text %}
             <a href="{{ link.url }}" target="_blank">{{ link.language }}</a>
           {% endfor %}
         </dd>
       {% endif %}
+      {% if document.solr.trAvailableIn %}
+        <dt>Available in</dt>
+        <dd>{{ document.solr.trAvailableIn | join_by:", " | safe }}</dd>
+      {% endif %}
+      {% if document.solr.trUrl %}
+        <dt>Available web site</dt>
+        <dd><a target="_blank" href="{{ document.solr.trUrl }}">{{ document.solr.trUrl }}</a></dd>
+      {% endif %}
+
+      <dt>Source</dt>
+      <dd><a target="_blank" href="http://iucn.org">{{ document.source }}</a> (ID: {{ document.document_id }})</dd>
     </dl>
   </section>
 
@@ -165,66 +165,49 @@
   </section>
   {% endif %}
 
-  {% if references %}
+  {% if direct_links or back_links %}
   <section id="treaty-references">
     <h2 class="section-title">Treaty references</h2>
-      {% for label, treaties in references.items %}
-        <dl class="dl-horizontal references">
-          <dt>{{ label }}</dt>
-            {% for treaty in treaties %}
-            <dd>
-              <div class="treaty-link-container">
-                <a href="{% url 'treaty_details' treaty.id %}?{{ query }}"
-                   title="See treaty details">{{ treaty.title }}</a>
-               </div>
-              <time>{{ treaty.date|date:"b j, Y"|capfirst  }}</time>
-            </dd>
-            {% endfor %}
-        </dl>
-      {% endfor %}
+    {% include 'bits/treaty_references.html' with links=direct_links %}
+    {% include 'bits/treaty_references.html' with links=back_links %}
   </section>
   {% endif %}
 
+  {% if decisions|length or literatures|length or court_decisions|length %}
   <section id="other-references">
     <h2 class="section-title">Other references</h2>
-
     <dl>
-      <dt>COP decisions</dt>
-      <dd>
-        {% if decisions|length %}
+      {% if decisions|length %}
+        <dt>COP decisions</dt>
+        <dd>
           <strong>{{ decisions|length }} decisions</strong> related to this treaty.
           <a href="{% url 'resultDecisions' document.id %}?{{ query }}">View decisions</a>
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
+        </dd>
+      {% endif %}
     </dl>
 
     <dl>
-      <dt>Literature</dt>
-      <dd>
-        {% if literatures|length %}
+      {% if literatures|length %}
+        <dt>Literature</dt>
+        <dd>
           <strong>{{ literatures|length }} literatures</strong> related to this treaty.
           <a href="{% url 'resultLiteratures' document.id %}?{{ query }}">View literatures</a>
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
+        </dd>
+      {% endif %}
     </dl>
 
     <dl>
-      <dt>Court Decision</dt>
-      <dd>
-        {% if court_decisions|length %}
+      {% if court_decisions|length %}
+        <dt>Court Decision</dt>
+        <dd>
           <strong>{{ court_decisions|length }} court decisions</strong> related to this treaty.
           <a href="{% url 'resultCourtDecisions' document.id %}?{{ query }}">View court decisions</a>
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
+        </dd>
+      {% endif %}
     </dl>
 
   </section>
+  {% endif %}
 
 </article>
 {% endblock content %}

@@ -70,7 +70,7 @@
 
     {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
       <div class="filter-header">
-        <h6>Year Period</h6>
+        <h6>Year / Period</h6>
       </div>
       <input id="slider-years" type="text"
              data-slider-min="1860"
@@ -108,7 +108,7 @@
 
     <div id="filter-treaties" class="collapse {% if form.has_treaty %}in{% endif %}">
         <div class="filter-header">
-          <h6>Type of document</h6>
+          <h6>Document type</h6>
         </div>
         <ul class="filter-treaty" data-formid="#id_tr_type">
           {% include 'bits/checkbox_facet.html' with facet=facets.trTypeOfText_en form_field=form.tr_type show_empty=True %}
@@ -129,7 +129,7 @@
       </ul>
 
       <div class="filter-header">
-        <h6>Depository</h6>
+        <h6>Depositary</h6>
         <span class="filter-treaty pull-right" data-formid="#id_tr_depository_op">
           {% include 'bits/operation_facet.html' with form_field=form.tr_depository_op form_target='#id_tr_depository' %}
         </span>
@@ -137,7 +137,7 @@
       <div id="tr_depository-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
-        <input type="text" class="tm-input" placeholder="Add depository" data-formid="#id_tr_depository"/>
+        <input type="text" class="tm-input" placeholder="Add depositary" data-formid="#id_tr_depository"/>
       </div>
 
       <div class="filter-header">
@@ -218,7 +218,7 @@
 
     <div id="filter-legislation" class="collapse {% if form.has_legislation %}in{% endif %}">
       <div class="filter-header">
-        <h6>Type of legislation</h6>
+        <h6>Document type</h6>
       </div>
       <ul class="filter-legislation" data-formid="#id_leg_type">
         {% include 'bits/checkbox_facet.html' with facet=facets.legType_en form_field=form.leg_type show_empty=True %}
@@ -239,17 +239,8 @@
     <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">Literature filters</h5>
 
     <div id="filter-literatures" class="collapse {% if form.has_literature %}in{% endif %}">
-       <div class="filter-header">
-        <h6>Type of document</h6>
-       </div>
-      <div id="lit_type-filter" class="tag-select">
-        <select class="tag-options" hidden>
-        </select>
-        <input type="text" class="tm-input word-match" placeholder="Add type of document" data-formid="#id_lit_type"/>
-      </div>
-
-      <div class="filter-header">
-        <h6>Literature author</h6>
+      <div class="clearfix filter-header">
+        <h6 class="pull-left">Author</h6>
         <span class="filter-literature pull-right" data-formid="#id_lit_author_op">
           {% include 'bits/operation_facet.html' with form_field=form.lit_author_op form_target='#id_lit_author' %}
         </span>
@@ -276,6 +267,23 @@
         <select class="tag-options" hidden>
         </select>
         <input type="text" class="tm-input word-match" placeholder="Add publisher" data-formid="#id_lit_publisher">
+      </div>
+
+      <div class="filter-header">
+        <h6>Document type</h6>
+      </div>
+      <div id="lit_type-filter" class="tag-select">
+        <select class="tag-options" hidden>
+        </select>
+        <input type="text" class="tm-input word-match" placeholder="Add document type" data-formid="#id_lit_type"/>
+      </div>
+      <div class="filter-header">
+        <h6>Document type (original)</h6>
+      </div>
+      <div id="lit_type2-filter" class="tag-select">
+        <select class="tag-options" hidden>
+        </select>
+        <input type="text" class="tm-input word-match" placeholder="Add document type" data-formid="#id_lit_type2"/>
       </div>
     </div>
   </fieldset>

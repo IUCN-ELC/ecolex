@@ -7,8 +7,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
 from urllib.parse import urlencode
 import logging
-
 from ecolex.legislation import harvest_file
+
 from ecolex.search import (
     search, get_document, get_documents_by_field, get_treaty_by_informea_id,
     SearchMixin,
@@ -150,7 +150,7 @@ class TreatyParticipantView(SearchView):
 
     def get_context_data(self, **kwargs):
         ctx = super(TreatyParticipantView, self).get_context_data(**kwargs)
-        ctx['results'] = get_documents_by_field('partyCountry',
+        ctx['results'] = get_documents_by_field('partyCountry_en',
                                                 [kwargs['id']],
                                                 1000000)  # get all results
         return ctx
@@ -204,27 +204,40 @@ class TreatyDetails(DetailsView):
 
     template_name = 'details/treaty.html'
 
+    def _sort_references(self, doc, fields, treaty_references, treaties):
+        references = {}
+        for field in fields:
+            treaties_list = treaty_references.get(field, [])
+            if treaties_list and any(treaties_list):
+                label = doc.REFERENCE_FIELDS.get(field)
+                references.setdefault(label, [])
+                references[label].extend([t for t in treaties
+                                          if t.solr.get('trElisId', -1)
+                                          in treaties_list])
+                references[label].sort(key=lambda x: x.date(),
+                                       reverse=True)
+                if len(references[label]) == 0:
+                    references.pop(label)
+        return references
+
     def get_context_data(self, **kwargs):
         context = super(TreatyDetails, self).get_context_data(**kwargs)
 
-        ids = context['document'].get_references_ids_set()
-        treaties_info = context['results'].get_referred_treaties('trElisId',
-                                                                 ids)
-        references_mapping = context['document'].references()
-        if references_mapping:
-            context['references'] = {}
-            for label, treaties_list in references_mapping.items():
-                if treaties_list and any(treaties_list):
-                    context['references'].setdefault(label, [])
-                    context['references'][label].\
-                        extend([t for t in treaties_info
-                                if t.solr.get('trElisId', -1) in treaties_list])
-                    context['references'][label].\
-                        sort(key=lambda x: x.date(), reverse=True)
-        if context['document'].informea_id():
-            context['decisions'] = context['document'].get_decisions()
-        context['literatures'] = context['document'].get_literatures()
-        context['court_decisions'] = context['document'].get_court_decisions()
+        doc = context['document']
+        treaty_references = doc.references()
+        treaty_ids = [v for x in treaty_references.values() for v in x]
+        treaties = context['results'].get_referred_treaties('trElisId',
+                                                            treaty_ids)
+        if treaty_references:
+            context['direct_links'] = self._sort_references(
+                doc, doc.DIRECT_LINKS, treaty_references, treaties)
+            context['back_links'] = self._sort_references(
+                doc, doc.BACK_LINKS, treaty_references, treaties)
+
+        if doc.informea_id():
+            context['decisions'] = doc.get_decisions()
+        context['literatures'] = doc.get_literatures()
+        context['court_decisions'] = doc.get_court_decisions()
 
         return context
 
@@ -236,8 +249,7 @@ class LiteratureDetails(DetailsView):
     def get_context_data(self, **kwargs):
         context = super(LiteratureDetails, self).get_context_data(**kwargs)
         document = context['document']
-        reference_ids = document.get_references_ids_dict()
-        references_to = document.get_references_from_ids(reference_ids)
+        references_to = document.get_references_to()
         references_from = document.get_references_from()
         context['references_to'] = references_to
         context['references_from'] = references_from
@@ -345,6 +357,9 @@ class FaoFeedView(View):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
+        logger = logging.getLogger('legislation_import')
+        #for key,val in request.META.items():
+        #    logger.debug('Header %s = %s' % (key,val))
         key = request.META.get('HTTP_API_KEY', None)
         api_key = getattr(settings, 'FAOLEX_API_KEY')
         if not key or key != api_key:
@@ -353,13 +368,15 @@ class FaoFeedView(View):
         return super(FaoFeedView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request):
+        logger = logging.getLogger('legislation_import')
+        #logger.debug(request.body)
         legislation_file = request.FILES.get('file', None)
         if not legislation_file:
             logger.error('No attached file!')
             response = 'You have to attach an XML file!'
         else:
             try:
-                response = harvest_file(legislation_file, logger)
+                response = harvest_file(legislation_file)
                 logger.info(response)
                 data = {
                     'message': response

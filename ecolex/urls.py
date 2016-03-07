@@ -1,6 +1,8 @@
 from django.conf import settings
-from django.conf.urls import patterns, url, include
+from django.conf.urls import include, patterns, url
+from django.conf.urls.i18n import i18n_patterns
 from rest_framework import routers
+
 from .views import (
     SearchResults, PageView, ResultDetailsDecisions, Homepage,
     ResultDetailsParticipants, debug, SearchResultsAjax, DecMeetingView,
@@ -12,6 +14,12 @@ from .views import (
 from .api import urls as api_urls
 
 urlpatterns = patterns(
+    '',
+    url(r'^fao/$', FaoFeedView.as_view(), name='fao_feeder'),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+)
+
+urlpatterns += i18n_patterns(
     '',
     url(r'^$', Homepage.as_view(), name="homepage"),
     url(r'^result/$', SearchResults.as_view(),
@@ -44,7 +52,6 @@ urlpatterns = patterns(
         LegislationDetails.as_view(), name="legislation_details"),
     url(r'^p/(?P<slug>\w+)/', PageView.as_view(),
         name="page"),
-    url(r'^fao/$', FaoFeedView.as_view(), name='fao_feeder'),
 )
 
 urlpatterns += patterns(

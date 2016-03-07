@@ -17,7 +17,7 @@ from ecolex.management.commands.cop_decision import CopDecisionImporter
 from ecolex.management.commands.logging import LOG_DICT
 
 logging.config.dictConfig(LOG_DICT)
-logger = logging.getLogger(__name__)
+import_logger = logging.getLogger(__name__)
 
 CLASS_MAPPING = {
     COURT_DECISION: CourtDecisionImporter,
@@ -40,7 +40,8 @@ class Command(BaseCommand):
         make_option('--batch-size', type=int, default=10),
         make_option('--update-status', action='store_true'),
         make_option('--update-text', action='store_true'),
-        make_option('--reindex', action='store_true')
+        make_option('--reindex', action='store_true'),
+        make_option('--backlinks', action='store_true')
     )
 
     def handle(self, *args, **options):
@@ -53,6 +54,7 @@ class Command(BaseCommand):
         parser.add_argument('--update-status', action='store_true')
         parser.add_argument('--update-text', action='store_true')
         parser.add_argument('--reindex', action='store_true')
+        parser.add_argument('--backlinks', action='store_true')
         parser.set_defaults(test=False, batch_size=1)
         args = parser.parse_args()
 
@@ -65,14 +67,16 @@ class Command(BaseCommand):
 
         if args.test:
             if importer.test():
-                logger.info('Test for {} passed.'.format(args.obj_type))
+                import_logger.info('Test for {} passed.'.format(args.obj_type))
             else:
-                logger.warn('Test for {} failed.'.format(args.obj_type))
+                import_logger.warn('Test for {} failed.'.format(args.obj_type))
         elif args.update_status:
             importer.update_status()
         elif args.update_text:
-            importer.update_legislation_full_text()
+            importer.update_full_text()
         elif args.reindex:
-            importer.reindex_failed_legislations()
+            importer.reindex_failed()
+        elif args.backlinks:
+            importer.add_back_links()
         else:
             importer.harvest(args.batch_size)

@@ -1,0 +1,18 @@
+{% load tags%}
+
+{% for label, treaties in links.items %}
+  <dl class="dl-horizontal references">
+    <dt>{{ label }}</dt>
+ {% for treaty in treaties %}
+<dd>
+    <div class="treaty-link-container">
+        <h3 class="search-result-title">
+            <a href="{{ treaty.details_url }}?{{ query }}"
+               title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
+          </h3>
+        {% include 'short_display/treaty.html' with result=treaty %}
+    </div>
+</dd>
+{% endfor %}
+</dl>
+{% endfor %}

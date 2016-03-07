@@ -68,7 +68,7 @@ COP_DECISION_URL = http://odata.informea.org/informea.svc/Decisions
 QUERY_SKIP = $top=%d&$skip=%d
 QUERY_FILTER = $filter=updated gt datetime'%s'
 QUERY_FORMAT = $format=json
-QUERY_EXPAND = $expand=title,longTitle,keywords,content,files
+QUERY_EXPAND = $expand=title,longTitle,keywords,content,files,summary
 QUERY_ORDER = $orderby=updated asc
 PER_PAGE = 100
 DAYS_AGO = 7

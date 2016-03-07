@@ -23,25 +23,11 @@
       <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
       <dt>Status</dt> <dd>{{ document.solr.decStatus|capfirst }}</dd>
-      <dt>Date of document</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
+      <dt>Date</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
       <dt>Source</dt>
       <dd>{{ document.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
     </dl>
   </header>
-
-  {% if document.also or true %} {# check for alternative titles #}
-  <section id="aka">
-    <dl>
-      <dt>Also known as</dt>
-      <dd>
-        <ul>
-          <li>Convention sur la diversité biologique <sup>French</sup></li>
-          <li>other_language_title <sup>language</sup></li>
-        </ul>
-      </dd>
-    </dl>
-  </section>
-  {% endif %}
 
   <section id="details">
     <dl>
@@ -72,61 +58,41 @@
       </dd>
       {% endif %}
 
+      {% if document.get_files %}
+        <dt>Files</dt>
+          {% for url, name in document.get_files %}
+            <dd>
+              <a target="_blank" href="{{ url }}">{{ name }}</a>
+            </dd>
+          {% endfor %}
+      {% endif %}
+
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>
         <dd> {{ entry.value | date:"b j, Y" | capfirst | join_by:", " }}</dd>
       {% endfor %}
 
-      <dt>Keywords</dt>
-      <dd>
-        {% for keyword in document.keywords %}
-          <span class="tag">{{ keyword|capfirst|safe }}</span>
-        {% empty %}
-          <span class="na">Not available</span>
-        {% endfor %}
-      </dd>
-    </dl>
-  </section>
-
-  <section id="text">
-    <dl>
-      <dt>Summary</dt>
-      <dd>
-        {% for summary in document.solr.decSummary %}
-          <p class="summary">{{ summary|safe }}</p>
-        {% empty %}
-          <span class="na">Not available</span>
-        {% endfor %}
-      </dd>
-      <dt>Decision Body</dt>
-      {% for body in document.solr.decBody %}
+      {% if document.keywords %}
+        <dt>Keywords</dt>
         <dd>
-          <div class="html-disclaimer">As extracted from source. For details check the link to decision above.
-          </div>
-          <div class="html">{{ body|safe }}</div>
+          {% for keyword in document.keywords %}
+            <span class="tag">{{ keyword|capfirst|safe }}</span>
+          {% endfor %}
         </dd>
-      {% empty %}
-        <dd><span class="na">Not available</span></dd>
-      {% endfor %}
+      {% endif %}
     </dl>
   </section>
 
-  <section id="other-references">
-    <h2 class="section-title">Other references</h2>
-
-    <dl>
-      <dt>COP decisions</dt>
-      <dd>
-        {% if decisions|length %}
-          <strong>{{ decisions|length }} decisions</strong> related to this treaty.
-          <a href="{% url 'resultDecisions' document.id %}">View decisions</a>
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
-    </dl>
-
-  </section>
+  {% if document.get_body %}
+    <section id="text">
+      <dl>
+        <dt>Abstract</dt>
+        <dd>
+          <div class="html">{{ document.get_body|safe }}</div>
+        </dd>
+      </dl>
+    </section>
+  {% endif %}
 
 </article>
 {% endblock content %}

@@ -95,7 +95,9 @@ class Queryset(object):
         return self._hits
 
     def pages(self):
-        number_of_pages = (len(self) // self.rows) + 1
+        number_of_pages = (len(self) // self.rows)
+        if len(self) % self.rows != 0:
+            number_of_pages += 1
         return number_of_pages
 
     def first(self):
@@ -201,14 +203,14 @@ def get_relevancy():
         'legTitle': 100,
         'legLongTitle': 100,
 
-        'litLongTitle': 100,
+        'litLongTitle_en': 100,
         'litLongTitle_fr': 100,
-        'litLongTitle_sp': 100,
+        'litLongTitle_es': 100,
         'litLongTitle_other': 100,
 
-        'litPaperTitleOfText': 100,
+        'litPaperTitleOfText_en': 100,
         'litPaperTitleOfText_fr': 100,
-        'litPaperTitleOfText_sp': 100,
+        'litPaperTitleOfText_es': 100,
         'litPaperTitleOfText_other': 100,
 
         'cdTitleOfText_en': 100,
@@ -227,18 +229,50 @@ def get_relevancy():
         'cdAbstract_en': 50,
         'cdAbstract_es': 50,
         'cdAbstract_fr': 50,
-        'litAbstract': 50,
+        'litAbstract_en': 50,
+        'litAbstract_fr': 50,
+        'litAbstract_es': 50,
+        'litAbstract_other': 50,
         'legAbstract': 50,
 
         'trKeyword_en': 30,
         'trKeyword_fr': 30,
         'trKeyword_es': 30,
-        'decKeyword': 30,
-        'litKeyword': 30,
+        'decKeyword_en': 30,
+        'decKeyword_fr': 30,
+        'decKeyword_es': 30,
+        'litKeyword_en': 30,
+        'litKeyword_fr': 30,
+        'litKeyword_es': 30,
         'legKeyword_en': 30,
         'cdKeywords': 30,
 
-        'decBody': 20,
+        'trBasin_en': 25,
+        'trBasin_fr': 25,
+        'trBasin_es': 25,
+        'legBasin_en': 25,
+        'legBasin_fr': 25,
+        'legBasin_es': 25,
+        'litBasin_en': 25,
+        'litBasin_fr': 25,
+        'litBasin_es': 25,
+
+        'trRegion_en': 25,
+        'trRegion_fr': 25,
+        'trRegion_es': 25,
+        'cdRegion_en': 25,
+        'cdRegion_fr': 25,
+        'cdRegion_es': 25,
+        'litRegion_en': 25,
+        'litRegion_fr': 25,
+        'litRegion_es': 25,
+        'legGeoArea_en': 25,
+        'legGeoArea_fr': 25,
+        'legGeoArea_es': 25,
+
+        'decBody_en': 20,
+        'decBody_es': 20,
+        'decBody_fr': 20,
         'text': 20,
         'doc_content': 10,
     }
@@ -266,7 +300,7 @@ def get_fq(filters):
         'decStatus': 'decision',
         'decTreatyName_en': 'decision',
 
-        'litTypeOfText': 'literature',
+        'litTypeOfText_en': 'literature',
         'litAuthor': 'literature',
         'litSerialTitle': 'literature',
         'litPublisher': 'literature',
@@ -276,11 +310,11 @@ def get_fq(filters):
     }
 
     AND_FILTERS = [
-        'docKeyword',
-        'docSubject',
-        'docCountry',
-        'docRegion',
-        'docLanguage',
+        'docKeyword_en',
+        'docSubject_en',
+        'docCountry_en',
+        'docRegion_en',
+        'docLanguage_en',
         'trDepository_en',
         'litAuthor',
     ]
@@ -333,13 +367,16 @@ def search(user_query, filters=None, sortby=None, raw=None,
 def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
             sortby=None, raw=None, facets=None, fields=None, hl_details=False,
             facet_only=None):
-    solr = pysolr.Solr(settings.SOLR_URI, timeout=10)
+    solr = pysolr.Solr(settings.SOLR_URI, timeout=60)
+
     if user_query == '*':
         solr_query = '*:*'
         highlight = False
     else:
         solr_query = user_query if raw else escape_query(user_query)
+
     filters = filters or {}
+
     params = {
         'rows': rows,
         'start': start,
@@ -347,7 +384,8 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         'stats.field': 'docDate',
     }
 
-    params['fq'] = get_fq(filters)
+    if filters:
+        params['fq'] = get_fq(filters)
 
     params.update({
         'facet': 'true',
@@ -389,7 +427,6 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
 
     if settings.DEBUG:
         params['debug'] = True
-
     return solr.search(solr_query, **params)
 
 
@@ -405,7 +442,7 @@ def get_documents_by_field(id_name, treaty_ids, rows=None):
 def get_document(document_id, query='*', **kwargs):
     result = search(query, raw=True, filters={'id': [document_id]}, **kwargs)
     if not len(result):
-        return None
+        result = search('*', raw=True, filters={'id': [document_id]}, **kwargs)
     return result
 
 
@@ -448,11 +485,11 @@ class SearchMixin(object):
     def _get_filters(self, data):
         filters = {
             'type': data['type'] or dict(definitions.DOC_TYPE).keys(),
-            'docKeyword': data['keyword'],
-            'docSubject': data['subject'],
-            'docCountry': data['country'],
-            'docRegion': data['region'],
-            'docLanguage': data['language'],
+            'docKeyword_en': data['keyword'],
+            'docSubject_en': data['subject'],
+            'docCountry_en': data['country'],
+            'docRegion_en': data['region'],
+            'docLanguage_en': data['language'],
             'docDate': (data['yearmin'], data['yearmax']),
         }
         for doc_type in filters['type']:

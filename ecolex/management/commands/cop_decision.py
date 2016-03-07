@@ -1,4 +1,5 @@
 from datetime import date, datetime, timedelta
+from django.conf import settings
 import logging
 import logging.config
 import html
@@ -8,9 +9,10 @@ import requests
 from ecolex.management.utils import EcolexSolr, get_date, get_file_from_url
 from ecolex.management.utils import COP_DECISION, DEC_TREATY_FIELDS
 from ecolex.management.commands.logging import LOG_DICT
+from ecolex.models import DocumentText
 
 logging.config.dictConfig(LOG_DICT)
-logger = logging.getLogger('import')
+logger = logging.getLogger('cop_decision_import')
 regex = re.compile(r'[\n\t\r]')
 
 LANGUAGES = ['en', 'es', 'fr', 'ar', 'ru', 'zh']
@@ -18,9 +20,13 @@ DEFAULT_LANG = 'en'
 
 BASE_FIELDS = [
     'id', 'link', 'type', 'status', 'number', 'treaty', 'published', 'updated',
-    'meetingId', 'meetingTitle', 'meetingUrl', 'TreatyUUID'
+    'meetingId', 'meetingTitle', 'meetingUrl', 'treatyUUID'
 ]
-MULTILANGUAL_FIELDS = ['title', 'longTitle']
+MULTILINGUAL_FIELDS = ['title', 'longTitle', 'summary', 'content']
+
+# TODO Harvest French and Spanish translations for the following fields:
+#   - decKeyword
+#   - decLanguage
 
 FIELD_MAP = {
     'id': 'decId',
@@ -28,7 +34,7 @@ FIELD_MAP = {
 
     'title': 'decShortTitle',
     'longTitle': 'decLongTitle',
-    'keywords': 'decKeyword',
+    'keywords': 'decKeyword_en',
     'summary': 'decSummary',
     'content': 'decBody',
     'type': 'decType',
@@ -36,7 +42,7 @@ FIELD_MAP = {
     'number': 'decNumber',
 
     'treaty': 'decTreaty',
-    'TreatyUUID': 'decTreatyId',
+    'treatyUUID': 'decTreatyId',
 
     'published': 'decPublishDate',
     'updated': 'decUpdateDate',
@@ -105,10 +111,19 @@ class CopDecisionImporter(object):
         while True:
             skip_filter = self.query_skip % (self.per_page, skip)
             url = self._create_url(date_filter, skip_filter)
-            print(url)
-            response = requests.get(url)
-            if response.status_code != 200:
-                logger.error('Invalid return code %d' % response.status_code)
+            logger.debug(url)
+            try:
+                response = requests.get(url)
+                if response.status_code != 200:
+                    logger.error('Invalid return code HTTP %d, retrying.' % response.status_code)
+                    # Retry forever
+                    continue
+            except requests.exceptions.RequestException as e:
+                logger.error('Connection error, retrying')
+                if settings.DEBUG:
+                    logger.exception(e)
+                continue
+
             results = response.json()['d']['results']
             if not results:
                 break
@@ -125,8 +140,9 @@ class CopDecisionImporter(object):
 
     def _index_decisions(self, raw_decisions):
         decisions = self._parse(raw_decisions)
-        new_decisions = filter(bool, [self._get_solr_decision(d) for
-                               d in decisions])
+        new_decisions = list(filter(bool, [self._get_solr_decision(d) for
+                                    d in decisions]))
+        self._index_files(new_decisions)
         self.solr.add_bulk(new_decisions)
 
     def _parse(self, raw_decisions):
@@ -134,9 +150,9 @@ class CopDecisionImporter(object):
 
         for decision in raw_decisions:
             data = {'type': COP_DECISION}
-
+            logger.info('Parsing decision %s' % (decision['id'],))
             for field in BASE_FIELDS:
-                data[FIELD_MAP[field]] = self._clean(decision[field])
+                data[FIELD_MAP[field]] = self._clean(decision.get(field))
 
             if data['decPublishDate']:
                 data['decPublishDate'] = get_date(data['decPublishDate'])
@@ -145,19 +161,22 @@ class CopDecisionImporter(object):
                 if not data['decPublishDate']:
                     data['decPublishDate'] = data['decUpdateDate']
 
-            data['decKeyword'] = self._parse_keywords(decision['keywords'])
-            for multi_field in MULTILANGUAL_FIELDS:
+            data['decKeyword_en'] = self._parse_keywords(decision['keywords'])
+            languages = set()
+            for multi_field in MULTILINGUAL_FIELDS:
                 multi_values = self._parse_multilingual(decision[multi_field])
                 field = FIELD_MAP[multi_field]
+                languages.update(multi_values.keys())
                 for k, v in multi_values.items():
                     field_name = field + '_' + k
                     data[field_name] = v
+            data['decLanguage_en'] = list(languages) or ['en']
 
-            dec_body = self._parse_multilingual(decision['content'])
-            data['decBody'] = list(dec_body.values())
             files = decision['files']['results']
             if files:
-                data['text'], data['decLanguage'] = self._parse_files(files)
+                urls, file_names = self._parse_files(files)
+                data['decFileUrls'] = urls
+                data['decFileNames'] = file_names
 
             if data['decTreatyId']:
                 treaties = self.solr.search_all('trInformeaId',
@@ -173,10 +192,12 @@ class CopDecisionImporter(object):
 
     def _get_solr_decision(self, dec_data):
         new_dec = CopDecision(dec_data, self.solr)
-        exisiting_dec = self.solr.search(COP_DECISION, dec_data['decId'])
-        if exisiting_dec and not new_dec.is_modified(exisiting_dec):
+        existing_dec = self.solr.search(COP_DECISION, dec_data['decId'])
+        if not existing_dec:
+            logger.info('Insert on decision %s' % (dec_data['decId'],))
+        if existing_dec and not new_dec.is_modified(existing_dec):
             return None
-        solr_id = exisiting_dec['id'] if exisiting_dec else None
+        solr_id = existing_dec['id'] if existing_dec else None
         return new_dec.get_solr_format(dec_data['decId'], solr_id)
 
     def _parse_keywords(self, info):
@@ -189,25 +210,62 @@ class CopDecisionImporter(object):
 
     def _parse_multilingual(self, info):
         values = {}
-        for result in info['results']:
-            language = result['language']
-            if language not in LANGUAGES:
-                continue
-            value = regex.sub('', result['value'])
-            values[language] = value.strip()
+        if 'results' in info:
+            for result in info['results']:
+                language = result['language']
+                if language not in LANGUAGES:
+                    continue
+                value = regex.sub('', result['value'])
+                values[language] = value.strip()
         return values
 
     def _parse_files(self, files):
-        languages = set()
-        text = ''
+        urls = []
+        filenames = []
+
         for file_dict in files:
-            lang = file_dict.get('language')
-            languages.add(lang if lang not in (None, 'und') else DEFAULT_LANG)
-            url = file_dict.get('url')
-            if url:
-                file_obj = get_file_from_url(url)
-                text += self.solr.extract(file_obj)
-        return text, list(languages)
+            url = file_dict['url']
+            filename = file_dict['filename']
+            if url and filename:
+                urls.append(url)
+                filenames.append(filename)
+        return urls, filenames
+
+    def _index_files(self, decisions):
+        for decision in decisions:
+            url_list = decision.get('decFileUrls', [])
+            decId = decision['decId']
+            dec_text = ''
+            if not url_list:
+                # Nothing to download
+                doc, _ = DocumentText.objects.get_or_create(
+                    doc_id=decId, doc_type=COP_DECISION, url=None)
+                doc.status = DocumentText.INDEXED
+                doc.save()
+
+            for url in url_list:
+                doc, _ = DocumentText.objects.get_or_create(
+                    doc_id=decId, doc_type=COP_DECISION, url=url)
+                if doc.status == DocumentText.FULL_INDEXED:
+                    dec_text += doc.text
+                    logger.info('Already indexed %s' % url)
+                else:
+                    logger.info('Downloading: %s' % url)
+                    file_obj = get_file_from_url(url)
+                    if file_obj:
+                        logger.debug('Success downloading %s' % url)
+                        doc.text = self.solr.extract(file_obj)
+                        dec_text += doc.text
+                        doc.status = DocumentText.FULL_INDEXED
+                        doc.doc_size = file_obj.getbuffer().nbytes
+                        doc.save()
+                        logger.info('Success extracting %s' % decId)
+                    else:
+                        logger.error('Error on file download %s' % decId)
+                        doc.status = DocumentText.INDEXED
+                        doc.save()
+
+            decision['decText'] = dec_text
 
     def _clean(self, text):
         try:

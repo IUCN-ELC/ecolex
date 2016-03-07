@@ -1,3 +1,5 @@
+import collections
+
 DOC_TYPE = (
     ('treaty', "Treaty"),
     ('decision', "Decision"),
@@ -29,7 +31,8 @@ DECISION_FILTERS = {
 }
 
 LITERATURE_FILTERS = {
-    'litTypeOfText': 'lit_type',
+    'litDisplayType_en': 'lit_type',
+    'litTypeOfText_en': 'lit_type2',
     'litAuthor': 'lit_author',
     'litSerialTitle': 'lit_serial',
     'litPublisher': 'lit_publisher',
@@ -64,10 +67,11 @@ FIELD_TO_FACET_MAPPING = {
     'dec_status': 'decStatus',
     'dec_treaty': 'decTreatyName_en',
 
-    'lit_type': 'litTypeOfText',
     'lit_author': 'litAuthor',
     'lit_serial': 'litSerialTitle',
     'lit_publisher': 'litPublisher',
+    'lit_type': 'litDisplayType_en',
+    'lit_type2': 'litTypeOfText_en',
 
     'cd_territorial_subdivision': 'cdTerritorialSubdivision_en',
     'cd_type': 'cdTypeOfText',
@@ -75,19 +79,19 @@ FIELD_TO_FACET_MAPPING = {
     'leg_type': 'legType_en',
     'leg_territorial': 'legTerritorialSubdivision',
 
-    'subject': 'docSubject',
-    'keyword': 'docKeyword',
-    'country': 'docCountry',
-    'region': 'docRegion',
+    'subject': 'docSubject_en',
+    'keyword': 'docKeyword_en',
+    'country': 'docCountry_en',
+    'region': 'docRegion_en',
     'language': 'docLanguage',
 }
 
 
 SELECT_FACETS = {
-    'docSubject': 'subject',
-    'docKeyword': 'keyword',
-    'docCountry': 'country',
-    'docRegion': 'region',
+    'docSubject_en': 'subject',
+    'docKeyword_en': 'keyword',
+    'docCountry_en': 'country',
+    'docRegion_en': 'region',
     'docLanguage': 'language',
 
     'trDepository_en': 'tr_depository',
@@ -99,10 +103,11 @@ SELECT_FACETS = {
 
     'legTerritorialSubdivision': 'leg_territorial',
 
-    'litTypeOfText': 'lit_type',
     'litAuthor': 'lit_author',
     'litSerialTitle': 'lit_serial',
     'litPublisher': 'lit_publisher',
+    'litDisplayType_en': 'lit_type',
+    'litTypeOfText_en': 'lit_type2',
 }
 
 
@@ -121,35 +126,38 @@ SOLR_FIELDS = [
     'id', 'type', 'source', 'trTitleOfText', 'trTypeOfText_en', 'trStatus',
     'trPlaceOfAdoption', 'trDateOfText', 'trDateOfEntry', 'trKeyword_en',
     'trDateOfModification', 'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
-    'trPaperTitleOfText_sp', 'trPaperTitleOfText_other', 'trTitleOfTextShort',
+    'trPaperTitleOfText_es', 'trPaperTitleOfText_other', 'trTitleOfTextShort',
     'trElisId', 'decTreatyName_en',
     'decTitleOfText', 'decStatus', 'decPublishDate', 'decUpdateDate',
     'decShortTitle_en', 'decShortTitle_fr', 'decShortTitle_es',
     'decShortTitle_ru', 'decShortTitle_ar', 'decShortTitle_zh',
-    'decNumber', 'decKeyword', 'docKeyword', 'cdKeywords',
-    'litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp', 'litLongTitle_other',
-    'litPaperTitleOfText', 'litPaperTitleOfText_fr', 'litPaperTitleOfText_sp', 'litPaperTitleOfText_other',
+    'decNumber', 'docKeyword', 'cdKeywords',
+    'decKeyword_en', 'decKeyword_fr', 'decKeyword_es',
+    'litLongTitle_en', 'litLongTitle_fr', 'litLongTitle_es', 'litLongTitle_other',
+    'litPaperTitleOfText_en', 'litPaperTitleOfText_fr', 'litPaperTitleOfText_es', 'litPaperTitleOfText_other',
     'litSerialTitle', 'litId',
-    'litTitleOfTextShort', 'litTitleOfTextShort_fr', 'litTitleOfTextShort_sp',
+    'litTitleOfTextShort_en', 'litTitleOfTextShort_fr', 'litTitleOfTextShort_es',
     'litTitleOfTextShort_other',
-    'litTitleOfTextTransl', 'litTitleOfTextTransl_fr', 'litTitleOfTextTransl_sp',
-    'litDateOfEntry', 'litDateOfModifcation', 'litAbstract',
-    'litTypeOfText',
-    'litScope', 'litScope_fr', 'litScope_sp',
+    'litTitleOfTextTransl_en', 'litTitleOfTextTransl_fr', 'litTitleOfTextTransl_es',
+    'litDateOfEntry', 'litDateOfModification',
+    'litAbstract_en', 'litAbstract_fr', 'litAbstract_es', 'litAbstract_other',
+    'litTypeOfText_en', 'litTypeOfText_fr', 'litTypeOfText_es',
+    'litScope_en', 'litScope_fr', 'litScope_es',
     'litAuthorArticle', 'litCorpAuthorArticle', 'litAuthor', 'litCorpAuthor',
     'litPublisher', 'litPublPlace', 'litDateOfText',
-    'litKeyword', 'litSeriesFlag',
-    'litCountry', 'litRegion', 'litSubject', 'litLanguageOfDocument',
+    'litKeyword_en', 'litSeriesFlag',
+    'litCountry_en', 'litRegion', 'litSubject_en',
+    'litLanguageOfDocument_en', 'litLanguageOfDocument_fr', 'litLanguageOfDocument_es',
     'cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr',
     'cdTypeOfText', 'cdCountry_en', 'cdDateOfText',
     'legTitle', 'legLongTitle', 'legCountry_en', 'legKeyword_en',
-    'legDate', 'legOriginalDate', 'legConsolidationDate', 'legStatus', 'legTerritorialSubdivision', 'legId',
+    'legYear', 'legOriginalYear', 'legStatus', 'legTerritorialSubdivision', 'legId',
 ]
 
-LANGUAGE_MAP = {
-    'en': 'English',
-    'es': 'Spanish',
-    'fr': 'French',
-    'ru': 'Russian',
-    'other': 'Other',
-}
+LANGUAGE_MAP = collections.OrderedDict([
+    ('en', 'English'),
+    ('fr', 'French'),
+    ('es', 'Spanish'),
+    ('ru', 'Russian'),
+    ('other', 'Other'),
+])

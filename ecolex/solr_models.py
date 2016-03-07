@@ -1,6 +1,9 @@
 from collections import OrderedDict
 from datetime import datetime
 from html import unescape
+from os.path import basename
+from urllib import parse as urlparse
+
 import functools
 
 from django.core.urlresolvers import reverse
@@ -27,7 +30,7 @@ def all(obj, default=None):
 
 class ObjectNormalizer:
     KEYWORD_FIELD = 'docKeyword'
-    SUBJECT_FIELD = 'docSubject'
+    SUBJECT_FIELD = 'docSubject_en'
 
     def __init__(self, solr, hl):
         self.type = solr['type']
@@ -49,7 +52,7 @@ class ObjectNormalizer:
 
     def type_of_document(self):
         type_of_doc = self.solr.get(self.DOCTYPE_FIELD)
-        return all(type_of_doc, "Unknown type of document")
+        return all(type_of_doc, None)
 
     def id(self):
         return self.solr.get('id')
@@ -85,20 +88,40 @@ class ObjectNormalizer:
     def optional_fields(self):
         res = []
         for field, label, type in self.OPTIONAL_INFO_FIELDS:
-            if not self.solr.get(field):
-                continue
             entry = {}
-            entry['type'] = first(type, 'text')
             entry['label'] = label
-            value = self.solr.get(field)
+            if isinstance(field, list):
+                values = []
+                for f in field:
+                    value = self.solr.get(f)
+                    if value:
+                        values.append(value)
+                if not values:
+                    continue
+                entry['value'] = type.join(values)
+            else:
+                if type == 'attr':
+                    value = getattr(self, field)
+                    if value:
+                        if isinstance(value, list):
+                            value = ', '.join(sorted(value))
+                        entry['value'] = value
+                        res.append(entry)
+                    continue
+                elif not self.solr.get(field):
+                    continue
+                entry['type'] = first(type, 'text')
+                value = self.solr.get(field)
 
-            if 'date' in type:
-                try:
-                    value = datetime.strptime(first(value),
-                                              '%Y-%m-%dT%H:%M:%SZ').date()
-                except:
-                    pass
-            entry['value'] = value
+                if 'list' in type and isinstance(value, list):
+                    value = ', '.join(sorted(value))
+                elif 'date' in type:
+                    try:
+                        value = datetime.strptime(first(value),
+                                                '%Y-%m-%dT%H:%M:%SZ').date()
+                    except:
+                        pass
+                entry['value'] = value
             res.append(entry)
         return res
 
@@ -113,6 +136,12 @@ class ObjectNormalizer:
         pass
 
     def get_language(self):
+        pass
+
+    def get_body(self):
+        pass
+
+    def get_files(self):
         pass
 
     @property
@@ -135,7 +164,7 @@ class ObjectNormalizer:
 
 class TreatyParticipant(object):
     FIELD_MAP = {
-        'partyCountry': 'country',
+        'partyCountry_en': 'country',
         'partyPotentialParty': 'potential party',
         'partyEntryIntoForce': 'entry into force',
         'partyDateOfRatification': 'ratification',
@@ -158,10 +187,10 @@ class TreatyParticipant(object):
             'acceptance/approval',
             'succession',
             'consent to be bound',
+            'definite signature',
         ],
         'signature **': [
             'simple signature',
-            'definite signature',
         ],
     }
     EVENTS_ORDER = [
@@ -214,6 +243,9 @@ class TreatyParticipant(object):
 class Treaty(ObjectNormalizer):
     ID_FIELD = 'trElisId'
     SUMMARY_FIELD = 'trAbstract_en'
+    TITLE_FIELD = 'trPaperTitleOfText'  # multilangual
+    # IUCN asked to show all translations of the title
+    # TODO: do not repeat the title of the current language
     TITLE_FIELDS = [
         'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
         'trPaperTitleOfText_es', 'trPaperTitleOfText_other',
@@ -225,35 +257,43 @@ class Treaty(ObjectNormalizer):
     SUBJECT_FIELD = 'trSubject_en'
     OPTIONAL_INFO_FIELDS = [
         # (solr field, display text, type=text)
-        ('trTitleAbbreviation', 'Title Abbreviation', ''),
         ('trPlaceOfAdoption', 'Place of adoption', ''),
-        ('trAvailableIn', 'Available in', ''),
-        ('trRegion', 'Geographical area', ''),
-        ('trBasin_en', 'Basin', ''),
-        ('trDepository_en', 'Depository', ''),
-        ('trUrl', 'Available web site', 'url'),
-        ('trLanguageOfDocument_en', 'Language', ''),
-        ('trLanguageOfTranslation', 'Translation', ''),
-        ('trOfficialPublication', 'Official publication', ''),
-        ('trInternetReference_en', 'Internet Reference', ''),
-        ('trDateOfConsolidation', 'Consolidation Date', 'date')
+        ('trDepository_en', 'Depositary', ''),
+        ('trLanguageOfDocument_en', 'Language', 'list'),
+        # ('trUrl', 'Available web site', 'url'),
+        # ('trOfficialPublication', 'Official publication', ''),
+        # ('trInternetReference_en', 'Internet Reference', ''),
+        ('trEntryIntoForceDate', 'Entry into force', 'date'),
+        # ('trDateOfConsolidation', 'Consolidation Date', 'date')
     ]
 
     FULL_TEXT = 'trLinkToFullText'  # multilangual
 
+    DIRECT_LINKS = ['trEnablesTreaty', 'trSupersedesTreaty', 'trCitesTreaty',
+                    'trAmendsTreaty']
+    BACK_LINKS = ['trEnabledByTreaty', 'trSupersededBy', 'trCitedBy',
+                  'trAmendedBy']
+
     REFERENCE_FIELDS = {
-        'trAmendsTreaty': 'Amends:',
+        'trEnablesTreaty': 'Enables:',
         'trSupersedesTreaty': 'Supersedes:',
         'trCitesTreaty': 'Cites:',
-        'trEnablesTreaty': 'Enables:',
+        'trAmendsTreaty': 'Amends:',
+
         'trEnabledByTreaty': 'Enabled by:',
-        'trAmendedBy': 'Amended by:',
         'trSupersededBy': 'Superseded by:',
         'trCitedBy': 'Cited by:',
+        'trAmendedBy': 'Amended by:',
     }
 
     def jurisdiction(self):
         return first(self.solr.get('trJurisdiction_en'))
+
+    def region(self):
+        return self.solr.get('trRegion_en')
+
+    def basin(self):
+        return self.solr.get('trBasin_en')
 
     def place_of_adoption(self):
         return first(self.solr.get('trPlaceOfAdoption'))
@@ -282,21 +322,12 @@ class Treaty(ObjectNormalizer):
             return {'events': participants[0].available_events,
                     'participants': participants}
 
-    def get_references_ids_set(self):
-        ids = set()
-        for field, label in self.REFERENCE_FIELDS.items():
-            values = [v for v in self.solr.get(field, [])]
-            if values and any(values):
-                ids.update(values)
-
-        return ids
-
     def references(self):
         data = {}
         for field, label in self.REFERENCE_FIELDS.items():
             values = [v for v in self.solr.get(field, [])]
             if values and any(values):
-                data[label] = values
+                data[field] = values
         return data
 
     def get_decisions(self):
@@ -325,6 +356,17 @@ class Treaty(ObjectNormalizer):
     def details_url(self):
         return reverse('treaty_details', kwargs={'id': self.id()})
 
+    def title_translations(self):
+        titles = []
+        for code, language in LANGUAGE_MAP.items():
+            if code == 'en':
+                # TODO fix this when multilinguality feature is on
+                continue
+            title = self.solr.get('{}_{}'.format(self.TITLE_FIELD, code))
+            if title:
+                titles.append({'alttitle': first(title), 'language': language})
+        return titles
+
     @cached_property
     def link_to_full_text(self):
         links = []
@@ -337,14 +379,13 @@ class Treaty(ObjectNormalizer):
 
 class Decision(ObjectNormalizer):
     ID_FIELD = 'decNumber'
-    SUMMARY_FIELD = 'decBody'
+    SUMMARY_FIELD = 'decBody_en'
     TITLE_FIELDS = ['decShortTitle_en', 'decShortTitle_fr', 'decShortTitle_es',
                     'decShortTitle_ru', 'decShortTitle_ar', 'decShortTitle_zh']
     DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
     DOCTYPE_FIELD = 'decType'
-    KEYWORD_FIELD = 'decKeyword'
+    KEYWORD_FIELD = 'decKeyword_en'
     OPTIONAL_INFO_FIELDS = [
-        ('decUpdateDate', 'Date of Update', 'date'),
     ]
 
     def url(self):
@@ -362,61 +403,78 @@ class Decision(ObjectNormalizer):
             return LANGUAGE_MAP.get(lang_code, lang_code)
         return 'Document language'
 
+    def summary(self):
+        # TODO - Multilangual selector
+        return (first(self.solr.get('decSummary_en') or
+                      self.solr.get('decSummary_es') or
+                      self.solr.get('decSummary_fr')) or
+                '')
+
+    def get_body(self):
+        # TODO - Multilangual selector
+        return (first(self.solr.get('decBody_en') or
+                      self.solr.get('decBody_es') or
+                      self.solr.get('decBody_fr'))
+                or '')
+
+    def get_files(self):
+        urls = self.solr.get('decFileUrls', [])
+        filenames = self.solr.get('decFileNames', [])
+        return list(zip(urls, filenames))
+
 
 class Literature(ObjectNormalizer):
     ID_FIELD = 'litId'
-    LANGUAGE_FIELD = 'litLanguageOfDocument'
-    SUMMARY_FIELD = 'litAbstract'
+    LANGUAGE_FIELD = 'litLanguageOfDocument_en'
+    SUMMARY_FIELD = 'litAbstract_en'
     TITLE_FIELDS = [
-        'litPaperTitleOfText', 'litPaperTitleOfText_fr',
-        'litPaperTitleOfText_sp', 'litPaperTitleOfText_other',
-        'litLongTitle', 'litLongTitle_fr', 'litLongTitle_sp', 'litLongTitle_other',
-        'litTitleOfTextShort', 'litTitleOfTextShort_fr',
-        'litTitleOfTextShort_sp', 'litTitleOfTextShort_other',
-        'litTitleOfTextTransl', 'litTitleOfTextTransl_fr', 'litTitleOfTextTransl_sp'
+        'litPaperTitleOfText_en', 'litLongTitle_en', 'litTitleOfTextTransl_en', 'litTitleOfTextShort_en',
+        'litPaperTitleOfText_fr', 'litLongTitle_fr', 'litTitleOfTextTransl_fr', 'litTitleOfTextShort_fr',
+        'litPaperTitleOfText_es', 'litLongTitle_es', 'litTitleOfTextTransl_es', 'litTitleOfTextShort_es',
+        'litPaperTitleOfText_other', 'litLongTitle_other', 'litTitleOfTextShort_other',
     ]
+    TITLE_FIELDS_MULTILINGUAL = ['litPaperTitleOfText', 'litLongTitle', 'litTitleOfTextTransl']
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
     OPTIONAL_INFO_FIELDS = [
-        ('litVolumeNo', 'Volume', ''),
-        ('litPublisher', 'Publisher', ''),
-        ('litPublPlace', 'Place of publication', ''),
-        ('litDateOfText', 'Date of publication', ''),
-        ('litISBN', 'ISBN', ''),
-        ('litCollation', 'Pages', ''),
-        ('litSeriesFlag', 'Series', ''),
-        ('litConfName', 'Conference name', ''), # TODO: This is translatable field
-        ('litConfNo', 'Conference no', ''),
-        ('litConfPlace', 'Conference place', ''),
-        ('litConfDate', 'Conference date', ''),
-        ('litLanguageOfDocument', 'Language of document', ''),
+        (['litPublisher', 'litPublPlace'], 'Publisher', ' | '),
+        ('litISBN', 'ISBN', 'list'),
+        ('litISSN', 'ISSN', ''),
+        ('collation', 'Pages', 'attr'), # should exclude for article
+        ('type_of_document', 'Document type', 'attr'),
+         # TODO: litConfName is a translatable field
+        ('serial_title', 'Journal/Series', 'attr'),
+        (['litConfName_en', 'litConfNo', 'litConfDate', 'litConfPlace'], 'Conference', ' | '),
+        ('litLanguageOfDocument_en', 'Language', 'list'),
     ]
-    DOCTYPE_FIELD = 'litTypeOfText'
-    KEYWORD_FIELD = 'litKeyword'
-    SUBJECT_FIELD = 'litSubject'
+    DOCTYPE_FIELD = 'litTypeOfText_en'
+    KEYWORD_FIELD = 'litKeyword_en'
+    SUBJECT_FIELD = 'litSubject_en'
     REFERENCE_TO_FIELDS = {
         'litTreatyReference': 'treaty',
         'litLiteratureReference': 'literature',
         'litCourtDecisionReference': 'court_decision',
+        'litFaolexReference': 'legislation',
+        'litEULegislationReference': 'legislation',
+        'litNationalLegislationReference': 'legislation',
     }
     REFERENCE_MAPPING = {
         'treaty': 'trElisId',
         'literature': 'litId',
         'court_decision': 'cdOriginalId',
+        'legislation': 'legId',
     }
     REFERENCE_FROM_FIELDS = {
         'litLiteratureReference': 'literature',
     }
 
-    def get_references_ids_dict(self):
+    def get_references_to(self):
+        from ecolex.search import get_documents_by_field
         ids_dict = {}
         for field, doc_type in self.REFERENCE_TO_FIELDS.items():
             values = [v for v in self.solr.get(field, [])]
             if values and any(values):
                 ids_dict[doc_type] = values
-        return ids_dict
 
-    def get_references_from_ids(self, ids_dict):
-        from ecolex.search import get_documents_by_field
         references = {}
         for doc_type, ids in ids_dict.items():
             results = get_documents_by_field(self.REFERENCE_MAPPING[doc_type],
@@ -447,7 +505,7 @@ class Literature(ObjectNormalizer):
         return reverse('literature_details', kwargs={'id': self.id()})
 
     def jurisdiction(self):
-        return first(self.solr.get('litScope'))
+        return first(self.solr.get('litScope_en'))
 
     def corp_authors(self):
         authors = self.solr.get('litCorpAuthorArticle', [])
@@ -465,16 +523,16 @@ class Literature(ObjectNormalizer):
         return self.people_authors() or self.corp_authors()
 
     def countries(self):
-        return self.solr.get('litCountry')
+        return self.solr.get('litCountry_en')
 
     def publisher(self):
         return first(self.solr.get('litPublisher'))
 
     def region(self):
-        return first(self.solr.get('litRegion'))
+        return self.solr.get('litRegion_en')
 
     def basin(self):
-        return first(self.solr.get('litBasin'))
+        return self.solr.get('litBasin_en')
 
     def publication_place(self):
         return first(self.solr.get('litPublPlace'))
@@ -482,19 +540,57 @@ class Literature(ObjectNormalizer):
     def publication_date(self):
         return first(self.solr.get('litDateOfTextSer')) or first(self.solr.get('litDateOfText'))
 
+    def title_translations(self):
+        titles = []
+        for code, language in LANGUAGE_MAP.items():
+            for field in self.TITLE_FIELDS_MULTILINGUAL:
+                title = self.solr.get('{}_{}'.format(field, code))
+                if title:
+                    break
+            if title and title != self.title():
+                titles.append({'alttitle': first(title), 'language': language})
+        return titles
+
     def parent_title(self):
-        parent_title = first(self.solr.get('litLongTitle')) or first(self.solr.get('litSerialTitle'))
+        parent_title = first(self.solr.get('litLongTitle_en')) or first(self.solr.get('litSerialTitle'))
         if not parent_title or parent_title == self.title():
             return None
         return parent_title
 
-    def abstract(self):
-        return first(self.solr.get('litAbstract'))
+    @cached_property
+    def lit_is_article(self):
+        return bool(self.solr.get('litDateOfTextSer', '').strip())
+
+    @cached_property
+    def collation(self):
+        if not self.lit_is_article:
+            return self.solr.get('litCollation')
+        return None
+
+    @cached_property
+    def serial_title(self):
+        if not self.lit_is_article:
+            litSerialTitle = self.solr.get('litSerialTitle')
+            litVolumeNo = self.solr.get('litVolumeNo')
+            if litVolumeNo:
+                return ' | '.join([litSerialTitle, litVolumeNo])
+            else:
+                return litSerialTitle
+        return None
+
+    @cached_property
+    def link_to_full_text(self):
+        links = []
+        for link in self.solr.get('litLinkToFullText', []):
+            filename = basename(urlparse.urlparse(link).path)
+            links.append((link, filename))
+        return links
 
     def get_language(self):
-        return (first(self.solr.get('litLanguageOfDocument') or
+        # TODO: literature can have multiple languages - see ANA-082928
+        return (first(self.solr.get('litLanguageOfDocument_en') or
                       self.solr.get('litLanguageOfDocument_fr') or
-                      self.solr.get('litLanguageOfDocument_sp')) or
+                      self.solr.get('litLanguageOfDocument_es')) or
                 'Document language')
 
 
@@ -556,9 +652,10 @@ class Legislation(ObjectNormalizer):
     ID_FIELD = 'legId'
     SUMMARY_FIELD = 'legAbstract'
     TITLE_FIELDS = ['legTitle', 'legLongTitle']
-    DATE_FIELDS = ['legDate', 'legOriginalDate']
     KEYWORD_FIELD = 'legKeyword_en'
     SUBJECT_FIELD = 'legSubject_en'
+    DOCTYPE_FIELD = 'legType_en'
+    OPTIONAL_INFO_FIELDS = []
 
     LEGISLATION_REFERENCE_FIELDS = {
         'legImplement': 'Implements:',
@@ -598,6 +695,12 @@ class Legislation(ObjectNormalizer):
     def country(self):
         return first(self.solr.get('legCountry_en'))
 
+    def region(self):
+        return self.solr.get('legGeoArea_en')
+
+    def basin(self):
+        return self.solr.get('legBasin_en')
+
     def status(self):
         return first(self.solr.get('legStatus'))
 
@@ -612,18 +715,9 @@ class Legislation(ObjectNormalizer):
         return first(self.solr.get('legAbstract'))
 
     def date(self):
-        text_date = first(self.solr.get('legDate'))
-        if text_date:
-            return django_date_filter(datetime.strptime(
-                   text_date, '%Y-%m-%dT%H:%M:%SZ'), 'b j, Y').title()
-        original_date = first(self.solr.get('legOriginalDate'))
-        consolidation_date = first(self.solr.get('legConsolidationDate'))
-        #import pdb;pdb.set_trace()
-        if original_date:
-            original_date = django_date_filter(datetime.strptime(original_date,
-                            '%Y-%m-%dT%H:%M:%SZ'), 'b j, Y').title()
-            if consolidation_date:
-                consolidation_date = django_date_filter(datetime.strptime(
-                    consolidation_date,'%Y-%m-%dT%H:%M:%SZ'), ' (b j, Y)').title()
-            return '%s %s' % (original_date, consolidation_date or '')
-        return ""
+        legYear = self.solr.get('legYear')
+        legOriginalYear = self.solr.get('legOriginalYear')
+        if legOriginalYear:
+            return '%s (%s)' % (legYear, legOriginalYear)
+        else:
+            return legYear
