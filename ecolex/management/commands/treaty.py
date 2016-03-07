@@ -111,9 +111,11 @@ FIELD_MAP = {
     'scope': 'trScope',
     'searchdate': 'trSearchDate',
     'seatofcourt': 'trSeatOfCourt',
+
     'supersedestreaty': 'trSupersedesTreaty',
     'amendstreaty': 'trAmendsTreaty',
     'citestreaty': 'trCitesTreaty',
+
     'availablein': 'trAvailableIn',
     'languageoftranslation': 'trLanguageOfTranslation',
     'numberofpages': 'trNumberOfPages',
@@ -169,13 +171,6 @@ DATE_FIELDS = [
     'partyDateOfReservation',
     'partyDateOfWithdrawal',
 ]
-
-REFERENCE_MAPPING = {
-    'trEnabledByTreaty': 'trEnablesTreaty',
-    'trAmendsTreaty': 'trAmendedBy',
-    'trSupersedesTreaty': 'trSupersededBy',
-    'trCitesTreaty': 'trCitedBy',
-}
 
 URL_FIELDS = [
     'linktofulltext', 'linktofulltextsp', 'linktofulltextfr',
@@ -436,23 +431,6 @@ class TreatyImporter(object):
                                       for k, v in solr_docs[elis_id].items()
                                       if not isinstance(v, list) or any(v))
 
-    def _add_back_links(self, solr_docs):
-        for elis_id, doc in solr_docs.items():
-            for orig_field, backlink_field in REFERENCE_MAPPING.items():
-                if orig_field in doc:
-                    for ref in doc[orig_field]:
-                        if ref in solr_docs:
-                            solr_docs[ref].setdefault(backlink_field, [])
-                            solr_docs[ref][backlink_field].append(elis_id)
-                        else:
-                            # TODO: what if link is not present in solr_docs?
-                            existing_treaty = self.solr.search(TREATY, ref)
-                            if existing_treaty:
-                                logger.warn('Backlink on %s to %s should be updated' % (ref, elis_id))
-                                # TODO
-                            else:
-                                logger.warn('%s does not exist in Solr in order to update backlink to %s' % (ref, elis_id))
-
     def _create_url(self, year, month, skip):
         query_year = self.query_format % (year, month)
         query_hex = hexlify(str.encode(query_year)).decode()
@@ -462,34 +440,6 @@ class TreatyImporter(object):
         url = '%s%s%s%s%s' % (self.treaties_url, self.query_export, query,
                               self.query_type, page)
         return url
-
-    def add_back_links(self):
-        rows = 50
-        index = 0
-        while True:
-            print(index)
-            treaties = {}
-            docs = self.solr.solr.search('type:treaty', rows=rows, start=index)
-            for doc in docs:
-                elis_id = doc['trElisId']
-                for orig_field, backlink_field in REFERENCE_MAPPING.items():
-                    if orig_field in doc:
-                        for ref in doc[orig_field]:
-                            ref_doc = treaties.get(ref, self.solr.search(TREATY, ref))
-                            if ref_doc:
-                                ref_doc.setdefault(backlink_field, [])
-                                ref_doc[backlink_field].append(elis_id)
-                                logger.info('Added backlink from %s to %s' %
-                                            (ref, elis_id))
-                                treaties[ref] = ref_doc
-                            else:
-                                logger.error('Treaty %s not found' % ref)
-
-            self.solr.add_bulk(list(treaties.values()))
-
-            if len(docs) < rows:
-                break
-            index += rows
 
     def update_status(self):
         rows = 50
@@ -502,6 +452,7 @@ class TreatyImporter(object):
                 if 'trEntryIntoForceDate' not in treaty:
                     treaty['trStatus'] = 'Not in force'
                 else:
+                    # TODO: Update status based on backlink (trSuperededBy does not exist anymore)
                     if 'trSupersededBy' in treaty:
                         treaty['trStatus'] = 'Superseded'
                     else:
