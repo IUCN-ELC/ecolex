@@ -88,11 +88,12 @@ FIELD_TO_FACET_MAPPING = {
 
 
 SELECT_FACETS = {
+    # that is, facets thare are a <select> field...
     'docSubject_en': 'subject',
     'docKeyword_en': 'keyword',
     'docCountry_en': 'country',
     'docRegion_en': 'region',
-    'docLanguage': 'language',
+    'docLanguage_en': 'language',
 
     'trDepository_en': 'tr_depository',
     'trPlaceOfAdoption': 'tr_place_of_adoption',
