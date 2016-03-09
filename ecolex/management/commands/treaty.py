@@ -30,7 +30,6 @@ URL_CHANGE_TO = 'http://www.ecolex.org/server2neu.php/'
 replace_url = lambda text: (URL_CHANGE_TO + text.split(URL_CHANGE_FROM)[-1]) if text.startswith(URL_CHANGE_FROM) else text
 
 # TODO Harvest French and Spanish translations for the following fields:
-#   - trRegion
 #   - partyCountry
 
 FIELD_MAP = {
@@ -223,6 +222,7 @@ class TreatyImporter(object):
 
     def __init__(self, config):
         self.solr_timeout = config.getint('solr_timeout')
+        self.regions_json = config.get('regions_json')
         self.treaties_url = config.get('treaties_url')
         self.import_field = config.get('import_field')
         self.query_format = config.get('query_format')
@@ -236,11 +236,11 @@ class TreatyImporter(object):
         self.end_year = config.getint('end_year', now.year)
         self.start_month = int(config.get('start_month', now.month))
         self.end_month = int(config.get('end_month', now.month))
+        self.regions = self._get_regions()
         self.solr = EcolexSolr(self.solr_timeout)
         logger.info('Started treaty importer')
 
     def harvest(self, batch_size):
-
         year = self.end_year
         while year >= self.start_year:
             raw_treaties = []
@@ -303,6 +303,55 @@ class TreatyImporter(object):
                         if v in DATE_FIELDS:
                             data[v] = [format_date(date) for date in data[v]
                                        if self._valid_date(date)]
+
+                if ('trRegion_en' in data and 'trRegion_es' in data and
+                        'trRegion_fr' in data):
+                    regions_en = data.get('trRegion_en')
+                    regions_es = data.get('trRegion_es')
+                    regions_fr = data.get('trRegion_fr')
+                    regions = zip(regions_en, regions_es, regions_fr)
+                    new_regions = {'en': [], 'es': [], 'fr': []}
+                    for reg_en, reg_es, reg_fr in regions:
+                        values = self.regions.get(reg_en.lower())
+
+                        if values:
+                            new_regions['en'].append(reg_en)
+                            value_es = values['es']
+                            value_fr = values['fr']
+                            if value_es != reg_es:
+                                logger.error('Region name error: %s %s %s' %
+                                             (data['trElisId'], value_es,
+                                              reg_es))
+                            new_regions['es'].append(value_es)
+
+                            if value_fr != reg_fr:
+                                logger.error('Region name error: %s %s %s' %
+                                             (data['trElisId'], value_fr,
+                                              reg_fr))
+                            new_regions['fr'].append(value_fr)
+                        else:
+                            logger.error('New region name: %s %s %s %s' %
+                                         (data['trElisId'], reg_en, reg_es,
+                                          reg_fr))
+                            new_regions['en'].append(reg_en)
+                            new_regions['es'].append(reg_es)
+                            new_regions['fr'].append(reg_fr)
+
+                        data['trRegion_en'] = new_regions['en']
+                        data['trRegion_es'] = new_regions['es']
+                        data['trRegion_fr'] = new_regions['fr']
+
+                elif 'trRegion_en' in data:
+                    regions_en = data.get('trRegion_en')
+                    new_regions = {'en': [], 'es': [], 'fr': []}
+                    for reg_en in regions_en:
+                        values = self.regions.get(reg_en.lower())
+                        new_regions['en'].append(reg_en)
+                        new_regions['es'].append(values['es'])
+                        new_regions['fr'].append(values['fr'])
+                    data['trRegion_en'] = new_regions['en']
+                    data['trRegion_es'] = new_regions['es']
+                    data['trRegion_fr'] = new_regions['fr']
 
                 for party in document.findAll(PARTY):
                     if not getattr(party, COUNTRY):
@@ -441,6 +490,11 @@ class TreatyImporter(object):
         url = '%s%s%s%s%s' % (self.treaties_url, self.query_export, query,
                               self.query_type, page)
         return url
+
+    def _get_regions(self):
+        with open(self.regions_json) as f:
+            regions = json.load(f)
+        return regions
 
     def update_status(self):
         rows = 50
