@@ -1,16 +1,20 @@
 {% load tags %}
 
 <div class="search-result-details">
-    <strong class="sr-type">{{ result.type|capfirst }}</strong> |
-    <span class="sr-doctype">{{ result.type_of_document }}</span> {% if result.place_of_adoption %} |
-    <span class="sr-place"> {{ result.place_of_adoption }}</span> {% endif %} {% if result.date %} |
+  <strong class="sr-type">{{ result.type|capfirst }}</strong> |
+  <span class="sr-doctype">{{ result.type_of_document }}</span>
+  {% if result.place_of_adoption %} |
+    <span class="sr-place"> {{ result.place_of_adoption | join:'; ' }}</span>
+  {% endif %}
+  {% if result.date %} |
     <time class="sr-date" title="Date: {{ result.date }}">
-        {{ result.date|date:"b j, Y"|capfirst }}
+      {{ result.date|date:"b j, Y"|capfirst }}
     </time>
-    {% endif %}
+  {% endif %}
 </div>
 {% if result.keywords %}
-<p class="search-result-details"><strong>Keywords:</strong> {{ result.keywords | join_by:", " | safe }}
-</p>
+  <p class="search-result-details">
+    <strong>Keywords:</strong> {{ result.keywords | join_by:", " | safe }}
+  </p>
 {% endif %}
 <p class="search-result-source">Source: <a target="_blank" href="http://iucn.org">{{ result.source }}</a> (ID: {{ result.document_id }})</p>

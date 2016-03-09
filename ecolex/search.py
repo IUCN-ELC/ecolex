@@ -3,8 +3,12 @@ import re
 from collections import OrderedDict
 from django.conf import settings
 from ecolex import definitions
-from ecolex.solr_models import (
+from ecolex.solr_models_re import (
     Treaty, Decision, Literature, CourtDecision, Legislation
+)
+from ecolex.schema import (
+    CourtDecisionSchema, DecisionSchema, LegislationSchema, LiteratureSchema,
+    TreatySchema,
 )
 from ecolex.forms import SearchForm
 
@@ -114,18 +118,29 @@ class Queryset(object):
 
 
 def parse_result(hit, responses):
-    hl = responses.highlighting.get(hit['id'])
-    if hit['type'] == 'treaty':
-        return Treaty(hit, hl)
-    elif hit['type'] == 'decision':
-        return Decision(hit, hl)
-    elif hit['type'] == 'literature':
-        return Literature(hit, hl)
-    elif hit['type'] == 'court_decision':
-        return CourtDecision(hit, hl)
-    elif hit['type'] == 'legislation':
-        return Legislation(hit, hl)
-    return hit
+    # hl = responses.highlighting.get(hit['id'])
+
+    TYPE_TO_SCHEMA = {
+        'treaty': TreatySchema,
+        'decision': DecisionSchema,
+        'literature': LiteratureSchema,
+        'court_decision': CourtDecisionSchema,
+        'legislation': LegislationSchema,
+    }
+    TYPE_TO_MODEL = {
+        'treaty': Treaty,
+        'decision': Decision,
+        'literature': Literature,
+        'court_decision': CourtDecision,
+        'legislation': Legislation,
+    }
+    doctype = hit['type']
+    schema = TYPE_TO_SCHEMA[doctype]()
+    schema.context = {'language': 'en'}
+    result, errors = schema.load(hit)
+
+    document = TYPE_TO_MODEL[doctype](**result)
+    return document
 
 
 def parse_facets(facets):

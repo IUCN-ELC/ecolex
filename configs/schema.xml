@@ -76,9 +76,9 @@
     <field name="trComment" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trText" type="text" indexed="true" stored="false"/>
 
-    <field name="trTypeOfText_en" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trTypeOfText_es" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trTypeOfText_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trTypeOfText_en" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trTypeOfText_es" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trTypeOfText_fr" type="text" indexed="true" stored="true" multiValued="false"/>
 
     <field name="trFieldOfApplication_en" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trFieldOfApplication_es" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -235,6 +235,7 @@
 
     <field name="decTreatyId" type="string" indexed="true" stored="true"/>
     <field name="decTreaty" type="string" indexed="true" stored="true"/>
+
     <field name="decTreatyName_en" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="decTreatyName_es" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="decTreatyName_fr" type="string" indexed="true" stored="true" multiValued="false"/>

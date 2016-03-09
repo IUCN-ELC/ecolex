@@ -90,10 +90,11 @@ class TreatySchema(BaseSchema):
     court_name = fields.List(fields.String(), load_from='trCourtName')
     date_of_consolidation = fields.List(fields.Date,
                                         load_from='trDateOfConsolidation')
-    date_of_entry = fields.Date(load_from='trDateOfEntry')
+    date_of_entry = fields.Date(load_from='trDateOfEntry', missing=None)
     date_of_last_legal_action = fields.Date(load_from='trDateOfLastLegalAction')
-    date_of_modification = fields.Date(load_from='trDateOfModification')
-    date_of_text = fields.Date(load_from='trDateOfText')
+    date_of_modification = fields.Date(load_from='trDateOfModification',
+                                       missing=None)
+    date_of_text = fields.Date(load_from='trDateOfText', missing=None)
     depository = fields.List(fields.String(), load_from='trDepository',
                              multilingual=True)
     enabled = fields.String(load_from='trEnabled')
@@ -137,7 +138,8 @@ class TreatySchema(BaseSchema):
     order = fields.String(load_from='trOrder')
     paper_title_of_text = fields.List(fields.String(),
                                       load_from='trPaperTitleOfText',
-                                      multilingual=True)
+                                      multilingual=True,
+                                      missing=[])
     paper_title_of_text_other = fields.List(
         fields.String(), load_from='trPaperTitleOfText_other')
     parent_id = fields.Integer(load_from='trParentId')
@@ -162,7 +164,8 @@ class TreatySchema(BaseSchema):
     theme_secondary = fields.List(fields.String(), load_from='trThemeSecondary')
     title_abbreviation = fields.List(fields.String(),
                                      load_from='trTitleAbbreviation')
-    title_of_text = fields.List(fields.String(), load_from='trTitleOfText')
+    title_of_text = fields.List(fields.String(), load_from='trTitleOfText',
+                                missing=[])
     title_of_text_short = fields.List(fields.String(),
                                       load_from='trTitleOfTextShort')
     url = fields.List(fields.String(), load_from='trUrl')
@@ -191,15 +194,16 @@ class DecisionSchema(BaseSchema):
     meeting_id = fields.String(load_from='decMeetingId')
     meeting_title = fields.String(load_from='decMeetingTitle')
     meeting_url = fields.String(load_from='decMeetingUrl')
-    publish_date = fields.Date(load_from='decPublishDate')
-    short_title = fields.String(load_from='decShortTitle', multilingual=True)
+    publish_date = fields.Date(load_from='decPublishDate', missing=None)
+    short_title = fields.String(load_from='decShortTitle', multilingual=True,
+                                missing='')
     status = fields.String(load_from='decStatus')
     summary = fields.String(load_from='decSummary', multilingual=True)
     title_of_text = fields.List(fields.String(), load_from='decTitleOfText')
     treaty = fields.String(load_from='decTreaty')
     treaty_id = fields.String(load_from='decTreatyId')
     treaty_name = fields.String(load_from='decTreatyName', multilingual=True)
-    update_date = fields.Date(load_from='decUpdateDate')
+    update_date = fields.Date(load_from='decUpdateDate', missing=None)
 
 
 class LiteratureSchema(BaseSchema):
@@ -212,8 +216,9 @@ class LiteratureSchema(BaseSchema):
 
     abstract = fields.String(load_from='litAbstract', multilingual=True)
     abstract_other = fields.String(load_from='litAbstract_other')
-    author = fields.List(fields.String(), load_from='litAuthor')
-    author_article = fields.List(fields.String(), load_from='litAuthorArticle')
+    author = fields.List(fields.String(), load_from='litAuthor', missing=[])
+    author_article = fields.List(fields.String(), load_from='litAuthorArticle',
+                                 missing=[])
     available_in = fields.String(load_from='litAvailableIn')
     basin = fields.List(fields.String(), load_from='litBasin',
                         multilingual=True)
@@ -225,18 +230,20 @@ class LiteratureSchema(BaseSchema):
     conf_no = fields.String(load_from='litConfNo')
     conf_place = fields.String(load_from='litConfPlace')
     contributor = fields.List(fields.String(), load_from='litContributor')
-    corp_author = fields.List(fields.String(), load_from='litCorpAuthor')
+    corp_author = fields.List(fields.String(), load_from='litCorpAuthor',
+                              missing=[])
     corp_author_article = fields.List(fields.String(),
-                                      load_from='litCorpAuthorArticle')
-    country = fields.List(fields.String(), load_from='litCountry',
-                          multilingual=True)
+                                      load_from='litCorpAuthorArticle',
+                                      missing=[])
+    countries = fields.List(fields.String(), load_from='litCountry',
+                            multilingual=True)
     court_decision_reference = fields.List(
         fields.String(),
         load_from='litCourtDecisionReference')
     date_of_entry = fields.Date(load_from='litDateOfEntry')
     date_of_modification = fields.Date(load_from='litDateOfModification')
-    date_of_text = fields.String(load_from='litDateOfText')
-    date_of_text_ser = fields.String(load_from='litDateOfTextSer')
+    date_of_text = fields.String(load_from='litDateOfText', missing=None)
+    date_of_text_ser = fields.String(load_from='litDateOfTextSer', missing=None)
     display_details = fields.String(load_from='litDisplayDetails')
     display_region = fields.String(load_from='litDisplayRegion',
                                    multilingual=True)
@@ -268,37 +275,38 @@ class LiteratureSchema(BaseSchema):
     literature_reference = fields.List(fields.String(),
                                        load_from='litLiteratureReference')
     location = fields.String(load_from='litLocation')
-    long_title = fields.String(load_from='litLongTitle', multilingual=True)
+    long_title = fields.String(load_from='litLongTitle', multilingual=True,
+                               missing='')
     long_title_other = fields.String(load_from='litLongTitle_other')
     mode_of_acquisition = fields.String(load_from='litModeOfAcquisition')
     national_legislation_reference = fields.List(
         fields.String(),
         load_from='litNationalLegislationReference')
     paper_title_of_text = fields.String(load_from='litPaperTitleOfText',
-                                        multilingual=True)
+                                        multilingual=True, missing='')
     paper_title_of_text_other = fields.String(
         load_from='litPaperTitleOfText_other')
-    publ_place = fields.String(load_from='litPublPlace')
+    publication_place = fields.String(load_from='litPublPlace')
     publisher = fields.String(load_from='litPublisher')
     region = fields.List(fields.String(), load_from='litRegion',
                          multilingual=True)
     related_monograph = fields.String(load_from='litRelatedMonograph')
     related_web_site = fields.String(load_from='litRelatedWebSite')
-    scope = fields.String(load_from='litScope', multilingual=True)
+    jurisdiction = fields.String(load_from='litScope', multilingual=True)
     search_date = fields.String(load_from='litSearchDate')
     serial_status = fields.String(load_from='litSerialStatus')
-    serial_title = fields.String(load_from='litSerialTitle')
+    serial_title = fields.String(load_from='litSerialTitle', missing='')
     series_flag = fields.String(load_from='litSeriesFlag')
     territorial_subdivision = fields.String(
         load_from='litTerritorialSubdivision',
         multilingual=True)
     title_abbreviation = fields.String(load_from='litTitleAbbreviation')
     title_of_text_short = fields.String(load_from='litTitleOfTextShort',
-                                        multilingual=True)
+                                        multilingual=True, missing='')
     title_of_text_short_other = fields.String(
         load_from='litTitleOfTextShort_other')
     title_of_text_transl = fields.String(load_from='litTitleOfTextTransl',
-                                         multilingual=True)
+                                         multilingual=True, missing='')
     treaty_reference = fields.List(fields.String(),
                                    load_from='litTreatyReference')
     volume_no = fields.String(load_from='litVolumeNo')
@@ -318,7 +326,7 @@ class CourtDecisionSchema(BaseSchema):
     court_name = fields.String(load_from='cdCourtName')
     date_of_entry = fields.Date(load_from='cdDateOfEntry')
     date_of_modification = fields.Date(load_from='cdDateOfModification')
-    date_of_text = fields.Date(load_from='cdDateOfText')
+    date_of_text = fields.Date(load_from='cdDateOfText', missing=None)
     files = fields.List(fields.String(), load_from='cdFiles')
     internet_reference = fields.String(load_from='cdInternetReference',
                                        multilingual=True)
@@ -336,7 +344,8 @@ class CourtDecisionSchema(BaseSchema):
     territorial_subdivision = fields.String(
         load_from='cdTerritorialSubdivision',
         multilingual=True)
-    title_of_text = fields.String(load_from='cdTitleOfText', multilingual=True)
+    title_of_text = fields.String(load_from='cdTitleOfText', multilingual=True,
+                                  missing='')
     treaty_reference = fields.List(fields.String(),
                                    load_from='cdTreatyReference')
 
@@ -347,6 +356,8 @@ class LegislationSchema(BaseSchema):
     SUBJECTS_FIELD = 'legSubject'
 
     type_of_document = fields.String(load_from='legType', multilingual=True)
+    short_title = fields.String(load_from='legTitle', missing='')
+    long_title = fields.String(load_from='legLongTitle', missing='')
 
     abstract = fields.String(load_from='legAbstract')
     amends = fields.List(fields.String(), load_from='legAmends')
@@ -364,7 +375,6 @@ class LegislationSchema(BaseSchema):
     language = fields.List(fields.String(), load_from='legLanguage',
                            multilingual=True)
     link_to_full_text = fields.String(load_from='legLinkToFullText')
-    long_title = fields.String(load_from='legLongTitle')
     modification_date = fields.Date(load_from='legModificationDate')
     original_date = fields.Date(load_from='legOriginalDate')
     related_web_site = fields.String(load_from='legRelatedWebSite')
@@ -375,5 +385,4 @@ class LegislationSchema(BaseSchema):
     subject_code = fields.List(fields.String(), load_from='legSubject_code')
     territorial_subdivision = fields.String(
         load_from='legTerritorialSubdivision')
-    title = fields.String(load_from='legTitle')
     type_code = fields.String(load_from='legTypeCode')
