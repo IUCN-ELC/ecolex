@@ -458,7 +458,6 @@ class TreatyImporter(object):
                                                      [treaty_id], rows=100)
                     if len(results):
                         treaty['trStatus'] = 'Superseded'
-                        print('super')
                     else:
                         treaty['trStatus'] = 'In force'
                 treaties.append(treaty)
