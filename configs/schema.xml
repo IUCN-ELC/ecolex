@@ -323,6 +323,7 @@
     <field name="cdSubject_fr" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="cdSubject_es" type="text" indexed="true" stored="true" multiValued="true"/>
 
+    <field name="cdEcolexUrl" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdEcolexUrl_en" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdEcolexUrl_es" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdEcolexUrl_fr" type="string" indexed="false" stored="false" multiValued="false"/>
@@ -336,6 +337,7 @@
     <field name="cdFiles" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="cdInformeaTags" type="string" indexed="false" stored="false" multiValued="true"/>
 
+    <field name="cdInternetReference" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdInternetReference_en" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdInternetReference_es" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdInternetReference_fr" type="string" indexed="false" stored="true" multiValued="false"/>
@@ -354,6 +356,7 @@
     <field name="cdReferenceNumber" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdReferenceToLegislation" type="string" indexed="true" stored="false" multiValued="false"/>
 
+    <field name="cdRelatedUrl" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdRelatedUrl_en" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdRelatedUrl_es" type="string" indexed="false" stored="false" multiValued="false"/>
     <field name="cdRelatedUrl_fr" type="string" indexed="false" stored="false" multiValued="false"/>

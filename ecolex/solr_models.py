@@ -32,8 +32,8 @@ def all(obj, default=None):
 
 
 class ObjectNormalizer:
-    KEYWORD_FIELD = 'docKeyword' #del
-    SUBJECT_FIELD = 'docSubject' #del
+    KEYWORD_FIELD = 'docKeyword'
+    SUBJECT_FIELD = 'docSubject_en'
 
     def __init__(self, solr, hl):
         self.type = solr['type']

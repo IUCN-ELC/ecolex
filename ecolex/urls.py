@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.conf.urls import include, patterns, url
 from django.conf.urls.i18n import i18n_patterns
+from rest_framework import routers
 
 from .views import (
     SearchResults, PageView, ResultDetailsDecisions, Homepage,

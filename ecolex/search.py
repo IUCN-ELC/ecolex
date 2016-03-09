@@ -383,12 +383,15 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
             sortby=None, raw=None, facets=None, fields=None, hl_details=False,
             facet_only=None):
     solr = pysolr.Solr(settings.SOLR_URI, timeout=60)
+
     if user_query == '*':
         solr_query = '*:*'
         highlight = False
     else:
         solr_query = user_query if raw else escape_query(user_query)
+
     filters = filters or {}
+
     params = {
         'rows': rows,
         'start': start,
@@ -396,7 +399,8 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         'stats.field': 'docDate',
     }
 
-    params['fq'] = get_fq(filters)
+    if filters:
+        params['fq'] = get_fq(filters)
 
     params.update({
         'facet': 'true',
@@ -423,9 +427,6 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
 
     else:
         params['facet.field'] = facets or filters.keys()
-
-    if filters:
-        params['fq'] = get_fq(filters)
 
     if highlight:
         params.update(get_hl(hl_details=hl_details))

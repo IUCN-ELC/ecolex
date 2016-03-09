@@ -4,6 +4,9 @@ SOLR_TIMEOUT = 10
 [court_decision]
 BASEDIR = path where contrib directory is found
 COUNTRIES_JSON = %(basedir)s/config/countries.json
+LANGUAGES_JSON = /ecolex/ecolex/management/languages.json
+REGIONS_JSON = /ecolex/ecolex/management/regions.json
+SUBDIVISIONS_JSON = /ecolex/ecolex/management/subdivisions.json
 TEST_INPUT_FILE = %(basedir)s/testing/court_decision_in.json
 TEST_OUTPUT_FILE = %(basedir)s/testing/court_decision_out.json
 COURT_DECISIONS_URL = http://leo.informea.org/ws/court-decisions
