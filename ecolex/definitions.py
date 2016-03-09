@@ -83,32 +83,38 @@ FIELD_TO_FACET_MAPPING = {
     'keyword': 'docKeyword_en',
     'country': 'docCountry_en',
     'region': 'docRegion_en',
-    'language': 'docLanguage',
+    'language': 'docLanguage_en',
 }
 
 
-SELECT_FACETS = {
+_SELECT_FACETS = [
     # that is, facets thare are a <select> field...
-    'docSubject_en': 'subject',
-    'docKeyword_en': 'keyword',
-    'docCountry_en': 'country',
-    'docRegion_en': 'region',
-    'docLanguage_en': 'language',
+    'subject',
+    'keyword',
+    'country',
+    'region',
+    'language',
 
-    'trDepository_en': 'tr_depository',
-    'trPlaceOfAdoption': 'tr_place_of_adoption',
+    'tr_depository',
+    'tr_place_of_adoption',
 
-    'cdTerritorialSubdivision_en': 'cd_territorial_subdivision',
+    'cd_territorial_subdivision',
 
-    'decTreatyName_en': 'dec_treaty',
+    'dec_treaty',
 
-    'legTerritorialSubdivision': 'leg_territorial',
+    'leg_territorial',
 
-    'litAuthor': 'lit_author',
-    'litSerialTitle': 'lit_serial',
-    'litPublisher': 'lit_publisher',
-    'litDisplayType_en': 'lit_type',
-    'litTypeOfText_en': 'lit_type2',
+    'lit_author',
+    'lit_serial',
+    'lit_publisher',
+    'lit_type',
+    'lit_type2',
+]
+
+# TODO: get rid of this, and use above
+SELECT_FACETS = {
+    FIELD_TO_FACET_MAPPING[item]: item
+    for item in _SELECT_FACETS
 }
 
 
