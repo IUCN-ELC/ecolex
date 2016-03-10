@@ -19,5 +19,5 @@ class SolrQuerysetPagination(PageNumberPagination):
     django_paginator_class = SolrQuerysetPaginator
 
 
-class SolrFacetPagination(LimitOffsetPagination):
-    default_limit = settings.FACETS_PAGE_SIZE
+class SolrFacetPagination(PageNumberPagination):
+    page_size = settings.FACETS_PAGE_SIZE

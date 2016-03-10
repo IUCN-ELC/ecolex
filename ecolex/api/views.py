@@ -1,5 +1,4 @@
 import re
-from collections import namedtuple
 from django.core.cache import cache
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin#, RetrieveModelMixin
@@ -46,8 +45,6 @@ class BaseFacetViewSet(ListModelMixin,
 
         results = self.search(facet_only=facet).get_facets()[field]
 
-        obj_type = namedtuple('Something', ['item', 'count'])
-
         search = self.request.query_params.get('search', '').strip()
         if search:
             def _matches(item):
@@ -60,28 +57,8 @@ class BaseFacetViewSet(ListModelMixin,
                     terms
                 ))
 
-            return [
-                obj_type(*item) for item in results.items()
-                if _matches(item[0])
-            ]
+            items = (item for item in results.items() if _matches(item[0]))
         else:
-            return [
-                obj_type(*item) for item in results.items()
-            ]
+            items = results.items()
 
-
-class CountryFacetViewSet(BaseFacetViewSet):
-    field = 'docCountry_en'
-
-
-# not needed, there's very few of these
-#class SubjectFacetViewSet(BaseFacetViewSet):
-#    field = 'docSubject_en'
-
-
-class KeywordFacetViewSet(BaseFacetViewSet):
-    field = 'docKeyword_en'
-
-
-class AuthorFacetViewSet(BaseFacetViewSet):
-    field = 'litAuthor'
+        return self.serializer_class.convert_results(items)

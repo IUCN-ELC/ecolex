@@ -56,7 +56,7 @@ urlpatterns += i18n_patterns(
 
 urlpatterns += patterns(
     '',
-    url(r'^api/v1.0/', include(api_urls, namespace="api")),
+    url(r'^api/', include(api_urls, namespace="api")),
 )
 
 

@@ -2,12 +2,89 @@
 
 <input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">
 
+<script>
+var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
+</script>
+
 <fieldset class="global-filter">
 
   <h5 data-toggle="collapse"
       data-target="#filter-global">Common filters</h5>
 
   <div id="filter-global" class="collapse in">
+
+
+<style>
+/* avoid flicker before initialiazing */
+select.selection-facet {
+  height: 32px; /* pretty random, eh? */
+  border: none;
+  padding: 0;
+  visibility: hidden;
+}
+
+/* this is a bad fix to https://github.com/select2/select2/issues/1538 */
+.select2-results__option[aria-selected=true] {
+  display: none;
+}
+
+
+/* mimic the old look */
+.select2-container .select2-selection {
+  border: none !important;
+}
+
+.select2-container .select2-selection .select2-selection__rendered {
+  padding: 0;
+}
+
+.select2-selection__choice {
+  clear: left;
+}
+.select2-search--inline {
+  clear: left;
+  float: none;
+}
+
+.select2-container .select2-dropdown {
+  border: 1px solid #eee !important;
+  border-radius: 3px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  background-clip: padding-box;
+  box-sizing: content-box;
+
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.select2-container--default .select2-results__option {
+  margin: 0;
+  padding: 6px 10px;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  color: #141414;
+  background-color: #f5f5f5;
+  box-shadow: inset 2px 0 0 #1c5479;
+}
+
+/* prevent highlighted matches from dancing around */
+.select2-container .select2-results__option strong {
+  font-weight: normal;
+  color: #000;
+  /*text-shadow: 1px 0 0 #000;*/
+  /*text-decoration: underline;*/
+  border-bottom: 1px solid #1c5479;
+}
+
+
+</style>
+
+
+    {% include "bits/selection_facet.html" with title="Subject" id="subjects" placeholder="subjects" viewname="api:subject-list" data=facets.subject %}
+
+
+
     <div class="clearfix filter-header">
       <h6 class="pull-left">Subject</h6>
       <span class="filter-global pull-right" data-formid="#id_subject_op">
@@ -17,9 +94,9 @@
     <div id="subject-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>
-      <input type="text" class="tm-input word-match" placeholder="Add subjects" data-formid="#id_subject"/>
+      <input type="text" class="tm-input word-match" placeholder="Add subjects" data-formid="#id_subject" />
     </div>
-
+{% comment %}###begincomment
     <div class="clearfix filter-header">
       <h6 class="pull-left">Keywords</h6>
       <span class="filter-global pull-right" data-formid="#id_keyword_op">
@@ -29,7 +106,9 @@
     <div id="keyword-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>
-      <input type="text" class="tm-input word-match" placeholder="Add keywords" data-formid="#id_keyword"/>
+      <input type="text" class="tm-input word-match" placeholder="Add keywords" data-formid="#id_keyword"
+             data-api-url="{% url "api:keyword-list" %}"
+      />
     </div>
 
     <div class="clearfix filter-header">
@@ -41,7 +120,9 @@
     <div id="country-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>
-      <input type="text" class="tm-input" placeholder="Add countries" data-formid="#id_country"/>
+      <input type="text" class="tm-input" placeholder="Add countries" data-formid="#id_country"
+             data-api-url="{% url "api:country-list" %}"
+      />
     </div>
 
     <div class="clearfix filter-header">
@@ -53,7 +134,9 @@
     <div id="region-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>
-      <input type="text" class="tm-input" placeholder="Add geographical areas" data-formid="#id_region"/>
+      <input type="text" class="tm-input" placeholder="Add geographical areas" data-formid="#id_region"
+             data-api-url="{% url "api:region-list" %}"
+      />
     </div>
 
     <div class="clearfix filter-header">
@@ -65,7 +148,9 @@
     <div id="language-filter" class="tag-select">
       <select class="tag-options" hidden>
       </select>
-      <input type="text" class="tm-input" placeholder="Add languages" data-formid="#id_language"/>
+      <input type="text" class="tm-input" placeholder="Add languages" data-formid="#id_language"
+             data-api-url="{% url "api:language-list" %}"
+      />
     </div>
 
     {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
@@ -98,8 +183,11 @@
         </div>
       </div>
     {% endif %}
+###endcomment{% endcomment %}
+
   </div>
 </fieldset>
+{% comment %}###begincomment
 
 {% if not form.type.data or form.has_treaty %}
   <fieldset class="special-filter">
@@ -137,7 +225,9 @@
       <div id="tr_depository-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
-        <input type="text" class="tm-input" placeholder="Add depositary" data-formid="#id_tr_depository"/>
+        <input type="text" class="tm-input" placeholder="Add depositary" data-formid="#id_tr_depository"
+               data-api-url="{% url "api:tr-depository-list" %}"
+        />
       </div>
 
       <div class="filter-header">
@@ -146,7 +236,9 @@
       <div id="tr_place_of_adoption-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
-        <input type="text" class="tm-input" placeholder="Add place" data-formid="#id_tr_place_of_adoption"/>
+        <input type="text" class="tm-input" placeholder="Add place" data-formid="#id_tr_place_of_adoption"
+             data-api-url="{% url "api:tr-place-of-adoption-list" %}"
+        />
       </div>
 
     </div>
@@ -165,7 +257,9 @@
       <div id="dec_treaty-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
-        <input type="text" class="tm-input word-match" placeholder="Add treaties" data-formid="#id_dec_treaty"/>
+        <input type="text" class="tm-input word-match" placeholder="Add treaties" data-formid="#id_dec_treaty"
+             data-api-url="{% url "api:treaty-list" %}"
+        />
       </div>
 
       {% if facets.decType %}
@@ -206,7 +300,9 @@
       <div id="cd_territorial_subdivision-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
-        <input type="text" class="tm-input" placeholder="Add territory" data-formid="#id_cd_territorial_subdivision"/>
+        <input type="text" class="tm-input" placeholder="Add territory" data-formid="#id_cd_territorial_subdivision"
+             data-api-url="{% url "api:cd-territory-list" %}"
+        />
       </ul>
     </div>
   </fieldset>
@@ -229,7 +325,9 @@
        </div>
       <div id="leg_territorial-filter" class="tag-select">
         <select class="tag-options" hidden></select>
-        <input type="text" class="tm-input word-match" placeholder="Add sub-national/state level" data-formid="#id_leg_territorial"/>
+        <input type="text" class="tm-input word-match" placeholder="Add sub-national/state level" data-formid="#id_leg_territorial"
+               data-api-url="{% url "api:leg-territory-list" %}"
+        />
       </div>
   </fieldset>
 {% endif %}
@@ -248,7 +346,9 @@
       <div id="lit_author-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
-        <input type="text" class="tm-input word-match" placeholder="Add author" data-formid="#id_lit_author"/>
+        <input type="text" class="tm-input word-match" placeholder="Add author" data-formid="#id_lit_author"
+             data-api-url="{% url "api:lit-author-list" %}"
+        />
       </div>
 
       <div class="filter-header">
@@ -257,7 +357,9 @@
       <div id="lit_serial-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
-        <input type="text" class="tm-input word-match" placeholder="Add journal/series" data-formid="#id_lit_serial"/>
+        <input type="text" class="tm-input word-match" placeholder="Add journal/series" data-formid="#id_lit_serial"
+             data-api-url="{% url "api:lit-series-list" %}"
+        />
       </div>
 
       <div class="filter-header">
@@ -266,7 +368,9 @@
       <div id="lit_publisher-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
-        <input type="text" class="tm-input word-match" placeholder="Add publisher" data-formid="#id_lit_publisher">
+        <input type="text" class="tm-input word-match" placeholder="Add publisher" data-formid="#id_lit_publisher"
+             data-api-url="{% url "api:lit-publisher-list" %}"
+        >
       </div>
 
       <div class="filter-header">
@@ -275,7 +379,9 @@
       <div id="lit_type-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
-        <input type="text" class="tm-input word-match" placeholder="Add document type" data-formid="#id_lit_type"/>
+        <input type="text" class="tm-input word-match" placeholder="Add document type" data-formid="#id_lit_type"
+             data-api-url="{% url "api:lit-type-list" %}"
+        />
       </div>
       <div class="filter-header">
         <h6>Document type (original)</h6>
@@ -283,10 +389,13 @@
       <div id="lit_type2-filter" class="tag-select">
         <select class="tag-options" hidden>
         </select>
-        <input type="text" class="tm-input word-match" placeholder="Add document type" data-formid="#id_lit_type2"/>
+        <input type="text" class="tm-input word-match" placeholder="Add document type" data-formid="#id_lit_type2"
+{#              data-api-url="{% url "api:lit-type2-list" %}" TODO: what is this all about? #}
+        />
       </div>
     </div>
   </fieldset>
 {% endif %}
+###endcomment{% endcomment %}
 
 <input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">

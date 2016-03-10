@@ -1,3 +1,6 @@
+import logging
+from urllib.parse import urlencode
+from warnings import warn
 from django.conf import settings
 from django.http import Http404, HttpResponseForbidden, HttpResponseServerError, JsonResponse
 from django.shortcuts import render
@@ -5,8 +8,7 @@ from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
-from urllib.parse import urlencode
-import logging
+
 from ecolex.legislation import harvest_file
 
 from ecolex.search import (
@@ -16,6 +18,7 @@ from ecolex.search import (
 from ecolex.definitions import (
     FIELD_TO_FACET_MAPPING, SELECT_FACETS
 )
+from ecolex.api.serializers import SearchFacetSerializer
 
 
 logger = logging.getLogger(__name__)
@@ -90,7 +93,23 @@ class SearchResults(SearchView):
         results.set_page(page)
         results.fetch()
         ctx['results'] = results
-        ctx['facets'] = results.get_facets()
+
+        facets = results.get_facets()
+
+        # hack the (select) facets to have "pretty" keys.
+        # TODO: move this logic into Queryset.get_facets().
+        #       multilinguality could live there too!
+        #       (or even better, make the names pretty in schema...)
+        for old_key, new_key in SELECT_FACETS.items():
+            if old_key not in facets:
+                continue
+            ## also convert them to the api serializer format
+            #facets[new_key] = SearchFacetSerializer.convert_results(
+            #    facets.pop(old_key))
+            # (or not, handle it client-side for now)
+            facets[new_key] = facets.pop(old_key)
+
+        ctx['facets'] = facets
         ctx['stats_fields'] = results.get_field_stats()
         ctx['page'] = self.page_details(page, results)
         self.update_form_choices(ctx['facets'])

@@ -1,8 +1,241 @@
 var _form_data = null;
 
 $(document).ready(function() {
+
+/* our custom select2 adapter */
+var CachingAjaxAdapter;
+$.fn.select2.amd.require([
+    'select2/data/array',
+    'select2/data/ajax',
+    'select2/utils',
+    'select2/results',
+    'select2/dropdown/infiniteScroll',
+    'select2/diacritics'
+], function (ArrayAdapter, AjaxAdapter, Utils, Results, InfiniteScroll,
+             DIACRITICS) {
+    CachingAjaxAdapter = function ($element, options) {
+        var data = options.get('data') || [];
+        self._data = data;
+
+        $.extend(options.options, this._getDefaults());
+        CachingAjaxAdapter.__super__.constructor.call(this, $element, options);
+    };
+
+    Utils.Extend(CachingAjaxAdapter, AjaxAdapter);
+
+    var CustomResults = Utils.Decorate(Results, InfiniteScroll);
+
+    CustomResults.prototype.template = function (result, container) {
+        // hack to get the current query term, because select2
+        var term;
+        if (!result.loading) term = this.$element._term;
+
+        var content = CustomResults.prototype._template(result, term, container);
+
+        if (content == null) {
+            container.style.display = 'none';
+        } else if (typeof content === 'string') {
+            container.innerHTML = content;
+        } else {
+            $(container).append(content);
+        }
+    };
+
+    CustomResults.prototype._template = function (result, term) {
+        // .loading means this item is the "loading" message
+        if (result.loading) return result.text;
+
+        var text = CustomResults.prototype._highlight(result.text, term);
+
+        return '' +
+            '<div class="clearfix">' +
+            '<div class="pull-left">' + text + '</div>' +
+            '<div class="pull-right">' + result.count + '</div>' +
+            '</div>';
+    };
+
+    var _stripDiacritics = function (text) {
+        // courtesy of upstream
+        function match(a) {
+            return DIACRITICS[a] || a;
+        }
+        return text.replace(/[^\u0000-\u007E]/g, match);
+    };
+
+    CustomResults.prototype._highlight = function (text, term) {
+        // this actually does both highlighting and escaping
+
+        if (!term) return text;
+
+        // TODO: regex-escape the term
+        // TODO: should match all of the given terms. like the backend.
+        // TODO: unify with below
+        var re = new RegExp('\\b' + _stripDiacritics(term), 'ig');
+        var _esc = Utils.escapeMarkup;
+
+        var match;
+        var lastindex=0;
+        var out = '';
+
+        var _text = _stripDiacritics(text);
+
+        while ((match = re.exec(_text)) !== null) {
+            out += _esc(text.substring(lastindex, match.index));
+            out += '<strong>' + _esc(match[0]) + '</strong>';
+            lastindex = re.lastIndex;
+        }
+        out += _esc(text.substr(lastindex));
+
+        return out;
+    };
+
+    CachingAjaxAdapter.prototype.matches = function (params, data) {
+        // mostly copy/paste from upstream
+
+        var _matcher = CachingAjaxAdapter.prototype.matches;
+
+        // Always return the object if there is nothing to compare
+        if ($.trim(params.term) === '') {
+            return data;
+        }
+
+        // Do a recursive check for options with children
+        if (data.children && data.children.length > 0) {
+            // Clone the data object if there are children
+            // This is required as we modify the object to remove any non-matches
+            var match = $.extend(true, {}, data);
+
+            // Check each child of the option
+            for (var c = data.children.length - 1; c >= 0; c--) {
+                var child = data.children[c];
+
+                var matches = _matcher(params, child);
+
+                // If there wasn't a match, remove the object in the array
+                if (matches == null) {
+                    match.children.splice(c, 1);
+                }
+            }
+
+            // If any children matched, return the new object
+            if (match.children.length > 0) {
+                return match;
+            }
+
+            // If there were no matching children, check just the plain object
+            return _matcher(params, match);
+        }
+
+        var original = _stripDiacritics(data.text);
+        var term = _stripDiacritics(params.term);
+
+        // Check if the text contains the term
+        if (new RegExp('\\b' + term, 'i').test(original)) {
+                return data;
+        }
+
+        // If it doesn't contain the term, don't return anything
+        return null;
+    };
+
+    CachingAjaxAdapter.prototype._getDefaults = function () {
+        // default options
+
+        return {
+            // use infinite scrolling even without the ajax machinery
+            resultsAdapter: CustomResults,
+
+            templateSelection: function (item) {
+                return '' +
+                    Utils.escapeMarkup(item.text) +
+                    ' <sup class="badge">' + item.count + '</sup>';
+            },
+
+            __placeholder: ""
+        };
+    };
+
+/*
+  SingleSelection.prototype.display = function (data, container) {
+    var template = this.options.get('templateSelection');
+    var escapeMarkup = this.options.get('escapeMarkup');
+
+    return escapeMarkup(template(data, container));
+  };
+*/
+
+    CachingAjaxAdapter.prototype._applyDefaults = function (options) {
+        // ajax defaults, that is
+
+        options = CachingAjaxAdapter.__super__._applyDefaults(options);
+
+        var defaults = {
+            delay: 200,
+            dataType: 'json',
+
+            data: function (params) {
+                console.log(params);
+                return $.extend({}, params, {
+                    search: params.term || "",
+                    page: params.page || 1
+                });
+            },
+
+            /*
+            transport: function (params, success, failure) {
+                var $request = $.ajax(params);
+
+                $request.then(success);
+                $request.fail(failure);
+
+                return $request;
+            },
+             */
+
+            __placeholder: ""
+        };
+
+        return $.extend({},
+                        CachingAjaxAdapter.__super__._applyDefaults({}),
+                        defaults, options, true);
+    };
+
+    CachingAjaxAdapter.prototype.query = function (params, callback) {
+        // ensure everything has access to the current query term
+        this.$element._term = params.term;
+
+        var _Adapter;
+        if (!params.term || params.term.length < 2) //TODO
+            _Adapter = ArrayAdapter;
+        else
+            _Adapter = AjaxAdapter;
+
+        var _query = Utils.bind(_Adapter.prototype.query, this);
+        return _query(params, callback);
+    };
+
+    CachingAjaxAdapter.prototype.processResults = function (data, params) {
+        // select2 needs id, text keys
+        data.results = $.map(data.results, function (result) {
+            return {
+                id: result.item,
+                text: result.item,
+                count: result.count
+            };
+        });
+
+        // there's more results when the backend sends a next page url
+        data['pagination'] = {
+            more: Boolean(data['next'])
+        };
+
+        return data;
+    };
+});
+
+
     $('[data-filter]').on('click', function() {
-        target = $(this).data('filter')
+        target = $(this).data('filter');
         target = $(target);
         $(this).toggleClass('active');
 
@@ -84,11 +317,11 @@ $(document).ready(function() {
                 border: '0',
                 top: '169px',
                 color: "#666",
-                backgroundColor: 'transparent',
+                backgroundColor: 'transparent'
             },
             overlayCSS: {
                 backgroundColor: '#ccc',
-                opacity: 0.9,
+                opacity: 0.9
             }
         });
     }
@@ -132,6 +365,7 @@ $(document).ready(function() {
     function get_select_facets() {
         if ($('.tag-options').length > 0) {
             var data = $('.search-form').serialize();
+
             $.ajax({
                 url: '/facets/ajax/?' + data,
                 format: 'JSON',
@@ -141,12 +375,42 @@ $(document).ready(function() {
                     }
                     init_all();
                     unblock_ui();
-                },
+                }
             });
+
         }
     }
 
+    function _process_facet_data(data) {
+        var processed = [];
+        $.each(data, function(item, count) {
+
+            processed.push({
+                id: item,
+                text: item,
+                count: count
+            });
+        });
+        return processed;
+    }
+
+
     function init_all() {
+        $('.selection-facet').each(function(idx) {
+            var self = $(this);
+            var data = _process_facet_data(self.data('data'));
+            // strip away the initial data, for performance reasons
+            self.removeData('data');
+            self.removeAttr('data-data');
+
+            $(this).select2({
+                data: data,
+                dataAdapter: CachingAjaxAdapter
+            });
+        });
+
+
+
         // initialize tooltips
         // bootstrap tooltips are opt-in
         $('[data-toggle="tooltip"]').tooltip();
@@ -196,32 +460,7 @@ $(document).ready(function() {
                 max = $(maxEl).attr('max');
 
             $("#slider-years").slider('setValue', [min, max]);
-        }
-
-        // Multiselect
-        $('select[multiple]').multiselect({
-            buttonClass: '',
-            buttonContainer: '<div class="multiselect-wrapper" />',
-            disableIfEmpty: true,
-            enableFiltering: true,
-            enableCaseInsensitiveFiltering: true,
-            // filterBehavior: 'value',
-            numberDisplayed: 1,
-            nonSelectedText: 'Nothing selected',
-            enableCaseInsensitiveFiltering: true,
-            maxHeight: 240,
-            onDropdownHidden: function(e) {
-                var select = $(this.$select);
-                var formid = select.data('formid');
-
-                $(formid).val(select.val());
-                // submit now for now
-                push_and_submit(true);
-            },
-            onDropdownShown: function(e) {
-                search = $(e.target).find('.multiselect-search').focus();
-            },
-        });
+        };
 
         $('.filter-type button').click(function(e) {
             var current = $('#id_type').val() || [];
@@ -230,7 +469,7 @@ $(document).ready(function() {
             if (current.indexOf(toggle_value) == -1) {
                 current = [toggle_value];
             } else {
-                current = []
+                current = [];
             }
             $('#id_type').val(current);
             // submit now for now
@@ -314,7 +553,7 @@ $(document).ready(function() {
         $('input[type=reset]').click(function(e) {
             e.preventDefault();
             var data = {
-                'q': $('#search').val(),
+                'q': $('#search').val()
             };
             $('.search-form select, .search-form input').each(function() {
                 $(this).val('');
@@ -361,15 +600,17 @@ $(document).ready(function() {
             };
         };
 
+
         var tagValidator = function(strs) {
             return function(tag) {
                 return (strs.indexOf(tag) !== -1);
-            }
+            };
         };
 
         $(".tag-select").each(function() {
             var suggestions = [];
             var preselected = [];
+
             $(".tag-options option", this).each(function(i, opt) {
                 var selected = $(opt).attr("selected");
                 var entry = $(opt).text();
@@ -408,6 +649,8 @@ $(document).ready(function() {
                     prefilled: preselected,
                     validator: tagValidator(suggestions),
                     deleteTagsOnBackspace: false,
+                    CapitalizeFirstLetter: false,
+                    onlyTagList: true
                 }).on("tm:spliced", function(e) {
                     var formid = $(this).data('formid');
                     var value = $(this).tagsManager('tags');
@@ -431,7 +674,7 @@ $(document).ready(function() {
                 labelFor = labelFor.substr(1, labelFor.length); // remove #
                 label = $('<label/>', {
                     'class': 'tm-label',
-                    'for': labelFor,
+                    'for': labelFor
                 });
                 $(this).before(label);
                 $(self).on("focus", function(e) {
@@ -458,6 +701,9 @@ $(document).ready(function() {
                     return preselected.indexOf(item) === -1;
                 });
 
+                // console.log(suggestions);
+
+
                 $(this).typeahead({
                     hint: false,
                     highlight: true,
@@ -476,6 +722,7 @@ $(document).ready(function() {
         });
 
     }
+
     if ($('.search-form').hasClass('homepage')) {
         init_all();
     } else {

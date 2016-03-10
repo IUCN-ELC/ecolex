@@ -1,0 +1,15 @@
+{% load json %}
+<div class="clearfix filter-header">
+  <h6>{{ title }}</h6>
+
+  {# include operation thingie #}
+
+  <select id="facet-{{ id }}" class="selection-facet"
+          multiple="true"
+          data-width="300"
+          data-placeholder="Add {{ placeholder }}…"{% if viewname %}
+          data-ajax--url="{% url viewname %}"{% endif %}
+          data-data="{{ data|json }}"
+  ></select>
+
+</div>
