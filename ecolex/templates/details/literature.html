@@ -26,19 +26,21 @@
         <dt>Corporate author{{ document.corp_authors|length|pluralize:",s" }}</dt>
         <dd>{{ document.corp_authors | join_by:", " | safe }}</dd>
       {% endif %}
-      {% if document.lit_is_article and document.parent_title %}
-        <dt>In</dt>
+      {% if document.parent_title %}
+        <dt>Journal/Series</dt>
         <dd>{{ document.parent_title | safe }}
-            {% if document.solr.litCollation %}
-            | {{ document.solr.litCollation | safe }}
-            {% endif %}
-            {% if document.solr.litVolumeNo %}
-            | {{ document.solr.litVolumeNo | safe }}
+            {% if document.lit_is_article %}
+                {% if document.solr.litVolumeNo %}
+                | {{ document.solr.litVolumeNo | safe }}
+                {% endif %}
+                {% if document.solr.litCollation %}
+                | {{ document.solr.litCollation | safe }}
+                {% endif %}
             {% endif %}
         </dd>
       {% endif %}
       {% if document.solr.litDateOfText %}
-        <dt>Publication Date</dt>
+        <dt>Publication year</dt>
         <dd>{{ document.solr.litDateOfText | safe }}</dd>
       {% endif %}
     </dl>
@@ -46,10 +48,6 @@
 
   <section id="details">
     <dl>
-      {% if not document.lit_is_article and document.parent_title %}
-        <dt>In</dt>
-        <dd>{{ document.parent_title | safe }}</dd>
-      {% endif %}
       {% if document.title_translations %}
         <dt>Title (translation)</dt>
         <dd>
