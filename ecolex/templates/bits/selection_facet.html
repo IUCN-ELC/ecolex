@@ -4,12 +4,14 @@
 
   {# include operation thingie #}
 
-  <select id="facet-{{ id }}" class="selection-facet"
+  <select id="facet-{{ name }}" class="selection-facet"
+          name="{{ name }}"
           multiple="true"
           data-width="300"
           data-placeholder="Add {{ placeholder }}…"{% if viewname %}
           data-ajax--url="{% url viewname %}"{% endif %}
           data-data="{{ data|json }}"
+          data-selected="{{ selected|json }}"
   ></select>
 
 </div>

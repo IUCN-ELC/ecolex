@@ -3,26 +3,23 @@ var _form_data = null;
 $(document).ready(function() {
 
 /* our custom select2 adapter */
-var CachingAjaxAdapter;
-$.fn.select2.amd.require([
+    $.fn.select2.amd.define('ecolex/select2/adapter', [
     'select2/data/array',
     'select2/data/ajax',
     'select2/utils',
+    'select2/selection/search',
     'select2/results',
     'select2/dropdown/infiniteScroll',
+    'select2/selection/multiple',
     'select2/diacritics'
-], function (ArrayAdapter, AjaxAdapter, Utils, Results, InfiniteScroll,
+], function (ArrayAdapter, AjaxAdapter,
+             Utils,
+             Search,
+             Results, InfiniteScroll,
+             MultipleSelection,
              DIACRITICS) {
-    CachingAjaxAdapter = function ($element, options) {
-        var data = options.get('data') || [];
-        self._data = data;
 
-        $.extend(options.options, this._getDefaults());
-        CachingAjaxAdapter.__super__.constructor.call(this, $element, options);
-    };
-
-    Utils.Extend(CachingAjaxAdapter, AjaxAdapter);
-
+    /***/
     var CustomResults = Utils.Decorate(Results, InfiniteScroll);
 
     CustomResults.prototype.template = function (result, container) {
@@ -46,20 +43,11 @@ $.fn.select2.amd.require([
         if (result.loading) return result.text;
 
         var text = CustomResults.prototype._highlight(result.text, term);
-
         return '' +
             '<div class="clearfix">' +
             '<div class="pull-left">' + text + '</div>' +
             '<div class="pull-right">' + result.count + '</div>' +
             '</div>';
-    };
-
-    var _stripDiacritics = function (text) {
-        // courtesy of upstream
-        function match(a) {
-            return DIACRITICS[a] || a;
-        }
-        return text.replace(/[^\u0000-\u007E]/g, match);
     };
 
     CustomResults.prototype._highlight = function (text, term) {
@@ -69,7 +57,7 @@ $.fn.select2.amd.require([
 
         // TODO: regex-escape the term
         // TODO: should match all of the given terms. like the backend.
-        // TODO: unify with below
+        // TODO: unify with matching logic
         var re = new RegExp('\\b' + _stripDiacritics(term), 'ig');
         var _esc = Utils.escapeMarkup;
 
@@ -88,6 +76,45 @@ $.fn.select2.amd.require([
 
         return out;
     };
+
+
+    /* hacks, hacks, hacks */
+
+    // prevent backspace in search field from affecting previous item
+    Search.prototype.searchRemoveChoice = function() {
+        return;
+    };
+
+    // overwrite selection display function directly, it's simpler
+    // (instead of using the templateSelection option)
+    MultipleSelection.prototype.display = function (data, container) {
+        return '' +
+            Utils.escapeMarkup(data.text) +
+            ' <sup class="badge">' + data.count + '</sup>';
+    };
+
+    var _stripDiacritics = function (text) {
+        // courtesy of upstream
+        function match(a) {
+            return DIACRITICS[a] || a;
+        }
+        return text.replace(/[^\u0000-\u007E]/g, match);
+    };
+
+
+    /* the thing */
+    var CachingAjaxAdapter = function ($element, options) {
+        var data = options.get('data') || [];
+        self._data = data;
+
+        $.extend(options.options, {
+            resultsAdapter: CustomResults
+        });
+
+        CachingAjaxAdapter.__super__.constructor.call(this, $element, options);
+    };
+
+    Utils.Extend(CachingAjaxAdapter, AjaxAdapter);
 
     CachingAjaxAdapter.prototype.matches = function (params, data) {
         // mostly copy/paste from upstream
@@ -138,66 +165,36 @@ $.fn.select2.amd.require([
         return null;
     };
 
-    CachingAjaxAdapter.prototype._getDefaults = function () {
-        // default options
-
-        return {
-            // use infinite scrolling even without the ajax machinery
-            resultsAdapter: CustomResults,
-
-            templateSelection: function (item) {
-                return '' +
-                    Utils.escapeMarkup(item.text) +
-                    ' <sup class="badge">' + item.count + '</sup>';
-            },
-
-            __placeholder: ""
-        };
-    };
-
-/*
-  SingleSelection.prototype.display = function (data, container) {
-    var template = this.options.get('templateSelection');
-    var escapeMarkup = this.options.get('escapeMarkup');
-
-    return escapeMarkup(template(data, container));
-  };
-*/
-
     CachingAjaxAdapter.prototype._applyDefaults = function (options) {
         // ajax defaults, that is
-
-        options = CachingAjaxAdapter.__super__._applyDefaults(options);
 
         var defaults = {
             delay: 200,
             dataType: 'json',
 
             data: function (params) {
-                console.log(params);
-                return $.extend({}, params, {
+                // api-specific params
+                var base_params = {
                     search: params.term || "",
                     page: params.page || 1
+                };
+
+                // send allong all form fields
+                var _form_data = $(this[0].form).serializeArray();
+                var form_params = {};
+                $.each(_form_data, function(idx, obj) {
+                    console.log(idx, obj);
+                    form_params[obj.name] = obj.value;
                 });
-            },
 
-            /*
-            transport: function (params, success, failure) {
-                var $request = $.ajax(params);
-
-                $request.then(success);
-                $request.fail(failure);
-
-                return $request;
-            },
-             */
-
-            __placeholder: ""
+                return $.extend(
+                    {}, form_params, base_params);//, params);
+            }
         };
 
         return $.extend({},
                         CachingAjaxAdapter.__super__._applyDefaults({}),
-                        defaults, options, true);
+                        defaults, options);
     };
 
     CachingAjaxAdapter.prototype.query = function (params, callback) {
@@ -231,8 +228,50 @@ $.fn.select2.amd.require([
 
         return data;
     };
+
+    return CachingAjaxAdapter;
 });
 
+/* main */
+
+
+    var CachingAjaxAdapter = $.fn.select2.amd.require('ecolex/select2/adapter');
+
+    function _process_facet_data(data, selected) {
+        var processed = [];
+        $.each(data, function(item, count) {
+
+            processed.push({
+                id: item,
+                text: item,
+                count: count,
+                selected: ($.inArray(item, selected) != -1)
+            });
+        });
+        return processed;
+    }
+
+    // instantiate under amd.require, or things get fussy
+    $('.selection-facet').each(function(idx) {
+        var self = $(this);
+        var data = _process_facet_data(self.data('data'), self.data('selected'));
+        // strip away the initial data, for performance reasons
+        self.removeData('data');
+        self.removeAttr('data-data');
+
+        self.select2({
+            data: data,
+            dataAdapter: CachingAjaxAdapter
+        });
+    });
+
+
+
+
+
+/*
+
+// more commenting
 
     $('[data-filter]').on('click', function() {
         target = $(this).data('filter');
@@ -245,6 +284,13 @@ $.fn.select2.amd.require([
             target.attr('disabled', true);
         }
     });
+
+*/
+
+
+/*
+
+// TODO: repair / re-enable this
 
     // set initial history entry
     if (!history.state && Modernizr.history) {
@@ -265,6 +311,14 @@ $.fn.select2.amd.require([
         $(".search-form").deserialize(history.state.data);
         submit(history.state.data);
     });
+
+
+*/
+
+/*
+
+ // ok ....
+
 
     // initial form value
     var _initial_form_data = $('.search-form').serialize();
@@ -381,34 +435,8 @@ $.fn.select2.amd.require([
         }
     }
 
-    function _process_facet_data(data) {
-        var processed = [];
-        $.each(data, function(item, count) {
-
-            processed.push({
-                id: item,
-                text: item,
-                count: count
-            });
-        });
-        return processed;
-    }
-
 
     function init_all() {
-        $('.selection-facet').each(function(idx) {
-            var self = $(this);
-            var data = _process_facet_data(self.data('data'));
-            // strip away the initial data, for performance reasons
-            self.removeData('data');
-            self.removeAttr('data-data');
-
-            $(this).select2({
-                data: data,
-                dataAdapter: CachingAjaxAdapter
-            });
-        });
-
 
 
         // initialize tooltips
@@ -728,4 +756,7 @@ $.fn.select2.amd.require([
     } else {
         get_select_facets();
     }
+
+*/
+
 });

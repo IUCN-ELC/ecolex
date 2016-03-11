@@ -77,12 +77,11 @@ select.selection-facet {
   border-bottom: 1px solid #1c5479;
 }
 
-
 </style>
 
+{# todo: cleanup form.<facet> in django #}
 
-    {% include "bits/selection_facet.html" with title="Subject" id="subjects" placeholder="subjects" viewname="api:subject-list" data=facets.subject %}
-
+{% include "bits/selection_facet.html" with title="Subject" name="subject" placeholder="subjects" viewname="api:subject-list" data=facets.subject selected=form.subject.value %}
 
 
     <div class="clearfix filter-header">

@@ -57,6 +57,9 @@
   </div>
 </div>
 
+{# form is now page-wide, until someone decides to have fun with the template #}
+<form action="{% url 'results' %}" method="get">
+
 <div id="masthead" class="jumbotron text-center">
   <div class="container">
     <div class="jumbotron-brand">
@@ -75,19 +78,20 @@
       </div>
     </div>
 
-    <!-- search -->
-    <form action="{% url 'results' %}" method="get" class="search-form {{ page_type|default:"results-page" }}">
+    <!--{# old #} search -->
+    <div class="search-form {{ page_type|default:"results-page" }}">
       <label for="search">
         <span class="sr-only">Search</span>
         <span class="icon icon-search"></span>
       </label>
 
-      {{ form.q }}
+      <input id="search" type="search" autofocus {# autosave #} class="form-control" name="q" placeholder="Search in record and full text" value="{{ form.q.value|default:"" }}">
+      {# TODO: form.q.errors maybe? #}
 
       <button class="btn btn-search" type="submit">Search</button>
 
       {% include 'bits/hidden_form.html' %}
-    </form>
+    </div>
   </div>
 </div>
 
@@ -99,6 +103,8 @@
     {% endblock %}
   </div>
 </main>
+
+</form>
 
 <div class="footer">
   <div class="container">
