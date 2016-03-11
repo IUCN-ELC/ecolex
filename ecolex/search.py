@@ -127,20 +127,11 @@ def parse_result(hit, responses):
         'court_decision': CourtDecisionSchema,
         'legislation': LegislationSchema,
     }
-    TYPE_TO_MODEL = {
-        'treaty': Treaty,
-        'decision': Decision,
-        'literature': Literature,
-        'court_decision': CourtDecision,
-        'legislation': Legislation,
-    }
     doctype = hit['type']
     schema = TYPE_TO_SCHEMA[doctype]()
     schema.context = {'language': 'en'}
     result, errors = schema.load(hit)
-
-    document = TYPE_TO_MODEL[doctype](**result)
-    return document
+    return result
 
 
 def parse_facets(facets):

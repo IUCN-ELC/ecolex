@@ -9,8 +9,12 @@ Usage:
 
 """
 
+from marshmallow import post_load
 
 from ecolex.lib.schema import Schema, fields
+from ecolex.solr_models_re import (
+    Treaty, Decision, Legislation, CourtDecision, Literature,
+)
 
 
 class BaseSchema(Schema):
@@ -174,6 +178,10 @@ class TreatySchema(BaseSchema):
     url_treaty_text = fields.List(fields.String(), load_from='trUrlTreatyText')
     url_wikipedia = fields.List(fields.String(), load_from='trUrlWikipedia')
 
+    @post_load
+    def make_model(self, data):
+        return Treaty(**data)
+
 
 class DecisionSchema(BaseSchema):
     ID_FIELD = 'decNumber'
@@ -204,6 +212,10 @@ class DecisionSchema(BaseSchema):
     treaty_id = fields.String(load_from='decTreatyId')
     treaty_name = fields.String(load_from='decTreatyName', multilingual=True)
     update_date = fields.Date(load_from='decUpdateDate', missing=None)
+
+    @post_load
+    def make_model(self, data):
+        return Decision(**data)
 
 
 class LiteratureSchema(BaseSchema):
@@ -311,6 +323,10 @@ class LiteratureSchema(BaseSchema):
                                    load_from='litTreatyReference')
     volume_no = fields.String(load_from='litVolumeNo')
 
+    @post_load
+    def make_model(self, data):
+        return Literature(**data)
+
 
 class CourtDecisionSchema(BaseSchema):
     ID_FIELD = 'cdLeoId'
@@ -349,6 +365,10 @@ class CourtDecisionSchema(BaseSchema):
     treaty_reference = fields.List(fields.String(),
                                    load_from='cdTreatyReference')
 
+    @post_load
+    def make_model(self, data):
+        return CourtDecision(**data)
+
 
 class LegislationSchema(BaseSchema):
     ID_FIELD = 'legId'
@@ -386,3 +406,7 @@ class LegislationSchema(BaseSchema):
     territorial_subdivision = fields.String(
         load_from='legTerritorialSubdivision')
     type_code = fields.String(load_from='legTypeCode')
+
+    @post_load
+    def make_model(self, data):
+        return Legislation(**data)
