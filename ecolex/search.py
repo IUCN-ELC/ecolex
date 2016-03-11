@@ -390,6 +390,10 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     if filters:
         params['fq'] = get_fq(filters)
 
+    # include relevancy data early, because it alters facet results
+    # TODO: why is that?
+    params.update(get_relevancy())
+
     params.update({
         'facet': 'true',
         'facet.limit': facets_page_size,
@@ -402,6 +406,9 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         'facet.mincount': 1,
     })
 
+    # TODO: pass facet logic through the same code as api,
+    # and sort it in proper alphabetical order in python
+    # (also, cache it)
     if only_facet:
         params.update({
             'facet.field': only_facet['field'],
@@ -411,9 +418,6 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
             'facet.prefix': only_facet.get('prefix', '')
         })
 
-
-        print(solr_query, params)
-
         return solr.search(solr_query, **params)
 
     else:
@@ -422,7 +426,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     if highlight:
         params.update(get_hl(hl_details=hl_details))
     params['sort'] = get_sortby(sortby, highlight)
-    params.update(get_relevancy())
+
     # add spellcheck
     params.update({
         'spellcheck': 'true',
@@ -433,11 +437,6 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
 
     if settings.DEBUG:
         params['debug'] = True
-
-
-    print(solr_query, params)
-
-
     return solr.search(solr_query, **params)
 
 
