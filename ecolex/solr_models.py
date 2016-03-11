@@ -144,6 +144,9 @@ class ObjectNormalizer:
     def get_files(self):
         pass
 
+    def consolidation_date(self):
+        pass
+
     @property
     def keywords(self):
         return self.solr.get(self.KEYWORD_FIELD, [])
@@ -735,8 +738,9 @@ class Legislation(ObjectNormalizer):
 
     def date(self):
         legYear = self.solr.get('legYear')
+        return legYear
+
+    def consolidation_date(self):
         legOriginalYear = self.solr.get('legOriginalYear')
         if legOriginalYear:
-            return '%s (%s)' % (legYear, legOriginalYear)
-        else:
-            return legYear
+            return legOriginalYear
