@@ -19,84 +19,95 @@
 
     <dl>
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
-      <dt>Field of application</dt> <dd>{{ document.field_of_application }}</dd>
+      <dt>Field of application</dt> <dd>{{ document.field_of_application|join:"," }}</dd>
       <dt>Date</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
     </dl>
   </header>
 
   <section id="details">
     <dl>
-      {% if document.solr.trTitleAbbreviation %}
+      {% if document.title_abbreviation %}
         <dt>Title abbreviation</dt>
-        <dd><p class="alttitle">{{ document.solr.trTitleAbbreviation | join_by:", " |safe }}</p></dd>
+        <dd><p class="alttitle">{{ document.title_abbreviation|join:", " |safe }}</p></dd>
       {% endif %}
 
+      {# TODO #}
       {% if document.title_translations %}
         <dt>Title (translation)</dt>
         <dd>
           {% for title in document.title_translations %}
-            <p class="alttitle">{{ title.alttitle | safe}}<sup>{{ title.language }}</sup></p>
+            <p class="alttitle">{{ title.alttitle|safe }}<sup>{{ title.language }}</sup></p>
           {% endfor %}
         </dd>
       {% endif %}
 
-      {% for entry in document.optional_fields %}
-        <dt> {{ entry.label }} </dt>
-        {% if "url" in entry.type %}
-          {% for url in entry.value %}
-            <dd><a target="_blank" {% if "tracked" in entry.type %} class="decision-link" {% endif %} href="{{ url }}">{{ url }}</a></dd>
-          {% endfor %}
-        {% else %}
-          <dd>{{ entry.value | join_by:", " }}</dd>
-        {% endif %}
-      {% endfor %}
+      {% if document.place_of_adoption %}
+        <dt>Place of adoption</dt>
+        <dd>{{ document.place_of_adoption|join:", " }}</dd>
+      {% endif %}
+
+      {% if document.depository %}
+        <dt>Depository</dt>
+        <dd>{{ document.depository|join:", " }}</dd>
+      {% endif %}
+
+      {% if document.language_of_document %}
+        <dt>Language</dt>
+        <dd>{{ document.language_of_document|join:", " }}</dd>
+      {% endif %}
+
+      {% if document.entry_into_force_date %}
+        <dt>Entry into force</dt>
+        <dd>{{ document.entry_into_force_date|date:"b j, Y"|capfirst  }}</dd>
+      {% endif %}
 
       {% if document.subjects %}
         <dt>Subject{{ document.subjects|length|pluralize:",s" }}</dt>
-        <dd>{{ document.subjects | join_by:", " | safe }}</dd>
+        <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.keywords %}
         <dt>Keywords</dt>
         <dd>
         {% for keyword in document.keywords %}
-          <span class="tag">{{ keyword | capfirst | safe }}</span>
+          <span class="tag">{{ keyword|capfirst|safe }}</span>
         {% endfor %}
         </dd>
       {% endif %}
 
       {% if document.region %}
         <dt>Geographical area</dt>
-        <dd>{{ document.region | join_by:", " | safe }}</dd>
+        <dd>{{ document.region|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.basin %}
         <dt>Basin</dt>
-        <dd>{{ document.basin | join_by:", " | safe }}</dd>
+        <dd>{{ document.basin|join:", "|safe }}</dd>
       {% endif %}
     </dl>
   </section>
 
   <section id="text">
     <dl>
-      {% if document.solr.trAbstract_en %}
+      {% if document.abstract %}
         <dt>Abstract</dt>
         <dd>
-          {% for abs in document.solr.trAbstract_en %}
-            <p class="abstract">{{ abs|safe }}</p>
+          {% for abstract in document.abstract %}
+            <p class="abstract">{{ abstract|safe }}</p>
           {% endfor %}
         </dd>
       {% endif %}
 
-      {% if document.solr.trComment %}
+      {% if document.comment %}
         <dt>Comment</dt>
-        {% for comment in document.solr.trComment %}
+        {% for comment in document.comment %}
         <dd>
           <p class="comment">{{ comment|safe }}</p>
         </dd>
         {% endfor %}
       {% endif %}
 
+      {# TODO #}
       {% if document.link_to_full_text %}
         <dt>Full text</dt>
         <dd>
@@ -105,13 +116,19 @@
           {% endfor %}
         </dd>
       {% endif %}
-      {% if document.solr.trAvailableIn %}
+
+      {% if document.available_in %}
         <dt>Available in</dt>
-        <dd>{{ document.solr.trAvailableIn | join_by:", " | safe }}</dd>
+        <dd>{{ document.available_in|join:", "|safe }}</dd>
       {% endif %}
-      {% if document.solr.trUrl %}
+
+      {% if document.url %}
         <dt>Available web site</dt>
-        <dd><a target="_blank" href="{{ document.solr.trUrl }}">{{ document.solr.trUrl }}</a></dd>
+        <dd>
+          {% for doc_url in document.url %}
+            <a target="_blank" href="{{ document.url }}">{{ document.url }}</a>
+          {% endfor %}
+        </dd>
       {% endif %}
 
       <dt>Source</dt>

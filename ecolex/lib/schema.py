@@ -88,7 +88,7 @@ class Schema(_Schema):
             else:
                 warnings.warn(
                     "Schema %s has multilingual fields, but no language "
-                    "was made available in context."  % type(self).__name__,
+                    "was made available in context." % type(self).__name__,
                     stacklevel=2)
 
             lookups.extend(['{item}',

@@ -79,7 +79,7 @@ class TreatySchema(BaseSchema):
     author_a = fields.List(fields.String(), load_from='trAuthorA')
     author_m = fields.List(fields.String(), load_from='trAuthorM')
     author_whole = fields.List(fields.String(), load_from='trAuthorWhole')
-    available_in = fields.List(fields.String(), load_from='trAvailableIn')
+    available_in = fields.List(fields.String(), load_from='trAvailableIn')  # False list
     basin = fields.List(fields.String(), load_from='trBasin', multilingual=True)
     cited_by = fields.List(fields.String(), load_from='trCitedBy')
     cites_treaty = fields.List(fields.String(), load_from='trCitesTreaty')
@@ -88,7 +88,7 @@ class TreatySchema(BaseSchema):
     conf_place = fields.List(fields.String(), load_from='trConfPlace')
     contributor = fields.List(fields.String(), load_from='trContributor')
     court_name = fields.List(fields.String(), load_from='trCourtName')
-    date_of_consolidation = fields.List(fields.Date,
+    date_of_consolidation = fields.List(fields.Date(),
                                         load_from='trDateOfConsolidation')
     date_of_entry = fields.Date(load_from='trDateOfEntry', missing=None)
     date_of_last_legal_action = fields.Date(load_from='trDateOfLastLegalAction')
@@ -144,7 +144,7 @@ class TreatySchema(BaseSchema):
         fields.String(), load_from='trPaperTitleOfText_other')
     parent_id = fields.Integer(load_from='trParentId')
     place_of_adoption = fields.List(fields.String(),
-                                    load_from='trPlaceOfAdoption')
+                                    load_from='trPlaceOfAdoption')  # False list
     primary = fields.List(fields.String(), load_from='trPrimary')
     reference_to_literature = fields.List(fields.String(),
                                           load_from='trReferenceToLiterature')
@@ -167,7 +167,7 @@ class TreatySchema(BaseSchema):
     title_of_text = fields.List(fields.String(), load_from='trTitleOfText',
                                 missing=[])
     title_of_text_short = fields.List(fields.String(),
-                                      load_from='trTitleOfTextShort')
+                                      load_from='trTitleOfTextShort')  # False list
     url = fields.List(fields.String(), load_from='trUrl')
     url_elearning = fields.List(fields.String(), load_from='trUrlElearning')
     url_parties = fields.List(fields.String(), load_from='trUrlParties')

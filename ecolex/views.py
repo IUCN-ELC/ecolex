@@ -10,7 +10,7 @@ import logging
 from ecolex.legislation import harvest_file
 
 from ecolex.search import (
-    search, get_document, get_documents_by_field, get_treaty_by_informea_id,
+    get_document, get_documents_by_field, get_treaty_by_informea_id,
     SearchMixin,
 )
 from ecolex.definitions import (
@@ -225,15 +225,15 @@ class TreatyDetails(DetailsView):
 
     def get_context_data(self, **kwargs):
         context = super(TreatyDetails, self).get_context_data(**kwargs)
-        self.doc = context['document']
-        references = self.doc.get_treaty_references()
-        references.update(self.doc.get_treaty_back_references())
-        context['direct_links'], context['back_links'] = (
-            self._sort_references(references))
+        # self.doc = context['document']
+        # references = self.doc.get_treaty_references()
+        # references.update(self.doc.get_treaty_back_references())
+        # context['direct_links'], context['back_links'] = (
+        #     self._sort_references(references))
 
-        context['decisions'] = self.doc.get_decisions()
-        context['literatures'] = self.doc.get_literatures()
-        context['court_decisions'] = self.doc.get_court_decisions()
+        # context['decisions'] = self.doc.get_decisions()
+        # context['literatures'] = self.doc.get_literatures()
+        # context['court_decisions'] = self.doc.get_court_decisions()
 
         return context
 
