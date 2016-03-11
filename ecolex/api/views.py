@@ -43,7 +43,7 @@ class BaseFacetViewSet(ListModelMixin,
             'limit': -1,
         }
 
-        results = self.search(facet_only=facet).get_facets()[field]
+        results = self.search(only_facet=facet).get_facets()[field]
 
         search = self.request.query_params.get('search', '').strip()
         if search:

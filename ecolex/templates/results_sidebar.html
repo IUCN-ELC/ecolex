@@ -81,13 +81,17 @@ select.selection-facet {
 
 {# todo: cleanup form.<facet> in django #}
 
-{% include "bits/selection_facet.html" with title="Subject" name="subject" placeholder="subjects" viewname="api:subject-list" data=facets.subject selected=form.subject.value %}
+{% include "bits/selection_facet.html" with title="Subject" placeholder="Add subjects…" viewname="api:subject-list" data=facets.subject field=form.subject op_field=form.subject_op %}
 
 
+{% include "bits/selection_facet.html" with title="Author" placeholder="Add author…" viewname="api:lit-author-list" data=facets.lit_author field=form.lit_author op_field=form.lit_author_op %}
+
+
+{% comment %}###begincomment
     <div class="clearfix filter-header">
       <h6 class="pull-left">Subject</h6>
       <span class="filter-global pull-right" data-formid="#id_subject_op">
-        {% include 'bits/operation_facet.html' with form_field=form.subject_op form_target='#id_subject' %}
+        {% include 'bits/facet_operation.html' with form_field=form.subject_op form_target='#id_subject' %}
       </span>
     </div>
     <div id="subject-filter" class="tag-select">
@@ -95,11 +99,11 @@ select.selection-facet {
       </select>
       <input type="text" class="tm-input word-match" placeholder="Add subjects" data-formid="#id_subject" />
     </div>
-{% comment %}###begincomment
+
     <div class="clearfix filter-header">
       <h6 class="pull-left">Keywords</h6>
       <span class="filter-global pull-right" data-formid="#id_keyword_op">
-        {% include 'bits/operation_facet.html' with form_field=form.keyword_op form_target='#id_keyword' %}
+        {% include 'bits/facet_operation.html' with form_field=form.keyword_op form_target='#id_keyword' %}
       </span>
     </div>
     <div id="keyword-filter" class="tag-select">
@@ -113,7 +117,7 @@ select.selection-facet {
     <div class="clearfix filter-header">
       <h6 class="pull-left">Country</h6>
       <span class="filter-global pull-right" data-formid="#id_country_op">
-        {% include 'bits/operation_facet.html' with form_field=form.country_op form_target='#id_country' %}
+        {% include 'bits/facet_operation.html' with form_field=form.country_op form_target='#id_country' %}
       </span>
     </div>
     <div id="country-filter" class="tag-select">
@@ -127,7 +131,7 @@ select.selection-facet {
     <div class="clearfix filter-header">
       <h6 class="pull-left">Geographical Area</h6>
       <span class="filter-global pull-right" data-formid="#id_region_op">
-        {% include 'bits/operation_facet.html' with form_field=form.region_op form_target='#id_region' %}
+        {% include 'bits/facet_operation.html' with form_field=form.region_op form_target='#id_region' %}
       </span>
     </div>
     <div id="region-filter" class="tag-select">
@@ -141,7 +145,7 @@ select.selection-facet {
     <div class="clearfix filter-header">
       <h6 class="pull-left">Language</h6>
       <span class="filter-global pull-right" data-formid="#id_language_op">
-        {% include 'bits/operation_facet.html' with form_field=form.language_op form_target='#id_language' %}
+        {% include 'bits/facet_operation.html' with form_field=form.language_op form_target='#id_language' %}
       </span>
     </div>
     <div id="language-filter" class="tag-select">
@@ -218,7 +222,7 @@ select.selection-facet {
       <div class="filter-header">
         <h6>Depositary</h6>
         <span class="filter-treaty pull-right" data-formid="#id_tr_depository_op">
-          {% include 'bits/operation_facet.html' with form_field=form.tr_depository_op form_target='#id_tr_depository' %}
+          {% include 'bits/facet_operation.html' with form_field=form.tr_depository_op form_target='#id_tr_depository' %}
         </span>
       </div>
       <div id="tr_depository-filter" class="tag-select">
@@ -339,7 +343,7 @@ select.selection-facet {
       <div class="clearfix filter-header">
         <h6 class="pull-left">Author</h6>
         <span class="filter-literature pull-right" data-formid="#id_lit_author_op">
-          {% include 'bits/operation_facet.html' with form_field=form.lit_author_op form_target='#id_lit_author' %}
+          {% include 'bits/facet_operation.html' with form_field=form.lit_author_op form_target='#id_lit_author' %}
         </span>
       </div>
       <div id="lit_author-filter" class="tag-select">

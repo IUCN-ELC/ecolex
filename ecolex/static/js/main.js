@@ -1,9 +1,17 @@
-var _form_data = null;
-
 $(document).ready(function() {
 
+var _DIACRITICS = $.fn.select2.amd.require('select2/diacritics');
+function _stripDiacritics (text) {
+    // courtesy of upstream
+    function match(a) {
+        return _DIACRITICS[a] || a;
+    }
+    return text.replace(/[^\u0000-\u007E]/g, match);
+};
+
+
 /* our custom select2 adapter */
-    $.fn.select2.amd.define('ecolex/select2/adapter', [
+$.fn.select2.amd.define('ecolex/select2/adapter', [
     'select2/data/array',
     'select2/data/ajax',
     'select2/utils',
@@ -11,13 +19,12 @@ $(document).ready(function() {
     'select2/results',
     'select2/dropdown/infiniteScroll',
     'select2/selection/multiple',
-    'select2/diacritics'
-], function (ArrayAdapter, AjaxAdapter,
-             Utils,
-             Search,
-             Results, InfiniteScroll,
-             MultipleSelection,
-             DIACRITICS) {
+], function (
+    ArrayAdapter, AjaxAdapter,
+    Utils,
+    Search,
+    Results, InfiniteScroll,
+    MultipleSelection) {
 
     /***/
     var CustomResults = Utils.Decorate(Results, InfiniteScroll);
@@ -45,8 +52,8 @@ $(document).ready(function() {
         var text = CustomResults.prototype._highlight(result.text, term);
         return '' +
             '<div class="clearfix">' +
-            '<div class="pull-left">' + text + '</div>' +
-            '<div class="pull-right">' + result.count + '</div>' +
+              '<div class="pull-left">' + text + '</div>' +
+              '<div class="pull-right">' + result.count + '</div>' +
             '</div>';
     };
 
@@ -93,19 +100,10 @@ $(document).ready(function() {
             ' <sup class="badge">' + data.count + '</sup>';
     };
 
-    var _stripDiacritics = function (text) {
-        // courtesy of upstream
-        function match(a) {
-            return DIACRITICS[a] || a;
-        }
-        return text.replace(/[^\u0000-\u007E]/g, match);
-    };
-
-
     /* the thing */
     var CachingAjaxAdapter = function ($element, options) {
         var data = options.get('data') || [];
-        self._data = data;
+        this._data = data;
 
         $.extend(options.options, {
             resultsAdapter: CustomResults
@@ -180,15 +178,30 @@ $(document).ready(function() {
                 };
 
                 // send allong all form fields
-                var _form_data = $(this[0].form).serializeArray();
+                //var _form_data = $(this[0].form).serializeArray();
+                var _form_data = this[0].form._form_data;
+                console.log(_form_data);
                 var form_params = {};
                 $.each(_form_data, function(idx, obj) {
-                    console.log(idx, obj);
                     form_params[obj.name] = obj.value;
                 });
 
+                console.log('[form params]', form_params);
+
                 return $.extend(
                     {}, form_params, base_params);//, params);
+            },
+
+            // just for debugging
+            transport: function (params, success, failure) {
+                console.log('ajax', params);
+
+                var $request = $.ajax(params);
+
+                $request.then(success);
+                $request.fail(failure);
+
+                return $request;
             }
         };
 
@@ -197,18 +210,78 @@ $(document).ready(function() {
                         defaults, options);
     };
 
+    CachingAjaxAdapter.prototype.hasMoreData = function (params) {
+        // we have more data when:
+        // 1.
+        //   - the data was template-provided and
+        //   - there is an ajax url and
+        //   - the template said there's more data.
+        // or 2.
+        //   - the data was ajax-provided and
+        //   - the backend said so.
+
+        if (!this.ajaxOptions.url ||
+            !this.options.get('more') ||
+            $.isEmptyObject(params)
+           )
+            return false;
+
+        if (params.term ||
+            (params.page && params.page > 1))
+            return true;
+
+        return false;
+    };
+
+
+
+
+
+    CachingAjaxAdapter.prototype._array_query = function (params, callback) {
+        // copy / paste from SelectAdapter.prototype.query
+        var data = [];
+        var self = this;
+
+        var $options = this.$element.children();
+
+        $options.each(function () {
+            var $option = $(this);
+
+            if (!$option.is('option') && !$option.is('optgroup')) {
+                return;
+            }
+
+            var option = self.item($option);
+
+            var matches = self.matches(params, option);
+
+            if (matches !== null) {
+                data.push(matches);
+            }
+        });
+
+        callback({
+            results: data,
+            // end copy paste. this is the magic bit.
+            pagination: {
+                more: this.options.get('more')
+            }
+        });
+    };
+
+    CachingAjaxAdapter.prototype._ajax_query = AjaxAdapter.prototype.query;
+
     CachingAjaxAdapter.prototype.query = function (params, callback) {
         // ensure everything has access to the current query term
         this.$element._term = params.term;
 
-        var _Adapter;
-        if (!params.term || params.term.length < 2) //TODO
-            _Adapter = ArrayAdapter;
+        if (this.hasMoreData(params))
+            return this._ajax_query(params, callback);
         else
-            _Adapter = AjaxAdapter;
+            return this._array_query(params, callback);
 
-        var _query = Utils.bind(_Adapter.prototype.query, this);
-        return _query(params, callback);
+        //var _query = Utils.bind(_Adapter.prototype.query, this);
+        //return _query(params, callback);
     };
 
     CachingAjaxAdapter.prototype.processResults = function (data, params) {
@@ -232,10 +305,11 @@ $(document).ready(function() {
     return CachingAjaxAdapter;
 });
 
+
 /* main */
 
 
-    var CachingAjaxAdapter = $.fn.select2.amd.require('ecolex/select2/adapter');
+    // set up select2
 
     function _process_facet_data(data, selected) {
         var processed = [];
@@ -251,7 +325,8 @@ $(document).ready(function() {
         return processed;
     }
 
-    // instantiate under amd.require, or things get fussy
+    var _DataAdapter = $.fn.select2.amd.require('ecolex/select2/adapter');
+
     $('.selection-facet').each(function(idx) {
         var self = $(this);
         var data = _process_facet_data(self.data('data'), self.data('selected'));
@@ -261,9 +336,17 @@ $(document).ready(function() {
 
         self.select2({
             data: data,
-            dataAdapter: CachingAjaxAdapter
+            dataAdapter: _DataAdapter
         });
     });
+
+
+    // cache de current search data on the form
+    var _form = $('#search-form');
+    _form[0]._form_data = _form.serializeArray();
+
+
+
 
 
 

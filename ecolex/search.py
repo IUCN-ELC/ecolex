@@ -366,7 +366,10 @@ def search(user_query, filters=None, sortby=None, raw=None,
 
 def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
             sortby=None, raw=None, facets=None, fields=None, hl_details=False,
-            facet_only=None):
+            facets_page_size=None, only_facet=None):
+    if facets_page_size is None:
+        facets_page_size = settings.FACETS_PAGE_SIZE
+
     solr = pysolr.Solr(settings.SOLR_URI, timeout=60)
 
     if user_query == '*':
@@ -389,7 +392,7 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
 
     params.update({
         'facet': 'true',
-        'facet.limit': settings.FACETS_PAGE_SIZE,
+        'facet.limit': facets_page_size,
         # it is always desirable to sort by index
         'facet.sort': 'index',
         # TODO: should this really be enum for authors?
@@ -399,14 +402,17 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         'facet.mincount': 1,
     })
 
-    if facet_only:
+    if only_facet:
         params.update({
-            'facet.field': facet_only['field'],
+            'facet.field': only_facet['field'],
             'rows': 0,
-            'facet.limit': facet_only.get('limit', settings.FACETS_PAGE_SIZE),
-            'facet.offset': facet_only.get('offset', 0),
-            'facet.prefix': facet_only.get('prefix', '')
+            'facet.limit': only_facet.get('limit', facets_page_size),
+            'facet.offset': only_facet.get('offset', 0),
+            'facet.prefix': only_facet.get('prefix', '')
         })
+
+
+        print(solr_query, params)
 
         return solr.search(solr_query, **params)
 
@@ -427,6 +433,11 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
 
     if settings.DEBUG:
         params['debug'] = True
+
+
+    print(solr_query, params)
+
+
     return solr.search(solr_query, **params)
 
 

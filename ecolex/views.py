@@ -88,7 +88,10 @@ class SearchResults(SearchView):
     def get_context_data(self, **kwargs):
         ctx = super(SearchResults, self).get_context_data(**kwargs)
         page = int(self.request.GET.get('page', 1))
-        results = self.search()
+
+        # fetch one extra facet result, to let the frontend know
+        # if it should use ajax for the next pages
+        results = self.search(facets_page_size=settings.FACETS_PAGE_SIZE + 1)
 
         results.set_page(page)
         results.fetch()
@@ -104,10 +107,23 @@ class SearchResults(SearchView):
             if old_key not in facets:
                 continue
             ## also convert them to the api serializer format
+            # (or not, handle it client-side for now)
             #facets[new_key] = SearchFacetSerializer.convert_results(
             #    facets.pop(old_key))
-            # (or not, handle it client-side for now)
-            facets[new_key] = facets.pop(old_key)
+
+            # also hack them into a {results: [], more: bool} dict,
+            # accounting for that odd extra-result
+            f_data = facets.pop(old_key)
+            more = False
+
+            if len(f_data) > settings.FACETS_PAGE_SIZE:
+                more = True
+                f_data.popitem()
+
+            facets[new_key] = {
+                'results': f_data,
+                'more': more,
+            }
 
         ctx['facets'] = facets
         ctx['stats_fields'] = results.get_field_stats()

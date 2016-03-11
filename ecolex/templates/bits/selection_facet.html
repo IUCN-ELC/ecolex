@@ -1,17 +1,21 @@
 {% load json %}
 <div class="clearfix filter-header">
-  <h6>{{ title }}</h6>
+  <h6 class="pullz-left">{{ title }}</h6>
+{# TODO: configure / remove operation {{ name }} stuff #}
+  <span class="filter-global pull-right" data-formid="#id_{{ name }}_op">
+{% include 'bits/facet_operation.html' with form_field=op_field form_target='#id_subject' %}
+  </span>
 
-  {# include operation thingie #}
-
-  <select id="facet-{{ name }}" class="selection-facet"
-          name="{{ name }}"
+  <select id="facet-{{ field.name }}"
+          name="{{ field.name }}"
+          class="selection-facet clearfix"
           multiple="true"
           data-width="300"
-          data-placeholder="Add {{ placeholder }}…"{% if viewname %}
+          data-placeholder="{{ placeholder }}"{% if viewname %}
           data-ajax--url="{% url viewname %}"{% endif %}
-          data-data="{{ data|json }}"
-          data-selected="{{ selected|json }}"
+          data-data="{{ data.results|json }}"
+          data-more="{{ data.more|yesno:"true,false" }}"
+          data-selected="{{ field.value|json }}"
   ></select>
 
 </div>
