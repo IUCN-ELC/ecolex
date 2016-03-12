@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+var S2U = $.fn.select2.amd.require('select2/utils');
+
 var _DIACRITICS = $.fn.select2.amd.require('select2/diacritics');
 function _stripDiacritics (text) {
     // courtesy of upstream
@@ -9,47 +11,76 @@ function _stripDiacritics (text) {
     return text.replace(/[^\u0000-\u007E]/g, match);
 };
 
+/* debugbugbugbug */
+var _obs_trigger = S2U.Observable.prototype.trigger;
+S2U.Observable.prototype.trigger = function (event) {
+    if (['enable', 'blur', 'close', 'closing', 'focus',
+         'toggle', 'open', 'opening', 'keypress',
+         'results:focus'
+        ].indexOf(event) === -1)
+        console.log('[ev]', event, '[lx]', this.listeners[event]);
+
+    _obs_trigger.apply(this, arguments);
+};
 
 /* our custom select2 adapter */
 $.fn.select2.amd.define('ecolex/select2/adapter', [
+    'select2/utils',
     'select2/data/array',
     'select2/data/ajax',
-    'select2/utils',
     'select2/selection/search',
     'select2/results',
     'select2/dropdown/infiniteScroll',
-    'select2/selection/multiple',
+    'select2/selection/placeholder'
 ], function (
-    ArrayAdapter, AjaxAdapter,
     Utils,
+    ArrayAdapter, AjaxAdapter,
     Search,
     Results, InfiniteScroll,
-    MultipleSelection) {
+    Placeholder) {
 
     /***/
     var CustomResults = Utils.Decorate(Results, InfiniteScroll);
 
-    CustomResults.prototype.template = function (result, container) {
-        // hack to get the current query term, because select2
-        var term;
-        if (!result.loading) term = this.$element._term;
 
-        var content = CustomResults.prototype._template(result, term, container);
-
-        if (content == null) {
-            container.style.display = 'none';
-        } else if (typeof content === 'string') {
-            container.innerHTML = content;
-        } else {
-            $(container).append(content);
-        }
+    /* hacks, hacks, hacks */
+    // prevent backspace in search field from affecting previous item
+    Search.prototype.searchRemoveChoice = function() {
+        return;
     };
 
-    CustomResults.prototype._template = function (result, term) {
+    // don't remove placeholder on selection
+    Placeholder.prototype.update = function (decorated, data) {
+        var $placeholder = this.createPlaceholder(this.placeholder);
+        this.$selection.find('.select2-selection__rendered').append($placeholder);
+        return decorated.call(this, data);
+    };
+
+    /* the thing */
+    var CachingAjaxAdapter = function ($element, options) {
+        $.extend(options.options, {
+            // hardcode our customized results adapter
+            resultsAdapter: CustomResults,
+            // make sure the template has access to our stuff
+            templateResult: this.templateResult.bind(this),
+            // the same with the selection template
+            templateSelection: this.templateSelection.bind(this),
+            // no point defining this in options
+            escapeMarkup: function (txt) { return txt; }
+        });
+
+        CachingAjaxAdapter.__super__.constructor.call(this, $element, options);
+    };
+
+    Utils.Extend(CachingAjaxAdapter, AjaxAdapter);
+
+    CachingAjaxAdapter.prototype.templateResult = function (result, container) {
         // .loading means this item is the "loading" message
         if (result.loading) return result.text;
 
-        var text = CustomResults.prototype._highlight(result.text, term);
+        var term = this._term;
+
+        var text = this._highlight(result.text, term);
         return '' +
             '<div class="clearfix">' +
               '<div class="pull-left">' + text + '</div>' +
@@ -57,7 +88,7 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
             '</div>';
     };
 
-    CustomResults.prototype._highlight = function (text, term) {
+    CachingAjaxAdapter.prototype._highlight = function (text, term) {
         // this actually does both highlighting and escaping
 
         if (!term) return text;
@@ -84,35 +115,11 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         return out;
     };
 
-
-    /* hacks, hacks, hacks */
-
-    // prevent backspace in search field from affecting previous item
-    Search.prototype.searchRemoveChoice = function() {
-        return;
-    };
-
-    // overwrite selection display function directly, it's simpler
-    // (instead of using the templateSelection option)
-    MultipleSelection.prototype.display = function (data, container) {
+    CachingAjaxAdapter.prototype.templateSelection = function (data, container) {
         return '' +
             Utils.escapeMarkup(data.text) +
             ' <sup class="badge">' + data.count + '</sup>';
     };
-
-    /* the thing */
-    var CachingAjaxAdapter = function ($element, options) {
-        var data = options.get('data') || [];
-        this._data = data;
-
-        $.extend(options.options, {
-            resultsAdapter: CustomResults
-        });
-
-        CachingAjaxAdapter.__super__.constructor.call(this, $element, options);
-    };
-
-    Utils.Extend(CachingAjaxAdapter, AjaxAdapter);
 
     CachingAjaxAdapter.prototype.matches = function (params, data) {
         // mostly copy/paste from upstream
@@ -154,9 +161,10 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         var original = _stripDiacritics(data.text);
         var term = _stripDiacritics(params.term);
 
-        // Check if the text contains the term
+        // end copy paste. this is the differing part.
+        // TODO: split term into words and match them all
         if (new RegExp('\\b' + term, 'i').test(original)) {
-                return data;
+            return data;
         }
 
         // If it doesn't contain the term, don't return anything
@@ -180,21 +188,29 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
                 // send allong all form fields
                 //var _form_data = $(this[0].form).serializeArray();
                 var _form_data = this[0].form._form_data;
-                console.log(_form_data);
+
                 var form_params = {};
                 $.each(_form_data, function(idx, obj) {
-                    form_params[obj.name] = obj.value;
-                });
+                    // courtesy of
+                    // http://benalman.com/projects/jquery-misc-plugins/#serializeobject
 
-                console.log('[form params]', form_params);
+                    var n = obj.name,
+                        v = obj.value;
+
+                    form_params[n] = form_params[n] === undefined ? v
+                        : $.isArray( form_params[n] ) ? form_params[n].concat( v )
+                        : [ form_params[n], v ];
+                });
 
                 return $.extend(
                     {}, form_params, base_params);//, params);
-            },
+            }
+/*
+            ,
 
             // just for debugging
             transport: function (params, success, failure) {
-                console.log('ajax', params);
+                console.log('[ajax]', params.url, params.data);
 
                 var $request = $.ajax(params);
 
@@ -203,6 +219,7 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
 
                 return $request;
             }
+ */
         };
 
         return $.extend({},
@@ -212,80 +229,90 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
 
     CachingAjaxAdapter.prototype.hasMoreData = function (params) {
         // we have more data when:
-        // 1.
         //   - the data was template-provided and
         //   - there is an ajax url and
         //   - the template said there's more data.
-        // or 2.
+        // or when:
         //   - the data was ajax-provided and
         //   - the backend said so.
 
         if (!this.ajaxOptions.url ||
-            !this.options.get('more') ||
-            $.isEmptyObject(params)
+            !this.options.get('more')
            )
             return false;
 
-        if (params.term ||
-            (params.page && params.page > 1))
+        if (params &&
+            (params.term ||
+             (params.page && params.page > 1)
+            )
+           )
             return true;
 
         return false;
     };
 
+    CachingAjaxAdapter.prototype._default_query = function (params, callback) {
+        // wrapper around the default SelectAdapter.prototype.query
+        // that lets us add pagination info
 
+        console.log(':: query :: default');
 
+        var _super_query = ArrayAdapter.prototype.query;
+        var wrapper = callback;
 
+        if (this.options.get('more')) {
+            wrapper = function(data) {
+                data.pagination = {more: true};
+                callback(data);
+            };
+        }
 
-    CachingAjaxAdapter.prototype._array_query = function (params, callback) {
-        // copy / paste from SelectAdapter.prototype.query
-        var data = [];
+        _super_query.call(this, params, wrapper);
+
+    };
+
+    CachingAjaxAdapter.prototype._cached_query = function(params, callback) {
+        // applies the default matching logic against the cached data
+
+        console.log(':: query :: cached');
+
+        var results = [];
         var self = this;
 
-        var $options = this.$element.children();
-
-        $options.each(function () {
-            var $option = $(this);
-
-            if (!$option.is('option') && !$option.is('optgroup')) {
-                return;
-            }
-
-            var option = self.item($option);
-
-            var matches = self.matches(params, option);
-
-            if (matches !== null) {
-                data.push(matches);
-            }
+        $.each(this._cached_data.data.results, function(idx, result) {
+            if (self.matches(params, result) !== null)
+                results.push(result);
         });
 
         callback({
-            results: data,
-            // end copy paste. this is the magic bit.
-            pagination: {
-                more: this.options.get('more')
-            }
+            results: results
         });
     };
 
-    CachingAjaxAdapter.prototype._ajax_query = AjaxAdapter.prototype.query;
+    CachingAjaxAdapter.prototype._ajax_query = function (params, callback) {
+        console.log(':: query :: ajax');
+
+        // TODO: fix bug:
+        // items are doubled in results when they're aleady selected
+
+        AjaxAdapter.prototype.query.call(this, params, callback);
+    };
 
     CachingAjaxAdapter.prototype.query = function (params, callback) {
         // ensure everything has access to the current query term
         this.$element._term = params.term;
 
-        if (this.hasMoreData(params))
+        if (this._cached_data && this.isSubQuery(params))
+            return this._cached_query(params, callback);
+        else if (this.hasMoreData(params))
             return this._ajax_query(params, callback);
         else
-            return this._array_query(params, callback);
+            return this._default_query(params, callback);
 
-        //var _query = Utils.bind(_Adapter.prototype.query, this);
-        //return _query(params, callback);
     };
 
     CachingAjaxAdapter.prototype.processResults = function (data, params) {
-        // select2 needs id, text keys
+        // select2 needs "id" and "text" keys
         data.results = $.map(data.results, function (result) {
             return {
                 id: result.item,
@@ -294,13 +321,47 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
             };
         });
 
-        // there's more results when the backend sends a next page url
-        data['pagination'] = {
-            more: Boolean(data['next'])
-        };
+        // there are more results when the backend sends a next page url
+        var more = Boolean(data['next']);
+
+        if (more) {
+            // tell the default ajax adapter to request the next page
+            data['pagination'] = {
+                more: more
+            };
+        } else {
+            // cache things
+            this.setCachedData(data, params);
+        }
 
         return data;
     };
+
+    CachingAjaxAdapter.prototype.setCachedData = function (data, params) {
+        // cache the current term and the current data if there's only
+        // one page, and this is not a sub-query of the previous search
+        if ((params.page && params.page > 1) ||
+            this.isSubQuery(params)
+           )
+            return;
+
+        this._cached_data = {
+            term: params.term || "",
+            data: data
+        };
+    };
+
+    CachingAjaxAdapter.prototype.isSubQuery = function(params) {
+        if (!this._cached_data)
+            return false;
+
+        var term = params.term || "";
+        var cached_term = this._cached_data.term;
+
+        return (cached_term == "" ||
+                term.indexOf(cached_term) === 0);
+    };
+
 
     return CachingAjaxAdapter;
 });
@@ -335,6 +396,7 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         self.removeAttr('data-data');
 
         self.select2({
+            debug: true,
             data: data,
             dataAdapter: _DataAdapter
         });
@@ -344,11 +406,6 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     // cache de current search data on the form
     var _form = $('#search-form');
     _form[0]._form_data = _form.serializeArray();
-
-
-
-
-
 
 
 

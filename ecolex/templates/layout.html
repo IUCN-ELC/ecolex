@@ -19,7 +19,7 @@
   <script src="/static/js/jquery.deserialize.js"></script>
   <script src="/static/js/jquery.blockUI.js"></script>{% endcomment %}
   <script src="/static/js/select2.js"></script>
-  <script src="/static/js/main.js"></script>
+  <script src="/static/js/main.js{% if settings.DEBUG %}?{% now "U" %}{% endif %}"></script>
   {% block scripts %}{% endblock %}
   {% include 'bits/favicon.html' %}
 </head>
