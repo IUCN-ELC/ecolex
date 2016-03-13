@@ -410,8 +410,13 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     # and sort it in proper alphabetical order in python
     # (also, cache it)
     if only_facet:
+        # TODO: this smells
+        fname = only_facet['field']
+        tagged_fname = SearchMixin._get_tagged(fname)
+        if tagged_fname in filters:
+            fname = tagged_fname
         params.update({
-            'facet.field': only_facet['field'],
+            'facet.field': fname,
             'rows': 0,
             'facet.limit': only_facet.get('limit', facets_page_size),
             'facet.offset': only_facet.get('offset', 0),
@@ -432,11 +437,13 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         'spellcheck': 'true',
         'spellcheck.collate': 'true',
     })
+
     if fields:
         params['fl'] = ','.join(f for f in fields)
 
     if settings.DEBUG:
         params['debug'] = True
+
     return solr.search(solr_query, **params)
 
 
