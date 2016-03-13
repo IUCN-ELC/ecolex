@@ -81,10 +81,10 @@ select.selection-facet {
 
 {# todo: cleanup form.<facet> in django #}
 
-{% include "bits/selection_facet.html" with title="Subject" placeholder="Add subjects…" viewname="api:subject-list" data=facets.subject field=form.subject op_field=form.subject_op %}
+{% include "bits/selection_facet.html" with title="Subject" placeholder="Add subjects…" viewname="api:subject-list" data=facets.subject field=form.subject op_field=form.subject_and_ %}
 
 
-{% include "bits/selection_facet.html" with title="Author" placeholder="Add author…" viewname="api:lit-author-list" data=facets.lit_author field=form.lit_author op_field=form.lit_author_op %}
+{% include "bits/selection_facet.html" with title="Author" placeholder="Add author…" viewname="api:lit-author-list" data=facets.lit_author field=form.lit_author op_field=form.lit_author_and_ %}
 
 
 {% comment %}###begincomment

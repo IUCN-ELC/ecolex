@@ -3,7 +3,7 @@ from collections import OrderedDict
 from uuid import uuid4
 from django.conf import settings
 from ecolex.lib import camel_case_to__
-from ecolex import definitions
+from ecolex import definitions as defs
 from ecolex.solr_models import (
     Treaty, Decision, Literature, CourtDecision, Legislation
 )
@@ -285,10 +285,12 @@ def get_relevancy():
     params['qf'] = ' '.join(
         boost_pair_t(field, boost_factor) for field, boost_factor in
         RELEVANCY_FIELDS.items())
+
     return params
 
 
 def get_fq(filters):
+    # TODO: meh.
     FACETS_MAP = {
         'trTypeOfText_en': 'treaty',
         'trFieldOfApplication_en': 'treaty',
@@ -309,25 +311,27 @@ def get_fq(filters):
         'cdTerritorialSubdivision_en': 'court_decision',
     }
 
-    AND_FILTERS = [
-        'docKeyword_en',
-        'docSubject_en',
-        'docCountry_en',
-        'docRegion_en',
-        'docLanguage_en',
-        'trDepository_en',
-        'litAuthor',
-    ]
+    AND_FILTERS = [defs.FIELD_TO_FACET_MAPPING[f]
+                   for f in defs._AND_OP_FACETS]
 
     def multi_filter(filter, values):
         if filter == 'docDate':
             start, end = values
             start = start + '-01-01T00:00:00Z' if start else '*'
-            end = end + '-12-31T23:59:00Z' if end else '*'
+            end = end + '-12-31T23:59:59Z' if end else '*'
             return filter + ':[' + start + ' TO ' + end + ']'
-        values = ('"' + v + '"' for v in values)
-        operator = ' AND ' if filter in AND_FILTERS else ' OR '
-        return filter + ':(' + operator.join(t for t in values) + ')'
+
+        values = map(lambda v: '"%s"' % v, values)
+        operator = (' AND ' if filter in AND_FILTERS
+                    else ' OR ')
+
+        # WARNING:
+        # querying for "({!tag=xx}field:(yy))" throws parse error
+        # TODO: is this a solr bug?
+        #       might WhitespaceTokenizerFactory help?
+
+        return "{filter}:({value})".format(filter=filter,
+                                           value=escape_query(operator.join(values)))
 
     def type_filter(type, filters):
         if filters:
@@ -337,24 +341,39 @@ def get_fq(filters):
 
     enabled_types = filters.get('type', []) or \
         ['treaty', 'decision', 'literature', 'court_decision', 'legislation']
+
     type_filters = {f: [] for f in enabled_types}
     global_filters = []
+
     for filter, values in filters.items():
-        if '!ex' in filter:
-            filter = filter.replace('!ex', '!tag')
-        values = [v for v in values if v or filter == 'docDate']
-        if not values or filter == 'type' or not any(values):
+        _filter = filter
+        if filter.startswith('{!ex='):
+            filter = '{!tag=' + filter[5:]
+            _filter = filter[filter.index('}') + 1:]
+
+        values = [v for v in values if v or _filter == 'docDate']
+
+        if not values or _filter == 'type' or not any(values):
             continue
-        if filter in FACETS_MAP:
-            if FACETS_MAP[filter] in enabled_types:
-                type_filters[FACETS_MAP[filter]].append(
+
+        # NOTE:
+        # skipping on purpose to cause previous behaviour, i.e.
+        # type-specific filters will cause only that type to be displayed.
+        # see warning under multi_filter for explanation.
+        # TODO: fix this, the behaviour differs from AND to OR.
+        _skip_me = (_filter != filter)
+        if _filter in FACETS_MAP and not _skip_me:
+            if FACETS_MAP[_filter] in enabled_types:
+                type_filters[FACETS_MAP[_filter]].append(
                     multi_filter(filter, values)
                 )
         else:
             global_filters.append(multi_filter(filter, values))
+
     global_filters.append(' OR '.join(
-        '(' + type_filter(t, v) + ')' for t, v in type_filters.items())
-    )
+        '(%s)' % type_filter(t, v)
+        for t, v in type_filters.items()
+    ))
     return global_filters
 
 
@@ -410,11 +429,12 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     # and sort it in proper alphabetical order in python
     # (also, cache it)
     if only_facet:
-        # TODO: this smells
         fname = only_facet['field']
-        tagged_fname = SearchMixin._get_tagged(fname)
-        if tagged_fname in filters:
-            fname = tagged_fname
+        # make sure we don't overwrite a field marked for exclusion
+        # TODO: this smells. should be unified with filter logic.
+        excl_fname = SearchMixin._get_excluded(fname)
+        if excl_fname in filters:
+            fname = excl_fname
         params.update({
             'facet.field': fname,
             'rows': 0,
@@ -501,7 +521,7 @@ class SearchMixin(object):
 
     def _get_filters(self, data):
         filters = {
-            'type': data['type'] or dict(definitions.DOC_TYPE).keys(),
+            'type': data['type'] or dict(defs.DOC_TYPE).keys(),
             'docKeyword_en': data['keyword'],
             'docSubject_en': data['subject'],
             'docCountry_en': data['country'],
@@ -510,22 +530,31 @@ class SearchMixin(object):
             'docDate': (data['yearmin'], data['yearmax']),
         }
         for doc_type in filters['type']:
-            mapping = definitions.DOC_TYPE_FILTER_MAPPING[doc_type]
+            mapping = defs.DOC_TYPE_FILTER_MAPPING[doc_type]
             for k, v in mapping.items():
                 filters[k] = data[v]
 
-        for field in definitions.OPERATION_FIELD_MAPPING.keys():
-            field_name = definitions.OPERATION_FIELD_MAPPING[field]
-            facet_name = definitions.FIELD_TO_FACET_MAPPING[field_name]
-            if not data[field] and facet_name in filters:
-                values = filters.pop(facet_name)
-                facet_name = self._get_tagged(facet_name)
-                filters[facet_name] = values
+        # handle possible AND operations on facets
+        for op_form_field, field in defs.AND_OP_FIELD_MAPPING.items():
+            # we love jumping through hoops
+            solr_field = defs.FIELD_TO_FACET_MAPPING[field]
+
+            if data.get(op_form_field):
+                # nothing to do, AND is the default behaviour
+                pass
+            elif filters.get(solr_field):
+                # mark the field for exclusion
+                filters[
+                    self._get_excluded(solr_field)
+                ] = filters.pop(solr_field)
+
         return filters
 
     @classmethod
-    def _get_tagged(cls, facet_name):
-        # this doesn't exactly return it tagged, but whatever
+    def _get_excluded(cls, facet_name):
+        """
+        returns the field name, marked for solr exclusion
+        """
         return '{!ex=%s}%s' % (
             camel_case_to__(facet_name), facet_name)
 
@@ -550,6 +579,6 @@ class SearchMixin(object):
 
         kwargs.setdefault('filters', self.filters)
         kwargs.setdefault('sortby', self.sortby)
-        kwargs.setdefault('fields', definitions.SOLR_FIELDS)
+        kwargs.setdefault('fields', defs.SOLR_FIELDS)
 
         return search(query, **kwargs)

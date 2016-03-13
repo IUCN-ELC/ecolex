@@ -1,12 +1,13 @@
-from django.forms import Form, CharField, MultipleChoiceField, TextInput
+from django.forms import (
+    Form,
+    BooleanField, CharField, MultipleChoiceField,
+    TextInput,
+)
 
 from ecolex.definitions import DOC_TYPE
 
 
 class SearchForm(Form):
-    OPERATION_OPTIONS = (
-        ('AND', 'AND'),
-    )
     q = CharField(initial='', widget=TextInput(
         attrs={'id': 'search', 'class': 'form-control', 'autofocus': True,
                'placeholder': "Search in record and full text"}))
@@ -17,7 +18,7 @@ class SearchForm(Form):
     tr_status = MultipleChoiceField()
     tr_place_of_adoption = MultipleChoiceField()
     tr_depository = MultipleChoiceField()
-    tr_depository_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
+    tr_depository_and_ = BooleanField()
 
     dec_type = MultipleChoiceField()
     dec_status = MultipleChoiceField()
@@ -29,7 +30,7 @@ class SearchForm(Form):
     lit_type = MultipleChoiceField()
     lit_type2 = MultipleChoiceField()
     lit_author = MultipleChoiceField()
-    lit_author_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
+    lit_author_and_ = BooleanField()
     lit_serial = MultipleChoiceField()
     lit_publisher = MultipleChoiceField()
 
@@ -38,15 +39,15 @@ class SearchForm(Form):
     leg_status = MultipleChoiceField()
 
     subject = MultipleChoiceField()
-    subject_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
+    subject_and_ = BooleanField()
     keyword = MultipleChoiceField()
-    keyword_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
+    keyword_and_ = BooleanField()
     country = MultipleChoiceField()
-    country_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
+    country_and_ = BooleanField()
     region = MultipleChoiceField()
-    region_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
+    region_and_ = BooleanField()
     language = MultipleChoiceField()
-    language_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
+    language_and_ = BooleanField()
     yearmin = CharField()
     yearmax = CharField()
 
