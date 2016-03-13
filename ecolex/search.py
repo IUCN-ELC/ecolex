@@ -1,8 +1,8 @@
 import pysolr
-import re
 from collections import OrderedDict
 from uuid import uuid4
 from django.conf import settings
+from ecolex.lib import camel_case_to__
 from ecolex import definitions
 from ecolex.solr_models import (
     Treaty, Decision, Literature, CourtDecision, Legislation
@@ -527,13 +527,7 @@ class SearchMixin(object):
     def _get_tagged(cls, facet_name):
         # this doesn't exactly return it tagged, but whatever
         return '{!ex=%s}%s' % (
-            cls._get_tag(facet_name), facet_name)
-
-    @classmethod
-    def _get_tag(cls, facet_name):
-        return re.sub(
-            '((?<=.)[A-Z](?=[a-z0-9])|(?<=[a-z0-9])[A-Z])', r'_\1',
-            facet_name).lower()
+            camel_case_to__(facet_name), facet_name)
 
     def _prepare(self, data):
         """
