@@ -1,0 +1,3560 @@
+{
+  "R�gion Alsace": {
+    "French":"R�gion Alsace",
+    "Spanish":"R�gion Alsace",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Aquitaine": {
+    "French":"R�gion Aquitaine",
+    "Spanish":"R�gion Aquitaine",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Auvergne": {
+    "French":"R�gion Auvergne",
+    "Spanish":"R�gion Auvergne",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Bourgogne": {
+    "French":"R�gion Bourgogne",
+    "Spanish":"R�gion Bourgogne",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Bretagne": {
+    "French":"R�gion Bretagne",
+    "Spanish":"R�gion Bretagne",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Centre": {
+    "French":"R�gion Centre",
+    "Spanish":"R�gion Centre",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Champagne - Ardennes": {
+    "French":"R�gion Champagne - Ardennes",
+    "Spanish":"R�gion Champagne - Ardennes",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Corse": {
+    "French":"R�gion Corse",
+    "Spanish":"R�gion Corse",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Franche - Comt�": {
+    "French":"R�gion Franche - Comt�",
+    "Spanish":"R�gion Franche - Comt�",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Ile de de France": {
+    "French":"R�gion Ile de France",
+    "Spanish":"R�gion Ile de de France",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Languedoc - Roussillon": {
+    "French":"R�gion Languedoc - Roussillon",
+    "Spanish":"R�gion Languedoc - Roussillon",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Limousin": {
+    "French":"R�gion Limousin",
+    "Spanish":"R�gion Limousin",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Lorraine": {
+    "French":"R�gion Lorraine",
+    "Spanish":"R�gion Lorraine",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Midi - Pyren�es": {
+    "French":"R�gion Midi - Pyren�es",
+    "Spanish":"R�gion Midi - Pyren�es",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Nord - Pas de Calais": {
+    "French":"R�gion Nord - Pas de Calais",
+    "Spanish":"R�gion Nord - Pas de Calais",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Basse - Normandie": {
+    "French":"R�gion Basse - Normandie",
+    "Spanish":"R�gion Basse - Normandie",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Haute - Normandie": {
+    "French":"R�gion Haute - Normandie",
+    "Spanish":"R�gion Haute - Normandie",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Pays de la Loire": {
+    "French":"R�gion Pays de la Loire",
+    "Spanish":"R�gion Pays de la Loire",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Picardie": {
+    "French":"R�gion Picardie",
+    "Spanish":"R�gion Picardie",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Poitou-Charentes": {
+    "French":"R�gion Poitou-Charentes",
+    "Spanish":"R�gion Poitou-Charentes",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Provence - Alpes - C�te d'Az": {
+    "French":"R�gion Provence - Alpes - C�te d'Az",
+    "Spanish":"R�gion Provence - Alpes - C�te d'A",
+    "Code":"",
+    "Country":"France�"
+  },
+  "R�gion Rh�ne - Alpes": {
+    "French":"R�gion Rh�ne - Alpes",
+    "Spanish":"R�gion Rh�ne - Alpes",
+    "Code":"",
+    "Country":"France�"
+  },
+  "Terres australes et antarctiques": {
+    "French":"Terres australes et antarctiques",
+    "Spanish":"Terres australes et antarctiques",
+    "Code":"",
+    "Country":"France�"
+  },
+  "Federal Capital": {
+    "French":"Capitale f�derale",
+    "Spanish":"Capital Federal",
+    "Code":"ARGa",
+    "Country":"Argentina�"
+  },
+  "Buenos Aires": {
+    "French":"Buenos Aires",
+    "Spanish":"Buenos Aires",
+    "Code":"ARGb",
+    "Country":"Argentina�"
+  },
+  "Corrientes": {
+    "French":"Corrientes",
+    "Spanish":"Corrientes",
+    "Code":"ARGc",
+    "Country":"Argentina�"
+  },
+  "Entre Rios": {
+    "French":"Entre Rios",
+    "Spanish":"Entre Rios",
+    "Code":"ARGd",
+    "Country":"Argentina�"
+  },
+  "Chaco": {
+    "French":"Chaco",
+    "Spanish":"Chaco",
+    "Code":"ARGe",
+    "Country":"Argentina�"
+  },
+  "Santa Fe": {
+    "French":"Santa Fe",
+    "Spanish":"Santa F�",
+    "Code":"ARGf",
+    "Country":"Argentina�"
+  },
+  "Formosa": {
+    "French":"Formosa",
+    "Spanish":"Formosa",
+    "Code":"ARGg",
+    "Country":"Argentina�"
+  },
+  "Missiones": {
+    "French":"Missiones",
+    "Spanish":"Misiones",
+    "Code":"ARGh",
+    "Country":"Argentina�"
+  },
+  "Jujuy": {
+    "French":"Jujuy",
+    "Spanish":"Jujuy",
+    "Code":"ARGi",
+    "Country":"Argentina�"
+  },
+  "Salta": {
+    "French":"Salta",
+    "Spanish":"Salta",
+    "Code":"ARGj",
+    "Country":"Argentina�"
+  },
+  "Santiago del Estero": {
+    "French":"Santiago del Estero",
+    "Spanish":"Santiago del Estero",
+    "Code":"ARGk",
+    "Country":"Argentina�"
+  },
+  "Tucuman": {
+    "French":"Tucuman",
+    "Spanish":"Tucum�n",
+    "Code":"ARGl",
+    "Country":"Argentina�"
+  },
+  "Cordoba": {
+    "French":"Cordoba",
+    "Spanish":"Cordoba",
+    "Code":"ARGm",
+    "Country":"Argentina�"
+  },
+  "La Pampa": {
+    "French":"La Pampa",
+    "Spanish":"La Pampa",
+    "Code":"ARGn",
+    "Country":"Argentina�"
+  },
+  "San Luis": {
+    "French":"San Luis",
+    "Spanish":"San Luis",
+    "Code":"ARGo",
+    "Country":"Argentina�"
+  },
+  "Catamarca": {
+    "French":"Catamarca",
+    "Spanish":"Catamarca",
+    "Code":"ARGp",
+    "Country":"Argentina�"
+  },
+  "La Rioja": {
+    "French":"La Rioja",
+    "Spanish":"La Rioja",
+    "Code":"ARGq",
+    "Country":"Argentina�"
+  },
+  "Mendoza": {
+    "French":"Mendoza",
+    "Spanish":"Mendoza",
+    "Code":"ARGr",
+    "Country":"Argentina�"
+  },
+  "San Juan": {
+    "French":"San Juan",
+    "Spanish":"San Ju�n",
+    "Code":"ARGs",
+    "Country":"Argentina�"
+  },
+  "Neuqu�n": {
+    "French":"Neuqu�n",
+    "Spanish":"Neuqu�n",
+    "Code":"ARGt",
+    "Country":"Argentina�"
+  },
+  "Chubut": {
+    "French":"Chubut",
+    "Spanish":"Chubut",
+    "Code":"ARGu",
+    "Country":"Argentina�"
+  },
+  "Rio Negro": {
+    "French":"Rio Negro",
+    "Spanish":"Rio Negro",
+    "Code":"ARGv",
+    "Country":"Argentina�"
+  },
+  "Santa Cruz": {
+    "French":"Santa Cruz",
+    "Spanish":"Santa Cruz",
+    "Code":"ARGw",
+    "Country":"Argentina�"
+  },
+  "Fire Island": {
+    "French":"Terre de feu",
+    "Spanish":"Tierra del Fuego",
+    "Code":"ARGx",
+    "Country":"Argentina�"
+  },
+  "Antarctic Island": {
+    "French":"Antarctic Island",
+    "Spanish":"Islas ant�rticas",
+    "Code":"ARGy",
+    "Country":"Argentina�"
+  },
+  "South Atlantic Islands": {
+    "French":"South Atlantic Islands",
+    "Spanish":"Islas del Sur Atl�ntico",
+    "Code":"ARGz",
+    "Country":"Argentina�"
+  },
+  "New South Wales": {
+    "French":"Nouvelle Galle du Sud",
+    "Spanish":"New South Wales",
+    "Code":"AUSa",
+    "Country":"Australia�"
+  },
+  "Queensland": {
+    "French":"Queensland (le)",
+    "Spanish":"Queensland",
+    "Code":"AUSb",
+    "Country":"Australia�"
+  },
+  "South Australia": {
+    "French":"Australie du Sud",
+    "Spanish":"South Australia",
+    "Code":"AUSc",
+    "Country":"Australia�"
+  },
+  "Tasmania": {
+    "French":"Tasmanie",
+    "Spanish":"Tasmania",
+    "Code":"AUSd",
+    "Country":"Australia�"
+  },
+  "Victoria": {
+    "French":"Victoria",
+    "Spanish":"Victoria",
+    "Code":"AUSe",
+    "Country":"Australia�"
+  },
+  "Western Australia": {
+    "French":"Australie occidentale",
+    "Spanish":"Western Australia",
+    "Code":"AUSf",
+    "Country":"Australia�"
+  },
+  "Capital Territory": {
+    "French":"Terr. de la capitale",
+    "Spanish":"Capital Territory",
+    "Code":"AUSg",
+    "Country":"Australia�"
+  },
+  "Northern Territory": {
+    "French":"Territoire du Nord",
+    "Spanish":"Northern Territory",
+    "Code":"AUSh",
+    "Country":"Australia�"
+  },
+  "Australian Antarctic Territory": {
+    "French":"Terr. antarct. australes",
+    "Spanish":"Australian Antarctic Territory",
+    "Code":"AUSi",
+    "Country":"Australia�"
+  },
+  "Christmas Island": {
+    "French":"Ile Christmas",
+    "Spanish":"Christmas Island",
+    "Code":"AUSj",
+    "Country":"Australia�"
+  },
+  "Heard and McDonald Islands": {
+    "French":"Heard et Iles McDonald",
+    "Spanish":"Heard and McDonald Islands",
+    "Code":"AUSm",
+    "Country":"Australia�"
+  },
+  "Territory of Ashmore and Cartierands": {
+    "French":"Ashmore and Cartier Islands",
+    "Spanish":"Territory of Ashmore and Cartierands",
+    "Code":"AUSo",
+    "Country":"Australia�"
+  },
+  "Territory of Coral Sea Islands": {
+    "French":"Coral Sea Islands Territory",
+    "Spanish":"Territory of Coral Sea Islands",
+    "Code":"AUSp",
+    "Country":"Australia�"
+  },
+  "Burgenland": {
+    "French":"Burgenland",
+    "Spanish":"Burgenland",
+    "Code":"AUTn",
+    "Country":"Austria�"
+  },
+  "Carinthia": {
+    "French":"Carinthe",
+    "Spanish":"K�rnten",
+    "Code":"AUTp",
+    "Country":"Austria�"
+  },
+  "Nieder�sterreich": {
+    "French":"Nieder�sterreich",
+    "Spanish":"Nieder�sterreich",
+    "Code":"AUTq",
+    "Country":"Austria�"
+  },
+  "Ober�sterreich": {
+    "French":"Ober�sterreich",
+    "Spanish":"Ober�sterreich",
+    "Code":"AUTr",
+    "Country":"Austria�"
+  },
+  "Salzburg": {
+    "French":"Salzbourg",
+    "Spanish":"Salzburg",
+    "Code":"AUTs",
+    "Country":"Austria�"
+  },
+  "Steiermark": {
+    "French":"Steiermark",
+    "Spanish":"Steiermark",
+    "Code":"AUTt",
+    "Country":"Austria�"
+  },
+  "Tirol": {
+    "French":"Tyrol",
+    "Spanish":"Tirol",
+    "Code":"AUTu",
+    "Country":"Austria�"
+  },
+  "Vorarlberg": {
+    "French":"Vorarlberg",
+    "Spanish":"Vorarlberg",
+    "Code":"AUTv",
+    "Country":"Austria�"
+  },
+  "Wien": {
+    "French":"Wien",
+    "Spanish":"Wien",
+    "Code":"AUTw",
+    "Country":"Austria�"
+  },
+  "R�gion bruxelloise/Brusselse Gewes": {
+    "French":"R�gion bruxelloise/Brusselse Gewe",
+    "Spanish":"R�gion bruxelloise/Brusselse Gewes",
+    "Code":"BELa",
+    "Country":"Belgium�"
+  },
+  "Vlaamse Gewest": {
+    "French":"Vlaamse Gewest",
+    "Spanish":"Vlaamse Gewest",
+    "Code":"BELb",
+    "Country":"Belgium�"
+  },
+  "R�gion wallonne": {
+    "French":"R�gion wallonne",
+    "Spanish":"R�gion wallonne",
+    "Code":"BELc",
+    "Country":"Belgium�"
+  },
+  "Communaut� Fran�aise": {
+    "French":"Communaut� fran�aise",
+    "Spanish":"Communaut� Fran�aise",
+    "Code":"BELd",
+    "Country":"Belgium�"
+  },
+  "Deutschsprachige Gemeinschaft": {
+    "French":"Deutschsprachige Gemeinschaft",
+    "Spanish":"Deutschsprachige Gemeinschaft",
+    "Code":"BELe",
+    "Country":"Belgium�"
+  },
+  "Vlaamse Gemeenschap": {
+    "French":"Communaut� Hollandaise",
+    "Spanish":"Vlaamse Gemeenschap",
+    "Code":"BELf",
+    "Country":"Belgium�"
+  },
+  "Acre": {
+    "French":"Acre",
+    "Spanish":"Acre",
+    "Code":"BRAa",
+    "Country":"Brazil�"
+  },
+  "Alagoas": {
+    "French":"Alagoas",
+    "Spanish":"Alagoas",
+    "Code":"BRAb",
+    "Country":"Brazil�"
+  },
+  "Amazonas": {
+    "French":"Amazonas",
+    "Spanish":"Amazonas",
+    "Code":"BRAc",
+    "Country":"Brazil�"
+  },
+  "Bahia": {
+    "French":"Bahia",
+    "Spanish":"Bahia",
+    "Code":"BRAd",
+    "Country":"Brazil�"
+  },
+  "Ceara": {
+    "French":"Ceara",
+    "Spanish":"Ceara",
+    "Code":"BRAe",
+    "Country":"Brazil�"
+  },
+  "Esp�rito Santo": {
+    "French":"Esp�rito Santo",
+    "Spanish":"Esp�rito Santo",
+    "Code":"BRAf",
+    "Country":"Brazil�"
+  },
+  "Goi�s": {
+    "French":"Goi�s",
+    "Spanish":"Goi�s",
+    "Code":"BRAg",
+    "Country":"Brazil�"
+  },
+  "Guanabara": {
+    "French":"Guanabara",
+    "Spanish":"Guanabara",
+    "Code":"BRAh",
+    "Country":"Brazil�"
+  },
+  "Maranhao": {
+    "French":"Maranhao",
+    "Spanish":"Maranhao",
+    "Code":"BRAi",
+    "Country":"Brazil�"
+  },
+  "Mato Grosso": {
+    "French":"Mato Grosso",
+    "Spanish":"Mato Grosso",
+    "Code":"BRAj",
+    "Country":"Brazil�"
+  },
+  "Minas Gerais": {
+    "French":"Minas Gerais",
+    "Spanish":"Minas Gerais",
+    "Code":"BRAk",
+    "Country":"Brazil�"
+  },
+  "Par�": {
+    "French":"Par�",
+    "Spanish":"Par�",
+    "Code":"BRAl",
+    "Country":"Brazil�"
+  },
+  "Paraiba": {
+    "French":"Paraiba",
+    "Spanish":"Paraiba",
+    "Code":"BRAm",
+    "Country":"Brazil�"
+  },
+  "Paran�": {
+    "French":"Paran�",
+    "Spanish":"Paran�",
+    "Code":"BRAn",
+    "Country":"Brazil�"
+  },
+  "Pernambuco": {
+    "French":"Pernambuco",
+    "Spanish":"Pernambuco",
+    "Code":"BRAo",
+    "Country":"Brazil�"
+  },
+  "Piaul": {
+    "French":"Piaul",
+    "Spanish":"Piaul",
+    "Code":"BRAp",
+    "Country":"Brazil�"
+  },
+  "Rio de Janeiro": {
+    "French":"Rio de Janeiro",
+    "Spanish":"Rio de Janeiro",
+    "Code":"BRAq",
+    "Country":"Brazil�"
+  },
+  "Rio Grande do Norte": {
+    "French":"Rio Grande do Norte",
+    "Spanish":"Rio Grande do Norte",
+    "Code":"BRAr",
+    "Country":"Brazil�"
+  },
+  "Rio Grande do Sul": {
+    "French":"Rio Grande do Sul",
+    "Spanish":"Rio Grande do Sul",
+    "Code":"BRAs",
+    "Country":"Brazil�"
+  },
+  "Santa Catarina": {
+    "French":"Santa Catarina",
+    "Spanish":"Santa Catarina",
+    "Code":"BRAt",
+    "Country":"Brazil�"
+  },
+  "Sao Paulo": {
+    "French":"Sao Paulo",
+    "Spanish":"Sao Paulo",
+    "Code":"BRAu",
+    "Country":"Brazil�"
+  },
+  "Sergipe": {
+    "French":"Sergipe",
+    "Spanish":"Sergipe",
+    "Code":"BRAv",
+    "Country":"Brazil�"
+  },
+  "Amap�": {
+    "French":"Amap�",
+    "Spanish":"Amap�",
+    "Code":"BRAw",
+    "Country":"Brazil�"
+  },
+  "Fernando de Noronha": {
+    "French":"Fernando de Noronha",
+    "Spanish":"Fernando de Noronha",
+    "Code":"BRAx",
+    "Country":"Brazil�"
+  },
+  "Rondonia": {
+    "French":"Rondonia",
+    "Spanish":"Rondonia",
+    "Code":"BRAy",
+    "Country":"Brazil�"
+  },
+  "Roraima": {
+    "French":"Roraima",
+    "Spanish":"Roraima",
+    "Code":"BRAz",
+    "Country":"Brazil�"
+  },
+  "Chin State": {
+    "French":"",
+    "Spanish":"Chin State",
+    "Code":"MMRa",
+    "Country":"Myanmar�"
+  },
+  "Kachin State": {
+    "French":"Kachin State",
+    "Spanish":"Kachin State",
+    "Code":"MMRb",
+    "Country":"Myanmar�"
+  },
+  "Sagaing Division": {
+    "French":"Sagaing Division",
+    "Spanish":"Sagaing Division",
+    "Code":"MMRc",
+    "Country":"Myanmar�"
+  },
+  "Mandalay Division": {
+    "French":"Mandalay Division",
+    "Spanish":"Mandalay Division",
+    "Code":"MMRd",
+    "Country":"Myanmar�"
+  },
+  "Shan State": {
+    "French":"Shan State",
+    "Spanish":"Shan State",
+    "Code":"MMRe",
+    "Country":"Myanmar�"
+  },
+  "Magwe Division": {
+    "French":"Magwe Division",
+    "Spanish":"Magwe Division",
+    "Code":"MMRf",
+    "Country":"Myanmar�"
+  },
+  "Arakan State": {
+    "French":"Rakhine State",
+    "Spanish":"Rakhine State",
+    "Code":"MMRg",
+    "Country":"Myanmar�"
+  },
+  "Karen State": {
+    "French":"Karen State",
+    "Spanish":"Karen State",
+    "Code":"MMRh",
+    "Country":"Myanmar�"
+  },
+  "Irrawaddy Division": {
+    "French":"Irrawaddy Division",
+    "Spanish":"Irrawaddy Division",
+    "Code":"MMRi",
+    "Country":"Myanmar�"
+  },
+  "Pegu Division": {
+    "French":"Pegu Division",
+    "Spanish":"Pegu Division",
+    "Code":"MMRj",
+    "Country":"Myanmar�"
+  },
+  "Rangoon Division": {
+    "French":"Rangoon Division",
+    "Spanish":"Rangoon Division",
+    "Code":"MMRk",
+    "Country":"Myanmar�"
+  },
+  "Kayah State": {
+    "French":"Kayah State",
+    "Spanish":"Kayah State",
+    "Code":"MMRl",
+    "Country":"Myanmar�"
+  },
+  "Mon State": {
+    "French":"Mon State",
+    "Spanish":"Mon State",
+    "Code":"MMRm",
+    "Country":"Myanmar�"
+  },
+  "Tenasserim Division": {
+    "French":"Tenasserim Division",
+    "Spanish":"Tenasserim Division",
+    "Code":"MMRn",
+    "Country":"Myanmar�"
+  },
+  "Quebec": {
+    "French":"Quebec",
+    "Spanish":"Quebec",
+    "Code":"CANa",
+    "Country":"Canada�"
+  },
+  "Ontario": {
+    "French":"Ontario",
+    "Spanish":"Ontario",
+    "Code":"CANb",
+    "Country":"Canada�"
+  },
+  "Nova Scotia": {
+    "French":"Nouvelle Ecosse",
+    "Spanish":"Nova Scotia",
+    "Code":"CANc",
+    "Country":"Canada�"
+  },
+  "New Brunswick": {
+    "French":"Nouveau Brunswick",
+    "Spanish":"New Brunswick",
+    "Code":"CANd",
+    "Country":"Canada�"
+  },
+  "Manitoba": {
+    "French":"Manitoba",
+    "Spanish":"Manitoba",
+    "Code":"CANe",
+    "Country":"Canada�"
+  },
+  "British Columbia": {
+    "French":"Colombie britannique",
+    "Spanish":"British Columbia",
+    "Code":"CANf",
+    "Country":"Canada�"
+  },
+  "Prince Edward Island": {
+    "French":"Prince Edouard, Ile du",
+    "Spanish":"Prince Edward Island",
+    "Code":"CANg",
+    "Country":"Canada�"
+  },
+  "Alberta": {
+    "French":"Alberta",
+    "Spanish":"Alberta",
+    "Code":"CANh",
+    "Country":"Canada�"
+  },
+  "Saskatchewan": {
+    "French":"Saskatechewan",
+    "Spanish":"Saskatchewan",
+    "Code":"CANi",
+    "Country":"Canada�"
+  },
+  "Newfoundland": {
+    "French":"Terre Neuve",
+    "Spanish":"Newfoundland",
+    "Code":"CANj",
+    "Country":"Canada�"
+  },
+  "Northwest Territories": {
+    "French":"Northwest Territories",
+    "Spanish":"Northwest Territories",
+    "Code":"CANk",
+    "Country":"Canada�"
+  },
+  "Yukon Territory": {
+    "French":"Territoire du Yukon",
+    "Spanish":"Yukon Territory",
+    "Code":"CANl",
+    "Country":"Canada�"
+  },
+  "Taiwan": {
+    "French":"Taiwan",
+    "Spanish":"Taiwan",
+    "Code":"CHNb",
+    "Country":"China�"
+  },
+  "Aland Isles": {
+    "French":"Ile d'Aland",
+    "Spanish":"Aland Isles",
+    "Code":"FINa",
+    "Country":"Finland�"
+  },
+  "Ain": {
+    "French":"Ain",
+    "Spanish":"Ain",
+    "Code":"FRai",
+    "Country":"France�"
+  },
+  "Aisne": {
+    "French":"Aisne",
+    "Spanish":"Aisne",
+    "Code":"FRas",
+    "Country":"France�"
+  },
+  "Allier": {
+    "French":"Allier",
+    "Spanish":"Allier",
+    "Code":"FRal",
+    "Country":"France�"
+  },
+  "Alpes de Haute-Provence": {
+    "French":"Alpes Hautes-Prov.",
+    "Spanish":"Alpes de Haute-Provence",
+    "Code":"FRap",
+    "Country":"France�"
+  },
+  "Hautes Alpes": {
+    "French":"Hautes Alpes",
+    "Spanish":"Hautes Alpes",
+    "Code":"FRha",
+    "Country":"France�"
+  },
+  "Alpes-Maritimes": {
+    "French":"Alpes-Marit.",
+    "Spanish":"Alpes-Maritimes",
+    "Code":"FRam",
+    "Country":"France�"
+  },
+  "Ard?che": {
+    "French":"Ard?che",
+    "Spanish":"Ard?che",
+    "Code":"FRar",
+    "Country":"France�"
+  },
+  "Ardennes": {
+    "French":"Ardennes",
+    "Spanish":"Ardennes",
+    "Code":"FRad",
+    "Country":"France�"
+  },
+  "Ari?ge": {
+    "French":"Ari?ge",
+    "Spanish":"Ari?ge",
+    "Code":"FRag",
+    "Country":"France�"
+  },
+  "Aube": {
+    "French":"Aube",
+    "Spanish":"Aube",
+    "Code":"FRab",
+    "Country":"France�"
+  },
+  "Ville de Paris": {
+    "French":"Ville de Paris",
+    "Spanish":"Ville de Paris",
+    "Code":"FRvp",
+    "Country":"France�"
+  },
+  "Aveyron": {
+    "French":"Aveyron",
+    "Spanish":"Aveyron",
+    "Code":"FRav",
+    "Country":"France�"
+  },
+  "Aude": {
+    "French":"Aude",
+    "Spanish":"Aude",
+    "Code":"FRau",
+    "Country":"France�"
+  },
+  "Bouches-du-Rh�ne": {
+    "French":"B.-du-Rhone",
+    "Spanish":"Bouches-du-Rh�ne",
+    "Code":"FRbo",
+    "Country":"France�"
+  },
+  "Calvados": {
+    "French":"Calvados",
+    "Spanish":"Calvados",
+    "Code":"FRcv",
+    "Country":"France�"
+  },
+  "Cantal": {
+    "French":"Cantal",
+    "Spanish":"Cantal",
+    "Code":"FRcn",
+    "Country":"France�"
+  },
+  "Charente": {
+    "French":"Charente",
+    "Spanish":"Charente",
+    "Code":"FRch",
+    "Country":"France�"
+  },
+  "Charente-Maritime": {
+    "French":"Charente-M.",
+    "Spanish":"Charente-Maritime",
+    "Code":"FRcm",
+    "Country":"France�"
+  },
+  "Cher": {
+    "French":"Cher",
+    "Spanish":"Cher",
+    "Code":"FRer",
+    "Country":"France�"
+  },
+  "Corr?ze": {
+    "French":"Correze",
+    "Spanish":"Corr?ze",
+    "Code":"FRcz",
+    "Country":"France�"
+  },
+  "Corse-du-Sud": {
+    "French":"Corse-du-Sud",
+    "Spanish":"Corse-du-Sud",
+    "Code":"FRcs",
+    "Country":"France�"
+  },
+  "Haute Corse": {
+    "French":"Haute Corse",
+    "Spanish":"Haute Corse",
+    "Code":"FRhc",
+    "Country":"France�"
+  },
+  "C�te-d'Or": {
+    "French":"Cotes-d'Or",
+    "Spanish":"C�te-d'Or",
+    "Code":"FRco",
+    "Country":"France�"
+  },
+  "C�tes d'Armor": {
+    "French":"C�tes d'Armor",
+    "Spanish":"C�tes d'Armor",
+    "Code":"FRca",
+    "Country":"France�"
+  },
+  "Creuse": {
+    "French":"Creuse",
+    "Spanish":"Creuse",
+    "Code":"FRcr",
+    "Country":"France�"
+  },
+  "Dordogne": {
+    "French":"Dordogne",
+    "Spanish":"Dordogne",
+    "Code":"FRdo",
+    "Country":"France�"
+  },
+  "Doubs": {
+    "French":"Doubs",
+    "Spanish":"Doubs",
+    "Code":"FRdu",
+    "Country":"France�"
+  },
+  "Dr�me": {
+    "French":"Drome",
+    "Spanish":"Dr�me",
+    "Code":"FRdr",
+    "Country":"France�"
+  },
+  "Eure": {
+    "French":"Eure",
+    "Spanish":"Eure",
+    "Code":"FReu",
+    "Country":"France�"
+  },
+  "Eure-et-Loir": {
+    "French":"Eure-et-Loire",
+    "Spanish":"Eure-et-Loir",
+    "Code":"FRel",
+    "Country":"France�"
+  },
+  "Finist?re": {
+    "French":"Finistere",
+    "Spanish":"Finist?re",
+    "Code":"FRfi",
+    "Country":"France�"
+  },
+  "Gard": {
+    "French":"Gard",
+    "Spanish":"Gard",
+    "Code":"FRga",
+    "Country":"France�"
+  },
+  "Haute Garonne": {
+    "French":"Haute Garonne",
+    "Spanish":"Haute Garonne",
+    "Code":"FRhg",
+    "Country":"France�"
+  },
+  "Gers": {
+    "French":"Gers",
+    "Spanish":"Gers",
+    "Code":"FRge",
+    "Country":"France�"
+  },
+  "Gironde": {
+    "French":"Gironde",
+    "Spanish":"Gironde",
+    "Code":"FRgi",
+    "Country":"France�"
+  },
+  "Herault": {
+    "French":"Herault",
+    "Spanish":"Herault",
+    "Code":"FRhe",
+    "Country":"France�"
+  },
+  "Ille-et-Vilaine": {
+    "French":"Ille-et-Vil",
+    "Spanish":"Ille-et-Vilaine",
+    "Code":"FRiv",
+    "Country":"France�"
+  },
+  "Indre": {
+    "French":"Indre",
+    "Spanish":"Indre",
+    "Code":"FRin",
+    "Country":"France�"
+  },
+  "Indre-et-Loire": {
+    "French":"Indre-et-L",
+    "Spanish":"Indre-et-Loire",
+    "Code":"FRil",
+    "Country":"France�"
+  },
+  "Is?re": {
+    "French":"Isere",
+    "Spanish":"Is?re",
+    "Code":"FRis",
+    "Country":"France�"
+  },
+  "Jura": {
+    "French":"Jura",
+    "Spanish":"Jura",
+    "Code":"FRju",
+    "Country":"France�"
+  },
+  "Landes": {
+    "French":"Landes",
+    "Spanish":"Landes",
+    "Code":"FRla",
+    "Country":"France�"
+  },
+  "Loir-et-Cher": {
+    "French":"Loir-et-Cher",
+    "Spanish":"Loir-et-Cher",
+    "Code":"FRlc",
+    "Country":"France�"
+  },
+  "Loire": {
+    "French":"Loire",
+    "Spanish":"Loire",
+    "Code":"FRlr",
+    "Country":"France�"
+  },
+  "Loire-Atlantique": {
+    "French":"Loire-Atl.",
+    "Spanish":"Loire-Atlantique",
+    "Code":"FRat",
+    "Country":"France�"
+  },
+  "Haute Loire": {
+    "French":"Haute Loire",
+    "Spanish":"Haute Loire",
+    "Code":"FRhl",
+    "Country":"France�"
+  },
+  "Loiret": {
+    "French":"Loiret",
+    "Spanish":"Loiret",
+    "Code":"FRlt",
+    "Country":"France�"
+  },
+  "Lot": {
+    "French":"Lot",
+    "Spanish":"Lot",
+    "Code":"FRlo",
+    "Country":"France�"
+  },
+  "Lot-et-Garonne": {
+    "French":"Lot-et-Gar.",
+    "Spanish":"Lot-et-Garonne",
+    "Code":"FRlg",
+    "Country":"France�"
+  },
+  "Loz?re": {
+    "French":"Lozere",
+    "Spanish":"Loz?re",
+    "Code":"FRlz",
+    "Country":"France�"
+  },
+  "Maine-et-Loire": {
+    "French":"Maine-et-L.",
+    "Spanish":"Maine-et-Loire",
+    "Code":"FRml",
+    "Country":"France�"
+  },
+  "Manche": {
+    "French":"Manche",
+    "Spanish":"Manche",
+    "Code":"FRma",
+    "Country":"France�"
+  },
+  "Marne": {
+    "French":"Marne",
+    "Spanish":"Marne",
+    "Code":"FRmr",
+    "Country":"France�"
+  },
+  "Haute Marne": {
+    "French":"Haute Marne",
+    "Spanish":"Haute Marne",
+    "Code":"FRhm",
+    "Country":"France�"
+  },
+  "Mayenne": {
+    "French":"Mayenne",
+    "Spanish":"Mayenne",
+    "Code":"FRmy",
+    "Country":"France�"
+  },
+  "Meurthe-et-Moselle": {
+    "French":"M-et-Mos.",
+    "Spanish":"Meurthe-et-Moselle",
+    "Code":"FRmm",
+    "Country":"France�"
+  },
+  "Meuse": {
+    "French":"Meuse",
+    "Spanish":"Meuse",
+    "Code":"FRme",
+    "Country":"France�"
+  },
+  "Morbihan": {
+    "French":"Morbihan",
+    "Spanish":"Morbihan",
+    "Code":"FRmh",
+    "Country":"France�"
+  },
+  "Moselle": {
+    "French":"Moselle",
+    "Spanish":"Moselle",
+    "Code":"FRmo",
+    "Country":"France�"
+  },
+  "Ni?vre": {
+    "French":"Nierve",
+    "Spanish":"Ni?vre",
+    "Code":"FRni",
+    "Country":"France�"
+  },
+  "Nord": {
+    "French":"Nord",
+    "Spanish":"Nord",
+    "Code":"FRno",
+    "Country":"France�"
+  },
+  "Oise": {
+    "French":"Oise",
+    "Spanish":"Oise",
+    "Code":"FRoi",
+    "Country":"France�"
+  },
+  "Orne": {
+    "French":"Orne",
+    "Spanish":"Orne",
+    "Code":"FRor",
+    "Country":"France�"
+  },
+  "Pas-de-Calais": {
+    "French":"Pas-de-Cal.",
+    "Spanish":"Pas-de-Calais",
+    "Code":"FRpc",
+    "Country":"France�"
+  },
+  "Puy-de-D�me": {
+    "French":"Puy-de-d.",
+    "Spanish":"Puy-de-D�me",
+    "Code":"FRpd",
+    "Country":"France�"
+  },
+  "Pyr�n�es-Atlantiques": {
+    "French":"Pyrenees-A.",
+    "Spanish":"Pyr�n�es-Atlantiques",
+    "Code":"FRpa",
+    "Country":"France�"
+  },
+  "Hautes Pyr�n�es": {
+    "French":"Hautes Pyrenees",
+    "Spanish":"Hautes Pyr�n�es",
+    "Code":"FRhp",
+    "Country":"France�"
+  },
+  "Pyr�n�es-Orientales": {
+    "French":"Pyrenees-O.",
+    "Spanish":"Pyr�n�es-Orientales",
+    "Code":"FRpo",
+    "Country":"France�"
+  },
+  "Bas Rhin": {
+    "French":"Bas Rhin",
+    "Spanish":"Bas Rhin",
+    "Code":"FRbr",
+    "Country":"France�"
+  },
+  "Haut Rhin": {
+    "French":"Haut Rhin",
+    "Spanish":"Haut Rhin",
+    "Code":"FRhr",
+    "Country":"France�"
+  },
+  "Rh�ne": {
+    "French":"Rhone",
+    "Spanish":"Rh�ne",
+    "Code":"FRrh",
+    "Country":"France�"
+  },
+  "Haute Sa�ne": {
+    "French":"Haute Saone",
+    "Spanish":"Haute Sa�ne",
+    "Code":"FRhs",
+    "Country":"France�"
+  },
+  "Sa�ne-et-Loire": {
+    "French":"Saone-et-L.",
+    "Spanish":"Sa�ne-et-Loire",
+    "Code":"FRsl",
+    "Country":"France�"
+  },
+  "Sarthe": {
+    "French":"Sarthe",
+    "Spanish":"Sarthe",
+    "Code":"FRsa",
+    "Country":"France�"
+  },
+  "Savoie": {
+    "French":"Savoie",
+    "Spanish":"Savoie",
+    "Code":"FRsv",
+    "Country":"France�"
+  },
+  "Haute Savoie": {
+    "French":"Haute Savoie",
+    "Spanish":"Haute Savoie",
+    "Code":"FRhu",
+    "Country":"France�"
+  },
+  "Seine-Maritime": {
+    "French":"Seine-Marit.",
+    "Spanish":"Seine-Maritime",
+    "Code":"FRmt",
+    "Country":"France�"
+  },
+  "Seine-et-Marne": {
+    "French":"Seine-et-M.",
+    "Spanish":"Seine-et-Marne",
+    "Code":"FRsm",
+    "Country":"France�"
+  },
+  "Yvelines": {
+    "French":"Yveline",
+    "Spanish":"Yvelines",
+    "Code":"FRyv",
+    "Country":"France�"
+  },
+  "Deux S?vres": {
+    "French":"Deux Sevres",
+    "Spanish":"Deux S?vres",
+    "Code":"FRds",
+    "Country":"France�"
+  },
+  "Somme": {
+    "French":"Somme",
+    "Spanish":"Somme",
+    "Code":"FRso",
+    "Country":"France�"
+  },
+  "Tarn": {
+    "French":"Tarn",
+    "Spanish":"Tarn",
+    "Code":"FRta",
+    "Country":"France�"
+  },
+  "Tarn-et-Garonne": {
+    "French":"Tarn-et-G.",
+    "Spanish":"Tarn-et-Garonne",
+    "Code":"FRtg",
+    "Country":"France�"
+  },
+  "Var": {
+    "French":"Var",
+    "Spanish":"Var",
+    "Code":"FRva",
+    "Country":"France�"
+  },
+  "Vaucluse": {
+    "French":"Vaucluse",
+    "Spanish":"Vaucluse",
+    "Code":"FRvu",
+    "Country":"France�"
+  },
+  "Vend�e": {
+    "French":"Vendee",
+    "Spanish":"Vend�e",
+    "Code":"FRve",
+    "Country":"France�"
+  },
+  "Vienne": {
+    "French":"Vienne",
+    "Spanish":"Vienne",
+    "Code":"FRvi",
+    "Country":"France�"
+  },
+  "Haute Vienne": {
+    "French":"Haute Vienne",
+    "Spanish":"Haute Vienne",
+    "Code":"FRhv",
+    "Country":"France�"
+  },
+  "Vosges": {
+    "French":"Vosges",
+    "Spanish":"Vosges",
+    "Code":"FRvo",
+    "Country":"France�"
+  },
+  "Yonne": {
+    "French":"Yonne",
+    "Spanish":"Yonne",
+    "Code":"FRyo",
+    "Country":"France�"
+  },
+  "Territoire de Belfort": {
+    "French":"Territoire de Belfort",
+    "Spanish":"Territoire de Belfort",
+    "Code":"FRtb",
+    "Country":"France�"
+  },
+  "Essonne": {
+    "French":"Essonne",
+    "Spanish":"Essonne",
+    "Code":"FRes",
+    "Country":"France�"
+  },
+  "Hauts-de-Seine": {
+    "French":"H.-de-Seine",
+    "Spanish":"Hauts-de-Seine",
+    "Code":"FRhn",
+    "Country":"France�"
+  },
+  "Seine-St-Denis": {
+    "French":"S.-St-Denis",
+    "Spanish":"Seine-St-Denis",
+    "Code":"FRsd",
+    "Country":"France�"
+  },
+  "Val-de-Marne": {
+    "French":"Val-de-M.",
+    "Spanish":"Val-de-Marne",
+    "Code":"FRvm",
+    "Country":"France�"
+  },
+  "Val-d'Oise": {
+    "French":"Val-d'oise",
+    "Spanish":"Val-d'Oise",
+    "Code":"FRos",
+    "Country":"France�"
+  },
+  "Baden-W�rttemberg": {
+    "French":"Baden-W�rttemberg",
+    "Spanish":"Baden-W�rttemberg",
+    "Code":"GERa",
+    "Country":"Germany�"
+  },
+  "Bayern": {
+    "French":"Bayern",
+    "Spanish":"Bayern",
+    "Code":"GERb",
+    "Country":"Germany�"
+  },
+  "Berlin": {
+    "French":"Berlin",
+    "Spanish":"Berlin",
+    "Code":"GERc",
+    "Country":"Germany�"
+  },
+  "Brandenburg": {
+    "French":"Brandenburg",
+    "Spanish":"Brandenburg",
+    "Code":"GERe",
+    "Country":"Germany�"
+  },
+  "Bremen": {
+    "French":"Bremen",
+    "Spanish":"Bremen",
+    "Code":"GERd",
+    "Country":"Germany�"
+  },
+  "Hamburg": {
+    "French":"Hamburg",
+    "Spanish":"Hamburg",
+    "Code":"GERf",
+    "Country":"Germany�"
+  },
+  "Hessen": {
+    "French":"Hessen",
+    "Spanish":"Hessen",
+    "Code":"GERg",
+    "Country":"Germany�"
+  },
+  "Mecklenburg-Vorpommern": {
+    "French":"Mecklenburg-Vorpommern",
+    "Spanish":"Mecklenburg-Vorpommern",
+    "Code":"GERq",
+    "Country":"Germany�"
+  },
+  "Niedersachsen": {
+    "French":"Niedersachsen",
+    "Spanish":"Niedersachsen",
+    "Code":"GERh",
+    "Country":"Germany�"
+  },
+  "Nordrhein-Westfalen": {
+    "French":"Nordrhein-Westfalen",
+    "Spanish":"Nordrhein-Westfalen",
+    "Code":"GERi",
+    "Country":"Germany�"
+  },
+  "Rheinland-Pfalz": {
+    "French":"Rheinland-Pfalz",
+    "Spanish":"Rheinland-Pfalz",
+    "Code":"GERj",
+    "Country":"Germany�"
+  },
+  "Saarland": {
+    "French":"Saarland",
+    "Spanish":"Saarland",
+    "Code":"GERk",
+    "Country":"Germany�"
+  },
+  "Sachsen": {
+    "French":"Sachsen",
+    "Spanish":"Sachsen",
+    "Code":"GERm",
+    "Country":"Germany�"
+  },
+  "Sachsen-Anhalt": {
+    "French":"Sachsen-Anhalt",
+    "Spanish":"Sachsen-Anhalt",
+    "Code":"GERn",
+    "Country":"Germany�"
+  },
+  "Schleswig-Holstein": {
+    "French":"Schleswig-Holstein",
+    "Spanish":"Schleswig-Holstein",
+    "Code":"GERl",
+    "Country":"Germany�"
+  },
+  "Th�ringen": {
+    "French":"Th�ringen",
+    "Spanish":"Th�ringen",
+    "Code":"GERo",
+    "Country":"Germany�"
+  },
+  "Great Britain": {
+    "French":"Great Britain",
+    "Spanish":"Great Britain",
+    "Code":"GBRa",
+    "Country":"United Kingdom�"
+  },
+  "England": {
+    "French":"Angleterre",
+    "Spanish":"England",
+    "Code":"GBRb",
+    "Country":"United Kingdom�"
+  },
+  "Greater London only": {
+    "French":"Greater London only",
+    "Spanish":"Greater London only",
+    "Code":"GBRc",
+    "Country":"United Kingdom�"
+  },
+  "Northern Ireland": {
+    "French":"Irlande du Nord",
+    "Spanish":"Northern Ireland",
+    "Code":"GBRd",
+    "Country":"United Kingdom�"
+  },
+  "Scotland": {
+    "French":"Ecosse",
+    "Spanish":"Scotland",
+    "Code":"GBRe",
+    "Country":"United Kingdom�"
+  },
+  "Wales": {
+    "French":"Pays de Galle",
+    "Spanish":"Wales",
+    "Code":"GBRf",
+    "Country":"United Kingdom�"
+  },
+  "Jersey": {
+    "French":"Jersey",
+    "Spanish":"Jersey",
+    "Code":"GBRg",
+    "Country":"United Kingdom�"
+  },
+  "Isle of Man": {
+    "French":"Isle of Man",
+    "Spanish":"Isle of Man",
+    "Code":"GBRi",
+    "Country":"United Kingdom�"
+  },
+  "Falkland Islands and Dependencies (former)": {
+    "French":"Falkland Islands and Dependencies (former)",
+    "Spanish":"Falkland Islands and Dependencies (former)",
+    "Code":"GBRj",
+    "Country":"United Kingdom�"
+  },
+  "Ascension": {
+    "French":"Ascension",
+    "Spanish":"Ascension",
+    "Code":"GBRl",
+    "Country":"United Kingdom�"
+  },
+  "Tristan da Cunha": {
+    "French":"Tristan da Cunha",
+    "Spanish":"Tristan da Cunha",
+    "Code":"GBRm",
+    "Country":"United Kingdom�"
+  },
+  "British Antarctic Territory": {
+    "French":"Terr. Britanniques d'antarctic",
+    "Spanish":"British Antarctic Territory",
+    "Code":"GBRo",
+    "Country":"United Kingdom�"
+  },
+  "South Georgia": {
+    "French":"South Georgia",
+    "Spanish":"South Georgia",
+    "Code":"GBRp",
+    "Country":"United Kingdom�"
+  },
+  "South Sandwich Island": {
+    "French":"South Sandwich Island",
+    "Spanish":"South Sandwich Islands",
+    "Code":"GBRq",
+    "Country":"United Kingdom�"
+  },
+  "Hong Kong": {
+    "French":"Hong Kong",
+    "Spanish":"Hong Kong",
+    "Code":"HKG",
+    "Country":"China�"
+  },
+  "Andhra Pradesh": {
+    "French":"Andhra Pradesh",
+    "Spanish":"Andhra Pradesh",
+    "Code":"INDa",
+    "Country":"India�"
+  },
+  "Assam": {
+    "French":"Assam",
+    "Spanish":"Assam",
+    "Code":"INDb",
+    "Country":"India�"
+  },
+  "Bihar": {
+    "French":"Bihar",
+    "Spanish":"Bihar",
+    "Code":"INDc",
+    "Country":"India�"
+  },
+  "Gujarat": {
+    "French":"Gujarat",
+    "Spanish":"Gujarat",
+    "Code":"INDd",
+    "Country":"India�"
+  },
+  "Haryana": {
+    "French":"Haryana",
+    "Spanish":"Haryana",
+    "Code":"INDe",
+    "Country":"India�"
+  },
+  "Jammu and Kashmir": {
+    "French":"Jammu et Kashmir",
+    "Spanish":"Jammu and Kashmir",
+    "Code":"INDf",
+    "Country":"India�"
+  },
+  "Kerala": {
+    "French":"Kerala",
+    "Spanish":"Kerala",
+    "Code":"INDg",
+    "Country":"India�"
+  },
+  "Madhya Pradesh": {
+    "French":"Madhya Pradesh",
+    "Spanish":"Madhya Pradesh",
+    "Code":"INDh",
+    "Country":"India�"
+  },
+  "Maharashtra": {
+    "French":"Maharashtra",
+    "Spanish":"Maharashtra",
+    "Code":"INDi",
+    "Country":"India�"
+  },
+  "Karnataka": {
+    "French":"Karnataka",
+    "Spanish":"Karnataka",
+    "Code":"INDj",
+    "Country":"India�"
+  },
+  "Nagaland": {
+    "French":"Nagaland",
+    "Spanish":"Nagaland",
+    "Code":"INDk",
+    "Country":"India�"
+  },
+  "Orissa": {
+    "French":"Orissa",
+    "Spanish":"Orissa",
+    "Code":"INDl",
+    "Country":"India�"
+  },
+  "Punjab": {
+    "French":"Punjab",
+    "Spanish":"Punjab",
+    "Code":"INDm",
+    "Country":"India�"
+  },
+  "Rajasthan": {
+    "French":"Rajasthan",
+    "Spanish":"Rajasthan",
+    "Code":"INDn",
+    "Country":"India�"
+  },
+  "Tamil Nadu": {
+    "French":"Tamil Nadu",
+    "Spanish":"Tamil Nadu",
+    "Code":"INDo",
+    "Country":"India�"
+  },
+  "Uttar Pradesh": {
+    "French":"Uttar Pradesh",
+    "Spanish":"Uttar Pradesh",
+    "Code":"INDp",
+    "Country":"India�"
+  },
+  "West Bengal": {
+    "French":"West Bengal",
+    "Spanish":"West Bengal",
+    "Code":"INDq",
+    "Country":"India�"
+  },
+  "Andaman and Nicobar Islands": {
+    "French":"Andaman et Nicobar Iles",
+    "Spanish":"Andaman and Nicobar Islands",
+    "Code":"INDr",
+    "Country":"India�"
+  },
+  "Chandigarh": {
+    "French":"Chandigarh",
+    "Spanish":"Chandigarh",
+    "Code":"INDs",
+    "Country":"India�"
+  },
+  "Dadra and Nagar Haveli": {
+    "French":"Dadra et Nagar Haveli",
+    "Spanish":"Dadra and Nagar Haveli",
+    "Code":"INDt",
+    "Country":"India�"
+  },
+  "Delhi": {
+    "French":"Delhi",
+    "Spanish":"Delhi",
+    "Code":"INDu",
+    "Country":"India�"
+  },
+  "Goa, Daman and Diu": {
+    "French":"Goa, Daman et Diu",
+    "Spanish":"Goa , Daman and Diu",
+    "Code":"INDv",
+    "Country":"India�"
+  },
+  "Himachal Pradesh": {
+    "French":"Himachal Pradesh",
+    "Spanish":"Himachal Pradesh",
+    "Code":"INDw",
+    "Country":"India�"
+  },
+  "Lakshadweep": {
+    "French":"Lakshadweep",
+    "Spanish":"Lakshadweep",
+    "Code":"INDx",
+    "Country":"India�"
+  },
+  "Manipur": {
+    "French":"Manipur",
+    "Spanish":"Manipur",
+    "Code":"INDy",
+    "Country":"India�"
+  },
+  "Pondicherry": {
+    "French":"Pondicherry",
+    "Spanish":"Pondicherry",
+    "Code":"INDz",
+    "Country":"India�"
+  },
+  "Tripura": {
+    "French":"Tripura",
+    "Spanish":"Tripura",
+    "Code":"IND3",
+    "Country":"India�"
+  },
+  "Meghalaya": {
+    "French":"Meghalaya",
+    "Spanish":"Meghalaya",
+    "Code":"IND4",
+    "Country":"India�"
+  },
+  "Arunachal Pradesh": {
+    "French":"Arunachal Pradesh",
+    "Spanish":"Arunachal Pradesh",
+    "Code":"IND5",
+    "Country":"India�"
+  },
+  "Mizoram": {
+    "French":"Mizoram",
+    "Spanish":"Mizoram",
+    "Code":"IND6",
+    "Country":"India�"
+  },
+  "Bolzano": {
+    "French":"Bolzano",
+    "Spanish":"Bolzano",
+    "Code":"ITAa",
+    "Country":"Italy�"
+  },
+  "Piemonte": {
+    "French":"Piemonte",
+    "Spanish":"Piemonte",
+    "Code":"ITAb",
+    "Country":"Italy�"
+  },
+  "Lombardia": {
+    "French":"Lombardia",
+    "Spanish":"Lombardia",
+    "Code":"ITAc",
+    "Country":"Italy�"
+  },
+  "Lombardia-Bergamo": {
+    "French":"Lombardia-Bergamo",
+    "Spanish":"Lombardia-Bergamo",
+    "Code":"ITA1",
+    "Country":"Italy�"
+  },
+  "Lombardia-Brescia": {
+    "French":"Lombardia-Brescia",
+    "Spanish":"Lombardia-Brescia",
+    "Code":"ITA2",
+    "Country":"Italy�"
+  },
+  "Lombardia-Como": {
+    "French":"Lombardia-Como",
+    "Spanish":"Lombardia-Como",
+    "Code":"ITA3",
+    "Country":"Italy�"
+  },
+  "Lombardia-Mantova": {
+    "French":"Lombardia-Mantova",
+    "Spanish":"Lombardia-Mantova",
+    "Code":"ITA4",
+    "Country":"Italy�"
+  },
+  "Lombardia-Milano": {
+    "French":"Lombardia-Milano",
+    "Spanish":"Lombardia-Milano",
+    "Code":"ITA5",
+    "Country":"Italy�"
+  },
+  "Lombardia-Sondrio": {
+    "French":"Lombardia-Sondrio",
+    "Spanish":"Lombardia-Sondrio",
+    "Code":"ITA6",
+    "Country":"Italy�"
+  },
+  "Lombardia-Pavia": {
+    "French":"Lombardia-Pavia",
+    "Spanish":"Lombardia-Pavia",
+    "Code":"ITA7",
+    "Country":"Italy�"
+  },
+  "Veneto": {
+    "French":"Veneto",
+    "Spanish":"Veneto",
+    "Code":"ITAd",
+    "Country":"Italy�"
+  },
+  "Liguria": {
+    "French":"Liguria",
+    "Spanish":"Liguria",
+    "Code":"ITAe",
+    "Country":"Italy�"
+  },
+  "Trentino Alto Adigo": {
+    "French":"Trentino Alto Adigo",
+    "Spanish":"Trentino Alto Adigo",
+    "Code":"ITAf",
+    "Country":"Italy�"
+  },
+  "Trento": {
+    "French":"Trento",
+    "Spanish":"Trento",
+    "Code":"ITAg",
+    "Country":"Italy�"
+  },
+  "Emilia-Romagna": {
+    "French":"Emilia-Romagna",
+    "Spanish":"Emilia-Romagna",
+    "Code":"ITAh",
+    "Country":"Italy�"
+  },
+  "Toscana": {
+    "French":"Toscana",
+    "Spanish":"Toscana",
+    "Code":"ITAi",
+    "Country":"Italy�"
+  },
+  "Umbria": {
+    "French":"Umbria",
+    "Spanish":"Umbria",
+    "Code":"ITAj",
+    "Country":"Italy�"
+  },
+  "Marche": {
+    "French":"Marche",
+    "Spanish":"Marche",
+    "Code":"ITAk",
+    "Country":"Italy�"
+  },
+  "Lazio": {
+    "French":"Lazio",
+    "Spanish":"Lazio",
+    "Code":"ITAl",
+    "Country":"Italy�"
+  },
+  "Abruzzo": {
+    "French":"Abruzzo",
+    "Spanish":"Abruzzo",
+    "Code":"ITAm",
+    "Country":"Italy�"
+  },
+  "Molise": {
+    "French":"Molise",
+    "Spanish":"Molise",
+    "Code":"ITAn",
+    "Country":"Italy�"
+  },
+  "Campania": {
+    "French":"Campania",
+    "Spanish":"Campania",
+    "Code":"ITAo",
+    "Country":"Italy�"
+  },
+  "Puglia": {
+    "French":"Puglia",
+    "Spanish":"Puglia",
+    "Code":"ITAp",
+    "Country":"Italy�"
+  },
+  "Basilicata": {
+    "French":"Basilicata",
+    "Spanish":"Basilicata",
+    "Code":"ITAq",
+    "Country":"Italy�"
+  },
+  "Calabria": {
+    "French":"Calabria",
+    "Spanish":"Calabria",
+    "Code":"ITAr",
+    "Country":"Italy�"
+  },
+  "Sicilia": {
+    "French":"Sicilia",
+    "Spanish":"Sicilia",
+    "Code":"ITAs",
+    "Country":"Italy�"
+  },
+  "Sardegna": {
+    "French":"Sardegna",
+    "Spanish":"Sardegna",
+    "Code":"ITAt",
+    "Country":"Italy�"
+  },
+  "Valle d'Aosta": {
+    "French":"Val d'Aoste",
+    "Spanish":"Valle d'Aosta",
+    "Code":"ITAu",
+    "Country":"Italy�"
+  },
+  "Friuli-Venezia Giulia": {
+    "French":"Friuli-Venezia Giulia",
+    "Spanish":"Friuli-Venezia Giulia",
+    "Code":"ITAv",
+    "Country":"Italy�"
+  },
+  "Tokyo": {
+    "French":"Tokyo",
+    "Spanish":"Tokyo",
+    "Code":"JAPa",
+    "Country":"Japan�"
+  },
+  "Ryu Kyu": {
+    "French":"Ryu Kyu, Ile",
+    "Spanish":"Ryu Kyu",
+    "Code":"JAPb",
+    "Country":"Japan�"
+  },
+  "Johore": {
+    "French":"Johore",
+    "Spanish":"Johore",
+    "Code":"MALa",
+    "Country":"Malaysia�"
+  },
+  "Kedah": {
+    "French":"Kedah",
+    "Spanish":"Kedah",
+    "Code":"MALb",
+    "Country":"Malaysia�"
+  },
+  "Kelantan": {
+    "French":"Kelantan",
+    "Spanish":"Kelantan",
+    "Code":"MALc",
+    "Country":"Malaysia�"
+  },
+  "Malacca": {
+    "French":"Malacca",
+    "Spanish":"Malacca",
+    "Code":"MALd",
+    "Country":"Malaysia�"
+  },
+  "Negri Sembilan": {
+    "French":"Negri Sembilan",
+    "Spanish":"Negri Sembilan",
+    "Code":"MALe",
+    "Country":"Malaysia�"
+  },
+  "Pahang": {
+    "French":"Pahang",
+    "Spanish":"Pahang",
+    "Code":"MALf",
+    "Country":"Malaysia�"
+  },
+  "Perak": {
+    "French":"Perak",
+    "Spanish":"Perak",
+    "Code":"MALg",
+    "Country":"Malaysia�"
+  },
+  "Perlis": {
+    "French":"Perlis",
+    "Spanish":"Perlis",
+    "Code":"MALh",
+    "Country":"Malaysia�"
+  },
+  "Sabah": {
+    "French":"Sabah",
+    "Spanish":"Sabah",
+    "Code":"MALi",
+    "Country":"Malaysia�"
+  },
+  "Sarawak": {
+    "French":"Sarawak",
+    "Spanish":"Sarawak",
+    "Code":"MALj",
+    "Country":"Malaysia�"
+  },
+  "Selangor": {
+    "French":"Selangor",
+    "Spanish":"Selangor",
+    "Code":"MALk",
+    "Country":"Malaysia�"
+  },
+  "Penang": {
+    "French":"Penang",
+    "Spanish":"Penang",
+    "Code":"MALl",
+    "Country":"Malaysia�"
+  },
+  "Trengganu": {
+    "French":"Trengganu",
+    "Spanish":"Trengganu",
+    "Code":"MALm",
+    "Country":"Malaysia�"
+  },
+  "Aquascalientes": {
+    "French":"Aquascalientes",
+    "Spanish":"Aquascalientes",
+    "Code":"MEXa",
+    "Country":"Mexico�"
+  },
+  "Baja California, Norte": {
+    "French":"Baja California",
+    "Spanish":"Baja California , Norte",
+    "Code":"MEXb",
+    "Country":"Mexico�"
+  },
+  "Baja California Sur": {
+    "French":"Baja California Sur",
+    "Spanish":"Baja California Sur",
+    "Code":"MEXc",
+    "Country":"Mexico�"
+  },
+  "Campeche": {
+    "French":"Campeche",
+    "Spanish":"Campeche",
+    "Code":"MEXd",
+    "Country":"Mexico�"
+  },
+  "Coahuila": {
+    "French":"Coahuila",
+    "Spanish":"Coahuila",
+    "Code":"MEXe",
+    "Country":"Mexico�"
+  },
+  "Colima": {
+    "French":"Colima",
+    "Spanish":"Colima",
+    "Code":"MEXf",
+    "Country":"Mexico�"
+  },
+  "Chiapas": {
+    "French":"Chiapas",
+    "Spanish":"Chiapas",
+    "Code":"MEXg",
+    "Country":"Mexico�"
+  },
+  "Chihuahua": {
+    "French":"Chihuahua",
+    "Spanish":"Chihuahua",
+    "Code":"MEXh",
+    "Country":"Mexico�"
+  },
+  "Distrito Federal": {
+    "French":"Distrito Federal",
+    "Spanish":"Distrito Federal",
+    "Code":"MEXi",
+    "Country":"Mexico�"
+  },
+  "Durango": {
+    "French":"Durango",
+    "Spanish":"Durango",
+    "Code":"MEXj",
+    "Country":"Mexico�"
+  },
+  "Guanajuato": {
+    "French":"Guanajuato",
+    "Spanish":"Guanajuato",
+    "Code":"MEXk",
+    "Country":"Mexico�"
+  },
+  "Guerrero": {
+    "French":"Guerrero",
+    "Spanish":"Guerrero",
+    "Code":"MEXl",
+    "Country":"Mexico�"
+  },
+  "Hidalgo": {
+    "French":"Hidalgo",
+    "Spanish":"Hidalgo",
+    "Code":"MEXm",
+    "Country":"Mexico�"
+  },
+  "Jalisco": {
+    "French":"Jalisco",
+    "Spanish":"Jalisco",
+    "Code":"MEXn",
+    "Country":"Mexico�"
+  },
+  "Mexico": {
+    "French":"M�xico",
+    "Spanish":"M�xico",
+    "Code":"MEXo",
+    "Country":"Mexico�"
+  },
+  "Michoacan": {
+    "French":"Michoacan",
+    "Spanish":"Michoacan",
+    "Code":"MEXp",
+    "Country":"Mexico�"
+  },
+  "Morelos": {
+    "French":"Morelos",
+    "Spanish":"Morelos",
+    "Code":"MEXq",
+    "Country":"Mexico�"
+  },
+  "Nayarit": {
+    "French":"Nayarit",
+    "Spanish":"Nayarit",
+    "Code":"MEXr",
+    "Country":"Mexico�"
+  },
+  "Nuevo Leon": {
+    "French":"Nuevo Leon",
+    "Spanish":"Nuevo Le�n",
+    "Code":"MEXs",
+    "Country":"Mexico�"
+  },
+  "Oaxaca": {
+    "French":"Oaxaca",
+    "Spanish":"Oaxaca",
+    "Code":"MEXt",
+    "Country":"Mexico�"
+  },
+  "Puebla": {
+    "French":"Puebla",
+    "Spanish":"Puebla",
+    "Code":"MEXu",
+    "Country":"Mexico�"
+  },
+  "Quer�taro de Arteaga": {
+    "French":"Quer�taro de Arteaga",
+    "Spanish":"Quer�taro de Arteaga",
+    "Code":"MEXv",
+    "Country":"Mexico�"
+  },
+  "Quintana Roo": {
+    "French":"Quintana Roo",
+    "Spanish":"Quintana Roo",
+    "Code":"MEXw",
+    "Country":"Mexico�"
+  },
+  "San Luis Potosi": {
+    "French":"San Luis Potosi",
+    "Spanish":"San Luis Potosi",
+    "Code":"MEXx",
+    "Country":"Mexico�"
+  },
+  "Sinaloa": {
+    "French":"Sinaloa",
+    "Spanish":"Sinaloa",
+    "Code":"MEXy",
+    "Country":"Mexico�"
+  },
+  "Sonora": {
+    "French":"Sonora",
+    "Spanish":"Sonora",
+    "Code":"MEXz",
+    "Country":"Mexico�"
+  },
+  "Tabasco": {
+    "French":"Tabasco",
+    "Spanish":"Tabasco",
+    "Code":"MEX1",
+    "Country":"Mexico�"
+  },
+  "Tamaulipas": {
+    "French":"Tamaulipas",
+    "Spanish":"Tamaulipas",
+    "Code":"MEX2",
+    "Country":"Mexico�"
+  },
+  "Tlaxcala": {
+    "French":"Tlaxcala",
+    "Spanish":"Tlaxcala",
+    "Code":"MEX3",
+    "Country":"Mexico�"
+  },
+  "Veracruz": {
+    "French":"Veracruz",
+    "Spanish":"Veracruz",
+    "Code":"MEX4",
+    "Country":"Mexico�"
+  },
+  "Yucatan": {
+    "French":"Yucat�n",
+    "Spanish":"Yucat�n",
+    "Code":"MEX5",
+    "Country":"Mexico�"
+  },
+  "Zacatecas": {
+    "French":"Zacatecas",
+    "Spanish":"Zacatecas",
+    "Code":"MEX6",
+    "Country":"Mexico�"
+  },
+  "Groningen": {
+    "French":"Groningen",
+    "Spanish":"Groningen",
+    "Code":"NETa",
+    "Country":"Netherlands�"
+  },
+  "Friesland": {
+    "French":"Friesland",
+    "Spanish":"Friesland",
+    "Code":"NETb",
+    "Country":"Netherlands�"
+  },
+  "Drenthe": {
+    "French":"Drenthe",
+    "Spanish":"Drenthe",
+    "Code":"NETc",
+    "Country":"Netherlands�"
+  },
+  "Overijssel": {
+    "French":"Overijssel",
+    "Spanish":"Overijssel",
+    "Code":"NETd",
+    "Country":"Netherlands�"
+  },
+  "Gelderland": {
+    "French":"Gelderland",
+    "Spanish":"Gelderland",
+    "Code":"NETe",
+    "Country":"Netherlands�"
+  },
+  "Utrecht": {
+    "French":"Utrecht",
+    "Spanish":"Utrecht",
+    "Code":"NETf",
+    "Country":"Netherlands�"
+  },
+  "Noord-Holland": {
+    "French":"Noord-Holland",
+    "Spanish":"Noord-Holland",
+    "Code":"NETg",
+    "Country":"Netherlands�"
+  },
+  "Zuid-Holland": {
+    "French":"Zuid-Holland",
+    "Spanish":"Zuid-Holland",
+    "Code":"NETh",
+    "Country":"Netherlands�"
+  },
+  "Zeeland": {
+    "French":"Zeeland",
+    "Spanish":"Zeeland",
+    "Code":"NETi",
+    "Country":"Netherlands�"
+  },
+  "Noord-Brabant": {
+    "French":"Noord-Brabant",
+    "Spanish":"Noord-Brabant",
+    "Code":"NETj",
+    "Country":"Netherlands�"
+  },
+  "Limburg": {
+    "French":"Limbourg",
+    "Spanish":"Limburg",
+    "Code":"NETk",
+    "Country":"Netherlands�"
+  },
+  "Dronten": {
+    "French":"Dronten",
+    "Spanish":"Dronten",
+    "Code":"NETl",
+    "Country":"Netherlands�"
+  },
+  "Flevoland": {
+    "French":"Flevoland",
+    "Spanish":"Flevoland",
+    "Code":"NETm",
+    "Country":"Netherlands�"
+  },
+  "Flevoland - Noordoostpolder/Ur": {
+    "French":"Flevoland - Noordoostpolder/Urk",
+    "Spanish":"Flevoland - Noordoostpolder/U",
+    "Code":"NETn",
+    "Country":"Netherlands�"
+  },
+  "Flevoland - Zuidelijke IJsselmolders": {
+    "French":"Flevoland - Zuidelijke IJsselmeerers",
+    "Spanish":"Flevoland - Zuidelijke IJsselpolders",
+    "Code":"NETo",
+    "Country":"Netherlands�"
+  },
+  "Chatham Islands": {
+    "French":"Iles Chatham",
+    "Spanish":"Islas Chatham",
+    "Code":"NZLa",
+    "Country":"New Zealand�"
+  },
+  "Titi Islands": {
+    "French":"Iles Titi",
+    "Spanish":"Islas Titi",
+    "Code":"NZLb",
+    "Country":"New Zealand�"
+  },
+  "Ross Dependency": {
+    "French":"Ross, D�pendance de",
+    "Spanish":"Ross Dependency",
+    "Code":"NZLc",
+    "Country":"New Zealand�"
+  },
+  "Anambra": {
+    "French":"Anambra",
+    "Spanish":"Anambra",
+    "Code":"NIGa",
+    "Country":"Nigeria�"
+  },
+  "Bauchi": {
+    "French":"Bauchi",
+    "Spanish":"Bauchi",
+    "Code":"NIGb",
+    "Country":"Nigeria�"
+  },
+  "Bendel": {
+    "French":"Bendel",
+    "Spanish":"Bendel",
+    "Code":"NIGc",
+    "Country":"Nigeria�"
+  },
+  "Benue": {
+    "French":"Benue",
+    "Spanish":"Benue",
+    "Code":"NIGd",
+    "Country":"Nigeria�"
+  },
+  "Borno": {
+    "French":"Borno",
+    "Spanish":"Borno",
+    "Code":"NIGe",
+    "Country":"Nigeria�"
+  },
+  "Cross Rivers": {
+    "French":"Cross Rivers",
+    "Spanish":"Cross Rivers",
+    "Code":"NIGf",
+    "Country":"Nigeria�"
+  },
+  "Gongola": {
+    "French":"Gongola",
+    "Spanish":"Gongola",
+    "Code":"NIGg",
+    "Country":"Nigeria�"
+  },
+  "Imo": {
+    "French":"Imo",
+    "Spanish":"Imo",
+    "Code":"NIGh",
+    "Country":"Nigeria�"
+  },
+  "Kaduna": {
+    "French":"Kaduna",
+    "Spanish":"Kaduna",
+    "Code":"NIGi",
+    "Country":"Nigeria�"
+  },
+  "Kano": {
+    "French":"Kano",
+    "Spanish":"Kano",
+    "Code":"NIGj",
+    "Country":"Nigeria�"
+  },
+  "Kwara": {
+    "French":"Kwara",
+    "Spanish":"Kwara",
+    "Code":"NIGk",
+    "Country":"Nigeria�"
+  },
+  "Lagos": {
+    "French":"Lagos",
+    "Spanish":"Lagos",
+    "Code":"NIGl",
+    "Country":"Nigeria�"
+  },
+  "Niger": {
+    "French":"Niger",
+    "Spanish":"Niger",
+    "Code":"NIGm",
+    "Country":"Nigeria�"
+  },
+  "Ogun": {
+    "French":"Ogun",
+    "Spanish":"Ogun",
+    "Code":"NIGn",
+    "Country":"Nigeria�"
+  },
+  "Ondo": {
+    "French":"Ondo",
+    "Spanish":"Ondo",
+    "Code":"NIGo",
+    "Country":"Nigeria�"
+  },
+  "Oyo": {
+    "French":"Oyo",
+    "Spanish":"Oyo",
+    "Code":"NIGp",
+    "Country":"Nigeria�"
+  },
+  "Plateau": {
+    "French":"Plateau",
+    "Spanish":"Plateau",
+    "Code":"NIGq",
+    "Country":"Nigeria�"
+  },
+  "Rivers": {
+    "French":"Rivers",
+    "Spanish":"Rivers",
+    "Code":"NIGr",
+    "Country":"Nigeria�"
+  },
+  "Sokoto": {
+    "French":"Sokoto",
+    "Spanish":"Sokoto",
+    "Code":"NIGs",
+    "Country":"Nigeria�"
+  },
+  "Bauchi/Borno/Gongola": {
+    "French":"Bauchi/Borno/Gongola",
+    "Spanish":"Bauchi/Borno/Gongola",
+    "Code":"NIGt",
+    "Country":"Nigeria�"
+  },
+  "Ogun/Ondo/Oyo": {
+    "French":"Ogun/Ondo/Oyo",
+    "Spanish":"Ogun/Ondo/Oyo",
+    "Code":"NIGu",
+    "Country":"Nigeria�"
+  },
+  "Benue/Kaduna/Kwara/Niger/Plateau/So": {
+    "French":"Benue/Kaduna/Kwara/Niger/Plateau/So",
+    "Spanish":"Benue/Kaduna/Kwara/Niger/Plateau/So",
+    "Code":"NIGv",
+    "Country":"Nigeria�"
+  },
+  "Anambra/Imo/Rivers/Cross Rivers": {
+    "French":"Anambra/Imo/Rivers/Cross Rivers",
+    "Spanish":"Anambra/Imo/Rivers/Cross Rivers",
+    "Code":"NIGw",
+    "Country":"Nigeria�"
+  },
+  "Bouvet Island": {
+    "French":"Ile Bouvet",
+    "Spanish":"Bouvet Island",
+    "Code":"NORa",
+    "Country":"Norway�"
+  },
+  "Peter I. Island": {
+    "French":"Ile Pierre Ier",
+    "Spanish":"Peter I. Island",
+    "Code":"NORb",
+    "Country":"Norway�"
+  },
+  "Queen Maud Land": {
+    "French":"Queen Maud Land",
+    "Spanish":"Queen Maud Land",
+    "Code":"NORc",
+    "Country":"Norway�"
+  },
+  "North-West Frontier Prov.": {
+    "French":"North-West Frontier Prov.",
+    "Spanish":"North-West Frontier Prov.",
+    "Code":"PAKa",
+    "Country":"Pakistan�"
+  },
+  "Balochistan": {
+    "French":"Balochistan",
+    "Spanish":"Balochistan",
+    "Code":"PAKb",
+    "Country":"Pakistan�"
+  },
+  "Punjab": {
+    "French":"Punjab",
+    "Spanish":"Punjab",
+    "Code":"PAKc",
+    "Country":"Pakistan�"
+  },
+  "Azad Kashmir": {
+    "French":"Azad Kashmir",
+    "Spanish":"Azad Kashmir",
+    "Code":"PAKd",
+    "Country":"Pakistan�"
+  },
+  "Northern Area": {
+    "French":"Northern Area",
+    "Spanish":"Northern Area",
+    "Code":"PAKf",
+    "Country":"Pakistan�"
+  },
+  "Sind": {
+    "French":"Sind",
+    "Spanish":"Sind",
+    "Code":"PAKe",
+    "Country":"Pakistan�"
+  },
+  "Federal Capital Territory": {
+    "French":"Territoire de Capital F�deral",
+    "Spanish":"Federal Capital Territory",
+    "Code":"PAKg",
+    "Country":"Pakistan�"
+  },
+  "Madeira": {
+    "French":"Madeira",
+    "Spanish":"Madeira",
+    "Code":"PORa",
+    "Country":"Portugal�"
+  },
+  "A�ores": {
+    "French":"A�ores",
+    "Spanish":"A�ores",
+    "Code":"PORb",
+    "Country":"Portugal�"
+  },
+  "Eastern Cape": {
+    "French":"Eastern Cape",
+    "Spanish":"Eastern Cape",
+    "Code":"SAFb",
+    "Country":"South Africa�"
+  },
+  "Mpumalanga": {
+    "French":"Mpumalanga",
+    "Spanish":"Mpumalanga",
+    "Code":"SAFc",
+    "Country":"South Africa�"
+  },
+  "Free State": {
+    "French":"Free State",
+    "Spanish":"Free State",
+    "Code":"SAFd",
+    "Country":"South Africa�"
+  },
+  "Gauteng": {
+    "French":"Gauteng",
+    "Spanish":"Gauteng",
+    "Code":"SAFe",
+    "Country":"South Africa�"
+  },
+  "Kwazulu-Natal": {
+    "French":"Kwazulu-Natal",
+    "Spanish":"Kwazulu-Natal",
+    "Code":"SAFf",
+    "Country":"South Africa�"
+  },
+  "Northern Cape": {
+    "French":"Northern Cape",
+    "Spanish":"Northern Cape",
+    "Code":"SAFg",
+    "Country":"South Africa�"
+  },
+  "Northern Province": {
+    "French":"Northern Province",
+    "Spanish":"Northern Province",
+    "Code":"SAFi",
+    "Country":"South Africa�"
+  },
+  "North West": {
+    "French":"North West",
+    "Spanish":"North West",
+    "Code":"SAFj",
+    "Country":"South Africa�"
+  },
+  "Western Cape": {
+    "French":"Western Cape",
+    "Spanish":"Western Cape",
+    "Code":"SAFh",
+    "Country":"South Africa�"
+  },
+  "Cape Province (former)": {
+    "French":"Cape, Province du (ancient)",
+    "Spanish":"Cape Province (former)",
+    "Code":"SAFk",
+    "Country":"South Africa�"
+  },
+  "Natal (former)": {
+    "French":"Natal (ancient)",
+    "Spanish":"Natal (former)",
+    "Code":"SAFi",
+    "Country":"South Africa�"
+  },
+  "Orange Free State (former)": {
+    "French":"Orange Free State (ancient)",
+    "Spanish":"Orange Free State (former)",
+    "Code":"SAFj",
+    "Country":"South Africa�"
+  },
+  "Transvaal (former)": {
+    "French":"Transvaal (ancient)",
+    "Spanish":"Transvaal (former)",
+    "Code":"SAFk",
+    "Country":"South Africa�"
+  },
+  "Canarias": {
+    "French":"Canaries",
+    "Spanish":"Canarias",
+    "Code":"SPAa",
+    "Country":"Spain�"
+  },
+  "Tenerife": {
+    "French":"T�nerife",
+    "Spanish":"Tenerife",
+    "Code":"SPAb",
+    "Country":"Spain�"
+  },
+  "Ceuta-Mellilla": {
+    "French":"Ceuta-Mellilla",
+    "Spanish":"Ceuta-Mellilla",
+    "Code":"SPAc",
+    "Country":"Spain�"
+  },
+  "Andalucia": {
+    "French":"Andalousie",
+    "Spanish":"Andalucia",
+    "Code":"SPAd",
+    "Country":"Spain�"
+  },
+  "Galicia": {
+    "French":"Galice",
+    "Spanish":"Galicia",
+    "Code":"SPAe",
+    "Country":"Spain�"
+  },
+  "Catalunya": {
+    "French":"Catalogne",
+    "Spanish":"Catalunya",
+    "Code":"SPAf",
+    "Country":"Spain�"
+  },
+  "Pais Vasco": {
+    "French":"Pays Basque",
+    "Spanish":"Pais Vasco",
+    "Code":"SPAg",
+    "Country":"Spain�"
+  },
+  "Cantabria": {
+    "French":"Cantabria",
+    "Spanish":"Cantabria",
+    "Code":"SPAh",
+    "Country":"Spain�"
+  },
+  "Principado de Asturias": {
+    "French":"Principante d'Asturie",
+    "Spanish":"Principado de Asturias",
+    "Code":"SPAi",
+    "Country":"Spain�"
+  },
+  "Madrid": {
+    "French":"Madrid",
+    "Spanish":"Madrid",
+    "Code":"SPAj",
+    "Country":"Spain�"
+  },
+  "Navarra": {
+    "French":"Navarra",
+    "Spanish":"Navarra",
+    "Code":"SPAk",
+    "Country":"Spain�"
+  },
+  "Murcia": {
+    "French":"Murcia",
+    "Spanish":"Murcia",
+    "Code":"SPAl",
+    "Country":"Spain�"
+  },
+  "Aragon": {
+    "French":"Aragon",
+    "Spanish":"Aragon",
+    "Code":"SPAm",
+    "Country":"Spain�"
+  },
+  "Castilla-La Mancha": {
+    "French":"Castilla-La Mancha",
+    "Spanish":"Castilla-La Mancha",
+    "Code":"SPAn",
+    "Country":"Spain�"
+  },
+  "Comunidad Valenciana": {
+    "French":"Comunidad Valenciana",
+    "Spanish":"Comunidad Valenciana",
+    "Code":"SPAo",
+    "Country":"Spain�"
+  },
+  "La Rioja": {
+    "French":"La Rioja",
+    "Spanish":"La Rioja",
+    "Code":"SPAp",
+    "Country":"Spain�"
+  },
+  "Extremadura": {
+    "French":"Extremadura",
+    "Spanish":"Extremadura",
+    "Code":"SPAq",
+    "Country":"Spain�"
+  },
+  "Castilla y Le�n": {
+    "French":"Castilla y Le�n",
+    "Spanish":"Castilla y Le�n",
+    "Code":"SPAr",
+    "Country":"Spain�"
+  },
+  "Baleares": {
+    "French":"Bal�ares",
+    "Spanish":"Baleares",
+    "Code":"SPAs",
+    "Country":"Spain�"
+  },
+  "Cordoba": {
+    "French":"Cordoba",
+    "Spanish":"Cordoba",
+    "Code":"SPAt",
+    "Country":"Spain�"
+  },
+  "Equatoria Region": {
+    "French":"R�gion �quatoriale",
+    "Spanish":"Regi�n Ecuatorial",
+    "Code":"SDNa",
+    "Country":"Sudan�"
+  },
+  "Stockholm(City)": {
+    "French":"Stockholm(City)",
+    "Spanish":"Stockholm (City)",
+    "Code":"SWEa",
+    "Country":"Sweden�"
+  },
+  "Stockholms L�n": {
+    "French":"Stockholms L�n",
+    "Spanish":"Stockholms L�n",
+    "Code":"SWEb",
+    "Country":"Sweden�"
+  },
+  "Uppsala": {
+    "French":"Uppsala",
+    "Spanish":"Uppsala",
+    "Code":"SWEc",
+    "Country":"Sweden�"
+  },
+  "S�dermanland": {
+    "French":"S�dermanland",
+    "Spanish":"S�dermanland",
+    "Code":"SWEd",
+    "Country":"Sweden�"
+  },
+  "�sterg�tland": {
+    "French":"�sterg�tland",
+    "Spanish":"�sterg�tland",
+    "Code":"SWEe",
+    "Country":"Sweden�"
+  },
+  "J�nk�ping": {
+    "French":"J�nk�ping",
+    "Spanish":"J�nk�ping",
+    "Code":"SWEf",
+    "Country":"Sweden�"
+  },
+  "Kronoberg": {
+    "French":"Kronoberg",
+    "Spanish":"Kronoberg",
+    "Code":"SWEg",
+    "Country":"Sweden�"
+  },
+  "Kalmar": {
+    "French":"Kalmar",
+    "Spanish":"Kalmar",
+    "Code":"SWEh",
+    "Country":"Sweden�"
+  },
+  "Kalmar/Island of �land": {
+    "French":"Kalmar/Isle d'�land",
+    "Spanish":"Kalmar / Island of �land",
+    "Code":"SWEi",
+    "Country":"Sweden�"
+  },
+  "Gotland": {
+    "French":"Gotland",
+    "Spanish":"Gotland",
+    "Code":"SWEj",
+    "Country":"Sweden�"
+  },
+  "Blekinge": {
+    "French":"Blekinge",
+    "Spanish":"Blekinge",
+    "Code":"SWEk",
+    "Country":"Sweden�"
+  },
+  "Kristianstad": {
+    "French":"Kristianstad",
+    "Spanish":"Kristianstad",
+    "Code":"SWEl",
+    "Country":"Sweden�"
+  },
+  "Malm�hus": {
+    "French":"Malm�hus",
+    "Spanish":"Malm�hus",
+    "Code":"SWEm",
+    "Country":"Sweden�"
+  },
+  "Halland": {
+    "French":"Halland",
+    "Spanish":"Halland",
+    "Code":"SWEn",
+    "Country":"Sweden�"
+  },
+  "G�teborg och Bohus": {
+    "French":"G�teborg et Bohus",
+    "Spanish":"G�teborg och Bohus",
+    "Code":"SWEo",
+    "Country":"Sweden�"
+  },
+  "�lvsborg": {
+    "French":"�lvsborg",
+    "Spanish":"�lvsborg",
+    "Code":"SWEp",
+    "Country":"Sweden�"
+  },
+  "Skaraborg": {
+    "French":"Skaraborg",
+    "Spanish":"Skaraborg",
+    "Code":"SWEq",
+    "Country":"Sweden�"
+  },
+  "V�rmland": {
+    "French":"V�rmland",
+    "Spanish":"V�rmland",
+    "Code":"SWEr",
+    "Country":"Sweden�"
+  },
+  "�rebro": {
+    "French":"�rebro",
+    "Spanish":"�rebro",
+    "Code":"SWEs",
+    "Country":"Sweden�"
+  },
+  "V�stmanland": {
+    "French":"V�stmanland",
+    "Spanish":"V�stmanland",
+    "Code":"SWEt",
+    "Country":"Sweden�"
+  },
+  "Kopparberg": {
+    "French":"Kopparberg",
+    "Spanish":"Kopparberg",
+    "Code":"SWEu",
+    "Country":"Sweden�"
+  },
+  "G�vleborg": {
+    "French":"G�vleborg",
+    "Spanish":"G�vleborg",
+    "Code":"SWEv",
+    "Country":"Sweden�"
+  },
+  "V�sternorrland": {
+    "French":"V�sternorrland",
+    "Spanish":"V�sternorrland",
+    "Code":"SWEw",
+    "Country":"Sweden�"
+  },
+  "J�mtland": {
+    "French":"J�mtland",
+    "Spanish":"J�mtland",
+    "Code":"SWEx",
+    "Country":"Sweden�"
+  },
+  "V�sterbotten": {
+    "French":"V�sterbotten",
+    "Spanish":"V�sterbotten",
+    "Code":"SWEy",
+    "Country":"Sweden�"
+  },
+  "Norrbotten": {
+    "French":"Norrbotten",
+    "Spanish":"Norrbotten",
+    "Code":"SWEz",
+    "Country":"Sweden�"
+  },
+  "Aargau": {
+    "French":"Aargoire",
+    "Spanish":"Aargau",
+    "Code":"SWIa",
+    "Country":"Switzerland�"
+  },
+  "Appenzell Ausserrhoden": {
+    "French":"Appenzell Ausserrhoden",
+    "Spanish":"Appenzell Ausserrhoden",
+    "Code":"SWIb",
+    "Country":"Switzerland�"
+  },
+  "Appenzell Innerrhoden": {
+    "French":"Appenzell Innerrhoden",
+    "Spanish":"Appenzell Innerrhoden",
+    "Code":"SWIc",
+    "Country":"Switzerland�"
+  },
+  "Basel-Stadt": {
+    "French":"Basel-Stadt",
+    "Spanish":"Basel-Stadt",
+    "Code":"SWId",
+    "Country":"Switzerland�"
+  },
+  "Basel-Landschaft": {
+    "French":"Basel-Landschaft",
+    "Spanish":"Basel-Landschaft",
+    "Code":"SWIe",
+    "Country":"Switzerland�"
+  },
+  "Bern": {
+    "French":"Berne",
+    "Spanish":"Bern",
+    "Code":"SWIf",
+    "Country":"Switzerland�"
+  },
+  "Fribourg": {
+    "French":"Fribourg",
+    "Spanish":"Fribourg",
+    "Code":"SWIg",
+    "Country":"Switzerland�"
+  },
+  "Geneva": {
+    "French":"Gen?ve",
+    "Spanish":"Gen?ve",
+    "Code":"SWIh",
+    "Country":"Switzerland�"
+  },
+  "Glarus": {
+    "French":"Glarus",
+    "Spanish":"Glarus",
+    "Code":"SWIi",
+    "Country":"Switzerland�"
+  },
+  "Graub�nden": {
+    "French":"Grisons",
+    "Spanish":"Graub�nden",
+    "Code":"SWIj",
+    "Country":"Switzerland�"
+  },
+  "Jura": {
+    "French":"Jura",
+    "Spanish":"Jura",
+    "Code":"SWIz",
+    "Country":"Switzerland�"
+  },
+  "Luzern": {
+    "French":"Luzern",
+    "Spanish":"Luzern",
+    "Code":"SWIk",
+    "Country":"Switzerland�"
+  },
+  "Neuchatel": {
+    "French":"Neuch�tel",
+    "Spanish":"Neuch�tel",
+    "Code":"SWIl",
+    "Country":"Switzerland�"
+  },
+  "Nidwalden": {
+    "French":"Nidwalden",
+    "Spanish":"Nidwalden",
+    "Code":"SWIm",
+    "Country":"Switzerland�"
+  },
+  "Obwalden": {
+    "French":"Obwalden",
+    "Spanish":"Obwalden",
+    "Code":"SWIn",
+    "Country":"Switzerland�"
+  },
+  "Schwyz": {
+    "French":"Schwyz",
+    "Spanish":"Schwyz",
+    "Code":"SWIo",
+    "Country":"Switzerland�"
+  },
+  "St. Gallen": {
+    "French":"St. Gall",
+    "Spanish":"St. Gallen",
+    "Code":"SWIp",
+    "Country":"Switzerland�"
+  },
+  "Solothurn": {
+    "French":"Soleure",
+    "Spanish":"Solothurn",
+    "Code":"SWIq",
+    "Country":"Switzerland�"
+  },
+  "Schaffhausen": {
+    "French":"Schaffhausen",
+    "Spanish":"Schaffhausen",
+    "Code":"SWIr",
+    "Country":"Switzerland�"
+  },
+  "Ticino": {
+    "French":"Tessin",
+    "Spanish":"Ticino",
+    "Code":"SWIs",
+    "Country":"Switzerland�"
+  },
+  "Thurgau": {
+    "French":"Thurgoire",
+    "Spanish":"Thurgau",
+    "Code":"SWIt",
+    "Country":"Switzerland�"
+  },
+  "Uri": {
+    "French":"Uri",
+    "Spanish":"Uri",
+    "Code":"SWIu",
+    "Country":"Switzerland�"
+  },
+  "Vaud": {
+    "French":"Vaud",
+    "Spanish":"Vaud",
+    "Code":"SWIv",
+    "Country":"Switzerland�"
+  },
+  "Valais": {
+    "French":"Valais",
+    "Spanish":"Valais",
+    "Code":"SWIw",
+    "Country":"Switzerland�"
+  },
+  "Z�rich": {
+    "French":"Z�rich",
+    "Spanish":"Z�rich",
+    "Code":"SWIx",
+    "Country":"Switzerland�"
+  },
+  "Zug": {
+    "French":"Zoug",
+    "Spanish":"Zug",
+    "Code":"SWIy",
+    "Country":"Switzerland�"
+  },
+  "North Sinai": {
+    "French":"Sinai du Nord",
+    "Spanish":"Norte Sinai",
+    "Code":"EGYa",
+    "Country":"Egypt�"
+  },
+  "South Sinai": {
+    "French":"Sinai du Sud",
+    "Spanish":"Sur Sinai",
+    "Code":"EGYb",
+    "Country":"Egypt�"
+  },
+  "Matrouh Governorate": {
+    "French":"Matrouh Governorate",
+    "Spanish":"Matrouh Governorate",
+    "Code":"EGYc",
+    "Country":"Egypt�"
+  },
+  "Alabama": {
+    "French":"Alabama",
+    "Spanish":"Alabama",
+    "Code":"US10",
+    "Country":"United States of America�"
+  },
+  "Alaska": {
+    "French":"Alaska",
+    "Spanish":"Alaska",
+    "Code":"US11",
+    "Country":"United States of America�"
+  },
+  "Arizona": {
+    "French":"Arizona",
+    "Spanish":"Arizona",
+    "Code":"US12",
+    "Country":"United States of America�"
+  },
+  "Arkansas": {
+    "French":"Arkansas",
+    "Spanish":"Arkansas",
+    "Code":"US13",
+    "Country":"United States of America�"
+  },
+  "California": {
+    "French":"California",
+    "Spanish":"California",
+    "Code":"US14",
+    "Country":"United States of America�"
+  },
+  "Colorado": {
+    "French":"Colorado",
+    "Spanish":"Colorado",
+    "Code":"US15",
+    "Country":"United States of America�"
+  },
+  "Connecticut": {
+    "French":"Connecticut",
+    "Spanish":"Connecticut",
+    "Code":"US16",
+    "Country":"United States of America�"
+  },
+  "Delaware": {
+    "French":"Delaware",
+    "Spanish":"Delaware",
+    "Code":"US17",
+    "Country":"United States of America�"
+  },
+  "District of Columbia": {
+    "French":"District of Columbia",
+    "Spanish":"District of Columbia",
+    "Code":"US18",
+    "Country":"United States of America�"
+  },
+  "Florida": {
+    "French":"Florida",
+    "Spanish":"Florida",
+    "Code":"US19",
+    "Country":"United States of America�"
+  },
+  "Georgia": {
+    "French":"Georgia",
+    "Spanish":"Georgia",
+    "Code":"US20",
+    "Country":"United States of America�"
+  },
+  "Hawaii": {
+    "French":"Hawaii",
+    "Spanish":"Hawaii",
+    "Code":"US21",
+    "Country":"United States of America�"
+  },
+  "Idaho": {
+    "French":"Idaho",
+    "Spanish":"Idaho",
+    "Code":"US22",
+    "Country":"United States of America�"
+  },
+  "Illinois": {
+    "French":"Illinois",
+    "Spanish":"Illinois",
+    "Code":"US23",
+    "Country":"United States of America�"
+  },
+  "Indiana": {
+    "French":"Indiana",
+    "Spanish":"Indiana",
+    "Code":"US24",
+    "Country":"United States of America�"
+  },
+  "Iowa": {
+    "French":"Iowa",
+    "Spanish":"Iowa",
+    "Code":"US25",
+    "Country":"United States of America�"
+  },
+  "Kansas": {
+    "French":"Kansas",
+    "Spanish":"Kansas",
+    "Code":"US26",
+    "Country":"United States of America�"
+  },
+  "Kentucky": {
+    "French":"Kentucky",
+    "Spanish":"Kentucky",
+    "Code":"US27",
+    "Country":"United States of America�"
+  },
+  "Louisiana": {
+    "French":"Louisiane",
+    "Spanish":"Louisiana",
+    "Code":"US28",
+    "Country":"United States of America�"
+  },
+  "Maine": {
+    "French":"Maine",
+    "Spanish":"Maine",
+    "Code":"US29",
+    "Country":"United States of America�"
+  },
+  "Maryland": {
+    "French":"Maryland",
+    "Spanish":"Maryland",
+    "Code":"US30",
+    "Country":"United States of America�"
+  },
+  "Massachusetts": {
+    "French":"Massachusetts",
+    "Spanish":"Massachusetts",
+    "Code":"US31",
+    "Country":"United States of America�"
+  },
+  "Michigan": {
+    "French":"Michigan",
+    "Spanish":"Michigan",
+    "Code":"US32",
+    "Country":"United States of America�"
+  },
+  "Minnesota": {
+    "French":"Minnesota",
+    "Spanish":"Minnesota",
+    "Code":"US33",
+    "Country":"United States of America�"
+  },
+  "Mississippi": {
+    "French":"Mississippi",
+    "Spanish":"Mississippi",
+    "Code":"US34",
+    "Country":"United States of America�"
+  },
+  "Missouri": {
+    "French":"Missouri",
+    "Spanish":"Missouri",
+    "Code":"US35",
+    "Country":"United States of America�"
+  },
+  "Montana": {
+    "French":"Montana",
+    "Spanish":"Montana",
+    "Code":"US36",
+    "Country":"United States of America�"
+  },
+  "Nebraska": {
+    "French":"Nebraska",
+    "Spanish":"Nebraska",
+    "Code":"US37",
+    "Country":"United States of America�"
+  },
+  "Nevada": {
+    "French":"Nevada",
+    "Spanish":"Nevada",
+    "Code":"US38",
+    "Country":"United States of America�"
+  },
+  "New Hampshire": {
+    "French":"New Hampshire",
+    "Spanish":"New Hampshire",
+    "Code":"US39",
+    "Country":"United States of America�"
+  },
+  "New Jersey": {
+    "French":"New Jersey",
+    "Spanish":"New Jersey",
+    "Code":"US40",
+    "Country":"United States of America�"
+  },
+  "New Mexico": {
+    "French":"New Mexico",
+    "Spanish":"New Mexico",
+    "Code":"US41",
+    "Country":"United States of America�"
+  },
+  "New York": {
+    "French":"New York",
+    "Spanish":"New York",
+    "Code":"US42",
+    "Country":"United States of America�"
+  },
+  "North Carolina": {
+    "French":"North Caroline",
+    "Spanish":"North Carolina",
+    "Code":"US43",
+    "Country":"United States of America�"
+  },
+  "North Dakota": {
+    "French":"North Dakota",
+    "Spanish":"North Dakota",
+    "Code":"US44",
+    "Country":"United States of America�"
+  },
+  "Ohio": {
+    "French":"Ohio",
+    "Spanish":"Ohio",
+    "Code":"US45",
+    "Country":"United States of America�"
+  },
+  "Oklahoma": {
+    "French":"Oklahoma",
+    "Spanish":"Oklahoma",
+    "Code":"US46",
+    "Country":"United States of America�"
+  },
+  "Oregon": {
+    "French":"Oregon",
+    "Spanish":"Oregon",
+    "Code":"US47",
+    "Country":"United States of America�"
+  },
+  "Pennsylvania": {
+    "French":"Pennsylvanie",
+    "Spanish":"Pennsylvania",
+    "Code":"US48",
+    "Country":"United States of America�"
+  },
+  "Rhode Island": {
+    "French":"Rhode Island",
+    "Spanish":"Rhode Island",
+    "Code":"US49",
+    "Country":"United States of America�"
+  },
+  "South Carolina": {
+    "French":"South Caroline",
+    "Spanish":"South Carolina",
+    "Code":"US50",
+    "Country":"United States of America�"
+  },
+  "South Dakota": {
+    "French":"South Dakota",
+    "Spanish":"South Dakota",
+    "Code":"US51",
+    "Country":"United States of America�"
+  },
+  "Tennessee": {
+    "French":"Tennessee",
+    "Spanish":"Tennessee",
+    "Code":"US52",
+    "Country":"United States of America�"
+  },
+  "Texas": {
+    "French":"Texas",
+    "Spanish":"Texas",
+    "Code":"US53",
+    "Country":"United States of America�"
+  },
+  "Utah": {
+    "French":"Utah",
+    "Spanish":"Utah",
+    "Code":"US54",
+    "Country":"United States of America�"
+  },
+  "Vermont": {
+    "French":"Vermont",
+    "Spanish":"Vermont",
+    "Code":"US55",
+    "Country":"United States of America�"
+  },
+  "Virginia": {
+    "French":"Virginie",
+    "Spanish":"Virginia",
+    "Code":"US56",
+    "Country":"United States of America�"
+  },
+  "Washington": {
+    "French":"Washington",
+    "Spanish":"Washington",
+    "Code":"US57",
+    "Country":"United States of America�"
+  },
+  "West Virginia": {
+    "French":"Virginie, Oleidentale",
+    "Spanish":"West Virginia",
+    "Code":"US58",
+    "Country":"United States of America�"
+  },
+  "Wisconsin": {
+    "French":"Wisconsin",
+    "Spanish":"Wisconsin",
+    "Code":"US59",
+    "Country":"United States of America�"
+  },
+  "Wyoming": {
+    "French":"Wyoming",
+    "Spanish":"Wyoming",
+    "Code":"US66",
+    "Country":"United States of America�"
+  },
+  "U.S. Territories and Possessions": {
+    "French":"U.S. Territories and Possessions",
+    "Spanish":"U.S. Territories and Possessions",
+    "Code":"US60",
+    "Country":"United States of America�"
+  },
+  "Canal Zone": {
+    "French":"Canal, Zone du",
+    "Spanish":"Canal Zone",
+    "Code":"US61",
+    "Country":"United States of America�"
+  },
+  "Trust Terr. of Pacific": {
+    "French":"Trust Terr. of Pacific",
+    "Spanish":"Trust Terr. of Pacific",
+    "Code":"US62",
+    "Country":"United States of America�"
+  },
+  "Wake Island": {
+    "French":"Wake",
+    "Spanish":"Wake Island",
+    "Code":"US65",
+    "Country":"United States of America�"
+  },
+  "Anzo�tegui": {
+    "French":"Anzo�tegui",
+    "Spanish":"Anzo�tegui",
+    "Code":"VENa",
+    "Country":"Venezuela�"
+  },
+  "Apute": {
+    "French":"Apure",
+    "Spanish":"Apute",
+    "Code":"VENb",
+    "Country":"Venezuela�"
+  },
+  "Aragua": {
+    "French":"Aragua",
+    "Spanish":"Aragua",
+    "Code":"VENc",
+    "Country":"Venezuela�"
+  },
+  "Barinas": {
+    "French":"Barinas",
+    "Spanish":"Barinas",
+    "Code":"VENd",
+    "Country":"Venezuela�"
+  },
+  "Bolivar": {
+    "French":"Bolivar",
+    "Spanish":"Bolivar",
+    "Code":"VENe",
+    "Country":"Venezuela�"
+  },
+  "Carabobo": {
+    "French":"Carabobo",
+    "Spanish":"Carabobo",
+    "Code":"VENf",
+    "Country":"Venezuela�"
+  },
+  "Cojedes": {
+    "French":"Cojedes",
+    "Spanish":"Cojedes",
+    "Code":"VENg",
+    "Country":"Venezuela�"
+  },
+  "Falc�n": {
+    "French":"Falc�n",
+    "Spanish":"Falc�n",
+    "Code":"VENh",
+    "Country":"Venezuela�"
+  },
+  "Gu�rico": {
+    "French":"Gu�rico",
+    "Spanish":"Gu�rico",
+    "Code":"VENi",
+    "Country":"Venezuela�"
+  },
+  "Lara": {
+    "French":"Lara",
+    "Spanish":"Lara",
+    "Code":"VENj",
+    "Country":"Venezuela�"
+  },
+  "M�rida": {
+    "French":"M�rida",
+    "Spanish":"M�rida",
+    "Code":"VENk",
+    "Country":"Venezuela�"
+  },
+  "Miranda": {
+    "French":"Miranda",
+    "Spanish":"Miranda",
+    "Code":"VENl",
+    "Country":"Venezuela�"
+  },
+  "Monagas": {
+    "French":"Monagas",
+    "Spanish":"Monagas",
+    "Code":"VENm",
+    "Country":"Venezuela�"
+  },
+  "Nueva Esparta": {
+    "French":"Nueva Esparta",
+    "Spanish":"Nueva Esparta",
+    "Code":"VENn",
+    "Country":"Venezuela�"
+  },
+  "Portuguesa": {
+    "French":"Portuguesa",
+    "Spanish":"Portuguesa",
+    "Code":"VENo",
+    "Country":"Venezuela�"
+  },
+  "Sucre": {
+    "French":"Sucre",
+    "Spanish":"Sucre",
+    "Code":"VENp",
+    "Country":"Venezuela�"
+  },
+  "T�chira": {
+    "French":"T�chira",
+    "Spanish":"T�chira",
+    "Code":"VENq",
+    "Country":"Venezuela�"
+  },
+  "Truj?llo": {
+    "French":"Truj?llo",
+    "Spanish":"Trujillo",
+    "Code":"VENr",
+    "Country":"Venezuela�"
+  },
+  "Yaracuy": {
+    "French":"Yaracuy",
+    "Spanish":"Yaracuy",
+    "Code":"VENs",
+    "Country":"Venezuela�"
+  },
+  "Zulia": {
+    "French":"Zulia",
+    "Spanish":"Zulia",
+    "Code":"VENt",
+    "Country":"Venezuela�"
+  },
+  "Ter.Amazonas": {
+    "French":"Ter.Amazonas",
+    "Spanish":"Terr.Amazonas",
+    "Code":"VENu",
+    "Country":"Venezuela�"
+  },
+  "Ter.Delta Amacuro": {
+    "French":"Ter.Delta Amacuro",
+    "Spanish":"Terr.Delta Amacuro",
+    "Code":"VENv",
+    "Country":"Venezuela�"
+  },
+  "Federal District": {
+    "French":"Federal District",
+    "Spanish":"Distrito Federal",
+    "Code":"VENw",
+    "Country":"Venezuela�"
+  },
+  "Federal Dependencies": {
+    "French":"Federal Dependencies",
+    "Spanish":"Dependencias Federales",
+    "Code":"VENx",
+    "Country":"Venezuela�"
+  },
+  "SR Croatia": {
+    "French":"Croatie",
+    "Spanish":"SR Croatia",
+    "Code":"YUGa",
+    "Country":"Yugoslavia�"
+  },
+  "SR Serbia": {
+    "French":"Serbie",
+    "Spanish":"SR Serbia",
+    "Code":"YUGb",
+    "Country":"Yugoslavia�"
+  },
+  "SR Bosnia and Hercegovina": {
+    "French":"Bosnie et Herzegovina",
+    "Spanish":"SR Bosnia-Herzegovina",
+    "Code":"YUGc",
+    "Country":"Yugoslavia�"
+  },
+  "SR Macedonia": {
+    "French":"Mocedonie",
+    "Spanish":"SR Macedonia",
+    "Code":"YUGd",
+    "Country":"Yugoslavia�"
+  },
+  "SR Montenegro": {
+    "French":"Montenegro",
+    "Spanish":"SR Montenegro",
+    "Code":"YUGe",
+    "Country":"Yugoslavia�"
+  },
+  "SR Slovenia": {
+    "French":"Slovenie",
+    "Spanish":"SR Eslovenia",
+    "Code":"YUGf",
+    "Country":"Yugoslavia�"
+  },
+  "Kosovo": {
+    "French":"Kosovo",
+    "Spanish":"Kosovo",
+    "Code":"YUGg",
+    "Country":"Yugoslavia�"
+  },
+  "Wojwodina": {
+    "French":"Wojwodina",
+    "Spanish":"Wojwodina",
+    "Code":"YUGh",
+    "Country":"Yugoslavia�"
+  }
+}

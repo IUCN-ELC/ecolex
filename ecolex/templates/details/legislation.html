@@ -26,7 +26,14 @@
         <dd>{{ document.solr.legTerritorialSubdivision }}</dd>
       {% endif %}
       <dt>Document type</dt><dd>{{ document.type|capfirst }}</dd>
-      <dt>Date</dt><dd>{{ document.date }}</dd>
+      <dt>Date</dt>
+      <dd>
+        <span class="sr-date" title="Original">{{ document.date }}
+        {% if document.consolidation_date %}
+          <span class="sr-date" title="Consolidation">({{ document.consolidation_date }})</span>
+        {% endif %}
+      </dd>
+
       {% if document.solr.legLongTitle %}
         <dt>Long title</dt><dd>{{ document.solr.legLongTitle }}</dd>
       {% endif %}

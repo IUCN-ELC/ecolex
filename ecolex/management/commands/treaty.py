@@ -14,6 +14,7 @@ from ecolex.management.utils import EcolexSolr, TREATY, get_content_from_url
 from ecolex.management.utils import get_file_from_url
 from ecolex.management.utils import format_date
 from ecolex.models import DocumentText
+from ecolex.search import get_documents_by_field
 
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('treaty_import')
@@ -29,7 +30,6 @@ URL_CHANGE_TO = 'http://www.ecolex.org/server2neu.php/'
 replace_url = lambda text: (URL_CHANGE_TO + text.split(URL_CHANGE_FROM)[-1]) if text.startswith(URL_CHANGE_FROM) else text
 
 # TODO Harvest French and Spanish translations for the following fields:
-#   - trRegion
 #   - partyCountry
 
 FIELD_MAP = {
@@ -111,9 +111,11 @@ FIELD_MAP = {
     'scope': 'trScope',
     'searchdate': 'trSearchDate',
     'seatofcourt': 'trSeatOfCourt',
+
     'supersedestreaty': 'trSupersedesTreaty',
     'amendstreaty': 'trAmendsTreaty',
     'citestreaty': 'trCitesTreaty',
+
     'availablein': 'trAvailableIn',
     'languageoftranslation': 'trLanguageOfTranslation',
     'numberofpages': 'trNumberOfPages',
@@ -170,13 +172,6 @@ DATE_FIELDS = [
     'partyDateOfWithdrawal',
 ]
 
-REFERENCE_MAPPING = {
-    'trEnabledByTreaty': 'trEnablesTreaty',
-    'trAmendsTreaty': 'trAmendedBy',
-    'trSupersedesTreaty': 'trSupersededBy',
-    'trCitesTreaty': 'trCitedBy',
-}
-
 URL_FIELDS = [
     'linktofulltext', 'linktofulltextsp', 'linktofulltextfr',
     'linktofulltextother'
@@ -227,6 +222,7 @@ class TreatyImporter(object):
 
     def __init__(self, config):
         self.solr_timeout = config.getint('solr_timeout')
+        self.regions_json = config.get('regions_json')
         self.treaties_url = config.get('treaties_url')
         self.import_field = config.get('import_field')
         self.query_format = config.get('query_format')
@@ -240,11 +236,11 @@ class TreatyImporter(object):
         self.end_year = config.getint('end_year', now.year)
         self.start_month = int(config.get('start_month', now.month))
         self.end_month = int(config.get('end_month', now.month))
+        self.regions = self._get_regions()
         self.solr = EcolexSolr(self.solr_timeout)
         logger.info('Started treaty importer')
 
     def harvest(self, batch_size):
-
         year = self.end_year
         while year >= self.start_year:
             raw_treaties = []
@@ -307,6 +303,55 @@ class TreatyImporter(object):
                         if v in DATE_FIELDS:
                             data[v] = [format_date(date) for date in data[v]
                                        if self._valid_date(date)]
+
+                if ('trRegion_en' in data and 'trRegion_es' in data and
+                        'trRegion_fr' in data):
+                    regions_en = data.get('trRegion_en')
+                    regions_es = data.get('trRegion_es')
+                    regions_fr = data.get('trRegion_fr')
+                    regions = zip(regions_en, regions_es, regions_fr)
+                    new_regions = {'en': [], 'es': [], 'fr': []}
+                    for reg_en, reg_es, reg_fr in regions:
+                        values = self.regions.get(reg_en.lower())
+
+                        if values:
+                            new_regions['en'].append(reg_en)
+                            value_es = values['es']
+                            value_fr = values['fr']
+                            if value_es != reg_es:
+                                logger.error('Region name error: %s %s %s' %
+                                             (data['trElisId'], value_es,
+                                              reg_es))
+                            new_regions['es'].append(value_es)
+
+                            if value_fr != reg_fr:
+                                logger.error('Region name error: %s %s %s' %
+                                             (data['trElisId'], value_fr,
+                                              reg_fr))
+                            new_regions['fr'].append(value_fr)
+                        else:
+                            logger.error('New region name: %s %s %s %s' %
+                                         (data['trElisId'], reg_en, reg_es,
+                                          reg_fr))
+                            new_regions['en'].append(reg_en)
+                            new_regions['es'].append(reg_es)
+                            new_regions['fr'].append(reg_fr)
+
+                        data['trRegion_en'] = new_regions['en']
+                        data['trRegion_es'] = new_regions['es']
+                        data['trRegion_fr'] = new_regions['fr']
+
+                elif 'trRegion_en' in data:
+                    regions_en = data.get('trRegion_en')
+                    new_regions = {'en': [], 'es': [], 'fr': []}
+                    for reg_en in regions_en:
+                        values = self.regions.get(reg_en.lower())
+                        new_regions['en'].append(reg_en)
+                        new_regions['es'].append(values['es'])
+                        new_regions['fr'].append(values['fr'])
+                    data['trRegion_en'] = new_regions['en']
+                    data['trRegion_es'] = new_regions['es']
+                    data['trRegion_fr'] = new_regions['fr']
 
                 for party in document.findAll(PARTY):
                     if not getattr(party, COUNTRY):
@@ -436,23 +481,6 @@ class TreatyImporter(object):
                                       for k, v in solr_docs[elis_id].items()
                                       if not isinstance(v, list) or any(v))
 
-    def _add_back_links(self, solr_docs):
-        for elis_id, doc in solr_docs.items():
-            for orig_field, backlink_field in REFERENCE_MAPPING.items():
-                if orig_field in doc:
-                    for ref in doc[orig_field]:
-                        if ref in solr_docs:
-                            solr_docs[ref].setdefault(backlink_field, [])
-                            solr_docs[ref][backlink_field].append(elis_id)
-                        else:
-                            # TODO: what if link is not present in solr_docs?
-                            existing_treaty = self.solr.search(TREATY, ref)
-                            if existing_treaty:
-                                logger.warn('Backlink on %s to %s should be updated' % (ref, elis_id))
-                                # TODO
-                            else:
-                                logger.warn('%s does not exist in Solr in order to update backlink to %s' % (ref, elis_id))
-
     def _create_url(self, year, month, skip):
         query_year = self.query_format % (year, month)
         query_hex = hexlify(str.encode(query_year)).decode()
@@ -463,33 +491,10 @@ class TreatyImporter(object):
                               self.query_type, page)
         return url
 
-    def add_back_links(self):
-        rows = 50
-        index = 0
-        while True:
-            print(index)
-            treaties = {}
-            docs = self.solr.solr.search('type:treaty', rows=rows, start=index)
-            for doc in docs:
-                elis_id = doc['trElisId']
-                for orig_field, backlink_field in REFERENCE_MAPPING.items():
-                    if orig_field in doc:
-                        for ref in doc[orig_field]:
-                            ref_doc = treaties.get(ref, self.solr.search(TREATY, ref))
-                            if ref_doc:
-                                ref_doc.setdefault(backlink_field, [])
-                                ref_doc[backlink_field].append(elis_id)
-                                logger.info('Added backlink from %s to %s' %
-                                            (ref, elis_id))
-                                treaties[ref] = ref_doc
-                            else:
-                                logger.error('Treaty %s not found' % ref)
-
-            self.solr.add_bulk(list(treaties.values()))
-
-            if len(docs) < rows:
-                break
-            index += rows
+    def _get_regions(self):
+        with open(self.regions_json) as f:
+            regions = json.load(f)
+        return regions
 
     def update_status(self):
         rows = 50
@@ -502,7 +507,10 @@ class TreatyImporter(object):
                 if 'trEntryIntoForceDate' not in treaty:
                     treaty['trStatus'] = 'Not in force'
                 else:
-                    if 'trSupersededBy' in treaty:
+                    treaty_id = treaty.get('trElisId')
+                    results = get_documents_by_field('trSupersedesTreaty',
+                                                     [treaty_id], rows=100)
+                    if len(results):
                         treaty['trStatus'] = 'Superseded'
                     else:
                         treaty['trStatus'] = 'In force'
