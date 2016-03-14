@@ -16,6 +16,9 @@
           data-data="{{ data.results|json }}"
           data-more="{{ data.more|yesno:"true,false" }}"
           data-selected="{{ field.value|json }}"
-  ></select>
-
+  >
+{% for option in field.value %}
+    <option id="{{ option }}" selected data-count="0">{{ option }}</option>
+{% endfor %}
+  </select>
 </div>

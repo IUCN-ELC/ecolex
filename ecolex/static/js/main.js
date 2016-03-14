@@ -118,7 +118,9 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     CachingAjaxAdapter.prototype.templateSelection = function (data, container) {
         return '' +
             Utils.escapeMarkup(data.text) +
-            ' <sup class="badge">' + data.count + '</sup>';
+            ' <sup class="badge">' +
+                (data.count !== undefined ? data.count : '') +
+            '</sup>';
     };
 
     CachingAjaxAdapter.prototype.matches = function (params, data) {
