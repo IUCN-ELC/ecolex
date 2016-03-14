@@ -121,7 +121,8 @@ SELECT_FACETS = {
 # all selection facets are AND-able
 # TODO: add all single-valued fields here / create clean list from multi-valued
 _AND_OP_FACETS = set(_SELECT_FACETS).difference([
-    'lit_serial'
+    'lit_publisher',
+    'lit_serial',
     'lit_type',
 ])
 
