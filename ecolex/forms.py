@@ -55,6 +55,10 @@ class SearchForm(Form):
             fname = defs._AND_OP_FIELD_PATTERN % f
             self.fields[fname] = BooleanField()
 
+        # no field is required
+        for field in self.fields.values():
+            field.required = False
+
     def _has_document_type(self, doctype):
         return doctype in self.data.get('type', [])
 

@@ -11,7 +11,7 @@ function _stripDiacritics (text) {
     return text.replace(/[^\u0000-\u007E]/g, match);
 };
 
-/* debugbugbugbug */
+/* debugbugbugbug * /
 var _obs_trigger = S2U.Observable.prototype.trigger;
 S2U.Observable.prototype.trigger = function (event) {
     if (['enable', 'blur', 'close', 'closing', 'focus',
@@ -22,6 +22,7 @@ S2U.Observable.prototype.trigger = function (event) {
 
     _obs_trigger.apply(this, arguments);
 };
+// */
 
 /* our custom select2 adapter */
 $.fn.select2.amd.define('ecolex/select2/adapter', [
@@ -398,16 +399,51 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         self.removeAttr('data-data');
 
         self.select2({
-            debug: true,
             data: data,
             dataAdapter: _DataAdapter
         });
-    });
 
+        // add clearfix to select2 widget
+        //self.next().addClass('clearfix');
+    });
 
     // cache de current search data on the form
     var _form = $('#search-form');
     _form[0]._form_data = _form.serializeArray();
+
+
+    /* old stuff 1: temporarily re-enabled / adapted */
+
+    function submit() {
+        $('#search-form').submit();
+    };
+
+    // Sortby controls
+    $('.sortby').click(function(e) {
+        e.preventDefault();
+        var value = $(this).data('sortby');
+        $('#id_sortby').val(value);
+
+        submit();
+    });
+
+    // Type facet controls
+    $('.filter-type button').click(function(e) {
+        var current = $('#id_type').val() || [];
+        var toggle_value = $(this).data('value');
+
+        if (current.indexOf(toggle_value) == -1) {
+            current = [toggle_value];
+        } else {
+            current = [];
+        }
+        $('#id_type').val(current);
+
+        submit();
+    });
+
+    /* end old stuff 1 */
+
 
 
 
@@ -632,22 +668,6 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
             $("#slider-years").slider('setValue', [min, max]);
         };
 
-        $('.filter-type button').click(function(e) {
-            var current = $('#id_type').val() || [];
-            var toggle_value = $(this).data('value');
-            var is_homepage = $(this).parents().hasClass('homepage');
-            if (current.indexOf(toggle_value) == -1) {
-                current = [toggle_value];
-            } else {
-                current = [];
-            }
-            $('#id_type').val(current);
-            // submit now for now
-            if (is_homepage)
-                push_and_submit(false);
-            else
-                push_and_submit(true);
-        });
 
         // Treaty -> Type of Document/Field of application filter
         // COP Decision -> Decision Type, Decision Status /Decision Treaty
@@ -693,14 +713,6 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
                 $(this).blur();
                 return false;
             }
-        });
-
-        // Sortby controls
-        $('.sortby').click(function(e) {
-            e.preventDefault();
-            var value = $(this).data('sortby');
-            $('#id_sortby').val(value);
-            push_and_submit(true);
         });
 
         $('button[type=submit]').off("click").on("click", function(e) {

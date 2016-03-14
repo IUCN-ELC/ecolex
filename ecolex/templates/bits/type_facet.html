@@ -1,5 +1,6 @@
 {# The type filter has different behaviour between the home page and the results page. #}
 <div class="btn-group btn-group-sm filter-type {{ page_type|default:"results-page" }}">
+<div style="display: none">{{ form.type }}{# TODO: de-jsify (and de-uglify) #}</div>
   <!-- Treaty filter -->
   <button type="button"
           class="btn btn-default {% if 'treaty' in form.type.data %}active{% endif %}"

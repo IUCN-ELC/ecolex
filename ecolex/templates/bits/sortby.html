@@ -1,3 +1,5 @@
+<input id="id_{{ form.sortby.name }}" name="{{ form.sortby.name }}" type="hidden" value="{{ form.sortby.value }}">
+{# TODO: de-jsify#}
 {% if form.sortby.data == '' %}
   <strong>Sorted by relevance</strong>
 {% else %}
