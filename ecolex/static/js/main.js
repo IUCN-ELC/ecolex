@@ -32,13 +32,14 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     'select2/selection/search',
     'select2/results',
     'select2/dropdown/infiniteScroll',
+    'select2/selection/multiple',
     'select2/selection/placeholder'
 ], function (
     Utils,
     ArrayAdapter, AjaxAdapter,
     Search,
     Results, InfiniteScroll,
-    Placeholder) {
+    MultipleSelection, Placeholder) {
 
     /***/
     var CustomResults = Utils.Decorate(Results, InfiniteScroll);
@@ -48,6 +49,46 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     // prevent backspace in search field from affecting previous item
     Search.prototype.searchRemoveChoice = function() {
         return;
+    };
+
+    // prevent toggling on item removal. TODO: fix, it's ugly
+    MultipleSelection.prototype.bind = function (container, $container) {
+        // this is mostly copy/paste
+
+        var self = this;
+
+        MultipleSelection.__super__.bind.apply(this, arguments);
+
+        // this part customized
+        this.$selection.on('click', function (evt) {
+            if ($(evt.target).is('input.select2-search__field')) {
+                self.trigger('toggle', {
+                    originalEvent: evt
+                });
+            }
+        });
+        // end custom
+
+        this.$selection.on(
+            'click',
+            '.select2-selection__choice__remove',
+            function (evt) {
+                // Ignore the event if it is disabled
+                if (self.options.get('disabled')) {
+                    return;
+                }
+
+                var $remove = $(this);
+                var $selection = $remove.parent();
+
+                var data = $selection.data('data');
+
+                self.trigger('unselect', {
+                    originalEvent: evt,
+                    data: data
+                });
+            }
+        );
     };
 
     // don't remove placeholder on selection
@@ -258,7 +299,7 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         // wrapper around the default SelectAdapter.prototype.query
         // that lets us add pagination info
 
-        console.log(':: query :: default');
+        //console.log(':: query :: default');
 
         var _super_query = ArrayAdapter.prototype.query;
         var wrapper = callback;
@@ -277,7 +318,7 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     CachingAjaxAdapter.prototype._cached_query = function(params, callback) {
         // applies the default matching logic against the cached data
 
-        console.log(':: query :: cached');
+        //console.log(':: query :: cached');
 
         var results = [];
         var self = this;
@@ -293,7 +334,7 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     };
 
     CachingAjaxAdapter.prototype._ajax_query = function (params, callback) {
-        console.log(':: query :: ajax');
+        //console.log(':: query :: ajax');
 
         // TODO: fix bug:
         // items are doubled in results when they're aleady selected
