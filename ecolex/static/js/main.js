@@ -403,6 +403,8 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
             dataAdapter: _DataAdapter
         });
 
+        self.change(submit);
+
         // add clearfix to select2 widget
         //self.next().addClass('clearfix');
     });
@@ -417,6 +419,9 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     function submit() {
         $('#search-form').submit();
     };
+
+    // TODO: not the most beautiful approach this
+    $('#search-form input:checkbox').change(submit);
 
     // Sortby controls
     $('.sortby').click(function(e) {
