@@ -119,8 +119,11 @@ SELECT_FACETS = {
 
 
 # all selection facets are AND-able
-# (which is bad. TODO: don't include single-valued fields)
-_AND_OP_FACETS = _SELECT_FACETS
+# TODO: add all single-valued fields here / create clean list from multi-valued
+_AND_OP_FACETS = set(_SELECT_FACETS).difference([
+    'lit_serial'
+    'lit_type',
+])
 
 _AND_OP_FIELD_PATTERN = "%s_and_"
 AND_OP_FIELD_MAPPING = {
