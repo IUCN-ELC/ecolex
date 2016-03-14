@@ -183,100 +183,6 @@ def get_sortby(sortby, has_search_term):
 
 
 def get_relevancy():
-    RELEVANCY_FIELDS = {
-        'trPaperTitleOfText_en': 110,
-        'trPaperTitleOfText_es': 110,
-        'trPaperTitleOfText_fr': 110,
-        'decLongTitle_en': 100,
-        'decLongTitle_es': 100,
-        'decLongTitle_fr': 100,
-        'decLongTitle_ru': 100,
-        'decLongTitle_ar': 100,
-        'decLongTitle_zh': 100,
-        'decShortTitle_en': 100,
-        'decShortTitle_es': 100,
-        'decShortTitle_fr': 100,
-        'decShortTitle_ru': 100,
-        'decShortTitle_ar': 100,
-        'decShortTitle_zh': 100,
-
-        'legTitle': 100,
-        'legLongTitle': 100,
-
-        'litLongTitle_en': 100,
-        'litLongTitle_fr': 100,
-        'litLongTitle_es': 100,
-        'litLongTitle_other': 100,
-
-        'litPaperTitleOfText_en': 100,
-        'litPaperTitleOfText_fr': 100,
-        'litPaperTitleOfText_es': 100,
-        'litPaperTitleOfText_other': 100,
-
-        'cdTitleOfText_en': 100,
-        'cdTitleOfText_es': 100,
-        'cdTitleOfText_fr': 100,
-
-        'litId': 100,
-        'legId': 100,
-        'trElisId': 100,
-
-        'trTitleAbbreviation': 75,
-        'decSummary': 50,
-        'trAbstract_en': 50,
-        'trAbstract_es': 50,
-        'trAbstract_fr': 50,
-        'cdAbstract_en': 50,
-        'cdAbstract_es': 50,
-        'cdAbstract_fr': 50,
-        'litAbstract_en': 50,
-        'litAbstract_fr': 50,
-        'litAbstract_es': 50,
-        'litAbstract_other': 50,
-        'legAbstract': 50,
-
-        'trKeyword_en': 30,
-        'trKeyword_fr': 30,
-        'trKeyword_es': 30,
-        'decKeyword_en': 30,
-        'decKeyword_fr': 30,
-        'decKeyword_es': 30,
-        'litKeyword_en': 30,
-        'litKeyword_fr': 30,
-        'litKeyword_es': 30,
-        'legKeyword_en': 30,
-        'cdKeywords': 30,
-
-        'trBasin_en': 25,
-        'trBasin_fr': 25,
-        'trBasin_es': 25,
-        'legBasin_en': 25,
-        'legBasin_fr': 25,
-        'legBasin_es': 25,
-        'litBasin_en': 25,
-        'litBasin_fr': 25,
-        'litBasin_es': 25,
-
-        'trRegion_en': 25,
-        'trRegion_fr': 25,
-        'trRegion_es': 25,
-        'cdRegion_en': 25,
-        'cdRegion_fr': 25,
-        'cdRegion_es': 25,
-        'litRegion_en': 25,
-        'litRegion_fr': 25,
-        'litRegion_es': 25,
-        'legGeoArea_en': 25,
-        'legGeoArea_fr': 25,
-        'legGeoArea_es': 25,
-
-        'decBody_en': 20,
-        'decBody_es': 20,
-        'decBody_fr': 20,
-        'text': 20,
-        'doc_content': 10,
-    }
-
     def boost_pair_t(field, boost_factor):
         return field + "^" + str(boost_factor)
 
@@ -284,7 +190,7 @@ def get_relevancy():
     params['defType'] = 'edismax'
     params['qf'] = ' '.join(
         boost_pair_t(field, boost_factor) for field, boost_factor in
-        RELEVANCY_FIELDS.items())
+        defs.RELEVANCY_FIELDS.items())
 
     return params
 
