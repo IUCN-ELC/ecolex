@@ -117,8 +117,23 @@ SELECT_FACETS = {
     for item in _SELECT_FACETS
 }
 
+_CHECKBOX_FACETS = [
+    'tr_type',
+    'tr_field',
+    'tr_status',
 
-# all selection facets are AND-able
+    'dec_type',
+    'dec_status',
+
+    'cd_type',
+
+    'leg_type',
+]
+
+# all selection facets are OR-able, and so are all checkbox facets
+_OR_OP_FACETS = _SELECT_FACETS + _CHECKBOX_FACETS
+# NOTE: set(_OR_OP_FACETS) == set(FIELD_TO_FACET_MAPPING.keys()). go figure
+
 # TODO: add all single-valued fields here / create clean list from multi-valued
 _AND_OP_FACETS = set(_SELECT_FACETS).difference([
     'lit_publisher',
@@ -127,10 +142,6 @@ _AND_OP_FACETS = set(_SELECT_FACETS).difference([
 ])
 
 _AND_OP_FIELD_PATTERN = "%s_and_"
-AND_OP_FIELD_MAPPING = {
-    _AND_OP_FIELD_PATTERN % item: item
-    for item in _AND_OP_FACETS
-}
 
 
 SOLR_FIELDS = [

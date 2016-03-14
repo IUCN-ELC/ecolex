@@ -46,18 +46,21 @@ class SearchForm(Form):
 
     sortby = CharField(initial='')
 
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         # add AND-able fields
         for f in defs._AND_OP_FACETS:
-            fname = defs._AND_OP_FIELD_PATTERN % f
+            fname = self.get_and_field_name_for(f)
             self.fields[fname] = BooleanField()
 
         # no field is required
         for field in self.fields.values():
             field.required = False
+
+    @staticmethod
+    def get_and_field_name_for(field):
+        return defs._AND_OP_FIELD_PATTERN % field
 
     def _has_document_type(self, doctype):
         return doctype in self.data.get('type', [])

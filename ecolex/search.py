@@ -217,6 +217,9 @@ def get_fq(filters):
         'cdTerritorialSubdivision_en': 'court_decision',
     }
 
+    OR_FILTERS = [defs.FIELD_TO_FACET_MAPPING[f]
+                  for f in defs._OR_OP_FACETS]
+
     AND_FILTERS = [defs.FIELD_TO_FACET_MAPPING[f]
                    for f in defs._AND_OP_FACETS]
 
@@ -440,19 +443,23 @@ class SearchMixin(object):
             for k, v in mapping.items():
                 filters[k] = data[v]
 
-        # handle possible AND operations on facets
-        for op_form_field, field in defs.AND_OP_FIELD_MAPPING.items():
-            # we love jumping through hoops
-            solr_field = defs.FIELD_TO_FACET_MAPPING[field]
+        # add exclusion local param for OR-able fields
+        for field in defs._OR_OP_FACETS:
+            # but skip AND-able fields if we got an AND request
+            if (field in defs._AND_OP_FACETS and
+                data.get(
+                    SearchForm.get_and_field_name_for(field)
+                )
+            ):
+                continue
 
-            if data.get(op_form_field):
-                # nothing to do, AND is the default behaviour
+            solr_field = defs.FIELD_TO_FACET_MAPPING[field]
+            try:
+                filter = filters.pop(solr_field)
+            except KeyError:
                 pass
-            elif filters.get(solr_field):
-                # mark the field for exclusion
-                filters[
-                    self._get_excluded(solr_field)
-                ] = filters.pop(solr_field)
+            else:
+                filters[self._get_excluded(solr_field)] = filter
 
         return filters
 
