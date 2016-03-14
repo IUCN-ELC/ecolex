@@ -4,21 +4,20 @@ from django.forms import (
     TextInput,
 )
 
-from ecolex.definitions import DOC_TYPE
+from ecolex import definitions as defs
 
 
 class SearchForm(Form):
     q = CharField(initial='', widget=TextInput(
         attrs={'id': 'search', 'class': 'form-control', 'autofocus': True,
                'placeholder': "Search in record and full text"}))
-    type = MultipleChoiceField(choices=DOC_TYPE)
+    type = MultipleChoiceField(choices=defs.DOC_TYPE)
 
     tr_type = MultipleChoiceField()
     tr_field = MultipleChoiceField()
     tr_status = MultipleChoiceField()
     tr_place_of_adoption = MultipleChoiceField()
     tr_depository = MultipleChoiceField()
-    tr_depository_and_ = BooleanField()
 
     dec_type = MultipleChoiceField()
     dec_status = MultipleChoiceField()
@@ -30,7 +29,6 @@ class SearchForm(Form):
     lit_type = MultipleChoiceField()
     lit_type2 = MultipleChoiceField()
     lit_author = MultipleChoiceField()
-    lit_author_and_ = BooleanField()
     lit_serial = MultipleChoiceField()
     lit_publisher = MultipleChoiceField()
 
@@ -39,19 +37,23 @@ class SearchForm(Form):
     leg_status = MultipleChoiceField()
 
     subject = MultipleChoiceField()
-    subject_and_ = BooleanField()
     keyword = MultipleChoiceField()
-    keyword_and_ = BooleanField()
     country = MultipleChoiceField()
-    country_and_ = BooleanField()
     region = MultipleChoiceField()
-    region_and_ = BooleanField()
     language = MultipleChoiceField()
-    language_and_ = BooleanField()
     yearmin = CharField()
     yearmax = CharField()
 
     sortby = CharField(initial='')
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # add AND-able fields
+        for f in defs._AND_OP_FACETS:
+            fname = defs._AND_OP_FIELD_PATTERN % f
+            self.fields[fname] = BooleanField()
 
     def _has_document_type(self, doctype):
         return doctype in self.data.get('type', [])

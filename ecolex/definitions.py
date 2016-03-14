@@ -117,19 +117,10 @@ SELECT_FACETS = {
     for item in _SELECT_FACETS
 }
 
-# TODO: why don't all SELECT_FACETS get an operator choice?
-_AND_OP_FACETS = [
-    # facets that are AND-able
-    'subject',
-    'keyword',
-    'country',
-    'region',
-    'language',
 
-    'tr_depository',
-
-    'lit_author',
-]
+# all selection facets are AND-able
+# (which is bad. TODO: don't include single-valued fields)
+_AND_OP_FACETS = _SELECT_FACETS
 
 _AND_OP_FIELD_PATTERN = "%s_and_"
 AND_OP_FIELD_MAPPING = {
