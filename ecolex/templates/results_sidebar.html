@@ -97,6 +97,7 @@ select.selection-facet {
 {% include "bits/selection_facet.html" with title="Language" placeholder="Add languages…" viewname="api:language-list" data=facets.language field=form.language op_field=form.language_and_ %}
 
 {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
+{# TODO: this logic needs fixing. min/max years should default to the dataset's values, with this here facet excluded #}
       <div class="filter-header">
         <h6>Year / Period</h6>
       </div>
@@ -109,7 +110,7 @@ select.selection-facet {
         <div class="slider-min">
           <!-- <label for="year-min">From</label> -->
           <input id="year-min" type="number"
-                 data-formid="#id_yearmin"
+                 name="{{ form.yearmin.name }}"
                  value="{{ form.yearmin.data }}"
                  min="1860"
                  max="2016"
@@ -118,7 +119,7 @@ select.selection-facet {
         <div class="slider-max">
           <!-- <label for="year-max">To</label> -->
           <input id="year-max" type="number"
-                 data-formid="#id_yearmax"
+                 name="{{ form.yearmax.name }}"
                  value="{{ form.yearmax.data }}"
                  min="1860"
                  max="{% now "Y" %}"

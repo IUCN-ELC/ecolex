@@ -412,7 +412,7 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     _form[0]._form_data = _form.serializeArray();
 
 
-    /* old stuff 1: temporarily re-enabled / adapted */
+    /* old stuff re-enabled / temporarily adapted */
 
     function submit() {
         $('#search-form').submit();
@@ -442,7 +442,29 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         submit();
     });
 
-    /* end old stuff 1 */
+    // Slider
+    $("#slider-years")
+        .slider()
+        .on('slide', function(event) {
+            var min = $('#year-min'),
+                max = $('#year-max');
+
+            min.val(event.value[0]);
+            max.val(event.value[1]);
+        })
+        .on('slideStop', function(event) {
+            var min = $('#year-min'),
+                max = $('#year-max');
+
+            min.val(event.value[0]);
+            max.val(event.value[1]);
+
+            // TODO: this is annoying
+            submit();
+        });
+
+    /* end old stuff */
+
 
 
 
@@ -617,40 +639,11 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     function init_all() {
 
 
-        // initialize tooltips
-        // bootstrap tooltips are opt-in
-        $('[data-toggle="tooltip"]').tooltip();
-
         // prevent disabled pagination anchor to trigger page reload
         $('.pagination').on('click', '.disabled', function(e) {
             e.preventDefault();
         });
 
-        // Slider
-        $("#slider-years")
-            .slider()
-            .on('slide', function(event) {
-                var min = $('#year-min'),
-                    max = $('#year-max');
-
-                min.val(event.value[0]);
-                max.val(event.value[1]);
-            })
-            .on('slideStop', function(event) {
-                var min = $('#year-min'),
-                    max = $('#year-max');
-
-                min.val(event.value[0]);
-                max.val(event.value[1]);
-
-                var form_id = $(min).data('formid');
-                $(form_id).val($(min).val());
-
-                var form_id = $(max).data('formid');
-                $(form_id).val($(max).val());
-
-                push_and_submit(true);
-            });
 
         // Year inputs
         updateYear = function(e) {
