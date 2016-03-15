@@ -24,10 +24,10 @@ AUTHOR_SPACE = '^b'
 FIELD_MAP = {
     'id': 'litId',
     'id2': 'litId2',
-    'authora': 'litAuthorArticle',
-    'authorm': 'litAuthor',
-    'corpauthora': 'litCorpAuthorArticle',
-    'corpauthorm': 'litCorpAuthor',
+    'authora': 'litAuthorA',
+    'authorm': 'litAuthorM',
+    'corpauthora': 'litCorpAuthorA',
+    'corpauthorm': 'litCorpAuthorM',
     'dateofentry': 'litDateOfEntry',
     'dateofmodification': 'litDateOfModification',
 
@@ -166,7 +166,7 @@ SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
 MULTIVALUED_FIELDS = [
     'litId2',
-    'litAuthor', 'litCorpAuthor', 'litAuthorArticle', 'litCorpAuthorArticle',
+    'litAuthorM', 'litAuthorA', 'litCorpAuthorM', 'litCorpAuthorA',
     'litSubject_en', 'litSubject_fr', 'litSubject_es',
     'litKeyword_en', 'litKeyword_fr', 'litKeyword_es',
     'litContributor', 'litISBN',

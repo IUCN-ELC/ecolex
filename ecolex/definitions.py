@@ -165,7 +165,7 @@ SOLR_FIELDS = [
     'litAbstract_en', 'litAbstract_fr', 'litAbstract_es', 'litAbstract_other',
     'litTypeOfText_en', 'litTypeOfText_fr', 'litTypeOfText_es',
     'litScope_en', 'litScope_fr', 'litScope_es',
-    'litAuthorArticle', 'litCorpAuthorArticle', 'litAuthor', 'litCorpAuthor',
+    'litAuthorA', 'litAuthorM', 'litCorpAuthorA', 'litCorpAuthorM',
     'litPublisher', 'litPublPlace', 'litDateOfText',
     'litVolumeNo', 'litCollation',
     'litKeyword_en', 'litSeriesFlag',
