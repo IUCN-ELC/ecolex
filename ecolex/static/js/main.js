@@ -509,11 +509,15 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
             submit();
         });
 
+    // Global reset button
+    $('input[type=reset]').click(function(e) {
+        e.preventDefault();
+        $form = $('#search-form');
+        $form[0].reset();
+        $form.submit();
+    });
+
     /* end old stuff */
-
-
-
-
 
 /*
 
