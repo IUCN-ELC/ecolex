@@ -5,6 +5,7 @@ from os.path import basename
 from urllib import parse as urlparse
 
 import functools
+import re
 
 from django.core.urlresolvers import reverse
 from django.utils.html import strip_tags
@@ -570,13 +571,17 @@ class Literature(ObjectNormalizer):
                 title = self.solr.get('{}_{}'.format(field, code))
                 if title:
                     break
-            if title and title != self.title():
+            if (title and title != self.title() and
+                    re.sub('<[^<]+?>', '', first(title)) !=
+                    re.sub('<[^<]+?>', '', self.title())):
                 titles.append({'alttitle': first(title), 'language': language})
         return titles
 
     def parent_title(self):
         parent_title = first(self.solr.get('litLongTitle_en')) or first(self.solr.get('litSerialTitle'))
-        if not parent_title or parent_title == self.title():
+        if (not parent_title or parent_title == self.title() or
+                re.sub('<[^<]+?>', '', first(parent_title)) ==
+                re.sub('<[^<]+?>', '', self.title())):
             return None
         return parent_title
 
