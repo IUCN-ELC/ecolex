@@ -59,6 +59,9 @@ FIELD_MAP = {
     'collation': 'litCollation',
     # TODO CLEAN dateoftext field
     'dateoftext': 'litDateOfText',
+    # TODO leave only the correct field below
+    'yearOfText': 'litYearOfText',
+    'yearofText': 'litYearOfText',
     'linktofulltext': 'litLinkToFullText',
     'doi': 'litLinkDOI',
     'typeoftext': 'litTypeOfText_en',

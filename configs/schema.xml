@@ -507,6 +507,7 @@
     <field name="litVolumeNo" type="string" indexed="false" stored="true"/>
     <field name="litCollation" type="string" indexed="false" stored="true"/>
     <field name="litDateOfText" type="string" indexed="false" stored="true"/>
+    <field name="litYearOfText" type="string" indexed="false" stored="true"/>
     <field name="litLinkToFullText" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="litLinkDOI" type="string" indexed="false" stored="true"/>
 
