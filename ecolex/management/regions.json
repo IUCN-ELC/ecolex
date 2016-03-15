@@ -45,19 +45,19 @@
         "es": "Asia"
     },
     "asia and the pacific": {
-        "en": "Asia and the pacific",
-        "fr": "Asie et pacifique",
-        "es": "Asia y pacifico"
+        "en": "Asia and the Pacific",
+        "fr": "Asie et Pacifique",
+        "es": "Asia y Pacifico"
     },
     "atlantic ocean islands": {
-        "en": "Atlantic ocean islands",
-        "fr": "\u00celes de l'oc\u00e9an atlantique",
+        "en": "Atlantic Ocean Islands",
+        "fr": "\u00celes de l'Oc\u00e9an Atlantique",
         "es": "Islas del oc\u00e9ano atl\u00e1ntico"
     },
     "australia and new zealand": {
-        "en": "Australia and new zealand",
-        "fr": "Australie et nouvelle-z\u00e9lande",
-        "es": "Australia y nueva zelandia"
+        "en": "Australia and New Zealand",
+        "fr": "Australie et Nouvelle-Z\u00e9lande",
+        "es": "Australia y Nueva Zelandia"
     },
     "benelux": {
         "en": "Benelux",
@@ -66,8 +66,8 @@
     },
     "black sea": {
         "en": "Black sea",
-        "fr": "Mer noire",
-        "es": "Mar negro"
+        "fr": "Mer Noire",
+        "es": "Mar Negro"
     },
     "caribbean": {
         "en": "Caribbean",
@@ -75,24 +75,24 @@
         "es": "Caribe"
     },
     "caspian sea": {
-        "en": "Caspian sea",
-        "fr": "Mer caspienne",
-        "es": "Mar caspio"
+        "en": "Caspian Sea",
+        "fr": "Mer Caspienne",
+        "es": "Mar Caspio"
     },
     "central africa": {
-        "en": "Central africa",
-        "fr": "Afrique centrale",
-        "es": "Africa central"
+        "en": "Central Africa",
+        "fr": "Afrique Centrale",
+        "es": "Africa Central"
     },
     "central america": {
-        "en": "Central america",
-        "fr": "Am\u00e9rique centrale",
-        "es": "Am\u00e9rica central"
+        "en": "Central America",
+        "fr": "Am\u00e9rique Centrale",
+        "es": "Am\u00e9rica Central"
     },
     "central asia": {
-        "en": "Central asia",
-        "fr": "Asie centrale",
-        "es": "Asia central"
+        "en": "Central Asia",
+        "fr": "Asie Centrale",
+        "es": "Asia Central"
     },
     "central europe": {
         "en": "Central Europe",
@@ -100,34 +100,39 @@
         "es": "Europa Central"
     },
     "cis (com. of indep. states)": {
-        "en": "Cis (com. of indep. states)",
-        "fr": "Cei (com. des etats ind\u00e9p.)",
-        "es": "Cei (com. de estados indep.)"
+        "en": "CIS (Commonealth of Independent States)",
+        "fr": "CEI (Communauté des États indépendants)",
+        "es": "CEI (Comunidad de Estados Independientes)"
+    },
+    "cis (com. of indep. states)": {
+        "en": "CIS (Commonealth of Independent States)",
+        "fr": "CEI (Communauté des États indépendants)",
+        "es": "CEI (Comunidad de Estados Independientes)"
     },
     "east asian seas": {
-        "en": "East asian seas",
-        "fr": "East asian seas",
-        "es": "Mares del asia oriental"
+        "en": "East Asian Seas",
+        "fr": "East Asian Seas",
+        "es": "Mares del Asia Oriental"
     },
     "east pacific": {
-        "en": "East pacific",
-        "fr": "Pacifique du est",
-        "es": "Pac\u00edfico oriental"
+        "en": "East Pacific",
+        "fr": "Pacifique du Est",
+        "es": "Pac\u00edfico Oriental"
     },
     "eastern africa": {
-        "en": "Eastern africa",
-        "fr": "Afrique orientale",
-        "es": "Africa oriental"
+        "en": "Eastern Africa",
+        "fr": "Afrique Orientale",
+        "es": "Africa Oriental"
     },
     "eastern asia": {
-        "en": "Eastern asia",
-        "fr": "Asie orientale",
-        "es": "Asia oriental"
+        "en": "Eastern Asia",
+        "fr": "Asie Orientale",
+        "es": "Asia Oriental"
     },
     "eastern europe": {
-        "en": "Eastern europe",
-        "fr": "Europe de l'est",
-        "es": "Europa oriental"
+        "en": "Eastern Europe",
+        "fr": "Europe de l'Est",
+        "es": "Europa Oriental"
     },
     "europe": {
         "en": "Europe",
@@ -135,32 +140,37 @@
         "es": "Europa"
     },
     "europe and central asia": {
-        "en": "Europe and central asia",
-        "fr": "Europe et asie centrale",
-        "es": "Europa y central asia"
+        "en": "Europe and Central Asia",
+        "fr": "Europe et Asie Centrale",
+        "es": "Europa y Central Asia"
     },
     "european union countries": {
-        "en": "European union countries",
-        "fr": "Pays de l'union europ\u00e9enne",
-        "es": "Pa\u00edses de la uni\u00f3n europea"
+        "en": "European Union Countries",
+        "fr": "Pays de l'Union Europ\u00e9enne",
+        "es": "Pa\u00edses de la Uni\u00f3n Europea"
     },
     "indian ocean": {
-        "en": "Indian ocean",
-        "fr": "Oc\u00e9an indien",
-        "es": "Oc\u00e9ano \u00edndico"
+        "en": "Indian Ocean",
+        "fr": "Oc\u00e9an Indien",
+        "es": "Oc\u00e9ano Índico"
     },
     "landlocked developing countries": {
-        "en": "Landlocked developing countries",
-        "fr": "Pays en d\u00e9veloppement sans littoral",
-        "es": "Pa\u00edses en desarrollo sin litoral"
+        "en": "Landlocked Developing Nations",
+        "fr": "Nations en d\u00e9veloppement sans littoral",
+        "es": "Naciones en desarrollo sin litoral"
+    },
+    "landlocked developing nations": {
+        "en": "Landlocked Developing Nations",
+        "fr": "Nations en d\u00e9veloppement sans littoral",
+        "es": "Naciones en desarrollo sin litoral"
     },
     "latin america and the caribbean": {
-        "en": "Latin america and the caribbean",
-        "fr": "Am\u00e9rique latine et cara\u00efbes",
-        "es": "Am\u00e9rica latina y el caribe"
+        "en": "Latin America and the Caribbean",
+        "fr": "Am\u00e9rique latine et Cara\u00efbes",
+        "es": "Am\u00e9rica Latina y el Caribe"
     },
     "least developed countries": {
-        "en": "Least developed countries",
+        "en": "Least Developed Countries",
         "fr": "Pays les moins avances",
         "es": "Pa\u00edses menos desarrollados"
     },
@@ -180,59 +190,59 @@
         "es": "Micronesia"
     },
     "middle east": {
-        "en": "Middle east",
-        "fr": "Moyen-orient",
-        "es": "Medio oriente"
+        "en": "Middle East",
+        "fr": "Moyen-Orient",
+        "es": "Medio Oriente"
     },
     "north america": {
-        "en": "North america",
-        "fr": "Am\u00e9rique du nord",
-        "es": "Am\u00e9rica del norte"
+        "en": "North America",
+        "fr": "Am\u00e9rique du Nord",
+        "es": "Am\u00e9rica del Norte"
     },
     "north asia": {
-        "en": "North asia",
-        "fr": "Asie du nord",
-        "es": "Asia del norte"
+        "en": "North Asia",
+        "fr": "Asie du Nord",
+        "es": "Asia del Norte"
     },
     "north atlantic": {
-        "en": "North atlantic",
-        "fr": "Atlantique nord",
-        "es": "Atl\u00e1ntico norte"
+        "en": "North Atlantic",
+        "fr": "Atlantique Nord",
+        "es": "Atl\u00e1ntico Norte"
     },
     "north pacific": {
-        "en": "North pacific",
-        "fr": "Pacifique nord",
-        "es": "Pac\u00edfico norte"
+        "en": "North Pacific",
+        "fr": "Pacifique Nord",
+        "es": "Pac\u00edfico Norte"
     },
     "north sea": {
-        "en": "North sea",
-        "fr": "Mer du nord",
-        "es": "Mar del norte"
+        "en": "North Sea",
+        "fr": "Mer du Nord",
+        "es": "Mar del Norte"
     },
     "north-east atlantic": {
-        "en": "North-east atlantic",
-        "fr": "Atlantique du nord-est",
-        "es": "Atl\u00e1ntico nordeste"
+        "en": "North-East Atlantic",
+        "fr": "Atlantique du Nord-Est",
+        "es": "Atl\u00e1ntico Nordeste"
     },
     "north-east pacific": {
-        "en": "North-east pacific",
-        "fr": "Pacifique du nord-est",
-        "es": "Pac\u00edfico nordeste"
+        "en": "North-East Pacific",
+        "fr": "Pacifique du Nord-Est",
+        "es": "Pac\u00edfico Nordeste"
     },
     "north-west pacific": {
-        "en": "North-west pacific",
-        "fr": "Pacifique nord occidental",
-        "es": "Pac\u00edfico nordoeste"
+        "en": "North-West Pacific",
+        "fr": "Pacifique Nord Occidental",
+        "es": "Pac\u00edfico Nordoeste"
     },
     "northern africa": {
-        "en": "Northern africa",
-        "fr": "Afrique du nord",
-        "es": "Africa del norte"
+        "en": "Northern Africa",
+        "fr": "Afrique du Nord",
+        "es": "Africa del Norte"
     },
     "northern europe": {
         "en": "Northern Europe",
-        "fr": "Europe du nord",
-        "es": "Europa septentrional"
+        "fr": "Europe du Nord",
+        "es": "Europa Septentrional"
     },
     "oceania": {
         "en": "Oceania",
@@ -240,9 +250,9 @@
         "es": "Oceania"
     },
     "persian gulf": {
-        "en": "Persian gulf",
-        "fr": "Golfe persique",
-        "es": "Golfo p\u00e9rsico"
+        "en": "Persian Gulf",
+        "fr": "Golfe Persique",
+        "es": "Golfo P\u00e9rsico"
     },
     "polynesia": {
         "en": "Polynesia",
@@ -250,13 +260,13 @@
         "es": "Polinesia"
     },
     "red sea  gulf of aden": {
-        "en": "Red sea  gulf of aden",
-        "fr": "Mer rouge et le golfe d'aden",
-        "es": "Mar rojo  golfo de ad\u00e9n"
+        "en": "Red Sea & Gulf of Aden",
+        "fr": "Mer Rouge et le Golfe d'Aden",
+        "es": "Mar Rojo & Golfo de Ad\u00e9n"
     },
     "red sea & gulf of aden": {
         "en": "Red Sea & Gulf of Aden",
-        "fr": "Mer Rouge et le golfe d'Aden",
+        "fr": "Mer Rouge et le Golfe d'Aden",
         "es": "Mar Rojo & Golfo de Ad\u00e9n"
     },
     "sahel": {
@@ -265,68 +275,68 @@
         "es": "Sahel"
     },
     "small island developing states": {
-        "en": "Small island developing states",
-        "fr": "Petits \u00e9tats insulaires en d\u00e9veloppement",
+        "en": "Small Island Developing States",
+        "fr": "Petits États insulaires en d\u00e9veloppement",
         "es": "Peque\u00f1os estados insulares en desarrollo"
     },
     "south america": {
         "en": "South America",
-        "fr": "Am\u00e9rique du sud",
-        "es": "Am\u00e9rica del sur"
+        "fr": "Am\u00e9rique du Sud",
+        "es": "Am\u00e9rica del Sur"
     },
     "south asian seas": {
-        "en": "South asian seas",
-        "fr": "Mer de l'asie du sud-est",
-        "es": "Mares del asia sudoriental"
+        "en": "South Asian Seas",
+        "fr": "Mer de l'Asie du Sud-Est",
+        "es": "Mares del Asia Sudoriental"
     },
     "south atlantic": {
-        "en": "South atlantic",
-        "fr": "Atlantique sud",
-        "es": "Atl\u00e1ntico sur"
+        "en": "South Atlantic",
+        "fr": "Atlantique Sud",
+        "es": "Atl\u00e1ntico Sur"
     },
     "south pacific": {
-        "en": "South pacific",
-        "fr": "Pacifique sud",
-        "es": "Pac\u00edfico sur"
+        "en": "South Pacific",
+        "fr": "Pacifique Sud",
+        "es": "Pac\u00edfico Sur"
     },
     "south-eastern asia": {
-        "en": "South-eastern Asia",
-        "fr": "Asie du sud-est",
-        "es": "Asia sudoriental"
+        "en": "South-Eastern Asia",
+        "fr": "Asie du Sud-Est",
+        "es": "Asia Sudoriental"
     },
     "south-eastern pacific": {
-        "en": "South-eastern pacific",
-        "fr": "Pacifique du sud-est",
-        "es": "Pac\u00edfico sudeste"
+        "en": "South-Eastern Pacific",
+        "fr": "Pacifique du Sud-Est",
+        "es": "Pac\u00edfico Sudeste"
     },
     "southern africa": {
         "en": "Southern Africa",
-        "fr": "Afrique m\u00e9ridionale",
-        "es": "Africa meridional"
+        "fr": "Afrique M\u00e9ridionale",
+        "es": "Africa Meridional"
     },
     "southern asia": {
         "en": "Southern Asia",
-        "fr": "Asie du sud",
-        "es": "Asia meridional"
+        "fr": "Asie du Sud",
+        "es": "Asia Meridional"
     },
     "southern europe": {
         "en": "Southern Europe",
-        "fr": "Europe du sud",
-        "es": "Europa meridional"
+        "fr": "Europe du Sud",
+        "es": "Europa Meridional"
     },
     "western africa": {
         "en": "Western Africa",
-        "fr": "Afrique de l'ouest",
-        "es": "Africa occidental"
+        "fr": "Afrique de l'Ouest",
+        "es": "Africa Occidental"
     },
     "western asia": {
         "en": "Western Asia",
-        "fr": "Asie occidentale",
-        "es": "Asia occidental"
+        "fr": "Asie Occidentale",
+        "es": "Asia Occidental"
     },
     "western europe": {
         "en": "Western Europe",
-        "fr": "Europe du ouest",
-        "es": "Europa occidental"
+        "fr": "Europe du Ouest",
+        "es": "Europa Occidental"
     }
 }
