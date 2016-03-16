@@ -598,10 +598,12 @@ class Literature(ObjectNormalizer):
     @cached_property
     def serial_title(self):
         if not self.lit_is_article:
-            litSerialTitle = self.solr.get('litSerialTitle')
-            litVolumeNo = self.solr.get('litVolumeNo')
-            if litVolumeNo:
+            litSerialTitle = self.solr.get('litSerialTitle', '')
+            litVolumeNo = self.solr.get('litVolumeNo', '')
+            if litVolumeNo and litSerialTitle:
                 return ' | '.join([litSerialTitle, litVolumeNo])
+            elif litVolumeNo:
+                return litVolumeNo
             else:
                 return litSerialTitle
         return None
