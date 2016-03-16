@@ -9,11 +9,12 @@ Usage:
 
 """
 
-from marshmallow import post_load
+from collections import OrderedDict
+from marshmallow import post_load, pre_load
 
 from ecolex.lib.schema import Schema, fields
 from ecolex.solr_models_re import (
-    Treaty, Decision, Legislation, CourtDecision, Literature,
+    CourtDecision, Decision, Legislation, Literature, Treaty, TreatyParty,
 )
 
 
@@ -37,31 +38,25 @@ class BaseSchema(Schema):
 
 
 class TreatyPartySchema(Schema):
-    country = fields.String(load_from='partyCountry')
-    acceptance_approval_date = fields.Date(
-        load_from='partyDateOfAcceptanceApproval')
-    accession_approbation_date = fields.Date(
+    country = fields.String(load_from='partyCountry', multilingual=True)
+    acceptance_approval = fields.Date(load_from='partyDateOfAcceptanceApproval')
+    accession_approbation = fields.Date(
         load_from='partyDateOfAccessionApprobation')
-    consent_to_be_bound_date = fields.Date(
-        load_from='partyDateOfConsentToBeBound')
-    definite_signature_date = fields.Date(
-        load_from='partyDateOfDefiniteSignature')
-    participation_date = fields.Date(
-        load_from='partyDateOfParticipation')
-    provisional_application_date = fields.Date(
+    consent_to_be_bound = fields.Date(load_from='partyDateOfConsentToBeBound')
+    definite_signature = fields.Date(load_from='partyDateOfDefiniteSignature')
+    entry_into_force = fields.Date(load_from='partyEntryIntoForce', missing=None)
+    participation = fields.Date(load_from='partyDateOfParticipation')
+    provisional_application = fields.Date(
         load_from='partyDateOfProvisionalApplication')
-    ratification_date = fields.Date(
-        load_from='partyDateOfRatification')
-    reservation_date = fields.Date(
-        load_from='partyDateOfReservation')
-    simple_signature_date = fields.Date(
-        load_from='partyDateOfSimpleSignature')
-    succession_date = fields.Date(
-        load_from='partyDateOfSuccession')
-    withdrawal_date = fields.Date(
-        load_from='partyDateOfWithdrawal')
-    entry_into_force_date = fields.Date(
-        load_from='partyEntryIntoForce')
+    ratification = fields.Date(load_from='partyDateOfRatification')
+    reservation = fields.Date(load_from='partyDateOfReservation')
+    simple_signature = fields.Date(load_from='partyDateOfSimpleSignature')
+    succession = fields.Date(load_from='partyDateOfSuccession')
+    withdrawal = fields.Date(load_from='partyDateOfWithdrawal')
+
+    @post_load
+    def make_model(self, data):
+        return TreatyParty(**data)
 
 
 class TreatySchema(BaseSchema):
@@ -73,8 +68,8 @@ class TreatySchema(BaseSchema):
                                    multilingual=True)  # False list (?)
 
     # setting these requires special handling, TODO
-    parties = fields.Nested(TreatyPartySchema,
-                            many=True)
+    parties = fields.Nested(TreatyPartySchema, many=True)
+
     abstract = fields.List(fields.String(), load_from='trAbstract',
                            multilingual=True)
     amended_by = fields.List(fields.String(), load_from='trAmendedBy')
@@ -177,6 +172,14 @@ class TreatySchema(BaseSchema):
     url_parties = fields.List(fields.String(), load_from='trUrlParties')
     url_treaty_text = fields.List(fields.String(), load_from='trUrlTreatyText')
     url_wikipedia = fields.List(fields.String(), load_from='trUrlWikipedia')
+
+    @pre_load
+    def handle_parties(self, data):
+        parties = OrderedDict((k, v) for k, v in data.items()
+                              if k.startswith('party'))
+        parties = [dict(zip(parties.keys(), v)) for v in zip(*parties.values())]
+        data['parties'] = parties
+        return data
 
     @post_load
     def make_model(self, data):

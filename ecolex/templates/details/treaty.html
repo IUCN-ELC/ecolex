@@ -136,7 +136,7 @@
     </dl>
   </section>
 
-  {% if document.participants %}
+  {% if document.parties %}
   <section id="participants">
     <div class="clearfix">
       <a id="participants-extras"
@@ -149,22 +149,23 @@
       <thead>
         <tr>
           <th>Countries</th>
-          {% for event_name in document.participants.events %}
-          <th nowrap="nowrap">{{ event_name|capfirst }}</th>
+          {% for event in document.parties_events %}
+          <th nowrap="nowrap">{{ document.EVENTS_NAMES|lookup:event }}</th>
           {% endfor %}
         </tr>
       </thead>
     <tbody class="body">
-        {% for participant in document.participants.participants %}
+        {% for party in document.parties|sort_by:'country' %}
         <tr class="country">
-          <th>{{ participant.country }}</th>
-          {% for event_name in document.participants.events %}
+          <th>{{ party.country }}</th>
+
+          {% for event_field in document.parties_events %}
           <td>
-            {% with participant.events|lookup:event_name as event %}
+            {% with party|getattr:event_field as event %}
               {% if event.date %}
-                <time title="{{ event.subgroup|default:event_name|capfirst }} date">
+                <time title="{{ document.EVENTS_NAMES|lookup:event.details }} date">
                 {{ event.date|parse_date|date:"b j, Y"|capfirst }}
-                {% if event.idx %}[{{ event.idx }}]{% endif %}
+                {% if event.index %}[{{ event.index }}]{% endif %}
                 </time>
               {% else %}
                 <span class="text-muted" title="Not available">-</span>
@@ -177,7 +178,7 @@
       </tbody>
     </table>
 
-    {% include 'bits/participants_legend.html' with events=document.participants.events %}
+    {% include 'bits/participants_legend.html' with events=document.parties_events %}
 
   </section>
   {% endif %}

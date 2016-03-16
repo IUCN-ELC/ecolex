@@ -13,6 +13,16 @@ def lookup(d, key):
     return d.get(key, d.get(str(key)))
 
 
+@register.filter(name='getattr')
+def getattribute(obj, attr):
+    return getattr(obj, attr)
+
+
+@register.filter
+def sort_by(lst, attr):
+    return sorted(lst, key=lambda x: getattr(x, attr))
+
+
 @register.filter
 def just_year(value):
     return value and value[0:4]
@@ -23,6 +33,7 @@ def join_by(lst, arg):
     if lst and (type(lst) is list or type(lst) is set):
         return arg.join(lst)
     return lst
+
 
 @register.filter
 def capfirstseq(lst):
