@@ -83,7 +83,6 @@ FIELD_MAP = {
 
     'comment': 'trComment',
     'titleoftextshort': 'trTitleOfTextShort',
-    'author': 'trAuthor',
     'titleabbreviation': 'trTitleAbbreviation',
     'placeofadoption': 'trPlaceOfAdoption',
 
@@ -93,7 +92,6 @@ FIELD_MAP = {
 
     'citiestreaty': 'trCitiesTreaty',
     'confname': 'trConfName',
-    'contributor': 'trContributor',
     'courtname': 'trCourtName',
     'dateoflastlegalaction': 'trDateOfLastLegalAction',
 

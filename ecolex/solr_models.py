@@ -532,15 +532,15 @@ class Literature(ObjectNormalizer):
         return first(self.solr.get('litScope_en'))
 
     def corp_authors(self):
-        authors = self.solr.get('litCorpAuthorArticle', [])
+        authors = self.solr.get('litCorpAuthorA', [])
         if not authors:
-            authors = self.solr.get('litCorpAuthor', [])
+            authors = self.solr.get('litCorpAuthorM', [])
         return authors
 
     def people_authors(self):
-        authors = self.solr.get('litAuthorArticle', [])
+        authors = self.solr.get('litAuthorA', [])
         if not authors:
-            authors = self.solr.get('litAuthor', [])
+            authors = self.solr.get('litAuthorM', [])
         return authors
 
     def authors(self):
