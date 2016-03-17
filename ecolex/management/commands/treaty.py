@@ -274,7 +274,7 @@ class TreatyImporter(object):
             self._clean_referred_treaties(treaties)
             new_treaties = list(filter(bool, [self._get_solr_treaty(treaty) for
                                        treaty in treaties.values()]))
-            self._index_files(new_treaties)
+            # self._index_files(new_treaties)
             logger.debug('Adding treaties')
             try:
                 self.solr.add_bulk(new_treaties)
@@ -299,6 +299,7 @@ class TreatyImporter(object):
                         data[v] = [self._clean_text(f.text) for
                                    f in field_values]
                         if v in DATE_FIELDS:
+                            data[v] = [self._repair_date(x) for x in data[v]]
                             data[v] = [format_date(date) for date in data[v]
                                        if self._valid_date(date)]
 
@@ -456,6 +457,18 @@ class TreatyImporter(object):
     def _clean_text(self, text):
         return html.unescape(text.strip())
 
+    def _repair_date(self, date):
+        date_info = date.split('-')
+        if len(date_info) != 3:
+            return date
+        if date_info[1] == '00':
+            date_info[1] = '01'
+        if date_info[2] == '00':
+            date_info[2] = '01'
+        if date_info[0] == '0000':
+            return date
+        return '-'.join(date_info)
+
     def _valid_date(self, date):
         date_info = date.split('-')
         if len(date_info) != 3:
@@ -502,8 +515,8 @@ class TreatyImporter(object):
             print(index)
             docs = self.solr.solr.search('type:treaty', rows=rows, start=index)
             for treaty in docs:
-                if 'trEntryIntoForceDate' not in treaty:
-                    treaty['trStatus'] = 'Not in force'
+                if 'Bilateral' in treaty.get('trTypeOfText_en', []):
+                    treaty['trStatus'] = 'In force'
                 else:
                     treaty_id = treaty.get('trElisId')
                     results = get_documents_by_field('trSupersedesTreaty',
@@ -511,7 +524,10 @@ class TreatyImporter(object):
                     if len(results):
                         treaty['trStatus'] = 'Superseded'
                     else:
-                        treaty['trStatus'] = 'In force'
+                        if 'trEntryIntoForceDate' in treaty:
+                            treaty['trStatus'] = 'In force'
+                        else:
+                            treaty['trStatus'] = 'Not in force'
                 treaties.append(treaty)
 
             if len(docs) < rows:
