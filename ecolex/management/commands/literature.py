@@ -57,11 +57,8 @@ FIELD_MAP = {
     'publplace': 'litPublPlace',
     'volumeno': 'litVolumeNo',
     'collation': 'litCollation',
-    # TODO CLEAN dateoftext field
     'dateoftext': 'litDateOfText',
-    # TODO leave only the correct field below
-    'yearOfText': 'litYearOfText',
-    'yearofText': 'litYearOfText',
+    'yearoftext': 'litYearOfText',
     'linktofulltext': 'litLinkToFullText',
     'doi': 'litLinkDOI',
     'typeoftext': 'litTypeOfText_en',
