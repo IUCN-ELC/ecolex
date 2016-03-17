@@ -102,6 +102,7 @@
         <dd>
           {% for link in document.link_to_full_text %}
             <a href="{{ link.url }}" target="_blank">{{ link.language }}</a>
+            &nbsp;
           {% endfor %}
         </dd>
       {% endif %}

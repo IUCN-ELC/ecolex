@@ -108,6 +108,7 @@
       <dd>
           {% for link in document.link_to_full_text %}
             <a class="decision-link" href="{{ link.0 }}" target="_blank">{{ link.1 }}</a>
+            &nbsp;
           {% endfor %}
       </dd>
       {% endif %}
