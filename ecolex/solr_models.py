@@ -395,9 +395,9 @@ class Treaty(ObjectNormalizer):
     def link_to_full_text(self):
         links = []
         for code, language in LANGUAGE_MAP.items():
-            url = self.solr.get('{}_{}'.format(self.FULL_TEXT, code))
-            if url:
-                links.append({'url': first(url), 'language': language})
+            urls = self.solr.get('{}_{}'.format(self.FULL_TEXT, code), [])
+            for url in urls:
+                links.append({'url': url, 'language': language})
         return links
 
 
