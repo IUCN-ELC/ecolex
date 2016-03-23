@@ -6748,10 +6748,10 @@ fieldset .filter-header {
     vertical-align: middle;
   }
   .homepage-tour-themes .homepage-tour {
-    width: 33.333%;
+    width: 25%;
   }
   .homepage-tour-themes .homepage-themes {
-    width: 66.6666%;
+    width: 75%;
   }
 }
 @media (max-width: 991px) {
