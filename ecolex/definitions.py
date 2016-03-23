@@ -161,7 +161,7 @@ SOLR_FIELDS = [
     'litTitleOfTextShort_en', 'litTitleOfTextShort_fr', 'litTitleOfTextShort_es',
     'litTitleOfTextShort_other',
     'litTitleOfTextTransl_en', 'litTitleOfTextTransl_fr', 'litTitleOfTextTransl_es',
-    'litDateOfEntry', 'litDateOfModification',
+    'litDateOfEntry', 'litDateOfModification', 'litDateOfTextSer',
     'litAbstract_en', 'litAbstract_fr', 'litAbstract_es', 'litAbstract_other',
     'litTypeOfText_en', 'litTypeOfText_fr', 'litTypeOfText_es',
     'litScope_en', 'litScope_fr', 'litScope_es',

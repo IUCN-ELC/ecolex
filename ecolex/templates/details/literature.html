@@ -26,22 +26,20 @@
         <dt>Corporate author{{ document.corp_authors|length|pluralize:",s" }}</dt>
         <dd>{{ document.corp_authors | join_by:", " | safe }}</dd>
       {% endif %}
-      {% if document.parent_title %}
+      {% if document.lit_is_article and document.serial_title %}
         <dt>Journal/Series</dt>
-        <dd>{{ document.parent_title | safe }}
-            {% if document.lit_is_article %}
-                {% if document.solr.litVolumeNo %}
-                | {{ document.solr.litVolumeNo | safe }}
-                {% endif %}
-                {% if document.solr.litCollation %}
-                | {{ document.solr.litCollation | safe }}
-                {% endif %}
-            {% endif %}
+        <dd>{{ document.serial_title | safe }}
+            {% if document.solr.litVolumeNo %} | {{ document.solr.litVolumeNo | safe }} {% endif %}
+            {% if document.solr.litCollation %} | {{ document.solr.litCollation | safe }} {% endif %}
         </dd>
       {% endif %}
-      {% if document.solr.litDateOfText %}
+      {% if document.lit_is_chapter and document.parent_title %}
+        <dt>Monograph</dt>
+        <dd>{{ document.parent_title | safe }}</dd>
+      {% endif %}
+      {% if document.date %}
         <dt>Publication year</dt>
-        <dd>{{ document.solr.litDateOfText | safe }}</dd>
+        <dd>{{ document.date | safe }}</dd>
       {% endif %}
     </dl>
   </header>

@@ -8,8 +8,12 @@
 {% endif %}
 
 <p class="search-result-details">
-    {% if result.parent_title %}
-    <strong>Journal/Series: </strong><span>{{ result.parent_title | safe }}</span>
+    {% if result.lit_is_article and result.serial_title %}
+    <strong>In: </strong><span>{{ result.serial_title | safe }}</span>
+        {% if result.solr.litVolumeNo %} | {{ result.solr.litVolumeNo | safe }} {% endif %}
+        {% if result.solr.litCollation %} | {{ result.solr.litCollation | safe }} {% endif %}
+    {% elif result.lit_is_chapter and result.parent_title %}
+    <strong>In: </strong><span>{{ result.parent_title | safe }}</span>
         {% if result.solr.litVolumeNo %} | {{ result.solr.litVolumeNo | safe }} {% endif %}
         {% if result.solr.litCollation %} | {{ result.solr.litCollation | safe }} {% endif %}
     {% endif %}
@@ -26,6 +30,7 @@
     {% if result.countries %} | <span>{{ result.countries | join_by:", " | safe }}</span> {% endif %}
 </p>
 
-<p class="search-result-details"><strong>Keywords:</strong> {{ result.keywords | join_by:", " | safe }}
+<p class="search-result-details"><strong>Keywords:</strong>
+    {{ result.keywords | capfirstseq | join_by:", " | safe }}
 </p>
 <p class="search-result-source">Source: <a target="_blank" href="http://iucn.org">{{ result.source }}</a> (ID: {{ result.document_id }})</p>

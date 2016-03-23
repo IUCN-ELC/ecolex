@@ -10,6 +10,7 @@ import re
 from django.core.urlresolvers import reverse
 from django.utils.html import strip_tags
 from django.template.defaultfilters import date as django_date_filter
+from django.utils.translation import get_language
 
 from ecolex.definitions import DOC_SOURCES, LANGUAGE_MAP
 
@@ -451,23 +452,28 @@ class Literature(ObjectNormalizer):
     ID_FIELD = 'litId'
     LANGUAGE_FIELD = 'litLanguageOfDocument_en'
     SUMMARY_FIELD = 'litAbstract_en'
+
+    TITLE_FIELD_MAP = {
+        'MON': 'litLongTitle',
+        'ANA': 'litPaperTitleOfText'
+    }
     TITLE_FIELDS = [
-        'litPaperTitleOfText_en', 'litLongTitle_en', 'litTitleOfTextTransl_en', 'litTitleOfTextShort_en',
-        'litPaperTitleOfText_fr', 'litLongTitle_fr', 'litTitleOfTextTransl_fr', 'litTitleOfTextShort_fr',
-        'litPaperTitleOfText_es', 'litLongTitle_es', 'litTitleOfTextTransl_es', 'litTitleOfTextShort_es',
-        'litPaperTitleOfText_other', 'litLongTitle_other', 'litTitleOfTextShort_other',
+        'litPaperTitleOfText_en', 'litLongTitle_en',
+        'litPaperTitleOfText_fr', 'litLongTitle_fr',
+        'litPaperTitleOfText_es', 'litLongTitle_es',
+        'litPaperTitleOfText_other', 'litLongTitle_other',
     ]
-    TITLE_FIELDS_MULTILINGUAL = ['litPaperTitleOfText', 'litLongTitle', 'litTitleOfTextTransl']
+
     DATE_FIELDS = ['litDateOfEntry', 'litDateOfModification']
     OPTIONAL_INFO_FIELDS = [
         (['litPublisher', 'litPublPlace'], 'Publisher', ' | '),
         ('litISBN', 'ISBN', 'list'),
         ('litISSN', 'ISSN', ''),
-        ('collation', 'Pages', 'attr'), # should exclude for article
+        ('collation', 'Pages', 'attr'),
         ('type_of_document', 'Document type', 'attr'),
-         # TODO: litConfName is a translatable field
-        ('serial_title', 'Journal/Series', 'attr'),
+        # TODO: litConfName is a translatable field
         (['litConfName_en', 'litConfNo', 'litConfDate', 'litConfPlace'], 'Conference', ' | '),
+        # literature can have multiple languages - see ANA-082928
         ('litLanguageOfDocument_en', 'Language', 'list'),
     ]
     DOCTYPE_FIELD = 'litTypeOfText_en'
@@ -519,11 +525,10 @@ class Literature(ObjectNormalizer):
         return references
 
     def document_id(self):
-        obj = self.solr.get(self.ID_FIELD)
-        #TODO remove after re-import of literature using single value litId
-        if obj and type(obj) is list:
-            return obj[-1]
-        return obj
+        return self.solr.get(self.ID_FIELD)
+
+    def date(self):
+        return self.solr.get('litYearOfText') or self.solr.get('litDateOfTextSer')
 
     def details_url(self):
         return reverse('literature_details', kwargs={'id': self.id()})
@@ -564,40 +569,76 @@ class Literature(ObjectNormalizer):
     def publication_date(self):
         return first(self.solr.get('litDateOfTextSer')) or first(self.solr.get('litDateOfText'))
 
+    def title_field(self):
+        return self.TITLE_FIELD_MAP.get(self.document_id()[:3])
+
+    def get_multilingual(self, field, lang_code):
+        # TODO: probably something similar already implemented by Iulia
+        return self.solr.get('{}_{}'.format(field, lang_code))
+
+    def get_field_current(self, field):
+        # TODO: probably something similar already implemented by Iulia
+        # Try current language first
+        value = self.get_multilingual(field, get_language())
+        if not value:
+            for lang_code in LANGUAGE_MAP.keys():
+                value = self.get_multilingual(field, lang_code)
+                if value:
+                    break;
+        return value
+
+    def title(self):
+        title = first(self.get_field_current(self.title_field()))
+        # first is necessary because of excerpt highlighting
+        return title or "Unknown Document"
+
     def title_translations(self):
         titles = []
+        main_title = self.title()
         for code, language in LANGUAGE_MAP.items():
-            for field in self.TITLE_FIELDS_MULTILINGUAL:
-                title = self.solr.get('{}_{}'.format(field, code))
-                if title:
-                    break
-            if (title and title != self.title() and
-                    re.sub('<[^<]+?>', '', first(title)) !=
-                    re.sub('<[^<]+?>', '', self.title())):
-                titles.append({'alttitle': first(title), 'language': language})
+            if code == get_language():
+                continue
+            title = first(self.get_multilingual(self.title_field(), code))
+            if title and title != main_title:
+                titles.append({'alttitle': title, 'language': language})
         return titles
 
+    @cached_property
     def parent_title(self):
-        parent_title = first(self.solr.get('litLongTitle_en')) or first(self.solr.get('litSerialTitle'))
-        if (not parent_title or parent_title == self.title() or
-                re.sub('<[^<]+?>', '', first(parent_title)) ==
-                re.sub('<[^<]+?>', '', self.title())):
-            return None
-        return parent_title
+        # only for chapters
+        if self.lit_is_chapter:
+            return self.get_field_current('litLongTitle')
+        return None
 
     @cached_property
     def lit_is_article(self):
+        # TODO: also check document_id ?
         return bool(self.solr.get('litDateOfTextSer', '').strip())
+
+    @cached_property
+    def lit_is_chapter(self):
+        return self.document_id()[:3] == 'ANA' and not self.lit_is_article
 
     @cached_property
     def collation(self):
         if not self.lit_is_article:
-            return self.solr.get('litCollation')
+            # for articles, the collation is included in serial_title
+            volume = self.solr.get('litVolumeNo', '')
+            collation = self.solr.get('litCollation')
+            if volume and collation:
+                return ' | '.join([volume, collation])
+            else:
+                return volume or collation
         return None
 
     @cached_property
     def serial_title(self):
-        if not self.lit_is_article:
+        if self.lit_is_article:
+            # TODO: why don't we include always volume and collation
+            # since they are always displayed together?
+            return self.solr.get('litSerialTitle')
+        else:
+            # TODO: when is this shown???
             litSerialTitle = self.solr.get('litSerialTitle', '')
             litVolumeNo = self.solr.get('litVolumeNo', '')
             if litVolumeNo and litSerialTitle:
@@ -615,13 +656,6 @@ class Literature(ObjectNormalizer):
             filename = basename(urlparse.urlparse(link).path)
             links.append((link, filename))
         return links
-
-    def get_language(self):
-        # TODO: literature can have multiple languages - see ANA-082928
-        return (first(self.solr.get('litLanguageOfDocument_en') or
-                      self.solr.get('litLanguageOfDocument_fr') or
-                      self.solr.get('litLanguageOfDocument_es')) or
-                'Document language')
 
 
 class CourtDecision(ObjectNormalizer):
@@ -744,8 +778,7 @@ class Legislation(ObjectNormalizer):
         return first(self.solr.get('legAbstract'))
 
     def date(self):
-        legYear = self.solr.get('legYear')
-        return legYear
+        return self.solr.get('legYear')
 
     def consolidation_date(self):
         legOriginalYear = self.solr.get('legOriginalYear')
