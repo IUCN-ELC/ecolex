@@ -204,25 +204,6 @@ class TreatyDetails(DetailsView):
 
     template_name = 'details/treaty.html'
 
-    def _sort_references(self, references):
-        direct_sorted_refs = []
-        for label in self.doc.DIRECT_LABELS:
-            treaties = references.get(label, [])
-            if treaties and any(treaties):
-                treaties = [t for t in treaties]
-                treaties.sort(key=lambda x: x.date(), reverse=True)
-                direct_sorted_refs.append((label, treaties))
-
-        back_sorted_refs = []
-        for label in self.doc.BACK_LABELS:
-            treaties = references.get(label, [])
-            if treaties and any(treaties):
-                treaties = [t for t in treaties]
-                treaties.sort(key=lambda x: x.date(), reverse=True)
-                back_sorted_refs.append((label, treaties))
-
-        return direct_sorted_refs, back_sorted_refs
-
     def get_context_data(self, **kwargs):
         context = super(TreatyDetails, self).get_context_data(**kwargs)
         # self.doc = context['document']

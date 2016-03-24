@@ -419,8 +419,10 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     else:
         params['facet.field'] = facets or filters.keys()
 
+    """
     if highlight:
         params.update(get_hl(hl_details=hl_details))
+    """
     params['sort'] = get_sortby(sortby, highlight)
     params.update(get_relevancy())
     # add spellcheck
@@ -436,10 +438,10 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     return solr.search(solr_query, **params)
 
 
-def get_documents_by_field(id_name, treaty_ids, rows=None):
+def get_documents_by_field(id_name, treaty_ids, rows=None, sortby=None):
     solr_query = id_name + ":(" + " ".join(treaty_ids) + ")"
     rows = len(treaty_ids) if rows is None else rows
-    result = search(solr_query, rows=rows, raw=True)
+    result = search(solr_query, rows=rows, sortby=sortby, raw=True)
     if not len(result):
         return []
     return result

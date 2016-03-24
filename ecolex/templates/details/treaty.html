@@ -183,11 +183,26 @@
   </section>
   {% endif %}
 
-  {% if direct_links or back_links %}
+  {% if document.treaty_references %}
   <section id="treaty-references">
     <h2 class="section-title">Treaty references</h2>
-    {% include 'bits/treaty_references.html' with links=direct_links %}
-    {% include 'bits/treaty_references.html' with links=back_links %}
+
+    {% for name, value in document.treaty_references.items %}
+      <dl class="dl-horizontal references">
+        <dt>{{ name|labelify }}</dt>
+        {% for treaty in value %}
+          <dd>
+            <div class="treaty-link-container">
+              <h3 class="search-result-title">
+                <a href="{{ treaty.details_url }}?{{ query }}"
+                   title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
+              </h3>
+              {% include 'short_display/treaty.html' with result=treaty %}
+            </div>
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endfor %}
   </section>
   {% endif %}
 

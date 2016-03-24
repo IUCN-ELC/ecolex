@@ -2,11 +2,15 @@
 These models define the documents' behaviour that could not be included in the
 schema. They will eventually replace actual solr_models.
 """
+from collections import OrderedDict
 from datetime import date
 from django.core.urlresolvers import reverse
+from django.utils.functional import cached_property
+
 
 DEFAULT_TITLE = 'Unknown Document'
 INVALID_DATE = date(2, 11, 30)
+MAX_ROWS = 100
 
 
 class BaseModel(object):
@@ -47,6 +51,16 @@ class Treaty(DocumentModel):
         'reservation',
         'withdrawal',
     ]
+    TREATY_REFERENCES = [
+        'enables', 'supersedes', 'cites', 'amends',
+        'enabled_by', 'superseded_by', 'cited_by', 'amended_by',
+    ]
+    TREATY_BACKREF_FIELDS = {
+        'amended_by': 'trAmendsTreaty',
+        'cited_by': 'trCitesTreaty',
+        'enables': 'trEnabledByTreaty',
+        'superseded_by': 'trSupersedesTreaty',
+    }
 
     @property
     def title(self):
@@ -65,6 +79,27 @@ class Treaty(DocumentModel):
     def parties_events(self):
         events = set().union(*[party.events for party in self.parties])
         return sorted(events, key=lambda x: self.EVENTS_ORDER.index(x))
+
+    @cached_property
+    def treaty_references(self):
+        from ecolex.search import get_documents_by_field
+        refs = OrderedDict()
+        for field in self.TREATY_REFERENCES:
+            backref_field = self.TREATY_BACKREF_FIELDS.get(field)
+            if not backref_field:
+                value = getattr(self, field, [])
+                if not value:
+                    continue
+                solr_field = 'trElisId'
+            else:
+                value = [self.document_id]
+                solr_field = self.TREATY_BACKREF_FIELDS[field]
+
+            new_value = get_documents_by_field(solr_field, value, rows=MAX_ROWS,
+                                               sortby='last')
+            if new_value:
+                refs[field] = new_value
+        return refs
 
 
 class TreatyParty(BaseModel):

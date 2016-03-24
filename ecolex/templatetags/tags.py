@@ -19,6 +19,11 @@ def getattribute(obj, attr):
 
 
 @register.filter
+def labelify(text):
+    return text.replace('_', ' ').capitalize()
+
+
+@register.filter
 def sort_by(lst, attr):
     return sorted(lst, key=lambda x: getattr(x, attr))
 

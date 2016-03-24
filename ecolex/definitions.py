@@ -1,5 +1,6 @@
 import collections
 
+
 DOC_TYPE = (
     ('treaty', "Treaty"),
     ('decision', "Decision"),

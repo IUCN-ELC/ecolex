@@ -67,21 +67,16 @@ class TreatySchema(BaseSchema):
     type_of_document = fields.List(fields.String(), load_from='trTypeOfText',
                                    multilingual=True)  # False list (?)
 
-    # setting these requires special handling, TODO
     parties = fields.Nested(TreatyPartySchema, many=True)
 
     abstract = fields.List(fields.String(), load_from='trAbstract',
                            multilingual=True)
-    amended_by = fields.List(fields.String(), load_from='trAmendedBy')
-    amends_treaty = fields.List(fields.String(), load_from='trAmendsTreaty')
     author = fields.List(fields.String(), load_from='trAuthor')
     author_a = fields.List(fields.String(), load_from='trAuthorA')
     author_m = fields.List(fields.String(), load_from='trAuthorM')
     author_whole = fields.List(fields.String(), load_from='trAuthorWhole')
     available_in = fields.List(fields.String(), load_from='trAvailableIn')  # False list
     basin = fields.List(fields.String(), load_from='trBasin', multilingual=True)
-    cited_by = fields.List(fields.String(), load_from='trCitedBy')
-    cites_treaty = fields.List(fields.String(), load_from='trCitesTreaty')
     comment = fields.List(fields.String(), load_from='trComment')
     conf_name = fields.List(fields.String(), load_from='trConfName')
     conf_place = fields.List(fields.String(), load_from='trConfPlace')
@@ -97,9 +92,6 @@ class TreatySchema(BaseSchema):
     depository = fields.List(fields.String(), load_from='trDepository',
                              multilingual=True)
     enabled = fields.String(load_from='trEnabled')
-    enabled_by_treaty = fields.List(fields.String(),
-                                    load_from='trEnabledByTreaty')
-    enables_treaty = fields.List(fields.String(), load_from='trEnablesTreaty')
     entry_into_force_date = fields.Date(load_from='trEntryIntoForceDate')
     field_of_application = fields.List(fields.String(),
                                        load_from='trFieldOfApplication',
@@ -145,10 +137,6 @@ class TreatySchema(BaseSchema):
     place_of_adoption = fields.List(fields.String(),
                                     load_from='trPlaceOfAdoption')  # False list
     primary = fields.List(fields.String(), load_from='trPrimary')
-    reference_to_literature = fields.List(fields.String(),
-                                          load_from='trReferenceToLiterature')
-    reference_to_treaties = fields.List(fields.String(),
-                                        load_from='trReferenceToTreaties')
     region = fields.List(fields.String(), load_from='trRegion',
                          multilingual=True)
     relevant_text_treaty = fields.List(fields.String(),
@@ -157,9 +145,6 @@ class TreatySchema(BaseSchema):
     search_date = fields.Date(load_from='trSearchDate')
     seat_of_court = fields.List(fields.String(), load_from='trSeatOfCourt')
     status = fields.String(load_from='trStatus')
-    superseded_by = fields.List(fields.String(), load_from='trSupersededBy')
-    supersedes_treaty = fields.List(fields.String(),
-                                    load_from='trSupersedesTreaty')
     theme_secondary = fields.List(fields.String(), load_from='trThemeSecondary')
     title_abbreviation = fields.List(fields.String(),
                                      load_from='trTitleAbbreviation')
@@ -172,6 +157,12 @@ class TreatySchema(BaseSchema):
     url_parties = fields.List(fields.String(), load_from='trUrlParties')
     url_treaty_text = fields.List(fields.String(), load_from='trUrlTreatyText')
     url_wikipedia = fields.List(fields.String(), load_from='trUrlWikipedia')
+
+    # References
+    amends = fields.List(fields.String(), load_from='trAmendsTreaty')
+    cites = fields.List(fields.String(), load_from='trCitesTreaty')
+    enabled_by = fields.List(fields.String(), load_from='trEnabledByTreaty')
+    supersedes = fields.List(fields.String(), load_from='trSupersedesTreaty')
 
     @pre_load
     def handle_parties(self, data):
