@@ -20,17 +20,27 @@
     </div>
 
     <dl>
-      <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
-      <dt>Status</dt> <dd>{{ document.solr.decStatus|capfirst }}</dd>
+      <dt>Reference number</dt> <dd>{{ document.document_id|default:"-" }}</dd>
       <dt>Date</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
-      <dt>Source</dt>
-      <dd>{{ document.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
     </dl>
   </header>
 
   <section id="details">
     <dl>
+      <dt>Status</dt> <dd>{{ document.solr.decStatus|capfirst }}</dd>
+      {% if document.subjects %}
+        <dt>Subject{{ document.subjects|length|pluralize:",s" }}</dt>
+        <dd>{{ document.subjects | join_by:", " | safe }}</dd>
+      {% endif %}
+      {% if document.keywords %}
+        <dt>Keywords</dt>
+        <dd>
+        {% for keyword in document.keywords %}
+            <span class="tag">{{ keyword|capfirst|safe }}</span>
+        {% endfor %}
+        </dd>
+      {% endif %}
       {% if treaty %}
         <dt>Treaty</dt>
         <dd>
@@ -52,11 +62,13 @@
       </dd>
 
       {% if document.url %}
-      <dt>Link to decision</dt>
+      <dt>Available website</dt>
       <dd>
         <a target="_blank" href="{{ document.url }}">{{ document.get_language }}</a>
       </dd>
       {% endif %}
+      <dt>Source</dt>
+      <dd>{{ document.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
 
       {% if document.get_files %}
         <dt>Files</dt>
@@ -71,15 +83,6 @@
         <dt> {{ entry.label }} </dt>
         <dd> {{ entry.value | date:"b j, Y" | capfirst | join_by:", " }}</dd>
       {% endfor %}
-
-      {% if document.keywords %}
-        <dt>Keywords</dt>
-        <dd>
-          {% for keyword in document.keywords %}
-            <span class="tag">{{ keyword|capfirst|safe }}</span>
-          {% endfor %}
-        </dd>
-      {% endif %}
     </dl>
   </section>
 

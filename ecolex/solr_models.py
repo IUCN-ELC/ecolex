@@ -409,6 +409,7 @@ class Decision(ObjectNormalizer):
                     'decShortTitle_ru', 'decShortTitle_ar', 'decShortTitle_zh']
     DATE_FIELDS = ['decPublishDate', 'decUpdateDate']
     DOCTYPE_FIELD = 'decType'
+    SUBJECT_FIELD = 'trSubject_en'
     KEYWORD_FIELD = 'decKeyword_en'
     OPTIONAL_INFO_FIELDS = [
     ]
@@ -423,7 +424,7 @@ class Decision(ObjectNormalizer):
         return first(self.solr.get('decStatus'), "unknown")
 
     def get_language(self):
-        lang_code = first(self.solr.get('decLanguage'))
+        lang_code = first(self.solr.get('decLanguage_en'))
         if lang_code:
             return LANGUAGE_MAP.get(lang_code, lang_code)
         return 'Document language'
