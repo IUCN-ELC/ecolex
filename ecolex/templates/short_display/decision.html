@@ -12,7 +12,7 @@
     {% endif %}
 </div>
 {% if result.keywords %}
-<p class="search-result-details"><strong>Keywords:</strong> {{ result.keywords | join_by:", " | safe }}
+<p class="search-result-details"><strong>Keywords:</strong> {{ result.keywords | capfirstseq | join_by:", " | safe }}
 </p>
 {% endif %}
 <p class="search-result-source">Source: {{ result.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></p>
