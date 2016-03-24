@@ -10,6 +10,11 @@ from django.utils.functional import cached_property
 
 DEFAULT_TITLE = 'Unknown Document'
 INVALID_DATE = date(2, 11, 30)
+
+# This limit does not allow all documents to be showed on the details_decisions,
+# details_court_decisions and details_literatures pages (Treaty -> Other
+# references). However, increasing this limit slows also increases the page's
+# load time. TODO Pagination on the details pages
 MAX_ROWS = 100
 
 
@@ -75,7 +80,7 @@ class Treaty(DocumentModel):
                 self.date_of_entry or
                 self.date_of_modification)
 
-    @property
+    @cached_property
     def parties_events(self):
         events = set().union(*[party.events for party in self.parties])
         return sorted(events, key=lambda x: self.EVENTS_ORDER.index(x))
@@ -100,6 +105,24 @@ class Treaty(DocumentModel):
             if new_value:
                 refs[field] = new_value
         return refs
+
+    @cached_property
+    def decisions(self):
+        from ecolex.search import get_documents_by_field
+        return get_documents_by_field('decTreatyId',
+                                      [self.informea_id], rows=MAX_ROWS)
+
+    @cached_property
+    def literatures(self):
+        from ecolex.search import get_documents_by_field
+        return get_documents_by_field('litTreatyReference',
+                                      [self.document_id], rows=MAX_ROWS)
+
+    @cached_property
+    def court_decisions(self):
+        from ecolex.search import get_documents_by_field
+        return get_documents_by_field('cdTreatyReference',
+                                      [self.document_id], rows=MAX_ROWS)
 
 
 class TreatyParty(BaseModel):

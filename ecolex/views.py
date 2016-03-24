@@ -7,8 +7,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
 from urllib.parse import urlencode
 import logging
-from ecolex.legislation import harvest_file
 
+from ecolex.legislation import harvest_file
 from ecolex.search import (
     get_document, get_documents_by_field, get_treaty_by_informea_id,
     SearchMixin,
@@ -204,20 +204,6 @@ class TreatyDetails(DetailsView):
 
     template_name = 'details/treaty.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(TreatyDetails, self).get_context_data(**kwargs)
-        # self.doc = context['document']
-        # references = self.doc.get_treaty_references()
-        # references.update(self.doc.get_treaty_back_references())
-        # context['direct_links'], context['back_links'] = (
-        #     self._sort_references(references))
-
-        # context['decisions'] = self.doc.get_decisions()
-        # context['literatures'] = self.doc.get_literatures()
-        # context['court_decisions'] = self.doc.get_court_decisions()
-
-        return context
-
 
 class LiteratureDetails(DetailsView):
 
@@ -267,20 +253,8 @@ class ResultDetailsDecisions(SearchView):
         if not results.count():
             raise Http404()
 
-        meetings = {}
-        meetingNames = {}
         context['treaty'] = results.first()
         context['page_type'] = 'homepage'
-
-        for decision in context['treaty'].get_decisions():
-            decId = decision.solr['decMeetingId'][0]
-            x = meetings.get(decId, [])
-            x.append(decision)
-            meetings[decId] = x
-            if 'decMeetingTitle' in decision.solr:
-                meetingNames[decId] = decision.solr['decMeetingTitle'][0]
-        context['meetings'] = meetings
-        context['meetingNames'] = meetingNames
         return context
 
 
@@ -296,7 +270,6 @@ class ResultDetailsLiteratures(SearchView):
 
         context['treaty'] = results.first()
         context['page_type'] = 'homepage'
-        context['literatures'] = context['treaty'].get_literatures()
         return context
 
 
@@ -312,7 +285,6 @@ class ResultDetailsCourtDecisions(SearchView):
 
         context['treaty'] = results.first()
         context['page_type'] = 'homepage'
-        context['court_decisions'] = context['treaty'].get_court_decisions()
         return context
 
 

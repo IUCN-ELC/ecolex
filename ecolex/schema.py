@@ -269,8 +269,9 @@ class LiteratureSchema(BaseSchema):
     id2 = fields.List(fields.String(), load_from='litId2')
     int_org = fields.String(load_from='litIntOrg', multilingual=True)
     internet_reference = fields.String(load_from='litInternetReference')
-    language_of_document = fields.String(load_from='litLanguageOfDocument',
-                                         multilingual=True)
+    language_of_document = fields.List(fields.String(),
+                                       load_from='litLanguageOfDocument',
+                                       multilingual=True)
     language_of_translation = fields.String(
         load_from='litLanguageOfTranslation',
         multilingual=True)

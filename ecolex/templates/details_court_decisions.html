@@ -23,19 +23,19 @@
     <thead>
       <th>Title</th>
     </thead>
-      <tbody>
-        {% for court_decision in court_decisions %}
-        <tr>
-          <td>
-            <h3 class="search-result-title">
-              <a href="{{ court_decision.details_url }}?{{ query }}"
-                 title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
-            </h3>
-            {% include 'short_display/court_decision.html' with result=court_decision %}
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
+    <tbody>
+      {% for court_decision in treaty.court_decisions %}
+      <tr>
+        <td>
+          <h3 class="search-result-title">
+            <a href="{{ court_decision.details_url }}?{{ query }}"
+               title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
+          </h3>
+          {% include 'short_display/court_decision.html' with result=court_decision %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
   </table>
 
 </article>
