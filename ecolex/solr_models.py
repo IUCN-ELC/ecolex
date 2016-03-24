@@ -607,7 +607,7 @@ class Literature(ObjectNormalizer):
     def parent_title(self):
         # only for chapters
         if self.lit_is_chapter:
-            return self.get_field_current('litLongTitle')
+            return first(self.get_field_current('litLongTitle'))
         return None
 
     @cached_property
