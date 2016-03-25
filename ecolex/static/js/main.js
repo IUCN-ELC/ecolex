@@ -514,6 +514,10 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         e.preventDefault();
         $form = $('#search-form');
         $form[0].reset();
+        $('#search-form input:checkbox:checked').prop("checked", false);
+        $('#year-min').val(1860);
+        $('#year-max').val(2015);
+        $('#id_type option:selected').prop("selected", false);
         $form.submit();
     });
 
