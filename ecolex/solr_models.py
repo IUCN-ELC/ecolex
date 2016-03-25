@@ -424,10 +424,10 @@ class Decision(ObjectNormalizer):
         return first(self.solr.get('decStatus'), "unknown")
 
     def get_language(self):
-        lang_code = first(self.solr.get('decLanguage_en'))
-        if lang_code:
-            return LANGUAGE_MAP.get(lang_code, lang_code)
-        return 'Document language'
+        link = first(self.solr.get('decLink'))
+        if link:
+            return urlparse.urlparse(link).hostname
+        return 'No link'
 
     def summary(self):
         # TODO - Multilangual selector
