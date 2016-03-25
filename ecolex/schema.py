@@ -23,6 +23,9 @@ class BaseSchema(Schema):
     Inherited by all main object schemas.
     """
 
+    # this must be defined by subclasses
+    Model = None
+
     id = fields.String()
     type = fields.String()
     source = fields.String()
@@ -35,6 +38,10 @@ class BaseSchema(Schema):
                            load_from_attribute='KEYWORDS_FIELD')
     subjects = fields.List(fields.String(), multilingual=True,
                            load_from_attribute='SUBJECTS_FIELD')
+
+    @post_load
+    def make_model(self, data):
+        return self.Model(**data)
 
 
 class TreatyPartySchema(Schema):
@@ -60,6 +67,8 @@ class TreatyPartySchema(Schema):
 
 
 class TreatySchema(BaseSchema):
+    Model = Treaty
+
     ID_FIELD = 'trElisId'
     KEYWORDS_FIELD = 'trKeyword'
     SUBJECTS_FIELD = 'trSubject'
@@ -172,12 +181,10 @@ class TreatySchema(BaseSchema):
         data['parties'] = parties
         return data
 
-    @post_load
-    def make_model(self, data):
-        return Treaty(**data)
-
 
 class DecisionSchema(BaseSchema):
+    Model = Decision
+
     ID_FIELD = 'decNumber'
     KEYWORDS_FIELD = 'decKeyword'
     SUBJECTS_FIELD = 'docSubject'  # COP decisions don't have subjects (?)
@@ -207,12 +214,10 @@ class DecisionSchema(BaseSchema):
     treaty_name = fields.String(load_from='decTreatyName', multilingual=True)
     update_date = fields.Date(load_from='decUpdateDate', missing=None)
 
-    @post_load
-    def make_model(self, data):
-        return Decision(**data)
-
 
 class LiteratureSchema(BaseSchema):
+    Model = Literature
+
     ID_FIELD = 'litId'  # this is actually multivalued (?)
     KEYWORDS_FIELD = 'litKeyword'
     SUBJECTS_FIELD = 'litSubject'
@@ -319,12 +324,10 @@ class LiteratureSchema(BaseSchema):
     corp_author_m = fields.List(fields.String(), load_from='litCorpAuthorM',
                                 missing=[])
 
-    @post_load
-    def make_model(self, data):
-        return Literature(**data)
-
 
 class CourtDecisionSchema(BaseSchema):
+    Model = CourtDecision
+
     ID_FIELD = 'cdLeoId'
     KEYWORDS_FIELD = 'cdKeyword'
     SUBJECTS_FIELD = 'cdSubject'
@@ -361,12 +364,10 @@ class CourtDecisionSchema(BaseSchema):
     treaty_reference = fields.List(fields.String(),
                                    load_from='cdTreatyReference')
 
-    @post_load
-    def make_model(self, data):
-        return CourtDecision(**data)
-
 
 class LegislationSchema(BaseSchema):
+    Model = Legislation
+
     ID_FIELD = 'legId'
     KEYWORDS_FIELD = 'legKeyword'
     SUBJECTS_FIELD = 'legSubject'
@@ -405,7 +406,3 @@ class LegislationSchema(BaseSchema):
     amends = fields.List(fields.String(), load_from='legAmends')
     implements = fields.List(fields.String(), load_from='legImplement')
     repeals = fields.List(fields.String(), load_from='legRepeals')
-
-    @post_load
-    def make_model(self, data):
-        return Legislation(**data)
