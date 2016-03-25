@@ -1,7 +1,6 @@
 from django.conf import settings
-from django.conf.urls import include, patterns, url
+from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
-from rest_framework import routers
 
 from .views import (
     SearchResults, PageView, ResultDetailsDecisions, Homepage,
@@ -13,14 +12,12 @@ from .views import (
 )
 from .api import urls as api_urls
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^fao/$', FaoFeedView.as_view(), name='fao_feeder'),
     url(r'^i18n/', include('django.conf.urls.i18n')),
-)
+]
 
 urlpatterns += i18n_patterns(
-    '',
     url(r'^$', Homepage.as_view(), name="homepage"),
     url(r'^result/$', SearchResults.as_view(),
         name="results"),
@@ -54,15 +51,13 @@ urlpatterns += i18n_patterns(
         name="page"),
 )
 
-urlpatterns += patterns(
-    '',
+urlpatterns += [
     url(r'^api/', include(api_urls, namespace="api")),
-)
+]
 
 
 if settings.DEBUG:
-    urlpatterns += patterns(
-        '',
+    urlpatterns += [
         url(r'^_debug', debug, name="debug"),
         url(r'^playground/$', DesignPlayground.as_view(), name="playground"),
-    )
+    ]

@@ -2,6 +2,7 @@
 def global_config(request):
     from django.conf import settings
     expose_settings = [
+        'STATIC_URL',
         'GA_CODE',
         'FACETS_PAGE_SIZE',
         'DEBUG',

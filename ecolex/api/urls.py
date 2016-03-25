@@ -1,5 +1,5 @@
 from ecolex.definitions import SELECT_FACETS as FACET_MAP
-from django.conf.urls import include, patterns, url
+from django.conf.urls import include, url
 from rest_framework.routers import DefaultRouter
 from . import views
 
@@ -18,7 +18,6 @@ facet_urls = [
 ]
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^v1.0/', include(router.urls + facet_urls))
-)
+]

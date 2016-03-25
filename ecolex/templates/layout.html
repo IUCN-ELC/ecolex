@@ -6,20 +6,20 @@
   <meta charset="utf-8">
   <title>ECOLEX {% block title %}{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="{{ STATIC_URL }}{% version 'css/bootstrap.custom.css' %}">
-  <link rel="stylesheet" href="{{ STATIC_URL }}{% version 'css/bootstrap-tour.min.css' %}">
-  <link rel="stylesheet" href="{{ STATIC_URL }}{% version 'css/select2.css' %}">
-  <link rel="stylesheet" href="{{ STATIC_URL }}{% version 'css/main.css' %}">
+  <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/bootstrap.custom.css' %}">
+  <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/bootstrap-tour.min.css' %}">
+  <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/select2.css' %}">
+  <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/main.css' %}">
   {% block style %}{% endblock %}
   <script src="https://code.jquery.com/jquery-1.12.1.min.js"
           integrity="sha256-I1nTg78tSrZev3kjvfdM5A5Ak/blglGzlaZANLPDl3I="
           crossorigin="anonymous"></script>
-  <script src="{{ STATIC_URL }}{% version 'js/bootstrap.min.js' %}"></script>{% comment %}
-  <script src="{{ STATIC_URL }}{% version 'js/modernizr-custom.js' %}"></script>
-  <script src="{{ STATIC_URL }}{% version 'js/jquery.deserialize.js' %}"></script>
-  <script src="{{ STATIC_URL }}{% version 'js/jquery.blockUI.js' %}"></script>{% endcomment %}
-  <script src="{{ STATIC_URL }}{% version 'js/select2.js' %}"></script>
-  <script src="{{ STATIC_URL }}{% version 'js/main.js' %}"></script>
+  <script src="{{ settings.STATIC_URL }}{% version 'js/bootstrap.min.js' %}"></script>{% comment %}
+  <script src="{{ settings.STATIC_URL }}{% version 'js/modernizr-custom.js' %}"></script>
+  <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.deserialize.js' %}"></script>
+  <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.blockUI.js' %}"></script>{% endcomment %}
+  <script src="{{ settings.STATIC_URL }}{% version 'js/select2.js' %}"></script>
+  <script src="{{ settings.STATIC_URL }}{% version 'js/main.js' %}"></script>
   {% block scripts %}{% endblock %}
   {% include 'bits/favicon.html' %}
 </head>
