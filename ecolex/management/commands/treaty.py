@@ -62,8 +62,6 @@ FIELD_MAP = {
     'subject_fr_fr': 'trSubject_fr',
 
     'languageofdocument': 'trLanguageOfDocument_en',
-    'languageofdocument_es_es': 'trLanguageOfDocument_es',
-    'languageofdocument_fr_fr': 'trLanguageOfDocument_fr',
     'obsolete': 'trObsolete',
     'enabledbytreaty': 'trEnabledByTreaty',
     'placeofadoption': 'trPlaceOfAdoption',
@@ -145,6 +143,9 @@ PARTICIPANT_FIELDS = {
     'dateofwithdrawal': 'partyDateOfWithdrawal',
 }
 
+LANGUAGE_FIELDS = [
+    'trLanguageOfDocument_en',
+]
 
 DATE_FIELDS = [
     'trDateOfEntry',
@@ -221,6 +222,7 @@ class TreatyImporter(object):
     def __init__(self, config):
         self.solr_timeout = config.getint('solr_timeout')
         self.regions_json = config.get('regions_json')
+        self.languages_json = config.get('languages_json')
         self.treaties_url = config.get('treaties_url')
         self.import_field = config.get('import_field')
         self.query_format = config.get('query_format')
@@ -235,6 +237,7 @@ class TreatyImporter(object):
         self.start_month = int(config.get('start_month', now.month))
         self.end_month = int(config.get('end_month', now.month))
         self.regions = self._get_regions()
+        self.languages = self._get_languages()
         self.solr = EcolexSolr(self.solr_timeout)
         logger.info('Started treaty importer')
 
@@ -291,6 +294,8 @@ class TreatyImporter(object):
             for document in bs.findAll(DOCUMENT):
                 data = {
                     'type': TREATY,
+                    'trLanguageOfDocument_es': [],
+                    'trLanguageOfDocument_fr': [],
                 }
 
                 for k, v in FIELD_MAP.items():
@@ -302,6 +307,18 @@ class TreatyImporter(object):
                             data[v] = [self._repair_date(x) for x in data[v]]
                             data[v] = [format_date(date) for date in data[v]
                                        if self._valid_date(date)]
+                        elif v in LANGUAGE_FIELDS:
+                            langs = data[v]
+                            data[v] = []
+                            for lang in langs:
+                                lang = lang.lower()
+                                if lang in self.languages:
+                                    data['trLanguageOfDocument_en'].append(self.languages[lang]['en'])
+                                    data['trLanguageOfDocument_es'].append(self.languages[lang]['es'])
+                                    data['trLanguageOfDocument_fr'].append(self.languages[lang]['fr'])
+                                else:
+                                    logger.error('Language not found %s' % (lang.lower()))
+
 
                 if ('trRegion_en' in data and 'trRegion_es' in data and
                         'trRegion_fr' in data):
@@ -506,6 +523,15 @@ class TreatyImporter(object):
         with open(self.regions_json) as f:
             regions = json.load(f)
         return regions
+
+    def _get_languages(self):
+        with open(self.languages_json) as f:
+            languages_codes = json.load(f)
+        langs = {}
+        for k, v in languages_codes.items():
+            key = v['en'].lower()
+            langs[key] = v
+        return langs
 
     def update_status(self):
         rows = 50
