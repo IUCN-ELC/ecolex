@@ -9,29 +9,31 @@
 {% endif %}
 
 <p class="small clearfix">
-  <!-- Ugly -->
+  {# Ugly #}
   <span class="pull-left">
-    Found
+    Found <span id="number-of-results">{{ results.count|default:"no" }}</span>
     {% if form.type.data|length != 1 %}
-      <span id="number-of-results">{{ results.count }}</span> results
+      result{{ results.count|pluralize }}
     {% elif 'treaty' in form.type.data %}
-      <span id="number-of-results">{{ facets.type.treaty }}</span> treaties
+      treat{{ results.count|pluralize:"y,ies" }}
     {% elif 'decision' in form.type.data %}
-      <span id="number-of-results">{{ facets.type.decision }}</span> COP decisions
+      COP decision{{ results.count|pluralize }}
     {% elif 'literature' in form.type.data %}
-      <span id="number-of-results">{{ facets.type.literature }}</span> literatures
+      literature item{{ results.count|pluralize }}
     {% elif 'court_decision' in form.type.data %}
-      <span id="number-of-results">{{ facets.type.court_decision }}</span> court decisions
+      court decision{{ results.count|pluralize }}
     {% elif 'legislation' in form.type.data %}
-      <span id="number-of-results">{{ facets.type.legislation }}</span> legislation records
+      legislation record{{ results.count|pluralize }}
     {% endif %}
   </span>
-
+{% if results  %}
   <span class="pull-right">
     {% include 'bits/sortby.html' %}
   </span>
+{% endif %}
 </p>
 
+{% if results  %}
 <hr>
 
 <ul class="search-results">
@@ -90,3 +92,4 @@
 
 
 </div>
+{% endif %}{# /if results  #}

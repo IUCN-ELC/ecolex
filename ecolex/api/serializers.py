@@ -57,3 +57,14 @@ class SearchResultSerializer(BaseResultSerializer):
 class SearchFacetSerializer(Serializer):
     item = fields.CharField()
     count = fields.IntegerField()
+
+    @classmethod
+    def convert_results(cls, data):
+        """
+        Convenience function to convert a list of (item, count) tuples
+        into a list dictionaries.
+        """
+        return [
+            {'item': item, 'count': count}
+            for item, count in data
+        ]

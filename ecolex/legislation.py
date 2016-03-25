@@ -97,6 +97,9 @@ def harvest_file(uploaded_file):
     documents = bs.findAll(DOCUMENT)
     legislations = []
 
+    with open('/ecolex/ecolex/management/regions.json') as f:
+        json_regions = json.load(f)
+
     for document in documents:
         legislation = {
             'type': LEGISLATION,
@@ -121,13 +124,49 @@ def harvest_file(uploaded_file):
             if field_values:
                 legislation[field_name] = list(OrderedDict.fromkeys(field_values).keys())
 
+        if ('legGeoArea_en' in legislation and
+                'legGeoArea_es' in legislation and
+                'legGeoArea_fr' in legislation):
+            regions_en = legislation.get('legGeoArea_en')
+            regions_es = legislation.get('legGeoArea_es')
+            regions_fr = legislation.get('legGeoArea_fr')
+            regions = zip(regions_en, regions_es, regions_fr)
+            new_regions = {'en': [], 'es': [], 'fr': []}
+            for reg_en, reg_es, reg_fr in regions:
+                values = json_regions.get(reg_en.lower())
+                if values:
+                    new_regions['en'].append(values['en'])
+                    value_es = values['es']
+                    value_fr = values['fr']
+                    new_regions['es'].append(value_es)
+                    new_regions['fr'].append(value_fr)
+                    if value_es.lower() != reg_es.lower():
+                        logger.error('Region name error: %s %s %s' %
+                                     (legislation['legId'], value_es,
+                                      reg_es))
+
+                    if value_fr.lower() != reg_fr.lower():
+                        logger.error('Region name error: %s %s %s' %
+                                     (legislation['legId'], value_fr,
+                                      reg_fr))
+                else:
+                    logger.error('New region name: %s %s %s %s' %
+                                 (legislation['legId'], reg_en, reg_es,
+                                  reg_fr))
+                    new_regions['en'].append(reg_en.capitalize())
+                    new_regions['es'].append(reg_es.capitalize())
+                    new_regions['fr'].append(reg_fr.capitalize())
+            legislation['legGeoArea_en'] = new_regions['en']
+            legislation['legGeoArea_es'] = new_regions['es']
+            legislation['legGeoArea_fr'] = new_regions['fr']
+
         legYear = legislation.get('legYear')
         if legYear:
             try:
                 legDate = datetime.strptime(legYear, '%Y')
                 legislation['docDate'] = legDate.strftime('%Y-%m-%dT%H:%M:%SZ')
             except Exception as e:
-                logger.debug('Error parsing legYear %s' %(legYear))
+                logger.debug('Error parsing legYear %s' % (legYear))
                 pass
 
         url_value = document.attrs.get('url', None)

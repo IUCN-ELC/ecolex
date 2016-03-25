@@ -222,9 +222,6 @@ class LiteratureSchema(BaseSchema):
 
     abstract = fields.String(load_from='litAbstract', multilingual=True)
     abstract_other = fields.String(load_from='litAbstract_other')
-    author = fields.List(fields.String(), load_from='litAuthor', missing=[])
-    author_article = fields.List(fields.String(), load_from='litAuthorArticle',
-                                 missing=[])
     available_in = fields.String(load_from='litAvailableIn')
     basin = fields.List(fields.String(), load_from='litBasin',
                         multilingual=True)
@@ -236,11 +233,6 @@ class LiteratureSchema(BaseSchema):
     conf_no = fields.String(load_from='litConfNo')
     conf_place = fields.String(load_from='litConfPlace')
     contributor = fields.List(fields.String(), load_from='litContributor')
-    corp_author = fields.List(fields.String(), load_from='litCorpAuthor',
-                              missing=[])
-    corp_author_article = fields.List(fields.String(),
-                                      load_from='litCorpAuthorArticle',
-                                      missing=[])
     countries = fields.List(fields.String(), load_from='litCountry',
                             multilingual=True)
     court_decision_reference = fields.List(
@@ -302,7 +294,7 @@ class LiteratureSchema(BaseSchema):
     jurisdiction = fields.String(load_from='litScope', multilingual=True)
     search_date = fields.String(load_from='litSearchDate')
     serial_status = fields.String(load_from='litSerialStatus')
-    serial_title = fields.String(load_from='litSerialTitle', missing='')
+    orig_serial_title = fields.String(load_from='litSerialTitle', missing='')
     series_flag = fields.String(load_from='litSeriesFlag')
     territorial_subdivision = fields.String(
         load_from='litTerritorialSubdivision',
@@ -316,7 +308,16 @@ class LiteratureSchema(BaseSchema):
                                          multilingual=True, missing='')
     treaty_reference = fields.List(fields.String(),
                                    load_from='litTreatyReference')
-    volume_no = fields.String(load_from='litVolumeNo')
+    volume_no = fields.String(load_from='litVolumeNo', missing='')
+
+    # Authors
+    author = fields.List(fields.String(), load_from='litAuthor', missing=[])
+    author_a = fields.List(fields.String(), load_from='litAuthorA', missing=[])
+    author_m = fields.List(fields.String(), load_from='litAuthorM', missing=[])
+    corp_author_a = fields.List(fields.String(), load_from='litCorpAuthorA',
+                                missing=[])
+    corp_author_m = fields.List(fields.String(), load_from='litCorpAuthorM',
+                                missing=[])
 
     @post_load
     def make_model(self, data):
@@ -382,7 +383,7 @@ class LegislationSchema(BaseSchema):
     region = fields.List(fields.String(), load_from='legGeoArea',
                          multilingual=True)
     basin = fields.List(fields.String(), load_from='legBasin',
-                         multilingual=True)
+                        multilingual=True)
     keyword_code = fields.List(fields.String(), load_from='legKeyword_code')
     language_code = fields.List(fields.String(), load_from='legLanguage_code')
     language = fields.List(fields.String(), load_from='legLanguage',

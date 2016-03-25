@@ -1,3 +1,5 @@
+import logging
+from urllib.parse import urlencode
 from django.conf import settings
 from django.http import Http404, HttpResponseForbidden, HttpResponseServerError, JsonResponse
 from django.shortcuts import render
@@ -5,12 +7,11 @@ from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
-from urllib.parse import urlencode
-import logging
 
 from ecolex.legislation import harvest_file
 from ecolex.search import get_document, get_documents_by_field, SearchMixin
 from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS
+from ecolex.api.serializers import SearchFacetSerializer
 
 
 logger = logging.getLogger(__name__)
@@ -80,12 +81,44 @@ class SearchResults(SearchView):
     def get_context_data(self, **kwargs):
         ctx = super(SearchResults, self).get_context_data(**kwargs)
         page = int(self.request.GET.get('page', 1))
-        results = self.search()
+
+        # fetch one extra facet result, to let the frontend know
+        # if it should use ajax for the next pages
+        results = self.search(facets_page_size=settings.FACETS_PAGE_SIZE + 1)
 
         results.set_page(page)
         results.fetch()
         ctx['results'] = results
-        ctx['facets'] = results.get_facets()
+
+        facets = results.get_facets()
+
+        # hack the (select) facets to have "pretty" keys.
+        # TODO: move this logic into Queryset.get_facets().
+        #       multilinguality could live there too!
+        #       (or even better, make the names pretty in schema...)
+        for old_key, new_key in SELECT_FACETS.items():
+            if old_key not in facets:
+                continue
+            ## also convert them to the api serializer format
+            # (or not, handle it client-side for now)
+            #facets[new_key] = SearchFacetSerializer.convert_results(
+            #    facets.pop(old_key))
+
+            # also hack them into a {results: [], more: bool} dict,
+            # accounting for that odd extra-result
+            f_data = facets.pop(old_key)
+            more = False
+
+            if len(f_data) > settings.FACETS_PAGE_SIZE:
+                more = True
+                f_data.popitem()
+
+            facets[new_key] = {
+                'results': f_data,
+                'more': more,
+            }
+
+        ctx['facets'] = facets
         ctx['stats_fields'] = results.get_field_stats()
         ctx['page'] = self.page_details(page, results)
         self.update_form_choices(ctx['facets'])
@@ -155,7 +188,8 @@ class PageView(SearchView):
 
     def get(self, request, **kwargs):
         slug = kwargs.pop('slug', '')
-        PAGES = ('about', 'privacy', 'agreement', 'acknowledgements')
+        PAGES = ('about', 'privacy', 'agreement', 'acknowledgements',
+                 'other_resources')
         if slug not in PAGES:
             raise Http404()
         ctx = self.get_context_data()

@@ -229,16 +229,37 @@ class Literature(DocumentModel):
 
     @property
     def authors(self):
-        return (self.author_article or
-                self.author or
-                self.corp_author_article or
-                self.corp_author)
+        return (self.author_a or
+                self.author_m or
+                self.corp_author_a or
+                self.corp_author_m)
 
     @property
     def parent_title(self):
-        parent_title = self.long_title or self.serial_title
+        parent_title = self.long_title or self.orig_serial_title
         if parent_title != self.title:
             return parent_title
 
+    @property
     def publication_date(self):
         return self.date_of_text_ser or self.date_of_text
+
+    @cached_property
+    def is_article(self):
+        # TODO: also check document_id ?
+        return bool(self.date_of_text_ser)
+
+    @cached_property
+    def is_chapter(self):
+        return self.document_id.startswith('ANA') and not self.is_article
+
+    @cached_property
+    def serial_title(self):
+        if self.is_article:
+            # TODO: why don't we include always volume and collation
+            # since they are always displayed together?
+            return self.orig_serial_title
+        else:
+            # TODO: when is this shown???
+            vals = [v for v in (self.orig_serial_title, self.volume_no) if v]
+            return ' | '.join(vals)

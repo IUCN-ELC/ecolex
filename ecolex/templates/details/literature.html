@@ -25,30 +25,26 @@
         <dt>Corporate author{{ document.corp_authors|length|pluralize:",s" }}</dt>
         <dd>{{ document.corp_authors | join_by:", " | safe }}</dd>
       {% endif %}
-      {% if document.lit_is_article and document.parent_title %}
-        <dt>In</dt>
-        <dd>{{ document.parent_title | safe }}
-            {% if document.solr.litCollation %}
-            | {{ document.solr.litCollation | safe }}
-            {% endif %}
-            {% if document.solr.litVolumeNo %}
-            | {{ document.solr.litVolumeNo | safe }}
-            {% endif %}
+      {% if document.lit_is_article and document.serial_title %}
+        <dt>Journal/Series</dt>
+        <dd>{{ document.serial_title | safe }}
+            {% if document.solr.litVolumeNo %} | {{ document.solr.litVolumeNo | safe }} {% endif %}
+            {% if document.solr.litCollation %} | {{ document.solr.litCollation | safe }} {% endif %}
         </dd>
       {% endif %}
-      {% if document.solr.litDateOfText %}
-        <dt>Publication Date</dt>
-        <dd>{{ document.solr.litDateOfText | safe }}</dd>
+      {% if document.lit_is_chapter and document.parent_title %}
+        <dt>Monograph</dt>
+        <dd>{{ document.parent_title | safe }}</dd>
+      {% endif %}
+      {% if document.date %}
+        <dt>Publication year</dt>
+        <dd>{{ document.date | safe }}</dd>
       {% endif %}
     </dl>
   </header>
 
   <section id="details">
     <dl>
-      {% if not document.lit_is_article and document.parent_title %}
-        <dt>In</dt>
-        <dd>{{ document.parent_title | safe }}</dd>
-      {% endif %}
       {% if document.title_translations %}
         <dt>Title (translation)</dt>
         <dd>
@@ -109,6 +105,7 @@
       <dd>
           {% for link in document.link_to_full_text %}
             <a class="decision-link" href="{{ link.0 }}" target="_blank">{{ link.1 }}</a>
+            &nbsp;
           {% endfor %}
       </dd>
       {% endif %}

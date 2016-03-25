@@ -18,12 +18,13 @@
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.StandardFilterFactory"/>
         <filter class="solr.LowerCaseFilterFactory"/>
-        <!-- <filter class="solr.StopFilterFactory"/> -->
       </analyzer>
       <analyzer type="query">
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.ASCIIFoldingFilterFactory"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt,lang/stopwords_es.txt,lang/stopwords_fr.txt"/>
+
       </analyzer>
     </fieldType>
     <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
@@ -115,12 +116,6 @@
     <field name="trConfName" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="trConfPlace" type="text" indexed="true" stored="true" multiValued="true"/>
-
-    <field name="trContributor" type="text" indexed="false" stored="true" multiValued="true"/>
-    <field name="trAuthorA" type="text" indexed="false" stored="true" multiValued="true"/>
-    <field name="trAuthorM" type="text" indexed="false" stored="true" multiValued="true"/>
-    <field name="trAuthor" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trAuthorWhole" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="trLinkToFullText_en" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="trLinkToFullText_es" type="string" indexed="false" stored="true" multiValued="true"/>
@@ -483,9 +478,10 @@
     <field name="litId" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="litId2" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litAuthor" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="litAuthorArticle" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="litCorpAuthor" type="string" indexed="false" stored="true" multiValued="true"/>
-    <field name="litCorpAuthorArticle" type="string" indexed="false" stored="true" multiValued="true"/>
+    <field name="litAuthorM" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="litAuthorA" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="litCorpAuthorM" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="litCorpAuthorA" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="litDateOfEntry" type="tdate" indexed="true" stored="true"/>
     <field name="litDateOfModification" type="tdate" indexed="true" stored="true"/>
     <field name="litTitleAbbreviation" type="string" indexed="true" stored="true"/>
@@ -517,6 +513,7 @@
     <field name="litVolumeNo" type="string" indexed="false" stored="true"/>
     <field name="litCollation" type="string" indexed="false" stored="true"/>
     <field name="litDateOfText" type="string" indexed="false" stored="true"/>
+    <field name="litYearOfText" type="string" indexed="false" stored="true"/>
     <field name="litLinkToFullText" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="litLinkDOI" type="string" indexed="false" stored="true"/>
 
@@ -619,10 +616,6 @@
     <field name="litText" type="text" indexed="true" stored="false"/>
 
     <uniqueKey>id</uniqueKey>
-
-    <copyField source="trAuthorA" dest="trAuthor"/>
-    <copyField source="trAuthorM" dest="trAuthor"/>
-    <copyField source="trContributor" dest="trAuthor"/>
 
     <copyField source="trTitleAbbreviation" dest="trTitleOfText"/>
     <copyField source="trTitleOfTextShort" dest="trTitleOfText"/>
@@ -791,6 +784,11 @@
     <copyField source="legKeyword_es" dest="text"/>
     <copyField source="legKeyword_fr" dest="text"/>
     <copyField source="legText" dest="text"/>
+
+    <copyField source="litAuthorA" dest="litAuthor"/>
+    <copyField source="litAuthorM" dest="litAuthor"/>
+    <copyField source="litCorpAuthorA" dest="litAuthor"/>
+    <copyField source="litCorpAuthorM" dest="litAuthor"/>
 
     <copyField source="litLongTitle_en" dest="text"/>
     <copyField source="litLongTitle_fr" dest="text"/>

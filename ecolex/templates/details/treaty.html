@@ -113,6 +113,7 @@
         <dd>
           {% for link in document.link_to_full_text %}
             <a href="{{ link.url }}" target="_blank">{{ link.language }}</a>
+            &nbsp;
           {% endfor %}
         </dd>
       {% endif %}
@@ -132,7 +133,12 @@
       {% endif %}
 
       <dt>Source</dt>
-      <dd><a target="_blank" href="http://iucn.org">{{ document.source }}</a> (ID: {{ document.document_id }})</dd>
+      <dd>
+        {% if document.type_of_document == 'Bilateral' %}
+          <a target="_blank" href="http://faolex.fao.org/">FAO, FAOLEX;</a>
+        {% endif %}
+        <a target="_blank" href="http://iucn.org">{{ document.source }}</a> (ID: {{ document.document_id }})
+      </dd>
     </dl>
   </section>
 
@@ -223,8 +229,8 @@
       {% if document.literatures.count %}
         <dt>Literature</dt>
         <dd>
-          <strong>{{ document.literatures.count }} literatures</strong> related to this treaty.
-          <a href="{% url 'resultLiteratures' document.id %}?{{ query }}">View literatures</a>
+          <strong>{{ document.literatures.count }} record(s)</strong> related to this treaty.
+          <a href="{% url 'resultLiteratures' document.id %}?{{ query }}">View literature</a>
         </dd>
       {% endif %}
     </dl>

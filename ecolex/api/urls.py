@@ -1,14 +1,24 @@
-from django.conf.urls import patterns, url
+from ecolex.definitions import SELECT_FACETS as FACET_MAP
+from django.conf.urls import include, patterns, url
 from rest_framework.routers import DefaultRouter
 from . import views
 
 
 router = DefaultRouter()
 router.register(r'search', views.SearchResultViewSet, base_name="search")
-router.register(r'countries', views.CountryFacetViewSet, base_name="countries")
-#router.register(r'subjects', views.SubjectFacetViewSet, base_name="subjects")
-router.register(r'keywords', views.KeywordFacetViewSet, base_name="keywords")
-router.register(r'authors', views.AuthorFacetViewSet, base_name="authors")
+
+# to do this dynamically we need to provide a `field` initkwarg to as_view(),
+# which the drf router can't handle
+facet_urls = [
+    url(r'%s-list/' % facet.replace('_', '-'),
+        views.BaseFacetViewSet.as_view(actions={'get': 'list'}, field=field),
+        name="%s-list" % facet.replace('_', '-')
+    )
+    for field, facet in FACET_MAP.items()
+]
 
 
-urlpatterns = router.urls
+urlpatterns = patterns(
+    '',
+    url(r'^v1.0/', include(router.urls + facet_urls))
+)

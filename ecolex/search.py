@@ -1,9 +1,10 @@
 import pysolr
-import re
 from collections import OrderedDict
 from django.conf import settings
-from ecolex import definitions
-from ecolex.solr_models_re import (
+
+from ecolex.lib import camel_case_to__
+from ecolex import definitions as defs
+from ecolex.solr_models import (
     Treaty, Decision, Literature, CourtDecision, Legislation
 )
 from ecolex.schema import (
@@ -189,100 +190,6 @@ def get_sortby(sortby, has_search_term):
 
 
 def get_relevancy():
-    RELEVANCY_FIELDS = {
-        'trPaperTitleOfText_en': 110,
-        'trPaperTitleOfText_es': 110,
-        'trPaperTitleOfText_fr': 110,
-        'decLongTitle_en': 100,
-        'decLongTitle_es': 100,
-        'decLongTitle_fr': 100,
-        'decLongTitle_ru': 100,
-        'decLongTitle_ar': 100,
-        'decLongTitle_zh': 100,
-        'decShortTitle_en': 100,
-        'decShortTitle_es': 100,
-        'decShortTitle_fr': 100,
-        'decShortTitle_ru': 100,
-        'decShortTitle_ar': 100,
-        'decShortTitle_zh': 100,
-
-        'legTitle': 100,
-        'legLongTitle': 100,
-
-        'litLongTitle_en': 100,
-        'litLongTitle_fr': 100,
-        'litLongTitle_es': 100,
-        'litLongTitle_other': 100,
-
-        'litPaperTitleOfText_en': 100,
-        'litPaperTitleOfText_fr': 100,
-        'litPaperTitleOfText_es': 100,
-        'litPaperTitleOfText_other': 100,
-
-        'cdTitleOfText_en': 100,
-        'cdTitleOfText_es': 100,
-        'cdTitleOfText_fr': 100,
-
-        'litId': 100,
-        'legId': 100,
-        'trElisId': 100,
-
-        'trTitleAbbreviation': 75,
-        'decSummary': 50,
-        'trAbstract_en': 50,
-        'trAbstract_es': 50,
-        'trAbstract_fr': 50,
-        'cdAbstract_en': 50,
-        'cdAbstract_es': 50,
-        'cdAbstract_fr': 50,
-        'litAbstract_en': 50,
-        'litAbstract_fr': 50,
-        'litAbstract_es': 50,
-        'litAbstract_other': 50,
-        'legAbstract': 50,
-
-        'trKeyword_en': 30,
-        'trKeyword_fr': 30,
-        'trKeyword_es': 30,
-        'decKeyword_en': 30,
-        'decKeyword_fr': 30,
-        'decKeyword_es': 30,
-        'litKeyword_en': 30,
-        'litKeyword_fr': 30,
-        'litKeyword_es': 30,
-        'legKeyword_en': 30,
-        'cdKeywords': 30,
-
-        'trBasin_en': 25,
-        'trBasin_fr': 25,
-        'trBasin_es': 25,
-        'legBasin_en': 25,
-        'legBasin_fr': 25,
-        'legBasin_es': 25,
-        'litBasin_en': 25,
-        'litBasin_fr': 25,
-        'litBasin_es': 25,
-
-        'trRegion_en': 25,
-        'trRegion_fr': 25,
-        'trRegion_es': 25,
-        'cdRegion_en': 25,
-        'cdRegion_fr': 25,
-        'cdRegion_es': 25,
-        'litRegion_en': 25,
-        'litRegion_fr': 25,
-        'litRegion_es': 25,
-        'legGeoArea_en': 25,
-        'legGeoArea_fr': 25,
-        'legGeoArea_es': 25,
-
-        'decBody_en': 20,
-        'decBody_es': 20,
-        'decBody_fr': 20,
-        'text': 20,
-        'doc_content': 10,
-    }
-
     def boost_pair_t(field, boost_factor):
         return field + "^" + str(boost_factor)
 
@@ -290,11 +197,13 @@ def get_relevancy():
     params['defType'] = 'edismax'
     params['qf'] = ' '.join(
         boost_pair_t(field, boost_factor) for field, boost_factor in
-        RELEVANCY_FIELDS.items())
+        defs.RELEVANCY_FIELDS.items())
+
     return params
 
 
 def get_fq(filters):
+    # TODO: meh.
     FACETS_MAP = {
         'trTypeOfText_en': 'treaty',
         'trFieldOfApplication_en': 'treaty',
@@ -315,25 +224,30 @@ def get_fq(filters):
         'cdTerritorialSubdivision_en': 'court_decision',
     }
 
-    AND_FILTERS = [
-        'docKeyword_en',
-        'docSubject_en',
-        'docCountry_en',
-        'docRegion_en',
-        'docLanguage_en',
-        'trDepository_en',
-        'litAuthor',
-    ]
+    OR_FILTERS = [defs.FIELD_TO_FACET_MAPPING[f]
+                  for f in defs._OR_OP_FACETS]
+
+    AND_FILTERS = [defs.FIELD_TO_FACET_MAPPING[f]
+                   for f in defs._AND_OP_FACETS]
 
     def multi_filter(filter, values):
         if filter == 'docDate':
             start, end = values
             start = start + '-01-01T00:00:00Z' if start else '*'
-            end = end + '-12-31T23:59:00Z' if end else '*'
+            end = end + '-12-31T23:59:59Z' if end else '*'
             return filter + ':[' + start + ' TO ' + end + ']'
-        values = ('"' + v + '"' for v in values)
-        operator = ' AND ' if filter in AND_FILTERS else ' OR '
-        return filter + ':(' + operator.join(t for t in values) + ')'
+
+        values = map(lambda v: '"%s"' % v, values)
+        operator = (' AND ' if filter in AND_FILTERS
+                    else ' OR ')
+
+        # WARNING:
+        # querying for "({!tag=xx}field:(yy))" throws parse error
+        # TODO: is this a solr bug?
+        #       might WhitespaceTokenizerFactory help?
+
+        return "{filter}:({value})".format(filter=filter,
+                                           value=escape_query(operator.join(values)))
 
     def type_filter(type, filters):
         if filters:
@@ -343,24 +257,39 @@ def get_fq(filters):
 
     enabled_types = filters.get('type', []) or \
         ['treaty', 'decision', 'literature', 'court_decision', 'legislation']
+
     type_filters = {f: [] for f in enabled_types}
     global_filters = []
+
     for filter, values in filters.items():
-        if '!ex' in filter:
-            filter = filter.replace('!ex', '!tag')
-        values = [v for v in values if v or filter == 'docDate']
-        if not values or filter == 'type' or not any(values):
+        _filter = filter
+        if filter.startswith('{!ex='):
+            filter = '{!tag=' + filter[5:]
+            _filter = filter[filter.index('}') + 1:]
+
+        values = [v for v in values if v or _filter == 'docDate']
+
+        if not values or _filter == 'type' or not any(values):
             continue
-        if filter in FACETS_MAP:
-            if FACETS_MAP[filter] in enabled_types:
-                type_filters[FACETS_MAP[filter]].append(
+
+        # NOTE:
+        # skipping on purpose to cause previous behaviour, i.e.
+        # type-specific filters will cause only that type to be displayed.
+        # see warning under multi_filter for explanation.
+        # TODO: fix this, the behaviour differs from AND to OR.
+        _skip_me = (_filter != filter)
+        if _filter in FACETS_MAP and not _skip_me:
+            if FACETS_MAP[_filter] in enabled_types:
+                type_filters[FACETS_MAP[_filter]].append(
                     multi_filter(filter, values)
                 )
         else:
             global_filters.append(multi_filter(filter, values))
+
     global_filters.append(' OR '.join(
-        '(' + type_filter(t, v) + ')' for t, v in type_filters.items())
-    )
+        '(%s)' % type_filter(t, v)
+        for t, v in type_filters.items()
+    ))
     return global_filters
 
 
@@ -372,7 +301,10 @@ def search(user_query, filters=None, sortby=None, raw=None,
 
 def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
             sortby=None, raw=None, facets=None, fields=None, hl_details=False,
-            facet_only=None):
+            facets_page_size=None, only_facet=None):
+    if facets_page_size is None:
+        facets_page_size = settings.FACETS_PAGE_SIZE
+
     solr = pysolr.Solr(settings.SOLR_URI, timeout=60)
 
     if user_query == '*':
@@ -393,9 +325,13 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     if filters:
         params['fq'] = get_fq(filters)
 
+    # include relevancy data early, because it alters facet results
+    # TODO: why is that?
+    params.update(get_relevancy())
+
     params.update({
         'facet': 'true',
-        'facet.limit': settings.FACETS_PAGE_SIZE,
+        'facet.limit': facets_page_size,
         # it is always desirable to sort by index
         'facet.sort': 'index',
         # TODO: should this really be enum for authors?
@@ -405,13 +341,22 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         'facet.mincount': 1,
     })
 
-    if facet_only:
+    # TODO: pass facet logic through the same code as api,
+    # and sort it in proper alphabetical order in python
+    # (also, cache it)
+    if only_facet:
+        fname = only_facet['field']
+        # make sure we don't overwrite a field marked for exclusion
+        # TODO: this smells. should be unified with filter logic.
+        excl_fname = SearchMixin._get_excluded(fname)
+        if excl_fname in filters:
+            fname = excl_fname
         params.update({
-            'facet.field': facet_only['field'],
+            'facet.field': fname,
             'rows': 0,
-            'facet.limit': facet_only.get('limit', settings.FACETS_PAGE_SIZE),
-            'facet.offset': facet_only.get('offset', 0),
-            'facet.prefix': facet_only.get('prefix', '')
+            'facet.limit': only_facet.get('limit', facets_page_size),
+            'facet.offset': only_facet.get('offset', 0),
+            'facet.prefix': only_facet.get('prefix', '')
         })
 
         return solr.search(solr_query, **params)
@@ -424,17 +369,19 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
         params.update(get_hl(hl_details=hl_details))
     """
     params['sort'] = get_sortby(sortby, highlight)
-    params.update(get_relevancy())
+
     # add spellcheck
     params.update({
         'spellcheck': 'true',
         'spellcheck.collate': 'true',
     })
+
     if fields:
         params['fl'] = ','.join(f for f in fields)
 
     if settings.DEBUG:
         params['debug'] = True
+
     return solr.search(solr_query, **params)
 
 
@@ -492,7 +439,7 @@ class SearchMixin(object):
 
     def _get_filters(self, data):
         filters = {
-            'type': data['type'] or dict(definitions.DOC_TYPE).keys(),
+            'type': data['type'] or dict(defs.DOC_TYPE).keys(),
             'docKeyword_en': data['keyword'],
             'docSubject_en': data['subject'],
             'docCountry_en': data['country'],
@@ -501,30 +448,37 @@ class SearchMixin(object):
             'docDate': (data['yearmin'], data['yearmax']),
         }
         for doc_type in filters['type']:
-            mapping = definitions.DOC_TYPE_FILTER_MAPPING[doc_type]
+            mapping = defs.DOC_TYPE_FILTER_MAPPING[doc_type]
             for k, v in mapping.items():
                 filters[k] = data[v]
 
-        for field in definitions.OPERATION_FIELD_MAPPING.keys():
-            field_name = definitions.OPERATION_FIELD_MAPPING[field]
-            facet_name = definitions.FIELD_TO_FACET_MAPPING[field_name]
-            if not data[field] and facet_name in filters:
-                values = filters.pop(facet_name)
-                facet_name = self._get_tagged(facet_name)
-                filters[facet_name] = values
+        # add exclusion local param for OR-able fields
+        for field in defs._OR_OP_FACETS:
+            # but skip AND-able fields if we got an AND request
+            if (field in defs._AND_OP_FACETS and
+                data.get(
+                    SearchForm.get_and_field_name_for(field)
+                )
+            ):
+                continue
+
+            solr_field = defs.FIELD_TO_FACET_MAPPING[field]
+            try:
+                filter = filters.pop(solr_field)
+            except KeyError:
+                pass
+            else:
+                filters[self._get_excluded(solr_field)] = filter
+
         return filters
 
     @classmethod
-    def _get_tagged(cls, facet_name):
-        # this doesn't exactly return it tagged, but whatever
+    def _get_excluded(cls, facet_name):
+        """
+        returns the field name, marked for solr exclusion
+        """
         return '{!ex=%s}%s' % (
-            cls._get_tag(facet_name), facet_name)
-
-    @classmethod
-    def _get_tag(cls, facet_name):
-        return re.sub(
-            '((?<=.)[A-Z](?=[a-z0-9])|(?<=[a-z0-9])[A-Z])', r'_\1',
-            facet_name).lower()
+            camel_case_to__(facet_name), facet_name)
 
     def _prepare(self, data):
         """
@@ -547,6 +501,6 @@ class SearchMixin(object):
 
         kwargs.setdefault('filters', self.filters)
         kwargs.setdefault('sortby', self.sortby)
-        kwargs.setdefault('fields', definitions.SOLR_FIELDS)
+        kwargs.setdefault('fields', defs.SOLR_FIELDS)
 
         return search(query, **kwargs)

@@ -2,73 +2,102 @@
 
 <input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">
 
-<fieldset class="global-filter">
+{% comment %}
+<script>
+//{# not using this momentarily #}
+var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
+</script>
+{% endcomment %}
 
+{# TODO: please move me to my proper place #}
+<style>
+/* avoid flicker before initialiazing */
+select.selection-facet {
+  height: 32px; /* pretty random, eh? */
+  border: none;
+  padding: 0;
+  visibility: hidden;
+}
+
+.select2-container {
+  display: block;
+  clear: both;
+}
+
+/* this is a bad fix to https://github.com/select2/select2/issues/1538 */
+.select2-results__option[aria-selected=true] {
+  display: none;
+}
+
+
+/* mimic the old look */
+.select2-container .select2-selection {
+  border: none !important;
+}
+
+.select2-container .select2-selection .select2-selection__rendered {
+  padding: 0;
+}
+
+.select2-selection__choice {
+  clear: left;
+}
+.select2-search--inline {
+  clear: left;
+  float: none;
+}
+
+.select2-container .select2-dropdown {
+  border: 1px solid #eee !important;
+  border-radius: 3px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  background-clip: padding-box;
+  box-sizing: content-box;
+
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.select2-container--default .select2-results__option {
+  margin: 0;
+  padding: 6px 10px;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  color: #141414;
+  background-color: #f5f5f5;
+  box-shadow: inset 2px 0 0 #1c5479;
+}
+
+/* prevent highlighted matches from dancing around */
+.select2-container .select2-results__option strong {
+  font-weight: normal;
+  color: #000;
+  /*text-shadow: 1px 0 0 #000;*/
+  /*text-decoration: underline;*/
+  border-bottom: 1px solid #1c5479;
+}
+
+</style>
+
+
+<fieldset class="global-filter">
   <h5 data-toggle="collapse"
       data-target="#filter-global">Common filters</h5>
-
   <div id="filter-global" class="collapse in">
-    <div class="clearfix filter-header">
-      <h6 class="pull-left">Subject</h6>
-      <span class="filter-global pull-right" data-formid="#id_subject_op">
-        {% include 'bits/operation_facet.html' with form_field=form.subject_op form_target='#id_subject' %}
-      </span>
-    </div>
-    <div id="subject-filter" class="tag-select">
-      <select class="tag-options" hidden>
-      </select>
-      <input type="text" class="tm-input word-match" placeholder="Add subjects" data-formid="#id_subject"/>
-    </div>
 
-    <div class="clearfix filter-header">
-      <h6 class="pull-left">Keywords</h6>
-      <span class="filter-global pull-right" data-formid="#id_keyword_op">
-        {% include 'bits/operation_facet.html' with form_field=form.keyword_op form_target='#id_keyword' %}
-      </span>
-    </div>
-    <div id="keyword-filter" class="tag-select">
-      <select class="tag-options" hidden>
-      </select>
-      <input type="text" class="tm-input word-match" placeholder="Add keywords" data-formid="#id_keyword"/>
-    </div>
+{% include "bits/selection_facet.html" with title="Subject" placeholder="Add subjects…" viewname="api:subject-list" data=facets.subject field=form.subject op_field=form.subject_and_ %}
 
-    <div class="clearfix filter-header">
-      <h6 class="pull-left">Country</h6>
-      <span class="filter-global pull-right" data-formid="#id_country_op">
-        {% include 'bits/operation_facet.html' with form_field=form.country_op form_target='#id_country' %}
-      </span>
-    </div>
-    <div id="country-filter" class="tag-select">
-      <select class="tag-options" hidden>
-      </select>
-      <input type="text" class="tm-input" placeholder="Add countries" data-formid="#id_country"/>
-    </div>
+{% include "bits/selection_facet.html" with title="Keywords" placeholder="Add keywords…" viewname="api:keyword-list" data=facets.keyword field=form.keyword op_field=form.keyword_and_ %}
 
-    <div class="clearfix filter-header">
-      <h6 class="pull-left">Geographical Area</h6>
-      <span class="filter-global pull-right" data-formid="#id_region_op">
-        {% include 'bits/operation_facet.html' with form_field=form.region_op form_target='#id_region' %}
-      </span>
-    </div>
-    <div id="region-filter" class="tag-select">
-      <select class="tag-options" hidden>
-      </select>
-      <input type="text" class="tm-input" placeholder="Add geographical areas" data-formid="#id_region"/>
-    </div>
+{% include "bits/selection_facet.html" with title="Country" placeholder="Add countries…" viewname="api:country-list" data=facets.country field=form.country op_field=form.country_and_ %}
 
-    <div class="clearfix filter-header">
-      <h6 class="pull-left">Language</h6>
-      <span class="filter-global pull-right" data-formid="#id_language_op">
-        {% include 'bits/operation_facet.html' with form_field=form.language_op form_target='#id_language' %}
-      </span>
-    </div>
-    <div id="language-filter" class="tag-select">
-      <select class="tag-options" hidden>
-      </select>
-      <input type="text" class="tm-input" placeholder="Add languages" data-formid="#id_language"/>
-    </div>
+{% include "bits/selection_facet.html" with title="Geographical Area" placeholder="Add geographical areas…" viewname="api:region-list" data=facets.region field=form.region op_field=form.region_and_ %}
 
-    {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
+{% include "bits/selection_facet.html" with title="Language" placeholder="Add languages…" viewname="api:language-list" data=facets.language field=form.language op_field=form.language_and_ %}
+
+{% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
+{# TODO: this logic needs fixing. min/max years should default to the dataset's values, with this here facet excluded #}
       <div class="filter-header">
         <h6>Year / Period</h6>
       </div>
@@ -81,7 +110,7 @@
         <div class="slider-min">
           <!-- <label for="year-min">From</label> -->
           <input id="year-min" type="number"
-                 data-formid="#id_yearmin"
+                 name="{{ form.yearmin.name }}"
                  value="{{ form.yearmin.data }}"
                  min="1860"
                  max="2016"
@@ -90,68 +119,41 @@
         <div class="slider-max">
           <!-- <label for="year-max">To</label> -->
           <input id="year-max" type="number"
-                 data-formid="#id_yearmax"
+                 name="{{ form.yearmax.name }}"
                  value="{{ form.yearmax.data }}"
                  min="1860"
                  max="{% now "Y" %}"
                  placeholder="To {{ stats_fields.docDate.max|just_year }}">
         </div>
       </div>
-    {% endif %}
+{% endif %}
+
   </div>
 </fieldset>
 
+
 {% if not form.type.data or form.has_treaty %}
-  <fieldset class="special-filter">
+<fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_treaty %}class="collapsed"{% endif %}
         data-target="#filter-treaties">Treaty filters</h5>
 
     <div id="filter-treaties" class="collapse {% if form.has_treaty %}in{% endif %}">
-        <div class="filter-header">
-          <h6>Document type</h6>
-        </div>
-        <ul class="filter-treaty" data-formid="#id_tr_type">
-          {% include 'bits/checkbox_facet.html' with facet=facets.trTypeOfText_en form_field=form.tr_type show_empty=True %}
-        </ul>
 
-      <div class="filter-header">
-        <h6>Field of application</h6>
-      </div>
-      <ul class="filter-treaty" data-formid="#id_tr_field">
-        {% include 'bits/checkbox_facet.html' with facet=facets.trFieldOfApplication_en form_field=form.tr_field show_empty=True %}
-      </ul>
+{% include 'bits/checkbox_facet.html' with title="Document type" facet=facets.trTypeOfText_en field=form.tr_type show_empty=True %}
 
-      <div class="filter-header">
-        <h6>Status</h6>
-      </div>
-      <ul class="filter-treaty" data-formid="#id_tr_status">
-        {% include 'bits/checkbox_facet.html' with facet=facets.trStatus form_field=form.tr_status show_empty=True %}
-      </ul>
+{% include 'bits/checkbox_facet.html' with title="Field of application" facet=facets.trFieldOfApplication_en field=form.tr_field show_empty=True %}
 
-      <div class="filter-header">
-        <h6>Depositary</h6>
-        <span class="filter-treaty pull-right" data-formid="#id_tr_depository_op">
-          {% include 'bits/operation_facet.html' with form_field=form.tr_depository_op form_target='#id_tr_depository' %}
-        </span>
-      </div>
-      <div id="tr_depository-filter" class="tag-select">
-        <select class="tag-options" hidden>
-        </select>
-        <input type="text" class="tm-input" placeholder="Add depositary" data-formid="#id_tr_depository"/>
-      </div>
+{% include 'bits/checkbox_facet.html' with title="Status" facet=facets.trStatus field=form.tr_status show_empty=True %}
 
-      <div class="filter-header">
-        <h6>Place of adoption</h6>
-      </div>
-      <div id="tr_place_of_adoption-filter" class="tag-select">
-        <select class="tag-options" hidden>
-        </select>
-        <input type="text" class="tm-input" placeholder="Add place" data-formid="#id_tr_place_of_adoption"/>
-      </div>
+{# TODO: this is badly named deposit*o*ry in code #}
+{% include "bits/selection_facet.html" with title="Depositary" placeholder="Add depositary…" viewname="api:tr-depository-list" data=facets.tr_depository field=form.tr_depository op_field=form.tr_depository_and_ %}
+
+{% include "bits/selection_facet.html" with title="Place of adoption" placeholder="Add place…" viewname="api:tr-place-of-adoption-list" data=facets.tr_place_of_adoption field=form.tr_place_of_adoption op_field=form.tr_place_of_adoption_and_ %}
 
     </div>
-  </fieldset>
+</fieldset>
 {% endif %}
+
 
 {% if not form.type.data or form.has_decision %}
   <fieldset class="special-filter">
@@ -159,134 +161,66 @@
         data-target="#filter-cop-decisions">COP Decision filters</h5>
 
     <div id="filter-cop-decisions" class="collapse {% if form.has_decision %}in{% endif %}">
-      <div class="filter-header">
-        <h6>Treaty</h6>
-      </div>
-      <div id="dec_treaty-filter" class="tag-select">
-        <select class="tag-options" hidden>
-        </select>
-        <input type="text" class="tm-input word-match" placeholder="Add treaties" data-formid="#id_dec_treaty"/>
-      </div>
 
-      {% if facets.decType %}
-        <div class="filter-header">
-          <h6>Type of document</h6>
-        </div>
-        <ul class="filter-decision" data-formid="#id_dec_type">
-          {% include 'bits/checkbox_facet.html' with facet=facets.decType form_field=form.dec_type %}
-        </ul>
-      {% endif %}
+{% include "bits/selection_facet.html" with title="Treaty" placeholder="Add treaties…" viewname="api:dec-treaty-list" data=facets.dec_treaty field=form.dec_treaty op_field=form.dec_treaty_and_ %}
 
-      <div class="filter-header">
-        <h6>Decision status</h6>
-      </div>
-      <ul class="filter-decision" data-formid="#id_dec_status">
-        {% include 'bits/checkbox_facet.html' with facet=facets.decStatus form_field=form.dec_status show_empty=True %}
-      </ul>
-    </div>
-  </fieldset>
+{% if facets.decType %}
+{% include 'bits/checkbox_facet.html' with title="Type of document" facet=facets.decType field=form.dec_type %}
 {% endif %}
+
+{% include 'bits/checkbox_facet.html' with title="Decision status" facet=facets.decStatus field=form.dec_status show_empty=True %}
+
+    </div>
+</fieldset>
+{% endif %}
+
 
 {% if not form.type.data or form.has_court_decision %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_court_decision %}class="collapsed"{% endif %}
         data-target="#filter-court-decisions">Court decision filters</h5>
-
     <div id="filter-court-decisions" class="collapse {% if form.has_court_decision %}in{% endif %}">
-      <div class="filter-header">
-        <h6>Type of court</h6>
-      </div>
-      <ul class="filter-decision" data-formid="#id_cd_type">
-        {% include 'bits/checkbox_facet.html' with facet=facets.cdTypeOfText form_field=form.cd_type show_empty=True %}
-      </ul>
 
-      <div class="filter-header">
-        <h6>Sub-national/state level</h6>
-      </div>
-      <div id="cd_territorial_subdivision-filter" class="tag-select">
-        <select class="tag-options" hidden>
-        </select>
-        <input type="text" class="tm-input" placeholder="Add territory" data-formid="#id_cd_territorial_subdivision"/>
-      </ul>
+{% include 'bits/checkbox_facet.html' with title="Type of court" facet=facets.cdTypeOfText field=form.cd_type show_empty=True %}
+
+{% include "bits/selection_facet.html" with title="Sub-national/state level" placeholder="Add territory…" viewname="api:cd-territorial-subdivision-list" data=facets.cd_territorial_subdivision field=form.cd_territorial_subdivision op_field=form.cd_territorial_subdivision_and_ %}
+
     </div>
   </fieldset>
 {% endif %}
+
 
 {% if not form.type.data or form.has_legislation %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_legislation %}class="collapsed"{% endif %}data-target="#filter-legislation">Legislation filters</h5>
-
     <div id="filter-legislation" class="collapse {% if form.has_legislation %}in{% endif %}">
-      <div class="filter-header">
-        <h6>Document type</h6>
-      </div>
-      <ul class="filter-legislation" data-formid="#id_leg_type">
-        {% include 'bits/checkbox_facet.html' with facet=facets.legType_en form_field=form.leg_type show_empty=True %}
-      </ul>
 
-       <div class="filter-header">
-        <h6>Sub-national/state level</h6>
-       </div>
-      <div id="leg_territorial-filter" class="tag-select">
-        <select class="tag-options" hidden></select>
-        <input type="text" class="tm-input word-match" placeholder="Add sub-national/state level" data-formid="#id_leg_territorial"/>
-      </div>
+{% include 'bits/checkbox_facet.html' with title="Document type" facet=facets.legType_en field=form.leg_type show_empty=True %}
+
+{% include "bits/selection_facet.html" with title="Sub-national/state level" placeholder="Add territory…" viewname="api:leg-territorial-list" data=facets.leg_territorial field=form.leg_territorial op_field=form.leg_territorial_and_ %}
+
+    </div>
   </fieldset>
 {% endif %}
+
 
 {% if not form.type.data or form.has_literature %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">Literature filters</h5>
-
     <div id="filter-literatures" class="collapse {% if form.has_literature %}in{% endif %}">
-      <div class="clearfix filter-header">
-        <h6 class="pull-left">Author</h6>
-        <span class="filter-literature pull-right" data-formid="#id_lit_author_op">
-          {% include 'bits/operation_facet.html' with form_field=form.lit_author_op form_target='#id_lit_author' %}
-        </span>
-      </div>
-      <div id="lit_author-filter" class="tag-select">
-        <select class="tag-options" hidden>
-        </select>
-        <input type="text" class="tm-input word-match" placeholder="Add author" data-formid="#id_lit_author"/>
-      </div>
 
-      <div class="filter-header">
-        <h6>Journal/Series</h6>
-      </div>
-      <div id="lit_serial-filter" class="tag-select">
-        <select class="tag-options" hidden>
-        </select>
-        <input type="text" class="tm-input word-match" placeholder="Add journal/series" data-formid="#id_lit_serial"/>
-      </div>
+{% include "bits/selection_facet.html" with title="Author" placeholder="Add author…" viewname="api:lit-author-list" data=facets.lit_author field=form.lit_author op_field=form.lit_author_and_ %}
 
-      <div class="filter-header">
-        <h6>Publisher</h6>
-      </div>
-      <div id="lit_publisher-filter" class="tag-select">
-        <select class="tag-options" hidden>
-        </select>
-        <input type="text" class="tm-input word-match" placeholder="Add publisher" data-formid="#id_lit_publisher">
-      </div>
+{% include "bits/selection_facet.html" with title="Journal/Series" placeholder="Add journal/series…" viewname="api:lit-serial-list" data=facets.lit_serial field=form.lit_serial op_field=form.lit_serial_and_ %}
 
-      <div class="filter-header">
-        <h6>Document type</h6>
-      </div>
-      <div id="lit_type-filter" class="tag-select">
-        <select class="tag-options" hidden>
-        </select>
-        <input type="text" class="tm-input word-match" placeholder="Add document type" data-formid="#id_lit_type"/>
-      </div>
-      <div class="filter-header">
-        <h6>Document type (original)</h6>
-      </div>
-      <div id="lit_type2-filter" class="tag-select">
-        <select class="tag-options" hidden>
-        </select>
-        <input type="text" class="tm-input word-match" placeholder="Add document type" data-formid="#id_lit_type2"/>
-      </div>
+{% include "bits/selection_facet.html" with title="Publisher" placeholder="Add publisher…" viewname="api:lit-publisher-list" data=facets.lit_publisher field=form.lit_publisher op_field=form.lit_publisher_and_ %}
+
+{% include "bits/selection_facet.html" with title="Document type" placeholder="Add document type…" viewname="api:lit-type-list" data=facets.lit_type field=form.lit_type op_field=form.lit_type_and_ %}
+
     </div>
   </fieldset>
 {% endif %}
+
+
 
 <input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">

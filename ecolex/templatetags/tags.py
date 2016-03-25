@@ -2,11 +2,29 @@ from django import template
 from django.core.urlresolvers import resolve, reverse
 from django.utils import translation
 from django.template.defaultfilters import capfirst
+from django.contrib.staticfiles.finders import get_finders
 import datetime
+import os, re
 
 register = template.Library()
 INITIAL_DATE = datetime.date(1, 1, 1)
+version_cache = {}
 
+@register.simple_tag
+def version(path_string):
+    try:
+        if path_string in version_cache:
+            mtime = version_cache[path_string]
+        else:
+            for finder in get_finders():
+                static_file = finder.find(path_string)
+                if static_file:
+                    mtime = os.path.getmtime(static_file)
+                    version_cache[path_string] = mtime
+                    break
+        return '%s?%s' % (path_string, mtime,)
+    except:
+        return path_string
 
 @register.filter
 def lookup(d, key):

@@ -1,6 +1,7 @@
 from binascii import hexlify
 from bs4 import BeautifulSoup
 from datetime import datetime
+import json
 import html
 import logging
 import logging.config
@@ -23,10 +24,10 @@ AUTHOR_SPACE = '^b'
 FIELD_MAP = {
     'id': 'litId',
     'id2': 'litId2',
-    'authora': 'litAuthorArticle',
-    'authorm': 'litAuthor',
-    'corpauthora': 'litCorpAuthorArticle',
-    'corpauthorm': 'litCorpAuthor',
+    'authora': 'litAuthorA',
+    'authorm': 'litAuthorM',
+    'corpauthora': 'litCorpAuthorA',
+    'corpauthorm': 'litCorpAuthorM',
     'dateofentry': 'litDateOfEntry',
     'dateofmodification': 'litDateOfModification',
 
@@ -56,8 +57,8 @@ FIELD_MAP = {
     'publplace': 'litPublPlace',
     'volumeno': 'litVolumeNo',
     'collation': 'litCollation',
-    # TODO CLEAN dateoftext field
     'dateoftext': 'litDateOfText',
+    'yearoftext': 'litYearOfText',
     'linktofulltext': 'litLinkToFullText',
     'doi': 'litLinkDOI',
     'typeoftext': 'litTypeOfText_en',
@@ -162,7 +163,7 @@ SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
 MULTIVALUED_FIELDS = [
     'litId2',
-    'litAuthor', 'litCorpAuthor', 'litAuthorArticle', 'litCorpAuthorArticle',
+    'litAuthorM', 'litAuthorA', 'litCorpAuthorM', 'litCorpAuthorA',
     'litSubject_en', 'litSubject_fr', 'litSubject_es',
     'litKeyword_en', 'litKeyword_fr', 'litKeyword_es',
     'litContributor', 'litISBN',
@@ -233,6 +234,7 @@ class LiteratureImporter(object):
 
     def __init__(self, config):
         self.solr_timeout = config.getint('solr_timeout')
+        self.regions_json = config.get('regions_json')
         self.literature_url = config.get('literature_url')
         self.import_field = config.get('import_field')
         self.query_format = config.get('query_format')
@@ -247,6 +249,7 @@ class LiteratureImporter(object):
         self.start_month = config.getint('start_month', now.month)
         self.end_month = config.getint('end_month', now.month)
         self.solr = EcolexSolr(self.solr_timeout)
+        self.regions = self._get_regions()
         self.force_import_all = config.getboolean('force_import_all', False)
         logger.info('Started literature importer')
 
@@ -286,7 +289,7 @@ class LiteratureImporter(object):
                 literatures = self._parse(raw_literatures)
                 new_literatures = list(filter(bool, [self._get_solr_lit(lit) for
                                                      lit in literatures]))
-                self._index_files(new_literatures)
+                # self._index_files(new_literatures)
                 logger.debug('Adding literatures')
                 self.solr.add_bulk(new_literatures)
                 year -= 1
@@ -319,6 +322,42 @@ class LiteratureImporter(object):
                             data[v] = clean_values
                         if v in data and v not in MULTIVALUED_FIELDS:
                             data[v] = data[v][0]
+
+                # Region regularization
+                if 'litRegion_en' in data:
+                    regions_en = data.get('litRegion_en')
+                    regions_es = data.get('litRegion_es')
+                    regions_fr = data.get('litRegion_fr')
+                    regions = zip(regions_en, regions_es, regions_fr)
+                    new_regions = {'en': [], 'es': [], 'fr': []}
+                    for reg_en, reg_es, reg_fr in regions:
+                        values = self.regions.get(reg_en.lower())
+                        if values:
+                            new_regions['en'].append(reg_en)
+                            value_es = values['es']
+                            value_fr = values['fr']
+                            new_regions['es'].append(value_es)
+                            new_regions['fr'].append(value_fr)
+
+                            if value_es != reg_es:
+                                logger.error('Region name error: %s %s %s' %
+                                             (data['litId'], value_es,
+                                              reg_es))
+
+                            if value_fr != reg_fr:
+                                logger.error('Region name error: %s %s %s' %
+                                             (data['litId'], value_fr,
+                                              reg_fr))
+                        else:
+                            logger.error('New region name: %s %s %s %s' %
+                                         (data['litId'], reg_en, reg_es,
+                                          reg_fr))
+                            new_regions['en'].append(reg_en)
+                            new_regions['es'].append(reg_es)
+                            new_regions['fr'].append(reg_fr)
+                    data['litRegion_en'] = new_regions['en']
+                    data['litRegion_es'] = new_regions['es']
+                    data['litRegion_fr'] = new_regions['fr']
 
                 # litDateOfText parsing error log
                 if 'litDateOfText' in data and ('docDate' not in data or
@@ -425,3 +464,8 @@ class LiteratureImporter(object):
         url = '%s%s%s%s%s' % (self.literature_url, self.query_export, query,
                               self.query_type, page)
         return url
+
+    def _get_regions(self):
+        with open(self.regions_json) as f:
+            regions = json.load(f)
+        return regions

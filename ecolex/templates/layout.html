@@ -1,7 +1,4 @@
-{% load i18n %}
-{% load tags %}
-
-<!doctype html>
+{% load i18n %}{% load tags %}<!doctype html>
 <html lang="en">
 
 <head>
@@ -9,16 +6,25 @@
   <meta charset="utf-8">
   <title>ECOLEX {% block title %}{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/static/css/bootstrap.custom.css">
-  <link rel="stylesheet" href="/static/css/bootstrap-tour.min.css">
-  <link rel="stylesheet" href="/static/css/main.css">
-  {% block style %}
-  {% endblock %}
+  <link rel="stylesheet" href="{{ STATIC_URL }}{% version 'css/bootstrap.custom.css' %}">
+  <link rel="stylesheet" href="{{ STATIC_URL }}{% version 'css/bootstrap-tour.min.css' %}">
+  <link rel="stylesheet" href="{{ STATIC_URL }}{% version 'css/select2.css' %}">
+  <link rel="stylesheet" href="{{ STATIC_URL }}{% version 'css/main.css' %}">
+  {% block style %}{% endblock %}
+  <script src="https://code.jquery.com/jquery-1.12.1.min.js"
+          integrity="sha256-I1nTg78tSrZev3kjvfdM5A5Ak/blglGzlaZANLPDl3I="
+          crossorigin="anonymous"></script>
+  <script src="{{ STATIC_URL }}{% version 'js/bootstrap.min.js' %}"></script>{% comment %}
+  <script src="{{ STATIC_URL }}{% version 'js/modernizr-custom.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% version 'js/jquery.deserialize.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% version 'js/jquery.blockUI.js' %}"></script>{% endcomment %}
+  <script src="{{ STATIC_URL }}{% version 'js/select2.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% version 'js/main.js' %}"></script>
+  {% block scripts %}{% endblock %}
   {% include 'bits/favicon.html' %}
 </head>
 
 <body>
-
 <div class="navbar navbar-default">
   <div class="container">
     <div class="navbar-header">
@@ -34,6 +40,7 @@
         <li {% if page_slug == 'agreement' %}class="active"{% endif %}><a href="{% url 'page' slug='agreement' %}">User Agreement</a></li>
         <li {% if page_slug == 'privacy' %}class="active"{% endif %}><a href="{% url 'page' slug='privacy' %}">Privacy</a></li>
         <li {% if page_slug == 'acknowledgements' %}class="active"{% endif %}><a href="{% url 'page' slug='acknowledgements' %}">Acknowledgments</a></li>
+        <li {% if page_slug == 'other_resources' %}class="active"{% endif %}><a href="{% url 'page' slug='other_resources' %}">Other resources</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
@@ -56,6 +63,9 @@
   </div>
 </div>
 
+{# form is now page-wide, until someone decides to have fun with the template #}
+<form id="search-form" action="{% url 'results' %}" method="get">
+
 <div id="masthead" class="jumbotron text-center">
   <div class="container">
     <div class="jumbotron-brand">
@@ -74,19 +84,18 @@
       </div>
     </div>
 
-    <!-- search -->
-    <form action="{% url 'results' %}" method="get" class="search-form {{ page_type|default:"results-page" }}">
+    <!--{# old #} search -->
+    <div class="search-form {{ page_type|default:"results-page" }}">
       <label for="search">
         <span class="sr-only">Search</span>
         <span class="icon icon-search"></span>
       </label>
 
-      {{ form.q }}
+      <input id="search" type="search" autofocus {# autosave #} class="form-control" name="q" placeholder="Search in record and full text" value="{{ form.q.value|default:"" }}">
+      {# TODO: form.q.errors maybe? #}
 
       <button class="btn btn-search" type="submit">Search</button>
-
-      {% include 'bits/hidden_form.html' %}
-    </form>
+    </div>
   </div>
 </div>
 
@@ -99,6 +108,7 @@
   </div>
 </main>
 
+</form>
 <div class="footer">
   <div class="container">
     <div class="img">
@@ -109,23 +119,17 @@
       <li><a href="{% url 'page' slug='agreement' %}">User Agreement</a></li>
       <li><a href="{% url 'page' slug='privacy' %}">Privacy</a></li>
       <li><a href="{% url 'page' slug='acknowledgements' %}">Acknowledgments</a></li>
+      <li><a href="{% url 'page' slug='other_resources' %}">Other resources</a></li>
       <li><a href="#">Take a tour</a></li>
     </ul>
   </div>
 </div>
 
-<!-- scripts -->
-<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
-<script src="/static/js/modernizr-custom.js"></script>
-<script src="/static/js/bootstrap-tour.min.js"></script>
-<script src="/static/js/jquery.deserialize.js"></script>
-<script src="/static/js/jquery.blockUI.js"></script>
-<script src="/static/js/main.js"></script>
-<script src="/static/js/facets.js"></script>
-<script src="/static/js/tour.js"></script>
+<!-- end scripts -->
+<script src="{{ STATIC_URL }}{% version 'js/bootstrap-tour.min.js' %}"></script>
+<script src="{{ STATIC_URL }}{% version 'js/tour.js' %}"></script>
 {% if settings.GA_CODE %}{% include 'bits/ga.html' %}{% endif %}
-{% block scripts %}
+{% block endscripts %}
 {% endblock %}
 </body>
 

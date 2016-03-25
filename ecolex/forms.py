@@ -1,23 +1,23 @@
-from django.forms import Form, CharField, MultipleChoiceField, TextInput
+from django.forms import (
+    Form,
+    BooleanField, CharField, MultipleChoiceField,
+    TextInput,
+)
 
-from ecolex.definitions import DOC_TYPE
+from ecolex import definitions as defs
 
 
 class SearchForm(Form):
-    OPERATION_OPTIONS = (
-        ('AND', 'AND'),
-    )
     q = CharField(initial='', widget=TextInput(
         attrs={'id': 'search', 'class': 'form-control', 'autofocus': True,
                'placeholder': "Search in record and full text"}))
-    type = MultipleChoiceField(choices=DOC_TYPE)
+    type = MultipleChoiceField(choices=defs.DOC_TYPE)
 
     tr_type = MultipleChoiceField()
     tr_field = MultipleChoiceField()
     tr_status = MultipleChoiceField()
     tr_place_of_adoption = MultipleChoiceField()
     tr_depository = MultipleChoiceField()
-    tr_depository_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
 
     dec_type = MultipleChoiceField()
     dec_status = MultipleChoiceField()
@@ -27,9 +27,7 @@ class SearchForm(Form):
     cd_territorial_subdivision = MultipleChoiceField()
 
     lit_type = MultipleChoiceField()
-    lit_type2 = MultipleChoiceField()
     lit_author = MultipleChoiceField()
-    lit_author_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
     lit_serial = MultipleChoiceField()
     lit_publisher = MultipleChoiceField()
 
@@ -38,19 +36,30 @@ class SearchForm(Form):
     leg_status = MultipleChoiceField()
 
     subject = MultipleChoiceField()
-    subject_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
     keyword = MultipleChoiceField()
-    keyword_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
     country = MultipleChoiceField()
-    country_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
     region = MultipleChoiceField()
-    region_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
     language = MultipleChoiceField()
-    language_op = MultipleChoiceField(choices=OPERATION_OPTIONS)
     yearmin = CharField()
     yearmax = CharField()
 
     sortby = CharField(initial='')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # add AND-able fields
+        for f in defs._AND_OP_FACETS:
+            fname = self.get_and_field_name_for(f)
+            self.fields[fname] = BooleanField()
+
+        # no field is required
+        for field in self.fields.values():
+            field.required = False
+
+    @staticmethod
+    def get_and_field_name_for(field):
+        return defs._AND_OP_FIELD_PATTERN % field
 
     def _has_document_type(self, doctype):
         return doctype in self.data.get('type', [])

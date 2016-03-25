@@ -3,6 +3,7 @@ from django.conf import settings
 import logging
 import logging.config
 import html
+import json
 import re
 import requests
 
@@ -89,6 +90,7 @@ class CopDecisionImporter(object):
 
     def __init__(self, config):
         self.solr_timeout = config.getint('solr_timeout')
+        self.languages_json = config.get('languages_json')
         self.decision_url = config.get('cop_decision_url')
         self.query_skip = config.get('query_skip')
         self.query_filter = config.get('query_filter')
@@ -98,6 +100,7 @@ class CopDecisionImporter(object):
         self.days_ago = config.getint('days_ago')
         self.per_page = config.getint('per_page')
         self.solr = EcolexSolr(self.solr_timeout)
+        self.languages = self._get_languages()
         logger.info('Started COP Decision importer')
 
     def harvest(self, batch_size=500):
@@ -170,7 +173,14 @@ class CopDecisionImporter(object):
                 for k, v in multi_values.items():
                     field_name = field + '_' + k
                     data[field_name] = v
-            data['decLanguage_en'] = list(languages) or ['en']
+            languages = list(languages) or ['en']
+            data['decLanguage_en'] = []
+            data['decLanguage_fr'] = []
+            data['decLanguage_es'] = []
+            for lang in languages:
+                data['decLanguage_en'].append(self.languages[lang]['en'])
+                data['decLanguage_es'].append(self.languages[lang]['es'])
+                data['decLanguage_fr'].append(self.languages[lang]['fr'])
 
             files = decision['files']['results']
             if files:
@@ -266,6 +276,11 @@ class CopDecisionImporter(object):
                         doc.save()
 
             decision['decText'] = dec_text
+
+    def _get_languages(self):
+        with open(self.languages_json) as f:
+            languages_codes = json.load(f)
+        return languages_codes
 
     def _clean(self, text):
         try:

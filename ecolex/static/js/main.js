@@ -1,8 +1,530 @@
-var _form_data = null;
-
 $(document).ready(function() {
+
+var S2U = $.fn.select2.amd.require('select2/utils');
+
+var _DIACRITICS = $.fn.select2.amd.require('select2/diacritics');
+function _stripDiacritics (text) {
+    // courtesy of upstream
+    function match(a) {
+        return _DIACRITICS[a] || a;
+    }
+    return text.replace(/[^\u0000-\u007E]/g, match);
+};
+
+/* debugbugbugbug * /
+var _obs_trigger = S2U.Observable.prototype.trigger;
+S2U.Observable.prototype.trigger = function (event) {
+    if (['enable', 'blur', 'close', 'closing', 'focus',
+         'toggle', 'open', 'opening', 'keypress',
+         'results:focus'
+        ].indexOf(event) === -1)
+        console.log('[ev]', event, '[lx]', this.listeners[event]);
+
+    _obs_trigger.apply(this, arguments);
+};
+// */
+
+/* our custom select2 adapter */
+$.fn.select2.amd.define('ecolex/select2/adapter', [
+    'select2/utils',
+    'select2/data/array',
+    'select2/data/ajax',
+    'select2/selection/search',
+    'select2/results',
+    'select2/dropdown/infiniteScroll',
+    'select2/selection/multiple',
+    'select2/selection/placeholder'
+], function (
+    Utils,
+    ArrayAdapter, AjaxAdapter,
+    Search,
+    Results, InfiniteScroll,
+    MultipleSelection, Placeholder) {
+
+    /***/
+    var CustomResults = Utils.Decorate(Results, InfiniteScroll);
+
+
+    /* hacks, hacks, hacks */
+    // prevent backspace in search field from affecting previous item
+    Search.prototype.searchRemoveChoice = function() {
+        return;
+    };
+
+    // prevent toggling on item removal. TODO: fix, it's ugly
+    MultipleSelection.prototype.bind = function (container, $container) {
+        // this is mostly copy/paste
+
+        var self = this;
+
+        MultipleSelection.__super__.bind.apply(this, arguments);
+
+        // this part customized
+        this.$selection.on('click', function (evt) {
+            if ($(evt.target).is('input.select2-search__field')) {
+                self.trigger('toggle', {
+                    originalEvent: evt
+                });
+            }
+        });
+        // end custom
+
+        this.$selection.on(
+            'click',
+            '.select2-selection__choice__remove',
+            function (evt) {
+                // Ignore the event if it is disabled
+                if (self.options.get('disabled')) {
+                    return;
+                }
+
+                var $remove = $(this);
+                var $selection = $remove.parent();
+
+                var data = $selection.data('data');
+
+                self.trigger('unselect', {
+                    originalEvent: evt,
+                    data: data
+                });
+            }
+        );
+    };
+
+    // don't remove placeholder on selection
+    Placeholder.prototype.update = function (decorated, data) {
+        var $placeholder = this.createPlaceholder(this.placeholder);
+        this.$selection.find('.select2-selection__rendered').append($placeholder);
+        return decorated.call(this, data);
+    };
+
+    /* the thing */
+    var CachingAjaxAdapter = function ($element, options) {
+        $.extend(options.options, {
+            // hardcode our customized results adapter
+            resultsAdapter: CustomResults,
+            // make sure the template has access to our stuff
+            templateResult: this.templateResult.bind(this),
+            // the same with the selection template
+            templateSelection: this.templateSelection.bind(this),
+            // no point defining this in options
+            escapeMarkup: function (txt) { return txt; }
+        });
+
+        CachingAjaxAdapter.__super__.constructor.call(this, $element, options);
+    };
+
+    Utils.Extend(CachingAjaxAdapter, AjaxAdapter);
+
+    CachingAjaxAdapter.prototype.templateResult = function (result, container) {
+        // .loading means this item is the "loading" message
+        if (result.loading) return result.text;
+
+        var term = this._term;
+
+        var text = this._highlight(result.text, term);
+        return '' +
+            '<div class="clearfix">' +
+              '<div class="pull-left">' + text + '</div>' +
+              '<div class="pull-right">' + result.count + '</div>' +
+            '</div>';
+    };
+
+    CachingAjaxAdapter.prototype._highlight = function (text, term) {
+        // this actually does both highlighting and escaping
+
+        if (!term) return text;
+
+        // TODO: regex-escape the term
+        // TODO: should match all of the given terms. like the backend.
+        // TODO: unify with matching logic
+        var re = new RegExp('\\b' + _stripDiacritics(term), 'ig');
+        var _esc = Utils.escapeMarkup;
+
+        var match;
+        var lastindex=0;
+        var out = '';
+
+        var _text = _stripDiacritics(text);
+
+        while ((match = re.exec(_text)) !== null) {
+            out += _esc(text.substring(lastindex, match.index));
+            out += '<strong>' + _esc(match[0]) + '</strong>';
+            lastindex = re.lastIndex;
+        }
+        out += _esc(text.substr(lastindex));
+
+        return out;
+    };
+
+    CachingAjaxAdapter.prototype.templateSelection = function (data, container) {
+        return '' +
+            Utils.escapeMarkup(data.text) +
+            ' <sup class="badge">' +
+                (data.count !== undefined ? data.count : '') +
+            '</sup>';
+    };
+
+    CachingAjaxAdapter.prototype.matches = function (params, data) {
+        // mostly copy/paste from upstream
+
+        var _matcher = CachingAjaxAdapter.prototype.matches;
+
+        // Always return the object if there is nothing to compare
+        if ($.trim(params.term) === '') {
+            return data;
+        }
+
+        // Do a recursive check for options with children
+        if (data.children && data.children.length > 0) {
+            // Clone the data object if there are children
+            // This is required as we modify the object to remove any non-matches
+            var match = $.extend(true, {}, data);
+
+            // Check each child of the option
+            for (var c = data.children.length - 1; c >= 0; c--) {
+                var child = data.children[c];
+
+                var matches = _matcher(params, child);
+
+                // If there wasn't a match, remove the object in the array
+                if (matches == null) {
+                    match.children.splice(c, 1);
+                }
+            }
+
+            // If any children matched, return the new object
+            if (match.children.length > 0) {
+                return match;
+            }
+
+            // If there were no matching children, check just the plain object
+            return _matcher(params, match);
+        }
+
+        var original = _stripDiacritics(data.text);
+        var term = _stripDiacritics(params.term);
+
+        // end copy paste. this is the differing part.
+        // TODO: split term into words and match them all
+        if (new RegExp('\\b' + term, 'i').test(original)) {
+            return data;
+        }
+
+        // If it doesn't contain the term, don't return anything
+        return null;
+    };
+
+    CachingAjaxAdapter.prototype._applyDefaults = function (options) {
+        // ajax defaults, that is
+
+        var defaults = {
+            delay: 200,
+            dataType: 'json',
+
+            data: function (params) {
+                // api-specific params
+                var base_params = {
+                    search: params.term || "",
+                    page: params.page || 1
+                };
+
+                // send allong all form fields
+                //var _form_data = $(this[0].form).serializeArray();
+                var _form_data = this[0].form._form_data;
+
+                var form_params = {};
+                $.each(_form_data, function(idx, obj) {
+                    // courtesy of
+                    // http://benalman.com/projects/jquery-misc-plugins/#serializeobject
+
+                    var n = obj.name,
+                        v = obj.value;
+
+                    form_params[n] = form_params[n] === undefined ? v
+                        : $.isArray( form_params[n] ) ? form_params[n].concat( v )
+                        : [ form_params[n], v ];
+                });
+
+                return $.extend(
+                    {}, form_params, base_params);//, params);
+            }
+/*
+            ,
+
+            // just for debugging
+            transport: function (params, success, failure) {
+                console.log('[ajax]', params.url, params.data);
+
+                var $request = $.ajax(params);
+
+                $request.then(success);
+                $request.fail(failure);
+
+                return $request;
+            }
+ */
+        };
+
+        return $.extend({},
+                        CachingAjaxAdapter.__super__._applyDefaults({}),
+                        defaults, options);
+    };
+
+    CachingAjaxAdapter.prototype.hasMoreData = function (params) {
+        // we have more data when:
+        //   - the data was template-provided and
+        //   - there is an ajax url and
+        //   - the template said there's more data.
+        // or when:
+        //   - the data was ajax-provided and
+        //   - the backend said so.
+
+        if (!this.ajaxOptions.url ||
+            !this.options.get('more')
+           )
+            return false;
+
+        if (params &&
+            (params.term ||
+             (params.page && params.page > 1)
+            )
+           )
+            return true;
+
+        return false;
+    };
+
+    CachingAjaxAdapter.prototype._default_query = function (params, callback) {
+        // wrapper around the default SelectAdapter.prototype.query
+        // that lets us add pagination info
+
+        //console.log(':: query :: default');
+
+        var _super_query = ArrayAdapter.prototype.query;
+        var wrapper = callback;
+
+        if (this.options.get('more')) {
+            wrapper = function(data) {
+                data.pagination = {more: true};
+                callback(data);
+            };
+        }
+
+        _super_query.call(this, params, wrapper);
+
+    };
+
+    CachingAjaxAdapter.prototype._cached_query = function(params, callback) {
+        // applies the default matching logic against the cached data
+
+        //console.log(':: query :: cached');
+
+        var results = [];
+        var self = this;
+
+        $.each(this._cached_data.data.results, function(idx, result) {
+            if (self.matches(params, result) !== null)
+                results.push(result);
+        });
+
+        callback({
+            results: results
+        });
+    };
+
+    CachingAjaxAdapter.prototype._ajax_query = function (params, callback) {
+        //console.log(':: query :: ajax');
+
+        // TODO: fix bug:
+        // items are doubled in results when they're aleady selected
+
+        AjaxAdapter.prototype.query.call(this, params, callback);
+    };
+
+    CachingAjaxAdapter.prototype.query = function (params, callback) {
+        // ensure everything has access to the current query term
+        this.$element._term = params.term;
+
+        if (this._cached_data && this.isSubQuery(params))
+            return this._cached_query(params, callback);
+        else if (this.hasMoreData(params))
+            return this._ajax_query(params, callback);
+        else
+            return this._default_query(params, callback);
+
+    };
+
+    CachingAjaxAdapter.prototype.processResults = function (data, params) {
+        // select2 needs "id" and "text" keys
+        data.results = $.map(data.results, function (result) {
+            return {
+                id: result.item,
+                text: result.item,
+                count: result.count
+            };
+        });
+
+        // there are more results when the backend sends a next page url
+        var more = Boolean(data['next']);
+
+        if (more) {
+            // tell the default ajax adapter to request the next page
+            data['pagination'] = {
+                more: more
+            };
+        } else {
+            // cache things
+            this.setCachedData(data, params);
+        }
+
+        return data;
+    };
+
+    CachingAjaxAdapter.prototype.setCachedData = function (data, params) {
+        // cache the current term and the current data if there's only
+        // one page, and this is not a sub-query of the previous search
+        if ((params.page && params.page > 1) ||
+            this.isSubQuery(params)
+           )
+            return;
+
+        this._cached_data = {
+            term: params.term || "",
+            data: data
+        };
+    };
+
+    CachingAjaxAdapter.prototype.isSubQuery = function(params) {
+        if (!this._cached_data)
+            return false;
+
+        var term = params.term || "";
+        var cached_term = this._cached_data.term;
+
+        return (cached_term == "" ||
+                term.indexOf(cached_term) === 0);
+    };
+
+
+    return CachingAjaxAdapter;
+});
+
+
+/* main */
+
+
+    // set up select2
+
+    function _process_facet_data(data, selected) {
+        var processed = [];
+        $.each(data, function(item, count) {
+
+            processed.push({
+                id: item,
+                text: item,
+                count: count,
+                selected: ($.inArray(item, selected) != -1)
+            });
+        });
+        return processed;
+    }
+
+    var _DataAdapter = $.fn.select2.amd.require('ecolex/select2/adapter');
+
+    $('.selection-facet').each(function(idx) {
+        var self = $(this);
+        var data = _process_facet_data(self.data('data'), self.data('selected'));
+        // strip away the initial data, for performance reasons
+        self.removeData('data');
+        self.removeAttr('data-data');
+
+        self.select2({
+            data: data,
+            dataAdapter: _DataAdapter
+        });
+
+        self.change(submit);
+
+        // add clearfix to select2 widget
+        //self.next().addClass('clearfix');
+    });
+
+    // cache de current search data on the form
+    var _form = $('#search-form');
+    _form[0]._form_data = _form.serializeArray();
+
+
+    /* old stuff re-enabled / temporarily adapted */
+
+    function submit() {
+        $('#search-form').submit();
+    };
+
+    // TODO: not the most beautiful approach this
+    $('#search-form input:checkbox').change(submit);
+
+    // Sortby controls
+    $('.sortby').click(function(e) {
+        e.preventDefault();
+        var value = $(this).data('sortby');
+        $('#id_sortby').val(value);
+
+        submit();
+    });
+
+    // Type facet controls
+    $('.filter-type button').click(function(e) {
+        var current = $('#id_type').val() || [];
+        var toggle_value = $(this).data('value');
+
+        if (current.indexOf(toggle_value) == -1) {
+            current = [toggle_value];
+        } else {
+            current = [];
+        }
+        $('#id_type').val(current);
+
+        submit();
+    });
+
+    // Slider
+    $("#slider-years")
+        .slider()
+        .on('slide', function(event) {
+            var min = $('#year-min'),
+                max = $('#year-max');
+
+            min.val(event.value[0]);
+            max.val(event.value[1]);
+        })
+        .on('slideStop', function(event) {
+            var min = $('#year-min'),
+                max = $('#year-max');
+
+            min.val(event.value[0]);
+            max.val(event.value[1]);
+
+            // TODO: this is annoying
+            submit();
+        });
+
+    // Global reset button
+    $('input[type=reset]').click(function(e) {
+        e.preventDefault();
+        $form = $('#search-form');
+        $form[0].reset();
+        $form.submit();
+    });
+
+    /* end old stuff */
+
+/*
+
+// more commenting
+
     $('[data-filter]').on('click', function() {
-        target = $(this).data('filter')
+        target = $(this).data('filter');
         target = $(target);
         $(this).toggleClass('active');
 
@@ -12,6 +534,13 @@ $(document).ready(function() {
             target.attr('disabled', true);
         }
     });
+
+*/
+
+
+/*
+
+// TODO: repair / re-enable this
 
     // set initial history entry
     if (!history.state && Modernizr.history) {
@@ -32,6 +561,14 @@ $(document).ready(function() {
         $(".search-form").deserialize(history.state.data);
         submit(history.state.data);
     });
+
+
+*/
+
+/*
+
+ // ok ....
+
 
     // initial form value
     var _initial_form_data = $('.search-form').serialize();
@@ -84,11 +621,11 @@ $(document).ready(function() {
                 border: '0',
                 top: '169px',
                 color: "#666",
-                backgroundColor: 'transparent',
+                backgroundColor: 'transparent'
             },
             overlayCSS: {
                 backgroundColor: '#ccc',
-                opacity: 0.9,
+                opacity: 0.9
             }
         });
     }
@@ -132,6 +669,7 @@ $(document).ready(function() {
     function get_select_facets() {
         if ($('.tag-options').length > 0) {
             var data = $('.search-form').serialize();
+
             $.ajax({
                 url: '/facets/ajax/?' + data,
                 format: 'JSON',
@@ -141,46 +679,21 @@ $(document).ready(function() {
                     }
                     init_all();
                     unblock_ui();
-                },
+                }
             });
+
         }
     }
 
+
     function init_all() {
-        // initialize tooltips
-        // bootstrap tooltips are opt-in
-        $('[data-toggle="tooltip"]').tooltip();
+
 
         // prevent disabled pagination anchor to trigger page reload
         $('.pagination').on('click', '.disabled', function(e) {
             e.preventDefault();
         });
 
-        // Slider
-        $("#slider-years")
-            .slider()
-            .on('slide', function(event) {
-                var min = $('#year-min'),
-                    max = $('#year-max');
-
-                min.val(event.value[0]);
-                max.val(event.value[1]);
-            })
-            .on('slideStop', function(event) {
-                var min = $('#year-min'),
-                    max = $('#year-max');
-
-                min.val(event.value[0]);
-                max.val(event.value[1]);
-
-                var form_id = $(min).data('formid');
-                $(form_id).val($(min).val());
-
-                var form_id = $(max).data('formid');
-                $(form_id).val($(max).val());
-
-                push_and_submit(true);
-            });
 
         // Year inputs
         updateYear = function(e) {
@@ -196,49 +709,8 @@ $(document).ready(function() {
                 max = $(maxEl).attr('max');
 
             $("#slider-years").slider('setValue', [min, max]);
-        }
+        };
 
-        // Multiselect
-        $('select[multiple]').multiselect({
-            buttonClass: '',
-            buttonContainer: '<div class="multiselect-wrapper" />',
-            disableIfEmpty: true,
-            enableFiltering: true,
-            enableCaseInsensitiveFiltering: true,
-            // filterBehavior: 'value',
-            numberDisplayed: 1,
-            nonSelectedText: 'Nothing selected',
-            enableCaseInsensitiveFiltering: true,
-            maxHeight: 240,
-            onDropdownHidden: function(e) {
-                var select = $(this.$select);
-                var formid = select.data('formid');
-
-                $(formid).val(select.val());
-                // submit now for now
-                push_and_submit(true);
-            },
-            onDropdownShown: function(e) {
-                search = $(e.target).find('.multiselect-search').focus();
-            },
-        });
-
-        $('.filter-type button').click(function(e) {
-            var current = $('#id_type').val() || [];
-            var toggle_value = $(this).data('value');
-            var is_homepage = $(this).parents().hasClass('homepage');
-            if (current.indexOf(toggle_value) == -1) {
-                current = [toggle_value];
-            } else {
-                current = []
-            }
-            $('#id_type').val(current);
-            // submit now for now
-            if (is_homepage)
-                push_and_submit(false);
-            else
-                push_and_submit(true);
-        });
 
         // Treaty -> Type of Document/Field of application filter
         // COP Decision -> Decision Type, Decision Status /Decision Treaty
@@ -286,14 +758,6 @@ $(document).ready(function() {
             }
         });
 
-        // Sortby controls
-        $('.sortby').click(function(e) {
-            e.preventDefault();
-            var value = $(this).data('sortby');
-            $('#id_sortby').val(value);
-            push_and_submit(true);
-        });
-
         $('button[type=submit]').off("click").on("click", function(e) {
             e.preventDefault();
             var is_homepage = $(this).parents().hasClass('homepage');
@@ -314,7 +778,7 @@ $(document).ready(function() {
         $('input[type=reset]').click(function(e) {
             e.preventDefault();
             var data = {
-                'q': $('#search').val(),
+                'q': $('#search').val()
             };
             $('.search-form select, .search-form input').each(function() {
                 $(this).val('');
@@ -361,15 +825,17 @@ $(document).ready(function() {
             };
         };
 
+
         var tagValidator = function(strs) {
             return function(tag) {
                 return (strs.indexOf(tag) !== -1);
-            }
+            };
         };
 
         $(".tag-select").each(function() {
             var suggestions = [];
             var preselected = [];
+
             $(".tag-options option", this).each(function(i, opt) {
                 var selected = $(opt).attr("selected");
                 var entry = $(opt).text();
@@ -408,6 +874,8 @@ $(document).ready(function() {
                     prefilled: preselected,
                     validator: tagValidator(suggestions),
                     deleteTagsOnBackspace: false,
+                    CapitalizeFirstLetter: false,
+                    onlyTagList: true
                 }).on("tm:spliced", function(e) {
                     var formid = $(this).data('formid');
                     var value = $(this).tagsManager('tags');
@@ -431,7 +899,7 @@ $(document).ready(function() {
                 labelFor = labelFor.substr(1, labelFor.length); // remove #
                 label = $('<label/>', {
                     'class': 'tm-label',
-                    'for': labelFor,
+                    'for': labelFor
                 });
                 $(this).before(label);
                 $(self).on("focus", function(e) {
@@ -458,6 +926,9 @@ $(document).ready(function() {
                     return preselected.indexOf(item) === -1;
                 });
 
+                // console.log(suggestions);
+
+
                 $(this).typeahead({
                     hint: false,
                     highlight: true,
@@ -476,9 +947,13 @@ $(document).ready(function() {
         });
 
     }
+
     if ($('.search-form').hasClass('homepage')) {
         init_all();
     } else {
         get_select_facets();
     }
+
+*/
+
 });

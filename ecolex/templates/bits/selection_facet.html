@@ -1,0 +1,24 @@
+{% load json %}
+<div class="clearfix filter-header">
+  <h6{% if op_field %} class="pull-left"{% endif %}>{{ title }}</h6>
+{% if op_field %}
+  <span class="filter-global pull-right" data-formid="#id_{{ name }}_op">
+{% include 'bits/facet_operation.html' with field=op_field %}
+  </span>
+{% endif %}
+  <select id="facet-{{ field.name }}"
+          name="{{ field.name }}"
+          class="selection-facet clearfix"
+          multiple="true"
+          data-width="300"
+          data-placeholder="{{ placeholder }}"{% if viewname %}
+          data-ajax--url="{% url viewname %}"{% endif %}
+          data-data="{{ data.results|json }}"
+          data-more="{{ data.more|yesno:"true,false" }}"
+          data-selected="{{ field.value|json }}"
+  >
+{% for option in field.value %}
+    <option id="{{ option }}" selected data-count="0">{{ option }}</option>
+{% endfor %}
+  </select>
+</div>

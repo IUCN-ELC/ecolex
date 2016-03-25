@@ -35,7 +35,7 @@ var tourSteps = [
 
   // Interactive categories
   {
-    path: "/result/?q=Access+to+Genetic+Resourses",
+    path: "/en/result/?q=Access+to+Genetic+Resourses&yearmin=&yearmax=&sortby=",
     element: ".btn-group.filter-type",
     placement: "right",
     title: "Interactive categories",
@@ -94,14 +94,18 @@ var tourSteps = [
     placement: "left",
     title: "Faceted navigation",
     content: "<p>Try it yourself:</p><ol><li>Look for <strong>multilateral</strong> treaties</li><li>Add <strong>Waste management</strong> as a keyword</li><li>Only show records <strong>after 1900</strong></li></ol>",
+    onNext: function(tour) {
+      var nextUrl = $('.result-links').eq(0).attr('href')
+      var nextStep = tour.getCurrentStep() + 1;
+      tour._options['steps'][nextStep]['path'] = nextUrl;
+    }
   },
   // The details page
   {
-    path: "/details/treaty/686c51e6-420e-4722-a189-9e8ba7dc06f9/",
     element: ".record-title",
     placement: "top",
     title: "The details page",
-    content: "Designed to emphasize structure and readibility."
+    content: "Designed to emphasize structure and readibility.",
   },
   // Participants
   {
@@ -132,7 +136,7 @@ var tourSteps = [
   },
   // Cross-device
   {
-    path: "/",
+    path: "/en/",
     orphan: true,
     title: "Mobile &amp; Tablet support",
     content: "Please have a look at this prototype from your mobile or tablet as well.",
@@ -167,10 +171,4 @@ $(document).ready(function() {
     tour.restart();
   });
 
-  // tour.start();
-
-  // if (tour.ended()) {
-  //   // decide what to do
-  //   tour.restart();
-  // }
 });
