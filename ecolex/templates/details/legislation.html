@@ -21,14 +21,20 @@
       <dt>Country</dt>
       <dd>{{ document.country }}</dd>
 
-      {% if document.solr.legTerritorialSubdivision %}
+      {% if document.territorial_subdivision %}
         <dt>Territorial subdivision</dt>
-        <dd>{{ document.solr.legTerritorialSubdivision }}</dd>
+        <dd>{{ document.territorial_subdivision }}</dd>
       {% endif %}
       <dt>Document type</dt><dd>{{ document.type|capfirst }}</dd>
-      <dt>Date</dt><dd>{{ document.date }}</dd>
-      {% if document.solr.legLongTitle %}
-        <dt>Long title</dt><dd>{{ document.solr.legLongTitle }}</dd>
+      <dt>Date</dt>
+      <dd>
+        <span class="sr-date" title="Original">{{ document.date }}
+        {% if document.consolidation_date %}
+          <span class="sr-date" title="Consolidation">({{ document.consolidation_date }})</span>
+        {% endif %}
+      </dd>
+      {% if document.long_title %}
+        <dt>Long title</dt><dd>{{ document.long_title }}</dd>
       {% endif %}
     </dl>
   </header>
@@ -37,7 +43,7 @@
     <dl>
       {% if document.subjects %}
         <dt>Subjects</dt>
-        <dd>{{ document.subjects | join_by:", " | safe }}</dd>
+        <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.keywords %}
@@ -51,7 +57,7 @@
 
       {% if document.region %}
         <dt>Geographical area</dt>
-        <dd>{{ document.region | join_by:", " | safe }}</dd>
+        <dd>{{ document.region|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.basin %}
@@ -59,9 +65,9 @@
         <dd>{{ document.basin | join_by:", " | safe }}</dd>
       {% endif %}
 
-      {% if document.solr.legEntryIntoForce %}
+      {% if document.entry_into_force %}
         <dt>Entry into force notes</dt>
-        <dd>{{ document.solr.legEntryIntoForce }}</dd>
+        <dd>{{ document.entry_into_force }}</dd>
       {% endif %}
 
     </dl>
@@ -74,31 +80,37 @@
       <dd><p class="abstract">{{ document.abstract|safe }}</p></dd>
       {% endif %}
 
-      {% if document.solr.legLinkToFullText %}
+      {% if document.link_to_full_text %}
       <dt>Link to full text</dt>
       <dd>
-        <a href="{{ document.solr.legLinkToFullText }}" target="_blank">{{ document.language }}</a>
+        <a href="{{ document.link_to_full_text }}"
+           target="_blank">{{ document.language|join:"/" }}</a>
       </dd>
       {% endif %}
 
-      {% if document.solr.legRelatedWebSite %}
+      {% if document.related_web_site %}
         <dt>Available web site</dt>
         <dd>
-          <a href="{{ document.solr.legRelatedWebSite | url_normalize}}" target="_blank">{{ document.solr.legRelatedWebSite }}</a>
+          <a href="{{ document.related_web_site|url_normalize}}"
+             target="_blank">{{ document.related_web_site }}</a>
         </dd>
       {% endif %}
 
       <dt>Source</dt>
-      <dd>{{ document.source }}, <a target="_blank" href="http://faolex.fao.org/">FAOLEX</a> (ID: {{ document.document_id }})</dd>
+      <dd>
+        {{ document.source }},
+        <a target="_blank" href="http://faolex.fao.org/">FAOLEX</a>
+        (ID: {{ document.document_id }})
+      </dd>
     </dl>
   </section>
 
-{% if leg_references.items or leg_back_references.items %}
+  {% if document.references %}
   <section id="other-references">
     <h2 class="section-title">Legislation references</h2>
-    {% for label, legislations in leg_references.items %}
+    {% for field, legislations in document.references.items %}
       <dl class="dl-horizontal">
-        <dt>{{ label }}</dt>
+        <dt>{{ field|labelify }}</dt>
         {% for legislation in legislations %}
           <dd>
             <h3 class="search-result-title">
@@ -110,24 +122,8 @@
         {% endfor %}
       </dl>
     {% endfor %}
-
-    {% for label, legislations in leg_back_references.items %}
-      <dl class="dl-horizontal">
-        <dt>{{ label }}</dt>
-        {% for legislation in legislations %}
-          <dd>
-            <h3 class="search-result-title">
-              <a href="{{ legislation.details_url }}?{{ query }}"
-                 title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
-            </h3>
-            {% include 'short_display/legislation.html' with result=legislation %}
-          </dd>
-        {% endfor %}
-      </dl>
-    {% endfor %}
-
   </section>
-{% endif %}
+  {% endif %}
 
 </article>
 

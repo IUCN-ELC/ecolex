@@ -27,13 +27,37 @@ class BaseModel(object):
 
 
 class DocumentModel(BaseModel):
+    REFERENCES = []
+
     @property
     def details_url(self):
         return reverse(self.URL_NAME, kwargs={'id': self.id})
 
+    @cached_property
+    def references(self):
+        from ecolex.search import get_documents_by_field
+        refs = OrderedDict()
+        for field in self.REFERENCES:
+            backref_field = self.BACKREF_FIELDS.get(field)
+            if not backref_field:
+                value = getattr(self, field, [])
+                if not value:
+                    continue
+                solr_field = self.ID_FIELD
+            else:
+                value = [self.document_id]
+                solr_field = self.BACKREF_FIELDS[field]
+
+            new_value = get_documents_by_field(solr_field, value, rows=MAX_ROWS,
+                                               sortby='last')
+            if new_value:
+                refs[field] = new_value
+        return refs
+
 
 class Treaty(DocumentModel):
     URL_NAME = 'treaty_details'
+    ID_FIELD = 'trElisId'
     EVENTS_NAMES = {
         'acceptance_approval': 'Acceptance/approval',
         'accession_approbation': 'Accession/approbation',
@@ -58,11 +82,11 @@ class Treaty(DocumentModel):
         'reservation',
         'withdrawal',
     ]
-    TREATY_REFERENCES = [
+    REFERENCES = [
         'enables', 'supersedes', 'cites', 'amends',
         'enabled_by', 'superseded_by', 'cited_by', 'amended_by',
     ]
-    TREATY_BACKREF_FIELDS = {
+    BACKREF_FIELDS = {
         'amended_by': 'trAmendsTreaty',
         'cited_by': 'trCitesTreaty',
         'enables': 'trEnabledByTreaty',
@@ -86,27 +110,6 @@ class Treaty(DocumentModel):
     def parties_events(self):
         events = set().union(*[party.events for party in self.parties])
         return sorted(events, key=lambda x: self.EVENTS_ORDER.index(x))
-
-    @cached_property
-    def treaty_references(self):
-        from ecolex.search import get_documents_by_field
-        refs = OrderedDict()
-        for field in self.TREATY_REFERENCES:
-            backref_field = self.TREATY_BACKREF_FIELDS.get(field)
-            if not backref_field:
-                value = getattr(self, field, [])
-                if not value:
-                    continue
-                solr_field = 'trElisId'
-            else:
-                value = [self.document_id]
-                solr_field = self.TREATY_BACKREF_FIELDS[field]
-
-            new_value = get_documents_by_field(solr_field, value, rows=MAX_ROWS,
-                                               sortby='last')
-            if new_value:
-                refs[field] = new_value
-        return refs
 
     @cached_property
     def decisions(self):
@@ -186,6 +189,16 @@ class Decision(DocumentModel):
 
 class Legislation(DocumentModel):
     URL_NAME = 'legislation_details'
+    ID_FIELD = 'legId'
+    REFERENCES = [
+        'implements', 'amends', 'repeals',
+        'implemented_by', 'amended_by', 'repealed_by',
+    ]
+    BACKREF_FIELDS = {
+        'amended_by': 'legAmends',
+        'implemented_by': 'legImplement',
+        'repealed_by': 'legRepeals',
+    }
 
     @property
     def title(self):

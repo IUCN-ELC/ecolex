@@ -183,11 +183,11 @@
   </section>
   {% endif %}
 
-  {% if document.treaty_references %}
+  {% if document.references %}
   <section id="treaty-references">
     <h2 class="section-title">Treaty references</h2>
 
-    {% for name, value in document.treaty_references.items %}
+    {% for name, value in document.references.items %}
       <dl class="dl-horizontal references">
         <dt>{{ name|labelify }}</dt>
         {% for treaty in value %}

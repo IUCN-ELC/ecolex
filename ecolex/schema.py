@@ -375,25 +375,21 @@ class LegislationSchema(BaseSchema):
     long_title = fields.String(load_from='legLongTitle', missing='')
 
     abstract = fields.String(load_from='legAbstract')
-    amends = fields.List(fields.String(), load_from='legAmends')
-    consolidation_date = fields.Date(load_from='legConsolidationDate')
     country = fields.String(load_from='legCountry', multilingual=True)
     country_iso = fields.String(load_from='legCountry_iso')
-    date = fields.Date(load_from='legDate')
     entry_date = fields.Date(load_from='legEntryDate')
     entry_into_force = fields.String(load_from='legEntryIntoForce')
-    geo_area = fields.List(fields.String(), load_from='legGeoArea',
-                           multilingual=True)
-    implement = fields.List(fields.String(), load_from='legImplement')
+    region = fields.List(fields.String(), load_from='legGeoArea',
+                         multilingual=True)
+    basin = fields.List(fields.String(), load_from='legBasin',
+                         multilingual=True)
     keyword_code = fields.List(fields.String(), load_from='legKeyword_code')
     language_code = fields.List(fields.String(), load_from='legLanguage_code')
     language = fields.List(fields.String(), load_from='legLanguage',
                            multilingual=True)
     link_to_full_text = fields.String(load_from='legLinkToFullText')
     modification_date = fields.Date(load_from='legModificationDate')
-    original_date = fields.Date(load_from='legOriginalDate')
     related_web_site = fields.String(load_from='legRelatedWebSite')
-    repeals = fields.List(fields.String(), load_from='legRepeals')
     search_date = fields.Date(load_from='legSearchDate')
     source = fields.String(load_from='legSource')
     status = fields.String(load_from='legStatus')
@@ -401,6 +397,13 @@ class LegislationSchema(BaseSchema):
     territorial_subdivision = fields.String(
         load_from='legTerritorialSubdivision')
     type_code = fields.String(load_from='legTypeCode')
+    date = fields.String(load_from='legYear')
+    consolidation_date = fields.String(load_from='legOriginalYear')
+
+    # References
+    amends = fields.List(fields.String(), load_from='legAmends')
+    implements = fields.List(fields.String(), load_from='legImplement')
+    repeals = fields.List(fields.String(), load_from='legRepeals')
 
     @post_load
     def make_model(self, data):
