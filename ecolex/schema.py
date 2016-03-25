@@ -188,10 +188,10 @@ class DecisionSchema(BaseSchema):
     file_names = fields.List(fields.String(), load_from='decFileNames')
     file_urls = fields.List(fields.String(), load_from='decFileUrls')
     # TODO: check if this is deprecated
-    decison_id = fields.String(load_from='decId')
+    decision_id = fields.String(load_from='decId')
     language = fields.List(fields.String(), load_from='decLanguage',
                            multilingual=True)
-    link = fields.String(load_from='decLink')
+    url = fields.String(load_from='decLink')
     long_title = fields.String(load_from='decLongTitle', multilingual=True)
     meeting_id = fields.String(load_from='decMeetingId')
     meeting_title = fields.String(load_from='decMeetingTitle')
@@ -202,7 +202,7 @@ class DecisionSchema(BaseSchema):
     status = fields.String(load_from='decStatus')
     summary = fields.String(load_from='decSummary', multilingual=True)
     title_of_text = fields.List(fields.String(), load_from='decTitleOfText')
-    treaty = fields.String(load_from='decTreaty')
+    treaty_slug = fields.String(load_from='decTreaty')
     treaty_id = fields.String(load_from='decTreatyId')
     treaty_name = fields.String(load_from='decTreatyName', multilingual=True)
     update_date = fields.Date(load_from='decUpdateDate', missing=None)

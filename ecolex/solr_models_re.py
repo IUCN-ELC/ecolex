@@ -7,13 +7,15 @@ from datetime import date
 from django.core.urlresolvers import reverse
 from django.utils.functional import cached_property
 
+from ecolex.definitions import LANGUAGE_MAP
+
 
 DEFAULT_TITLE = 'Unknown Document'
 INVALID_DATE = date(2, 11, 30)
 
 # This limit does not allow all documents to be showed on the details_decisions,
 # details_court_decisions and details_literatures pages (Treaty -> Other
-# references). However, increasing this limit slows also increases the page's
+# references). However, increasing this limit also increases the page's
 # load time. TODO Pagination on the details pages
 MAX_ROWS = 100
 
@@ -167,6 +169,19 @@ class Decision(DocumentModel):
     @property
     def date(self):
         return self.publish_date or self.update_date
+
+    @cached_property
+    def treaty(self):
+        from ecolex.search import get_treaty_by_informea_id
+        return get_treaty_by_informea_id(self.treaty_id)
+
+    @cached_property
+    def files(self):
+        return list(zip(self.file_urls, self.file_names))
+
+    @cached_property
+    def language_names(self):
+        return [LANGUAGE_MAP.get(code, 'Undefined') for code in self.language]
 
 
 class Legislation(DocumentModel):

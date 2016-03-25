@@ -7,7 +7,12 @@
 {% endblock %}
 
 {% block content %}
-{% informea_url_id document %}
+
+{% if document.treaty_id and document.treaty_slug %}
+  <script>
+    document.informea_url = "http://www.informea.org/treaties/{{ document.treaty_slug }}/decision/{{ document.decision_id }}";
+  </script>
+{% endif %}
 
 <article class="record-details">
 
@@ -20,47 +25,63 @@
     </div>
 
     <dl>
-      <dt>{{ document.type|capfirst }}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
-      <dt>Status</dt> <dd>{{ document.solr.decStatus|capfirst }}</dd>
+      <dt>Reference number</dt> <dd>{{ document.document_id|default:"-" }}</dd>
       <dt>Date</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
-      <dt>Source</dt>
-      <dd>{{ document.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
     </dl>
   </header>
 
   <section id="details">
     <dl>
-      {% if treaty %}
+      <dt>Status</dt> <dd>{{ document.status|capfirst }}</dd>
+
+      {% if document.subjects %}
+        <dt>Subject{{ document.subjects|length|pluralize:",s" }}</dt>
+        <dd>{{ document.subjects | join_by:", " | safe }}</dd>
+      {% endif %}
+
+      {% if document.keywords %}
+        <dt>Keywords</dt>
+        <dd>
+        {% for keyword in document.keywords %}
+            <span class="tag">{{ keyword|capfirst|safe }}</span>
+        {% endfor %}
+        </dd>
+      {% endif %}
+
+      {% if document.treaty %}
         <dt>Treaty</dt>
         <dd>
-          <a href="{{ treaty.details_url }}?{{ query }}">
-            {{ treaty }} ({{ treaty.date|date:"b j, Y"|capfirst  }})
+          <a href="{{ document.treaty.details_url }}?{{ query }}">
+            {{ document.treaty.title|safe }} ({{ document.treaty.date|date:"b j, Y"|capfirst  }})
           </a>
         </dd>
       {% endif %}
 
       <dt>Meeting</dt>
       <dd>
-        {% if document.solr.decMeetingUrl %}
-          <a href="{{ document.solr.decMeetingUrl }}" target="_blank">
-            {{ document.solr.decMeetingTitle | safe }}
-          </a>
+        {% if document.meeting_url %}
+          <a href="{{ document.meeting_url }}"
+             target="_blank">{{ document.meeting_title|safe }}</a>
         {% else %}
-          {{ document.solr.decMeetingTitle | safe }}
+          {{ document.meeting_title|safe }}
         {% endif %}
       </dd>
 
       {% if document.url %}
-      <dt>Link to decision</dt>
-      <dd>
-        <a target="_blank" href="{{ document.url }}">{{ document.get_language }}</a>
-      </dd>
+        <dt>Available website</dt>
+        <dd>
+          {# TODO Check this, it doesn't seem to be right. #}
+          <a target="_blank" href="{{ document.url }}">{{ document.language_names.0 }}</a>
+        </dd>
       {% endif %}
 
-      {% if document.get_files %}
+      <dt>Source</dt>
+      <dd>{{ document.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
+
+      {% if document.files %}
         <dt>Files</dt>
-          {% for url, name in document.get_files %}
+          {% for url, name in document.files %}
             <dd>
               <a target="_blank" href="{{ url }}">{{ name }}</a>
             </dd>
@@ -72,23 +93,15 @@
         <dd> {{ entry.value | date:"b j, Y" | capfirst | join_by:", " }}</dd>
       {% endfor %}
 
-      {% if document.keywords %}
-        <dt>Keywords</dt>
-        <dd>
-          {% for keyword in document.keywords %}
-            <span class="tag">{{ keyword|capfirst|safe }}</span>
-          {% endfor %}
-        </dd>
-      {% endif %}
     </dl>
   </section>
 
-  {% if document.get_body %}
+  {% if document.body %}
     <section id="text">
       <dl>
         <dt>Abstract</dt>
         <dd>
-          <div class="html">{{ document.get_body|safe }}</div>
+          <div class="html">{{ document.body|safe }}</div>
         </dd>
       </dl>
     </section>

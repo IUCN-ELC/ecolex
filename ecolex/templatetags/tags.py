@@ -66,19 +66,6 @@ def url_normalize(value):
 
 
 @register.simple_tag()
-def informea_url_id(document):
-    # We use this to generate urls to informea.org decisions
-    treaty_id = document.solr.get('decTreatyId', None)
-    treaty_name = document.solr.get('decTreaty', None)
-    if not treaty_id or not treaty_name:
-        return ''
-
-    return """<script>
-        document.informea_url = "http://www.informea.org/treaties/{url_id}/decision/{dec_id}";
-    </script>""".format(url_id=treaty_name, dec_id=document.solr['decId'])
-
-
-@register.simple_tag()
 def breadcrumb(label, viewname='', query='', *args, **kwargs):
     if not viewname:
         return label

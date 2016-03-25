@@ -9,13 +9,8 @@ from urllib.parse import urlencode
 import logging
 
 from ecolex.legislation import harvest_file
-from ecolex.search import (
-    get_document, get_documents_by_field, get_treaty_by_informea_id,
-    SearchMixin,
-)
-from ecolex.definitions import (
-    FIELD_TO_FACET_MAPPING, SELECT_FACETS
-)
+from ecolex.search import get_document, get_documents_by_field, SearchMixin
+from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS
 
 
 logger = logging.getLogger(__name__)
@@ -188,16 +183,6 @@ class DetailsView(SearchView):
 class DecisionDetails(DetailsView):
 
     template_name = 'details/decision.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(DecisionDetails, self).get_context_data(**kwargs)
-        treaty_id = context['document'].solr.get('decTreatyId', None)
-
-        if treaty_id:
-            treaty = get_treaty_by_informea_id(treaty_id)
-            context['treaty'] = treaty
-
-        return context
 
 
 class TreatyDetails(DetailsView):
