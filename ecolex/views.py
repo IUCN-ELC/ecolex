@@ -129,39 +129,6 @@ class SearchResults(SearchView):
         return render(request, 'list_results.html', ctx)
 
 
-class SearchResultsAjax(SearchResults):
-
-    def get(self, request, **kwargs):
-        ctx = self.get_context_data(**kwargs)
-        main = render_to_string('results_main.html', ctx)
-        sidebar = render_to_string('results_sidebar.html', ctx)
-        search_form_inputs = render_to_string('bits/hidden_form.html', ctx)
-        return JsonResponse(dict(main=main, sidebar=sidebar,
-                                 form_inputs=search_form_inputs))
-
-
-class SelectFacetsAjax(SearchView):
-
-    def get(self, request, **kwargs):
-        ctx = super(SelectFacetsAjax, self).get_context_data(**kwargs)
-        results = self.search()
-
-        facets = results.get_facets()
-        data = {}
-        for k, v in SELECT_FACETS.items():
-            if k not in facets:
-                continue
-            show_empty = True if len(results) == 0 else False
-            context = {
-                'facet': facets[k],
-                'form_field': ctx['form'][v],
-                'show_empty': show_empty
-            }
-            html = render_to_string('bits/fancy_select.html', context)
-            data[v] = html
-        return JsonResponse(data)
-
-
 class DecMeetingView(SearchView):
     template_name = 'decision_meeting_details.html'
 
