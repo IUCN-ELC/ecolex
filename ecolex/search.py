@@ -2,7 +2,7 @@ import pysolr
 from collections import OrderedDict
 from django.conf import settings
 
-from ecolex.lib import camel_case_to__
+from ecolex.lib.utils import camel_case_to__
 from ecolex import definitions as defs
 from ecolex.solr_models import (
     Treaty, Decision, Literature, CourtDecision, Legislation

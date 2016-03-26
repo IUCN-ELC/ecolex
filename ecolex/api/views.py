@@ -4,7 +4,7 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin#, RetrieveModelMixin
 from ecolex import definitions
 from ecolex.search import SearchMixin
-from ecolex.lib import unaccent
+from ecolex.lib.utils import unaccent
 from . import serializers
 from . import pagination
 
