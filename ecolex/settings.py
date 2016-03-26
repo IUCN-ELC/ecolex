@@ -45,7 +45,8 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     #'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
+    #'django.middleware.locale.LocaleMiddleware',
+    'solid_i18n.middleware.SolidLocaleMiddleware',
     #'django.middleware.common.CommonMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
     #'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -143,6 +144,8 @@ USE_L10N = False
 
 USE_TZ = True
 
+# always redirect /en/ to root
+SOLID_I18N_DEFAULT_PREFIX_REDIRECT = True
 
 # drf
 
