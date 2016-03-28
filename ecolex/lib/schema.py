@@ -1,6 +1,6 @@
 import warnings
 from django.utils.functional import cached_property
-from marshmallow import Schema as _Schema, fields, pre_load
+from marshmallow import Schema as _Schema, SchemaOpts, fields, pre_load
 from ecolex.lib.utils import MutableLookupDict
 
 
@@ -18,6 +18,7 @@ if not getattr(fields.Field, '_patched', False):
 
         self._orig__init__(**kwargs)
 
+    # TODO: consider doing this with `Schema.on_bind_field` instead
     def _new_add_to_schema(self, field_name, schema):
         self._orig_add_to_schema(field_name, schema)
 
