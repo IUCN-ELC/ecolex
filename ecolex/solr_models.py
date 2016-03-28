@@ -483,6 +483,7 @@ class Literature(ObjectNormalizer):
     REFERENCE_TO_FIELDS = {
         'litTreatyReference': 'treaty',
         'litLiteratureReference': 'literature',
+        'litRelatedMonograph': 'literature',
         'litCourtDecisionReference': 'court_decision',
         'litFaolexReference': 'legislation',
         'litEULegislationReference': 'legislation',
@@ -496,16 +497,20 @@ class Literature(ObjectNormalizer):
     }
     REFERENCE_FROM_FIELDS = {
         'litLiteratureReference': 'literature',
+        'litRelatedMonograph': 'literature',
     }
 
     def get_references_to(self):
         from ecolex.search import get_documents_by_field
         ids_dict = {}
         for field, doc_type in self.REFERENCE_TO_FIELDS.items():
-            values = [v for v in self.solr.get(field, [])]
+            values = self.solr.get(field, [])
+            if not isinstance(values, list):
+                values = [values]
+            else:
+                values = [v for v in values]
             if values and any(values):
                 ids_dict[doc_type] = values
-
         references = {}
         for doc_type, ids in ids_dict.items():
             results = get_documents_by_field(self.REFERENCE_MAPPING[doc_type],
