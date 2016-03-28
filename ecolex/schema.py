@@ -9,13 +9,24 @@ Usage:
 
 """
 
-from collections import OrderedDict
+from collections import OrderedDict, namedtuple
 from marshmallow import post_load, pre_load
 
-from ecolex.lib.schema import Schema, fields
+from ecolex.lib.schema import Schema, SchemaOpts, fields
 from ecolex.solr_models_re import (
     CourtDecision, Decision, Legislation, Literature, Treaty, TreatyParty,
 )
+
+
+class _CustomOptions(SchemaOpts):
+    """
+    Custom Meta options class.
+    """
+    def __init__(self, meta):
+        super().__init__(meta)
+        self.model = getattr(meta, 'model', None)
+        self.abbr = getattr(meta, 'abbr', None)
+        self.type = getattr(meta, 'type', None)
 
 
 class BaseSchema(Schema):
@@ -23,11 +34,10 @@ class BaseSchema(Schema):
     Inherited by all main object schemas.
     """
 
-    # this must be defined by subclasses
-    Model = None
+    OPTIONS_CLASS = _CustomOptions
 
     id = fields.String()
-    type = fields.String()
+    type = fields.String(solr_filter=True)
     source = fields.String()
     indexed_at = fields.DateTime(load_from='indexedDate')
     updated_at = fields.DateTime(load_from='updatedDate')
@@ -39,9 +49,33 @@ class BaseSchema(Schema):
     subjects = fields.List(fields.String(), multilingual=True,
                            load_from_attribute='SUBJECTS_FIELD')
 
+    # common fields, used for filtering / faceting
+    # TODO: keywords & subjects above are redundant
+    _keywords = fields.List(fields.String(),
+                            load_from='docKeyword',
+                            multilingual=True,
+                            solr_filter=True)
+    _subjects = fields.List(fields.String(),
+                            load_from='docSubject',
+                            multilingual=True,
+                            solr_filter=True)
+    _country = fields.String(load_from='docCountry',
+                             multilingual=True,
+                             solr_filter=True)
+    _region = fields.String(load_from='docRegion',
+                            multilingual=True,
+                            solr_filter=True)
+    _language = fields.String(load_from='docLanguage',
+                              multilingual=True,
+                              solr_filter=True)
+
+
     @post_load
     def make_model(self, data):
-        return self.Model(**data)
+        if self.opts.model:
+            return self.opts.model(**data)
+        else:
+            return data
 
 
 class TreatyPartySchema(Schema):
@@ -67,14 +101,20 @@ class TreatyPartySchema(Schema):
 
 
 class TreatySchema(BaseSchema):
-    Model = Treaty
+    class Meta:
+        model = Treaty
+        abbr = 'tr'
+        type = 'treaty'
 
     ID_FIELD = 'trElisId'
     KEYWORDS_FIELD = 'trKeyword'
     SUBJECTS_FIELD = 'trSubject'
 
-    type_of_document = fields.List(fields.String(), load_from='trTypeOfText',
-                                   multilingual=True)  # False list (?)
+    # TODO: False list (?)
+    type_of_document = fields.List(fields.String(),
+                                   load_from='trTypeOfText',
+                                   multilingual=True,
+                                   solr_filter=True)
 
     parties = fields.Nested(TreatyPartySchema, many=True)
 
@@ -98,13 +138,17 @@ class TreatySchema(BaseSchema):
     date_of_modification = fields.Date(load_from='trDateOfModification',
                                        missing=None)
     date_of_text = fields.Date(load_from='trDateOfText', missing=None)
-    depository = fields.List(fields.String(), load_from='trDepository',
-                             multilingual=True)
+    depository = fields.List(fields.String(),
+                             load_from='trDepository',
+                             multilingual=True,
+                             solr_filter=True)
     enabled = fields.String(load_from='trEnabled')
     entry_into_force_date = fields.Date(load_from='trEntryIntoForceDate')
     field_of_application = fields.List(fields.String(),
                                        load_from='trFieldOfApplication',
-                                       multilingual=True)
+                                       multilingual=True,
+                                       solr_filter=True)
+
     informea_id = fields.String(load_from='trInformeaId')
     internet_reference = fields.List(fields.String(),
                                      load_from='trInternetReference',
@@ -143,8 +187,10 @@ class TreatySchema(BaseSchema):
     paper_title_of_text_other = fields.List(
         fields.String(), load_from='trPaperTitleOfText_other')
     parent_id = fields.Integer(load_from='trParentId')
+    # TODO: False list
     place_of_adoption = fields.List(fields.String(),
-                                    load_from='trPlaceOfAdoption')  # False list
+                                    load_from='trPlaceOfAdoption',
+                                    solr_filter=True)
     primary = fields.List(fields.String(), load_from='trPrimary')
     region = fields.List(fields.String(), load_from='trRegion',
                          multilingual=True)
@@ -153,7 +199,8 @@ class TreatySchema(BaseSchema):
     scope = fields.List(fields.String(), load_from='trScope')
     search_date = fields.Date(load_from='trSearchDate')
     seat_of_court = fields.List(fields.String(), load_from='trSeatOfCourt')
-    status = fields.String(load_from='trStatus')
+    status = fields.String(load_from='trStatus',
+                           solr_filter=True)
     theme_secondary = fields.List(fields.String(), load_from='trThemeSecondary')
     title_abbreviation = fields.List(fields.String(),
                                      load_from='trTitleAbbreviation')
@@ -183,13 +230,17 @@ class TreatySchema(BaseSchema):
 
 
 class DecisionSchema(BaseSchema):
-    Model = Decision
+    class Meta:
+        model = Decision
+        abbr = 'dec'
+        type = 'decision'
 
     ID_FIELD = 'decNumber'
     KEYWORDS_FIELD = 'decKeyword'
     SUBJECTS_FIELD = 'docSubject'  # COP decisions don't have subjects (?)
 
-    type_of_document = fields.String(load_from='decType')
+    type_of_document = fields.String(load_from='decType',
+                                     solr_filter=True)
 
     body = fields.String(load_from='decBody', multilingual=True)
     file_names = fields.List(fields.String(), load_from='decFileNames')
@@ -206,24 +257,33 @@ class DecisionSchema(BaseSchema):
     publish_date = fields.Date(load_from='decPublishDate', missing=None)
     short_title = fields.String(load_from='decShortTitle', multilingual=True,
                                 missing='')
-    status = fields.String(load_from='decStatus')
+    status = fields.String(load_from='decStatus',
+                           solr_filter=True)
     summary = fields.String(load_from='decSummary', multilingual=True)
     title_of_text = fields.List(fields.String(), load_from='decTitleOfText')
     treaty_slug = fields.String(load_from='decTreaty')
     treaty_id = fields.String(load_from='decTreatyId')
-    treaty_name = fields.String(load_from='decTreatyName', multilingual=True)
+    treaty_name = fields.String(load_from='decTreatyName',
+                                multilingual=True,
+                                solr_filter=True)
     update_date = fields.Date(load_from='decUpdateDate', missing=None)
 
 
 class LiteratureSchema(BaseSchema):
-    Model = Literature
+    class Meta:
+        model = Literature
+        abbr = 'lit'
+        type = 'literature'
 
     ID_FIELD = 'litId'  # this is actually multivalued (?)
     KEYWORDS_FIELD = 'litKeyword'
     SUBJECTS_FIELD = 'litSubject'
 
-    type_of_text = fields.List(fields.String(), load_from='litTypeOfText',
-                               multilingual=True)  # False list (?)
+    # TODO: False list (?)
+    type_of_text = fields.List(fields.String(),
+                               load_from='litTypeOfText',
+                               multilingual=True,
+                               solr_filter=True)
 
     abstract = fields.String(load_from='litAbstract', multilingual=True)
     abstract_other = fields.String(load_from='litAbstract_other')
@@ -291,7 +351,8 @@ class LiteratureSchema(BaseSchema):
     paper_title_of_text_other = fields.String(
         load_from='litPaperTitleOfText_other')
     publication_place = fields.String(load_from='litPublPlace')
-    publisher = fields.String(load_from='litPublisher')
+    publisher = fields.String(load_from='litPublisher',
+                              solr_filter=True)
     region = fields.List(fields.String(), load_from='litRegion',
                          multilingual=True)
     related_monograph = fields.String(load_from='litRelatedMonograph')
@@ -299,7 +360,9 @@ class LiteratureSchema(BaseSchema):
     jurisdiction = fields.String(load_from='litScope', multilingual=True)
     search_date = fields.String(load_from='litSearchDate')
     serial_status = fields.String(load_from='litSerialStatus')
-    orig_serial_title = fields.String(load_from='litSerialTitle', missing='')
+    orig_serial_title = fields.String(load_from='litSerialTitle',
+                                      missing='',
+                                      solr_filter=True)
     series_flag = fields.String(load_from='litSeriesFlag')
     territorial_subdivision = fields.String(
         load_from='litTerritorialSubdivision',
@@ -316,7 +379,10 @@ class LiteratureSchema(BaseSchema):
     volume_no = fields.String(load_from='litVolumeNo', missing='')
 
     # Authors
-    author = fields.List(fields.String(), load_from='litAuthor', missing=[])
+    author = fields.List(fields.String(),
+                         load_from='litAuthor',
+                         missing=[],
+                         solr_filter=True)
     author_a = fields.List(fields.String(), load_from='litAuthorA', missing=[])
     author_m = fields.List(fields.String(), load_from='litAuthorM', missing=[])
     corp_author_a = fields.List(fields.String(), load_from='litCorpAuthorA',
@@ -326,13 +392,18 @@ class LiteratureSchema(BaseSchema):
 
 
 class CourtDecisionSchema(BaseSchema):
-    Model = CourtDecision
+    class Meta:
+        model = CourtDecision
+        abbr = 'cd'
+        type = 'court_decision'
 
     ID_FIELD = 'cdLeoId'
     KEYWORDS_FIELD = 'cdKeyword'
     SUBJECTS_FIELD = 'cdSubject'
 
-    type_of_document = fields.String(load_from='cdTypeOfText')  # Multivalued ?
+    # TODO: Multivalued ?
+    type_of_document = fields.String(load_from='cdTypeOfText',
+                                     solr_filter=True)
 
     # TODO: this is common to more. group together?
     abstract = fields.String(load_from='cdAbstract', multilingual=True)
@@ -356,9 +427,9 @@ class CourtDecisionSchema(BaseSchema):
     reference_number = fields.String(load_from='cdReferenceNumber')
     seat_of_court = fields.String(load_from='cdSeatOfCourt', multilingual=True)
     status_of_decision = fields.String(load_from='cdStatusOfDecision')
-    territorial_subdivision = fields.String(
-        load_from='cdTerritorialSubdivision',
-        multilingual=True)
+    territorial_subdivision = fields.String(load_from='cdTerritorialSubdivision',
+                                            multilingual=True,
+                                            solr_filter=True)
     title_of_text = fields.String(load_from='cdTitleOfText', multilingual=True,
                                   missing='')
     treaty_reference = fields.List(fields.String(),
@@ -366,13 +437,18 @@ class CourtDecisionSchema(BaseSchema):
 
 
 class LegislationSchema(BaseSchema):
-    Model = Legislation
+    class Meta:
+        model = Legislation
+        abbr = 'leg'
+        type = 'legislation'
 
     ID_FIELD = 'legId'
     KEYWORDS_FIELD = 'legKeyword'
     SUBJECTS_FIELD = 'legSubject'
 
-    type_of_document = fields.String(load_from='legType', multilingual=True)
+    type_of_document = fields.String(load_from='legType',
+                                     multilingual=True,
+                                     solr_filter=True)
     short_title = fields.String(load_from='legTitle', missing='')
     long_title = fields.String(load_from='legLongTitle', missing='')
 
@@ -396,8 +472,8 @@ class LegislationSchema(BaseSchema):
     source = fields.String(load_from='legSource')
     status = fields.String(load_from='legStatus')
     subject_code = fields.List(fields.String(), load_from='legSubject_code')
-    territorial_subdivision = fields.String(
-        load_from='legTerritorialSubdivision')
+    territorial_subdivision = fields.String(load_from='legTerritorialSubdivision',
+                                            solr_filter=True)
     type_code = fields.String(load_from='legTypeCode')
     date = fields.String(load_from='legYear')
     consolidation_date = fields.String(load_from='legOriginalYear')
@@ -406,3 +482,52 @@ class LegislationSchema(BaseSchema):
     amends = fields.List(fields.String(), load_from='legAmends')
     implements = fields.List(fields.String(), load_from='legImplement')
     repeals = fields.List(fields.String(), load_from='legRepeals')
+
+
+class _Field(namedtuple('_Field',[
+        'name', 'load_from', 'multilingual', 'multivalue'])):
+    def get_field_for_language(self, lang):
+        if not self.multilingual:
+            return self.load_from
+        else:
+            return "%s_%s" % (self.load_from, lang)
+
+
+def get_filter_fields(base_schema, *schemas):
+    try:
+        return get_filter_fields._fields
+    except AttributeError:
+        pass
+
+    _fields = {}
+
+    for schema in (base_schema, ) + schemas:
+        for name, field in schema._declared_fields.items():
+            if not field.metadata.get('solr_filter', False):
+                continue
+            # don't duplicate inherited fields
+            if (schema != base_schema and
+                base_schema._declared_fields.get(name) is field
+            ):
+                continue
+
+            #import ipdb
+            #ipdb.set_trace()
+            abbr = schema.opts.abbr
+            prefix = '%s_' % abbr if abbr else ''
+            f_name = '%s%s' % (prefix, name)
+
+            load_from = field.load_from
+            if not load_from:
+                if field.load_from_attribute:
+                    load_from = schema.getattr(field.load_from_attribute)
+                else:
+                    load_from = name
+
+            _fields[f_name] = _Field(name,
+                                     load_from,
+                                     field.multilingual,
+                                     issubclass(type(field), fields.List))
+
+    get_filter_fields._fields = _fields
+    return _fields
