@@ -2,12 +2,15 @@ import logging
 from urllib.parse import urlencode
 from warnings import warn
 from django.conf import settings
-from django.http import Http404, HttpResponseForbidden, HttpResponseServerError, JsonResponse
+from django.core.urlresolvers import reverse
+from django.http import Http404, HttpResponseForbidden, HttpResponseServerError
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
+from django.views.generic.base import RedirectView
 
 from ecolex.legislation import harvest_file
 
@@ -436,3 +439,32 @@ def debug(request):
 
 class DesignPlayground(TemplateView):
     template_name = 'playground.html'
+
+
+class LegislationRedirectView(RedirectView):
+
+    doc_type_map = {
+        'legislation': 'legId',
+        'treaty': 'trElisId',
+        'literature': 'litId',
+    }
+
+    def get_redirect_url(self, *args, **kwargs):
+        doc_id = kwargs.pop('doc_id', None)
+        doc_type = kwargs.pop('doc_type', None)
+        if not doc_id or not doc_type:
+            return None
+        search_field = self.doc_type_map.get(doc_type)
+        results = get_documents_by_field(search_field, [doc_id], rows=1)
+        if not results:
+            return None
+        leg = [x for x in results][0]
+        doc_details = doc_type + '_details'
+        return reverse(doc_details, kwargs={'id': leg.id()})
+
+    def get(self, request, *args, **kwargs):
+        url = self.get_redirect_url(*args, **kwargs)
+        if url:
+            return HttpResponseRedirect(url)
+        else:
+            return HttpResponse('Arguments missing or document is not indexed')

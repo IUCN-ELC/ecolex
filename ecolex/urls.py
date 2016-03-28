@@ -9,7 +9,7 @@ from .views import (
     TreatyParticipantView, DecisionDetails, TreatyDetails, LiteratureDetails,
     CourtDecisionDetails, ResultDetailsLiteratures, FaoFeedView,
     ResultDetailsCourtDecisions, LegislationDetails,
-    SelectFacetsAjax, DesignPlayground,
+    SelectFacetsAjax, DesignPlayground, LegislationRedirectView,
 )
 from .api import urls as api_urls
 
@@ -52,6 +52,9 @@ urlpatterns += i18n_patterns(
         LegislationDetails.as_view(), name="legislation_details"),
     url(r'^p/(?P<slug>\w+)/', PageView.as_view(),
         name="page"),
+
+    url(r'^(?P<doc_type>\w+)/details/(?P<doc_id>[^/]+)/$',
+        LegislationRedirectView.as_view(), name="legislation_redirect"),
 )
 
 urlpatterns += patterns(
