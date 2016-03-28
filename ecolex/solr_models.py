@@ -483,7 +483,6 @@ class Literature(ObjectNormalizer):
     REFERENCE_TO_FIELDS = {
         'litTreatyReference': 'treaty',
         'litLiteratureReference': 'literature',
-        'litRelatedMonograph': 'literature',
         'litCourtDecisionReference': 'court_decision',
         'litFaolexReference': 'legislation',
         'litEULegislationReference': 'legislation',
@@ -497,7 +496,6 @@ class Literature(ObjectNormalizer):
     }
     REFERENCE_FROM_FIELDS = {
         'litLiteratureReference': 'literature',
-        'litRelatedMonograph': 'literature',
     }
 
     def get_references_to(self):
@@ -608,6 +606,17 @@ class Literature(ObjectNormalizer):
             if title and title != main_title:
                 titles.append({'alttitle': title, 'language': language})
         return titles
+
+    @cached_property
+    def parent_url(self):
+        # only for chapters
+        from ecolex.search import get_documents_by_field
+        if self.lit_is_chapter:
+            parent_elis_id = self.solr.get('litRelatedMonograph')
+            docs = get_documents_by_field('litId', [parent_elis_id], rows=1)
+            doc = [x for x in docs][0]
+            return doc.details_url()
+        return None
 
     @cached_property
     def parent_title(self):

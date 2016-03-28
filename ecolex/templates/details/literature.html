@@ -35,7 +35,7 @@
       {% endif %}
       {% if document.lit_is_chapter and document.parent_title %}
         <dt>Monograph</dt>
-        <dd>{{ document.parent_title | safe }}</dd>
+        <dd><a href="{{ document.parent_url }}?{{ query }}">{{ document.parent_title | safe }}</a></dd>
       {% endif %}
       {% if document.date %}
         <dt>Publication year</dt>
