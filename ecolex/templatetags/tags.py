@@ -1,6 +1,7 @@
 from django import template
 from django.core.urlresolvers import resolve, reverse
 from django.utils import translation
+from django.utils.html import format_html
 from django.template.defaultfilters import capfirst
 from django.contrib.staticfiles.finders import get_finders
 import datetime
@@ -80,14 +81,15 @@ def url_normalize(value):
     return value if value.startswith('http') else 'http://' + value
 
 
-@register.simple_tag()
+@register.simple_tag
 def breadcrumb(label, viewname='', query='', *args, **kwargs):
     if not viewname:
         return label
     url = reverse(viewname, args=args, kwargs=kwargs)
     if query:
         url = '{url}?{query}'.format(url=url, query=query)
-    return '<a href="{url}">{label}</a> &raquo;'.format(url=url, label=label)
+    return format_html('<a href="{url}">{label}</a> &raquo;',
+                       url=url, label=label)
 
 
 @register.simple_tag(takes_context=True)

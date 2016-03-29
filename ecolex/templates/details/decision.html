@@ -75,8 +75,6 @@
           <a target="_blank" href="{{ document.url }}">{{ document.language_names.0 }}</a>
         </dd>
       {% endif %}
-      <dt>Source</dt>
-      <dd>{{ document.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
 
       <dt>Source</dt>
       <dd>{{ document.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
@@ -89,11 +87,6 @@
             </dd>
           {% endfor %}
       {% endif %}
-
-      {% for entry in document.optional_fields %}
-        <dt> {{ entry.label }} </dt>
-        <dd> {{ entry.value|date:"b j, Y"|capfirst|join:", " }}</dd>
-      {% endfor %}
     </dl>
   </section>
 

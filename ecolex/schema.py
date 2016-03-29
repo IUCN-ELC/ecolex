@@ -59,15 +59,18 @@ class BaseSchema(Schema):
                             load_from='docSubject',
                             multilingual=True,
                             solr_filter=True)
-    _country = fields.String(load_from='docCountry',
-                             multilingual=True,
-                             solr_filter=True)
-    _region = fields.String(load_from='docRegion',
+    _country = fields.List(fields.String(),
+                           load_from='docCountry',
+                           multilingual=True,
+                           solr_filter=True)
+    _region = fields.List(fields.String(),
+                          load_from='docRegion',
+                          multilingual=True,
+                          solr_filter=True)
+    _language = fields.List(fields.String(),
+                            load_from='docLanguage',
                             multilingual=True,
                             solr_filter=True)
-    _language = fields.String(load_from='docLanguage',
-                              multilingual=True,
-                              solr_filter=True)
 
     @post_load
     def make_model(self, data):
@@ -188,7 +191,7 @@ class TreatySchema(BaseSchema):
                                       multilingual=True,
                                       missing=[])
     paper_title_of_text_other = fields.List(
-        fields.String(), load_from='trPaperTitleOfText_other')
+        fields.String(), load_from='trPaperTitleOfText_other', missing=[])
     parent_id = fields.Integer(load_from='trParentId')
     # TODO: False list
     place_of_adoption = fields.List(fields.String(),
@@ -211,7 +214,8 @@ class TreatySchema(BaseSchema):
                                 missing=[])
     # TODO: False list
     title_of_text_short = fields.List(fields.String(),
-                                      load_from='trTitleOfTextShort')
+                                      load_from='trTitleOfTextShort',
+                                      missing=[])
     url = fields.List(fields.String(), load_from='trUrl')
     url_elearning = fields.List(fields.String(), load_from='trUrlElearning')
     url_parties = fields.List(fields.String(), load_from='trUrlParties')
@@ -247,8 +251,8 @@ class DecisionSchema(BaseSchema):
                                      solr_filter=True)
 
     body = fields.String(load_from='decBody', multilingual=True)
-    file_names = fields.List(fields.String(), load_from='decFileNames')
-    file_urls = fields.List(fields.String(), load_from='decFileUrls')
+    file_names = fields.List(fields.String(), load_from='decFileNames', missing=[])
+    file_urls = fields.List(fields.String(), load_from='decFileUrls', missing=[])
     # TODO: check if this is deprecated
     decision_id = fields.String(load_from='decId')
     language = fields.List(fields.String(), load_from='decLanguage',
@@ -307,7 +311,8 @@ class LiteratureSchema(BaseSchema):
                             multilingual=True)
     court_decision_reference = fields.List(
         fields.String(),
-        load_from='litCourtDecisionReference')
+        load_from='litCourtDecisionReference',
+        missing=[])
     date_of_entry = fields.Date(load_from='litDateOfEntry')
     date_of_modification = fields.Date(load_from='litDateOfModification')
     date_of_text = fields.String(load_from='litDateOfText', missing=None)
@@ -343,7 +348,8 @@ class LiteratureSchema(BaseSchema):
     link_to_full_text = fields.List(fields.String(),
                                     load_from='litLinkToFullText')
     literature_reference = fields.List(fields.String(),
-                                       load_from='litLiteratureReference')
+                                       load_from='litLiteratureReference',
+                                       missing=[])
     location = fields.String(load_from='litLocation')
     long_title = fields.String(load_from='litLongTitle', multilingual=True,
                                missing='')
@@ -381,7 +387,8 @@ class LiteratureSchema(BaseSchema):
     title_of_text_transl = fields.String(load_from='litTitleOfTextTransl',
                                          multilingual=True, missing='')
     treaty_reference = fields.List(fields.String(),
-                                   load_from='litTreatyReference')
+                                   load_from='litTreatyReference',
+                                   missing=[])
     volume_no = fields.String(load_from='litVolumeNo', missing='')
 
     # Authors
