@@ -172,6 +172,7 @@ SOLR_FIELDS = [
     'cdTypeOfText', 'cdCountry_en', 'cdDateOfText',
     'legTitle', 'legLongTitle', 'legCountry_en', 'legKeyword_en',
     'legYear', 'legOriginalYear', 'legStatus', 'legTerritorialSubdivision', 'legId',
+    'slug',
 ]
 
 LANGUAGE_MAP = collections.OrderedDict([

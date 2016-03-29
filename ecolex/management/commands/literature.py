@@ -7,6 +7,8 @@ import logging
 import logging.config
 import re
 
+from django.template.defaultfilters import slugify
+
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.utils import EcolexSolr, LITERATURE
 from ecolex.management.utils import get_content_from_url, valid_date
@@ -373,6 +375,17 @@ class LiteratureImporter(object):
                 if id and id[:3] in DOCUMENT_TYPE_MAP:
                     for k, v in DOCUMENT_TYPE_MAP[id[:3]].items():
                         data[k] = v
+
+                title = (data.get('litLongTitle_en') or
+                         data.get('litLongTitle_es') or
+                         data.get('litLongTitle_fr') or
+                         data.get('litLongTitle_other') or
+                         data.get('litPaperTitleOfText_en') or
+                         data.get('litPaperTitleOfText_es') or
+                         data.get('litPaperTitleOfText_fr') or
+                         data.get('litPaperTitleOfText_other'))
+                slug = title + ' ' + data['litId']
+                data['slug'] = slugify(slug)
 
                 literatures.append(data)
         return literatures

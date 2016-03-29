@@ -7,6 +7,8 @@ import json
 import re
 import requests
 
+from django.template.defaultfilters import slugify
+
 from ecolex.management.utils import EcolexSolr, get_date, get_file_from_url
 from ecolex.management.utils import COP_DECISION, DEC_TREATY_FIELDS
 from ecolex.management.commands.logging import LOG_DICT
@@ -197,6 +199,15 @@ class CopDecisionImporter(object):
                     for k, v in TREATY_FIELDS_MAP.items():
                         if k in treaties[0]:
                             data[v] = treaties[0][k]
+
+            title = (data.get('decShortTitle_en') or
+                     data.get('decShortTitle_es') or
+                     data.get('decShortTitle_fr') or
+                     data.get('decShortTitle_ru') or
+                     data.get('decShortTitle_ar') or
+                     data.get('decShortTitle_zh'))
+            slug = title + ' ' + data.get('decId')
+            data['slug'] = slugify(slug)
             decisions.append(data)
         return decisions
 

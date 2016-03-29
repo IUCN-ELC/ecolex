@@ -7,6 +7,7 @@ import html
 import json
 
 from django.conf import settings
+from django.template.defaultfilters import slugify
 from pysolr import SolrError
 
 from ecolex.management.commands.logging import LOG_DICT
@@ -319,7 +320,6 @@ class TreatyImporter(object):
                                 else:
                                     logger.error('Language not found %s' % (lang.lower()))
 
-
                 if ('trRegion_en' in data and 'trRegion_es' in data and
                         'trRegion_fr' in data):
                     regions_en = data.get('trRegion_en')
@@ -394,6 +394,10 @@ class TreatyImporter(object):
                 data['trElisId'] = elis_id
                 data = self._apply_custom_rules(data)
                 treaties[elis_id] = data
+
+                title = data['trPaperTitleOfText_en'][0]
+                slug = title + ' ' + data['trElisId']
+                data['slug'] = slugify(slug)
 
         return treaties
 

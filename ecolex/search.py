@@ -376,10 +376,10 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     return solr.search(solr_query, **params)
 
 
-def get_documents_by_field(id_name, treaty_ids, rows=None):
+def get_documents_by_field(id_name, treaty_ids, rows=None, **kwargs):
     solr_query = id_name + ":(" + " ".join(treaty_ids) + ")"
     rows = len(treaty_ids) if rows is None else rows
-    result = search(solr_query, rows=rows, raw=True)
+    result = search(solr_query, rows=rows, raw=True, **kwargs)
     if not len(result):
         return []
     return result
@@ -391,6 +391,11 @@ def get_document(document_id, query='*', **kwargs):
         result = search('*', raw=True, filters={'id': [document_id]}, **kwargs)
     return result
 
+def get_document_by_slug(slug, query='*', **kwargs):
+    result = search(query, raw=True, filters={'slug': [slug]}, **kwargs)
+    if not len(result):
+        result = search('*', raw=True, filters={'slug': [slug]}, **kwargs)
+    return result
 
 def get_treaty_by_informea_id(informea_id):
     result = search('trInformeaId:' + informea_id, raw=True)

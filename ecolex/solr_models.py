@@ -379,7 +379,8 @@ class Treaty(ObjectNormalizer):
         return first(self.solr.get('trInformeaId'))
 
     def details_url(self):
-        return reverse('treaty_details', kwargs={'id': self.id()})
+        return reverse('treaty_details',
+                       kwargs={'slug': self.solr.get('slug')})
 
     def title_translations(self):
         titles = []
@@ -418,7 +419,8 @@ class Decision(ObjectNormalizer):
         return first(self.solr.get('decLink'))
 
     def details_url(self):
-        return reverse('decision_details', kwargs={'id': self.id()})
+        return reverse('decision_details',
+                       kwargs={'slug': self.solr.get('slug')})
 
     def status(self):
         return first(self.solr.get('decStatus'), "unknown")
@@ -535,7 +537,8 @@ class Literature(ObjectNormalizer):
         return self.solr.get('litYearOfText') or self.solr.get('litDateOfTextSer')
 
     def details_url(self):
-        return reverse('literature_details', kwargs={'id': self.id()})
+        return reverse('literature_details',
+                       kwargs={'slug': self.solr.get('slug')})
 
     def jurisdiction(self):
         return first(self.solr.get('litScope_en'))
@@ -686,7 +689,8 @@ class CourtDecision(ObjectNormalizer):
     REFERENCED_BY_FIELDS = {'literature': 'litCourtDecisionReference'}
 
     def details_url(self):
-        return reverse('court_decision_details', kwargs={'id': self.id()})
+        return reverse('court_decision_details',
+                       kwargs={'slug': self.solr.get('slug')})
 
     def get_references(self):
         from ecolex.search import get_documents_by_field
@@ -768,7 +772,8 @@ class Legislation(ObjectNormalizer):
         return references
 
     def details_url(self):
-        return reverse('legislation_details', kwargs={'id': self.id()})
+        return reverse('legislation_details',
+                       kwargs={'slug': self.solr.get('slug')})
 
     def country(self):
         return first(self.solr.get('legCountry_en'))

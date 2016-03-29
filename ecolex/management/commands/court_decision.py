@@ -3,6 +3,8 @@ import json
 import logging
 import logging.config
 
+from django.template.defaultfilters import slugify
+
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.utils import EcolexSolr, get_json_from_url
 from ecolex.management.utils import get_file_from_url
@@ -234,6 +236,13 @@ class CourtDecision(object):
                 files = [get_file_from_url(url) for url in urls if url]
                 solr_decision['text'] += '\n'.join(self.solr.extract(f)
                                                    for f in files if f)
+
+        title = (solr_decision.get('cdTitleOfText_en') or
+                 solr_decision.get('cdTitleOfText_fr') or
+                 solr_decision.get('cdTitleOfText_es'))
+        slug = title + ' ' + solr_decision.get('cdLeoId')
+        solr_decision['slug'] = slugify(slug)
+
         return solr_decision
 
 

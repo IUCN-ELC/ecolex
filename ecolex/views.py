@@ -16,7 +16,7 @@ from ecolex.legislation import harvest_file
 
 from ecolex.search import (
     search, get_document, get_documents_by_field, get_treaty_by_informea_id,
-    SearchMixin,
+    SearchMixin, get_document_by_slug
 )
 from ecolex.definitions import (
     FIELD_TO_FACET_MAPPING, SELECT_FACETS
@@ -211,9 +211,9 @@ class DetailsView(SearchView):
 
     def get_context_data(self, **kwargs):
         context = super(DetailsView, self).get_context_data(**kwargs)
+        slug = kwargs['slug']
 
-        results = get_document(document_id=kwargs['id'], query=self.query,
-                               hl_details=True)
+        results = get_document_by_slug(slug, query=self.query, hl_details=True)
         if not results:
             raise Http404()
         context['document'] = results.first()
