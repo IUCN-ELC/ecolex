@@ -4,7 +4,9 @@ from django.utils import translation
 from django.template.defaultfilters import capfirst
 from django.contrib.staticfiles.finders import get_finders
 import datetime
-import os, re
+import os
+from os.path import basename
+from urllib import parse as urlparse
 
 register = template.Library()
 INITIAL_DATE = datetime.date(1, 1, 1)
@@ -39,6 +41,11 @@ def getattribute(obj, attr):
 @register.filter
 def labelify(text):
     return text.replace('_', ' ').capitalize()
+
+
+@register.filter
+def extract_filename(link):
+    return basename(urlparse.urlparse(link).path)
 
 
 @register.filter

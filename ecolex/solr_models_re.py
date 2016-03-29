@@ -20,6 +20,10 @@ INVALID_DATE = date(2, 11, 30)
 MAX_ROWS = 100
 
 
+def join_available_values(separator, *values):
+    return separator.join([v for v in values if v])
+
+
 class BaseModel(object):
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
@@ -227,12 +231,17 @@ class Literature(DocumentModel):
                 self.title_of_text_transl or
                 self.title_of_text_short)
 
+    @cached_property
+    def people_authors(self):
+        return self.author_a or self.author_m
+
+    @cached_property
+    def corp_authors(self):
+        return self.corp_author_a or self.corp_author_m
+
     @property
     def authors(self):
-        return (self.author_a or
-                self.author_m or
-                self.corp_author_a or
-                self.corp_author_m)
+        return self.people_authors or self.corp_authors
 
     @property
     def parent_title(self):
@@ -243,6 +252,9 @@ class Literature(DocumentModel):
     @property
     def publication_date(self):
         return self.date_of_text_ser or self.date_of_text
+
+    def date(self):
+        return self.year_of_text or self.date_of_text_ser
 
     @cached_property
     def is_article(self):
@@ -261,5 +273,44 @@ class Literature(DocumentModel):
             return self.orig_serial_title
         else:
             # TODO: when is this shown???
-            vals = [v for v in (self.orig_serial_title, self.volume_no) if v]
-            return ' | '.join(vals)
+            return join_available_values(' | ',
+                                         self.orig_serial_title, self.volume_no)
+
+    @cached_property
+    def conference(self):
+        return join_available_values(' | ',
+                                     self.conf_name, self.conf_no,
+                                     self.conf_date, self.conf_place)
+
+    @cached_property
+    def treaties(self):
+        from ecolex.search import get_documents_by_field
+        return get_documents_by_field('trElisId', self.treaty_reference,
+                                      rows=MAX_ROWS)
+
+    @cached_property
+    def legislations(self):
+        from ecolex.search import get_documents_by_field
+        refs = (self.faolex_reference +
+                self.eu_legislation_reference +
+                self.national_legislation_reference)
+        return get_documents_by_field('legId', refs, rows=MAX_ROWS)
+
+    @cached_property
+    def court_decisions(self):
+        from ecolex.search import get_documents_by_field
+        return get_documents_by_field('cdOriginalId',
+                                      self.court_decision_reference,
+                                      rows=MAX_ROWS)
+
+    @cached_property
+    def literatures(self):
+        from ecolex.search import get_documents_by_field
+        return get_documents_by_field('litId', self.literature_reference,
+                                      rows=MAX_ROWS)
+
+    @cached_property
+    def references(self):
+        from ecolex.search import get_documents_by_field
+        return get_documents_by_field('litLiteratureReference',
+                                      [self.document_id], rows=MAX_ROWS)
