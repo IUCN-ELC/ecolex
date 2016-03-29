@@ -62,7 +62,7 @@
 
       {% if document.basin %}
         <dt>Basin</dt>
-        <dd>{{ document.basin | join_by:", " | safe }}</dd>
+        <dd>{{ document.basin|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.entry_into_force %}

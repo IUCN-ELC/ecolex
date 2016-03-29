@@ -4,7 +4,7 @@
   <strong class="sr-type">{{ result.type|capfirst }}</strong> |
   <span class="sr-doctype">{{ result.type_of_document }}</span>
   {% if result.place_of_adoption %} |
-    <span class="sr-place"> {{ result.place_of_adoption | join:'; ' }}</span>
+    <span class="sr-place"> {{ result.place_of_adoption|join:'; ' }}</span>
   {% endif %}
   {% if result.date %} |
     <time class="sr-date" title="Date: {{ result.date }}">
@@ -14,7 +14,7 @@
 </div>
 {% if result.keywords %}
   <p class="search-result-details">
-    <strong>Keywords:</strong> {{ result.keywords|capfirstseq|join_by:", "|safe }}
+    <strong>Keywords:</strong> {{ result.keywords|capfirstseq|join:", "|safe }}
   </p>
 {% endif %}
 <p class="search-result-source">Source:

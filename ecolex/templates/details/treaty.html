@@ -161,7 +161,7 @@
         </tr>
       </thead>
     <tbody class="body">
-        {% for party in document.parties|sort_by:'country' %}
+        {% for party in document.parties|dictsort:'country' %}
         <tr class="country">
           <th>{{ party.country }}</th>
 

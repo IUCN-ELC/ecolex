@@ -37,7 +37,7 @@
       <dt>Language of document</dt> <dd>{{ document.language }}</dd>
       {% if document.subjects %}
         <dt>Subjects</dt>
-        <dd>{{ document.subjects | join_by:", " | safe }}</dd>
+        <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
       {% if document.keywords %}
         <dt>Keywords</dt>

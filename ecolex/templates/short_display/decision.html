@@ -1,7 +1,7 @@
 {% load tags %}
 
 <div class="search-result-details">
-  <strong class="sr-type">{{ result.type|capfirst }}</strong> 
+  <strong class="sr-type">{{ result.type|capfirst }}</strong>
   {% if result.document_id %}
     <span class="sr-id"> {{ result.document_id }} </span>
   {% endif %} &ndash;
@@ -16,7 +16,7 @@
 </div>
 {% if result.keywords %}
   <p class="search-result-details">
-    <strong>Keywords:</strong> {{ result.keywords|capfirstseq|join_by:", "|safe }}
+    <strong>Keywords:</strong> {{ result.keywords|capfirstseq|join:", "|safe }}
   </p>
 {% endif %}
 <p class="search-result-source">

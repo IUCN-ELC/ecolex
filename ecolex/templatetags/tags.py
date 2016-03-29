@@ -12,6 +12,7 @@ register = template.Library()
 INITIAL_DATE = datetime.date(1, 1, 1)
 version_cache = {}
 
+
 @register.simple_tag
 def version(path_string):
     try:
@@ -27,6 +28,7 @@ def version(path_string):
         return '%s?%s' % (path_string, mtime,)
     except:
         return path_string
+
 
 @register.filter
 def lookup(d, key):
@@ -49,20 +51,8 @@ def extract_filename(link):
 
 
 @register.filter
-def sort_by(lst, attr):
-    return sorted(lst, key=lambda x: getattr(x, attr))
-
-
-@register.filter
 def just_year(value):
     return value and value[0:4]
-
-
-@register.filter
-def join_by(lst, arg):
-    if lst and (type(lst) is list or type(lst) is set):
-        return arg.join(lst)
-    return lst
 
 
 @register.filter

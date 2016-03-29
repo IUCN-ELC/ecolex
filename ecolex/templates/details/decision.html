@@ -37,7 +37,7 @@
 
       {% if document.subjects %}
         <dt>Subject{{ document.subjects|length|pluralize:",s" }}</dt>
-        <dd>{{ document.subjects | join_by:", " | safe }}</dd>
+        <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.keywords %}
@@ -92,7 +92,7 @@
 
       {% for entry in document.optional_fields %}
         <dt> {{ entry.label }} </dt>
-        <dd> {{ entry.value | date:"b j, Y" | capfirst | join_by:", " }}</dd>
+        <dd> {{ entry.value|date:"b j, Y"|capfirst|join:", " }}</dd>
       {% endfor %}
     </dl>
   </section>
