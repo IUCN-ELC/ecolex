@@ -376,18 +376,20 @@ class LiteratureImporter(object):
                     for k, v in DOCUMENT_TYPE_MAP[id[:3]].items():
                         data[k] = v
 
-                title = (data.get('litLongTitle_en') or
-                         data.get('litLongTitle_es') or
-                         data.get('litLongTitle_fr') or
-                         data.get('litLongTitle_other') or
-                         data.get('litPaperTitleOfText_en') or
-                         data.get('litPaperTitleOfText_es') or
-                         data.get('litPaperTitleOfText_fr') or
-                         data.get('litPaperTitleOfText_other'))
-                if not title:
-                    title = data.get('litId')
-                slug = title + ' ' + data.get('litId')
-                data['slug'] = slugify(slug)
+                    if id[:3] == 'MON':
+                        title = (data.get('litLongTitle_en') or
+                                 data.get('litLongTitle_es') or
+                                 data.get('litLongTitle_fr') or
+                                 data.get('litLongTitle_other'))
+                    else:
+                        title = (data.get('litPaperTitleOfText_en') or
+                                 data.get('litPaperTitleOfText_es') or
+                                 data.get('litPaperTitleOfText_fr') or
+                                 data.get('litPaperTitleOfText_other'))
+                    if not title:
+                        title = data.get('litId')
+                    slug = title + ' ' + data.get('litId')
+                    data['slug'] = slugify(slug)
 
                 literatures.append(data)
         return literatures
