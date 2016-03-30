@@ -3,16 +3,16 @@ from collections import OrderedDict
 from django.conf import settings
 from django.utils.translation import get_language
 
-from ecolex.lib import camel_case_to__
 from ecolex import definitions as defs
-from ecolex.solr_models import (
-    Treaty, Decision, Literature, CourtDecision, Legislation
-)
+from ecolex.forms import SearchForm
+from ecolex.lib import camel_case_to__
 from ecolex.schema import (
     CourtDecisionSchema, DecisionSchema, LegislationSchema, LiteratureSchema,
     TreatySchema,
 )
-from ecolex.forms import SearchForm
+from ecolex.solr_models import (
+    Treaty, Decision, Literature, CourtDecision, Legislation
+)
 
 
 HIGHLIGHT_FIELDS = []
@@ -247,8 +247,8 @@ def get_fq(filters):
         # TODO: is this a solr bug?
         #       might WhitespaceTokenizerFactory help?
 
-        return "{filter}:({value})".format(filter=filter,
-                                           value=escape_query(operator.join(values)))
+        return "{filter}:({value})".format(
+            filter=filter, value=escape_query(operator.join(values)))
 
     def type_filter(type, filters):
         if filters:
