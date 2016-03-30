@@ -80,6 +80,11 @@ class BaseSchema(Schema):
             return data
 
 
+class TranslationSchema(Schema):
+    language = fields.String(load_from='language')
+    value = fields.String(load_from='value')
+
+
 class TreatyPartySchema(Schema):
     country = fields.String(load_from='partyCountry', multilingual=True)
     acceptance_approval = fields.Date(load_from='partyDateOfAcceptanceApproval')
@@ -120,6 +125,7 @@ class TreatySchema(BaseSchema):
                                    solr_filter=True)
 
     parties = fields.Nested(TreatyPartySchema, many=True)
+    title_translations = fields.Nested(TranslationSchema, many=True)
 
     abstract = fields.List(fields.String(), load_from='trAbstract',
                            multilingual=True)
@@ -236,6 +242,15 @@ class TreatySchema(BaseSchema):
         data['parties'] = parties
         return data
 
+    @pre_load
+    def handle_translations(self, data):
+        # TODO Remove value index (v[0]) once Title is no longer multiValued
+        translations = [{'language': k.split('_')[-1], 'value': v[0]}
+                        for k, v in data.items()
+                        if k.startswith('trPaperTitleOfText')]
+        data['title_translations'] = translations
+        return data
+
 
 class DecisionSchema(BaseSchema):
     class Meta:
@@ -292,6 +307,8 @@ class LiteratureSchema(BaseSchema):
                                load_from='litTypeOfText',
                                multilingual=True,
                                solr_filter=True)
+
+    title_translations = fields.Nested(TranslationSchema, many=True)
 
     abstract = fields.String(load_from='litAbstract', multilingual=True)
     abstract_other = fields.String(load_from='litAbstract_other')
@@ -402,6 +419,22 @@ class LiteratureSchema(BaseSchema):
                                 missing=[])
     corp_author_m = fields.List(fields.String(), load_from='litCorpAuthorM',
                                 missing=[])
+
+    @pre_load
+    def handle_translations(self, data):
+        id = data['litId']
+        if id.startswith('MON'):
+            title_field = 'litLongTitle'
+        elif id.startswith('ANA'):
+            title_field = 'litPaperTitleOfText'
+        else:
+            return data
+
+        translations = [{'language': k.split('_')[-1], 'value': v}
+                        for k, v in data.items()
+                        if k.startswith(title_field)]
+        data['title_translations'] = translations
+        return data
 
 
 class CourtDecisionSchema(BaseSchema):

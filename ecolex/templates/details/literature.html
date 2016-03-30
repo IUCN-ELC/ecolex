@@ -1,5 +1,7 @@
 {% extends 'layout.html' %}
+
 {% load tags %}
+{% load i18n %}
 
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
@@ -53,7 +55,12 @@
         <dt>Title (translation)</dt>
         <dd>
           {% for title in document.title_translations %}
-            <p class="alttitle">{{ title.alttitle | safe}}<sup>{{ title.language }}</sup></p>
+            {% if title.language != LANGUAGE_CODE %}
+            <p class="alttitle">
+              {{ title.value|safe }}
+              <sup>{{ title.language|language_name_translated|capfirst  }}</sup>
+            </p>
+            {% endif %}
           {% endfor %}
         </dd>
       {% endif %}
