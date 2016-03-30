@@ -143,11 +143,13 @@ _AND_OP_FIELD_PATTERN = "%s_and_"
 
 
 SOLR_FIELDS = [
-    'id', 'type', 'source', 'trTitleOfText', 'trTypeOfText_en', 'trStatus',
+    'id', 'type', 'source', 'trTitleOfText', 'trTypeOfText_en',
+    'trTypeOfText_fr', 'trTypeOfText_es', 'trStatus',
     'trPlaceOfAdoption', 'trDateOfText', 'trDateOfEntry', 'trKeyword_en',
+    'trKeyword_fr', 'trKeyword_es',
     'trDateOfModification', 'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
     'trPaperTitleOfText_es', 'trPaperTitleOfText_other', 'trTitleOfTextShort',
-    'trElisId', 'decTreatyName_en',
+    'trElisId', 'decTreatyName_en', 'decTreatyName_fr', 'decTreatyName_es',
     'decTitleOfText', 'decStatus', 'decPublishDate', 'decUpdateDate',
     'decShortTitle_en', 'decShortTitle_fr', 'decShortTitle_es',
     'decShortTitle_ru', 'decShortTitle_ar', 'decShortTitle_zh',
@@ -166,12 +168,15 @@ SOLR_FIELDS = [
     'litAuthorA', 'litAuthorM', 'litCorpAuthorA', 'litCorpAuthorM',
     'litPublisher', 'litPublPlace', 'litDateOfText',
     'litVolumeNo', 'litCollation',
-    'litKeyword_en', 'litSeriesFlag',
-    'litCountry_en', 'litRegion', 'litSubject_en',
+    'litKeyword_en', 'litKeyword_fr', 'litKeyword_es', 'litSeriesFlag',
+    'litCountry_en', 'litCountry_fr', 'litCountry_es',
+    'litRegion_en', 'litRegion_fr', 'litRegion_es',
+    'litSubject_en', 'litSubject_fr', 'litSubject_es',
     'litLanguageOfDocument_en', 'litLanguageOfDocument_fr', 'litLanguageOfDocument_es',
     'cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr',
-    'cdTypeOfText', 'cdCountry_en', 'cdDateOfText',
-    'legTitle', 'legLongTitle', 'legCountry_en', 'legKeyword_en',
+    'cdTypeOfText', 'cdCountry_en', 'cdCountry_fr', 'cdCountry_es',
+    'cdDateOfText', 'legTitle', 'legLongTitle', 'legCountry_en', 'legCountry_fr',
+    'legCountry_es', 'legKeyword_en', 'legKeyword_fr', 'legKeyword_es',
     'legYear', 'legOriginalYear', 'legStatus', 'legTerritorialSubdivision', 'legId',
 ]
 
