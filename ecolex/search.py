@@ -1,6 +1,7 @@
 import pysolr
 from collections import OrderedDict
 from django.conf import settings
+from django.utils.translation import get_language
 
 from ecolex.lib import camel_case_to__
 from ecolex import definitions as defs
@@ -130,7 +131,7 @@ def parse_result(hit, responses):
     }
     doctype = hit['type']
     schema = TYPE_TO_SCHEMA[doctype]()
-    schema.context = {'language': 'en'}
+    schema.context = {'language': get_language()}
     result, errors = schema.load(hit)
     return result
 
