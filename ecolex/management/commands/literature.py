@@ -384,7 +384,9 @@ class LiteratureImporter(object):
                          data.get('litPaperTitleOfText_es') or
                          data.get('litPaperTitleOfText_fr') or
                          data.get('litPaperTitleOfText_other'))
-                slug = title + ' ' + data['litId']
+                if not title:
+                    title = data.get('litId')
+                slug = title + ' ' + data.get('litId')
                 data['slug'] = slugify(slug)
 
                 literatures.append(data)
