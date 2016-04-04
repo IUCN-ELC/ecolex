@@ -395,8 +395,13 @@ class TreatyImporter(object):
                 data = self._apply_custom_rules(data)
                 treaties[elis_id] = data
 
-                title = data['trPaperTitleOfText_en'][0]
-                slug = title + ' ' + data['trElisId']
+                title = (data.get('trPaperTitleOfText_en') or
+                         data.get('trPaperTitleOfText_fr') or
+                         data.get('trPaperTitleOfText_es') or
+                         data.get('trPaperTitleOfText_other') or
+                         data.get('trTitleOfText') or
+                         data.get('trTitleOfTextShort'))
+                slug = title[0] + ' ' + elis_id
                 data['slug'] = slugify(slug)
 
         return treaties
