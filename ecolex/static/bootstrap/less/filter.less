@@ -41,6 +41,20 @@
       // .hidden-xs();
       // .hidden-sm();
     }
+
+    .add-selection {
+      display:none;
+    }
+
+    &:hover {
+      .add-selection {
+        display: block;
+        position: absolute;
+        top: 0.8em;
+        right: 0.2em;
+        padding: 3px 3px;
+      }
+    }
   }
 }
 
@@ -78,10 +92,10 @@ label {
   }
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .slider-years {
@@ -155,7 +169,7 @@ fieldset {
       }
     }
   }
-  
+
   h5 {
     margin: 0;
     line-height: 2;
@@ -248,7 +262,7 @@ fieldset {
     padding-top: 0;
     font-size: inherit;
     line-height: inherit;
-    
+
     @media (max-width: @screen-sm-max) {
     }
 

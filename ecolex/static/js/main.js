@@ -473,6 +473,29 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         submit();
     });
 
+    // Type facet add multiple selections
+    $('.add-selection').click(function(e) {
+        if (e.stopPropagation){
+            e.stopPropagation();
+        }
+        else if(window.event){
+           window.event.cancelBubble=true;
+        }
+        var current = $('#id_type').val() || [];
+        var toggle_value = $(this).parent().data('value');
+        var index = current.indexOf(toggle_value);
+
+        if (index == -1) {
+            current.push(toggle_value);
+        }
+        else {
+            current.splice(index, 1);
+        }
+        $('#id_type').val(current);
+
+        submit();
+    });
+
     // Type facet controls
     $('.filter-type button').click(function(e) {
         var current = $('#id_type').val() || [];
