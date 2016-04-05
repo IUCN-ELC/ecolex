@@ -216,35 +216,22 @@ class DetailsView(SearchView):
 
 
 class DecisionDetails(DetailsView):
-
     template_name = 'details/decision.html'
 
 
 class TreatyDetails(DetailsView):
-
     template_name = 'details/treaty.html'
 
 
 class LiteratureDetails(DetailsView):
-
     template_name = 'details/literature.html'
 
 
 class CourtDecisionDetails(DetailsView):
-
     template_name = 'details/court_decision.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(CourtDecisionDetails, self).get_context_data(**kwargs)
-        references = context['document'].get_references()
-        referenced_by = context['document'].get_referenced_by()
-        context['references'] = references
-        context['referenced_by'] = referenced_by
-        return context
 
 
 class LegislationDetails(DetailsView):
-
     template_name = 'details/legislation.html'
 
 
