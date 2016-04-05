@@ -5,13 +5,12 @@ from django.http import (
     Http404, HttpResponseForbidden, HttpResponseServerError, JsonResponse,
 )
 from django.shortcuts import render
-from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
 
 from ecolex.legislation import harvest_file
-from ecolex.search import get_document, get_documents_by_field, SearchMixin
+from ecolex.search import get_document, SearchMixin
 from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS
 
 
@@ -132,26 +131,6 @@ class SearchResults(SearchView):
         return render(request, 'list_results.html', ctx)
 
 
-class DecMeetingView(SearchView):
-    template_name = 'decision_meeting_details.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super(DecMeetingView, self).get_context_data(**kwargs)
-        ctx['results'] = get_documents_by_field('decMeetingId',
-                                                [kwargs['id']],
-                                                1000000)  # get all results
-        return ctx
-
-
-class TreatyParticipantView(SearchView):
-    template_name = 'treaty_participant_details.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super(TreatyParticipantView, self).get_context_data(**kwargs)
-        ctx['results'] = get_documents_by_field('partyCountry_en',
-                                                [kwargs['id']],
-                                                1000000)  # get all results
-        return ctx
 
 
 class PageView(SearchView):

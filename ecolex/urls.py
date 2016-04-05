@@ -4,12 +4,11 @@ from django.conf.urls import include, url
 from solid_i18n.urls import solid_i18n_patterns as i18n_patterns
 
 from .views import (
-    SearchResults, PageView, ResultDetailsDecisions, Homepage,
-    ResultDetailsParticipants, debug, DecMeetingView,
-    TreatyParticipantView, DecisionDetails, TreatyDetails, LiteratureDetails,
-    CourtDecisionDetails, ResultDetailsLiteratures, FaoFeedView,
-    ResultDetailsCourtDecisions, LegislationDetails,
-    DesignPlayground,
+    CourtDecisionDetails, DecisionDetails, DesignPlayground, FaoFeedView,
+    Homepage, LegislationDetails, LiteratureDetails, PageView,
+    ResultDetailsCourtDecisions, ResultDetailsDecisions,
+    ResultDetailsLiteratures, ResultDetailsParticipants, SearchResults,
+    TreatyDetails, debug,
 )
 from .xviews import SearchResultsView
 from .api import urls as api_urls
@@ -27,10 +26,6 @@ urlpatterns += i18n_patterns(
     url(r'^xresult/$', SearchResultsView.as_view(),
         name="xresults"),
 
-    url(r'^meeting/(?P<id>[^/]+)/', DecMeetingView.as_view(),
-        name="meeting_details"),
-    url(r'^participant/(?P<id>[a-z\-]+)/', TreatyParticipantView.as_view(),
-        name="participant_details"),
     url(r'^details/(?P<id>[^/]+)/decisions/$',
         ResultDetailsDecisions.as_view(), name="resultDecisions"),
     url(r'^details/(?P<id>[^/]+)/literatures/$',
