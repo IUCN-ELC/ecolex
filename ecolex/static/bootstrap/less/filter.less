@@ -46,6 +46,10 @@
       display:none;
     }
 
+    .remove-selection {
+      display:none;
+    }
+
     &:hover {
       .add-selection {
         display: block;
@@ -53,6 +57,15 @@
         top: 0.8em;
         right: 0.2em;
         padding: 3px 3px;
+        background-color: @brand-green-darker;
+      }
+      .remove-selection {
+        display: block;
+        position: absolute;
+        top: 0.8em;
+        right: 0.2em;
+        padding: 3px 3px;
+        background-color: @brand-danger;
       }
     }
   }
