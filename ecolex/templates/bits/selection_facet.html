@@ -3,7 +3,7 @@
   <h6{% if op_field %} class="pull-left"{% endif %}>{{ title }}</h6>
 {% if op_field %}
   <span class="filter-global pull-right" data-formid="#id_{{ name }}_op">
-{% include 'bits/facet_operation.html' with field=op_field %}
+    {% include 'bits/facet_operation.html' with field=op_field target=field.name %}
   </span>
 {% endif %}
   <select id="facet-{{ field.name }}"

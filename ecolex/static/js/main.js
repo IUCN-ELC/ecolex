@@ -511,6 +511,12 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         submit();
     });
 
+    $('button.reset-multiple').click(function(e) {
+        e.preventDefault();
+        var target = $(this).data('target');
+        $(target).select2('val', '')
+    });
+
     // Slider
     $("#slider-years")
         .slider()
