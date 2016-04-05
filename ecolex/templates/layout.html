@@ -93,7 +93,9 @@
 
       <input id="search" type="search" autofocus {# autosave #} class="form-control" name="q" placeholder="Search in record and full text" value="{{ form.q.value|default:"" }}">
       {# TODO: form.q.errors maybe? #}
-
+      {% if form.q.value %}
+          <span id="query-remove" class="icon icon-close"></span>
+      {% endif %}
       <button class="btn btn-search" type="submit">Search</button>
     </div>
   </div>

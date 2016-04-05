@@ -496,6 +496,11 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         submit();
     });
 
+    $('#query-remove').click(function(e) {
+        $('#search').val('');
+        submit();
+    });
+
     // Type facet controls
     $('.filter-type button').click(function(e) {
         var current = $('#id_type').val() || [];

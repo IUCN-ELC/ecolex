@@ -5788,6 +5788,14 @@ fieldset[disabled] .slick-arrow.active {
   right: 5px;
   width: 110px;
 }
+.search-form .icon-close {
+  position: absolute;
+  top: 5px;
+  color: #666666;
+  font-size: 150%;
+  right: 115px;
+  cursor: pointer;
+}
 @media (min-width: 768px) {
   .search-form {
     max-width: 720px;
