@@ -42,6 +42,8 @@ class SearchView(TemplateView, SearchMixin):
             return zip(values, values)
 
         for k, v in FIELD_TO_FACET_MAPPING.items():
+            if k == 'xdate':
+                continue
             self.form.fields[k].choices = _extract(v)
 
 

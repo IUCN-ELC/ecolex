@@ -440,11 +440,11 @@ class SearchMixin(object):
     def _get_filters(self, data):
         filters = {
             'type': data['type'] or dict(defs.DOC_TYPE).keys(),
-            'docKeyword_en': data['keyword'],
-            'docSubject_en': data['subject'],
-            'docCountry_en': data['country'],
-            'docRegion_en': data['region'],
-            'docLanguage_en': data['language'],
+            'docKeyword_en': data['xkeywords'],
+            'docSubject_en': data['xsubjects'],
+            'docCountry_en': data['xcountry'],
+            'docRegion_en': data['xregion'],
+            'docLanguage_en': data['xlanguage'],
             'docDate': (data['yearmin'], data['yearmax']),
         }
         for doc_type in filters['type']:

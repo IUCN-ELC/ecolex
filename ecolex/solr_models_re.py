@@ -4,10 +4,9 @@ schema. They will eventually replace actual solr_models.
 """
 from collections import OrderedDict
 from datetime import date
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.functional import cached_property
-
-from ecolex.definitions import LANGUAGE_MAP
 
 
 DEFAULT_TITLE = 'Unknown Document'
@@ -184,7 +183,7 @@ class Decision(DocumentModel):
 
     @cached_property
     def language_names(self):
-        return [LANGUAGE_MAP.get(code, 'Undefined') for code in self.language]
+        return [settings.LANGUAGE_MAP.get(code, 'Undefined') for code in self.language]
 
 
 class Legislation(DocumentModel):

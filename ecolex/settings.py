@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from collections import OrderedDict
 from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -135,6 +136,15 @@ LANGUAGES = (
     ('fr', _('French')),
     ('es', _('Spanish')),
 )
+
+# TODO: ...
+LANGUAGE_MAP = OrderedDict([
+    ('en', 'English'),
+    ('fr', 'French'),
+    ('es', 'Spanish'),
+    ('ru', 'Russian'),
+    ('other', 'Other'),
+])
 
 TIME_ZONE = 'UTC'
 
