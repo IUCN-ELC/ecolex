@@ -4,15 +4,21 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin#, RetrieveModelMixin
 from ecolex import definitions
 from ecolex.search import SearchMixin
-from ecolex.lib import unaccent
+from ecolex.lib.utils import unaccent
 from . import serializers
 from . import pagination
 
 
+class ApiViewMixin(object):
+    def perform_authentication(self, request):
+        # skip authentication, we haven't any
+        pass
+
+
 # TODO: get_queryset is being called twice. wut?
 
-
-class SearchResultViewSet(ListModelMixin,
+class SearchResultViewSet(ApiViewMixin,
+                          ListModelMixin,
                           GenericViewSet,
                           SearchMixin):
     serializer_class = serializers.SearchResultSerializer
@@ -24,7 +30,8 @@ class SearchResultViewSet(ListModelMixin,
         return results
 
 
-class BaseFacetViewSet(ListModelMixin,
+class BaseFacetViewSet(ApiViewMixin,
+                       ListModelMixin,
                        GenericViewSet,
                        SearchMixin):
     serializer_class = serializers.SearchFacetSerializer

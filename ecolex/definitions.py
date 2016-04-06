@@ -1,4 +1,4 @@
-import collections
+from .schema import FIELD_MAP, FILTER_FIELDS, FETCH_FIELDS, BOOST_FIELDS
 
 
 DOC_TYPE = (
@@ -17,36 +17,37 @@ DOC_SOURCES = {
     'legislation': 'FAO',
 }
 
+
 TREATY_FILTERS = {
-    'trTypeOfText_en': 'tr_type',
-    'trFieldOfApplication_en': 'tr_field',
-    'trStatus': 'tr_status',
-    'trPlaceOfAdoption': 'tr_place_of_adoption',
-    'trDepository_en': 'tr_depository',
+    f.get_source_field('en'): k
+    for k, f in FILTER_FIELDS.items()
+    if k in FIELD_MAP['treaty']
 }
 
 DECISION_FILTERS = {
-    'decType': 'dec_type',
-    'decStatus': 'dec_status',
-    'decTreatyName_en': 'dec_treaty',
+    f.get_source_field('en'): k
+    for k, f in FILTER_FIELDS.items()
+    if k in FIELD_MAP['decision']
 }
 
 LITERATURE_FILTERS = {
-    'litTypeOfText_en': 'lit_type',
-    'litAuthor': 'lit_author',
-    'litSerialTitle': 'lit_serial',
-    'litPublisher': 'lit_publisher',
+    f.get_source_field('en'): k
+    for k, f in FILTER_FIELDS.items()
+    if k in FIELD_MAP['literature']
 }
 
 COURT_DECISION_FILTERS = {
-    'cdTerritorialSubdivision_en': 'cd_territorial_subdivision',
-    'cdTypeOfText': 'cd_type',
+    f.get_source_field('en'): k
+    for k, f in FILTER_FIELDS.items()
+    if k in FIELD_MAP['court_decision']
 }
 
 LEGISLATION_FILTERS = {
-    'legType_en': 'leg_type',
-    'legTerritorialSubdivision': 'leg_territorial',
+    f.get_source_field('en'): k
+    for k, f in FILTER_FIELDS.items()
+    if k in FIELD_MAP['legislation']
 }
+
 
 DOC_TYPE_FILTER_MAPPING = {
     'treaty': TREATY_FILTERS,
@@ -56,57 +57,35 @@ DOC_TYPE_FILTER_MAPPING = {
     'legislation': LEGISLATION_FILTERS,
 }
 
-FIELD_TO_FACET_MAPPING = {
-    'tr_type': 'trTypeOfText_en',
-    'tr_field': 'trFieldOfApplication_en',
-    'tr_status': 'trStatus',
-    'tr_place_of_adoption': 'trPlaceOfAdoption',
-    'tr_depository': 'trDepository_en',
 
-    'dec_type': 'decType',
-    'dec_status': 'decStatus',
-    'dec_treaty': 'decTreatyName_en',
-
-    'lit_author': 'litAuthor',
-    'lit_serial': 'litSerialTitle',
-    'lit_publisher': 'litPublisher',
-    'lit_type': 'litTypeOfText_en',
-
-    'cd_territorial_subdivision': 'cdTerritorialSubdivision_en',
-    'cd_type': 'cdTypeOfText',
-
-    'leg_type': 'legType_en',
-    'leg_territorial': 'legTerritorialSubdivision',
-
-    'subject': 'docSubject_en',
-    'keyword': 'docKeyword_en',
-    'country': 'docCountry_en',
-    'region': 'docRegion_en',
-    'language': 'docLanguage_en',
-}
+FIELD_TO_FACET_MAPPING = {k: f.get_source_field('en')
+                          for k, f in FILTER_FIELDS.items()}
+SOLR_FIELDS = [f.get_source_field('en') for f in FETCH_FIELDS.values()]
+RELEVANCY_FIELDS = {f.get_source_field('en'): f.solr_boost
+                    for f in BOOST_FIELDS.values()}
 
 
 _SELECT_FACETS = [
     # that is, facets thare are a <select> field...
-    'subject',
-    'keyword',
-    'country',
-    'region',
-    'language',
+    'xsubjects',
+    'xkeywords',
+    'xcountry',
+    'xregion',
+    'xlanguage',
 
     'tr_depository',
     'tr_place_of_adoption',
 
     'cd_territorial_subdivision',
 
-    'dec_treaty',
+    'dec_treaty_name',
 
-    'leg_territorial',
+    'leg_territorial_subdivision',
 
     'lit_author',
-    'lit_serial',
+    'lit_orig_serial_title',
     'lit_publisher',
-    'lit_type',
+    'lit_type_of_text',
 ]
 
 # TODO: get rid of this, and use above
@@ -116,16 +95,16 @@ SELECT_FACETS = {
 }
 
 _CHECKBOX_FACETS = [
-    'tr_type',
-    'tr_field',
+    'tr_type_of_document',
+    'tr_field_of_application',
     'tr_status',
 
-    'dec_type',
+    'dec_type_of_document',
     'dec_status',
 
-    'cd_type',
+    'cd_type_of_document',
 
-    'leg_type',
+    'leg_type_of_document',
 ]
 
 # all selection facets are OR-able, and so are all checkbox facets
@@ -135,150 +114,8 @@ _OR_OP_FACETS = _SELECT_FACETS + _CHECKBOX_FACETS
 # TODO: add all single-valued fields here / create clean list from multi-valued
 _AND_OP_FACETS = set(_SELECT_FACETS).difference([
     'lit_publisher',
-    'lit_serial',
-    'lit_type',
+    'lit_orig_serial_title',
+    'lit_type_of_text',
 ])
 
 _AND_OP_FIELD_PATTERN = "%s_and_"
-
-
-SOLR_FIELDS = [
-    'id', 'type', 'source', 'trTitleOfText', 'trTypeOfText_en',
-    'trTypeOfText_fr', 'trTypeOfText_es', 'trStatus',
-    'trPlaceOfAdoption', 'trDateOfText', 'trDateOfEntry', 'trKeyword_en',
-    'trKeyword_fr', 'trKeyword_es',
-    'trDateOfModification', 'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
-    'trPaperTitleOfText_es', 'trPaperTitleOfText_other', 'trTitleOfTextShort',
-    'trElisId', 'decTreatyName_en', 'decTreatyName_fr', 'decTreatyName_es',
-    'decTitleOfText', 'decStatus', 'decPublishDate', 'decUpdateDate',
-    'decShortTitle_en', 'decShortTitle_fr', 'decShortTitle_es',
-    'decShortTitle_ru', 'decShortTitle_ar', 'decShortTitle_zh',
-    'decNumber', 'docKeyword', 'cdKeywords',
-    'decKeyword_en', 'decKeyword_fr', 'decKeyword_es',
-    'litLongTitle_en', 'litLongTitle_fr', 'litLongTitle_es', 'litLongTitle_other',
-    'litPaperTitleOfText_en', 'litPaperTitleOfText_fr', 'litPaperTitleOfText_es', 'litPaperTitleOfText_other',
-    'litSerialTitle', 'litId',
-    'litTitleOfTextShort_en', 'litTitleOfTextShort_fr', 'litTitleOfTextShort_es',
-    'litTitleOfTextShort_other',
-    'litTitleOfTextTransl_en', 'litTitleOfTextTransl_fr', 'litTitleOfTextTransl_es',
-    'litDateOfEntry', 'litDateOfModification', 'litDateOfTextSer',
-    'litAbstract_en', 'litAbstract_fr', 'litAbstract_es', 'litAbstract_other',
-    'litTypeOfText_en', 'litTypeOfText_fr', 'litTypeOfText_es',
-    'litScope_en', 'litScope_fr', 'litScope_es',
-    'litAuthorA', 'litAuthorM', 'litCorpAuthorA', 'litCorpAuthorM',
-    'litPublisher', 'litPublPlace', 'litDateOfText',
-    'litVolumeNo', 'litCollation',
-    'litKeyword_en', 'litKeyword_fr', 'litKeyword_es', 'litSeriesFlag',
-    'litCountry_en', 'litCountry_fr', 'litCountry_es',
-    'litRegion_en', 'litRegion_fr', 'litRegion_es',
-    'litSubject_en', 'litSubject_fr', 'litSubject_es',
-    'litLanguageOfDocument_en', 'litLanguageOfDocument_fr', 'litLanguageOfDocument_es',
-    'cdTitleOfText_en', 'cdTitleOfText_es', 'cdTitleOfText_fr',
-    'cdTypeOfText', 'cdCountry_en', 'cdCountry_fr', 'cdCountry_es',
-    'cdDateOfText', 'legTitle', 'legLongTitle', 'legCountry_en', 'legCountry_fr',
-    'legCountry_es', 'legKeyword_en', 'legKeyword_fr', 'legKeyword_es',
-    'legYear', 'legOriginalYear', 'legStatus', 'legTerritorialSubdivision', 'legId',
-]
-
-LANGUAGE_MAP = collections.OrderedDict([
-    ('en', 'English'),
-    ('fr', 'French'),
-    ('es', 'Spanish'),
-    ('ru', 'Russian'),
-    ('other', 'Other'),
-])
-
-
-RELEVANCY_FIELDS = {
-    'trPaperTitleOfText_en': 110,
-    'trPaperTitleOfText_es': 110,
-    'trPaperTitleOfText_fr': 110,
-    'decLongTitle_en': 100,
-    'decLongTitle_es': 100,
-    'decLongTitle_fr': 100,
-    'decLongTitle_ru': 100,
-    'decLongTitle_ar': 100,
-    'decLongTitle_zh': 100,
-    'decShortTitle_en': 100,
-    'decShortTitle_es': 100,
-    'decShortTitle_fr': 100,
-    'decShortTitle_ru': 100,
-    'decShortTitle_ar': 100,
-    'decShortTitle_zh': 100,
-
-    'legTitle': 100,
-    'legLongTitle': 100,
-
-    'litLongTitle_en': 100,
-    'litLongTitle_fr': 100,
-    'litLongTitle_es': 100,
-    'litLongTitle_other': 100,
-
-    'litPaperTitleOfText_en': 100,
-    'litPaperTitleOfText_fr': 100,
-    'litPaperTitleOfText_es': 100,
-    'litPaperTitleOfText_other': 100,
-
-    'cdTitleOfText_en': 100,
-    'cdTitleOfText_es': 100,
-    'cdTitleOfText_fr': 100,
-
-    'litId': 100,
-    'legId': 100,
-    'trElisId': 100,
-
-    'trTitleAbbreviation': 75,
-    'decSummary': 50,
-    'trAbstract_en': 50,
-    'trAbstract_es': 50,
-    'trAbstract_fr': 50,
-    'cdAbstract_en': 50,
-    'cdAbstract_es': 50,
-    'cdAbstract_fr': 50,
-    'litAbstract_en': 50,
-    'litAbstract_fr': 50,
-    'litAbstract_es': 50,
-    'litAbstract_other': 50,
-    'legAbstract': 50,
-
-    'trKeyword_en': 30,
-    'trKeyword_fr': 30,
-    'trKeyword_es': 30,
-    'decKeyword_en': 30,
-    'decKeyword_fr': 30,
-    'decKeyword_es': 30,
-    'litKeyword_en': 30,
-    'litKeyword_fr': 30,
-    'litKeyword_es': 30,
-    'legKeyword_en': 30,
-    'cdKeywords': 30,
-
-    'trBasin_en': 25,
-    'trBasin_fr': 25,
-    'trBasin_es': 25,
-    'legBasin_en': 25,
-    'legBasin_fr': 25,
-    'legBasin_es': 25,
-    'litBasin_en': 25,
-    'litBasin_fr': 25,
-    'litBasin_es': 25,
-
-    'trRegion_en': 25,
-    'trRegion_fr': 25,
-    'trRegion_es': 25,
-    'cdRegion_en': 25,
-    'cdRegion_fr': 25,
-    'cdRegion_es': 25,
-    'litRegion_en': 25,
-    'litRegion_fr': 25,
-    'litRegion_es': 25,
-    'legGeoArea_en': 25,
-    'legGeoArea_fr': 25,
-    'legGeoArea_es': 25,
-
-    'decBody_en': 20,
-    'decBody_es': 20,
-    'decBody_fr': 20,
-    'text': 20,
-    'doc_content': 10,
-}

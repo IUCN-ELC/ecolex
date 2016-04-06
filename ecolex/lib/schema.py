@@ -5,8 +5,8 @@ from ecolex.lib.utils import MutableLookupDict
 
 
 # monkey patch default Field implementation, it's simpler
-if not getattr(fields.Field, '_patched', False):
-    def _new__init__(self, *args, **kwargs):
+class __Field(object):
+    def __init__(self, *args, **kwargs):
         self.multilingual = kwargs.pop('multilingual', False)
         self.fallback = kwargs.pop('fallback', True)
         self.load_from_attribute = kwargs.pop('load_from_attribute', None)
@@ -16,23 +16,59 @@ if not getattr(fields.Field, '_patched', False):
                 "`load_from` and `load_from_attribute` "
                 "are mutually exclusive.")
 
-        self._orig__init__(**kwargs)
+        self._orig___init__(*args, **kwargs)
 
-    # TODO: consider doing this with `Schema.on_bind_field` instead
-    def _new_add_to_schema(self, field_name, schema):
-        self._orig_add_to_schema(field_name, schema)
+    def _add_to_schema(self, field_name, schema):
+        self._orig__add_to_schema(field_name, schema)
 
         # now we have access to the parent schema
         if self.load_from_attribute:
             self.load_from = getattr(self.parent, self.load_from_attribute)
 
-    fields.Field._orig__init__ = fields.Field.__init__
-    fields.Field._orig_add_to_schema = fields.Field._add_to_schema
+    @property
+    def load_from(self):
+        return self._load_from or self.name
 
-    fields.Field.__init__ = _new__init__
-    fields.Field._add_to_schema = _new_add_to_schema
+    @load_from.setter
+    def load_from(self, value):
+        self._load_from = value
+
+    @property
+    def canonical_name(self):
+        abbr = self.parent.opts.abbr
+        prefix = '%s_' % abbr if abbr else ''
+        return '%s%s' % (prefix, self.name)
+
+if not getattr(fields.Field, '_patched', False):
+    for name, attr in __Field.__dict__.items():
+        if name.startswith('__') and name != '__init__':
+            continue
+
+        try:
+            orig_attr = getattr(fields.Field, name)
+        except AttributeError:
+            pass
+        else:
+            setattr(fields.Field, '_orig_%s' % name, orig_attr)
+
+        setattr(fields.Field, name, attr)
 
     fields.Field._patched = True
+
+
+class _CustomOptions(SchemaOpts):
+    """
+    Custom Meta options class.
+    """
+    def __init__(self, meta):
+        super().__init__(meta)
+        self.model = getattr(meta, 'model', None)
+        self.abbr = getattr(meta, 'abbr', None)
+        self.type = getattr(meta, 'type', None)
+        self.solr_filters = getattr(meta, 'solr_filters', [])
+        self.solr_fetch = getattr(meta, 'solr_fetch', [])
+        self.solr_boost = getattr(meta, 'solr_boost', {})
+        self.solr_highlight = getattr(meta, 'solr_highlight', [])
 
 
 class Schema(_Schema):
@@ -68,6 +104,7 @@ class Schema(_Schema):
 
     """
 
+    OPTIONS_CLASS = _CustomOptions
     _FALLBACK_LANGUAGE = 'en'
 
     @pre_load
@@ -105,10 +142,10 @@ class Schema(_Schema):
     def _multilingual_fields(self):
         """
         Returns this schema's multilingual fields as a dict of
-        {<field name / load_from >: <fallback (bool)>}
+        {<field load_from>: <fallback (bool)>}
         """
         return {
-            field.load_from or name: field.fallback
+            field.load_from: field.fallback
             for name, field in self.fields.items()
             if field.multilingual
         }

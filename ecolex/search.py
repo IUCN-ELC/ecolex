@@ -3,9 +3,9 @@ from collections import OrderedDict
 from django.conf import settings
 from django.utils.translation import get_language
 
+from ecolex.lib.utils import camel_case_to__
 from ecolex import definitions as defs
 from ecolex.forms import SearchForm
-from ecolex.lib import camel_case_to__
 from ecolex.schema import (
     CourtDecisionSchema, DecisionSchema, LegislationSchema, LiteratureSchema,
     TreatySchema,
@@ -441,11 +441,11 @@ class SearchMixin(object):
     def _get_filters(self, data):
         filters = {
             'type': data['type'] or dict(defs.DOC_TYPE).keys(),
-            'docKeyword_en': data['keyword'],
-            'docSubject_en': data['subject'],
-            'docCountry_en': data['country'],
-            'docRegion_en': data['region'],
-            'docLanguage_en': data['language'],
+            'docKeyword_en': data['xkeywords'],
+            'docSubject_en': data['xsubjects'],
+            'docCountry_en': data['xcountry'],
+            'docRegion_en': data['xregion'],
+            'docLanguage_en': data['xlanguage'],
             'docDate': (data['yearmin'], data['yearmax']),
         }
         for doc_type in filters['type']:

@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from collections import OrderedDict
 from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -33,25 +34,26 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
+    #'django.contrib.admin',
+    #'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
+    #'django.contrib.sessions',
+    #'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
     'ecolex',
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'django.contrib.sessions.middleware.SessionMiddleware',
+    #'django.middleware.locale.LocaleMiddleware',
+    'solid_i18n.middleware.SolidLocaleMiddleware',
+    #'django.middleware.common.CommonMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.contrib.auth.middleware.AuthenticationMiddleware',
+    #'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    #'django.contrib.messages.middleware.MessageMiddleware',
+    #'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'ecolex.middleware.CacheControlMiddleware',
 )
 
@@ -62,13 +64,13 @@ TEMPLATES = [{
     'OPTIONS': {
         'debug': DEBUG,
         'context_processors': {
-            "django.contrib.auth.context_processors.auth",
-            "django.core.context_processors.debug",
-            "django.core.context_processors.i18n",
-            "django.core.context_processors.media",
-            "django.core.context_processors.static",
-            "django.core.context_processors.tz",
-            "django.contrib.messages.context_processors.messages",
+            #"django.contrib.auth.context_processors.auth",
+            "django.template.context_processors.debug",
+            "django.template.context_processors.i18n",
+            "django.template.context_processors.media",
+            "django.template.context_processors.static",
+            "django.template.context_processors.tz",
+            #"django.contrib.messages.context_processors.messages",
             "ecolex.global_config",
         },
     },
@@ -135,6 +137,15 @@ LANGUAGES = (
     ('es', _('Spanish')),
 )
 
+# TODO: ...
+LANGUAGE_MAP = OrderedDict([
+    ('en', 'English'),
+    ('fr', 'French'),
+    ('es', 'Spanish'),
+    ('ru', 'Russian'),
+    ('other', 'Other'),
+])
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -143,6 +154,8 @@ USE_L10N = False
 
 USE_TZ = True
 
+# always redirect /en/ to root
+SOLID_I18N_DEFAULT_PREFIX_REDIRECT = True
 
 # drf
 
