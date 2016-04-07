@@ -386,6 +386,8 @@
     <field name="cdTitleOfTextShort" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdTreatyReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdUrlOther" type="string" indexed="true" stored="false" multiValued="false"/>
+    <field name="cdFaoDefaultUrl" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdFaoEnglishUrl" type="string" indexed="false" stored="true" multiValued="false"/>
 
     <!-- Legislation fields -->
     <field name="legId" type="string" indexed="true" stored="true"/>

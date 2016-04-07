@@ -7,6 +7,10 @@
 {% endblock %}
 
 {% block content %}
+{% if document.type_of_document == 'Bilateral' %}
+  {% faolex_url_id document %}
+{% endif %}
+
 <article class="record-details">
 
   <header>

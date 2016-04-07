@@ -7,13 +7,20 @@
   ga('create', '{{ settings.GA_CODE }}', 'auto');
   ga('send', 'pageview');
 
-  // informea.org tracker.
-  ga('create','UA-21090649-1', 'auto', {'name': 'informea'});
+  // informea.org tracker. (leo is sent to informea)
+  ga('create', 'UA-75793139-3', 'auto', {'name': 'informea'});
+  // faolex.org tracker.
+  ga('create', 'UA-75793139-2', 'auto', {'name': 'faolex'});
   if (document.informea_url) {
     ga('informea.set', 'referrer', "http://" + document.domain);
-    ga('informea.set', 'hostname', 'informea.org');
+    ga('informea.set', 'hostname', document.hostname);
     ga('informea.set', 'location', document.informea_url);
     ga('informea.send', 'pageview');
+  } else if (document.faolex_url) {
+    ga('faolex.set', 'referrer', "http://" + document.domain);
+    ga('faolex.set', 'hostname', document.hostname);
+    ga('faolex.set', 'location', document.faolex_url);
+    ga('faolex.send', 'pageview')
   }
 
   function set_custom_dimension(elem) {

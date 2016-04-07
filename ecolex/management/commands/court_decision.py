@@ -115,6 +115,7 @@ FULL_TEXT_FIELDS = ['field_url']
 SUBDIVISION_FIELDS = ['field_territorial_subdivision']
 REFERENCE_FIELDS = {'field_treaty': 'original_id',
                     'field_court_decision': 'uuid'}
+SOURCE_URL_FIELD = 'url'
 LANGUAGES = ['en', 'es', 'fr']
 
 
@@ -236,6 +237,12 @@ class CourtDecision(object):
                 files = [get_file_from_url(url) for url in urls if url]
                 solr_decision['text'] += '\n'.join(self.solr.extract(f)
                                                    for f in files if f)
+
+        # Get faolex URL
+        json_value = self.data.get(SOURCE_URL_FIELD, None)
+        if json_value:
+            solr_decision['cdFaoDefaultUrl'] = json_value.get('default', None)
+            solr_decision['cdFaoEnglishUrl'] = json_value.get('en', None)
 
         title = (solr_decision.get('cdTitleOfText_en') or
                  solr_decision.get('cdTitleOfText_fr') or

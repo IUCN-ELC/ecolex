@@ -69,15 +69,33 @@ def url_normalize(value):
 
 @register.simple_tag()
 def informea_url_id(document):
+    document_type = document.solr.get('type', None)
+    if document_type == 'court_decision':
+        url = document.solr.get('cdFaoEnglishUrl', None)
+        return """<script>
+            document.informea_url = "{url}";
+            document.hostname = "leo.informea.org";
+        </script>""".format(url=url)
+
     # We use this to generate urls to informea.org decisions
     treaty_id = document.solr.get('decTreatyId', None)
     treaty_name = document.solr.get('decTreaty', None)
+
     if not treaty_id or not treaty_name:
         return ''
 
     return """<script>
         document.informea_url = "http://www.informea.org/treaties/{url_id}/decision/{dec_id}";
+        document.hostname = "informea.org";
     </script>""".format(url_id=treaty_name, dec_id=document.solr['decId'])
+
+
+@register.simple_tag()
+def faolex_url_id(document):
+    return """<script>
+        document.faolex_url = "http://faolex.fao.org/cgi-bin/faolex.exe?database=faolex&search_type=query&table=result&query=ID:{leg_id}&format_name=ERALL&lang=eng";
+        document.hostname = "faolex.fao.org";
+        </script>""".format(leg_id=document.solr.get('legId', 'treaty'))
 
 
 @register.simple_tag()
