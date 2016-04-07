@@ -474,23 +474,19 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     });
 
     // Type facet add multiple selections
-    $('.add-selection').click(function(e) {
-        if (e.stopPropagation){
-            e.stopPropagation();
-        }
-        else if(window.event){
-           window.event.cancelBubble=true;
-        }
+    $('.add-selection, .remove-selection').click(function (event) {
+        event.stopPropagation();
+
         var current = $('#id_type').val() || [];
-        var toggle_value = $(this).parent().data('value');
+        var toggle_value = $(this).prev().data('value');
         var index = current.indexOf(toggle_value);
 
         if (index == -1) {
             current.push(toggle_value);
-        }
-        else {
+        } else {
             current.splice(index, 1);
         }
+
         $('#id_type').val(current);
 
         submit();
