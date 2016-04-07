@@ -8,7 +8,10 @@
     box-shadow: none;
     font-size: 14px;
 
-    &:active,
+    &:active {
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    }
+
     &.active {
       background-color: #ffeeab;
       border-color: @brand-warning;
@@ -83,7 +86,6 @@
         background-color: #eee;
         border-color: #c9c9c9;
 
-        &:active,
         &.active {
           background-color: #ffeeab;
           border-color: @brand-warning;

@@ -5976,7 +5976,9 @@ main {
   box-shadow: none;
   font-size: 14px;
 }
-.filter-type .btn:active,
+.filter-type .btn:active {
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
 .filter-type .btn.active {
   background-color: #ffeeab;
   border-color: #f0ad4e;
@@ -6043,8 +6045,6 @@ main {
   background-color: #eee;
   border-color: #c9c9c9;
 }
-.filter-type .btn-group:hover .btn:active,
-.filter-type .btn-group:focus .btn:active,
 .filter-type .btn-group:hover .btn.active,
 .filter-type .btn-group:focus .btn.active {
   background-color: #ffeeab;
