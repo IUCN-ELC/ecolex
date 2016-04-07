@@ -1,109 +1,118 @@
 {# The type filter has different behaviour between the home page and the results page. #}
-<div class="btn-group btn-group-sm filter-type {{ page_type|default:"results-page" }}">
+<div class="btn-group btn-group-justified filter-type {{ page_type|default:"results-page" }}">
 <div style="display: none">{{ form.type }}{# TODO: de-jsify (and de-uglify) #}</div>
   <!-- Treaty filter -->
-  <button type="button"
-          class="btn btn-default {% if 'treaty' in form.type.data %}active{% endif %}"
-          data-filter="#treaty-fieldset"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          data-value="treaty"
-          title="{% if 'treaty' in form.type.data %}Show all{% else %}Show only Treaties{% endif %}">
-    <span class="icon icon-treaty"></span>
-    {% if facets.type.treaty > 0 %}
-      <span class="badge">{{ facets.type.treaty }}</span>
-    {% endif %}
-    {% if 'treaty' in form.type.data %}
-      <span class="glyphicon glyphicon-remove remove-selection" title="Remove from selection"></span>
-    {% else %}
-      <span class="glyphicon glyphicon-plus add-selection" title="Add to selection"></span>
-    {% endif %}
-    <span class="btn-label">Treaties</span>
-  </button>
+  <div class="btn-group">
+    <button type="button"
+            class="btn btn-default {% if 'treaty' in form.type.data %}active{% endif %}"
+            data-filter="#treaty-fieldset"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            data-container="body"
+            data-value="treaty"
+            title="{% if 'treaty' in form.type.data %}Show all{% else %}Show only Treaties{% endif %}">
+      <span class="icon icon-treaty"></span>
+      <span class="btn-label">Treaties</span>
+      {% if facets.type.treaty > 0 %}
+        <span class="badge">{{ facets.type.treaty }}</span>
+      {% endif %}
+      {% if 'treaty' in form.type.data %}
+        <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
+      {% else %}
+        <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
+      {% endif %}
+    </button>
+  </div>
 
   <!-- COP decision filter -->
-  <button type="button"
-          class="btn btn-default {% if 'decision' in form.type.data %}active{% endif %}"
-          data-filter="#copdecision-fieldset"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          data-value="decision"
-          title="{% if 'decision' in form.type.data %}Show all{% else %}Show only COP Decisions{% endif %}">
-    <span class="icon icon-cop-decision"></span>
-    {% if facets.type.decision > 0 %}
-      <span class="badge">{{ facets.type.decision }}</span>
-    {% endif %}
-
-    {% if 'decision' in form.type.data %}
-      <span class="glyphicon glyphicon-remove remove-selection" title="Remove from selection"></span>
-    {% else %}
-      <span class="glyphicon glyphicon-plus add-selection" title="Add to selection"></span>
-    {% endif %}
-    <span class="btn-label">COP Decisions</span>
-  </button>
+  <div class="btn-group">
+    <button type="button"
+            class="btn btn-default {% if 'decision' in form.type.data %}active{% endif %}"
+            data-filter="#copdecision-fieldset"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            data-container="body"
+            data-value="decision"
+            title="{% if 'decision' in form.type.data %}Show all{% else %}Show only COP Decisions{% endif %}">
+      <span class="icon icon-cop-decision"></span>
+      <span class="btn-label">COP Decisions</span>
+      {% if facets.type.decision > 0 %}
+        <span class="badge">{{ facets.type.decision }}</span>
+      {% endif %}
+      {% if 'decision' in form.type.data %}
+        <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
+      {% else %}
+        <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
+      {% endif %}
+    </button>
+  </div>
 
   <!-- Legislation filter -->
-  <button type="button"
-          class="btn btn-default {% if 'legislation' in form.type.data %}active{% endif %}"
-          data-filter="#legislation-fieldset"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          data-value="legislation"
-          title="{% if 'legislation' in form.type.data %}Show all{% else %}Show only Legislation{% endif %}">
-    <span class="icon icon-legislation"></span>
-    {% if facets.type.legislation > 0 %}
-      <span class="badge">{{ facets.type.legislation }}</span>
-    {% endif %}
-    {% if 'legislation' in form.type.data %}
-      <span class="glyphicon glyphicon-remove remove-selection" title="Remove from selection"></span>
-    {% else %}
-      <span class="glyphicon glyphicon-plus add-selection" title="Add to selection"></span>
-    {% endif %}
-    <span class="btn-label">Legislation</span>
-  </button>
+  <div class="btn-group">
+    <button type="button"
+            class="btn btn-default {% if 'legislation' in form.type.data %}active{% endif %}"
+            data-filter="#legislation-fieldset"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            data-container="body"
+            data-value="legislation"
+            title="{% if 'legislation' in form.type.data %}Show all{% else %}Show only Legislation{% endif %}">
+      <span class="icon icon-legislation"></span>
+      <span class="btn-label">Legislation</span>
+      {% if facets.type.legislation > 0 %}
+        <span class="badge">{{ facets.type.legislation }}</span>
+      {% endif %}
+      {% if 'legislation' in form.type.data %}
+        <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
+      {% else %}
+        <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
+      {% endif %}
+    </button>
+  </div>
 
   <!-- Court decision filter -->
-  <button type="button"
-          class="btn btn-default {% if 'court_decision' in form.type.data %}active{% endif %}"
-          data-filter="#courtdecision-fieldset"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          data-value="court_decision"
-          title="{% if 'court_decision' in form.type.data %}Show all{% else %}Show only Court Decision{% endif %}">
-    <span class="icon icon-court-decision"></span>
-    {% if facets.type.court_decision > 0 %}
-      <span class="badge">{{ facets.type.court_decision }}</span>
-    {% endif %}
-    {% if 'court_decision' in form.type.data %}
-      <span class="glyphicon glyphicon-remove remove-selection" title="Remove from selection"></span>
-    {% else %}
-      <span class="glyphicon glyphicon-plus add-selection" title="Add to selection"></span>
-    {% endif %}
-    <span class="btn-label">Court Decisions</span>
-  </button>
+  <div class="btn-group">
+    <button type="button"
+            class="btn btn-default {% if 'court_decision' in form.type.data %}active{% endif %}"
+            data-filter="#courtdecision-fieldset"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            data-container="body"
+            data-value="court_decision"
+            title="{% if 'court_decision' in form.type.data %}Show all{% else %}Show only Court Decision{% endif %}">
+      <span class="icon icon-court-decision"></span>
+      <span class="btn-label">Court Decisions</span>
+      {% if facets.type.court_decision > 0 %}
+        <span class="badge">{{ facets.type.court_decision }}</span>
+      {% endif %}
+      {% if 'court_decision' in form.type.data %}
+        <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
+      {% else %}
+        <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
+      {% endif %}
+    </button>
+  </div>
 
   <!-- Literature filter -->
-  <button type="button"
-          class="btn btn-default {% if 'literature' in form.type.data %}active{% endif %}"
-          data-filter="#literature-fieldset"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          data-value="literature"
-          title="{% if 'literature' in form.type.data %}Show all{% else %}Show only Literature{% endif %}">
-    <span class="icon icon-literature"></span>
-    {% if facets.type.literature > 0 %}
-      <span class="badge">{{ facets.type.literature }}</span>
-    {% endif %}
-    {% if 'literature' in form.type.data %}
-      <span class="glyphicon glyphicon-remove remove-selection" title="Remove from selection"></span>
-    {% else %}
-      <span class="glyphicon glyphicon-plus add-selection" title="Add to selection"></span>
-    {% endif %}
-    <span class="btn-label">Literature</span>
-  </button>
+  <div class="btn-group">
+    <button type="button"
+            class="btn btn-default {% if 'literature' in form.type.data %}active{% endif %}"
+            data-filter="#literature-fieldset"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            data-container="body"
+            data-value="literature"
+            title="{% if 'literature' in form.type.data %}Show all{% else %}Show only Literature{% endif %}">
+      <span class="icon icon-literature"></span>
+      <span class="btn-label">Literature</span>
+      {% if facets.type.literature > 0 %}
+        <span class="badge">{{ facets.type.literature }}</span>
+      {% endif %}
+      {% if 'literature' in form.type.data %}
+        <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
+      {% else %}
+        <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
+      {% endif %}
+    </button>
+  </div>
 </div>
