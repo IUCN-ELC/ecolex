@@ -1,6 +1,6 @@
 {# The type filter has different behaviour between the home page and the results page. #}
+<div class="hidden">{{ form.type }}{# TODO: de-jsify (and de-uglify) #}</div>
 <div class="btn-group btn-group-justified filter-type {{ page_type|default:"results-page" }}">
-<div style="display: none">{{ form.type }}{# TODO: de-jsify (and de-uglify) #}</div>
   <!-- Treaty filter -->
   <div class="btn-group">
     <button type="button"
@@ -16,12 +16,12 @@
       {% if facets.type.treaty > 0 %}
         <span class="badge">{{ facets.type.treaty }}</span>
       {% endif %}
-      {% if 'treaty' in form.type.data %}
-        <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
-      {% else %}
-        <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
-      {% endif %}
     </button>
+    {% if 'treaty' in form.type.data %}
+      <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
+    {% else %}
+      <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
+    {% endif %}
   </div>
 
   <!-- COP decision filter -->
@@ -39,12 +39,12 @@
       {% if facets.type.decision > 0 %}
         <span class="badge">{{ facets.type.decision }}</span>
       {% endif %}
-      {% if 'decision' in form.type.data %}
-        <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
-      {% else %}
-        <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
-      {% endif %}
     </button>
+    {% if 'decision' in form.type.data %}
+      <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
+    {% else %}
+      <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
+    {% endif %}
   </div>
 
   <!-- Legislation filter -->
@@ -62,12 +62,12 @@
       {% if facets.type.legislation > 0 %}
         <span class="badge">{{ facets.type.legislation }}</span>
       {% endif %}
-      {% if 'legislation' in form.type.data %}
-        <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
-      {% else %}
-        <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
-      {% endif %}
     </button>
+    {% if 'legislation' in form.type.data %}
+      <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
+    {% else %}
+      <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
+    {% endif %}
   </div>
 
   <!-- Court decision filter -->
@@ -85,12 +85,12 @@
       {% if facets.type.court_decision > 0 %}
         <span class="badge">{{ facets.type.court_decision }}</span>
       {% endif %}
-      {% if 'court_decision' in form.type.data %}
-        <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
-      {% else %}
-        <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
-      {% endif %}
     </button>
+    {% if 'court_decision' in form.type.data %}
+      <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
+    {% else %}
+      <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
+    {% endif %}
   </div>
 
   <!-- Literature filter -->
@@ -108,11 +108,11 @@
       {% if facets.type.literature > 0 %}
         <span class="badge">{{ facets.type.literature }}</span>
       {% endif %}
-      {% if 'literature' in form.type.data %}
-        <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
-      {% else %}
-        <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
-      {% endif %}
     </button>
+    {% if 'literature' in form.type.data %}
+      <span class="remove-selection" title="Remove from selection"><span class="glyphicon glyphicon-remove"></span></span>
+    {% else %}
+      <span class="add-selection" title="Add to selection"><span class="glyphicon glyphicon-plus"></span></span>
+    {% endif %}
   </div>
 </div>
