@@ -69,6 +69,7 @@ class _CustomOptions(SchemaOpts):
         self.solr_fetch = getattr(meta, 'solr_fetch', [])
         self.solr_boost = getattr(meta, 'solr_boost', {})
         self.solr_highlight = getattr(meta, 'solr_highlight', [])
+        self.form_single_choice = getattr(meta, 'form_single_choice', [])
 
 
 class Schema(_Schema):

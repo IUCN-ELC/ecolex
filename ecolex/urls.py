@@ -11,6 +11,7 @@ from .views import (
     ResultDetailsCourtDecisions, LegislationDetails,
     DesignPlayground,
 )
+from .xviews import SearchResultsView
 from .api import urls as api_urls
 
 urlpatterns = [
@@ -22,6 +23,10 @@ urlpatterns += i18n_patterns(
     url(r'^$', Homepage.as_view(), name="homepage"),
     url(r'^result/$', SearchResults.as_view(),
         name="results"),
+
+    url(r'^xresult/$', SearchResultsView.as_view(),
+        name="xresults"),
+
     url(r'^meeting/(?P<id>[^/]+)/', DecMeetingView.as_view(),
         name="meeting_details"),
     url(r'^participant/(?P<id>[a-z\-]+)/', TreatyParticipantView.as_view(),

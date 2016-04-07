@@ -9,9 +9,9 @@ Usage:
 
 """
 
-from collections import OrderedDict, defaultdict, namedtuple
+from collections import OrderedDict, namedtuple
 from marshmallow import post_load, pre_load
-
+from ecolex.lib.utils import OrderedDefaultDict
 from ecolex.lib.schema import Schema, fields
 from ecolex.solr_models_re import (
     CourtDecision, Decision, Legislation, Literature, Treaty, TreatyParty,
@@ -625,6 +625,7 @@ class __FieldProperties(object):
     __slots__ = (
         'type', 'name', 'load_from', 'multilingual', 'multivalue', 'datatype',
         'solr_filter', 'solr_fetch', 'solr_boost', 'solr_highlight',
+        'form_single_choice'
     )
 
     def __init__(self, **kwargs):
@@ -642,12 +643,12 @@ class __FieldProperties(object):
         for prop in 'multilingual', 'multivalue':
             if getattr(self, prop):
                 props.append(prop)
-        return "< {}.{} ({}) : {}) >".format(
+        return "< {}.{} ({}) : {} >".format(
             self.type, self.name, self.load_from, ', '.join(props))
 
 
 def __get_field_properties(base_schema, *schemas):
-    props = defaultdict(OrderedDict)
+    props = OrderedDefaultDict(OrderedDict)
 
     for schema in (base_schema, ) + schemas:
         if schema is base_schema:
@@ -678,8 +679,9 @@ def __get_field_properties(base_schema, *schemas):
             fp.datatype = inst.__class__.__name__.lower()
 
             fp.solr_filter = name in schema.opts.solr_filters
-            for prop in ('solr_fetch', 'solr_highlight'):
-                setattr(fp, prop, name in getattr(schema.opts, prop))
+            for prop in ('solr_fetch', 'solr_highlight', 'form_single_choice'):
+                setattr(fp, prop,
+                        name in getattr(schema.opts, prop))
             try:
                 fp.solr_boost = schema.opts.solr_boost[name]
             except KeyError:

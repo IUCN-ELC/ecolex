@@ -1,5 +1,6 @@
 import re
 import unicodedata
+from collections import OrderedDict, defaultdict
 
 
 def unaccent(txt):
@@ -78,3 +79,16 @@ class MutableLookupDict(dict):
             return self[k]
         except KeyError:
             return d
+
+
+class OrderedDefaultDict(OrderedDict, defaultdict):
+    def __init__(self, *args, **kwargs):
+        default_factory = None
+        try:
+            default_factory = kwargs.pop('default_factory')
+        except KeyError:
+            if args and callable(args[0]):
+                default_factory = args[0]
+                args = args[1:]
+        super().__init__(*args, **kwargs)
+        self.default_factory = default_factory
