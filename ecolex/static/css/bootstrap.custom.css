@@ -6891,4 +6891,10 @@ fieldset .filter-header {
     border-bottom: 1px solid #cccccc;
   }
 }
+#filter-global .selection-facet {
+  width: 100%;
+}
+.select2-container--default .select2-selection--multiple {
+  background-color: transparent !important;
+}
 /*# sourceMappingURL=bootstrap.custom.css.map */
