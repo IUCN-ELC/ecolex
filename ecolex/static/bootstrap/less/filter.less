@@ -1,23 +1,29 @@
 .filter-type {
-  margin-bottom: @line-height-computed;
-  display: block;
   .clearfix();
 
+  box-shadow: 0 1px 4px -2px @darker;
+  display: block;
+  margin-bottom: @line-height-computed;
+
   .btn {
-    position: relative;
-    width: 20%;
+    box-shadow: none;
+    font-size: 14px;
     padding-left: @padding-xs-horizontal;
     padding-right: @padding-xs-horizontal;
+    position: relative;
+    width: 20%;
+
     &.active {
-      z-index: 5;
+      background-color: #ffeeab;
       border-color: @brand-warning; // #FDBD59;
-      background-color: #FFEEAB;
+      z-index: 5;
     }
+
     &[disabled] {
-      opacity: 1!important;
-      color: #333!important;
-      border-color: #DDD!important;
-      background-color: #fff!important;
+      background-color: #fff !important;
+      border-color: #ddd !important;
+      color: #333 !important;
+      opacity: 1 !important;
     }
 
     .icon {
@@ -28,44 +34,49 @@
 
     .badge {
       position: absolute;
-      top: -.75em;
       right: 1em;
+      top: -.75em;
     }
 
     .btn-label {
       display: block;
       letter-spacing: @letter-spacing-narrow;
+
       @media (max-width: 600px) {
         display: none;
       }
-      // .hidden-xs();
-      // .hidden-sm();
     }
+  }
 
-    .add-selection {
-      display:none;
-    }
+  .add-selection,
+  .remove-selection {
+    border-radius: @add-selection-border-radius;
+    color: @badge-color;
+    cursor: pointer;
+    display: none;
+    font-size: 11px;
+    padding: 1px 3px 1px 4px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 6;
+  }
 
-    .remove-selection {
-      display:none;
-    }
+  .add-selection {
+    background-color: @brand-green-darker;
+  }
+
+  .remove-selection {
+    background-color: @brand-danger;
+  }
+
+  .btn-group {
+    position: relative;
 
     &:hover {
-      .add-selection {
-        display: block;
-        position: absolute;
-        top: 0.8em;
-        right: 0.2em;
-        padding: 3px 3px;
-        background-color: @brand-green-darker;
-      }
+      .add-selection,
       .remove-selection {
         display: block;
-        position: absolute;
-        top: 0.8em;
-        right: 0.2em;
-        padding: 3px 3px;
-        background-color: @brand-danger;
       }
     }
   }
