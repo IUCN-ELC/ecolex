@@ -5971,29 +5971,9 @@ main {
   display: block;
   margin-bottom: 22px;
 }
-.filter-type:before,
-.filter-type:after {
-  content: " ";
-  display: table;
-}
-.filter-type:after {
-  clear: both;
-}
-.filter-type:before,
-.filter-type:after {
-  content: " ";
-  display: table;
-}
-.filter-type:after {
-  clear: both;
-}
 .filter-type .btn {
   box-shadow: none;
   font-size: 14px;
-  padding-left: 5px;
-  padding-right: 5px;
-  position: relative;
-  width: 20%;
 }
 .filter-type .btn.active {
   background-color: #ffeeab;
@@ -6036,7 +6016,7 @@ main {
   position: absolute;
   right: 10px;
   top: 10px;
-  z-index: 6;
+  z-index: 3;
 }
 .filter-type .add-selection {
   background-color: #1cb54b;
