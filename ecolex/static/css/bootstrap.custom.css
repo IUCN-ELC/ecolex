@@ -5978,7 +5978,6 @@ main {
 .filter-type .btn.active {
   background-color: #ffeeab;
   border-color: #f0ad4e;
-  z-index: 5;
 }
 .filter-type .btn[disabled] {
   background-color: #fff !important;
@@ -6011,12 +6010,21 @@ main {
   color: #ffffff;
   cursor: pointer;
   display: none;
-  font-size: 11px;
-  padding: 1px 3px 1px 4px;
+  font-size: 10px;
+  padding: .1em .3em .2em .4em;
   position: absolute;
   right: 10px;
   top: 10px;
+  transform: translateZ(0);
+  transition-duration: .35s;
   z-index: 3;
+}
+.filter-type .add-selection:hover,
+.filter-type .remove-selection:hover,
+.filter-type .add-selection:focus,
+.filter-type .remove-selection:focus {
+  transform: scale(1.4);
+  transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
 }
 .filter-type .add-selection {
   background-color: #1cb54b;
@@ -6028,7 +6036,9 @@ main {
   position: relative;
 }
 .filter-type .btn-group:hover .add-selection,
-.filter-type .btn-group:hover .remove-selection {
+.filter-type .btn-group:focus .add-selection,
+.filter-type .btn-group:hover .remove-selection,
+.filter-type .btn-group:focus .remove-selection {
   display: block;
 }
 aside {
