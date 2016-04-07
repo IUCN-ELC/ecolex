@@ -5967,6 +5967,7 @@ main {
   }
 }
 .filter-type {
+  border-radius: 3px;
   box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.4);
   display: block;
   margin-bottom: 22px;
@@ -5975,6 +5976,7 @@ main {
   box-shadow: none;
   font-size: 14px;
 }
+.filter-type .btn:active,
 .filter-type .btn.active {
   background-color: #ffeeab;
   border-color: #f0ad4e;
@@ -6035,11 +6037,31 @@ main {
 .filter-type .btn-group {
   position: relative;
 }
+.filter-type .btn-group:hover .btn,
+.filter-type .btn-group:focus .btn {
+  background-color: #eee;
+  border-color: #c9c9c9;
+}
+.filter-type .btn-group:hover .btn:active,
+.filter-type .btn-group:focus .btn:active,
+.filter-type .btn-group:hover .btn.active,
+.filter-type .btn-group:focus .btn.active {
+  background-color: #ffeeab;
+  border-color: #f0ad4e;
+}
 .filter-type .btn-group:hover .add-selection,
 .filter-type .btn-group:focus .add-selection,
 .filter-type .btn-group:hover .remove-selection,
 .filter-type .btn-group:focus .remove-selection {
   display: block;
+}
+.filter-type .btn-group:first-child .btn {
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.filter-type .btn-group:last-child .btn {
+  border-bottom-right-radius: 3px !important;
+  border-top-right-radius: 3px !important;
 }
 aside {
   font-size: 14px;

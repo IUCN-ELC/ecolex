@@ -1,4 +1,5 @@
 .filter-type {
+  border-radius: @border-radius-base;
   box-shadow: 0 1px 4px -2px @darker;
   display: block;
   margin-bottom: @line-height-computed;
@@ -7,6 +8,7 @@
     box-shadow: none;
     font-size: 14px;
 
+    &:active,
     &.active {
       background-color: #ffeeab;
       border-color: @brand-warning;
@@ -76,9 +78,34 @@
 
     &:hover,
     &:focus {
+      .btn {
+        background-color: #eee;
+        border-color: #c9c9c9;
+
+        &:active,
+        &.active {
+          background-color: #ffeeab;
+          border-color: @brand-warning;
+        }
+      }
+
       .add-selection,
       .remove-selection {
         display: block;
+      }
+    }
+
+    &:first-child {
+      .btn {
+        border-bottom-left-radius: @border-radius-base;
+        border-top-left-radius: @border-radius-base;
+      }
+    }
+
+    &:last-child {
+      .btn {
+        border-bottom-right-radius: @border-radius-base !important;
+        border-top-right-radius: @border-radius-base !important;
       }
     }
   }
