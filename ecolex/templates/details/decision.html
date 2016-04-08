@@ -74,7 +74,7 @@
         <dt>Files</dt>
           {% for url, name in document.get_files %}
             <dd>
-              <a target="_blank" href="{{ url }}">{{ name }}</a>
+              <a target="_blank" href="{{ url }}" class="file-link">{{ name }}</a>
             </dd>
           {% endfor %}
       {% endif %}

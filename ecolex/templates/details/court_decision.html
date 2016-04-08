@@ -59,7 +59,7 @@
 
       {% if document.solr.cdLinkToFullText_en %}
         <dt>Link to full text</dt>
-        <dd><a target="_blank" href="{{ document.solr.cdLinkToFullText_en | url_normalize }}">{{ document.language }}</a></dd>
+        <dd><a target="_blank" class="file-link" href="{{ document.solr.cdLinkToFullText_en | url_normalize }}">{{ document.language }}</a></dd>
       {% endif %}
       {% if document.solr.cdFiles %}
         <dt>Files</dt>

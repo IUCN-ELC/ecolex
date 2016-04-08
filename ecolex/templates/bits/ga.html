@@ -7,93 +7,44 @@
 
   var ecolex_code = 'UA-75793139-1',
       informea_code = 'UA-75793139-3',
-      faolex_code = 'UA-75793139-2';
+      faolex_code = 'UA-75793139-2',
+      faolex_code_2 = 'UA-75793139-4';
 
   ga('create', ecolex_code, 'auto');
   ga('send', 'pageview');
 
   ga('create', informea_code, 'auto', {'name': 'informea'});
   ga('create', faolex_code, 'auto', {'name': 'faolex'});
+  ga('create', faolex_code_2, 'auto', {'name': 'allSites'});
 
   if (document.informea_url) {
-    ga('informea.set', 'referrer', "http://" + document.domain);
-    ga('informea.set', 'hostname', document.hostname);
-    ga('informea.set', 'location', document.informea_url);
-    ga('informea.send', 'pageview');
+    send_hit('informea', document.informea_url)
   } else if (document.faolex_url) {
-    ga('faolex.set', 'referrer', "http://" + document.domain);
-    ga('faolex.set', 'hostname', document.hostname);
-    ga('faolex.set', 'location', document.faolex_url);
-    ga('faolex.send', 'pageview')
+    send_hit('faolex', document.faolex_url);
+    send_hit('allSites', document.faolex_url);
   }
 
-  function set_custom_dimension(elem) {
-    if (elem.hostname === "faolex.fao.org") {
-      ga('set', 'dimension1', true);
-      // Faolex visitor session
-      ga('set', 'dimension3', true);
-      // Faolex hit
-      ga('set', 'dimension5', true);
-      ga('set', 'metric1', 1);
-    } else if (elem.hostname === "www.ecolex.org") {
-      // Ecolex visitor (internal)
-      ga('set', 'dimension2', true);
-      // Ecolex visitor session
-      ga('set', 'dimension4', true);
-      // Ecolex document hit
-      ga('set', 'dimension6', true);
-      ga('set', 'metric2', 1);
-      eventAction = "InternalResultLink";
-    }
+  function send_hit(tracker_name, url) {
+    ga(tracker_name + '.set', 'referrer', "http://" + document.domain);
+    ga(tracker_name + '.set', 'hostname', document.hostname);
+    ga(tracker_name + '.set', 'location', url);
+    ga(tracker_name + '.send', 'pageview');
   }
-
-  // FIXME(catalinb): duplicate code
-  function decision_link() {
-    var url = this.href;
-    var eventAction = "Outbound Result Link";
-
-    if (this.hostname === "faolex.fao.org") {
-      eventAction = "Faolex Result Link";
-    } else if (this.hostname === "www.ecolex.org") {
-      eventAction = "Internal Result Link";
-    }
-    set_custom_dimension(this);
-
-    ga('send', 'event', 'Decision Outbound Link', eventAction, url);
-  }
-
-  function treaty_link() {
-    var url = this.href;
-    var eventAction = "Outbound Result Link";
-
-    if (this.hostname === "faolex.fao.org") {
-      eventAction = "Faolex Result Link";
-    } else if (this.hostname === "www.ecolex.org") {
-      eventAction = "Internal Result Link";
-    }
-    set_custom_dimension(this);
-
-    ga('send', 'event', 'Treaty Outbound Link', eventAction, url);
-  }
-
 
   function legislation_link() {
     var url = this.href;
-    var eventAction = "OutboundResultLink";
-
-    if (this.hostname === "faolex.fao.org") {
-      eventAction = "FaolexResultLink";
-    } else if (this.hostname === "www.ecolex.org") {
-      eventAction = "InternalResultLink";
-    }
+    var eventAction = "OutboundPdfLink";
+    //Hit ecolex with outboundlink
     ga('send', 'event', 'OutboundLink', eventAction, url);
 
+    if (this.hostname == "faolex.fao.org") {
+      // Hit faolex
+      send_hit('faolex', document.faolex_url);
+    }
   }
 
   window.addEventListener('load', function () {
     // setup handlers
-    // $(".decision-link").click(decision_link);
-    // $(".treaty-link").click(treaty_link);
     $(".file-link").click(legislation_link);
   });
 </script>
