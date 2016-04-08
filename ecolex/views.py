@@ -321,7 +321,8 @@ class ResultDetailsDecisions(SearchView):
 
     def get_context_data(self, **kwargs):
         context = super(ResultDetailsDecisions, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'])
+        slug = kwargs['slug']
+        results = get_document_by_slug(slug, query=self.query, hl_details=True)
         if not results.count():
             raise Http404()
 
@@ -348,7 +349,8 @@ class ResultDetailsLiteratures(SearchView):
 
     def get_context_data(self, **kwargs):
         context = super(ResultDetailsLiteratures, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'])
+        slug = kwargs['slug']
+        results = get_document_by_slug(slug, query=self.query, hl_details=True)
         if not results.count():
             raise Http404
 
@@ -364,7 +366,8 @@ class ResultDetailsCourtDecisions(SearchView):
 
     def get_context_data(self, **kwargs):
         context = super(ResultDetailsCourtDecisions, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'])
+        slug = kwargs['slug']
+        results = get_document_by_slug(slug, query=self.query, hl_details=True)
         if not results.count():
             raise Http404
 
@@ -379,7 +382,8 @@ class ResultDetailsParticipants(SearchView):
 
     def get_context_data(self, **kwargs):
         context = super(ResultDetailsParticipants, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'], self.query)
+        slug = kwargs['slug']
+        results = get_document_by_slug(slug, query=self.query, hl_details=True)
         if not results:
             raise Http404()
 
@@ -460,7 +464,7 @@ class LegislationRedirectView(RedirectView):
             return None
         leg = [x for x in results][0]
         doc_details = doc_type + '_details'
-        return reverse(doc_details, kwargs={'id': leg.id()})
+        return reverse(doc_details, kwargs={'slug': leg.solr.get('slug')})
 
     def get(self, request, *args, **kwargs):
         url = self.get_redirect_url(*args, **kwargs)
