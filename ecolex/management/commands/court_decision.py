@@ -241,8 +241,8 @@ class CourtDecision(object):
         # Get faolex URL
         json_value = self.data.get(SOURCE_URL_FIELD, None)
         if json_value:
-            solr_decision['cdFaoDefaultUrl'] = json_value.get('default', None)
-            solr_decision['cdFaoEnglishUrl'] = json_value.get('en', None)
+            solr_decision['cdLeoDefaultUrl'] = json_value.get('default', None)
+            solr_decision['cdLeoEnglishUrl'] = json_value.get('en', None)
 
         title = (solr_decision.get('cdTitleOfText_en') or
                  solr_decision.get('cdTitleOfText_fr') or
