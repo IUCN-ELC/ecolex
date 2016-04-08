@@ -1,12 +1,19 @@
+import logging
 import scorched
 from collections import Iterable
-from functools import reduce
+from functools import partial, reduce
 from operator import and_, or_
 from django.conf import settings
 from django.utils.functional import cached_property
 
 from .xforms import SearchForm
-from .schema import FILTER_FIELDS, FETCH_FIELDS, BOOST_FIELDS
+from .schema import (
+    SCHEMA_MAP, FIELD_MAP,
+    FILTER_FIELDS, FETCH_FIELDS, BOOST_FIELDS,
+)
+
+
+logger = logging.getLogger(__name__)
 
 
 class SearchViewMixin(object):
@@ -33,13 +40,32 @@ class Search(object):
             pass
 
         try:
-            qkwargs['type'] = data.pop('type')
+            types = data.pop('type')
         except KeyError:
-            pass
+            types = []
+
+        is_used_field = lambda x: True
+
+        if types:
+            qkwargs['type'] = self.to_query(types)
+
+            _used_fields = ()
+            for typ in types:
+                try:
+                    _used_fields += tuple(FIELD_MAP[typ])
+                except KeyError:
+                    # hmm. handle this in form maybe?
+                    pass
+            if _used_fields:
+                _used_fields = tuple(FIELD_MAP['_']) + _used_fields
+                is_used_field = lambda x: x in _used_fields
 
         filters = {}
         facets = []
         for name, value in data.items():
+            if not is_used_field(name):
+                continue
+
             field = FILTER_FIELDS[name].get_source_field(language)
             # also tag the field in local params
             filters['{!tag=%s}%s' % (name, field)] = self.to_query(value)
@@ -47,12 +73,15 @@ class Search(object):
             facets.append('{!ex=%s}%s' % (name, field))
 
         fetch_fields = [
-            f.get_source_field(language) for f in FETCH_FIELDS.values()
+            f.get_source_field(language)
+            for k, f in FETCH_FIELDS.items()
+            if is_used_field(k)
         ]
 
         boost_fields = {
             f.get_source_field(language): f.solr_boost
-            for f in BOOST_FIELDS.values()
+            for k, f in BOOST_FIELDS.items()
+            if is_used_field(k)
         }
 
         search = (
@@ -79,7 +108,8 @@ class Search(object):
 
         search.options = type(search.options)(wrapped_options, search)
 
-        return search.execute()
+        _constructor = partial(self.to_object, language=language)
+        return search.execute(constructor=_constructor)
 
     def to_query(self, data):
         # silly hack to be able to do "field:(some\\ thing OR an\\ other)"
@@ -93,6 +123,15 @@ class Search(object):
         return scorched.strings.DismaxString(
             "(%s)" % reduce(or_, (Q(item) for item in data))
         )
+
+    @staticmethod
+    def to_object(language, **data):
+        typ = data['type']
+        schema = SCHEMA_MAP[typ]
+        result, errors = schema.load(data, language=language)
+        if errors:
+            logger.error("Error parse error: %s", errors)
+        return result
 
 
 # create a default search instance

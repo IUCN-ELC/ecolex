@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView
 from django.http import QueryDict
+from django.utils.translation import get_language
 from .xsearch import searcher, SearchViewMixin
 
 
@@ -28,7 +29,9 @@ class SearchResultsView(SearchViewMixin, TemplateView):
         data = {k: v for k, v in form.data.lists()
                 if k in form.changed_data}
 
-        response = searcher.search(data, 'en')
+        response = searcher.search(data, language=get_language())
+
+        print(response.result.numFound)
 
         #results.set_page(page)
 

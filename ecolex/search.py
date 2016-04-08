@@ -131,8 +131,7 @@ def parse_result(hit, responses):
     }
     doctype = hit['type']
     schema = TYPE_TO_SCHEMA[doctype]()
-    schema.context = {'language': get_language()}
-    result, errors = schema.load(hit)
+    result, errors = schema.load(hit, language=get_language())
     return result
 
 

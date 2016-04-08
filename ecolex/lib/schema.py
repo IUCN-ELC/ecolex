@@ -92,13 +92,13 @@ class Schema(_Schema):
     ...                           fallback=False,
     ...                           load_from='another_attr')
     ...
-    >>> schema = MySchema(context={'language': 'abcd'})
+    >>> schema = MySchema()
     >>> result = schema.load({
     ...    'attr1_in': 'one',
     ...    'other_attr_abcd': 'two',
     ...    'attr3_in': 'three',
     ...    'another_attr': 'nope',
-    ... })
+    ... }, language='abcd')
     >>> result.data
     {'attr1': 'one', 'attr2': 'two', 'attr3': 'three'}
     >>>
@@ -150,3 +150,12 @@ class Schema(_Schema):
             for name, field in self.fields.items()
             if field.multilingual
         }
+
+    # because our system hard-depends on a language being set
+    def load(self, data, language, *args, **kwargs):
+        self.context['language'] = language
+        return super().load(data, *args, **kwargs)
+
+    def loads(self, json_data, language, *args, **kwargs):
+        self.context['language'] = language
+        return super().loads(json_data, *args, **kwargs)

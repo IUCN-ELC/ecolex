@@ -647,7 +647,7 @@ class __FieldProperties(object):
             self.type, self.name, self.load_from, ', '.join(props))
 
 
-def __get_field_properties(base_schema, *schemas):
+def __get_field_properties(base_schema, schemas):
     props = OrderedDefaultDict(OrderedDict)
 
     for schema in (base_schema, ) + schemas:
@@ -692,13 +692,21 @@ def __get_field_properties(base_schema, *schemas):
     return props
 
 
-__FPROPS = __get_field_properties(
-    BaseSchema,
+__OBJECT_SCHEMAS = (
     TreatySchema,
     DecisionSchema,
     LegislationSchema,
     CourtDecisionSchema,
-    LiteratureSchema
+    LiteratureSchema,
+)
+
+SCHEMA_MAP = {
+    schema.opts.type: schema()
+    for schema in __OBJECT_SCHEMAS
+}
+
+__FPROPS = __get_field_properties(
+    BaseSchema, __OBJECT_SCHEMAS
 )
 
 FIELD_MAP = {
@@ -719,8 +727,3 @@ BOOST_FIELDS = OrderedDict(
     (k, p) for _fps in __FPROPS.values() for k, p in _fps.items()
     if p.solr_boost
 )
-
-import pprint
-#pprint.pprint(FILTER_FIELDS, indent=2, width=200)
-#pprint.pprint(FETCH_FIELDS, indent=2, width=200)
-#pprint.pprint(dict(BOOST_FIELDS), indent=2, width=200)
