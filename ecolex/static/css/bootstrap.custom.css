@@ -2830,6 +2830,17 @@ tbody.collapse.in {
   -webkit-transition-timing-function: ease;
   transition-timing-function: ease;
 }
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid \9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
 .dropup,
 .dropdown {
   position: relative;
@@ -4250,7 +4261,8 @@ a.badge:focus {
   }
   .jumbotron .logo-ecolex img {
     margin: 0;
-    height: 105px;
+    margin-top: 15px;
+    height: 90px;
   }
   .jumbotron .slogan {
     padding-left: 0;
@@ -6783,6 +6795,9 @@ fieldset .filter-header {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.homepage-tour-themes-wrapper {
+  text-align: center;
 }
 @media (min-width: 992px) {
   .homepage-tour-themes-wrapper {

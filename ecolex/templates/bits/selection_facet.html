@@ -1,6 +1,6 @@
 {% load json %}
 <div class="clearfix filter-header">
-  <h6{% if op_field %} class="pull-left"{% endif %}>{{ title }}</h6>
+  <h6{% if op_field %} class="pull-left"{% endif %}>{{ title }}</h6><span class="caret"></span>
   {% if op_field %}
     <span class="filter-global pull-right" data-formid="#id_{{ name }}_op">
       {% include 'bits/facet_operation.html' with field=op_field target=field.name %}

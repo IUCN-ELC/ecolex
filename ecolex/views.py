@@ -177,7 +177,7 @@ class PageView(SearchView):
     def get(self, request, **kwargs):
         slug = kwargs.pop('slug', '')
         PAGES = ('about', 'privacy', 'agreement', 'acknowledgements',
-                 'other_resources')
+                 'knowledge_tools')
         if slug not in PAGES:
             raise Http404()
         ctx = self.get_context_data()
