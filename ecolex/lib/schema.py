@@ -151,11 +151,12 @@ class Schema(_Schema):
             if field.multilingual
         }
 
-    # because our system hard-depends on a language being set
-    def load(self, data, language, *args, **kwargs):
-        self.context['language'] = language
+    def load(self, data, language=None, *args, **kwargs):
+        if language:
+            self.context['language'] = language
         return super().load(data, *args, **kwargs)
 
-    def loads(self, json_data, language, *args, **kwargs):
-        self.context['language'] = language
+    def loads(self, json_data, language=None, *args, **kwargs):
+        if language:
+            self.context['language'] = language
         return super().loads(json_data, *args, **kwargs)
