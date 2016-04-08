@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from django.http import QueryDict
 from django.utils.translation import get_language
-from .xsearch import searcher, SearchViewMixin
+from .xsearch import Search, SearchViewMixin
 
 
 class HomepageView(TemplateView):
@@ -27,9 +27,10 @@ class SearchResultsView(SearchViewMixin, TemplateView):
         form.is_valid()
 
         data = {k: v for k, v in form.data.lists()
-                if k in form.changed_data}
+                }#if k in form.changed_data}
 
-        response = searcher.search(data, language=get_language())
+        search = Search(data, language=get_language())
+        response = search.execute()
 
         print(response.result.numFound)
 
