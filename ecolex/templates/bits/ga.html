@@ -1,16 +1,20 @@
+{% if settings.GA_ENABLED %}
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', '{{ settings.GA_CODE }}', 'auto');
+  var ecolex_code = 'UA-75793139-1',
+      informea_code = 'UA-75793139-3',
+      faolex_code = 'UA-75793139-2';
+
+  ga('create', ecolex_code, 'auto');
   ga('send', 'pageview');
 
-  // informea.org tracker. (leo is sent to informea)
-  ga('create', 'UA-75793139-3', 'auto', {'name': 'informea'});
-  // faolex.org tracker.
-  ga('create', 'UA-75793139-2', 'auto', {'name': 'faolex'});
+  ga('create', informea_code, 'auto', {'name': 'informea'});
+  ga('create', faolex_code, 'auto', {'name': 'faolex'});
+
   if (document.informea_url) {
     ga('informea.set', 'referrer', "http://" + document.domain);
     ga('informea.set', 'hostname', document.hostname);
@@ -72,9 +76,25 @@
     ga('send', 'event', 'Treaty Outbound Link', eventAction, url);
   }
 
+
+  function legislation_link() {
+    var url = this.href;
+    var eventAction = "OutboundResultLink";
+
+    if (this.hostname === "faolex.fao.org") {
+      eventAction = "FaolexResultLink";
+    } else if (this.hostname === "www.ecolex.org") {
+      eventAction = "InternalResultLink";
+    }
+    ga('send', 'event', 'OutboundLink', eventAction, url);
+
+  }
+
   window.addEventListener('load', function () {
     // setup handlers
-    $(".decision-link").click(decision_link);
-    $(".treaty-link").click(treaty_link);
+    // $(".decision-link").click(decision_link);
+    // $(".treaty-link").click(treaty_link);
+    $(".file-link").click(legislation_link);
   });
 </script>
+{% endif %}

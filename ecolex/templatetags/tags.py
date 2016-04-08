@@ -71,7 +71,7 @@ def url_normalize(value):
 def informea_url_id(document):
     document_type = document.solr.get('type', None)
     if document_type == 'court_decision':
-        url = document.solr.get('cdFaoEnglishUrl', None)
+        url = document.solr.get('cdLeoEnglishUrl', None)
         return """<script>
             document.informea_url = "{url}";
             document.hostname = "leo.informea.org";

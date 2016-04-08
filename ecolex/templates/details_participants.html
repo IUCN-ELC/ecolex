@@ -7,7 +7,7 @@
 
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
-  {% breadcrumb "Treaty" 'treaty_details' query id=treaty.id %}
+  {% breadcrumb "Treaty" 'treaty_details' query slug=treaty.solr.slug %}
   {% breadcrumb "Country/Participant" %}
 {% endblock %}
 

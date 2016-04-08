@@ -172,28 +172,6 @@ class SelectFacetsAjax(SearchView):
         return JsonResponse(data)
 
 
-class DecMeetingView(SearchView):
-    template_name = 'decision_meeting_details.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super(DecMeetingView, self).get_context_data(**kwargs)
-        ctx['results'] = get_documents_by_field('decMeetingId',
-                                                [kwargs['id']],
-                                                1000000)  # get all results
-        return ctx
-
-
-class TreatyParticipantView(SearchView):
-    template_name = 'treaty_participant_details.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super(TreatyParticipantView, self).get_context_data(**kwargs)
-        ctx['results'] = get_documents_by_field('partyCountry_en',
-                                                [kwargs['id']],
-                                                1000000)  # get all results
-        return ctx
-
-
 class PageView(SearchView):
 
     def get(self, request, **kwargs):

@@ -129,7 +129,7 @@
 <!-- end scripts -->
 <script src="{{ STATIC_URL }}{% version 'js/bootstrap-tour.min.js' %}"></script>
 <script src="{{ STATIC_URL }}{% version 'js/tour.js' %}"></script>
-{% if settings.GA_CODE %}{% include 'bits/ga.html' %}{% endif %}
+{% include 'bits/ga.html' %}
 {% block endscripts %}
 {% endblock %}
 </body>

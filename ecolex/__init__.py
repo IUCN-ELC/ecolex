@@ -2,7 +2,7 @@
 def global_config(request):
     from django.conf import settings
     expose_settings = [
-        'GA_CODE',
+        'GA_ENABLED',
         'FACETS_PAGE_SIZE',
         'DEBUG',
     ]

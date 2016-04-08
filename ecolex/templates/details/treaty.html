@@ -133,7 +133,7 @@
   <section id="participants">
     <div class="clearfix">
       <a id="participants-extras"
-        href="{% url 'resultParticipants' document.id %}?{{ query }}"
+        href="{% url 'resultParticipants' document.solr.slug %}?{{ query }}"
          class="pull-right btn btn-link">See Expanded View</a>
       <h2 class="section-title">Country/Participant</h2>
     </div>
@@ -191,7 +191,7 @@
         <dt>COP decisions</dt>
         <dd>
           <strong>{{ decisions|length }} decisions</strong> related to this treaty.
-          <a href="{% url 'resultDecisions' document.id %}?{{ query }}">View decisions</a>
+          <a href="{% url 'resultDecisions' document.solr.slug %}?{{ query }}">View decisions</a>
         </dd>
       {% endif %}
     </dl>
@@ -201,7 +201,7 @@
         <dt>Literature</dt>
         <dd>
           <strong>{{ literatures|length }} record(s)</strong> related to this treaty.
-          <a href="{% url 'resultLiteratures' document.id %}?{{ query }}">View literature</a>
+          <a href="{% url 'resultLiteratures' document.solr.slug %}?{{ query }}">View literature</a>
         </dd>
       {% endif %}
     </dl>
@@ -211,7 +211,7 @@
         <dt>Court Decision</dt>
         <dd>
           <strong>{{ court_decisions|length }} court decisions</strong> related to this treaty.
-          <a href="{% url 'resultCourtDecisions' document.id %}?{{ query }}">View court decisions</a>
+          <a href="{% url 'resultCourtDecisions' document.solr.slug %}?{{ query }}">View court decisions</a>
         </dd>
       {% endif %}
     </dl>
