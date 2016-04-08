@@ -83,7 +83,6 @@ FIELD_MAP = {
     'comment': 'trComment',
     'titleoftextshort': 'trTitleOfTextShort',
     'titleabbreviation': 'trTitleAbbreviation',
-    'placeofadoption': 'trPlaceOfAdoption',
 
     'basin': 'trBasin_en',
     'basin_fr_fr': 'trBasin_fr',
@@ -175,6 +174,19 @@ DATE_FIELDS = [
 URL_FIELDS = [
     'linktofulltext', 'linktofulltextsp', 'linktofulltextfr',
     'linktofulltextother'
+]
+
+FALSE_LIST_FIELDS = [
+    'trTypeOfText_en',
+    'trTypeOfText_es',
+    'trTypeOfText_fr',
+    'trAvailableIn',
+    'trPlaceOfAdoption',
+    'trTitleOfTextShort',
+    'trPaperTitleOfText_en',
+    'trPaperTitleOfText_es',
+    'trPaperTitleOfText_fr',
+    'trPaperTitleOfText_other',
 ]
 
 
@@ -319,6 +331,13 @@ class TreatyImporter(object):
                                     data['trLanguageOfDocument_fr'].append(self.languages[lang]['fr'])
                                 else:
                                     logger.error('Language not found %s' % (lang.lower()))
+                        elif v in FALSE_LIST_FIELDS:
+                            data[v] = field_values[0]
+                            if len(field_values) > 1:
+                                logger.error('Field {} has a value with more '
+                                             'than 1 elements: {}. Should '
+                                             'convert its type back to list.'
+                                             .format(v, field_values))
 
                 if ('trRegion_en' in data and 'trRegion_es' in data and
                         'trRegion_fr' in data):
@@ -399,9 +418,9 @@ class TreatyImporter(object):
                          data.get('trPaperTitleOfText_fr') or
                          data.get('trPaperTitleOfText_es') or
                          data.get('trPaperTitleOfText_other') or
-                         data.get('trTitleOfText') or
                          data.get('trTitleOfTextShort'))
-                slug = title[0] + ' ' + elis_id
+                title_list = [title] if title else data.get('trTitleOfText')
+                slug = title_list[0] + ' ' + elis_id
                 data['slug'] = slugify(slug)
 
         return treaties
@@ -412,12 +431,9 @@ class TreatyImporter(object):
             if value == rule['condition_value']:
                 data[rule['action_field']] = rule['action_value']
 
-        available_in = data.get('trAvailableIn', [])
-        new_available_in = []
-        for publication in available_in:
-            if publication.startswith('B7'):
-                new_available_in.append(publication.replace('B7', B7))
-        data['trAvailableIn'] = new_available_in
+        available_in = data.get('trAvailableIn', '')
+        if available_in.startswith('B7'):
+            data['trAvailableIn'] = available_in.replace('B7', B7)
 
         # fix server2.php/server2neu.php in full text links
         field_names = ['trLinkToFullText_en', 'trLinkToFullText_es',
@@ -550,7 +566,7 @@ class TreatyImporter(object):
             print(index)
             docs = self.solr.solr.search('type:treaty', rows=rows, start=index)
             for treaty in docs:
-                if 'Bilateral' in treaty.get('trTypeOfText_en', []):
+                if treaty.get('trTypeOfText_en', '') == 'Bilateral':
                     treaty['trStatus'] = 'In force'
                 else:
                     treaty_id = treaty.get('trElisId')

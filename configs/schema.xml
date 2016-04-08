@@ -65,11 +65,11 @@
 
     <field name="trTitleOfText" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trTitleAbbreviation" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trTitleOfTextShort" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trPaperTitleOfText_en" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trPaperTitleOfText_es" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trPaperTitleOfText_fr" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trPaperTitleOfText_other" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trTitleOfTextShort" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trPaperTitleOfText_en" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trPaperTitleOfText_es" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trPaperTitleOfText_fr" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trPaperTitleOfText_other" type="text" indexed="true" stored="true" multiValued="false"/>
 
     <field name="trIntroText" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trAbstract_en" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -78,15 +78,15 @@
     <field name="trComment" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trText" type="text" indexed="true" stored="false"/>
 
-    <field name="trTypeOfText_en" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trTypeOfText_es" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trTypeOfText_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trTypeOfText_en" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trTypeOfText_es" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trTypeOfText_fr" type="text" indexed="true" stored="true" multiValued="false"/>
 
     <field name="trFieldOfApplication_en" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trFieldOfApplication_es" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trFieldOfApplication_fr" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trPlaceOfAdoption" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trPlaceOfAdoption" type="string" indexed="true" stored="true" multiValued="false"/>
 
     <field name="trDepository_en" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trDepository_es" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -144,7 +144,7 @@
 
     <field name="trObsolete" type="string" indexed="true" stored="false"/>
 
-    <field name="trAvailableIn" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trAvailableIn" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="trLanguageOfTranslation" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trNumberOfPages" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trOfficialPublication" type="string" indexed="true" stored="true" multiValued="true"/>
