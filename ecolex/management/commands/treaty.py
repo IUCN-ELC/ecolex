@@ -432,7 +432,7 @@ class TreatyImporter(object):
                 data[rule['action_field']] = rule['action_value']
 
         available_in = data.get('trAvailableIn', '')
-        if available_in.startswith('B7'):
+        if available_in and available_in.startswith('B7'):
             data['trAvailableIn'] = available_in.replace('B7', B7)
 
         # fix server2.php/server2neu.php in full text links
