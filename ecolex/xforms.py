@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext as _
 from ecolex.lib.schema import fields
-from .schema import FILTER_FIELDS
+from .schema import FILTER_FIELDS, STATS_FIELDS
 
 
 class SearchForm(forms.Form):
@@ -25,8 +25,8 @@ class SearchForm(forms.Form):
         new_fields = []
         and_fields = []
         for name, field in FILTER_FIELDS.items():
-            if field.datatype in ('date', 'datetime'):
-                # date fields turn into 2 form fields: min and max
+            if name in STATS_FIELDS:
+                # fields with stats turn into 2 form fields: min and max
                 for suffix in ('min', 'max'):
                     new_fields.append(("%s_%s" % (name, suffix),
                                        forms.IntegerField()))

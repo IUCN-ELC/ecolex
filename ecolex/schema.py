@@ -718,6 +718,15 @@ FILTER_FIELDS = OrderedDict(
     if p.solr_filter
 )
 
+# build stats for all filters that are date(/time)s or numbers
+STATS_FIELDS = OrderedDict(
+    (k, p) for k, p in FILTER_FIELDS.items()
+    if p.datatype in (
+            'number', 'integer', 'decimal', 'float',
+            'datetime', 'localdatetime', 'time', 'date',
+    )
+)
+
 FETCH_FIELDS = OrderedDict(
     (k, p) for _fps in __FPROPS.values() for k, p in _fps.items()
     if p.solr_fetch
