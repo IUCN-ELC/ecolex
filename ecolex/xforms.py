@@ -1,3 +1,4 @@
+from functools import partialmethod
 from django import forms
 from django.utils.translation import ugettext as _
 from ecolex.lib.schema import fields
@@ -16,7 +17,15 @@ class SearchForm(forms.Form):
     )
 
     q = forms.CharField()
+    page = forms.IntegerField(min_value=1, required=False, initial=1)
     sortby = forms.ChoiceField(choices=SORT_CHOICES)
+
+    def __clean_field_with_initial(self, fname):
+        if fname not in self.data or self.cleaned_data[fname] is None:
+            return self.fields[fname].initial
+        return self.cleaned_data[fname]
+
+    clean_page = partialmethod(__clean_field_with_initial, 'page')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

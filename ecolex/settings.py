@@ -164,7 +164,7 @@ REST_FRAMEWORK = {
 }
 # used by both api and search
 FACETS_PAGE_SIZE = 100
-
+SEARCH_PAGE_SIZE = 20
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/

@@ -1,13 +1,14 @@
 import logging
-import scorched
 from collections import Iterable, defaultdict
 from datetime import datetime, timedelta
 from functools import partial, reduce
 from operator import and_, or_
+from scorched import SolrInterface
+from scorched.response import SolrResponse
+from scorched.strings import DismaxString
 from django.conf import settings
-from django.utils.functional import cached_property, LazyObject
+from django.utils.functional import LazyObject
 
-from .xforms import SearchForm
 from .schema import (
     SCHEMA_MAP, FIELD_MAP,
     FILTER_FIELDS, STATS_FIELDS, FETCH_FIELDS, BOOST_FIELDS,
@@ -20,19 +21,13 @@ logger = logging.getLogger(__name__)
 class __DefaultInterface(LazyObject):
     # this exists with the sole purpose to defer reading settings
     def _setup(self):
-        self._wrapped = scorched.SolrInterface(settings.SOLR_URI)
+        self._wrapped = SolrInterface(settings.SOLR_URI)
 
 
 DEFAULT_INTERFACE = __DefaultInterface()
 
 
-class SearchViewMixin(object):
-    @cached_property
-    def form(self):
-        return SearchForm(self.request.GET)
-
-
-class Search(object):
+class Searcher(object):
     SEARCH_OPTIONS = {
         'facet.limit': -1,
         'facet.sort': 'index',
@@ -80,7 +75,11 @@ class Search(object):
 
     def set_types(self, types):
         if not types:
-            self._used_fields = None
+            # momentarily set _used_fields even with no given type,
+            # to protect agains rogue form fields. TODO: fix.
+            #self._used_fields = None
+            self._used_fields = reduce(or_,
+                                       (set(fs) for fs in FIELD_MAP.values()))
             return
 
         types = set(SCHEMA_MAP.keys()).intersection(types)
@@ -94,10 +93,14 @@ class Search(object):
         self.qkwargs['type'] = self.to_query(list(types))
 
     def is_used_field(self, field):
-        if self._used_fields is None:
-            return True
-        else:
-            return field in self._used_fields
+        return field in self._used_fields
+        # we could shortcut calculation when there's no given type, but see
+        # `set_types()` above
+        #
+        # if self._used_fields is None:
+        #     return True
+        # else:
+        #     return field in self._used_fields
 
     def prepare_filters(self, data):
         filters = {
@@ -288,7 +291,7 @@ class Search(object):
 
         Q = self.interface.Q
         # this part needed to be able to do "field:(some\\ thing OR an\\ other)"
-        return scorched.strings.DismaxString(
+        return DismaxString(
             "(%s)" % reduce(op, (Q(item) for item in data))
         )
 
@@ -311,24 +314,42 @@ class Search(object):
             )
         )
 
-    def execute(self):
+    def _search(self):
         search = (
-            self.interface.query(*self.qargs)
-            .query(**self.qkwargs)
+            self.interface.query(*self.qargs, **self.qkwargs)
             .filter(**self.get_filters())
             .filter(**self.get_range_filters())
-            .facet_by(self.get_facet_fields())
-            .field_limit(self.get_fetch_fields())
-            .stats_on(self.get_stats_fields())
             .alt_parser('edismax', qf=self.get_boost_fields())
         )
-
         self.set_search_options(search)
 
-        from pprint import pprint
-        pprint(search.options(), indent=2, width=100)
+        return search
+
+    def search(self, page=1, page_size=None):
+        if page_size is None:
+            page_size = settings.SEARCH_PAGE_SIZE
+        start = (page - 1) * page_size
+
+        search = (
+            self._search()
+            .facet_by(self.get_facet_fields())
+            .stats_on(self.get_stats_fields())
+            .field_limit(self.get_fetch_fields())
+            .paginate(start=start, rows=page_size)
+        )
+
+        # from pprint import pprint
+        # pprint(search.options(), indent=2, width=100)
 
         _constructor = partial(self.to_object, language=self.language)
         response = search.execute(constructor=_constructor)
 
         return response
+
+
+empty_response = SolrResponse.from_json(repr({
+    "responseHeader": {"status": 0},
+    "response": {"numFound": 0,
+                 "start": 0,
+                 "docs": []}
+}).replace("'", '"'))
