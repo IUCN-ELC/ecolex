@@ -37,17 +37,26 @@ class SearchResultsView(SearchViewMixin, TemplateView):
         # TODO: when not valid?
         #form.is_valid()
 
-        if 'page' in form.errors:
-            page = 1
+        if any(f in form.errors
+               for f in (
+                'page', 'sortby'
+               )):
             response = empty_response
+            page = 1
         else:
             data = {k: v for k, v in form.data.lists()
                     }#if k in form.changed_data}
 
             page = form.cleaned_data['page']
+            sortby = form.cleaned_data['sortby']
+            date_sort = {
+                form.SORT_DEFAULT: None,
+                form.SORT_FIRST: True,
+                form.SORT_LAST: False,
+            }[sortby]
 
             searcher = Searcher(data, language=get_language())
-            response = searcher.search(page=page)
+            response = searcher.search(page=page, date_sort=date_sort)
 
         print(response.result.numFound)
 

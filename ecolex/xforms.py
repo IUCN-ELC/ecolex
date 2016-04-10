@@ -18,7 +18,8 @@ class SearchForm(forms.Form):
 
     q = forms.CharField()
     page = forms.IntegerField(min_value=1, required=False, initial=1)
-    sortby = forms.ChoiceField(choices=SORT_CHOICES)
+    sortby = forms.ChoiceField(choices=SORT_CHOICES,
+                               required=False, initial=SORT_DEFAULT)
 
     def __clean_field_with_initial(self, fname):
         if fname not in self.data or self.cleaned_data[fname] is None:
@@ -26,6 +27,7 @@ class SearchForm(forms.Form):
         return self.cleaned_data[fname]
 
     clean_page = partialmethod(__clean_field_with_initial, 'page')
+    clean_sortby = partialmethod(__clean_field_with_initial, 'sortby')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -736,3 +736,6 @@ BOOST_FIELDS = OrderedDict(
     (k, p) for _fps in __FPROPS.values() for k, p in _fps.items()
     if p.solr_boost
 )
+
+# hardcode the sort field. 'cause practicality...
+SORT_FIELD = __FPROPS['_']['xdate']

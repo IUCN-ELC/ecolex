@@ -12,6 +12,7 @@ from django.utils.functional import LazyObject
 from .schema import (
     SCHEMA_MAP, FIELD_MAP,
     FILTER_FIELDS, STATS_FIELDS, FETCH_FIELDS, BOOST_FIELDS,
+    SORT_FIELD,
 )
 
 
@@ -325,7 +326,7 @@ class Searcher(object):
 
         return search
 
-    def search(self, page=1, page_size=None):
+    def search(self, page=1, page_size=None, date_sort=None):
         if page_size is None:
             page_size = settings.SEARCH_PAGE_SIZE
         start = (page - 1) * page_size
@@ -337,6 +338,11 @@ class Searcher(object):
             .field_limit(self.get_fetch_fields())
             .paginate(start=start, rows=page_size)
         )
+
+        if date_sort is not None:
+            sort_dir = "" if date_sort else "-"
+            sort_field = SORT_FIELD.get_source_field(self.language)
+            search = search.sort_by("%s%s" % (sort_dir, sort_field))
 
         # from pprint import pprint
         # pprint(search.options(), indent=2, width=100)
