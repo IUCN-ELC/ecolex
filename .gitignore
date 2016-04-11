@@ -1,6 +1,4 @@
 instance/
-*.pyc
-.idea
 sandbox
 env
 db.sqlite3
@@ -15,14 +13,10 @@ contrib/treaties.json
 Thumbs.db
 
 # Editor generated files
-*.sublime-project
-*.sublime-workspace
+.idea
 
 # Files to ignore
 *.log
+*.pyc
 *.vi
 *~
-
-# Folders to ignore
-bower_components
-node_modules
