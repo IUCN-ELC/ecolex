@@ -474,7 +474,7 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     });
 
     // Type facet add multiple selections
-    $('.add-selection, .remove-selection').click(function (event) {
+    $('.selection-add, .selection-remove').click(function (event) {
         event.stopPropagation();
 
         var current = $('#id_type').val() || [];
