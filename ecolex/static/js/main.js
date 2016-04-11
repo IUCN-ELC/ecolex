@@ -435,16 +435,26 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     $('.selection-facet').each(function(idx) {
         var self = $(this);
         var data = _process_facet_data(self.data('data'), self.data('selected'));
+        var search_field_id = self.attr('id') + '-search-field';
         // strip away the initial data, for performance reasons
         self.removeData('data');
         self.removeAttr('data-data');
 
         self.select2({
             data: data,
-            dataAdapter: _DataAdapter
+            dataAdapter: _DataAdapter,
         });
 
+        self.next().find('.select2-search__field').attr('id', search_field_id);
         self.change(submit);
+
+        self.on("select2:opening", function (e) {
+            $(this).next().find('li.select2-search').show();
+        });
+
+        self.on("select2:close", function (e) {
+            $(this).next().find('li.select2-search').hide();
+        });
 
         // add clearfix to select2 widget
         //self.next().addClass('clearfix');

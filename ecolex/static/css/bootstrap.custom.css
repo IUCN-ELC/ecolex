@@ -6280,6 +6280,15 @@ fieldset .filter-header {
 .select2-container--default .select2-selection--multiple {
   background-color: transparent !important;
 }
+li.select2-search {
+  display: none;
+}
+span.select2-selection {
+  min-height: 0px !important;
+}
+ul.select2-selection__rendered {
+  display: block !important;
+}
 .html-disclaimer {
   font-size: 85%;
   font-style: italic;
