@@ -9,7 +9,7 @@ Usage:
 
 """
 
-from collections import OrderedDict, namedtuple
+from collections import OrderedDict
 from marshmallow import post_load, pre_load
 from ecolex.lib.utils import OrderedDefaultDict
 from ecolex.lib.schema import Schema, fields
@@ -153,10 +153,8 @@ class TreatySchema(CommonSchema):
             'region': 25,
         })
 
-    # TODO: False list (?)
-    type_of_document = fields.List(fields.String(),
-                                   load_from='trTypeOfText',
-                                   multilingual=True)
+    type_of_document = fields.String(load_from='trTypeOfText',
+                                     multilingual=True)
 
     parties = fields.Nested(TreatyPartySchema, many=True)
     title_translations = fields.Nested(TranslationSchema, many=True)
@@ -168,8 +166,7 @@ class TreatySchema(CommonSchema):
     author_m = fields.List(fields.String(), load_from='trAuthorM')
     author_whole = fields.List(fields.String(), load_from='trAuthorWhole')
 
-    # TODO  False list
-    available_in = fields.List(fields.String(), load_from='trAvailableIn')
+    available_in = fields.String(load_from='trAvailableIn')
 
     basin = fields.List(fields.String(), load_from='trBasin', multilingual=True)
     comment = fields.List(fields.String(), load_from='trComment')
@@ -224,16 +221,13 @@ class TreatySchema(CommonSchema):
     official_publication = fields.List(fields.String(),
                                        load_from='trOfficialPublication')
     order = fields.String(load_from='trOrder')
-    paper_title_of_text = fields.List(fields.String(),
-                                      load_from='trPaperTitleOfText',
-                                      multilingual=True,
-                                      missing=[])
-    paper_title_of_text_other = fields.List(
-        fields.String(), load_from='trPaperTitleOfText_other', missing=[])
+    paper_title_of_text = fields.String(load_from='trPaperTitleOfText',
+                                        multilingual=True,
+                                        missing='')
+    paper_title_of_text_other = fields.String(
+        load_from='trPaperTitleOfText_other', missing='')
     parent_id = fields.Integer(load_from='trParentId')
-    # TODO: False list
-    place_of_adoption = fields.List(fields.String(),
-                                    load_from='trPlaceOfAdoption')
+    place_of_adoption = fields.String(load_from='trPlaceOfAdoption')
     primary = fields.List(fields.String(), load_from='trPrimary')
     region = fields.List(fields.String(), load_from='trRegion',
                          multilingual=True)
@@ -248,10 +242,8 @@ class TreatySchema(CommonSchema):
                                      load_from='trTitleAbbreviation')
     title_of_text = fields.List(fields.String(), load_from='trTitleOfText',
                                 missing=[])
-    # TODO: False list
-    title_of_text_short = fields.List(fields.String(),
-                                      load_from='trTitleOfTextShort',
-                                      missing=[])
+    title_of_text_short = fields.String(load_from='trTitleOfTextShort',
+                                        missing='')
     url = fields.List(fields.String(), load_from='trUrl')
     url_elearning = fields.List(fields.String(), load_from='trUrlElearning')
     url_parties = fields.List(fields.String(), load_from='trUrlParties')
@@ -274,8 +266,7 @@ class TreatySchema(CommonSchema):
 
     @pre_load
     def handle_translations(self, data):
-        # TODO Remove value index (v[0]) once Title is no longer multiValued
-        translations = [{'language': k.split('_')[-1], 'value': v[0]}
+        translations = [{'language': k.split('_')[-1], 'value': v}
                         for k, v in data.items()
                         if k.startswith('trPaperTitleOfText')]
         data['title_translations'] = translations

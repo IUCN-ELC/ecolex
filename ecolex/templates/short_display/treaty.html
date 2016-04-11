@@ -4,7 +4,7 @@
   <strong class="sr-type">{{ result.type|capfirst }}</strong> |
   <span class="sr-doctype">{{ result.type_of_document }}</span>
   {% if result.place_of_adoption %} |
-    <span class="sr-place"> {{ result.place_of_adoption|join:'; ' }}</span>
+    <span class="sr-place"> {{ result.place_of_adoption }}</span>
   {% endif %}
   {% if result.date %} |
     <time class="sr-date" title="Date: {{ result.date }}">

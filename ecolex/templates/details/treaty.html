@@ -49,7 +49,7 @@
 
       {% if document.place_of_adoption %}
         <dt>Place of adoption</dt>
-        <dd>{{ document.place_of_adoption|join:", " }}</dd>
+        <dd>{{ document.place_of_adoption }}</dd>
       {% endif %}
 
       {% if document.depository %}
@@ -126,7 +126,7 @@
 
       {% if document.available_in %}
         <dt>Available in</dt>
-        <dd>{{ document.available_in|join:", "|safe }}</dd>
+        <dd>{{ document.available_in|safe }}</dd>
       {% endif %}
 
       {% if document.url %}

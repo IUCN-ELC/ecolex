@@ -101,7 +101,7 @@ class Treaty(DocumentModel):
         return (self.paper_title_of_text or
                 self.paper_title_of_text_other or
                 self.title_of_text_short or
-                [DEFAULT_TITLE])
+                DEFAULT_TITLE)
 
     @property
     def date(self):
