@@ -1,6 +1,8 @@
 import warnings
+from django.conf import settings
 from django.utils.functional import cached_property
 from marshmallow import Schema as _Schema, SchemaOpts, fields, pre_load
+
 from ecolex.lib.utils import MutableLookupDict
 
 
@@ -107,7 +109,6 @@ class Schema(_Schema):
     """
 
     OPTIONS_CLASS = _CustomOptions
-    _FALLBACK_LANGUAGE = 'en'
 
     @pre_load
     def _handle_multilingual_input(self, data):
@@ -131,8 +132,8 @@ class Schema(_Schema):
                     "was made available in context." % type(self).__name__,
                     stacklevel=2)
 
-            lookups.extend(['{item}',
-                            '{item}_%s' % self._FALLBACK_LANGUAGE])
+            lookups.extend(['{item}_%s' % lang
+                            for lang in settings.LANGUAGE_MAP])
 
             data = MutableLookupDict(data,
                                      mutables=multilinguals,

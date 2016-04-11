@@ -60,7 +60,8 @@ DOC_TYPE_FILTER_MAPPING = {
 
 FIELD_TO_FACET_MAPPING = {k: f.get_source_field('en')
                           for k, f in FILTER_FIELDS.items()}
-SOLR_FIELDS = [f.get_source_field('en') for f in FETCH_FIELDS.values()]
+SOLR_FIELDS = [field for f in FETCH_FIELDS.values()
+               for field in f.get_source_fields()]
 RELEVANCY_FIELDS = {f.get_source_field('en'): f.solr_boost
                     for f in BOOST_FIELDS.values()}
 

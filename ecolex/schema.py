@@ -10,7 +10,9 @@ Usage:
 """
 
 from collections import OrderedDict
+from django.conf import settings
 from marshmallow import post_load, pre_load
+
 from ecolex.lib.utils import OrderedDefaultDict
 from ecolex.lib.schema import Schema, fields
 from ecolex.solr_models_re import (
@@ -69,7 +71,7 @@ class BaseSchema(Schema):
         ]
         solr_boost = {
             'text': 20,
-            #'doc_content': 10, # not indexed, see above
+            # 'doc_content': 10, # not indexed, see above
         }
 
     @post_load
@@ -78,6 +80,7 @@ class BaseSchema(Schema):
             return self.opts.model(**data)
         else:
             return data
+
 
 class CommonSchema(BaseSchema):
     # Common fields that have different names in Solr
@@ -299,8 +302,10 @@ class DecisionSchema(CommonSchema):
     type_of_document = fields.String(load_from='decType')
 
     body = fields.String(load_from='decBody', multilingual=True)
-    file_names = fields.List(fields.String(), load_from='decFileNames', missing=[])
-    file_urls = fields.List(fields.String(), load_from='decFileUrls', missing=[])
+    file_names = fields.List(fields.String(), load_from='decFileNames',
+                             missing=[])
+    file_urls = fields.List(fields.String(), load_from='decFileUrls',
+                            missing=[])
     # TODO: check if this is deprecated
     decision_id = fields.String(load_from='decId')
     language = fields.List(fields.String(), load_from='decLanguage',
@@ -340,8 +345,8 @@ class LiteratureSchema(CommonSchema):
             'date_of_entry', 'date_of_modification',
             'date_of_text', 'date_of_text_ser',
             'abstract', 'abstract_other',
-            'jurisdiction', # "scope"
-            #'author',
+            'jurisdiction',  # "scope"
+            # 'author',
             'author_a', 'author_m', 'corp_author_a', 'corp_author_m',
             'publisher', 'publication_place',
             'volume_no', 'collation', 'series_flag',
@@ -361,12 +366,10 @@ class LiteratureSchema(CommonSchema):
             'region': 25,
         })
 
-
     ID_FIELD = 'litId'  # this is actually multivalued (?)
     KEYWORDS_FIELD = 'litKeyword'
     SUBJECTS_FIELD = 'litSubject'
 
-    # TODO: False list (?)
     type_of_text = fields.List(fields.String(),
                                load_from='litTypeOfText',
                                multilingual=True)
@@ -543,8 +546,8 @@ class CourtDecisionSchema(CommonSchema):
     reference_number = fields.String(load_from='cdReferenceNumber')
     seat_of_court = fields.String(load_from='cdSeatOfCourt', multilingual=True)
     status_of_decision = fields.String(load_from='cdStatusOfDecision')
-    territorial_subdivision = fields.String(load_from='cdTerritorialSubdivision',
-                                            multilingual=True)
+    territorial_subdivision = fields.String(
+        load_from='cdTerritorialSubdivision', multilingual=True)
     title_of_text = fields.String(load_from='cdTitleOfText', multilingual=True,
                                   missing='')
     treaty_reference = fields.List(fields.String(),
@@ -563,7 +566,7 @@ class LegislationSchema(CommonSchema):
         ]
         solr_fetch = CommonSchema.Meta.solr_fetch + [
             'short_title', 'long_title', 'country',
-            'date', 'consolidation_date', # "year" / "original year"
+            'date', 'consolidation_date',  # "year" / "original year"
             'status', 'territorial_subdivision',
         ]
         solr_boost = dict(CommonSchema.Meta.solr_boost, **{
@@ -603,7 +606,8 @@ class LegislationSchema(CommonSchema):
     source = fields.String(load_from='legSource')
     status = fields.String(load_from='legStatus')
     subject_code = fields.List(fields.String(), load_from='legSubject_code')
-    territorial_subdivision = fields.String(load_from='legTerritorialSubdivision')
+    territorial_subdivision = fields.String(
+        load_from='legTerritorialSubdivision')
     type_code = fields.String(load_from='legTypeCode')
     date = fields.String(load_from='legYear')
     consolidation_date = fields.String(load_from='legOriginalYear')
@@ -617,8 +621,8 @@ class LegislationSchema(CommonSchema):
 class __FieldProperties(object):
     __slots__ = (
         'type', 'name', 'load_from', 'multilingual', 'multivalue', 'datatype',
-        'solr_filter', 'solr_facet', 'solr_fetch', 'solr_boost', 'solr_highlight',
-        'form_single_choice'
+        'solr_filter', 'solr_facet', 'solr_fetch', 'solr_boost',
+        'solr_highlight', 'form_single_choice'
     )
 
     def __init__(self, **kwargs):
@@ -630,6 +634,13 @@ class __FieldProperties(object):
             return self.load_from
         else:
             return "%s_%s" % (self.load_from, lang)
+
+    def get_source_fields(self):
+        if not self.multilingual:
+            return [self.load_from]
+        else:
+            return ['{}_{}'.format(self.load_from, lang)
+                    for lang in settings.LANGUAGE_MAP]
 
     def __repr__(self):
         props = []
