@@ -332,7 +332,7 @@ class TreatyImporter(object):
                                 else:
                                     logger.error('Language not found %s' % (lang.lower()))
                         elif v in FALSE_LIST_FIELDS:
-                            data[v] = field_values[0]
+                            data[v] = self._clean_text(field_values[0].text)
                             if len(field_values) > 1:
                                 logger.error('Field {} has a value with more '
                                              'than 1 elements: {}. Should '
