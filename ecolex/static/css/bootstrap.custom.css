@@ -259,28 +259,6 @@ th {
   src: url('../fonts/ecolex-icons.eot');
   src: url('../fonts/ecolex-icons.eot?#iefix') format('embedded-opentype'), url('../fonts/ecolex-icons.woff') format('woff'), url('../fonts/ecolex-icons.ttf') format('truetype'), url('../fonts/ecolex-icons.svg#ecolex-icons') format('svg');
 }
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url('../fonts/glyphicons/glyphicons-halflings-regular.eot');
-  src: url('../fonts/glyphicons/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
-}
-.glyphicon {
-  position: relative;
-  top: 1px;
-  display: inline-block;
-  font-family: 'Glyphicons Halflings';
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.glyphicon-plus:before {
-  content: "\002b";
-}
-.glyphicon-remove:before {
-  content: "\e014";
-}
 .icon {
   font-family: "ecolex-icons";
   font-style: normal;
@@ -6021,33 +5999,33 @@ main {
     display: none;
   }
 }
-.filter-type .add-selection,
-.filter-type .remove-selection {
+.filter-type .selection-add,
+.filter-type .selection-remove {
   border-radius: 50%;
   color: #ffffff;
   cursor: pointer;
   display: none;
-  font-size: 10px;
-  padding: .1em .3em .2em .4em;
+  height: 16px;
   position: absolute;
   right: 10px;
   top: 10px;
   transform: translateZ(0);
   transition-duration: .35s;
+  width: 16px;
   z-index: 3;
 }
-.filter-type .add-selection:hover,
-.filter-type .remove-selection:hover,
-.filter-type .add-selection:focus,
-.filter-type .remove-selection:focus {
+.filter-type .selection-add:hover,
+.filter-type .selection-remove:hover,
+.filter-type .selection-add:focus,
+.filter-type .selection-remove:focus {
   transform: scale(1.4);
   transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
 }
-.filter-type .add-selection {
-  background-color: #1cb54b;
+.filter-type .selection-add {
+  background: #1cb54b url('../img/selection-add.svg') center center no-repeat;
 }
-.filter-type .remove-selection {
-  background-color: #d9534f;
+.filter-type .selection-remove {
+  background: #d9534f url('../img/selection-remove.svg') center center no-repeat;
 }
 .filter-type .btn-group {
   position: relative;
@@ -6062,10 +6040,10 @@ main {
   background-color: #ffeeab;
   border-color: #f0ad4e;
 }
-.filter-type .btn-group:hover .add-selection,
-.filter-type .btn-group:focus .add-selection,
-.filter-type .btn-group:hover .remove-selection,
-.filter-type .btn-group:focus .remove-selection {
+.filter-type .btn-group:hover .selection-add,
+.filter-type .btn-group:focus .selection-add,
+.filter-type .btn-group:hover .selection-remove,
+.filter-type .btn-group:focus .selection-remove {
   display: block;
 }
 .filter-type .btn-group:first-child .btn {

@@ -47,19 +47,19 @@
     }
   }
 
-  .add-selection,
-  .remove-selection {
-    border-radius: @add-selection-border-radius;
+  .selection-add,
+  .selection-remove {
+    border-radius: 50%;
     color: @badge-color;
     cursor: pointer;
     display: none;
-    font-size: 10px;
-    padding: .1em .3em .2em .4em;
+    height: 16px;
     position: absolute;
     right: 10px;
     top: 10px;
     transform: translateZ(0);
     transition-duration: .35s;
+    width: 16px;
     z-index: 3;
 
     &:hover,
@@ -69,12 +69,12 @@
     }
   }
 
-  .add-selection {
-    background-color: @brand-green-darker;
+  .selection-add {
+    background: @brand-green-darker url('../img/selection-add.svg') center center no-repeat;
   }
 
-  .remove-selection {
-    background-color: @brand-danger;
+  .selection-remove {
+    background: @brand-danger url('../img/selection-remove.svg') center center no-repeat;
   }
 
   .btn-group {
@@ -92,8 +92,8 @@
         }
       }
 
-      .add-selection,
-      .remove-selection {
+      .selection-add,
+      .selection-remove {
         display: block;
       }
     }

@@ -18,39 +18,6 @@
        url('@{icon-font-path}@{icon-font-name}.svg#@{icon-font-svg-id}') format('svg');
 }
 
-
-// #TODO: Remove glyphicons
-@font-face {
-  font-family: 'Glyphicons Halflings';
-
-  src: url('../fonts/glyphicons/glyphicons-halflings-regular.eot');
-  src: url('../fonts/glyphicons/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/glyphicons/glyphicons-halflings-regular.woff2') format('woff2'),
-    url('../fonts/glyphicons/glyphicons-halflings-regular.woff') format('woff'),
-    url('../fonts/glyphicons/glyphicons-halflings-regular.ttf') format('truetype'),
-    url('../fonts/glyphicons/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
-}
-
-.glyphicon {
-  position: relative;
-  top: 1px;
-  display: inline-block;
-  font-family: 'Glyphicons Halflings';
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.glyphicon-plus:before {
-  content: "\002b";
-}
-
-.glyphicon-remove:before {
-  content: "\e014";
-}
-
 .icon-base() {
   font-family: @icon-font-name;
   font-style: normal;
