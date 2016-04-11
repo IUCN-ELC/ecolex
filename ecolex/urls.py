@@ -58,3 +58,10 @@ if settings.DEBUG:
         url(r'^_debug', debug, name="debug"),
         url(r'^playground/$', DesignPlayground.as_view(), name="playground"),
     ]
+    # Local urls
+    try:
+        from ecolex import local_urls
+    except ImportError:
+        pass
+    else:
+        urlpatterns.append(url(r'^', include(local_urls)))

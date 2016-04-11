@@ -2,16 +2,17 @@ import logging
 from collections import Iterable, defaultdict
 from datetime import datetime, timedelta
 from functools import partial, reduce
-from operator import and_, or_
+from operator import and_, or_, itemgetter
 from scorched import SolrInterface
 from scorched.response import SolrResponse
 from scorched.strings import DismaxString
+from unidecode import unidecode
 from django.conf import settings
 from django.utils.functional import LazyObject
 
 from .schema import (
     SCHEMA_MAP, FIELD_MAP,
-    FILTER_FIELDS, STATS_FIELDS, FETCH_FIELDS, BOOST_FIELDS,
+    FILTER_FIELDS, FACET_FIELDS, STATS_FIELDS, FETCH_FIELDS, BOOST_FIELDS,
     SORT_FIELD,
 )
 
@@ -160,7 +161,7 @@ class Searcher(object):
     def prepare_facets(self):
         fields = [
             field
-            for field in FILTER_FIELDS.keys()
+            for field in FACET_FIELDS.keys()
             if self.is_used_field(field)
         ]
         self.facet_fields = fields
@@ -322,9 +323,46 @@ class Searcher(object):
             .filter(**self.get_range_filters())
             .alt_parser('edismax', qf=self.get_boost_fields())
         )
-        self.set_search_options(search)
 
         return search
+
+    def _execute(self, search):
+        # TODO: this is the place to cache some facets
+        do_facets = True
+
+        if do_facets:
+            search = search.facet_by(self.get_facet_fields())
+
+        # set search options last or they'll get overwritten
+        self.set_search_options(search)
+
+        _constructor=partial(self.to_object, language=self.language)
+        response = search.execute(constructor=_constructor)
+
+        if do_facets:
+            self._handle_facets(response)
+
+        return response
+
+    @staticmethod
+    def _normalize_facet(text):
+        return unidecode(text).lower()
+
+    @classmethod
+    def _convert_facet(cls, data):
+        item, count = data
+
+        return {
+            'id': cls._normalize_facet(item),
+            'text': item,
+            'count': count,
+        }
+
+    def _handle_facets(self, response):
+        facets = response.facet_counts.facet_fields
+        for k, data in facets.items():
+            facets[k] = sorted(map(self._convert_facet, data),
+                               key=itemgetter('id', 'text'))
 
     def search(self, page=1, page_size=None, date_sort=None):
         if page_size is None:
@@ -333,7 +371,6 @@ class Searcher(object):
 
         search = (
             self._search()
-            .facet_by(self.get_facet_fields())
             .stats_on(self.get_stats_fields())
             .field_limit(self.get_fetch_fields())
             .paginate(start=start, rows=page_size)
@@ -344,18 +381,44 @@ class Searcher(object):
             sort_field = SORT_FIELD.get_source_field(self.language)
             search = search.sort_by("%s%s" % (sort_dir, sort_field))
 
-        # from pprint import pprint
-        # pprint(search.options(), indent=2, width=100)
+        response = self._execute(search)
+        return SearchResponse(response)
 
-        _constructor = partial(self.to_object, language=self.language)
-        response = search.execute(constructor=_constructor)
+    def get_facets(self, facets):
+        if facets:
+            facets = [f for f in facets
+                      if f in self.facet_fields]
 
-        return response
+            if not facets:
+                raise ValueError("Illegal facets requested.")
+            else:
+                # TODO: overwriting these is not pretty
+                self.facet_fields = facets
+
+        search = (
+            self._search()
+            .paginate(rows=0)
+        )
+
+        response = self._execute(search)
+        return SearchResponse(response).facets
 
 
-empty_response = SolrResponse.from_json(repr({
+_empty_response = SolrResponse.from_json(repr({
     "responseHeader": {"status": 0},
     "response": {"numFound": 0,
                  "start": 0,
                  "docs": []}
 }).replace("'", '"'))
+
+
+class SearchResponse(object):
+    def __init__(self, response=None):
+        if response is None:
+            response = _empty_response
+
+        self.count = response.result.numFound
+        self.start = response.result.start
+        self.facets = response.facet_counts.facet_fields
+        self.stats = response.stats.stats_fields
+        self.results = response.result.docs

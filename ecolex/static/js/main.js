@@ -416,33 +416,18 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
 
     // set up select2
 
-    function _process_facet_data(data, selected) {
-        var processed = [];
-        $.each(data, function(item, count) {
-
-            processed.push({
-                id: item,
-                text: item,
-                count: count,
-                selected: ($.inArray(item, selected) != -1)
-            });
-        });
-        return processed;
-    }
-
     var _DataAdapter = $.fn.select2.amd.require('ecolex/select2/adapter');
 
     $('.selection-facet').each(function(idx) {
         var self = $(this);
-        var data = _process_facet_data(self.data('data'), self.data('selected'));
+
+        self.select2({
+            dataAdapter: _DataAdapter
+        });
+
         // strip away the initial data, for performance reasons
         self.removeData('data');
         self.removeAttr('data-data');
-
-        self.select2({
-            data: data,
-            dataAdapter: _DataAdapter
-        });
 
         self.change(submit);
 

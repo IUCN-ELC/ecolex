@@ -66,6 +66,7 @@ class _CustomOptions(SchemaOpts):
         self.abbr = getattr(meta, 'abbr', None)
         self.type = getattr(meta, 'type', None)
         self.solr_filters = getattr(meta, 'solr_filters', [])
+        self.solr_facets = getattr(meta, 'solr_facets', self.solr_filters)
         self.solr_fetch = getattr(meta, 'solr_fetch', [])
         self.solr_boost = getattr(meta, 'solr_boost', {})
         self.solr_highlight = getattr(meta, 'solr_highlight', [])

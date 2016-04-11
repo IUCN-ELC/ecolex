@@ -1,6 +1,6 @@
-from ecolex.definitions import SELECT_FACETS as FACET_MAP
 from django.conf.urls import include, url
 from rest_framework.routers import DefaultRouter
+from ecolex.schema import FACET_FIELDS
 from . import views
 
 
@@ -10,11 +10,11 @@ router.register(r'search', views.SearchResultViewSet, base_name="search")
 # to do this dynamically we need to provide a `field` initkwarg to as_view(),
 # which the drf router can't handle
 facet_urls = [
-    url(r'%s-list/' % facet.replace('_', '-'),
+    url(r'%s-list/' % field.replace('_', '-'),
         views.BaseFacetViewSet.as_view(actions={'get': 'list'}, field=field),
-        name="%s-list" % facet.replace('_', '-')
+        name="%s-list" % field.replace('_', '-')
     )
-    for field, facet in FACET_MAP.items()
+    for field in FACET_FIELDS.keys()
 ]
 
 

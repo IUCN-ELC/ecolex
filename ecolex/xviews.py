@@ -6,7 +6,7 @@ from django.http import QueryDict
 from django.utils.functional import cached_property
 from django.utils.translation import get_language
 from .xforms import SearchForm
-from .xsearch import Searcher, empty_response
+from .xsearch import Searcher, SearchResponse
 
 
 class HomepageView(TemplateView):
@@ -19,6 +19,13 @@ class SearchViewMixin(object):
     @cached_property
     def form(self):
         return SearchForm(self.request.GET)
+
+    def get_query_data(self):
+        data = self.form.data
+        return data and {
+            k: v
+            for k, v in data.lists()
+        }#if k in form.changed_data}
 
 
 class SearchResultsView(SearchViewMixin, TemplateView):
@@ -41,11 +48,10 @@ class SearchResultsView(SearchViewMixin, TemplateView):
                for f in (
                 'page', 'sortby'
                )):
-            response = empty_response
+            response = SearchResponse()
             page = 1
         else:
-            data = {k: v for k, v in form.data.lists()
-                    }#if k in form.changed_data}
+            data = self.get_query_data()
 
             page = form.cleaned_data['page']
             sortby = form.cleaned_data['sortby']
@@ -58,14 +64,25 @@ class SearchResultsView(SearchViewMixin, TemplateView):
             searcher = Searcher(data, language=get_language())
             response = searcher.search(page=page, date_sort=date_sort)
 
-        print(response.result.numFound)
-
-        ctx['results'] = response.result.docs
         ctx['form'] = self.form
+        ctx['results'] = response.results
+        ctx['facets'] = self._format_facets(response.facets)
+        ctx['stats'] = response.stats
         # TODO: rename ctx to 'pages'
-        ctx['page'] = self.get_page_details(page, response.result.numFound)
+        ctx['page'] = self.get_page_details(page, response.count)
 
         return ctx
+
+    @staticmethod
+    def _format_facets(facets):
+        # truncates the facets and returns a {results: [], more: bool} dict
+        return {
+            k: {
+                'more': len(data) > settings.FACETS_PAGE_SIZE,
+                'results': data[:settings.FACETS_PAGE_SIZE],
+            }
+            for k, data in facets.items()
+        }
 
     def get_page_details(self, current, result_count, page_size=None):
         if page_size is None:

@@ -62,6 +62,8 @@ class BaseSchema(Schema):
             'type', 'xkeywords', 'xsubjects', 'xcountry', 'xregion',
             'xlanguage', 'xdate',
         ]
+        solr_facets = solr_filters.copy()
+        solr_facets.remove('xdate')
         solr_fetch = [
             'id', 'type', 'source',
         ]
@@ -624,7 +626,7 @@ class LegislationSchema(CommonSchema):
 class __FieldProperties(object):
     __slots__ = (
         'type', 'name', 'load_from', 'multilingual', 'multivalue', 'datatype',
-        'solr_filter', 'solr_fetch', 'solr_boost', 'solr_highlight',
+        'solr_filter', 'solr_facet', 'solr_fetch', 'solr_boost', 'solr_highlight',
         'form_single_choice'
     )
 
@@ -679,6 +681,7 @@ def __get_field_properties(base_schema, schemas):
             fp.datatype = inst.__class__.__name__.lower()
 
             fp.solr_filter = name in schema.opts.solr_filters
+            fp.solr_facet = name in schema.opts.solr_facets
             for prop in ('solr_fetch', 'solr_highlight', 'form_single_choice'):
                 setattr(fp, prop,
                         name in getattr(schema.opts, prop))
@@ -716,6 +719,11 @@ FIELD_MAP = {
 FILTER_FIELDS = OrderedDict(
     (k, p) for _fps in __FPROPS.values() for k, p in _fps.items()
     if p.solr_filter
+)
+
+FACET_FIELDS = OrderedDict(
+    (k, p) for _fps in __FPROPS.values() for k, p in _fps.items()
+    if p.solr_facet
 )
 
 # build stats for all filters that are date(/time)s or numbers
