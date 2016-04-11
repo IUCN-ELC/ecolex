@@ -82,7 +82,7 @@ class SearchResultsView(SearchViewMixin, TemplateView):
                 'number': 1,
                 'no_pages': 1,
                 'pages_list': [1],
-                'pages_urls': [_url],
+                'pages_urls': {1: _url},
                 'next_url': None,
                 'prev_url': None,
                 'first_url': _url,
