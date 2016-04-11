@@ -59,16 +59,12 @@ class BaseFacetViewSet(ApiViewMixin,
 
         search = self.request.query_params.get('search', '').strip()
         if search:
+            search = Searcher._normalize_facet(search)
+            terms = [t for t in search.split(" ") if t]
             def _matches(item):
-                item = Searcher._normalize_facet(search)
-                terms = (t for t in search.split(" ") if t)
+                return all(map(lambda t: re.search(r'\b%s' % t, item, re.I),
+                               terms))
 
-                return all(map(
-                    lambda term: re.search(r'\b%s' % unaccent(term),
-                                           item, re.I),
-                    terms
-                ))
-
-            items = (item for item in items if _matches(item['id']))
+            items = [item for item in items if _matches(item['id'])]
 
         return items
