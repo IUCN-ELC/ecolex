@@ -8,4 +8,21 @@ supervisord.conf
 env27/
 local_settings.py
 contrib/treaties.json
+
+# OS generated files
+._*
+.DS_Store
+Thumbs.db
+
+# Editor generated files
+*.sublime-project
+*.sublime-workspace
+
+# Files to ignore
 *.log
+*.vi
+*~
+
+# Folders to ignore
+bower_components
+node_modules
