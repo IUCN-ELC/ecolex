@@ -356,15 +356,6 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     };
 
     CachingAjaxAdapter.prototype.processResults = function (data, params) {
-        // select2 needs "id" and "text" keys
-        data.results = $.map(data.results, function (result) {
-            return {
-                id: result.item,
-                text: result.item,
-                count: result.count
-            };
-        });
-
         // there are more results when the backend sends a next page url
         var more = Boolean(data['next']);
 
