@@ -20,11 +20,11 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     url(r'^$', Homepage.as_view(), name="homepage"),
-    url(r'^result/$', SearchResults.as_view(),
-        name="results"),
+    #url(r'^result/$', SearchResults.as_view(),
+    #    name="results"),
 
-    url(r'^xresult/$', SearchResultsView.as_view(),
-        name="xresults"),
+    url(r'^result/$', SearchResultsView.as_view(),
+        name="results"),
 
     url(r'^details/(?P<slug>[^/]+)/decisions/$',
         ResultDetailsDecisions.as_view(), name="resultDecisions"),
