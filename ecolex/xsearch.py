@@ -422,3 +422,9 @@ class SearchResponse(object):
         self.facets = response.facet_counts.facet_fields
         self.stats = response.stats.stats_fields
         self.results = response.result.docs
+
+    def __len__(self):
+        return self.count
+
+    def __iter__(self):
+        return iter(self.results)

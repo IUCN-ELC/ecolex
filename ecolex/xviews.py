@@ -65,7 +65,7 @@ class SearchResultsView(SearchViewMixin, TemplateView):
             response = searcher.search(page=page, date_sort=date_sort)
 
         ctx['form'] = self.form
-        ctx['results'] = response.results
+        ctx['results'] = response
         ctx['facets'] = response.facets
         ctx['stats'] = response.stats
         # TODO: rename ctx to 'pages'
