@@ -43,11 +43,9 @@ class BaseFacetViewSet(ApiViewMixin,
         field = self.field
         data = self.get_query_data()
 
-        # TODO !!1
-        language = 'en'
+        language = data.pop('lang')[0]
         searcher = Searcher(data, language=language)
         response = searcher.search()
-
 
         facet = {
             'field': field,

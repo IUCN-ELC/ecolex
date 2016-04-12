@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load json %}
 {% load tags %}
 <div class="clearfix filter-header" id="facet-{{ field.name }}-container">
@@ -17,7 +18,7 @@
           class="selection-facet clearfix"
           multiple="true"
           data-placeholder="{{ placeholder }}"{% if viewname %}
-          data-ajax--url="{% url viewname %}"{% endif %}{% with facet|apify_f as data %}
+          data-ajax--url="{% url viewname %}?lang={{ LANGUAGE_CODE }}"{% endif %}{% with facet|apify_f as data %}
           data-data="{{ data.results|json }}"
           data-more="{{ data.more|yesno:"true,false" }}"{% endwith %}
           data-selected="{{ field.value|json }}">
