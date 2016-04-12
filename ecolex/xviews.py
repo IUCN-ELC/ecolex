@@ -33,11 +33,12 @@ class SearchViewMixin(object):
         for rk in rem_keys:
             del data[rk]
 
-        data.update({
-            k: v
-            for k, v in self.form.data.lists()
-            if k not in data
-        })
+        if self.form.data:
+            data.update({
+                k: v
+                for k, v in self.form.data.lists()
+                if k not in data
+            })
 
         return data
 
