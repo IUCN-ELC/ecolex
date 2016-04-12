@@ -39,7 +39,7 @@
 
       {% if document.is_chapter and document.parent_title %}
         <dt>Monograph</dt>
-        <dd>{{ document.parent_title|safe }}</dd>
+        <dd><a href="{{ document.parent_url }}?{{ query }}">{{ document.parent_title|safe }}</a></dd>
       {% endif %}
 
       {% if document.date %}
@@ -149,8 +149,8 @@
       <dt>Full text</dt>
       <dd>
           {% for link in document.link_to_full_text %}
-            <a class="decision-link" href="{{ link }}"
-               target="_blank">{{ link|extract_filename }}</a>
+            <a class="decision-link" href="{{ link }}" target="_blank"
+               class="file-link">{{ link|extract_filename }}</a>
             &nbsp;
           {% endfor %}
       </dd>

@@ -1,18 +1,21 @@
 {% extends 'layout.html' %}
 {% load tags %}
 
+{% block scripts %}
+  {% if document.treaty_id and document.treaty_slug %}
+  <script>
+    document.informea_url = "http://www.informea.org/treaties/{{ document.treaty_slug }}/decision/{{ document.decision_id }}";
+    document.hostname = "informea.org";
+  </script>
+  {% endif %}
+{% endblock %}
+
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
   {% breadcrumb "COP decision" %}
 {% endblock %}
 
 {% block content %}
-
-{% if document.treaty_id and document.treaty_slug %}
-  <script>
-    document.informea_url = "http://www.informea.org/treaties/{{ document.treaty_slug }}/decision/{{ document.decision_id }}";
-  </script>
-{% endif %}
 
 <article class="record-details">
 
@@ -71,8 +74,8 @@
       {% if document.url %}
         <dt>Available website</dt>
         <dd>
-          {# TODO Check this, it doesn't seem to be right. #}
-          <a target="_blank" href="{{ document.url }}">{{ document.language_names.0 }}</a>
+          <a href="{{ document.url }}"
+             target="_blank">{{ document.url|extract_hostname|default:"No link" }}</a>
         </dd>
       {% endif %}
 
@@ -83,7 +86,7 @@
         <dt>Files</dt>
           {% for url, name in document.files %}
             <dd>
-              <a target="_blank" href="{{ url }}">{{ name }}</a>
+              <a target="_blank" href="{{ url }}" class="file-link">{{ name }}</a>
             </dd>
           {% endfor %}
       {% endif %}

@@ -1,17 +1,20 @@
 import logging
 from urllib.parse import urlencode
 from django.conf import settings
-from django.http import (
-    Http404, HttpResponseForbidden, HttpResponseServerError, JsonResponse,
-)
+from django.core.urlresolvers import reverse
+from django.http import Http404, HttpResponseForbidden, HttpResponseServerError
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
+from django.views.generic.base import RedirectView
 
 from ecolex.legislation import harvest_file
-from ecolex.search import get_document, SearchMixin
 from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS
+from ecolex.search import (
+    SearchMixin, get_documents_by_field, get_document_by_slug
+)
 
 
 logger = logging.getLogger(__name__)
@@ -131,14 +134,12 @@ class SearchResults(SearchView):
         return render(request, 'list_results.html', ctx)
 
 
-
-
 class PageView(SearchView):
 
     def get(self, request, **kwargs):
         slug = kwargs.pop('slug', '')
         PAGES = ('about', 'privacy', 'agreement', 'acknowledgements',
-                 'other_resources')
+                 'knowledge_tools')
         if slug not in PAGES:
             raise Http404()
         ctx = self.get_context_data()
@@ -150,9 +151,9 @@ class DetailsView(SearchView):
 
     def get_context_data(self, **kwargs):
         context = super(DetailsView, self).get_context_data(**kwargs)
+        slug = kwargs['slug']
 
-        results = get_document(document_id=kwargs['id'], query=self.query,
-                               hl_details=True)
+        results = get_document_by_slug(slug, query=self.query, hl_details=True)
         if not results:
             raise Http404()
         context['document'] = results.first()
@@ -188,7 +189,8 @@ class ResultDetailsDecisions(SearchView):
 
     def get_context_data(self, **kwargs):
         context = super(ResultDetailsDecisions, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'])
+        slug = kwargs['slug']
+        results = get_document_by_slug(slug, query=self.query, hl_details=True)
         if not results.count():
             raise Http404()
 
@@ -203,7 +205,8 @@ class ResultDetailsLiteratures(SearchView):
 
     def get_context_data(self, **kwargs):
         ctx = super(ResultDetailsLiteratures, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'])
+        slug = kwargs['slug']
+        results = get_document_by_slug(slug, query=self.query, hl_details=True)
         if not results.count():
             raise Http404
 
@@ -218,7 +221,8 @@ class ResultDetailsCourtDecisions(SearchView):
 
     def get_context_data(self, **kwargs):
         ctx = super(ResultDetailsCourtDecisions, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'])
+        slug = kwargs['slug']
+        results = get_document_by_slug(slug, query=self.query, hl_details=True)
         if not results.count():
             raise Http404
 
@@ -232,7 +236,8 @@ class ResultDetailsParticipants(SearchView):
 
     def get_context_data(self, **kwargs):
         ctx = super(ResultDetailsParticipants, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'], self.query)
+        slug = kwargs['slug']
+        results = get_document_by_slug(slug, query=self.query, hl_details=True)
         if not results:
             raise Http404()
 
@@ -292,3 +297,32 @@ def debug(request):
 
 class DesignPlayground(TemplateView):
     template_name = 'playground.html'
+
+
+class LegislationRedirectView(RedirectView):
+
+    doc_type_map = {
+        'legislation': 'legId',
+        'treaty': 'trElisId',
+        'literature': 'litId',
+    }
+
+    def get_redirect_url(self, *args, **kwargs):
+        doc_id = kwargs.pop('doc_id', None)
+        doc_type = kwargs.pop('doc_type', None)
+        if not doc_id or not doc_type:
+            return None
+        search_field = self.doc_type_map.get(doc_type)
+        results = get_documents_by_field(search_field, [doc_id], rows=1)
+        if not results:
+            return None
+        leg = [x for x in results][0]
+        doc_details = doc_type + '_details'
+        return reverse(doc_details, kwargs={'slug': leg.solr.get('slug')})
+
+    def get(self, request, *args, **kwargs):
+        url = self.get_redirect_url(*args, **kwargs)
+        if url:
+            return HttpResponseRedirect(url)
+        else:
+            return HttpResponse('Arguments missing or document is not indexed')

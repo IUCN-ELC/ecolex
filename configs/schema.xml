@@ -52,6 +52,7 @@
     <field name="source" type="string" indexed="true" stored="true" required="true" default="informea"/>
     <field name="indexedDate" type="tdate" indexed="false" stored="true" default="NOW"/>
     <field name="updatedDate" type="tdate" indexed="false" stored="true"/>
+    <field name="slug" type="string" indexed="true" stored="true" multiValued="false"/>
 
     <field name="trElisId" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="trDateOfText" type="tdate" indexed="true" stored="true"/>
@@ -64,11 +65,11 @@
 
     <field name="trTitleOfText" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trTitleAbbreviation" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trTitleOfTextShort" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trPaperTitleOfText_en" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trPaperTitleOfText_es" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trPaperTitleOfText_fr" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trPaperTitleOfText_other" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trTitleOfTextShort" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trPaperTitleOfText_en" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trPaperTitleOfText_es" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trPaperTitleOfText_fr" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trPaperTitleOfText_other" type="text" indexed="true" stored="true" multiValued="false"/>
 
     <field name="trIntroText" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trAbstract_en" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -85,7 +86,7 @@
     <field name="trFieldOfApplication_es" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trFieldOfApplication_fr" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trPlaceOfAdoption" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trPlaceOfAdoption" type="string" indexed="true" stored="true" multiValued="false"/>
 
     <field name="trDepository_en" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trDepository_es" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -143,7 +144,7 @@
 
     <field name="trObsolete" type="string" indexed="true" stored="false"/>
 
-    <field name="trAvailableIn" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trAvailableIn" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="trLanguageOfTranslation" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trNumberOfPages" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trOfficialPublication" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -388,6 +389,8 @@
     <field name="cdTitleOfTextShort" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdTreatyReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdUrlOther" type="string" indexed="true" stored="false" multiValued="false"/>
+    <field name="cdLeoDefaultUrl" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdLeoEnglishUrl" type="string" indexed="false" stored="true" multiValued="false"/>
 
     <!-- Legislation fields -->
     <field name="legId" type="string" indexed="true" stored="true"/>
@@ -600,7 +603,7 @@
 
     <field name="litEdition" type="string" indexed="false" stored="true"/>
     <field name="litCallNo" type="string" indexed="false" stored="true"/>
-    <field name="litRelatedMonograph" type="string" indexed="false" stored="true"/>
+    <field name="litRelatedMonograph" type="string" indexed="true" stored="true"/>
 
     <field name="litBasin_en" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="litBasin_fr" type="text" indexed="true" stored="true" multiValued="true"/>

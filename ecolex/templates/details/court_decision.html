@@ -1,6 +1,13 @@
 {% extends 'layout.html' %}
 {% load tags %}
 
+{% block scripts %}
+  <script>
+    document.informea_url = "{{ document.leo_english_url }}";
+    document.hostname = "leo.informea.org";
+  </script>
+{% endblock %}
+
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
   {% breadcrumb "Court decision" %}
@@ -68,6 +75,7 @@
         <dd>
           {# TODO Check if language_of_document should be used here #}
           <a href="{{ document.link_to_full_text|url_normalize }}"
+             class="file-link"
              target="_blank">{{ document.language_of_document|join:", " }}</a>
         </dd>
       {% endif %}

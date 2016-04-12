@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+
 <article class="record-details">
 
   <header>
@@ -118,7 +119,7 @@
         <dt>Full text</dt>
         <dd>
           {% for link in document.link_to_full_text %}
-            <a href="{{ link.url }}" target="_blank">{{ link.language }}</a>
+            <a href="{{ link.url }}" target="_blank" class="file-link">{{ link.language }}</a>
             &nbsp;
           {% endfor %}
         </dd>
@@ -152,7 +153,7 @@
   <section id="participants">
     <div class="clearfix">
       <a id="participants-extras"
-        href="{% url 'resultParticipants' document.id %}?{{ query }}"
+        href="{% url 'resultParticipants' document.slug %}?{{ query }}"
          class="pull-right btn btn-link">See Expanded View</a>
       <h2 class="section-title">Country/Participant</h2>
     </div>
@@ -226,7 +227,7 @@
         <dt>COP decisions</dt>
         <dd>
           <strong>{{ document.decisions.count }} decisions</strong> related to this treaty.
-          <a href="{% url 'resultDecisions' document.id %}?{{ query }}">View decisions</a>
+          <a href="{% url 'resultDecisions' document.slug %}?{{ query }}">View decisions</a>
         </dd>
       {% endif %}
     </dl>
@@ -235,8 +236,8 @@
       {% if document.literatures.count %}
         <dt>Literature</dt>
         <dd>
-          <strong>{{ document.literatures.count }} record(s)</strong> related to this treaty.
-          <a href="{% url 'resultLiteratures' document.id %}?{{ query }}">View literature</a>
+          <strong>{{ literatures|length }} record(s)</strong> related to this treaty.
+          <a href="{% url 'resultLiteratures' document.slug %}?{{ query }}">View literature</a>
         </dd>
       {% endif %}
     </dl>
@@ -245,8 +246,8 @@
       {% if document.court_decisions.count %}
         <dt>Court Decision</dt>
         <dd>
-          <strong>{{ document.court_decisions.count }} court decisions</strong> related to this treaty.
-          <a href="{% url 'resultCourtDecisions' document.id %}?{{ query }}">View court decisions</a>
+          <strong>{{ court_decisions|length }} court decisions</strong> related to this treaty.
+          <a href="{% url 'resultCourtDecisions' document.slug %}?{{ query }}">View court decisions</a>
         </dd>
       {% endif %}
     </dl>

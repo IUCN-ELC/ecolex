@@ -34,7 +34,7 @@ class DocumentModel(BaseModel):
 
     @property
     def details_url(self):
-        return reverse(self.URL_NAME, kwargs={'id': self.id})
+        return reverse(self.URL_NAME, kwargs={'slug': self.slug})
 
     @cached_property
     def references(self):

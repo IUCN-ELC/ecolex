@@ -26,6 +26,7 @@ class BaseSchema(Schema):
     """
 
     id = fields.String()
+    slug = fields.String()
     type = fields.String()
     source = fields.String()
     indexed_at = fields.DateTime(load_from='indexedDate')
@@ -67,7 +68,7 @@ class BaseSchema(Schema):
         solr_facets = solr_filters.copy()
         solr_facets.remove('xdate')
         solr_fetch = [
-            'id', 'type', 'source',
+            'id', 'slug', 'type', 'source',
         ]
         solr_boost = {
             'text': 20,
@@ -540,6 +541,8 @@ class CourtDecisionSchema(CommonSchema):
     language_of_document = fields.List(fields.String(),
                                        load_from='cdLanguageOfDocument',
                                        multilingual=True)
+    leo_default_url = fields.String(load_from='cdLeoDefaultUrl')
+    leo_english_url = fields.String(load_from='cdLeoEnglishUrl')
     link_to_full_text = fields.String(load_from='cdLinkToFullText',
                                       multilingual=True)
     original_id = fields.String(load_from='cdOriginalId')

@@ -1,24 +1,28 @@
-{% load json %}{% load tags %}
-<div class="clearfix filter-header">
-  <h6{% if op_field %} class="pull-left"{% endif %}>{{ title }}</h6>
-{% if op_field %}
-  <span class="filter-global pull-right" data-formid="#id_{{ name }}_op">
-{% include 'bits/facet_operation.html' with field=op_field %}
-  </span>
-{% endif %}
+{% load json %}
+{% load tags %}
+<div class="clearfix filter-header" id="facet-{{ field.name }}-container">
+  <label class="pull-left filter-label" data-target="#facet-{{ field.name }}">
+    <h6 class="pull-left">{{ title }}</h6><span class="caret"></span>
+  </label>
+    <span class="filter-global pull-right" data-formid="#id_{{ name }}_op">
+      {% if op_field and field.value|length > 1 %}
+        {% include 'bits/facet_operation.html' with field=op_field target=field.name %}
+      {% endif %}
+      {% if field.value|length > 0 %}
+        {% include 'bits/facet_reset.html' with target=field.name %}
+      {% endif %}
+    </span>
   <select id="facet-{{ field.name }}"
           name="{{ field.name }}"
           class="selection-facet clearfix"
           multiple="true"
-          data-width="300"
           data-placeholder="{{ placeholder }}"{% if viewname %}
           data-ajax--url="{% url viewname %}"{% endif %}{% with facet|apify_f as data %}
           data-data="{{ data.results|json }}"
           data-more="{{ data.more|yesno:"true,false" }}"{% endwith %}
-          data-selected="{{ field.value|json }}"
-  >
-{% for option in field.value %}
-    <option id="{{ option }}" selected data-count="0">{{ option }}</option>
-{% endfor %}
+          data-selected="{{ field.value|json }}">
+    {% for option in field.value %}
+        <option id="{{ option }}" selected data-count="0">{{ option }}</option>
+    {% endfor %}
   </select>
 </div>

@@ -411,16 +411,25 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
 
     $('.selection-facet').each(function(idx) {
         var self = $(this);
+        var search_field_id = self.attr('id') + '-search-field';
 
         self.select2({
-            dataAdapter: _DataAdapter
+            dataAdapter: _DataAdapter,
         });
 
         // strip away the initial data, for performance reasons
         self.removeData('data');
         self.removeAttr('data-data');
 
+        var search_field = self.next().find('.select2-search__field');
+        search_field.attr('id', search_field_id);
         self.change(submit);
+
+        self.on("select2:closing", function (e) {
+            $(this).next().find('li.select2-search').hide();
+            $(this).parent().find('label.filter-label').removeClass('dropup');
+            $(this).data('open', false);
+        });
 
         // add clearfix to select2 widget
         //self.next().addClass('clearfix');
@@ -437,6 +446,20 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         $('#search-form').submit();
     };
 
+    $('.filter-label').on('click', function (e) {
+        var data_target = $(this).data('target');
+        var input_selector = data_target + '-search-field';
+        var open = $(data_target).data('open');
+        if (open) {
+            target.select2('close');
+        } else {
+            $(this).data('open', true);
+            $(this).parent().find('li.select2-search').show();
+            $(input_selector).trigger('click');
+            $(this).addClass('dropup');
+        }
+    });
+
     // TODO: not the most beautiful approach this
     $('#search-form input:checkbox').change(submit);
 
@@ -446,6 +469,30 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         var value = $(this).data('sortby');
         $('#id_sortby').val(value);
 
+        submit();
+    });
+
+    // Type facet add multiple selections
+    $('.selection-add, .selection-remove').click(function (event) {
+        event.stopPropagation();
+
+        var current = $('#id_type').val() || [];
+        var toggle_value = $(this).prev().data('value');
+        var index = current.indexOf(toggle_value);
+
+        if (index == -1) {
+            current.push(toggle_value);
+        } else {
+            current.splice(index, 1);
+        }
+
+        $('#id_type').val(current);
+
+        submit();
+    });
+
+    $('#query-remove').click(function(e) {
+        $('#search').val('');
         submit();
     });
 
@@ -462,6 +509,12 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         $('#id_type').val(current);
 
         submit();
+    });
+
+    $('button.reset-multiple').click(function(e) {
+        e.preventDefault();
+        var target = $(this).data('target');
+        $(target).select2('val', '')
     });
 
     // Slider
@@ -490,6 +543,10 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         e.preventDefault();
         $form = $('#search-form');
         $form[0].reset();
+        $('#search-form input:checkbox:checked').prop("checked", false);
+        $('#year-min').val(1860);
+        $('#year-max').val(2015);
+        $('#id_type option:selected').prop("selected", false);
         $form.submit();
     });
 

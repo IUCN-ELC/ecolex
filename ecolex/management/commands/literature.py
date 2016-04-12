@@ -7,6 +7,8 @@ import logging
 import logging.config
 import re
 
+from django.template.defaultfilters import slugify
+
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.utils import EcolexSolr, LITERATURE
 from ecolex.management.utils import get_content_from_url, valid_date
@@ -158,7 +160,7 @@ DATE_FIELDS = [
     'litDateOfEntry', 'litDateOfModification'
 ]
 
-TEXT_DATE_FIELDS = ['litDateOfText']
+TEXT_DATE_FIELDS = ['litDateOfTextSer', 'litYearOfText', 'litDateOfText']
 SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
 MULTIVALUED_FIELDS = [
@@ -311,9 +313,6 @@ class LiteratureImporter(object):
                             valid_date(field_values[0].text)):
                         data[v] = format_date(
                             self._clean_text(field_values[0].text))
-                    elif v in TEXT_DATE_FIELDS and field_values:
-                        value = self._clean_text(field_values[0].text)
-                        data[v], data['docDate'] = self._clean_text_date(value)
                     elif field_values:
                         clean_values = [self._clean_text(field.text) for field in field_values]
                         if v in data:
@@ -322,6 +321,15 @@ class LiteratureImporter(object):
                             data[v] = clean_values
                         if v in data and v not in MULTIVALUED_FIELDS:
                             data[v] = data[v][0]
+
+                for field in TEXT_DATE_FIELDS:
+                    if field in data and 'docDate' not in data:
+                        data[field], data['docDate'] = self._clean_text_date(data[field])
+                # litDateOfText parsing error log
+                if 'litDateOfText' in data and ('docDate' not in data or
+                                                not data['docDate']):
+                    logger.error('Invalid date format (dateoftext) %s: %s' %
+                                 (data['litId'], data['litDateOfText']))
 
                 # Region regularization
                 if 'litRegion_en' in data:
@@ -359,12 +367,6 @@ class LiteratureImporter(object):
                     data['litRegion_es'] = new_regions['es']
                     data['litRegion_fr'] = new_regions['fr']
 
-                # litDateOfText parsing error log
-                if 'litDateOfText' in data and ('docDate' not in data or
-                                                not data['docDate']):
-                    logger.error('Invalid date format (dateoftext) %s: %s' %
-                                 (data['litId'], data['litDateOfText']))
-
                 # compute litDisplayType
                 id = data.get('litId')
                 if id and 'V;' in id:
@@ -373,6 +375,21 @@ class LiteratureImporter(object):
                 if id and id[:3] in DOCUMENT_TYPE_MAP:
                     for k, v in DOCUMENT_TYPE_MAP[id[:3]].items():
                         data[k] = v
+
+                    if id[:3] == 'MON':
+                        title = (data.get('litLongTitle_en') or
+                                 data.get('litLongTitle_es') or
+                                 data.get('litLongTitle_fr') or
+                                 data.get('litLongTitle_other'))
+                    else:
+                        title = (data.get('litPaperTitleOfText_en') or
+                                 data.get('litPaperTitleOfText_es') or
+                                 data.get('litPaperTitleOfText_fr') or
+                                 data.get('litPaperTitleOfText_other'))
+                    if not title:
+                        title = data.get('litId')
+                    slug = title + ' ' + data.get('litId')
+                    data['slug'] = slugify(slug)
 
                 literatures.append(data)
         return literatures

@@ -382,7 +382,8 @@ class Treaty(ObjectNormalizer):
         return first(self.solr.get('trInformeaId'))
 
     def details_url(self):
-        return reverse('treaty_details', kwargs={'id': self.id()})
+        return reverse('treaty_details',
+                       kwargs={'slug': self.solr.get('slug')})
 
     def title_translations(self):
         titles = []
@@ -421,16 +422,17 @@ class Decision(ObjectNormalizer):
         return first(self.solr.get('decLink'))
 
     def details_url(self):
-        return reverse('decision_details', kwargs={'id': self.id()})
+        return reverse('decision_details',
+                       kwargs={'slug': self.solr.get('slug')})
 
     def status(self):
         return first(self.solr.get('decStatus'), "unknown")
 
     def get_language(self):
-        lang_code = first(self.solr.get('decLanguage_en'))
-        if lang_code:
-            return settings.LANGUAGE_MAP.get(lang_code, lang_code)
-        return 'Document language'
+        link = first(self.solr.get('decLink'))
+        if link:
+            return urlparse.urlparse(link).hostname
+        return 'No link'
 
     def summary(self):
         # TODO - Multilangual selector
@@ -505,10 +507,13 @@ class Literature(ObjectNormalizer):
         from ecolex.search import get_documents_by_field
         ids_dict = {}
         for field, doc_type in self.REFERENCE_TO_FIELDS.items():
-            values = [v for v in self.solr.get(field, [])]
+            values = self.solr.get(field, [])
+            if not isinstance(values, list):
+                values = [values]
+            else:
+                values = [v for v in values]
             if values and any(values):
                 ids_dict[doc_type] = values
-
         references = {}
         for doc_type, ids in ids_dict.items():
             results = get_documents_by_field(self.REFERENCE_MAPPING[doc_type],
@@ -535,7 +540,8 @@ class Literature(ObjectNormalizer):
         return self.solr.get('litYearOfText') or self.solr.get('litDateOfTextSer')
 
     def details_url(self):
-        return reverse('literature_details', kwargs={'id': self.id()})
+        return reverse('literature_details',
+                       kwargs={'slug': self.solr.get('slug')})
 
     def jurisdiction(self):
         return first(self.solr.get('litScope_en'))
@@ -608,6 +614,17 @@ class Literature(ObjectNormalizer):
         return titles
 
     @cached_property
+    def parent_url(self):
+        # only for chapters
+        from ecolex.search import get_documents_by_field
+        if self.lit_is_chapter:
+            parent_elis_id = self.solr.get('litRelatedMonograph')
+            docs = get_documents_by_field('litId', [parent_elis_id], rows=1)
+            doc = [x for x in docs][0]
+            return doc.details_url()
+        return None
+
+    @cached_property
     def parent_title(self):
         # only for chapters
         if self.lit_is_chapter:
@@ -675,7 +692,8 @@ class CourtDecision(ObjectNormalizer):
     REFERENCED_BY_FIELDS = {'literature': 'litCourtDecisionReference'}
 
     def details_url(self):
-        return reverse('court_decision_details', kwargs={'id': self.id()})
+        return reverse('court_decision_details',
+                       kwargs={'slug': self.solr.get('slug')})
 
     def get_references(self):
         from ecolex.search import get_documents_by_field
@@ -757,7 +775,8 @@ class Legislation(ObjectNormalizer):
         return references
 
     def details_url(self):
-        return reverse('legislation_details', kwargs={'id': self.id()})
+        return reverse('legislation_details',
+                       kwargs={'slug': self.solr.get('slug')})
 
     def country(self):
         return first(self.solr.get('legCountry_en'))

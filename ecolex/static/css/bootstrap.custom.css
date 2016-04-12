@@ -2808,6 +2808,17 @@ tbody.collapse.in {
   -webkit-transition-timing-function: ease;
   transition-timing-function: ease;
 }
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid \9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
 .dropup,
 .dropdown {
   position: relative;
@@ -2920,6 +2931,13 @@ tbody.collapse.in {
   top: auto;
   bottom: 100%;
   margin-bottom: 2px;
+}
+.dropup .caret,
+.navbar-fixed-bottom .dropdown .caret {
+  border-top: 0;
+  border-bottom: 4px dashed;
+  border-bottom: 4px solid \9;
+  content: "";
 }
 @media (min-width: 768px) {
   .navbar-right .dropdown-menu {
@@ -4228,7 +4246,8 @@ a.badge:focus {
   }
   .jumbotron .logo-ecolex img {
     margin: 0;
-    height: 105px;
+    margin-top: 15px;
+    height: 90px;
   }
   .jumbotron .slogan {
     padding-left: 0;
@@ -5763,6 +5782,14 @@ fieldset[disabled] .slick-arrow.active {
   right: 5px;
   width: 110px;
 }
+.search-form .icon-close {
+  position: absolute;
+  top: 5px;
+  color: #666666;
+  font-size: 150%;
+  right: 115px;
+  cursor: pointer;
+}
 @media (min-width: 768px) {
   .search-form {
     max-width: 720px;
@@ -5937,41 +5964,28 @@ main {
   }
 }
 .filter-type {
-  margin-bottom: 22px;
+  border-radius: 3px;
+  box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.4);
   display: block;
-}
-.filter-type:before,
-.filter-type:after {
-  content: " ";
-  display: table;
-}
-.filter-type:after {
-  clear: both;
-}
-.filter-type:before,
-.filter-type:after {
-  content: " ";
-  display: table;
-}
-.filter-type:after {
-  clear: both;
+  margin-bottom: 22px;
 }
 .filter-type .btn {
-  position: relative;
-  width: 20%;
-  padding-left: 5px;
-  padding-right: 5px;
+  box-shadow: none;
+  font-size: 14px;
+}
+.filter-type .btn:active {
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 .filter-type .btn.active {
-  z-index: 5;
+  background-color: #ffeeab;
   border-color: #f0ad4e;
-  background-color: #FFEEAB;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 .filter-type .btn[disabled] {
-  opacity: 1!important;
-  color: #333!important;
-  border-color: #DDD!important;
-  background-color: #fff!important;
+  background-color: #fff !important;
+  border-color: #ddd !important;
+  color: #333 !important;
+  opacity: 1 !important;
 }
 .filter-type .btn .icon {
   display: block;
@@ -5980,8 +5994,8 @@ main {
 }
 .filter-type .btn .badge {
   position: absolute;
-  top: -0.75em;
   right: 1em;
+  top: -0.75em;
 }
 .filter-type .btn .btn-label {
   display: block;
@@ -5991,6 +6005,61 @@ main {
   .filter-type .btn .btn-label {
     display: none;
   }
+}
+.filter-type .selection-add,
+.filter-type .selection-remove {
+  border-radius: 50%;
+  color: #ffffff;
+  cursor: pointer;
+  display: none;
+  height: 16px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  transform: translateZ(0);
+  transition-duration: .35s;
+  width: 16px;
+  z-index: 3;
+}
+.filter-type .selection-add:hover,
+.filter-type .selection-remove:hover,
+.filter-type .selection-add:focus,
+.filter-type .selection-remove:focus {
+  transform: scale(1.4);
+  transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+.filter-type .selection-add {
+  background: #1cb54b url('../img/selection-add.svg') center center no-repeat;
+}
+.filter-type .selection-remove {
+  background: #d9534f url('../img/selection-remove.svg') center center no-repeat;
+}
+.filter-type .btn-group {
+  position: relative;
+}
+.filter-type .btn-group:hover .btn,
+.filter-type .btn-group:focus .btn {
+  background-color: #eee;
+  border-color: #c9c9c9;
+}
+.filter-type .btn-group:hover .btn.active,
+.filter-type .btn-group:focus .btn.active {
+  background-color: #ffeeab;
+  border-color: #f0ad4e;
+}
+.filter-type .btn-group:hover .selection-add,
+.filter-type .btn-group:focus .selection-add,
+.filter-type .btn-group:hover .selection-remove,
+.filter-type .btn-group:focus .selection-remove {
+  display: block;
+}
+.filter-type .btn-group:first-child .btn {
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.filter-type .btn-group:last-child .btn {
+  border-bottom-right-radius: 3px !important;
+  border-top-right-radius: 3px !important;
 }
 aside {
   font-size: 14px;
@@ -6211,6 +6280,21 @@ fieldset .filter-header {
 }
 .multiselect-wrapper .multiselect-search {
   border-radius: 0;
+}
+.selection-facet {
+  width: 100%;
+}
+.select2-container--default .select2-selection--multiple {
+  background-color: transparent !important;
+}
+li.select2-search {
+  display: none;
+}
+span.select2-selection {
+  min-height: 0px !important;
+}
+ul.select2-selection__rendered {
+  display: block !important;
 }
 .html-disclaimer {
   font-size: 85%;
@@ -6705,6 +6789,9 @@ fieldset .filter-header {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.homepage-tour-themes-wrapper {
+  text-align: center;
 }
 @media (min-width: 992px) {
   .homepage-tour-themes-wrapper {

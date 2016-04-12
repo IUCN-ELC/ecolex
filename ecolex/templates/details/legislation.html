@@ -1,6 +1,13 @@
 {% extends 'layout.html' %}
 {% load tags %}
 
+{% block scripts %}
+  <script>
+    document.faolex_url = "http://faolex.fao.org/cgi-bin/faolex.exe?database=faolex&search_type=query&table=result&query=ID:{{ document.document_id }}&format_name=ERALL&lang=eng";
+    document.hostname = "faolex.fao.org";
+  </script>
+{% endblock %}
+
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
   {% breadcrumb "Legislation" %}
@@ -82,8 +89,9 @@
 
       {% if document.link_to_full_text %}
       <dt>Link to full text</dt>
+      {# TODO Check if language is the right thing to display here #}
       <dd>
-        <a href="{{ document.link_to_full_text }}"
+        <a href="{{ document.link_to_full_text }}" class="file-link"
            target="_blank">{{ document.language|join:"/" }}</a>
       </dd>
       {% endif %}

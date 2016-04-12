@@ -5,8 +5,10 @@ import tempfile
 from bs4 import BeautifulSoup
 from datetime import datetime
 from collections import OrderedDict
-from django.conf import settings
 from pysolr import SolrError
+
+from django.conf import settings
+from django.template.defaultfilters import slugify
 
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.utils import EcolexSolr, LEGISLATION
@@ -178,6 +180,10 @@ def harvest_file(uploaded_file):
             legislation['legStatus'] = REPEALED
         else:
             legislation['legStatus'] = IN_FORCE
+
+        title = legislation.get('legTitle') or legislation.get('legLongTitle')
+        slug = title + ' ' + legislation.get('legId')
+        legislation['slug'] = slugify(slug)
 
         legislations.append(legislation)
 

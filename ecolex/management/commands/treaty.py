@@ -7,6 +7,7 @@ import html
 import json
 
 from django.conf import settings
+from django.template.defaultfilters import slugify
 from pysolr import SolrError
 
 from ecolex.management.commands.logging import LOG_DICT
@@ -62,8 +63,6 @@ FIELD_MAP = {
     'subject_fr_fr': 'trSubject_fr',
 
     'languageofdocument': 'trLanguageOfDocument_en',
-    'languageofdocument_es_es': 'trLanguageOfDocument_es',
-    'languageofdocument_fr_fr': 'trLanguageOfDocument_fr',
     'obsolete': 'trObsolete',
     'enabledbytreaty': 'trEnabledByTreaty',
     'placeofadoption': 'trPlaceOfAdoption',
@@ -84,7 +83,6 @@ FIELD_MAP = {
     'comment': 'trComment',
     'titleoftextshort': 'trTitleOfTextShort',
     'titleabbreviation': 'trTitleAbbreviation',
-    'placeofadoption': 'trPlaceOfAdoption',
 
     'basin': 'trBasin_en',
     'basin_fr_fr': 'trBasin_fr',
@@ -145,6 +143,9 @@ PARTICIPANT_FIELDS = {
     'dateofwithdrawal': 'partyDateOfWithdrawal',
 }
 
+LANGUAGE_FIELDS = [
+    'trLanguageOfDocument_en',
+]
 
 DATE_FIELDS = [
     'trDateOfEntry',
@@ -173,6 +174,19 @@ DATE_FIELDS = [
 URL_FIELDS = [
     'linktofulltext', 'linktofulltextsp', 'linktofulltextfr',
     'linktofulltextother'
+]
+
+FALSE_LIST_FIELDS = [
+    'trTypeOfText_en',
+    'trTypeOfText_es',
+    'trTypeOfText_fr',
+    'trAvailableIn',
+    'trPlaceOfAdoption',
+    'trTitleOfTextShort',
+    'trPaperTitleOfText_en',
+    'trPaperTitleOfText_es',
+    'trPaperTitleOfText_fr',
+    'trPaperTitleOfText_other',
 ]
 
 
@@ -221,6 +235,7 @@ class TreatyImporter(object):
     def __init__(self, config):
         self.solr_timeout = config.getint('solr_timeout')
         self.regions_json = config.get('regions_json')
+        self.languages_json = config.get('languages_json')
         self.treaties_url = config.get('treaties_url')
         self.import_field = config.get('import_field')
         self.query_format = config.get('query_format')
@@ -235,6 +250,7 @@ class TreatyImporter(object):
         self.start_month = int(config.get('start_month', now.month))
         self.end_month = int(config.get('end_month', now.month))
         self.regions = self._get_regions()
+        self.languages = self._get_languages()
         self.solr = EcolexSolr(self.solr_timeout)
         logger.info('Started treaty importer')
 
@@ -291,6 +307,8 @@ class TreatyImporter(object):
             for document in bs.findAll(DOCUMENT):
                 data = {
                     'type': TREATY,
+                    'trLanguageOfDocument_es': [],
+                    'trLanguageOfDocument_fr': [],
                 }
 
                 for k, v in FIELD_MAP.items():
@@ -302,6 +320,24 @@ class TreatyImporter(object):
                             data[v] = [self._repair_date(x) for x in data[v]]
                             data[v] = [format_date(date) for date in data[v]
                                        if self._valid_date(date)]
+                        elif v in LANGUAGE_FIELDS:
+                            langs = data[v]
+                            data[v] = []
+                            for lang in langs:
+                                lang = lang.lower()
+                                if lang in self.languages:
+                                    data['trLanguageOfDocument_en'].append(self.languages[lang]['en'])
+                                    data['trLanguageOfDocument_es'].append(self.languages[lang]['es'])
+                                    data['trLanguageOfDocument_fr'].append(self.languages[lang]['fr'])
+                                else:
+                                    logger.error('Language not found %s' % (lang.lower()))
+                        elif v in FALSE_LIST_FIELDS:
+                            data[v] = self._clean_text(field_values[0].text)
+                            if len(field_values) > 1:
+                                logger.error('Field {} has a value with more '
+                                             'than 1 elements: {}. Should '
+                                             'convert its type back to list.'
+                                             .format(v, field_values))
 
                 if ('trRegion_en' in data and 'trRegion_es' in data and
                         'trRegion_fr' in data):
@@ -378,6 +414,15 @@ class TreatyImporter(object):
                 data = self._apply_custom_rules(data)
                 treaties[elis_id] = data
 
+                title = (data.get('trPaperTitleOfText_en') or
+                         data.get('trPaperTitleOfText_fr') or
+                         data.get('trPaperTitleOfText_es') or
+                         data.get('trPaperTitleOfText_other') or
+                         data.get('trTitleOfTextShort'))
+                title_list = [title] if title else data.get('trTitleOfText')
+                slug = title_list[0] + ' ' + elis_id
+                data['slug'] = slugify(slug)
+
         return treaties
 
     def _apply_custom_rules(self, data):
@@ -386,12 +431,9 @@ class TreatyImporter(object):
             if value == rule['condition_value']:
                 data[rule['action_field']] = rule['action_value']
 
-        available_in = data.get('trAvailableIn', [])
-        new_available_in = []
-        for publication in available_in:
-            if publication.startswith('B7'):
-                new_available_in.append(publication.replace('B7', B7))
-        data['trAvailableIn'] = new_available_in
+        available_in = data.get('trAvailableIn', '')
+        if available_in and available_in.startswith('B7'):
+            data['trAvailableIn'] = available_in.replace('B7', B7)
 
         # fix server2.php/server2neu.php in full text links
         field_names = ['trLinkToFullText_en', 'trLinkToFullText_es',
@@ -507,6 +549,15 @@ class TreatyImporter(object):
             regions = json.load(f)
         return regions
 
+    def _get_languages(self):
+        with open(self.languages_json) as f:
+            languages_codes = json.load(f)
+        langs = {}
+        for k, v in languages_codes.items():
+            key = v['en'].lower()
+            langs[key] = v
+        return langs
+
     def update_status(self):
         rows = 50
         index = 0
@@ -515,7 +566,7 @@ class TreatyImporter(object):
             print(index)
             docs = self.solr.solr.search('type:treaty', rows=rows, start=index)
             for treaty in docs:
-                if 'Bilateral' in treaty.get('trTypeOfText_en', []):
+                if treaty.get('trTypeOfText_en', '') == 'Bilateral':
                     treaty['trStatus'] = 'In force'
                 else:
                     treaty_id = treaty.get('trElisId')

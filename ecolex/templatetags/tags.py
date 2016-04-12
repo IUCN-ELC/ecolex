@@ -53,6 +53,11 @@ def extract_filename(link):
 
 
 @register.filter
+def extract_hostname(link):
+    return urlparse.urlparse(link).hostname
+
+
+@register.filter
 def just_year(value):
     return value and value[0:4]
 
@@ -101,6 +106,7 @@ def translate_url(context, language):
     url = reverse(view.url_name, args=view.args, kwargs=view.kwargs)
     translation.activate(request_language)
     return url
+
 
 @register.filter
 def apify_f(data):

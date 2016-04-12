@@ -4,6 +4,7 @@ def global_config(request):
     expose_settings = [
         'STATIC_URL',
         'GA_CODE',
+        'GA_ENABLED',
         'FACETS_PAGE_SIZE',
         'DEBUG',
     ]
