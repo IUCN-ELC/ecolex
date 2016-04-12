@@ -1,3 +1,4 @@
+from operator import itemgetter
 from django import template
 from django.conf import settings
 from django.core.urlresolvers import resolve, reverse
@@ -119,3 +120,10 @@ def apify_f(data):
 @register.filter
 def field_urlencoded(field, value):
     return field.urlencoded(value)
+
+@register.filter
+def get_facet_counts(fdata):
+    return {
+        f['id']: f['count']
+        for f in fdata
+    }

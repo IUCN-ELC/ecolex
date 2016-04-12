@@ -1,3 +1,4 @@
+{% load tags %}{% with facets.type|get_facet_counts as type_count %}
 {# The type filter has different behaviour between the home page and the results page. #}
 <div class="hidden">{{ form.type }}{# TODO: de-jsify (and de-uglify) #}</div>
 <div class="btn-group btn-group-justified filter-type {{ page_type|default:"results-page" }}">
@@ -13,8 +14,8 @@
             title="{% if 'treaty' in form.type.data %}Show all{% else %}Show only Treaties{% endif %}">
       <span class="icon icon-treaty"></span>
       <span class="btn-label">Treaties</span>
-      {% if facets.type.treaty > 0 %}
-        <span class="badge">{{ facets.type.treaty }}</span>
+      {% if type_count.treaty > 0 %}
+        <span class="badge">{{ type_count.treaty }}</span>
       {% endif %}
     </button>
   </div>
@@ -31,8 +32,8 @@
             title="{% if 'decision' in form.type.data %}Show all{% else %}Show only COP Decisions{% endif %}">
       <span class="icon icon-cop-decision"></span>
       <span class="btn-label">COP Decisions</span>
-      {% if facets.type.decision > 0 %}
-        <span class="badge">{{ facets.type.decision }}</span>
+      {% if type_count.decision > 0 %}
+        <span class="badge">{{ type_count.decision }}</span>
       {% endif %}
     </button>
   </div>
@@ -49,8 +50,8 @@
             title="{% if 'legislation' in form.type.data %}Show all{% else %}Show only Legislation{% endif %}">
       <span class="icon icon-legislation"></span>
       <span class="btn-label">Legislation</span>
-      {% if facets.type.legislation > 0 %}
-        <span class="badge">{{ facets.type.legislation }}</span>
+      {% if type_count.legislation > 0 %}
+        <span class="badge">{{ type_count.legislation }}</span>
       {% endif %}
     </button>
   </div>
@@ -67,8 +68,8 @@
             title="{% if 'court_decision' in form.type.data %}Show all{% else %}Show only Court Decision{% endif %}">
       <span class="icon icon-court-decision"></span>
       <span class="btn-label">Court Decisions</span>
-      {% if facets.type.court_decision > 0 %}
-        <span class="badge">{{ facets.type.court_decision }}</span>
+      {% if type_count.court_decision > 0 %}
+        <span class="badge">{{ type_count.court_decision }}</span>
       {% endif %}
     </button>
   </div>
@@ -85,9 +86,10 @@
             title="{% if 'literature' in form.type.data %}Show all{% else %}Show only Literature{% endif %}">
       <span class="icon icon-literature"></span>
       <span class="btn-label">Literature</span>
-      {% if facets.type.literature > 0 %}
-        <span class="badge">{{ facets.type.literature }}</span>
+      {% if type_count.literature > 0 %}
+        <span class="badge">{{ type_count.literature }}</span>
       {% endif %}
     </button>
   </div>
 </div>
+{% endwith %}
