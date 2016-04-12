@@ -40,6 +40,7 @@
           <a data-toggle="dropdown">Knowledge tools<span class="caret"></span></a>
           {% include 'bits/knowledge_tools.html' %}
         </li>
+        <li><a data-toggle="tour" class="btn btn-blue">Take a tour</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
@@ -93,31 +94,31 @@
 
             <ul class="homepage-categories">
               <li>
-                <a href="">
+                <a href="{% url 'results' %}?type=treaty">
                   <span class="icon icon-treaty"></span>
                   Treaty
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="{% url 'results' %}?type=decision">
                   <span class="icon icon-cop-decision"></span>
                   COP Decisions
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="{% url 'results' %}?type=legislation">
                   <span class="icon icon-legislation"></span>
                   Legislation
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="{% url 'results' %}?type=court_decision">
                   <span class="icon icon-court-decision"></span>
                   Court Decisions
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="{% url 'results' %}?type=literature">
                   <span class="icon icon-literature"></span>
                   Literature
                 </a>

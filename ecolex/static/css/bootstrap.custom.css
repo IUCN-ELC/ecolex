@@ -2656,6 +2656,11 @@ fieldset[disabled] .btn-search.active {
   color: #ffffff;
   background-color: #0077c0;
   border-color: #0077c0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+  color: #fff !important;
 }
 .btn-blue:hover,
 .btn-blue:focus,
@@ -2697,6 +2702,12 @@ fieldset[disabled] .btn-blue.active {
 .btn-blue .badge {
   color: #0077c0;
   background-color: #ffffff;
+}
+.btn-blue:hover,
+.btn-blue:focus,
+.btn-blue.focus {
+  color: #000000 !important;
+  text-decoration: none;
 }
 .btn-link {
   color: #0066cc;
