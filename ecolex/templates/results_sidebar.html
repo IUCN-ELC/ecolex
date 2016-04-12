@@ -139,11 +139,11 @@ select.selection-facet {
 
     <div id="filter-treaties" class="collapse {% if form.has_treaty %}in{% endif %}">
 
-{% include 'bits/checkbox_facet.html' with title="Document type" facet=facets.trTypeOfText_en field=form.tr_type show_empty=True %}
+{% include 'bits/checkbox_facet.html' with title="Document type" facet=facets.tr_type_of_document field=form.tr_type_of_document show_empty=True %}
 
-{% include 'bits/checkbox_facet.html' with title="Field of application" facet=facets.trFieldOfApplication_en field=form.tr_field show_empty=True %}
+{% include 'bits/checkbox_facet.html' with title="Field of application" facet=facets.field_of_application field=form.tr_field_of_application show_empty=True %}
 
-{% include 'bits/checkbox_facet.html' with title="Status" facet=facets.trStatus field=form.tr_status show_empty=True %}
+{% include 'bits/checkbox_facet.html' with title="Status" facet=facets.tr_status field=form.tr_status show_empty=True %}
 
 {# TODO: this is badly named deposit*o*ry in code #}
 {% include "bits/selection_facet.html" with title="Depositary" placeholder="Add depositary…" viewname="api:tr-depository-list" data=facets.tr_depository field=form.tr_depository op_field=form.tr_depository_and_ %}
@@ -162,13 +162,13 @@ select.selection-facet {
 
     <div id="filter-cop-decisions" class="collapse {% if form.has_decision %}in{% endif %}">
 
-{% include "bits/selection_facet.html" with title="Treaty" placeholder="Add treaties…" viewname="api:dec-treaty-name-list" data=facets.dec_treaty field=form.dec_treaty op_field=form.dec_treaty_and_ %}
+{% include "bits/selection_facet.html" with title="Treaty" placeholder="Add treaties…" viewname="api:dec-treaty-name-list" data=facets.dec_treaty_name field=form.dec_treaty_name op_field=form.dec_treaty_name_and_ %}
 
-{% if facets.decType %}
-{% include 'bits/checkbox_facet.html' with title="Type of document" facet=facets.decType field=form.dec_type %}
+{% if facets.dec_type_of_document %}
+{% include 'bits/checkbox_facet.html' with title="Type of document" facet=facets.dec_type_of_document field=form.dec_type_of_document %}
 {% endif %}
 
-{% include 'bits/checkbox_facet.html' with title="Decision status" facet=facets.decStatus field=form.dec_status show_empty=True %}
+{% include 'bits/checkbox_facet.html' with title="Decision status" facet=facets.dec_status field=form.dec_status show_empty=True %}
 
     </div>
 </fieldset>
@@ -181,7 +181,7 @@ select.selection-facet {
         data-target="#filter-court-decisions">Court decision filters</h5>
     <div id="filter-court-decisions" class="collapse {% if form.has_court_decision %}in{% endif %}">
 
-{% include 'bits/checkbox_facet.html' with title="Type of court" facet=facets.cdTypeOfText field=form.cd_type show_empty=True %}
+{% include 'bits/checkbox_facet.html' with title="Type of court" facet=facets.cd_type_of_document field=form.cd_type_of_document show_empty=True %}
 
 {% include "bits/selection_facet.html" with title="Sub-national/state level" placeholder="Add territory…" viewname="api:cd-territorial-subdivision-list" data=facets.cd_territorial_subdivision field=form.cd_territorial_subdivision op_field=form.cd_territorial_subdivision_and_ %}
 
@@ -195,9 +195,9 @@ select.selection-facet {
     <h5 data-toggle="collapse" {% if not form.has_legislation %}class="collapsed"{% endif %}data-target="#filter-legislation">Legislation filters</h5>
     <div id="filter-legislation" class="collapse {% if form.has_legislation %}in{% endif %}">
 
-{% include 'bits/checkbox_facet.html' with title="Document type" facet=facets.legType_en field=form.leg_type show_empty=True %}
+{% include 'bits/checkbox_facet.html' with title="Document type" facet=facets.leg_type_of_document field=form.leg_type_of_document show_empty=True %}
 
-{% include "bits/selection_facet.html" with title="Sub-national/state level" placeholder="Add territory…" viewname="api:leg-territorial-subdivision-list" data=facets.leg_territorial field=form.leg_territorial op_field=form.leg_territorial_and_ %}
+{% include "bits/selection_facet.html" with title="Sub-national/state level" placeholder="Add territory…" viewname="api:leg-territorial-subdivision-list" data=facets.leg_territorial_subdivision field=form.leg_territorial_subdivision op_field=form.leg_territorial_subdivision_and_ %}
 
     </div>
   </fieldset>
@@ -211,11 +211,11 @@ select.selection-facet {
 
 {% include "bits/selection_facet.html" with title="Author" placeholder="Add author…" viewname="api:lit-author-list" data=facets.lit_author field=form.lit_author op_field=form.lit_author_and_ %}
 
-{% include "bits/selection_facet.html" with title="Journal/Series" placeholder="Add journal/series…" viewname="api:lit-orig-serial-title-list" data=facets.lit_serial field=form.lit_serial op_field=form.lit_serial_and_ %}
+{% include "bits/selection_facet.html" with title="Journal/Series" placeholder="Add journal/series…" viewname="api:lit-orig-serial-title-list" data=facets.lit_orig_serial_title field=form.lit_orig_serial_title op_field=form.lit_orig_serial_title_and_ %}
 
 {% include "bits/selection_facet.html" with title="Publisher" placeholder="Add publisher…" viewname="api:lit-publisher-list" data=facets.lit_publisher field=form.lit_publisher op_field=form.lit_publisher_and_ %}
 
-{% include "bits/selection_facet.html" with title="Document type" placeholder="Add document type…" viewname="api:lit-type-of-text-list" data=facets.lit_type field=form.lit_type op_field=form.lit_type_and_ %}
+{% include "bits/selection_facet.html" with title="Document type" placeholder="Add document type…" viewname="api:lit-type-of-text-list" data=facets.lit_type_of_text field=form.lit_type_of_text op_field=form.lit_type_of_text_and_ %}
 
     </div>
   </fieldset>
