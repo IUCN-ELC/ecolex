@@ -5,14 +5,13 @@ from os.path import basename
 from urllib import parse as urlparse
 
 import functools
-import re
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.html import strip_tags
-from django.template.defaultfilters import date as django_date_filter
 from django.utils.translation import get_language
 
-from ecolex.definitions import DOC_SOURCES, LANGUAGE_MAP
+from ecolex.definitions import DOC_SOURCES
 
 
 def cached_property(func):
@@ -24,10 +23,14 @@ def first(obj, default=None):
         return obj[0]
     return obj if obj else default
 
+
 def all(obj, default=None):
     if obj and type(obj) is list:
         return '; '.join(obj)
     return obj if obj else default
+
+
+# NOTE: code covered in schema marked with '#del'
 
 
 class ObjectNormalizer:
@@ -150,11 +153,11 @@ class ObjectNormalizer:
         pass
 
     @property
-    def keywords(self):
+    def keywords(self): #del
         return self.solr.get(self.KEYWORD_FIELD, [])
 
     @property
-    def subjects(self):
+    def subjects(self): #del
         return self.solr.get(self.SUBJECT_FIELD, [])
 
     @classmethod
@@ -258,8 +261,8 @@ class Treaty(ObjectNormalizer):
     ]
     DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
     DOCTYPE_FIELD = 'trTypeOfText_en'
-    KEYWORD_FIELD = 'trKeyword_en'
-    SUBJECT_FIELD = 'trSubject_en'
+    KEYWORD_FIELD = 'trKeyword_en' #del
+    SUBJECT_FIELD = 'trSubject_en' #del
     OPTIONAL_INFO_FIELDS = [
         # (solr field, display text, type=text)
         ('trPlaceOfAdoption', 'Place of adoption', ''),
@@ -384,7 +387,7 @@ class Treaty(ObjectNormalizer):
 
     def title_translations(self):
         titles = []
-        for code, language in LANGUAGE_MAP.items():
+        for code, language in settings.LANGUAGE_MAP.items():
             if code == 'en':
                 # TODO fix this when multilinguality feature is on
                 continue
@@ -396,7 +399,7 @@ class Treaty(ObjectNormalizer):
     @cached_property
     def link_to_full_text(self):
         links = []
-        for code, language in LANGUAGE_MAP.items():
+        for code, language in settings.LANGUAGE_MAP.items():
             urls = self.solr.get('{}_{}'.format(self.FULL_TEXT, code), [])
             for url in urls:
                 links.append({'url': url, 'language': language})
@@ -588,7 +591,7 @@ class Literature(ObjectNormalizer):
         # Try current language first
         value = self.get_multilingual(field, get_language())
         if not value:
-            for lang_code in LANGUAGE_MAP.keys():
+            for lang_code in settings.LANGUAGE_MAP.keys():
                 value = self.get_multilingual(field, lang_code)
                 if value:
                     break;
@@ -602,7 +605,7 @@ class Literature(ObjectNormalizer):
     def title_translations(self):
         titles = []
         main_title = self.title()
-        for code, language in LANGUAGE_MAP.items():
+        for code, language in settings.LANGUAGE_MAP.items():
             if code == get_language():
                 continue
             title = first(self.get_multilingual(self.title_field(), code))

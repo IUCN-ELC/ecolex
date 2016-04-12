@@ -1,14 +1,19 @@
 from django import template
+from django.conf import settings
 from django.core.urlresolvers import resolve, reverse
 from django.utils import translation
+from django.utils.html import format_html
 from django.template.defaultfilters import capfirst
 from django.contrib.staticfiles.finders import get_finders
 import datetime
-import os, re
+import os
+from os.path import basename
+from urllib import parse as urlparse
 
 register = template.Library()
 INITIAL_DATE = datetime.date(1, 1, 1)
 version_cache = {}
+
 
 @register.simple_tag
 def version(path_string):
@@ -26,21 +31,36 @@ def version(path_string):
     except:
         return path_string
 
+
 @register.filter
 def lookup(d, key):
     return d.get(key, d.get(str(key)))
+
+
+@register.filter(name='getattr')
+def getattribute(obj, attr):
+    return getattr(obj, attr)
+
+
+@register.filter
+def labelify(text):
+    return text.replace('_', ' ').capitalize()
+
+
+@register.filter
+def extract_filename(link):
+    return basename(urlparse.urlparse(link).path)
+
+
+@register.filter
+def extract_hostname(link):
+    return urlparse.urlparse(link).hostname
 
 
 @register.filter
 def just_year(value):
     return value and value[0:4]
 
-
-@register.filter
-def join_by(lst, arg):
-    if lst and (type(lst) is list or type(lst) is set):
-        return arg.join(lst)
-    return lst
 
 @register.filter
 def capfirstseq(lst):
@@ -67,45 +87,15 @@ def url_normalize(value):
     return value if value.startswith('http') else 'http://' + value
 
 
-@register.simple_tag()
-def informea_url_id(document):
-    document_type = document.solr.get('type', None)
-    if document_type == 'court_decision':
-        url = document.solr.get('cdLeoEnglishUrl', None)
-        return """<script>
-            document.informea_url = "{url}";
-            document.hostname = "leo.informea.org";
-        </script>""".format(url=url)
-
-    # We use this to generate urls to informea.org decisions
-    treaty_id = document.solr.get('decTreatyId', None)
-    treaty_name = document.solr.get('decTreaty', None)
-
-    if not treaty_id or not treaty_name:
-        return ''
-
-    return """<script>
-        document.informea_url = "http://www.informea.org/treaties/{url_id}/decision/{dec_id}";
-        document.hostname = "informea.org";
-    </script>""".format(url_id=treaty_name, dec_id=document.solr['decId'])
-
-
-@register.simple_tag()
-def faolex_url_id(document):
-    return """<script>
-        document.faolex_url = "http://faolex.fao.org/cgi-bin/faolex.exe?database=faolex&search_type=query&table=result&query=ID:{leg_id}&format_name=ERALL&lang=eng";
-        document.hostname = "faolex.fao.org";
-        </script>""".format(leg_id=document.solr.get('legId', 'treaty'))
-
-
-@register.simple_tag()
+@register.simple_tag
 def breadcrumb(label, viewname='', query='', *args, **kwargs):
     if not viewname:
         return label
     url = reverse(viewname, args=args, kwargs=kwargs)
     if query:
         url = '{url}?{query}'.format(url=url, query=query)
-    return '<a href="{url}">{label}</a> &raquo;'.format(url=url, label=label)
+    return format_html('<a href="{url}">{label}</a> &raquo;',
+                       url=url, label=label)
 
 
 @register.simple_tag(takes_context=True)
@@ -116,3 +106,12 @@ def translate_url(context, language):
     url = reverse(view.url_name, args=view.args, kwargs=view.kwargs)
     translation.activate(request_language)
     return url
+
+
+@register.filter
+def apify_f(data):
+    # truncates the facet and returns a {results: [], more: bool} dict
+    return {
+        'more': len(data) > settings.FACETS_PAGE_SIZE,
+        'results': data[:settings.FACETS_PAGE_SIZE],
+    }

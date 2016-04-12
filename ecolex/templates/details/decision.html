@@ -1,13 +1,21 @@
 {% extends 'layout.html' %}
 {% load tags %}
 
+{% block scripts %}
+  {% if document.treaty_id and document.treaty_slug %}
+  <script>
+    document.informea_url = "http://www.informea.org/treaties/{{ document.treaty_slug }}/decision/{{ document.decision_id }}";
+    document.hostname = "informea.org";
+  </script>
+  {% endif %}
+{% endblock %}
+
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
   {% breadcrumb "COP decision" %}
 {% endblock %}
 
 {% block content %}
-{% informea_url_id document %}
 
 <article class="record-details">
 
@@ -28,11 +36,13 @@
 
   <section id="details">
     <dl>
-      <dt>Status</dt> <dd>{{ document.solr.decStatus|capfirst }}</dd>
+      <dt>Status</dt> <dd>{{ document.status|capfirst }}</dd>
+
       {% if document.subjects %}
         <dt>Subject{{ document.subjects|length|pluralize:",s" }}</dt>
-        <dd>{{ document.subjects | join_by:", " | safe }}</dd>
+        <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
+
       {% if document.keywords %}
         <dt>Keywords</dt>
         <dd>
@@ -41,57 +51,54 @@
         {% endfor %}
         </dd>
       {% endif %}
-      {% if treaty %}
+
+      {% if document.treaty %}
         <dt>Treaty</dt>
         <dd>
-          <a href="{{ treaty.details_url }}?{{ query }}">
-            {{ treaty }} ({{ treaty.date|date:"b j, Y"|capfirst  }})
+          <a href="{{ document.treaty.details_url }}?{{ query }}">
+            {{ document.treaty.title|safe }} ({{ document.treaty.date|date:"b j, Y"|capfirst  }})
           </a>
         </dd>
       {% endif %}
 
       <dt>Meeting</dt>
       <dd>
-        {% if document.solr.decMeetingUrl %}
-          <a href="{{ document.solr.decMeetingUrl }}" target="_blank">
-            {{ document.solr.decMeetingTitle | safe }}
-          </a>
+        {% if document.meeting_url %}
+          <a href="{{ document.meeting_url }}"
+             target="_blank">{{ document.meeting_title|safe }}</a>
         {% else %}
-          {{ document.solr.decMeetingTitle | safe }}
+          {{ document.meeting_title|safe }}
         {% endif %}
       </dd>
 
       {% if document.url %}
-      <dt>Available website</dt>
-      <dd>
-        <a target="_blank" href="{{ document.url }}">{{ document.get_language }}</a>
-      </dd>
+        <dt>Available website</dt>
+        <dd>
+          <a href="{{ document.url }}"
+             target="_blank">{{ document.url|extract_hostname|default:"No link" }}</a>
+        </dd>
       {% endif %}
+
       <dt>Source</dt>
       <dd>{{ document.source }}, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
 
-      {% if document.get_files %}
+      {% if document.files %}
         <dt>Files</dt>
-          {% for url, name in document.get_files %}
+          {% for url, name in document.files %}
             <dd>
               <a target="_blank" href="{{ url }}" class="file-link">{{ name }}</a>
             </dd>
           {% endfor %}
       {% endif %}
-
-      {% for entry in document.optional_fields %}
-        <dt> {{ entry.label }} </dt>
-        <dd> {{ entry.value | date:"b j, Y" | capfirst | join_by:", " }}</dd>
-      {% endfor %}
     </dl>
   </section>
 
-  {% if document.get_body %}
+  {% if document.body %}
     <section id="text">
       <dl>
         <dt>Abstract</dt>
         <dd>
-          <div class="html">{{ document.get_body|safe }}</div>
+          <div class="html">{{ document.body|safe }}</div>
         </dd>
       </dl>
     </section>

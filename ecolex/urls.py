@@ -1,33 +1,30 @@
 from django.conf import settings
-from django.conf.urls import include, patterns, url
-from django.conf.urls.i18n import i18n_patterns
-from rest_framework import routers
+from django.conf.urls import include, url
+# from django.conf.urls.i18n import i18n_patterns
+from solid_i18n.urls import solid_i18n_patterns as i18n_patterns
 
 from .views import (
-    SearchResults, PageView, ResultDetailsDecisions, Homepage,
-    ResultDetailsParticipants, debug, SearchResultsAjax,
-    DecisionDetails, TreatyDetails, LiteratureDetails,
-    CourtDecisionDetails, ResultDetailsLiteratures, FaoFeedView,
-    ResultDetailsCourtDecisions, LegislationDetails,
-    SelectFacetsAjax, DesignPlayground, LegislationRedirectView,
+    CourtDecisionDetails, DecisionDetails, DesignPlayground, FaoFeedView,
+    Homepage, LegislationDetails, LegislationRedirectView,  LiteratureDetails,
+    PageView, ResultDetailsCourtDecisions, ResultDetailsDecisions,
+    ResultDetailsLiteratures, ResultDetailsParticipants, SearchResults,
+    TreatyDetails, debug,
 )
+from .xviews import SearchResultsView
 from .api import urls as api_urls
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^fao/$', FaoFeedView.as_view(), name='fao_feeder'),
     url(r'^i18n/', include('django.conf.urls.i18n')),
-)
+]
 
 urlpatterns += i18n_patterns(
-    '',
     url(r'^$', Homepage.as_view(), name="homepage"),
-    url(r'^result/$', SearchResults.as_view(),
+    #url(r'^result/$', SearchResults.as_view(),
+    #    name="results"),
+
+    url(r'^result/$', SearchResultsView.as_view(),
         name="results"),
-    url(r'^result/ajax/', SearchResultsAjax.as_view(),
-        name="results_ajax"),
-    url(r'^facets/ajax/', SelectFacetsAjax.as_view(),
-        name="facets_ajax"),
 
     url(r'^details/(?P<slug>[^/]+)/decisions/$',
         ResultDetailsDecisions.as_view(), name="resultDecisions"),
@@ -55,15 +52,20 @@ urlpatterns += i18n_patterns(
         LegislationRedirectView.as_view(), name="legislation_redirect"),
 )
 
-urlpatterns += patterns(
-    '',
+urlpatterns += [
     url(r'^api/', include(api_urls, namespace="api")),
-)
+]
 
 
 if settings.DEBUG:
-    urlpatterns += patterns(
-        '',
+    urlpatterns += [
         url(r'^_debug', debug, name="debug"),
         url(r'^playground/$', DesignPlayground.as_view(), name="playground"),
-    )
+    ]
+    # Local urls
+    try:
+        from ecolex import local_urls
+    except ImportError:
+        pass
+    else:
+        urlpatterns.append(url(r'^', include(local_urls)))

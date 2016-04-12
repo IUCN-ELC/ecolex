@@ -1,13 +1,19 @@
 {% extends 'layout.html' %}
 {% load tags %}
 
+{% block scripts %}
+  <script>
+    document.informea_url = "{{ document.leo_english_url }}";
+    document.hostname = "leo.informea.org";
+  </script>
+{% endblock %}
+
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
   {% breadcrumb "Court decision" %}
 {% endblock %}
 
 {% block content %}
-{% informea_url_id document %}
 
 <article class="record-details">
 
@@ -30,16 +36,24 @@
   <section id="details">
     <dl>
       <dt>Country</dt> <dd>{{ document.country }}</dd>
-      <dt>Court name</dt> <dd>{{ document.solr.cdCourtName }}</dd>
-      <dt>Justices</dt> <dd>{{ document.solr.cdJustices|join:"<br>" }}</dd>
-      {% if document.solr.cdReferenceNumber %}
-        <dt>Reference number</dt> <dd>{{ document.solr.cdReferenceNumber }}</dd>
+      <dt>Court name</dt> <dd>{{ document.court_name }}</dd>
+
+      {% if document.justices %}
+        <dt>Justices</dt> <dd>{{ document.justices|join:"<br>" }}</dd>
       {% endif %}
-      <dt>Language of document</dt> <dd>{{ document.language }}</dd>
+
+      {% if document.reference_number %}
+        <dt>Reference number</dt> <dd>{{ document.reference_number }}</dd>
+      {% endif %}
+
+      <dt>Language of document</dt>
+      <dd>{{ document.language_of_document|join:", " }}</dd>
+
       {% if document.subjects %}
         <dt>Subjects</dt>
-        <dd>{{ document.subjects | join_by:", " | safe }}</dd>
+        <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
+
       {% if document.keywords %}
         <dt>Keywords</dt>
         <dd>
@@ -56,20 +70,27 @@
       <dt>Abstract</dt>
       <dd>{{ document.abstract|safe }}</dd>
 
-
-      {% if document.solr.cdLinkToFullText_en %}
+      {% if document.link_to_full_text %}
         <dt>Link to full text</dt>
-        <dd><a target="_blank" class="file-link" href="{{ document.solr.cdLinkToFullText_en | url_normalize }}">{{ document.language }}</a></dd>
+        <dd>
+          {# TODO Check if language_of_document should be used here #}
+          <a href="{{ document.link_to_full_text|url_normalize }}"
+             class="file-link"
+             target="_blank">{{ document.language_of_document|join:", " }}</a>
+        </dd>
       {% endif %}
-      {% if document.solr.cdFiles %}
+
+      {% if document.files %}
         <dt>Files</dt>
-        {% for link in document.solr.cdFiles %}
+        {% for link in document.files %}
+          {# TODO Check if document.title should be used here #}
           <dd><a href="{{ link }}">{{ document.title|safe }}</a></dd>
         {% endfor %}
       {% endif %}
     </dl>
   </section>
 
+{# TODO Update references #}
 {% if references.items or referenced_by.items %}
   <section id="other-references">
     {% if references.items %}

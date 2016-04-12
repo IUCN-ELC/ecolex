@@ -1,5 +1,7 @@
 {% extends 'layout.html' %}
+
 {% load tags %}
+{% load i18n %}
 
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
@@ -7,9 +9,6 @@
 {% endblock %}
 
 {% block content %}
-{% if document.type_of_document == 'Bilateral' %}
-  {% faolex_url_id document %}
-{% endif %}
 
 <article class="record-details">
 
@@ -23,84 +22,99 @@
 
     <dl>
       <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
-      <dt>Field of application</dt> <dd>{{ document.field_of_application }}</dd>
+      <dt>Field of application</dt> <dd>{{ document.field_of_application|join:"," }}</dd>
       <dt>Date</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
     </dl>
   </header>
 
   <section id="details">
     <dl>
-      {% if document.solr.trTitleAbbreviation %}
+      {% if document.title_abbreviation %}
         <dt>Title abbreviation</dt>
-        <dd><p class="alttitle">{{ document.solr.trTitleAbbreviation | join_by:", " |safe }}</p></dd>
+        <dd><p class="alttitle">{{ document.title_abbreviation|join:", " |safe }}</p></dd>
       {% endif %}
 
       {% if document.title_translations %}
         <dt>Title (translation)</dt>
         <dd>
           {% for title in document.title_translations %}
-            <p class="alttitle">{{ title.alttitle | safe}}<sup>{{ title.language }}</sup></p>
+            {% if title.language != LANGUAGE_CODE %}
+            <p class="alttitle">
+              {{ title.value|safe }}
+              <sup>{{ title.language|language_name_translated|capfirst  }}</sup>
+            </p>
+            {% endif %}
           {% endfor %}
         </dd>
       {% endif %}
 
-      {% for entry in document.optional_fields %}
-        <dt> {{ entry.label }} </dt>
-        {% if "url" in entry.type %}
-          {% for url in entry.value %}
-            <dd><a target="_blank" {% if "tracked" in entry.type %} class="decision-link" {% endif %} href="{{ url }}">{{ url }}</a></dd>
-          {% endfor %}
-        {% else %}
-          <dd>{{ entry.value | join_by:", " }}</dd>
-        {% endif %}
-      {% endfor %}
+      {% if document.place_of_adoption %}
+        <dt>Place of adoption</dt>
+        <dd>{{ document.place_of_adoption }}</dd>
+      {% endif %}
+
+      {% if document.depository %}
+        <dt>Depository</dt>
+        <dd>{{ document.depository|join:", " }}</dd>
+      {% endif %}
+
+      {% if document.language_of_document %}
+        <dt>Language</dt>
+        <dd>{{ document.language_of_document|join:", " }}</dd>
+      {% endif %}
+
+      {% if document.entry_into_force_date %}
+        <dt>Entry into force</dt>
+        <dd>{{ document.entry_into_force_date|date:"b j, Y"|capfirst  }}</dd>
+      {% endif %}
 
       {% if document.subjects %}
         <dt>Subject{{ document.subjects|length|pluralize:",s" }}</dt>
-        <dd>{{ document.subjects | join_by:", " | safe }}</dd>
+        <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.keywords %}
         <dt>Keywords</dt>
         <dd>
         {% for keyword in document.keywords %}
-          <span class="tag">{{ keyword | capfirst | safe }}</span>
+          <span class="tag">{{ keyword|capfirst|safe }}</span>
         {% endfor %}
         </dd>
       {% endif %}
 
       {% if document.region %}
         <dt>Geographical area</dt>
-        <dd>{{ document.region | join_by:", " | safe }}</dd>
+        <dd>{{ document.region|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.basin %}
         <dt>Basin</dt>
-        <dd>{{ document.basin | join_by:", " | safe }}</dd>
+        <dd>{{ document.basin|join:", "|safe }}</dd>
       {% endif %}
     </dl>
   </section>
 
   <section id="text">
     <dl>
-      {% if document.solr.trAbstract_en %}
+      {% if document.abstract %}
         <dt>Abstract</dt>
         <dd>
-          {% for abs in document.solr.trAbstract_en %}
-            <p class="abstract">{{ abs|safe }}</p>
+          {% for abstract in document.abstract %}
+            <p class="abstract">{{ abstract|safe }}</p>
           {% endfor %}
         </dd>
       {% endif %}
 
-      {% if document.solr.trComment %}
+      {% if document.comment %}
         <dt>Comment</dt>
-        {% for comment in document.solr.trComment %}
+        {% for comment in document.comment %}
         <dd>
           <p class="comment">{{ comment|safe }}</p>
         </dd>
         {% endfor %}
       {% endif %}
 
+      {# TODO #}
       {% if document.link_to_full_text %}
         <dt>Full text</dt>
         <dd>
@@ -110,13 +124,19 @@
           {% endfor %}
         </dd>
       {% endif %}
-      {% if document.solr.trAvailableIn %}
+
+      {% if document.available_in %}
         <dt>Available in</dt>
-        <dd>{{ document.solr.trAvailableIn | join_by:", " | safe }}</dd>
+        <dd>{{ document.available_in|safe }}</dd>
       {% endif %}
-      {% if document.solr.trUrl %}
+
+      {% if document.url %}
         <dt>Available web site</dt>
-        <dd><a target="_blank" href="{{ document.solr.trUrl }}">{{ document.solr.trUrl }}</a></dd>
+        <dd>
+          {% for doc_url in document.url %}
+            <a target="_blank" href="{{ document.url }}">{{ document.url }}</a>
+          {% endfor %}
+        </dd>
       {% endif %}
 
       <dt>Source</dt>
@@ -129,11 +149,11 @@
     </dl>
   </section>
 
-  {% if document.participants %}
+  {% if document.parties %}
   <section id="participants">
     <div class="clearfix">
       <a id="participants-extras"
-        href="{% url 'resultParticipants' document.solr.slug %}?{{ query }}"
+        href="{% url 'resultParticipants' document.slug %}?{{ query }}"
          class="pull-right btn btn-link">See Expanded View</a>
       <h2 class="section-title">Country/Participant</h2>
     </div>
@@ -142,22 +162,23 @@
       <thead>
         <tr>
           <th>Countries</th>
-          {% for event_name in document.participants.events %}
-          <th nowrap="nowrap">{{ event_name|capfirst }}</th>
+          {% for event in document.parties_events %}
+          <th nowrap="nowrap">{{ document.EVENTS_NAMES|lookup:event }}</th>
           {% endfor %}
         </tr>
       </thead>
     <tbody class="body">
-        {% for participant in document.participants.participants %}
+        {% for party in document.parties|dictsort:'country' %}
         <tr class="country">
-          <th>{{ participant.country }}</th>
-          {% for event_name in document.participants.events %}
+          <th>{{ party.country }}</th>
+
+          {% for event_field in document.parties_events %}
           <td>
-            {% with participant.events|lookup:event_name as event %}
+            {% with party|getattr:event_field as event %}
               {% if event.date %}
-                <time title="{{ event.subgroup|default:event_name|capfirst }} date">
+                <time title="{{ document.EVENTS_NAMES|lookup:event.details }} date">
                 {{ event.date|parse_date|date:"b j, Y"|capfirst }}
-                {% if event.idx %}[{{ event.idx }}]{% endif %}
+                {% if event.index %}[{{ event.index }}]{% endif %}
                 </time>
               {% else %}
                 <span class="text-muted" title="Not available">-</span>
@@ -170,48 +191,63 @@
       </tbody>
     </table>
 
-    {% include 'bits/participants_legend.html' with events=document.participants.events %}
+    {% include 'bits/participants_legend.html' with events=document.parties_events %}
 
   </section>
   {% endif %}
 
-  {% if direct_links or back_links %}
+  {% if document.references %}
   <section id="treaty-references">
     <h2 class="section-title">Treaty references</h2>
-    {% include 'bits/treaty_references.html' with links=direct_links %}
-    {% include 'bits/treaty_references.html' with links=back_links %}
+
+    {% for name, value in document.references.items %}
+      <dl class="dl-horizontal references">
+        <dt>{{ name|labelify }}</dt>
+        {% for treaty in value %}
+          <dd>
+            <div class="treaty-link-container">
+              <h3 class="search-result-title">
+                <a href="{{ treaty.details_url }}?{{ query }}"
+                   title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
+              </h3>
+              {% include 'short_display/treaty.html' with result=treaty %}
+            </div>
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endfor %}
   </section>
   {% endif %}
 
-  {% if decisions|length or literatures|length or court_decisions|length %}
+  {% if document.decisions.count or document.literatures.count or document.court_decisions.count %}
   <section id="other-references">
     <h2 class="section-title">Other references</h2>
     <dl>
-      {% if decisions|length %}
+      {% if document.decisions.count %}
         <dt>COP decisions</dt>
         <dd>
-          <strong>{{ decisions|length }} decisions</strong> related to this treaty.
-          <a href="{% url 'resultDecisions' document.solr.slug %}?{{ query }}">View decisions</a>
+          <strong>{{ document.decisions.count }} decisions</strong> related to this treaty.
+          <a href="{% url 'resultDecisions' document.slug %}?{{ query }}">View decisions</a>
         </dd>
       {% endif %}
     </dl>
 
     <dl>
-      {% if literatures|length %}
+      {% if document.literatures.count %}
         <dt>Literature</dt>
         <dd>
           <strong>{{ literatures|length }} record(s)</strong> related to this treaty.
-          <a href="{% url 'resultLiteratures' document.solr.slug %}?{{ query }}">View literature</a>
+          <a href="{% url 'resultLiteratures' document.slug %}?{{ query }}">View literature</a>
         </dd>
       {% endif %}
     </dl>
 
     <dl>
-      {% if court_decisions|length %}
+      {% if document.court_decisions.count %}
         <dt>Court Decision</dt>
         <dd>
           <strong>{{ court_decisions|length }} court decisions</strong> related to this treaty.
-          <a href="{% url 'resultCourtDecisions' document.solr.slug %}?{{ query }}">View court decisions</a>
+          <a href="{% url 'resultCourtDecisions' document.slug %}?{{ query }}">View court decisions</a>
         </dd>
       {% endif %}
     </dl>

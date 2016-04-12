@@ -2,35 +2,34 @@
 
 {% if result.authors %}
 <p class="search-result-details">
-    <strong>Author{{ result.authors|length|pluralize:",s" }}: </strong>
-    <span>{{ result.authors | join_by:", " | safe }}</span>
+  <strong>Author{{ result.authors|length|pluralize:",s" }}: </strong>
+  <span>{{ result.authors|join:", "|safe }}</span>
 </p>
 {% endif %}
 
 <p class="search-result-details">
-    {% if result.lit_is_article and result.serial_title %}
-    <strong>In: </strong><span>{{ result.serial_title | safe }}</span>
-        {% if result.solr.litVolumeNo %} | {{ result.solr.litVolumeNo | safe }} {% endif %}
-        {% if result.solr.litCollation %} | {{ result.solr.litCollation | safe }} {% endif %}
-    {% elif result.lit_is_chapter and result.parent_title %}
-    <strong>In: </strong><span>{{ result.parent_title | safe }}</span>
-        {% if result.solr.litVolumeNo %} | {{ result.solr.litVolumeNo | safe }} {% endif %}
-        {% if result.solr.litCollation %} | {{ result.solr.litCollation | safe }} {% endif %}
-    {% endif %}
+  {% if result.is_article and result.serial_title %}
+    <strong>In: </strong><span>{{ result.serial_title|safe }}</span>
+    {% if result.volume_no %} | {{ result.volume_no|safe }} {% endif %}
+    {% if result.collation %} | {{ result.collation|safe }} {% endif %}
+  {% elif result.is_chapter and result.parent_title %}
+  <strong>In: </strong><span>{{ result.parent_title|safe }}</span>
+    {% if result.volume_no %} | {{ result.volume_no|safe }} {% endif %}
+    {% if result.collation %} | {{ result.collation|safe }} {% endif %}
+  {% endif %}
 </p>
 <p class="search-result-details">
-    {% if result.publisher %}<strong>Publisher: </strong><span>{{ result.publisher }}</span>{% endif %}
-    {% if result.publication_place %} | <span>{{ result.publication_place }}</span>{% endif %}
-    {% if result.publication_date %} | <span>{{ result.publication_date }}</span>{% endif %}
+  {% if result.publisher %}<strong>Publisher: </strong><span>{{ result.publisher }}</span>{% endif %}
+  {% if result.publication_place %} | <span>{{ result.publication_place }}</span>{% endif %}
+  {% if result.publication_date %} | <span>{{ result.publication_date }}</span>{% endif %}
 </p>
 
 <p class="search-result-details">
-    <strong class="sr-type">{{ result.type|capfirst }}</strong>
-    {% if result.jurisdiction %} | <span>{{ result.jurisdiction }}</span> {% endif %}
-    {% if result.countries %} | <span>{{ result.countries | join_by:", " | safe }}</span> {% endif %}
+  <strong class="sr-type">{{ result.type|capfirst }}</strong>
+  {% if result.jurisdiction %} | <span>{{ result.jurisdiction }}</span> {% endif %}
+  {% if result.countries %} | <span>{{ result.countries|join:", "|safe }}</span> {% endif %}
 </p>
 
 <p class="search-result-details"><strong>Keywords:</strong>
-    {{ result.keywords | capfirstseq | join_by:", " | safe }}
+  {{ result.keywords|capfirstseq|join:", "|safe }}
 </p>
-<p class="search-result-source">Source: <a target="_blank" href="http://iucn.org">{{ result.source }}</a> (ID: {{ result.document_id }})</p>

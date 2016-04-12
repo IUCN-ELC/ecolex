@@ -24,23 +24,24 @@
       <th>#</th>
       <th>Title</th>
     </thead>
-    {% for meetingId in meetings.keys %}
+    {% regroup treaty.decisions by meeting_title as decision_list %}
+    {% for decision in decision_list %}
       <tbody>
         <tr>
-          <th colspan="3">{{ meetingNames|lookup:meetingId }}</th>
+          <th colspan="3">{{ decision.grouper }}</th>
         </tr>
-        {% for decision in meetings|lookup:meetingId %}
+        {% for item in decision.list %}
         <tr>
           <td>
-            <span title="Decision number">{{ decision.document_id }}</span>
+            <span title="Decision number">{{ item.document_id }}</span>
           </td>
           <td>
             <div class="treaty-link-container">
               <h3 class="search-result-title">
-                <a href="{{ decision.details_url }}?{{ query }}"
-                   title="{{ decision.title|safe|striptags }}">{{ decision.title|safe }}</a>
+                <a href="{{ item.details_url }}?{{ query }}"
+                   title="{{ item.title|safe|striptags }}">{{ item.title|safe }}</a>
               </h3>
-              {% include 'short_display/decision.html' with result=decision %}
+              {% include 'short_display/decision.html' with result=item%}
             </div>
           </td>
         </tr>

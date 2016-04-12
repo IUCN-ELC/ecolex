@@ -1,4 +1,5 @@
 {% load json %}
+{% load tags %}
 <div class="clearfix filter-header" id="facet-{{ field.name }}-container">
   <label class="pull-left filter-label" data-target="#facet-{{ field.name }}">
     <h6 class="pull-left">{{ title }}</h6><span class="caret"></span>
@@ -16,9 +17,9 @@
           class="selection-facet clearfix"
           multiple="true"
           data-placeholder="{{ placeholder }}"{% if viewname %}
-          data-ajax--url="{% url viewname %}"{% endif %}
+          data-ajax--url="{% url viewname %}"{% endif %}{% with facet|apify_f as data %}
           data-data="{{ data.results|json }}"
-          data-more="{{ data.more|yesno:"true,false" }}"
+          data-more="{{ data.more|yesno:"true,false" }}"{% endwith %}
           data-selected="{{ field.value|json }}">
     {% for option in field.value %}
         <option id="{{ option }}" selected data-count="0">{{ option }}</option>

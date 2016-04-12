@@ -1,27 +1,20 @@
 import logging
 from urllib.parse import urlencode
-from warnings import warn
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseForbidden, HttpResponseServerError
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
 from django.views.generic.base import RedirectView
 
 from ecolex.legislation import harvest_file
-
+from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS
 from ecolex.search import (
-    search, get_document, get_documents_by_field, get_treaty_by_informea_id,
-    SearchMixin, get_document_by_slug
+    SearchMixin, get_documents_by_field, get_document_by_slug
 )
-from ecolex.definitions import (
-    FIELD_TO_FACET_MAPPING, SELECT_FACETS
-)
-from ecolex.api.serializers import SearchFacetSerializer
 
 
 logger = logging.getLogger(__name__)
@@ -36,7 +29,7 @@ class SearchView(TemplateView, SearchMixin):
         # Prepare query
         self._prepare(self.request.GET)
 
-        ctx['form'] = self.form # set by _prepare above
+        ctx['form'] = self.form  # set by _prepare above
         ctx['debug'] = settings.DEBUG
         ctx['text_suggestion'] = settings.TEXT_SUGGESTION
         ctx['query'] = urlencode(self.request.GET)
@@ -52,6 +45,8 @@ class SearchView(TemplateView, SearchMixin):
             return zip(values, values)
 
         for k, v in FIELD_TO_FACET_MAPPING.items():
+            if k == 'xdate':
+                continue
             self.form.fields[k].choices = _extract(v)
 
 
@@ -109,9 +104,9 @@ class SearchResults(SearchView):
         for old_key, new_key in SELECT_FACETS.items():
             if old_key not in facets:
                 continue
-            ## also convert them to the api serializer format
+            # also convert them to the api serializer format
             # (or not, handle it client-side for now)
-            #facets[new_key] = SearchFacetSerializer.convert_results(
+            # facets[new_key] = SearchFacetSerializer.convert_results(
             #    facets.pop(old_key))
 
             # also hack them into a {results: [], more: bool} dict,
@@ -137,39 +132,6 @@ class SearchResults(SearchView):
     def get(self, request, **kwargs):
         ctx = self.get_context_data(**kwargs)
         return render(request, 'list_results.html', ctx)
-
-
-class SearchResultsAjax(SearchResults):
-
-    def get(self, request, **kwargs):
-        ctx = self.get_context_data(**kwargs)
-        main = render_to_string('results_main.html', ctx)
-        sidebar = render_to_string('results_sidebar.html', ctx)
-        search_form_inputs = render_to_string('bits/hidden_form.html', ctx)
-        return JsonResponse(dict(main=main, sidebar=sidebar,
-                                 form_inputs=search_form_inputs))
-
-
-class SelectFacetsAjax(SearchView):
-
-    def get(self, request, **kwargs):
-        ctx = super(SelectFacetsAjax, self).get_context_data(**kwargs)
-        results = self.search()
-
-        facets = results.get_facets()
-        data = {}
-        for k, v in SELECT_FACETS.items():
-            if k not in facets:
-                continue
-            show_empty = True if len(results) == 0 else False
-            context = {
-                'facet': facets[k],
-                'form_field': ctx['form'][v],
-                'show_empty': show_empty
-            }
-            html = render_to_string('bits/fancy_select.html', context)
-            data[v] = html
-        return JsonResponse(data)
 
 
 class PageView(SearchView):
@@ -203,95 +165,23 @@ class DetailsView(SearchView):
 
 
 class DecisionDetails(DetailsView):
-
     template_name = 'details/decision.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(DecisionDetails, self).get_context_data(**kwargs)
-        treaty_id = context['document'].solr.get('decTreatyId', None)
-
-        if treaty_id:
-            treaty = get_treaty_by_informea_id(treaty_id)
-            context['treaty'] = treaty
-
-        return context
 
 
 class TreatyDetails(DetailsView):
-
     template_name = 'details/treaty.html'
-
-    def _sort_references(self, references):
-        direct_sorted_refs = []
-        for label in self.doc.DIRECT_LABELS:
-            treaties = references.get(label, [])
-            if treaties and any(treaties):
-                treaties = [t for t in treaties]
-                treaties.sort(key=lambda x: x.date(), reverse=True)
-                direct_sorted_refs.append((label, treaties))
-
-        back_sorted_refs = []
-        for label in self.doc.BACK_LABELS:
-            treaties = references.get(label, [])
-            if treaties and any(treaties):
-                treaties = [t for t in treaties]
-                treaties.sort(key=lambda x: x.date(), reverse=True)
-                back_sorted_refs.append((label, treaties))
-
-        return direct_sorted_refs, back_sorted_refs
-
-    def get_context_data(self, **kwargs):
-        context = super(TreatyDetails, self).get_context_data(**kwargs)
-        self.doc = context['document']
-        references = self.doc.get_treaty_references()
-        references.update(self.doc.get_treaty_back_references())
-        context['direct_links'], context['back_links'] = (
-            self._sort_references(references))
-
-        context['decisions'] = self.doc.get_decisions()
-        context['literatures'] = self.doc.get_literatures()
-        context['court_decisions'] = self.doc.get_court_decisions()
-
-        return context
 
 
 class LiteratureDetails(DetailsView):
-
     template_name = 'details/literature.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(LiteratureDetails, self).get_context_data(**kwargs)
-        document = context['document']
-        references_to = document.get_references_to()
-        references_from = document.get_references_from()
-        context['references_to'] = references_to
-        context['references_from'] = references_from
-        return context
 
 
 class CourtDecisionDetails(DetailsView):
-
     template_name = 'details/court_decision.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(CourtDecisionDetails, self).get_context_data(**kwargs)
-        references = context['document'].get_references()
-        referenced_by = context['document'].get_referenced_by()
-        context['references'] = references
-        context['referenced_by'] = referenced_by
-        return context
 
 
 class LegislationDetails(DetailsView):
-
     template_name = 'details/legislation.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(LegislationDetails, self).get_context_data(**kwargs)
-        leg = context['document']
-        context['leg_references'] = leg.get_legislation_references()
-        context['leg_back_references'] = leg.get_legislation_back_references()
-        return context
 
 
 class ResultDetailsDecisions(SearchView):
@@ -304,20 +194,8 @@ class ResultDetailsDecisions(SearchView):
         if not results.count():
             raise Http404()
 
-        meetings = {}
-        meetingNames = {}
         context['treaty'] = results.first()
         context['page_type'] = 'homepage'
-
-        for decision in context['treaty'].get_decisions():
-            decId = decision.solr['decMeetingId'][0]
-            x = meetings.get(decId, [])
-            x.append(decision)
-            meetings[decId] = x
-            if 'decMeetingTitle' in decision.solr:
-                meetingNames[decId] = decision.solr['decMeetingTitle'][0]
-        context['meetings'] = meetings
-        context['meetingNames'] = meetingNames
         return context
 
 
@@ -326,16 +204,15 @@ class ResultDetailsLiteratures(SearchView):
     template_name = 'details_literatures.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ResultDetailsLiteratures, self).get_context_data(**kwargs)
+        ctx = super(ResultDetailsLiteratures, self).get_context_data(**kwargs)
         slug = kwargs['slug']
         results = get_document_by_slug(slug, query=self.query, hl_details=True)
         if not results.count():
             raise Http404
 
-        context['treaty'] = results.first()
-        context['page_type'] = 'homepage'
-        context['literatures'] = context['treaty'].get_literatures()
-        return context
+        ctx['treaty'] = results.first()
+        ctx['page_type'] = 'homepage'
+        return ctx
 
 
 class ResultDetailsCourtDecisions(SearchView):
@@ -343,31 +220,29 @@ class ResultDetailsCourtDecisions(SearchView):
     template_name = 'details_court_decisions.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ResultDetailsCourtDecisions, self).get_context_data(**kwargs)
+        ctx = super(ResultDetailsCourtDecisions, self).get_context_data(**kwargs)
         slug = kwargs['slug']
         results = get_document_by_slug(slug, query=self.query, hl_details=True)
         if not results.count():
             raise Http404
 
-        context['treaty'] = results.first()
-        context['page_type'] = 'homepage'
-        context['court_decisions'] = context['treaty'].get_court_decisions()
-        return context
+        ctx['treaty'] = results.first()
+        ctx['page_type'] = 'homepage'
+        return ctx
 
 
 class ResultDetailsParticipants(SearchView):
     template_name = 'details_participants.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ResultDetailsParticipants, self).get_context_data(**kwargs)
+        ctx = super(ResultDetailsParticipants, self).get_context_data(**kwargs)
         slug = kwargs['slug']
         results = get_document_by_slug(slug, query=self.query, hl_details=True)
         if not results:
             raise Http404()
 
-        context['treaty'] = results.first()
-
-        return context
+        ctx['treaty'] = results.first()
+        return ctx
 
 
 class FaoFeedView(View):
@@ -375,7 +250,7 @@ class FaoFeedView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         logger = logging.getLogger('legislation_import')
-        #for key,val in request.META.items():
+        # for key,val in request.META.items():
         #    logger.debug('Header %s = %s' % (key,val))
         key = request.META.get('HTTP_API_KEY', None)
         api_key = getattr(settings, 'FAOLEX_API_KEY')
@@ -386,7 +261,7 @@ class FaoFeedView(View):
 
     def post(self, request):
         logger = logging.getLogger('legislation_import')
-        #logger.debug(request.body)
+        # logger.debug(request.body)
         legislation_file = request.FILES.get('file', None)
         if not legislation_file:
             logger.error('No attached file!')
@@ -402,6 +277,7 @@ class FaoFeedView(View):
             except:
                 logger.exception('Error harvesting file')
         return HttpResponseServerError('Internal server error during harvesting')
+
 
 def debug(request):
     import subprocess

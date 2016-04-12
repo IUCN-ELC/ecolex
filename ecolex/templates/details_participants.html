@@ -13,7 +13,7 @@
 
 {% block content %}
 <p>
-  <span class="treaty-name">{{ treaty.full_title|safe }}</span>
+  <span class="treaty-name">{{ treaty.title|safe }} ({{ treaty.date }})</span>
 </p>
 
 <hr>
@@ -28,22 +28,22 @@
       <thead>
         <tr>
           <th class="col-country">Countries</th>
-          {% for event_name in treaty.participants.events %}
-          <th>{{ event_name|capfirst }}</th>
+          {% for event in treaty.parties_events %}
+          <th>{{ treaty.EVENTS_NAMES|lookup:event }}</th>
           {% endfor %}
         </tr>
       </thead>
       <tbody>
-        {% for participant in treaty.participants.participants %}
+        {% for participant in treaty.parties %}
           <tr>
             <th>{{ participant.country }}</th>
-            {% for event_name in treaty.participants.events %}
-              {% with participant.events|lookup:event_name as event %}
+            {% for event_field in treaty.parties_events %}
+              {% with participant|getattr:event_field as event %}
                 {% if event.date %}
                   <td data-order="{{ event.date|parse_date|total_seconds }}"
-                      title="{{ event.subgroup|default:event_name|capfirst }} date">
+                      title="{{ treaty.EVENTS_NAMES|lookup:event.details }} date">
                     {{ event.date|parse_date|date:"b j, Y"|capfirst }}
-                    {% if event.idx %}[{{ event.idx }}]{% endif %}
+                    {% if event.index %}[{{ event.index }}]{% endif %}
                   </td>
                 {% else %}
                   <td title="Not available">-</td>

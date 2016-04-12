@@ -1,5 +1,7 @@
 {% extends 'layout.html' %}
+
 {% load tags %}
+{% load i18n %}
 
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
@@ -7,7 +9,6 @@
 {% endblock %}
 
 {% block content %}
-{% informea_url_id document %}
 
 <article class="record-details">
 
@@ -21,25 +22,29 @@
     <dl>
       {% if document.people_authors %}
         <dt>Author{{ document.people_authors|length|pluralize:",s" }}</dt>
-        <dd>{{ document.people_authors | join_by:", " | safe }}</dd>
+        <dd>{{ document.people_authors|join:", "|safe }}</dd>
       {% elif document.corp_authors %}
         <dt>Corporate author{{ document.corp_authors|length|pluralize:",s" }}</dt>
-        <dd>{{ document.corp_authors | join_by:", " | safe }}</dd>
+        <dd>{{ document.corp_authors|join:", "|safe }}</dd>
       {% endif %}
-      {% if document.lit_is_article and document.serial_title %}
+
+      {% if document.is_article and document.serial_title %}
         <dt>Journal/Series</dt>
-        <dd>{{ document.serial_title | safe }}
-            {% if document.solr.litVolumeNo %} | {{ document.solr.litVolumeNo | safe }} {% endif %}
-            {% if document.solr.litCollation %} | {{ document.solr.litCollation | safe }} {% endif %}
+        <dd>
+          {{ document.serial_title|safe }}
+          {% if document.volume_no %} | {{ document.volume_no|safe }} {% endif %}
+          {% if document.collation %} | {{ document.collation|safe }} {% endif %}
         </dd>
       {% endif %}
-      {% if document.lit_is_chapter and document.parent_title %}
+
+      {% if document.is_chapter and document.parent_title %}
         <dt>Monograph</dt>
-        <dd><a href="{{ document.parent_url }}?{{ query }}">{{ document.parent_title | safe }}</a></dd>
+        <dd><a href="{{ document.parent_url }}?{{ query }}">{{ document.parent_title|safe }}</a></dd>
       {% endif %}
+
       {% if document.date %}
         <dt>Publication year</dt>
-        <dd>{{ document.date | safe }}</dd>
+        <dd>{{ document.date|safe }}</dd>
       {% endif %}
     </dl>
   </header>
@@ -50,15 +55,53 @@
         <dt>Title (translation)</dt>
         <dd>
           {% for title in document.title_translations %}
-            <p class="alttitle">{{ title.alttitle | safe}}<sup>{{ title.language }}</sup></p>
+            {% if title.language != LANGUAGE_CODE %}
+            <p class="alttitle">
+              {{ title.value|safe }}
+              <sup>{{ title.language|language_name_translated|capfirst  }}</sup>
+            </p>
+            {% endif %}
           {% endfor %}
         </dd>
       {% endif %}
 
-      {% for entry in document.optional_fields %}
-        <dt>{{ entry.label }}</dt>
-        <dd>{{ entry.value }}</dd>
-      {% endfor %}
+      {% if document.publisher %}
+        <dt>Publisher</dt>
+        <dd>
+          {{ document.publisher }}
+          {% if document.publication_place %} | {{ document.publication_place }} {% endif %}
+        </dd>
+      {% endif %}
+
+      {% if document.isbn %}
+        <dt>ISBN</dt>
+        <dd>{{ document.isbn|join:", " }}</dd>
+      {% endif %}
+
+      {% if document.issn %}
+        <dt>ISBN</dt>
+        <dd>{{ document.issn }}</dd>
+      {% endif %}
+
+      {% if document.collation %}
+        <dt>Pages</dt>
+        <dd>{{ document.collation }}</dd>
+      {% endif %}
+
+      {% if document.type_of_text %}
+        <dt>Document type</dt>
+        <dd>{{ document.type_of_text|join:", " }}</dd>
+      {% endif %}
+
+      {% if document.conference %}
+        <dt>Conference</dt>
+        <dd>{{ document.conference }}</dd>
+      {% endif %}
+
+      {% if document.language_of_document %}
+        <dt>Language</dt>
+        <dd>{{ document.language_of_document|join:", " }}</dd>
+      {% endif %}
     </dl>
   </section>
 
@@ -71,12 +114,12 @@
 
       {% if document.countries %}
         <dt>Countr{{ document.countries|length|pluralize:"y,ies" }}</dt>
-        <dd>{{ document.countries | join_by:", " | safe }}</dd>
+        <dd>{{ document.countries|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.subjects %}
         <dt>Subject{{ document.subjects|length|pluralize:",s" }}</dt>
-        <dd>{{ document.subjects | join_by:", " | safe }}</dd>
+        <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.keywords %}
@@ -89,11 +132,12 @@
 
       {% if document.region %}
         <dt>Geographical area</dt>
-        <dd>{{ document.region | join_by:", " | safe }}</dd>
+        <dd>{{ document.region|join:", "|safe }}</dd>
       {% endif %}
+
       {% if document.basin %}
         <dt>Basin</dt>
-        <dd>{{ document.basin | join_by:", " | safe }}</dd>
+        <dd>{{ document.basin|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.summary %}
@@ -105,75 +149,111 @@
       <dt>Full text</dt>
       <dd>
           {% for link in document.link_to_full_text %}
-            <a class="decision-link" href="{{ link.0 }}" target="_blank" class="file-link">{{ link.1 }}</a>
+            <a class="decision-link" href="{{ link }}" target="_blank"
+               class="file-link">{{ link|extract_filename }}</a>
             &nbsp;
           {% endfor %}
       </dd>
       {% endif %}
-      {% if document.solr.litLinkDOI %}
+
+      {% if document.link_doi %}
       <dt>Available DOI</dt>
       <dd>
-          <a href="{{ document.solr.litLinkDOI | url_normalize }}" target="_blank">{{ document.solr.litLinkDOI }}</a>
+        <a href="{{ document.link_doi|url_normalize }}"
+           target="_blank">{{ document.link_doi }}</a>
       </dd>
       {% endif %}
-      {% if document.solr.litRelatedWebSite %}
+
+      {% if document.related_web_site %}
       <dt>Available web site</dt>
       <dd>
-          <a href="{{ document.solr.litRelatedWebSite | url_normalize }}" target="_blank">{{ document.solr.litRelatedWebSite }}</a>
+        <a href="{{ document.related_web_site|url_normalize }}"
+           target="_blank">{{ document.related_web_site }}</a>
       </dd>
       {% endif %}
+
       <dt>Source</dt>
-      <dd><a target="_blank" href="http://iucn.org">{{ document.source }}</a> (ID: {{ document.document_id }})</dd>
+      <dd>
+        <a target="_blank" href="http://iucn.org">{{ document.source }}</a>
+        (ID: {{ document.document_id }})
+      </dd>
     </dl>
   </section>
 
   <section id="other-references">
-    {% if references_to.items %}
-      <h2 class="section-title">References to</h2>
-      {% for doc_type, docs in references_to.items %}
-        <dl>
-          <dt>{{ doc_type|capfirst }}</dt>
-          {% for doc in docs %}
-            <dd>
+  {% if document.treaties or document.legislations or document.court_decisions or document.literatures %}
+    <h2 class="section-title">References to</h2>
+    {% for treaty in document.treaties %}
+      <dl>
+        <dt>Treaty</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ treaty.details_url }}?{{ query }}"
+               title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
+          </h3>
+          {% include 'short_display/treaty.html' with result=treaty %}
+        </dd>
+      </dl>
+    {% endfor %}
 
-              <h3 class="search-result-title">
-                <a href="{{ doc.details_url }}?{{ query }}"
-                   title="{{ doc.title|safe|striptags }}">{{ doc.title|safe }}</a>
-              </h3>
+    {% for legislation in document.legislations %}
+      <dl>
+        <dt>Legislation</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ legislation.details_url }}?{{ query }}"
+               title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
+          </h3>
+          {% include 'short_display/legislation.html' with result=legislation %}
+        </dd>
+      </dl>
+    {% endfor %}
 
-              {% if doc_type == 'court_decision' %}
-                {% include 'short_display/court_decision.html' with result=doc %}
-              {% elif doc_type == 'treaty' %}
-                {% include 'short_display/treaty.html' with result=doc %}
-              {% elif doc_type == 'literature' %}
-                {% include 'short_display/literature.html' with result=doc %}
-              {% elif doc_type == 'legislation' %}
-                {% include 'short_display/legislation.html' with result=doc %}
-              {% endif %}
-            </dd>
-          {% endfor %}
-        </dl>
-      {% endfor %}
-    {% endif %}
+    {% for court_decision in document.court_decisions %}
+      <dl>
+        <dt>Court decision</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ court_decision.details_url }}?{{ query }}"
+               title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
+          </h3>
+          {% include 'short_display/court_decision.html' with result=court_decision %}
+        </dd>
+      </dl>
+    {% endfor %}
 
-    {% if references_from.items %}
-      <h2 class="section-title">References from</h2>
-      {% for doc_type, docs in references_from.items %}
-        <dl>
-          <dt>{{ doc_type|capfirst }}</dt>
-          {% for doc in docs %}
-            <dd>
-              <h3 class="search-result-title">
-                <a href="{{ doc.details_url }}?{{ query }}"
-                   title="{{ doc.title|safe|striptags }}">{{ doc.title|safe }}</a>
-              </h3>
-              {% include 'short_display/literature.html' with result=doc %}
-            </dd>
-          {% endfor %}
-        </dl>
-      {% endfor %}
-    {% endif %}
-    <a class="decision-link" href="http://www.ecolex.org/ecolex/ledge/view/RecordDetails?index=literature&id={{ document.document_id }}" target="_blank">Link to ecolex.org (for testing purposes)</a>
+    {% for literature in document.literatures %}
+      <dl>
+        <dt>Literature</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ literature.details_url }}?{{ query }}"
+               title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
+          </h3>
+          {% include 'short_display/literature.html' with result=literature %}
+        </dd>
+      </dl>
+    {% endfor %}
+  {% endif %}
+
+  {% if document.references %}
+    <h2 class="section-title">References from</h2>
+    {% for literature in document.references %}
+      <dl>
+        <dt>Literature</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ literature.details_url }}?{{ query }}"
+               title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
+          </h3>
+          {% include 'short_display/literature.html' with result=literature %}
+        </dd>
+      </dl>
+    {% endfor %}
+  {% endif %}
+    <a class="decision-link"
+        href="http://www.ecolex.org/ecolex/ledge/view/RecordDetails?index=literature&id={{ document.document_id }}" target="_blank">
+        Link to ecolex.org (for testing purposes)</a>
   </section>
 
 </article>

@@ -20,19 +20,19 @@
   </header>
 
   <table class="table decisions-expanded">
-      <tbody>
-        {% for literature in literatures %}
-        <tr>
-          <td>
-            <h3 class="search-result-title">
-              <a href="{{ literature.details_url }}?{{ query }}"
-                 title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
-            </h3>
-            {% include 'short_display/literature.html' with result=literature %}
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
+    <tbody>
+      {% for literature in treaty.literatures %}
+      <tr>
+        <td>
+          <h3 class="search-result-title">
+            <a href="{{ literature.details_url }}?{{ query }}"
+               title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
+          </h3>
+          {% include 'short_display/literature.html' with result=literature %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
   </table>
 
 </article>

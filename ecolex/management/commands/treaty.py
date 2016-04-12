@@ -574,6 +574,7 @@ class TreatyImporter(object):
                                                      [treaty_id], rows=100)
                     if len(results):
                         treaty['trStatus'] = 'Superseded'
+                        print('super')
                     else:
                         if 'trEntryIntoForceDate' in treaty:
                             treaty['trStatus'] = 'In force'

@@ -1,13 +1,18 @@
 import pysolr
 from collections import OrderedDict
-from uuid import uuid4
 from django.conf import settings
-from ecolex.lib import camel_case_to__
+from django.utils.translation import get_language
+
+from ecolex.lib.utils import camel_case_to__
 from ecolex import definitions as defs
+from ecolex.forms import SearchForm
+from ecolex.schema import (
+    CourtDecisionSchema, DecisionSchema, LegislationSchema, LiteratureSchema,
+    TreatySchema,
+)
 from ecolex.solr_models import (
     Treaty, Decision, Literature, CourtDecision, Legislation
 )
-from ecolex.forms import SearchForm
 
 
 HIGHLIGHT_FIELDS = []
@@ -115,18 +120,19 @@ class Queryset(object):
 
 
 def parse_result(hit, responses):
-    hl = responses.highlighting.get(hit['id'])
-    if hit['type'] == 'treaty':
-        return Treaty(hit, hl)
-    elif hit['type'] == 'decision':
-        return Decision(hit, hl)
-    elif hit['type'] == 'literature':
-        return Literature(hit, hl)
-    elif hit['type'] == 'court_decision':
-        return CourtDecision(hit, hl)
-    elif hit['type'] == 'legislation':
-        return Legislation(hit, hl)
-    return hit
+    # hl = responses.highlighting.get(hit['id'])
+
+    TYPE_TO_SCHEMA = {
+        'treaty': TreatySchema,
+        'decision': DecisionSchema,
+        'literature': LiteratureSchema,
+        'court_decision': CourtDecisionSchema,
+        'legislation': LegislationSchema,
+    }
+    doctype = hit['type']
+    schema = TYPE_TO_SCHEMA[doctype]()
+    result, errors = schema.load(hit, language=get_language())
+    return result
 
 
 def parse_facets(facets):
@@ -141,6 +147,7 @@ def parse_suggestions(solr_suggestions):
     if 'collation' in solr_suggestions['suggestions']:
         return unescape_string(solr_suggestions['suggestions'][-1])
     return ''
+
 
 def escape_query(query):
     """ Code from: http://opensourceconnections.com/blog/2013/01/17/escaping-solr-query-characters-in-python/
@@ -239,8 +246,8 @@ def get_fq(filters):
         # TODO: is this a solr bug?
         #       might WhitespaceTokenizerFactory help?
 
-        return "{filter}:({value})".format(filter=filter,
-                                           value=escape_query(operator.join(values)))
+        return "{filter}:({value})".format(
+            filter=filter, value=escape_query(operator.join(values)))
 
     def type_filter(type, filters):
         if filters:
@@ -357,8 +364,10 @@ def _search(user_query, filters=None, highlight=True, start=0, rows=PERPAGE,
     else:
         params['facet.field'] = facets or filters.keys()
 
+    """
     if highlight:
         params.update(get_hl(hl_details=hl_details))
+    """
     params['sort'] = get_sortby(sortby, highlight)
 
     # add spellcheck
@@ -391,11 +400,13 @@ def get_document(document_id, query='*', **kwargs):
         result = search('*', raw=True, filters={'id': [document_id]}, **kwargs)
     return result
 
+
 def get_document_by_slug(slug, query='*', **kwargs):
     result = search(query, raw=True, filters={'slug': [slug]}, **kwargs)
     if not len(result):
         result = search('*', raw=True, filters={'slug': [slug]}, **kwargs)
     return result
+
 
 def get_treaty_by_informea_id(informea_id):
     result = search('trInformeaId:' + informea_id, raw=True)
@@ -436,11 +447,11 @@ class SearchMixin(object):
     def _get_filters(self, data):
         filters = {
             'type': data['type'] or dict(defs.DOC_TYPE).keys(),
-            'docKeyword_en': data['keyword'],
-            'docSubject_en': data['subject'],
-            'docCountry_en': data['country'],
-            'docRegion_en': data['region'],
-            'docLanguage_en': data['language'],
+            'docKeyword_en': data['xkeywords'],
+            'docSubject_en': data['xsubjects'],
+            'docCountry_en': data['xcountry'],
+            'docRegion_en': data['xregion'],
+            'docLanguage_en': data['xlanguage'],
             'docDate': (data['yearmin'], data['yearmax']),
         }
         for doc_type in filters['type']:

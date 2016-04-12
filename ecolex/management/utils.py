@@ -28,6 +28,7 @@ DEC_TREATY_FIELDS = ['partyCountry_en', 'trSubject_en']
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('import')
 
+
 def get_content_length_from_url(url):
     if 'http' not in url:
         url = 'http://' + url
@@ -38,6 +39,7 @@ def get_content_length_from_url(url):
         if settings.DEBUG:
             logger.exception('Error checking file {}'.format(url))
         return None
+
 
 def get_file_from_url(url):
     if 'http' not in url:
@@ -53,7 +55,8 @@ def get_file_from_url(url):
             response.status_code, url))
         return None
 
-    if response.headers.get('Content-Length') == '675' and '404' in response.content.decode('UTF-8'):
+    if (response.headers.get('Content-Length') == '675' and
+            '404' in response.content.decode('UTF-8')):
         logger.error('Potential soft 404 for {}'.format(url))
         return None
 
@@ -131,9 +134,9 @@ class EcolexSolr(object):
         result = self.search_all(id_field, id_value)
         return result[0] if result else None
 
-    def search_all(self, key, value):
-        query = '{}:"{}"'.format(key, value)
-        result = self.solr.search(query)
+    def search_all(self, key, value='*', **kwargs):
+        query = '{}:{}'.format(key, value)
+        result = self.solr.search(query, **kwargs)
         if result.hits:
             return result.docs
 
@@ -161,7 +164,7 @@ class EcolexSolr(object):
         try:
             response = self.solr.extract(file)
         except pysolr.SolrError as e:
-            logger.error('Error extracting text from file %s' % (file.name,) )
+            logger.error('Error extracting text from file %s' % (file.name,))
             if settings.DEBUG:
                 logging.getLogger('solr').exception(e)
             return ''
