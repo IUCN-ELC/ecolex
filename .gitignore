@@ -7,5 +7,6 @@ db.sqlite3
 supervisord.conf
 env27/
 local_settings.py
+local_urls.py
 contrib/treaties.json
 fao_import.log

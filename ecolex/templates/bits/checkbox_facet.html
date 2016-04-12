@@ -1,19 +1,20 @@
 <div class="clearfix filter-header">
   <h6>{{ title }}</h6>
 </div>
+
 <ul class="filter-treaty">
-{% for type, count in facet.items %}
-  {% if show_empty or count > 0 %}
+{% for f in facet %}
+  {% if show_empty or f.count > 0 %}
   <li>
-    <label class="facet-checkbox {% if not count %}disabled{% endif %}" for="{{ field.name }}_{{ type }}">
+    <label class="facet-checkbox {% if not f.count %}disabled{% endif %}" for="{{ field.name }}_{{ f.id }}">
       <input type="checkbox"
-             id="{{ field.name }}_{{ type }}"
+             id="{{ field.name }}_{{ f.id }}"
              name="{{ field.name }}"
-             value="{{ type }}"
-             {% if type in field.data %}checked{% endif %}
-             {% if not count %}disabled{% endif %}>
-      <span class="facet-counter">{{ count }}</span>
-      <span class="facet-text">{{ type|capfirst }}</span>
+             value="{{ f.text }}"
+             {% if f.text in field.data %}checked{% endif %}
+             {% if not f.count %}disabled{% endif %}>
+      <span class="facet-counter">{{ f.count }}</span>
+      <span class="facet-text">{{ f.text|capfirst }}</span>
     </label>
   </li>
   {% endif %}

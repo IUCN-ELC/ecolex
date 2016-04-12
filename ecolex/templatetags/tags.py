@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 from django.core.urlresolvers import resolve, reverse
 from django.utils import translation
 from django.utils.html import format_html
@@ -100,3 +101,11 @@ def translate_url(context, language):
     url = reverse(view.url_name, args=view.args, kwargs=view.kwargs)
     translation.activate(request_language)
     return url
+
+@register.filter
+def apify_f(data):
+    # truncates the facet and returns a {results: [], more: bool} dict
+    return {
+        'more': len(data) > settings.FACETS_PAGE_SIZE,
+        'results': data[:settings.FACETS_PAGE_SIZE],
+    }

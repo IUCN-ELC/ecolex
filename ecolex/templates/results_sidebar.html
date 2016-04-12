@@ -86,15 +86,15 @@ select.selection-facet {
       data-target="#filter-global">Common filters</h5>
   <div id="filter-global" class="collapse in">
 
-{% include "bits/selection_facet.html" with title="Subject" placeholder="Add subjects…" viewname="api:xsubjects-list" data=facets.xsubjects field=form.xsubjects op_field=form.xsubjects_and_ %}
+{% include "bits/selection_facet.html" with title="Subject" placeholder="Add subjects…" viewname="api:xsubjects-list" facet=facets.xsubjects field=form.xsubjects op_field=form.xsubjects_and_ %}
 
-{% include "bits/selection_facet.html" with title="Keywords" placeholder="Add keywords…" viewname="api:xkeywords-list" data=facets.xkeywords field=form.xkeywords op_field=form.xkeywords_and_ %}
+{% include "bits/selection_facet.html" with title="Keywords" placeholder="Add keywords…" viewname="api:xkeywords-list" facet=facets.xkeywords field=form.xkeywords op_field=form.xkeywords_and_ %}
 
-{% include "bits/selection_facet.html" with title="Country" placeholder="Add countries…" viewname="api:xcountry-list" data=facets.xcountry field=form.xcountry op_field=form.xcountry_and_ %}
+{% include "bits/selection_facet.html" with title="Country" placeholder="Add countries…" viewname="api:xcountry-list" facet=facets.xcountry field=form.xcountry op_field=form.xcountry_and_ %}
 
-{% include "bits/selection_facet.html" with title="Geographical Area" placeholder="Add geographical areas…" viewname="api:xregion-list" data=facets.xregion field=form.xregion op_field=form.xregion_and_ %}
+{% include "bits/selection_facet.html" with title="Geographical Area" placeholder="Add geographical areas…" viewname="api:xregion-list" facet=facets.xregion field=form.xregion op_field=form.xregion_and_ %}
 
-{% include "bits/selection_facet.html" with title="Language" placeholder="Add languages…" viewname="api:xlanguage-list" data=facets.xlanguage field=form.xlanguage op_field=form.xlanguage_and_ %}
+{% include "bits/selection_facet.html" with title="Language" placeholder="Add languages…" viewname="api:xlanguage-list" facet=facets.xlanguage field=form.xlanguage op_field=form.xlanguage_and_ %}
 
 {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
 {# TODO: this logic needs fixing. min/max years should default to the dataset's values, with this here facet excluded #}
@@ -146,9 +146,9 @@ select.selection-facet {
 {% include 'bits/checkbox_facet.html' with title="Status" facet=facets.tr_status field=form.tr_status show_empty=True %}
 
 {# TODO: this is badly named deposit*o*ry in code #}
-{% include "bits/selection_facet.html" with title="Depositary" placeholder="Add depositary…" viewname="api:tr-depository-list" data=facets.tr_depository field=form.tr_depository op_field=form.tr_depository_and_ %}
+{% include "bits/selection_facet.html" with title="Depositary" placeholder="Add depositary…" viewname="api:tr-depository-list" facet=facets.tr_depository field=form.tr_depository op_field=form.tr_depository_and_ %}
 
-{% include "bits/selection_facet.html" with title="Place of adoption" placeholder="Add place…" viewname="api:tr-place-of-adoption-list" data=facets.tr_place_of_adoption field=form.tr_place_of_adoption op_field=form.tr_place_of_adoption_and_ %}
+{% include "bits/selection_facet.html" with title="Place of adoption" placeholder="Add place…" viewname="api:tr-place-of-adoption-list" facet=facets.tr_place_of_adoption field=form.tr_place_of_adoption op_field=form.tr_place_of_adoption_and_ %}
 
     </div>
 </fieldset>
@@ -162,9 +162,9 @@ select.selection-facet {
 
     <div id="filter-cop-decisions" class="collapse {% if form.has_decision %}in{% endif %}">
 
-{% include "bits/selection_facet.html" with title="Treaty" placeholder="Add treaties…" viewname="api:dec-treaty-name-list" data=facets.dec_treaty_name field=form.dec_treaty_name op_field=form.dec_treaty_name_and_ %}
+{% include "bits/selection_facet.html" with title="Treaty" placeholder="Add treaties…" viewname="api:dec-treaty-name-list" facet=facets.dec_treaty_name field=form.dec_treaty_name op_field=form.dec_treaty_name_and_ %}
 
-{% if facets.dec_type_of_document %}
+{% if facets.dec_type_of_document.results %}
 {% include 'bits/checkbox_facet.html' with title="Type of document" facet=facets.dec_type_of_document field=form.dec_type_of_document %}
 {% endif %}
 
@@ -183,7 +183,7 @@ select.selection-facet {
 
 {% include 'bits/checkbox_facet.html' with title="Type of court" facet=facets.cd_type_of_document field=form.cd_type_of_document show_empty=True %}
 
-{% include "bits/selection_facet.html" with title="Sub-national/state level" placeholder="Add territory…" viewname="api:cd-territorial-subdivision-list" data=facets.cd_territorial_subdivision field=form.cd_territorial_subdivision op_field=form.cd_territorial_subdivision_and_ %}
+{% include "bits/selection_facet.html" with title="Sub-national/state level" placeholder="Add territory…" viewname="api:cd-territorial-subdivision-list" facet=facets.cd_territorial_subdivision field=form.cd_territorial_subdivision op_field=form.cd_territorial_subdivision_and_ %}
 
     </div>
   </fieldset>
@@ -197,7 +197,7 @@ select.selection-facet {
 
 {% include 'bits/checkbox_facet.html' with title="Document type" facet=facets.leg_type_of_document field=form.leg_type_of_document show_empty=True %}
 
-{% include "bits/selection_facet.html" with title="Sub-national/state level" placeholder="Add territory…" viewname="api:leg-territorial-subdivision-list" data=facets.leg_territorial_subdivision field=form.leg_territorial_subdivision op_field=form.leg_territorial_subdivision_and_ %}
+{% include "bits/selection_facet.html" with title="Sub-national/state level" placeholder="Add territory…" viewname="api:leg-territorial-subdivision-list" facet=facets.leg_territorial_subdivision field=form.leg_territorial_subdivision op_field=form.leg_territorial_subdivision_and_ %}
 
     </div>
   </fieldset>
@@ -209,13 +209,13 @@ select.selection-facet {
     <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">Literature filters</h5>
     <div id="filter-literatures" class="collapse {% if form.has_literature %}in{% endif %}">
 
-{% include "bits/selection_facet.html" with title="Author" placeholder="Add author…" viewname="api:lit-author-list" data=facets.lit_author field=form.lit_author op_field=form.lit_author_and_ %}
+{% include "bits/selection_facet.html" with title="Author" placeholder="Add author…" viewname="api:lit-author-list" facet=facets.lit_author field=form.lit_author op_field=form.lit_author_and_ %}
 
-{% include "bits/selection_facet.html" with title="Journal/Series" placeholder="Add journal/series…" viewname="api:lit-orig-serial-title-list" data=facets.lit_orig_serial_title field=form.lit_orig_serial_title op_field=form.lit_orig_serial_title_and_ %}
+{% include "bits/selection_facet.html" with title="Journal/Series" placeholder="Add journal/series…" viewname="api:lit-orig-serial-title-list" facet=facets.lit_orig_serial_title field=form.lit_orig_serial_title op_field=form.lit_orig_serial_title_and_ %}
 
-{% include "bits/selection_facet.html" with title="Publisher" placeholder="Add publisher…" viewname="api:lit-publisher-list" data=facets.lit_publisher field=form.lit_publisher op_field=form.lit_publisher_and_ %}
+{% include "bits/selection_facet.html" with title="Publisher" placeholder="Add publisher…" viewname="api:lit-publisher-list" facet=facets.lit_publisher field=form.lit_publisher op_field=form.lit_publisher_and_ %}
 
-{% include "bits/selection_facet.html" with title="Document type" placeholder="Add document type…" viewname="api:lit-type-of-text-list" data=facets.lit_type_of_text field=form.lit_type_of_text op_field=form.lit_type_of_text_and_ %}
+{% include "bits/selection_facet.html" with title="Document type" placeholder="Add document type…" viewname="api:lit-type-of-text-list" facet=facets.lit_type_of_text field=form.lit_type_of_text op_field=form.lit_type_of_text_and_ %}
 
     </div>
   </fieldset>

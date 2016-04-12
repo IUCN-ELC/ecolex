@@ -66,23 +66,12 @@ class SearchResultsView(SearchViewMixin, TemplateView):
 
         ctx['form'] = self.form
         ctx['results'] = response.results
-        ctx['facets'] = self._format_facets(response.facets)
+        ctx['facets'] = response.facets
         ctx['stats'] = response.stats
         # TODO: rename ctx to 'pages'
         ctx['page'] = self.get_page_details(page, response.count)
 
         return ctx
-
-    @staticmethod
-    def _format_facets(facets):
-        # truncates the facets and returns a {results: [], more: bool} dict
-        return {
-            k: {
-                'more': len(data) > settings.FACETS_PAGE_SIZE,
-                'results': data[:settings.FACETS_PAGE_SIZE],
-            }
-            for k, data in facets.items()
-        }
 
     def get_page_details(self, current, result_count, page_size=None):
         if page_size is None:

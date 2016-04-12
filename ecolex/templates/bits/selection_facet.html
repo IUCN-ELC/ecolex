@@ -1,4 +1,4 @@
-{% load json %}
+{% load json %}{% load tags %}
 <div class="clearfix filter-header">
   <h6{% if op_field %} class="pull-left"{% endif %}>{{ title }}</h6>
 {% if op_field %}
@@ -12,9 +12,9 @@
           multiple="true"
           data-width="300"
           data-placeholder="{{ placeholder }}"{% if viewname %}
-          data-ajax--url="{% url viewname %}"{% endif %}
+          data-ajax--url="{% url viewname %}"{% endif %}{% with facet|apify_f as data %}
           data-data="{{ data.results|json }}"
-          data-more="{{ data.more|yesno:"true,false" }}"
+          data-more="{{ data.more|yesno:"true,false" }}"{% endwith %}
           data-selected="{{ field.value|json }}"
   >
 {% for option in field.value %}
