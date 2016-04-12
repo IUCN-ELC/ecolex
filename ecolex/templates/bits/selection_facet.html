@@ -1,6 +1,6 @@
 {% load json %}
 <div class="clearfix filter-header" id="facet-{{ field.name }}-container">
-  <label class="pull-left" for="facet-{{ field.name }}-search-field">
+  <label class="pull-left filter-label" data-target="#facet-{{ field.name }}">
     <h6 class="pull-left">{{ title }}</h6><span class="caret"></span>
   </label>
     <span class="filter-global pull-right" data-formid="#id_{{ name }}_op">
