@@ -472,25 +472,6 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         submit();
     });
 
-    // Type facet add multiple selections
-    $('.selection-add, .selection-remove').click(function (event) {
-        event.stopPropagation();
-
-        var current = $('#id_type').val() || [];
-        var toggle_value = $(this).prev().data('value');
-        var index = current.indexOf(toggle_value);
-
-        if (index == -1) {
-            current.push(toggle_value);
-        } else {
-            current.splice(index, 1);
-        }
-
-        $('#id_type').val(current);
-
-        submit();
-    });
-
     $('#query-remove').click(function(e) {
         $('#search').val('');
         submit();
@@ -500,12 +481,14 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     $('.filter-type button').click(function(e) {
         var current = $('#id_type').val() || [];
         var toggle_value = $(this).data('value');
+        var index = current.indexOf(toggle_value);
 
-        if (current.indexOf(toggle_value) == -1) {
-            current = [toggle_value];
+        if (index == -1) {
+            current.push(toggle_value);
         } else {
-            current = [];
+            current.splice(index, 1);
         }
+
         $('#id_type').val(current);
 
         submit();

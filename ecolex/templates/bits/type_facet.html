@@ -17,11 +17,6 @@
         <span class="badge">{{ facets.type.treaty }}</span>
       {% endif %}
     </button>
-    {% if 'treaty' in form.type.data %}
-      <span class="selection-remove" title="Remove from selection"></span>
-    {% else %}
-      <span class="selection-add" title="Add to selection"></span>
-    {% endif %}
   </div>
 
   <!-- COP decision filter -->
@@ -40,11 +35,6 @@
         <span class="badge">{{ facets.type.decision }}</span>
       {% endif %}
     </button>
-    {% if 'decision' in form.type.data %}
-      <span class="selection-remove" title="Remove from selection"></span>
-    {% else %}
-      <span class="selection-add" title="Add to selection"></span>
-    {% endif %}
   </div>
 
   <!-- Legislation filter -->
@@ -63,11 +53,6 @@
         <span class="badge">{{ facets.type.legislation }}</span>
       {% endif %}
     </button>
-    {% if 'legislation' in form.type.data %}
-      <span class="selection-remove" title="Remove from selection"></span>
-    {% else %}
-      <span class="selection-add" title="Add to selection"></span>
-    {% endif %}
   </div>
 
   <!-- Court decision filter -->
@@ -86,11 +71,6 @@
         <span class="badge">{{ facets.type.court_decision }}</span>
       {% endif %}
     </button>
-    {% if 'court_decision' in form.type.data %}
-      <span class="selection-remove" title="Remove from selection"></span>
-    {% else %}
-      <span class="selection-add" title="Add to selection"></span>
-    {% endif %}
   </div>
 
   <!-- Literature filter -->
@@ -109,10 +89,5 @@
         <span class="badge">{{ facets.type.literature }}</span>
       {% endif %}
     </button>
-    {% if 'literature' in form.type.data %}
-      <span class="selection-remove" title="Remove from selection"></span>
-    {% else %}
-      <span class="selection-add" title="Add to selection"></span>
-    {% endif %}
   </div>
 </div>
