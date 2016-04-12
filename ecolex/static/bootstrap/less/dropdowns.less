@@ -188,6 +188,12 @@
     bottom: 100%;
     margin-bottom: 2px;
   }
+  .caret {
+    border-top: 0;
+    border-bottom: @caret-width-base dashed;
+    border-bottom: @caret-width-base solid ~"\9"; // IE8
+    content: "";
+  }
 }
 
 

@@ -445,15 +445,15 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
             dataAdapter: _DataAdapter,
         });
 
-        self.next().find('.select2-search__field').attr('id', search_field_id);
+        var search_field = self.next().find('.select2-search__field');
+        search_field.attr('id', search_field_id);
         self.change(submit);
 
-        self.on("select2:opening", function (e) {
-            $(this).next().find('li.select2-search').show();
-        });
-
-        self.on("select2:close", function (e) {
+        self.on("select2:closing", function (e) {
             $(this).next().find('li.select2-search').hide();
+            $(this).parent().find('label.filter-label').removeClass('dropup');
+            $(this).data('open', false);
+            console.log('tay');
         });
 
         // add clearfix to select2 widget
@@ -470,6 +470,20 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     function submit() {
         $('#search-form').submit();
     };
+
+    $('.filter-label').on('click', function (e) {
+        var data_target = $(this).data('target');
+        var input_selector = data_target + '-search-field';
+        var open = $(data_target).data('open');
+        if (open) {
+            target.select2('close');
+        } else {
+            $(this).data('open', true);
+            $(this).parent().find('li.select2-search').show();
+            $(input_selector).trigger('click');
+            $(this).addClass('dropup');
+        }
+    });
 
     // TODO: not the most beautiful approach this
     $('#search-form input:checkbox').change(submit);
