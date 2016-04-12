@@ -1,8 +1,40 @@
 from functools import partialmethod
+from types import MethodType
 from django import forms
 from django.utils.translation import ugettext as _
 from ecolex.lib.schema import fields
 from .schema import FIELD_MAP, FILTER_FIELDS, STATS_FIELDS
+
+
+def _urlencoded(self, value):
+    """
+    Returns a form field "as a url querystring", with the given value
+    replacing the current one.
+    """
+    form_data = self.form.data.copy()
+
+    if value == self.field.initial:
+        try:
+            del form_data[self.name]
+        except KeyError:
+            pass
+    else:
+        form_data[self.name] = value
+
+    return form_data.urlencode()
+
+def patched(field):
+    """
+    Patch the field so that its bound field instance gets a `urlencoded` method.
+    """
+    _orig_gbf = field.get_bound_field
+    def _new_gbf(self, *args, **kwargs):
+        bfield = _orig_gbf(*args, **kwargs)
+        bfield.urlencoded = MethodType(_urlencoded, bfield)
+        return bfield
+
+    field.get_bound_field = MethodType(_new_gbf, field)
+    return field
 
 
 class SearchForm(forms.Form):
@@ -17,9 +49,9 @@ class SearchForm(forms.Form):
     )
 
     q = forms.CharField(required=False)
-    page = forms.IntegerField(min_value=1, required=False, initial=1)
-    sortby = forms.ChoiceField(choices=SORT_CHOICES,
-                               required=False, initial=SORT_DEFAULT)
+    page = patched(forms.IntegerField(min_value=1, required=False, initial=1))
+    sortby = patched(forms.ChoiceField(choices=SORT_CHOICES,
+                                       required=False, initial=SORT_DEFAULT))
 
     def __clean_field_with_initial(self, fname):
         if fname not in self.data or self.cleaned_data[fname] is None:
@@ -45,7 +77,8 @@ class SearchForm(forms.Form):
                 # special-case type to set available choices
                 choices = list(FIELD_MAP.keys())
                 choices.remove('_')
-                field = forms.MultipleChoiceField(choices=zip(choices, choices))
+                field = patched(
+                    forms.MultipleChoiceField(choices=zip(choices, choices)))
                 new_fields.append(('type', field))
             else:
                 # this will be faceted upon. create a choice field

@@ -10,26 +10,29 @@
 
 <p class="small clearfix">
   {# Ugly #}
-  <span class="pull-left">
     Found <span id="number-of-results">{{ results.count|default:"no" }}</span>
     {% if form.type.data|length != 1 %}
-      result{{ results.count|pluralize }}
+      result{{ results.count|pluralize }}.
     {% elif 'treaty' in form.type.data %}
-      treat{{ results.count|pluralize:"y,ies" }}
+      treat{{ results.count|pluralize:"y,ies" }}.
     {% elif 'decision' in form.type.data %}
-      COP decision{{ results.count|pluralize }}
+      COP decision{{ results.count|pluralize }}.
     {% elif 'literature' in form.type.data %}
-      literature item{{ results.count|pluralize }}
+      literature item{{ results.count|pluralize }}.
     {% elif 'court_decision' in form.type.data %}
-      court decision{{ results.count|pluralize }}
+      court decision{{ results.count|pluralize }}.
     {% elif 'legislation' in form.type.data %}
-      legislation record{{ results.count|pluralize }}
+      legislation record{{ results.count|pluralize }}.
     {% endif %}
-  </span>
-{% if results  %}
-  <span class="pull-right">
+{% if results %}
+  Show only
+  {% for value, text in form.fields.type.choices %}{% if not forloop.first %} | {% endif %}
+   <a href="{% url "results" %}?{{ form.type|field_urlencoded:value }}">{{ text }}</a>
+  {% endfor %}
+</p>
+<p>
     {% include 'bits/sortby.html' %}
-  </span>
+</p>
 {% endif %}
 </p>
 

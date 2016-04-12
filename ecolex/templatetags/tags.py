@@ -115,3 +115,7 @@ def apify_f(data):
         'more': len(data) > settings.FACETS_PAGE_SIZE,
         'results': data[:settings.FACETS_PAGE_SIZE],
     }
+
+@register.filter
+def field_urlencoded(field, value):
+    return field.urlencoded(value)
