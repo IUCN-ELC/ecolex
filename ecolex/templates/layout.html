@@ -24,9 +24,14 @@
   {% include 'bits/favicon.html' %}
 </head>
 
-<body>
+<body {% if page_type == "homepage" %}class="body-colored"{% endif %}>
 <div class="navbar navbar-default">
   <div class="container">
+
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
+      Menu <span class="icon icon-menu"></span>
+    </button>
+
     <div class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
         <li {% if page_type == "homepage" %}class="active"{% endif %}><a href="{% url 'homepage' %}">Home</a></li>
@@ -61,25 +66,80 @@
 {# form is now page-wide, until someone decides to have fun with the template #}
 <form id="search-form" action="{% url 'results' %}" method="get">
 
+{% if page_type == "homepage" %}
+<!-- #TODO: Clean better -->
+
+<main>
+    <div id="masthead" class="jumbotron text-center">
+        <div class="container">
+            <div class="jumbotron-brand">
+                <div class="logo-ecolex">
+                    <a href="{% url 'homepage' %}"><img src="/static/img/logo-ecolex-inverted.svg" alt="Ecolex Logo" title="Homepage"></a>
+                </div>
+                <div class="slogan">
+                    <strong>The gateway to <br>environmental law</strong>
+                </div>
+
+            </div>
+            <div class="search-form {{ page_type|default:" results-page " }}">
+                <label for="search">
+                    <span class="sr-only">Search</span>
+                    <span class="icon icon-search"></span>
+                </label>
+                <input id="search" type="search" autofocus {# autosave #} class="form-control" name="q" placeholder="Search in record and full text" value="{{ form.q.value|default:" " }}"> {# TODO: form.q.errors maybe? #} {% if form.q.value %}
+                <span id="query-remove" class="icon icon-close"></span> {% endif %}
+                <button class="btn btn-search" type="submit">Search</button>
+            </div>
+
+            <ul class="homepage-categories">
+              <li>
+                <a href="">
+                  <span class="icon icon-treaty"></span>
+                  Treaty
+                </a>
+              </li>
+              <li>
+                <a href="">
+                  <span class="icon icon-cop-decision"></span>
+                  COP Decisions
+                </a>
+              </li>
+              <li>
+                <a href="">
+                  <span class="icon icon-legislation"></span>
+                  Legislation
+                </a>
+              </li>
+              <li>
+                <a href="">
+                  <span class="icon icon-court-decision"></span>
+                  Court Decisions
+                </a>
+              </li>
+              <li>
+                <a href="">
+                  <span class="icon icon-literature"></span>
+                  Literature
+                </a>
+              </li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+
+{% else %}
+
 <div id="masthead" class="jumbotron text-center">
   <div class="container">
     <div class="jumbotron-brand">
       <div class="logo-ecolex">
-        <a href="{% url 'homepage' %}"><img src="/static/img/logo-ecolex-inverted.png" alt="Ecolex Logo" title="Homepage"></a>
+        <a href="{% url 'homepage' %}"><img src="/static/img/logo-ecolex-inverted.svg" alt="Ecolex Logo" title="Homepage"></a>
       </div>
       <div class="slogan">
         <strong>The gateway to <br>environmental law</strong>
       </div>
-      <div class="credits">
-        Joint operation by <br><a href="http://www.fao.org/">FAO</a>, <a href="http://www.iucn.org/">IUCN</a>, <a
-          href="http://www.unep.org/">UNEP</a>
-      </div>
-      <div class="logo-credits">
-        <img src="/static/img/logo-credits.svg" alt="">
-      </div>
-    </div>
 
-    <!--{# old #} search -->
     <div class="search-form {{ page_type|default:"results-page" }}">
       <label for="search">
         <span class="sr-only">Search</span>
@@ -93,6 +153,10 @@
       {% endif %}
       <button class="btn btn-search" type="submit">Search</button>
     </div>
+
+    </div>
+
+
   </div>
 </div>
 
@@ -104,20 +168,43 @@
     {% endblock %}
   </div>
 </main>
+{% endif %}
 
 </form>
 <div class="footer">
-  <div class="container">
-    <div class="img">
-      <img src="/static/img/logo-ecolex-mono.png" alt="Logo Ecolex">
+    <div class="container">
+      <div class="footer-inner">
+        <nav class="footer-nav">
+          <ul class="list-inline" style="margin-bottom: 0;">
+              <li><a href="{% url 'page' slug='agreement' %}">User Agreement</a></li>
+              <li><a href="{% url 'page' slug='privacy' %}">Privacy</a></li>
+              <li><a href="{% url 'page' slug='acknowledgements' %}">Acknowledgments</a></li>
+          </ul>
+        </nav>
+
+        <div class="footer-credits">
+          <span style="display: inline-block; vertical-align: middle;">Joint operation by
+                    <br><a href="http://www.fao.org/">FAO</a>, <a href="http://www.iucn.org/">IUCN</a>, <a href="http://www.unep.org/">UNEP</a></span>
+          <ul class="list-inline">
+              <li>
+                  <div class="sprite-credits sprite-iucn">
+                  </div>
+              </li>
+              <li>
+                  <div class="sprite-credits sprite-unep">
+                  </div>
+              </li>
+              <li>
+                  <div class="sprite-credits sprite-fao">
+                  </div>
+              </li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <ul class="list-inline">
-      <li><a href="{% url 'page' slug='agreement' %}">User Agreement</a></li>
-      <li><a href="{% url 'page' slug='privacy' %}">Privacy</a></li>
-      <li><a href="{% url 'page' slug='acknowledgements' %}">Acknowledgments</a></li>
-    </ul>
-  </div>
 </div>
+
+
 
 <!-- end scripts -->
 <script src="{{ STATIC_URL }}{% version 'js/bootstrap-tour.min.js' %}"></script>

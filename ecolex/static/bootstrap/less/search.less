@@ -7,6 +7,8 @@
 
   position: relative;
   padding: @inset;
+  display: inline-block;
+  vertical-align: middle;
   background: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, .8);
 
@@ -53,17 +55,24 @@
     cursor: pointer;
   }
 
+  &.homepage {
+    margin: 2em 0 1em;
+    border-radius: 5px;
+    bottom: 0;
+  }
+
   @media (min-width: @grid-float-breakpoint) {
     max-width: 720px;
-    margin-left: auto;
-    margin-right: auto;
-    top: @line-height-computed;
     border-radius: 5px;
+    width: 600px;
   }
 
   @media (max-width: @grid-float-breakpoint-max) {
-    margin-left: (-@grid-gutter-width / 2 - @jumbotron-padding / 2);
-    margin-right: (-@grid-gutter-width / 2 - @jumbotron-padding / 2);
+    display: block;
+    max-width: none;
+    margin-left: (-@jumbotron-padding / 2);
+    margin-right: (-@jumbotron-padding / 2);
+    position: relative;
     bottom: -@jumbotron-padding;
     .form-control {
       padding-right: (@button-width-mobile + @padding-base-horizontal);
@@ -73,14 +82,6 @@
       padding-left: @padding-xs-horizontal;
       width: @button-width-mobile;
     }
-  }
-
-  @media (min-width: @screen-sm) {
-    margin-left: 180px;
-    max-width: 100%;
-  }
-  @media (min-width: @screen-md) {
-    margin-right: 180px;
   }
 }
 

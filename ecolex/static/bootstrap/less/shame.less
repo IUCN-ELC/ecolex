@@ -282,3 +282,52 @@
     }
   }
 }
+
+.sprite-credits {
+ display: block;
+ height: 64px;
+ width: 64px;
+ background: url('../img/logo-credits.svg') no-repeat top left;
+  background-size: cover;
+}
+
+.sprite-iucn {
+ background-position: 0 0;
+}
+
+.sprite-unep {
+ background-position: -64px 0 ;
+}
+
+.sprite-fao {
+ background-position: -128px 0 ;
+ width: 180px;
+}
+
+
+.homepage-categories {
+  list-style: none;
+  padding-left: 0;
+  display: table;
+  margin: 1em auto;
+  table-layout: fixed;
+  > li {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .icon {
+    font-size: 4.5rem;
+    display: block;
+  }
+  a {
+    display: block;
+    padding: 1rem;
+    text-decoration: none;
+    font-size: smaller;
+    &:hover,
+    &:focus {
+      color: #0095f3;
+    }
+  }
+}

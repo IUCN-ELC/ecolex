@@ -12,7 +12,7 @@
   .h1 {
     color: @jumbotron-heading-color;
   }
-  
+
   p {
     margin-bottom: (@jumbotron-padding / 2);
     font-size: @jumbotron-font-size;
@@ -21,7 +21,7 @@
 
   strong {
     font-weight: normal;
-    color: lighten(#0076C0, 10%);
+    color: #1CB54B;
   }
 
   a {
@@ -59,65 +59,41 @@
 
 // custom
 .jumbotron {
-  
-  .jumbotron-brand {
-    display: table;
-    table-layout: auto;
-    border-collapse: collapse;
-    margin: 0 auto @line-height-computed;
-  }
+
+
   .logo-ecolex,
-  .logo-credits,
-  .slogan,
-  .credits {
-    display: table-cell;
+  .slogan {
+    display: inline-block;
     vertical-align: middle;
-    padding: 0 1em;
-    letter-spacing: .05em;
-    line-height: 1.2;
     text-align: left;
   }
-  .logo-ecolex,
-  .logo-credits {
+
+  .logo-ecolex {
     img {
-      height: 4em;
+      height: 3em;
       width: auto;
       margin: -1em;
     }
   }
-  .slogan {
-    border-right: 1px solid lighten(#0076C0, 10%);
-  }
 
   @media (max-width: @grid-float-breakpoint-max) {
     .jumbotron-brand {
-      margin: (@line-height-computed / 2) (-@grid-gutter-width / 2);
+      margin: (@line-height-computed / 2) (-@grid-gutter-width / 2) 0;
       font-size: @font-size-small;
       display: block;
       text-align: left;
     }
     .logo-ecolex {
-      float: left;
       padding: 0;
-      margin-top: -12px;
       img {
         margin: 0;
         height: 60px;
       }
     }
-    .logo-credits {
-      display: none;
-    }
     .slogan,
     .credits {
-      margin-left: 66px;
       padding: 0;
-      display: block;
       border: 0;
-    }
-    .credits {
-      margin-top: 6px;
-      font-size: @font-size-smaller;
     }
     br {
       display: none;
@@ -128,25 +104,18 @@
       position: relative;
       display: block;
       margin: 0;
-      margin-left: 180px
     }
     .logo-ecolex {
-      position: absolute;
-      right: 100%;
-      top: 0;
+      margin-right: 1em;
       img {
         margin: 0;
         margin-top: 15px;
-        height: 90px;
+        height: 72px;
       }
     }
     .slogan {
+      margin-right: 1em;
       padding-left: 0;
-    }
-  }
-  @media (min-width: @screen-md) {
-    .jumbotron-brand {
-      margin: 0 180px;
     }
   }
 }

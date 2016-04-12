@@ -5,8 +5,33 @@ body {
   position: relative;
   min-height: 100%;
   @media (min-width: @screen-sm) {
-    padding-bottom: (@jumbotron-padding * 2 + @line-height-computed + 1);
+    padding-bottom: 129px;
   }
+}
+
+.body-colored {
+  background-color: @jumbotron-bg;
+  .jumbotron-brand {
+    text-align: center;
+  }
+  /*@media (min-width: @grid-float-breakpoint) {*/
+    height: 100%;
+
+    #search-form {
+      height: 100%;
+    }
+    main {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .footer {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  /*}*/
 }
 
 .navbar-brand {
@@ -16,8 +41,16 @@ body {
 main {
   min-height: 420px;
   padding: @line-height-computed 0 @jumbotron-padding;
-  background-color: #fff;
+  /*background-color: #fff;*/
 }
+
+.logo-credits {
+    img {
+      height: 4em;
+      width: auto;
+      margin: -1em;
+    }
+  }
 
 .footer {
   @media (min-width: @screen-sm) {
@@ -55,17 +88,36 @@ main {
     }
   }
 
-  @media (max-width: (@screen-xs-min - 1) ) {
-    .list-inline li {
-      display: block;
-      margin-top: @padding-base-vertical;
+  @media (max-width: @screen-sm-max) {
+    .list-inline {
+      > li {
+        display: block;
+        margin-bottom: .5em;
+      }
     }
   }
 
-  @media (min-width: @screen-xs-min) {
-    .container      { .clearfix(); }
-    .img            { float: left; }
-    .list-inline    { float: right; }
+  @media (min-width: @screen-sm-min) {
+    .footer-inner {
+      display: table;
+      width: 100%;
+    }
+    .footer-nav,
+    .footer-credits {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .footer-credits {
+      width: 1%;
+      white-space: nowrap;
+    }
+  }
+}
+
+.footer-credits {
+  .list-inline {
+    display: inline-block;
+    vertical-align: middle;
   }
 }
 
