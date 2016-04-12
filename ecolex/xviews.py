@@ -21,11 +21,25 @@ class SearchViewMixin(object):
         return SearchForm(self.request.GET)
 
     def get_query_data(self):
-        data = self.form.data
-        return data and {
+        # momentarily return a mish-mash of form's cleaned_data and data,
+        # until form validation can be fully trusted
+        self.form.is_valid()
+        data = self.form.cleaned_data.copy()
+        rem_keys = []
+        # clean all empty things
+        for k, v in data.items():
+            if v in (None, []):
+                rem_keys.append(k)
+        for rk in rem_keys:
+            del data[rk]
+
+        data.update({
             k: v
-            for k, v in data.lists()
-        }#if k in form.changed_data}
+            for k, v in self.form.data.lists()
+            if k not in data
+        })
+
+        return data
 
 
 class SearchResultsView(SearchViewMixin, TemplateView):
@@ -53,8 +67,8 @@ class SearchResultsView(SearchViewMixin, TemplateView):
         else:
             data = self.get_query_data()
 
-            page = form.cleaned_data['page']
-            sortby = form.cleaned_data['sortby']
+            page = data.pop('page')
+            sortby = data.pop('sortby')
             date_sort = {
                 form.SORT_DEFAULT: None,
                 form.SORT_FIRST: True,

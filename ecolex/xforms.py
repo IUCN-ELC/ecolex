@@ -16,7 +16,7 @@ class SearchForm(forms.Form):
         (SORT_LAST, _('least recent')),
     )
 
-    q = forms.CharField()
+    q = forms.CharField(required=False)
     page = forms.IntegerField(min_value=1, required=False, initial=1)
     sortby = forms.ChoiceField(choices=SORT_CHOICES,
                                required=False, initial=SORT_DEFAULT)

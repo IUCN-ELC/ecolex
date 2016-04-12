@@ -57,9 +57,12 @@ class Searcher(object):
 
         # `q` and `type` will be used for query-ing, the rest are filters
         try:
-            self.qargs.append(data.pop('q'))
+            q = data.pop('q')
         except KeyError:
             pass
+        else:
+            if q:
+                self.qargs.append(q)
 
         types = data.pop('type', [])
 
