@@ -2,7 +2,7 @@ from functools import partialmethod
 from django import forms
 from django.utils.translation import ugettext as _
 from ecolex.lib.schema import fields
-from .schema import FILTER_FIELDS, STATS_FIELDS
+from .schema import FIELD_MAP, FILTER_FIELDS, STATS_FIELDS
 
 
 class SearchForm(forms.Form):
@@ -41,6 +41,12 @@ class SearchForm(forms.Form):
                 for suffix in ('min', 'max'):
                     new_fields.append(("%s_%s" % (name, suffix),
                                        forms.IntegerField()))
+            elif name == 'type':
+                # special-case type to set available choices
+                choices = list(FIELD_MAP.keys())
+                choices.remove('_')
+                field = forms.MultipleChoiceField(choices=zip(choices, choices))
+                new_fields.append(('type', field))
             else:
                 # this will be faceted upon. create a choice field
                 # (multiple by default)

@@ -717,9 +717,9 @@ __FPROPS = __get_field_properties(
     BaseSchema, __OBJECT_SCHEMAS
 )
 
-FIELD_MAP = {
-    k: v.keys() for k, v in __FPROPS.items()
-}
+FIELD_MAP = OrderedDict(
+    (k, v.keys()) for k, v in __FPROPS.items()
+)
 
 FILTER_FIELDS = OrderedDict(
     (k, p) for _fps in __FPROPS.values() for k, p in _fps.items()
