@@ -270,9 +270,12 @@ class TreatySchema(CommonSchema):
 
     @pre_load
     def handle_translations(self, data):
+        # TODO See if 'other' should be left out; if not, change the
+        # 'language_name_translated' template filter that caused the crash
         translations = [{'language': k.split('_')[-1], 'value': v}
                         for k, v in data.items()
-                        if k.startswith('trPaperTitleOfText')]
+                        if k.startswith('trPaperTitleOfText')
+                        and not k.endswith('other')]
         data['title_translations'] = translations
         return data
 
