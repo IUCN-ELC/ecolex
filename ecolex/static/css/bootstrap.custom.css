@@ -5229,6 +5229,9 @@ button.close {
   margin-left: -22px;
   margin-right: 0;
 }
+.filter-label {
+  cursor: pointer;
+}
 .offcanvas {
   display: none;
 }

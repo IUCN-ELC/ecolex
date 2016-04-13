@@ -12,7 +12,7 @@
   .list-unstyled();
   position: absolute;
   margin: 0;
-  
+
   .input-group {
     margin: @padding-base-vertical @padding-base-horizontal;
   }
@@ -34,7 +34,7 @@
     &.multiselect-group-clickable label {
       cursor: pointer;
     }
-    
+
     > a {
       padding: 0;
 
@@ -68,17 +68,21 @@
 }
 
 .form-inline .multiselect-container{
- 
+
   label.checkbox, label.radio{
     padding: @padding-base-vertical @ms-indent;
   }
- 
-  li a label{              
-  
+
+  li a label{
+
     &.checkbox input[type="checkbox"], &.radio input[type="radio"]{
       margin-left: (-@ms-indent);
       margin-right: 0;
     }
   }
-} 
+}
+
+.filter-label {
+  cursor: pointer;
+}
 
