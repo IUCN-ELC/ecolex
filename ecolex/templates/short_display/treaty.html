@@ -17,8 +17,8 @@
     <strong>Keywords:</strong> {{ result.keywords|capfirstseq|join:", "|safe }}
   </p>
 {% endif %}
-<p class="search-result-source">Source:
+<p class="search-result-source"><strong>Source:</strong>
   {% if result.type_of_document == 'Bilateral' %}
     <a target="_blank" href="http://faolex.fao.org/">FAO, FAOLEX;</a>
   {% endif %}
-    <a target="_blank" href="http://iucn.org">{{ result.source }}</a> (ID: {{ result.document_id }})</p>
+    <a target="_blank" href="http://iucn.org">IUCN</a> (ID: {{ result.document_id }})</p>

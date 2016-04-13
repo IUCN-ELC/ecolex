@@ -33,3 +33,6 @@
 <p class="search-result-details"><strong>Keywords:</strong>
   {{ result.keywords|capfirstseq|join:", "|safe }}
 </p>
+<p class="search-result-source"><strong>Source:</strong>
+    <a target="_blank" href="http://iucn.org">IUCN</a> (ID: {{ result.document_id }})
+</p>
