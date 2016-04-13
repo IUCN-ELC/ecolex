@@ -11,7 +11,8 @@
             data-placement="bottom"
             data-container="body"
             data-value="treaty"
-            title="{% if 'treaty' in form.type.data %}Show all{% else %}Show only Treaties{% endif %}">
+            title="{% if 'treaty' in form.type.data %}Show all{% else %}Show only Treaties{% endif %}"
+            {% if not type_count.treaty %}disabled="disabled"{% endif %}>
       <span class="icon icon-treaty"></span>
       <span class="btn-label">Treaties</span>
       {% if type_count.treaty > 0 %}
@@ -29,7 +30,8 @@
             data-placement="bottom"
             data-container="body"
             data-value="decision"
-            title="{% if 'decision' in form.type.data %}Show all{% else %}Show only COP Decisions{% endif %}">
+            title="{% if 'decision' in form.type.data %}Show all{% else %}Show only COP Decisions{% endif %}"
+            {% if not type_count.decision %}disabled="disabled"{% endif %}>
       <span class="icon icon-cop-decision"></span>
       <span class="btn-label">COP Decisions</span>
       {% if type_count.decision > 0 %}
@@ -47,7 +49,8 @@
             data-placement="bottom"
             data-container="body"
             data-value="legislation"
-            title="{% if 'legislation' in form.type.data %}Show all{% else %}Show only Legislation{% endif %}">
+            title="{% if 'legislation' in form.type.data %}Show all{% else %}Show only Legislation{% endif %}"
+            {% if not type_count.legislation %}disabled="disabled"{% endif %}>
       <span class="icon icon-legislation"></span>
       <span class="btn-label">Legislation</span>
       {% if type_count.legislation > 0 %}
@@ -65,7 +68,8 @@
             data-placement="bottom"
             data-container="body"
             data-value="court_decision"
-            title="{% if 'court_decision' in form.type.data %}Show all{% else %}Show only Court Decision{% endif %}">
+            title="{% if 'court_decision' in form.type.data %}Show all{% else %}Show only Court Decision{% endif %}"
+            {% if not type_count.court_decision %}disabled="disabled"{% endif %}>
       <span class="icon icon-court-decision"></span>
       <span class="btn-label">Court Decisions</span>
       {% if type_count.court_decision > 0 %}
@@ -83,7 +87,8 @@
             data-placement="bottom"
             data-container="body"
             data-value="literature"
-            title="{% if 'literature' in form.type.data %}Show all{% else %}Show only Literature{% endif %}">
+            title="{% if 'literature' in form.type.data %}Show all{% else %}Show only Literature{% endif %}"
+            {% if not type_count.literature %}disabled="disabled"{% endif %}>
       <span class="icon icon-literature"></span>
       <span class="btn-label">Literature</span>
       {% if type_count.literature > 0 %}

@@ -27,17 +27,27 @@
       {{ form.type.data|join:" or " }} thing, really.
     {% endif %}
 {% if results %}
-  Show only
-  {% for id, txt in form.fields.type.choices %}{% if not forloop.first %} | {% endif %}
-  <a href="{% url "results" %}?{{ form.type|field_urlencoded:id }}">
-    {% if id == "treaty" %}Treaties
-    {% elif id == "decision" %}COP Decisions
-    {% elif id == "legislation" %}Legislation
-    {% elif id == "court_decision" %}Court Decisions
-    {% elif id == "literature" %}Literature
-    {% endif %}
-  </a>
-  {% endfor %}
+  {% with facets.type|get_facet_counts as type_count %}
+    Show only
+    {% for id, txt in form.fields.type.choices %}{% if not forloop.first %} | {% endif %}
+      {% with type_count|lookup:id as count %}
+        {% if count %}
+          <a href="{% url "results" %}?{{ form.type|field_urlencoded:id }}">
+        {% endif %}
+
+        {% if id == "treaty" %}Treaties
+        {% elif id == "decision" %}COP Decisions
+        {% elif id == "legislation" %}Legislation
+        {% elif id == "court_decision" %}Court Decisions
+        {% elif id == "literature" %}Literature
+        {% endif %}
+
+        {% if count %}
+          </a>
+        {% endif %}
+      {% endwith %}
+    {% endfor %}
+  {% endwith %}
 </p>
 <p class="small clearfix">
     {% include 'bits/sortby.html' %}
