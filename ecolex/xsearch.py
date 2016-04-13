@@ -64,14 +64,16 @@ class Searcher(object):
             if q:
                 self.qargs.append(q)
 
-        types = data.pop('type', [])
+        types = data.get('type', [])
 
         try:
             self.set_types(types)
         except ValueError:
             # all types requested are invalid
-            # TODO: return an "empty" response
+            self.invalid = True
             return
+        else:
+            self.invalid = False
 
         self.prepare_filters(data)
         self.prepare_stats()
@@ -95,7 +97,8 @@ class Searcher(object):
                                    (set(FIELD_MAP[t]) for t in types),
                                    set(FIELD_MAP['_']))
 
-        self.qkwargs['type'] = self.to_query(list(types))
+        # we'll filter on types instead, so we can get facet counts
+        #self.qkwargs['type'] = self.to_query(list(types))
 
     def is_used_field(self, field):
         return field in self._used_fields
@@ -368,6 +371,9 @@ class Searcher(object):
                                key=itemgetter('id', 'text'))
 
     def search(self, page=1, page_size=None, date_sort=None):
+        if self.invalid:
+            return SearchResponse()
+
         if page_size is None:
             page_size = settings.SEARCH_PAGE_SIZE
         start = (page - 1) * page_size
