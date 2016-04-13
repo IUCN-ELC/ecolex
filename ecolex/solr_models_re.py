@@ -225,10 +225,11 @@ class Literature(DocumentModel):
 
     @property
     def title(self):
-        return (self.paper_title_of_text or
-                self.long_title or
-                self.title_of_text_transl or
-                self.title_of_text_short)
+        if self.document_id.startswith('ANA'):
+            return self.paper_title_of_text
+        elif self.document_id.startswith('MON'):
+            return self.long_title
+        return 'Untitled'
 
     @cached_property
     def people_authors(self):
@@ -243,10 +244,20 @@ class Literature(DocumentModel):
         return self.people_authors or self.corp_authors
 
     @property
+    def parent_url(self):
+        # only for chapters
+        from ecolex.search import get_documents_by_field
+        if self.is_chapter:
+            docs = get_documents_by_field('litId', [self.related_monograph], rows=1)
+            doc = [x for x in docs][0]
+            return doc.details_url
+        return None
+
+    @property
     def parent_title(self):
-        parent_title = self.long_title or self.orig_serial_title
-        if parent_title != self.title:
-            return parent_title
+        if self.is_chapter:
+            return self.long_title
+        return None
 
     def date(self):
         return self.date_of_text_ser or self.year_of_text or self.date_of_text
