@@ -3,7 +3,7 @@
 
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
-  {% breadcrumb "Treaty" 'treaty_details' query slug=treaty.solr.slug %}
+  {% breadcrumb "Treaty" 'treaty_details' query slug=treaty.slug %}
   {% breadcrumb "COP decisions" %}
 {% endblock %}
 
