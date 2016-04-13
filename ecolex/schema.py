@@ -28,7 +28,6 @@ class BaseSchema(Schema):
     id = fields.String()
     slug = fields.String()
     type = fields.String()
-    source = fields.String()
     indexed_at = fields.DateTime(load_from='indexedDate')
     updated_at = fields.DateTime(load_from='updatedDate')
 
@@ -67,9 +66,7 @@ class BaseSchema(Schema):
         ]
         solr_facets = solr_filters.copy()
         solr_facets.remove('xdate')
-        solr_fetch = [
-            'id', 'slug', 'type', 'source',
-        ]
+        solr_fetch = ['id', 'slug', 'type']
         solr_boost = {
             'text': 20,
             # 'doc_content': 10, # not indexed, see above

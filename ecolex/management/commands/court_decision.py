@@ -179,7 +179,6 @@ class CourtDecision(object):
         solr_decision = {
             'text': '',
             'type': COURT_DECISION,
-            'source': 'InforMEA',
             'cdLeoId': leo_id,
             'id': solr_id,
         }
