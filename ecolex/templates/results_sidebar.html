@@ -132,7 +132,7 @@ select.selection-facet {
 </fieldset>
 
 
-{% if not form.type.data or form.has_treaty %}
+{% if form.has_treaty %}
 <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_treaty %}class="collapsed"{% endif %}
         data-target="#filter-treaties">Treaty filters</h5>
@@ -155,7 +155,7 @@ select.selection-facet {
 {% endif %}
 
 
-{% if not form.type.data or form.has_decision %}
+{% if form.has_decision %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_decision %}class="collapsed"{% endif %}
         data-target="#filter-cop-decisions">COP Decision filters</h5>
@@ -190,7 +190,7 @@ select.selection-facet {
 {% endif %}
 
 
-{% if not form.type.data or form.has_legislation %}
+{% if form.has_legislation %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_legislation %}class="collapsed"{% endif %}data-target="#filter-legislation">Legislation filters</h5>
     <div id="filter-legislation" class="collapse {% if form.has_legislation %}in{% endif %}">
@@ -204,7 +204,7 @@ select.selection-facet {
 {% endif %}
 
 
-{% if not form.type.data or form.has_literature %}
+{% if form.has_literature %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">Literature filters</h5>
     <div id="filter-literatures" class="collapse {% if form.has_literature %}in{% endif %}">

@@ -1,9 +1,10 @@
 from functools import partialmethod
 from types import MethodType
 from django import forms
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext as _
 from ecolex.lib.schema import fields
-from .schema import FIELD_MAP, FILTER_FIELDS, STATS_FIELDS
+from .schema import FIELD_MAP, FILTER_FIELDS, STATS_FIELDS, SCHEMA_MAP
 
 
 def _urlencoded(self, value):
@@ -112,20 +113,49 @@ class SearchForm(forms.Form):
             self[name].and_field = self[and_name]
             #self[and_name].parent_field = self[name]
 
-    def _has_document_type(self, doctype):
-        return doctype in self.data.get('type', [])
+    @cached_property
+    def _FIELD_TYPE_MAP(self):
+        return {
+            f: t
+            for t, fs in FIELD_MAP.items() if t != '_'
+            for f in fs
+        }
 
-    def has_treaty(self):
-        return self._has_document_type('treaty')
+    def __has_document_type(self, doctype):
+        # the form "has" the doctype, when either:
+        # - no type-specific field is in use, and
+        # - either: - no types are specified, or
+        #           - it's listed in the requested types
+        # or:
+        # - a specific field of this type is in use, and
+        # - either: (-, -, the same as above)
+        #
+        # (TODO: conflicting type + specific field is an error, so are
+        # different type-specific fields)
 
-    def has_decision(self):
-        return self._has_document_type('decision')
+        if not self.data:
+            return True
 
-    def has_literature(self):
-        return self._has_document_type('literature')
+        types = self.data.getlist('type')
 
-    def has_legislation(self):
-        return self._has_document_type('legislation')
+        if types and len(types) == 1:
+            return types[0] == doctype
 
-    def has_court_decision(self):
-        return self._has_document_type('court_decision')
+        try:
+            current = next(self._FIELD_TYPE_MAP[f]
+                           for f in self.data.keys()
+                           if f in self._FIELD_TYPE_MAP)
+        except StopIteration:
+            pass
+        else:
+            return doctype == current
+
+        # if we got here, it's all-inclusive
+        # (for the given types)
+        return not types or doctype in types
+
+    has_treaty = partialmethod(__has_document_type, 'treaty')
+    has_decision = partialmethod(__has_document_type, 'decision')
+    has_literature = partialmethod(__has_document_type, 'literature')
+    has_legislation = partialmethod(__has_document_type, 'legislation')
+    has_court_decision = partialmethod(__has_document_type, 'court_decision')
