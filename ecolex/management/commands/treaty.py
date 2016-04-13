@@ -234,8 +234,8 @@ class TreatyImporter(object):
 
     def __init__(self, config):
         self.solr_timeout = config.getint('solr_timeout')
-        self.regions_json = config.get('regions_json')
-        self.languages_json = config.get('languages_json')
+        self.regions_json = settings.REGIONS_JSON
+        self.languages_json = settings.LANGUAGES_JSON
         self.treaties_url = config.get('treaties_url')
         self.import_field = config.get('import_field')
         self.query_format = config.get('query_format')
@@ -330,6 +330,9 @@ class TreatyImporter(object):
                                     data['trLanguageOfDocument_es'].append(self.languages[lang]['es'])
                                     data['trLanguageOfDocument_fr'].append(self.languages[lang]['fr'])
                                 else:
+                                    data['trLanguageOfDocument_en'].append(lang)
+                                    data['trLanguageOfDocument_es'].append(lang)
+                                    data['trLanguageOfDocument_fr'].append(lang)
                                     logger.error('Language not found %s' % (lang.lower()))
                         elif v in FALSE_LIST_FIELDS:
                             data[v] = self._clean_text(field_values[0].text)

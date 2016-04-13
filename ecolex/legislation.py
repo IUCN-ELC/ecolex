@@ -74,6 +74,8 @@ FIELD_MAP = {
 
 }
 
+LANGUAGE_FIELDS = ['legLanguage_en', 'legLanguage_fr', 'legLanguage_es']
+
 MULTIVALUED_FIELDS = [
     'legLanguage_en', 'legLanguage_fr', 'legLanguage_es',
     'legKeyword_code', 'legKeyword_en', 'legKeyword_fr', 'legKeyword_es',
@@ -101,7 +103,7 @@ def harvest_file(upfile):
     legislations = []
     count_ignored = 0
 
-    with open('/ecolex/ecolex/management/regions.json') as f:
+    with open(settings.LANGUAGES_JSON) as f:
         json_regions = json.load(f)
 
     for document in documents:

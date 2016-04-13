@@ -8,6 +8,7 @@ import logging.config
 import re
 
 from django.template.defaultfilters import slugify
+from django.conf import settings
 
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.utils import EcolexSolr, LITERATURE
@@ -55,6 +56,7 @@ FIELD_MAP = {
 
     'serialtitle': 'litSerialTitle',
     'isbn': 'litISBN',
+
     'publisher': 'litPublisher',
     'publplace': 'litPublPlace',
     'volumeno': 'litVolumeNo',
@@ -238,7 +240,8 @@ class LiteratureImporter(object):
 
     def __init__(self, config):
         self.solr_timeout = config.getint('solr_timeout')
-        self.regions_json = config.get('regions_json')
+        self.regions_json = settings.REGIONS_JSON
+        self.languages_json = settings.LANGUAGES_JSON
         self.literature_url = config.get('literature_url')
         self.import_field = config.get('import_field')
         self.query_format = config.get('query_format')
@@ -254,6 +257,7 @@ class LiteratureImporter(object):
         self.end_month = config.getint('end_month', now.month)
         self.solr = EcolexSolr(self.solr_timeout)
         self.regions = self._get_regions()
+        self.languages = self._get_languages()
         self.force_import_all = config.getboolean('force_import_all', False)
         logger.info('Started literature importer')
 
@@ -490,3 +494,12 @@ class LiteratureImporter(object):
         with open(self.regions_json) as f:
             regions = json.load(f)
         return regions
+
+    def _get_languages(self):
+        with open(self.languages_json) as f:
+            languages_codes = json.load(f)
+        langs = {}
+        for k, v in languages_codes.items():
+            key = v['en'].lower()
+            langs[key] = v
+        return langs

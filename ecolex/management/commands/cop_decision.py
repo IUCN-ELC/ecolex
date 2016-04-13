@@ -92,7 +92,7 @@ class CopDecisionImporter(object):
 
     def __init__(self, config):
         self.solr_timeout = config.getint('solr_timeout')
-        self.languages_json = config.get('languages_json')
+        self.languages_json = settings.LANGUAGES_JSON
         self.decision_url = config.get('cop_decision_url')
         self.query_skip = config.get('query_skip')
         self.query_filter = config.get('query_filter')
