@@ -1,9 +1,19 @@
-{% load tags %}
-{% if form.sortby.value %}<input id="id_{{ form.sortby.name }}" name="{{ form.sortby.name }}" type="hidden" value="{{ form.sortby.value }}">{% endif %}
-{% for id, txt in form.fields.sortby.choices %}{% if not forloop.first %} | {% endif %}
-  {% if not id and not form.sortby.value or id == form.sortby.value %}
-<strong>Sorted by {{ txt }}</strong>
-  {% else %}
-<a {#data-sortby="{{ id }}" class="sortby" #}href="{% url "results" %}?{{ form.sortby|field_urlencoded:id }}">Sort by {{ txt }}</a>
-  {% endif %}
-{% endfor %}
+<input id="id_{{ form.sortby.name }}" name="{{ form.sortby.name }}" type="hidden" value="{{ form.sortby.value|default:"" }}">
+{% if form.sortby.data == 'last' %}
+  <strong>Sorted by most recent</strong>
+{% else %}
+  <a data-sortby="last" class="sortby" href="">Sort by most recent</a>
+{% endif %} |
+{% if form.sortby.data == 'first' %}
+  <strong>Sorted by least recent</strong>
+{% else %}
+  <a data-sortby="first" class="sortby" href="">Sort by least recent</a>
+{% endif %}
+{% if form.q.data and form.q.data.strip %}
+ |
+    {% if not form.sortby.data or form.sortby.data == '' %}
+      <strong>Sorted by relevance</strong>
+    {% else %}
+      <a data-sortby="" class="sortby" href="">Sort by relevance</a>
+    {% endif %}
+{% endif %}

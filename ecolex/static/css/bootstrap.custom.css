@@ -2654,8 +2654,8 @@ fieldset[disabled] .btn-search.active {
 }
 .btn-blue {
   color: #ffffff;
-  background-color: #0077c0;
-  border-color: #0077c0;
+  background-color: #0066cc;
+  border-color: #0066cc;
   margin-top: 10px;
   margin-bottom: 10px;
   padding-top: 3px !important;
@@ -2669,8 +2669,8 @@ fieldset[disabled] .btn-search.active {
 .btn-blue.active,
 .open > .dropdown-toggle.btn-blue {
   color: #ffffff;
-  background-color: #00629f;
-  border-color: #005e97;
+  background-color: #0055ab;
+  border-color: #0052a3;
 }
 .btn-blue:active,
 .btn-blue.active,
@@ -2700,7 +2700,7 @@ fieldset[disabled] .btn-blue.active {
   border-color: transparent;
 }
 .btn-blue .badge {
-  color: #0077c0;
+  color: #0066cc;
   background-color: #ffffff;
 }
 .btn-blue:hover,
