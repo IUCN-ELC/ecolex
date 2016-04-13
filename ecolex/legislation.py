@@ -83,19 +83,21 @@ MULTIVALUED_FIELDS = [
     'legSubject_code', 'legSubject_en', 'legSubject_fr', 'legSubject_es',
 ]
 
+
 def get_content(values):
     values = [v.get(CONTENT, None) for v in values]
     return values
 
-def harvest_file(uploaded_file):
-    if settings.DEBUG:
-        with tempfile.NamedTemporaryFile(prefix=uploaded_file.name, delete=False) as f:
-            logger.debug('Dumping data to %s' %(f.name))
-            for chunk in uploaded_file.chunks():
-                f.write(chunk)
-            uploaded_file.seek(0)
 
-    bs = BeautifulSoup(uploaded_file)
+def harvest_file(upfile):
+    if settings.DEBUG:
+        with tempfile.NamedTemporaryFile(prefix=upfile.name, delete=False) as f:
+            logger.debug('Dumping data to %s' % (f.name))
+            for chunk in upfile.chunks():
+                f.write(chunk)
+            upfile.seek(0)
+
+    bs = BeautifulSoup(upfile)
     documents = bs.findAll(DOCUMENT)
     legislations = []
 
@@ -105,7 +107,6 @@ def harvest_file(uploaded_file):
     for document in documents:
         legislation = {
             'type': LEGISLATION,
-            'source': 'fao',
         }
 
         for k, v in FIELD_MAP.items():
@@ -124,7 +125,8 @@ def harvest_file(uploaded_file):
         for field_name in MULTIVALUED_FIELDS:
             field_values = legislation.get(field_name)
             if field_values:
-                legislation[field_name] = list(OrderedDict.fromkeys(field_values).keys())
+                legislation[field_name] = list(
+                    OrderedDict.fromkeys(field_values).keys())
 
         if ('legGeoArea_en' in legislation and
                 'legGeoArea_es' in legislation and
@@ -167,9 +169,8 @@ def harvest_file(uploaded_file):
             try:
                 legDate = datetime.strptime(legYear, '%Y')
                 legislation['docDate'] = legDate.strftime('%Y-%m-%dT%H:%M:%SZ')
-            except Exception as e:
+            except Exception:
                 logger.debug('Error parsing legYear %s' % (legYear))
-                pass
 
         url_value = document.attrs.get('url', None)
         if url_value:
@@ -189,6 +190,7 @@ def harvest_file(uploaded_file):
 
     response = add_legislations(legislations)
     return response
+
 
 def add_legislations(legislations):
     solr = EcolexSolr()
@@ -215,14 +217,14 @@ def add_legislations(legislations):
                 new_legislations.append(legislation)
                 new_docs.append(doc)
         except SolrError as e:
-            logger.error('Error importing legislation %s' % (leg_id,) )
+            logger.error('Error importing legislation %s' % (leg_id,))
             failed_docs.append(doc)
             if settings.DEBUG:
                 logger.exception(e)
 
-        doc.parsed_data=json.dumps(legislation)
-        if ( doc.url != legislation['legLinkToFullText']):
-            doc.url=legislation['legLinkToFullText']
+        doc.parsed_data = json.dumps(legislation)
+        if (doc.url != legislation['legLinkToFullText']):
+            doc.url = legislation['legLinkToFullText']
             # will not re-parse if same url and doc_size
             doc.doc_size = None
 
@@ -241,6 +243,7 @@ def add_legislations(legislations):
     )
     return response
 
+
 def index_and_log(solr, legislations, docs):
     # solr.add_bulk returns False on fail
     if not solr.add_bulk(legislations):
@@ -250,4 +253,3 @@ def index_and_log(solr, legislations, docs):
         # no need to store what is already indexed in Solr
         doc.parsed_data = ''
     return len(legislations)
-
