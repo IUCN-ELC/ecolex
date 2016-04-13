@@ -249,6 +249,8 @@ class Literature(DocumentModel):
             return parent_title
 
     def date(self):
+        import pdb; pdb.set_trace()
+        return self.year_of_text
         return self.date_of_text_ser or self.year_of_text or self.date_of_text
 
     @cached_property

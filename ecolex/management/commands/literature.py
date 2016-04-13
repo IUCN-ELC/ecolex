@@ -164,8 +164,6 @@ DATE_FIELDS = [
 
 TEXT_DATE_FIELDS = ['litDateOfTextSer', 'litYearOfText', 'litDateOfText']
 SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
-DATE_FORMAT = '%Y-%m-%d'
-
 
 MULTIVALUED_FIELDS = [
     'litId2',
@@ -445,7 +443,7 @@ class LiteratureImporter(object):
 
         def parse(value, date_format):
             date = datetime.strptime(value, date_format)
-            return date.strftime(DATE_FORMAT), date.strftime(SOLR_DATE_FORMAT)
+            return value, date.strftime(SOLR_DATE_FORMAT)
 
         for date_format in date_formats:
             try:

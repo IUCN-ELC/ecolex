@@ -342,7 +342,7 @@ class LiteratureSchema(CommonSchema):
             'long_title', 'long_title_other', 'paper_title_of_text',
             'paper_title_of_text_other', 'orig_serial_title',
             'title_of_text_short', 'title_of_text_short_other',
-            'title_of_text_transl',
+            'title_of_text_transl', 'year_of_text',
             'date_of_entry', 'date_of_modification',
             'date_of_text', 'date_of_text_ser',
             'abstract', 'abstract_other',
