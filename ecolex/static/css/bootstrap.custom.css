@@ -5916,7 +5916,7 @@ main {
 .footer {
   padding: 30px 0;
   border-top: 1px solid #dddddd;
-  background-color: #eeeeee;
+  background-color: #fff;
   font-size: 14px;
   color: #808080;
 }
@@ -6929,7 +6929,7 @@ ul.select2-selection__rendered {
   display: block;
   height: 64px;
   width: 64px;
-  background: url('../img/logo-credits.png') no-repeat top left;
+  background: url('../img/logos-credits-colour.jpg') no-repeat top left;
   background-size: cover;
 }
 .sprite-iucn {
