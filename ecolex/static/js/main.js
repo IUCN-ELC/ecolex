@@ -148,8 +148,10 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         var _text = _stripDiacritics(text);
 
         while ((match = re.exec(_text)) !== null) {
-            out += _esc(text.substring(lastindex, match.index));
-            out += '<strong>' + _esc(match[0]) + '</strong>';
+            out += _esc(
+                text.substring(lastindex, match.index));
+            out += '<strong>' + _esc(
+                text.substr(match.index, match[0].length)) + '</strong>';
             lastindex = re.lastIndex;
         }
         out += _esc(text.substr(lastindex));
