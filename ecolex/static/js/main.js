@@ -355,7 +355,17 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
 
     };
 
+    CachingAjaxAdapter._processData = function (data, selected) {
+        $.each(data, function(idx, item) {
+            item._key = item.id;
+            item.id = item.text;
+            item.selected = selected && $.inArray(item.text, selected) != -1;
+        });
+    };
+
     CachingAjaxAdapter.prototype.processResults = function (data, params) {
+        CachingAjaxAdapter._processData(data.results);
+
         // there are more results when the backend sends a next page url
         var more = Boolean(data['next']);
 
@@ -404,23 +414,24 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
 
 /* main */
 
-
     // set up select2
 
     var _DataAdapter = $.fn.select2.amd.require('ecolex/select2/adapter');
 
     $('.selection-facet').each(function(idx) {
         var self = $(this);
-        var search_field_id = self.attr('id') + '-search-field';
-
-        self.select2({
-            dataAdapter: _DataAdapter,
-        });
-
+        var _data = self.data('data');
+        _DataAdapter._processData(_data, self.data('selected'));
         // strip away the initial data, for performance reasons
         self.removeData('data');
         self.removeAttr('data-data');
 
+        self.select2({
+            data: _data,
+            dataAdapter: _DataAdapter,
+        });
+
+        var search_field_id = self.attr('id') + '-search-field';
         var search_field = self.next().find('.select2-search__field');
         search_field.attr('id', search_field_id);
         self.change(submit);
