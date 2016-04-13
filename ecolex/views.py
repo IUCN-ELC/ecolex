@@ -159,7 +159,6 @@ class DetailsView(SearchView):
         context['document'] = results.first()
         context['results'] = results
         context['debug'] = settings.DEBUG
-        context['page_type'] = 'homepage'
 
         return context
 
@@ -195,7 +194,6 @@ class ResultDetailsDecisions(SearchView):
             raise Http404()
 
         context['treaty'] = results.first()
-        context['page_type'] = 'homepage'
         return context
 
 
@@ -211,7 +209,6 @@ class ResultDetailsLiteratures(SearchView):
             raise Http404
 
         ctx['treaty'] = results.first()
-        ctx['page_type'] = 'homepage'
         return ctx
 
 
@@ -227,7 +224,6 @@ class ResultDetailsCourtDecisions(SearchView):
             raise Http404
 
         ctx['treaty'] = results.first()
-        ctx['page_type'] = 'homepage'
         return ctx
 
 
