@@ -26,8 +26,15 @@
     {% endif %}
 {% if results %}
   Show only
-  {% for value, text in form.fields.type.choices %}{% if not forloop.first %} | {% endif %}
-   <a href="{% url "results" %}?{{ form.type|field_urlencoded:value }}">{{ text }}</a>
+  {% for value, id in form.fields.type.choices %}{% if not forloop.first %} | {% endif %}
+  <a href="{% url "results" %}?{{ form.type|field_urlencoded:value }}">
+    {% if id == "treaty" %}Treaties
+    {% elif id == "decision" %}COP Decisions
+    {% elif id == "legislation" %}Legislation
+    {% elif id == "court_decision" %}Court Decisions
+    {% elif id == "literature" %}Literature
+    {% endif %}
+  </a>
   {% endfor %}
 </p>
 <p>
