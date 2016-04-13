@@ -537,7 +537,9 @@ class Literature(ObjectNormalizer):
         return self.solr.get(self.ID_FIELD)
 
     def date(self):
-        return self.solr.get('litYearOfText') or self.solr.get('litDateOfTextSer')
+        return (self.solr.get('litDateOfTextSer') or
+                self.solr.get('litYearOfText') or
+                self.solr.get('litDateOfText'))
 
     def details_url(self):
         return reverse('literature_details',
@@ -575,9 +577,6 @@ class Literature(ObjectNormalizer):
 
     def publication_place(self):
         return first(self.solr.get('litPublPlace'))
-
-    def publication_date(self):
-        return first(self.solr.get('litDateOfTextSer')) or first(self.solr.get('litDateOfText'))
 
     def title_field(self):
         return self.TITLE_FIELD_MAP.get(self.document_id()[:3])

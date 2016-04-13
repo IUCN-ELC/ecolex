@@ -248,12 +248,8 @@ class Literature(DocumentModel):
         if parent_title != self.title:
             return parent_title
 
-    @property
-    def publication_date(self):
-        return self.date_of_text_ser or self.date_of_text
-
     def date(self):
-        return self.year_of_text or self.date_of_text_ser
+        return self.date_of_text_ser or self.year_of_text or self.date_of_text
 
     @cached_property
     def is_article(self):

@@ -21,7 +21,7 @@
 <p class="search-result-details">
   {% if result.publisher %}<strong>Publisher: </strong><span>{{ result.publisher }}</span>{% endif %}
   {% if result.publication_place %} | <span>{{ result.publication_place }}</span>{% endif %}
-  {% if result.publication_date %} | <span>{{ result.publication_date }}</span>{% endif %}
+  {% if result.date %} | <span>{{ result.date|safe }}</span>{% endif %}
 </p>
 
 <p class="search-result-details">

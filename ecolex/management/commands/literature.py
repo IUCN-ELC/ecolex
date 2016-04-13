@@ -162,6 +162,8 @@ DATE_FIELDS = [
 
 TEXT_DATE_FIELDS = ['litDateOfTextSer', 'litYearOfText', 'litDateOfText']
 SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
+DATE_FORMAT = '%Y-%m-%d'
+
 
 MULTIVALUED_FIELDS = [
     'litId2',
@@ -323,8 +325,10 @@ class LiteratureImporter(object):
                             data[v] = data[v][0]
 
                 for field in TEXT_DATE_FIELDS:
-                    if field in data and 'docDate' not in data:
-                        data[field], data['docDate'] = self._clean_text_date(data[field])
+                    if field in data:
+                        data[field], temp_doc_date = self._clean_text_date(data[field])
+                        if temp_doc_date and 'docDate' not in data:
+                            data['docDate'] = temp_doc_date
                 # litDateOfText parsing error log
                 if 'litDateOfText' in data and ('docDate' not in data or
                                                 not data['docDate']):
@@ -437,7 +441,7 @@ class LiteratureImporter(object):
 
         def parse(value, date_format):
             date = datetime.strptime(value, date_format)
-            return value, date.strftime(SOLR_DATE_FORMAT)
+            return date.strftime(DATE_FORMAT), date.strftime(SOLR_DATE_FORMAT)
 
         for date_format in date_formats:
             try:
