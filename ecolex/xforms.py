@@ -12,6 +12,8 @@ def _urlencoded(self, value):
     replacing the current one.
     """
     form_data = self.form.data.copy()
+    if not form_data:
+        return ""
 
     if value == self.field.initial:
         try:
