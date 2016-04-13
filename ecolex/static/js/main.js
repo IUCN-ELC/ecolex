@@ -356,6 +356,7 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     };
 
     CachingAjaxAdapter._processData = function (data, selected) {
+        if (data === '""') return [];
         $.each(data, function(idx, item) {
             item._key = item.id;
             item.id = item.text;
