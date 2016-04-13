@@ -28,8 +28,8 @@
     {% endif %}
 {% if results %}
   Show only
-  {% for value, id in form.fields.type.choices %}{% if not forloop.first %} | {% endif %}
-  <a href="{% url "results" %}?{{ form.type|field_urlencoded:value }}">
+  {% for id, txt in form.fields.type.choices %}{% if not forloop.first %} | {% endif %}
+  <a href="{% url "results" %}?{{ form.type|field_urlencoded:id }}">
     {% if id == "treaty" %}Treaties
     {% elif id == "decision" %}COP Decisions
     {% elif id == "legislation" %}Legislation
