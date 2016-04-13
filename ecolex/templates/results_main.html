@@ -23,6 +23,8 @@
       court decision{{ results.count|pluralize }}.
     {% elif 'legislation' in form.type.data %}
       legislation record{{ results.count|pluralize }}.
+    {% else %}
+      {{ form.type.data|join:" or " }} thing, really.
     {% endif %}
 {% if results %}
   Show only

@@ -51,7 +51,7 @@ class Searcher(object):
     def __init__(self, data, language, interface=DEFAULT_INTERFACE):
         self.language = language
         self.interface = interface
-
+        self.valid = True
         self.qargs = []
         self.qkwargs = {}
 
@@ -70,10 +70,8 @@ class Searcher(object):
             self.set_types(types)
         except ValueError:
             # all types requested are invalid
-            self.invalid = True
+            self.valid = False
             return
-        else:
-            self.invalid = False
 
         self.prepare_filters(data)
         self.prepare_stats()
@@ -371,7 +369,7 @@ class Searcher(object):
                                key=itemgetter('id', 'text'))
 
     def search(self, page=1, page_size=None, date_sort=None):
-        if self.invalid:
+        if not self.valid:
             return SearchResponse()
 
         if page_size is None:
