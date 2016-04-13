@@ -42,19 +42,20 @@ def patched(field):
 
 class SearchForm(forms.Form):
     SORT_DEFAULT = ''
-    SORT_FIRST = 'first'
-    SORT_LAST = 'last'
+    SORT_ASC = 'oldest'
+    SORT_DESC = 'newest'
 
     SORT_CHOICES = (
+        (SORT_DESC, _('most recent')),
+        (SORT_ASC, _('least recent')),
         (SORT_DEFAULT, _('relevance')),
-        (SORT_FIRST, _('most recent')),
-        (SORT_LAST, _('least recent')),
+    )
+
+    _ALT_SORT_CHOICES = (
     )
 
     q = forms.CharField(required=False)
     page = patched(forms.IntegerField(min_value=1, required=False, initial=1))
-    sortby = patched(forms.ChoiceField(choices=SORT_CHOICES,
-                                       required=False, initial=SORT_DEFAULT))
 
     def __clean_field_with_initial(self, fname):
         if fname not in self.data or self.cleaned_data[fname] is None:
@@ -64,8 +65,43 @@ class SearchForm(forms.Form):
     clean_page = partialmethod(__clean_field_with_initial, 'page')
     clean_sortby = partialmethod(__clean_field_with_initial, 'sortby')
 
+    def mk_sortby(self):
+        # we normally get a regular field
+        choices = self.SORT_CHOICES
+        initial = self.SORT_DEFAULT
+        cls = forms.ChoiceField
+
+        # unless q is empty. then sortby defaults to most recent
+        if not self.data.get('q', '').strip():
+            _c = dict(self.SORT_CHOICES)
+            choices = (
+                (self.SORT_DEFAULT, _c[self.SORT_DESC]),
+                (self.SORT_ASC, _c[self.SORT_ASC]),
+            )
+            initial = old_default = self.SORT_DESC
+            new_default = self.SORT_DEFAULT
+
+            # we need to massage the data so that both the old and new defaults
+            # are treated the same, while we still pass the expected value
+            # to the code downstream
+            class _AltChoiceField(forms.ChoiceField):
+                def clean(self, value):
+                    if value == old_default:
+                        value = new_default
+                    value = super().clean(value)
+                    if value == new_default:
+                        value = old_default
+                    return value
+
+            cls = _AltChoiceField
+
+        self.fields['sortby'] = patched(cls(
+            choices=choices, initial=initial, required=False))
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.mk_sortby()
 
         # dynamically add all filterable fields
         new_fields = []

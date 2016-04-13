@@ -56,8 +56,6 @@ class SearchResultsView(SearchViewMixin, TemplateView):
         ctx = super().get_context_data(**kwargs)
 
         form = self.form
-        # TODO: when not valid?
-        #form.is_valid()
 
         if any(f in form.errors
                for f in (
@@ -70,10 +68,11 @@ class SearchResultsView(SearchViewMixin, TemplateView):
 
             page = data.pop('page')
             sortby = data.pop('sortby')
+
             date_sort = {
                 form.SORT_DEFAULT: None,
-                form.SORT_FIRST: True,
-                form.SORT_LAST: False,
+                form.SORT_ASC: True,
+                form.SORT_DESC: False,
             }[sortby]
 
             searcher = Searcher(data, language=get_language())

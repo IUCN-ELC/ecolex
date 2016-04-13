@@ -535,20 +535,6 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     // TODO: not the most beautiful approach this
     $('#search-form input:checkbox').change(submit);
 
-    // Sortby controls
-    $('.sortby').click(function(e) {
-        e.preventDefault();
-        var value = $(this).data('sortby');
-        $('#id_sortby').val(value);
-
-        submit();
-    });
-
-    $('#query-remove').click(function(e) {
-        $('#search').val('');
-        submit();
-    });
-
     // Type facet controls
     $('.filter-type button').click(function(e) {
         var current = $('#id_type').val() || [];
