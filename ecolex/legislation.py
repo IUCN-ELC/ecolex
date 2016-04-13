@@ -88,7 +88,6 @@ def get_content(values):
     values = [v.get(CONTENT, None) for v in values]
     return values
 
-
 def harvest_file(upfile):
     if settings.DEBUG:
         with tempfile.NamedTemporaryFile(prefix=upfile.name, delete=False) as f:
@@ -100,6 +99,7 @@ def harvest_file(upfile):
     bs = BeautifulSoup(upfile)
     documents = bs.findAll(DOCUMENT)
     legislations = []
+    count_ignored = 0
 
     with open('/ecolex/ecolex/management/regions.json') as f:
         json_regions = json.load(f)
@@ -127,6 +127,12 @@ def harvest_file(upfile):
             if field_values:
                 legislation[field_name] = list(
                     OrderedDict.fromkeys(field_values).keys())
+
+        if ('legTypeCode' in legislation):
+            if legislation['legTypeCode'] == 'A':
+                # Ignore International agreements
+                count_ignored += 1
+                continue
 
         if ('legGeoArea_en' in legislation and
                 'legGeoArea_es' in legislation and
@@ -188,11 +194,11 @@ def harvest_file(upfile):
 
         legislations.append(legislation)
 
-    response = add_legislations(legislations)
+    response = add_legislations(legislations, count_ignored)
     return response
 
 
-def add_legislations(legislations):
+def add_legislations(legislations, count_ignored):
     solr = EcolexSolr()
     new_docs = []
     updated_docs = []
@@ -235,11 +241,12 @@ def add_legislations(legislations):
     for doc in new_docs + updated_docs + failed_docs:
         doc.save()
 
-    response = 'Total %d. Added %d. Updated %d. Failed %d.' % (
-        len(legislations),
+    response = 'Total %d. Added %d. Updated %d. Failed %d. Ignored %d' % (
+        len(legislations) + count_ignored,
         count_new,
         count_updated,
-        len(legislations)-count_new-count_updated
+        len(legislations)-count_new-count_updated,
+        count_ignored
     )
     return response
 
