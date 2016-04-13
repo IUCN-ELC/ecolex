@@ -121,8 +121,8 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         if (result.loading) return result.text;
 
         var term = this._term;
-
         var text = this._highlight(result.text, term);
+
         return '' +
             '<div class="clearfix">' +
               '<div class="pull-right">' + result.count + '</div>' +
@@ -344,7 +344,7 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
 
     CachingAjaxAdapter.prototype.query = function (params, callback) {
         // ensure everything has access to the current query term
-        this.$element._term = params.term;
+        this._term = params.term;
 
         if (this._cached_data && this.isSubQuery(params))
             return this._cached_query(params, callback);
