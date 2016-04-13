@@ -11,6 +11,11 @@ function _stripDiacritics (text) {
     return text.replace(/[^\u0000-\u007E]/g, match);
 };
 
+RegExp.__escape_re = /[-\/\\^$*+?.()|[\]{}]/g;
+RegExp.escape = function(s) {
+    return s.replace(RegExp.__escape_re, '\\$&');
+};
+
 /* debugbugbugbug * /
 var _obs_trigger = S2U.Observable.prototype.trigger;
 S2U.Observable.prototype.trigger = function (event) {
@@ -131,28 +136,72 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     };
 
     CachingAjaxAdapter.prototype._highlight = function (text, term) {
-        // this actually does both highlighting and escaping
-
-        if (!term) return text;
-
-        // TODO: regex-escape the term
-        // TODO: should match all of the given terms. like the backend.
-        // TODO: unify with matching logic
-        var re = new RegExp('\\b' + _stripDiacritics(term), 'ig');
+        // this has to do both highlighting and escaping
+        // TODO: make the preparation code not run once for every list item.
+        // (needs some hacking of select2(?))
+        var term = $.trim(term);
         var _esc = Utils.escapeMarkup;
 
-        var match;
-        var lastindex=0;
-        var out = '';
+        if (term === '') return _esc(text);
 
         var _text = _stripDiacritics(text);
+        var words = RegExp.escape(_stripDiacritics(term)).split(/ +/);
+        var matches = [];
 
-        while ((match = re.exec(_text)) !== null) {
-            out += _esc(
-                text.substring(lastindex, match.index));
-            out += '<strong>' + _esc(
-                text.substr(match.index, match[0].length)) + '</strong>';
-            lastindex = re.lastIndex;
+        $.each(words, function(idx, word) {
+            var re = new RegExp('\\b' + word, 'ig');
+            var match;
+            //var lastindex=0;
+
+            while ((match = re.exec(_text)) !== null) {
+                matches.push({
+                    index: match.index,
+                    length: match[0].length
+                });
+                //lastindex = re.lastIndex
+            }
+        });
+
+        // sort the matches by index.
+        var _overlaps = false;
+        matches.sort(function(m1, m2) {
+            var diff = m1.index - m2.index;
+            if (diff === 0) {
+                // we have an overlapping match, make the longest match first
+                _overlaps = true;
+                return m2.length - m1.length;
+            }
+            return diff;
+        });
+
+        if (_overlaps) {
+            var _match, _oldindex, _index;
+            // iterate them backwardsly to preserve longer match
+            for (var i = matches.length -1; i >= 0 ; i--) {
+                _match = matches[i];
+                _index = _match.index;
+                if (_index == _oldindex) {
+                    // if duplicate, pop previous item
+                    matches.splice(i+1, 1);
+                }
+                _oldindex = _index;
+            }
+        }
+
+        var out = "";
+        var lastindex=0;
+        var match;
+
+        for (var i = 0, j =  matches.length; i < j ; i++) {
+            match = matches[i];
+
+            out += _esc(text.substring(lastindex, match.index));
+
+            out += '<strong>';
+            out += _esc(text.substr(match.index, match.length));
+            out += '</strong>';
+
+            lastindex = match.index + match.length;
         }
         out += _esc(text.substr(lastindex));
 
@@ -170,12 +219,14 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     CachingAjaxAdapter.prototype.matches = function (params, data) {
         // mostly copy/paste from upstream
 
-        var _matcher = CachingAjaxAdapter.prototype.matches;
+        var term = $.trim(params.term);
 
         // Always return the object if there is nothing to compare
-        if ($.trim(params.term) === '') {
+        if (term === '') {
             return data;
         }
+
+        var _matcher = CachingAjaxAdapter.prototype.matches;
 
         // Do a recursive check for options with children
         if (data.children && data.children.length > 0) {
@@ -204,14 +255,21 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
             return _matcher(params, match);
         }
 
-        var original = _stripDiacritics(data.text);
-        var term = _stripDiacritics(params.term);
-
         // end copy paste. this is the differing part.
-        // TODO: split term into words and match them all
-        if (new RegExp('\\b' + term, 'i').test(original)) {
-            return data;
-        }
+        var txt = _stripDiacritics(data.text);
+        var words = RegExp.escape(_stripDiacritics(term)).split(/ +/);
+
+        var matches = true;
+        $.each(words, function(idx, word) {
+            if (new RegExp('\\b' + word, 'i').test(txt)) {
+                return true;
+            } else {
+                matches = false;
+                return false;
+            }
+        });
+
+        if (matches) return data;
 
         // If it doesn't contain the term, don't return anything
         return null;
