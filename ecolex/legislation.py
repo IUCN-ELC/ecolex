@@ -151,16 +151,16 @@ def harvest_file(upfile):
                     new_regions['es'].append(value_es)
                     new_regions['fr'].append(value_fr)
                     if value_es.lower() != reg_es.lower():
-                        logger.error('Region name error: %s %s %s' %
+                        logger.debug('Region name different: %s %s %s' %
                                      (legislation['legId'], value_es,
                                       reg_es))
 
                     if value_fr.lower() != reg_fr.lower():
-                        logger.error('Region name error: %s %s %s' %
+                        logger.debug('Region name different: %s %s %s' %
                                      (legislation['legId'], value_fr,
                                       reg_fr))
                 else:
-                    logger.error('New region name: %s %s %s %s' %
+                    logger.warn('New region name: %s %s %s %s' %
                                  (legislation['legId'], reg_en, reg_es,
                                   reg_fr))
                     new_regions['en'].append(reg_en.capitalize())
