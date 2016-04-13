@@ -111,3 +111,21 @@ class SearchForm(forms.Form):
         for name, and_name in and_fields:
             self[name].and_field = self[and_name]
             #self[and_name].parent_field = self[name]
+
+    def _has_document_type(self, doctype):
+        return doctype in self.data.get('type', [])
+
+    def has_treaty(self):
+        return self._has_document_type('treaty')
+
+    def has_decision(self):
+        return self._has_document_type('decision')
+
+    def has_literature(self):
+        return self._has_document_type('literature')
+
+    def has_legislation(self):
+        return self._has_document_type('legislation')
+
+    def has_court_decision(self):
+        return self._has_document_type('court_decision')
