@@ -125,8 +125,8 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         var text = this._highlight(result.text, term);
         return '' +
             '<div class="clearfix">' +
-              '<div class="pull-left">' + text + '</div>' +
               '<div class="pull-right">' + result.count + '</div>' +
+              '<div>' + text + '</div>' +
             '</div>';
     };
 
