@@ -262,11 +262,20 @@ class Searcher(object):
         ]
 
     def get_fetch_fields(self):
-        return tuple(
+        fields = tuple(
             f.get_source_field(self.language)
             for k, f in FETCH_FIELDS.items()
             if self.is_used_field(k)
         )
+        # we need to always get english fields, for fallback. hardcode some.
+        if self.language != 'en':
+            fields += tuple(
+                f.get_source_field('en')
+                for k, f in FETCH_FIELDS.items()
+                if self.is_used_field(k) and f.multilingual
+            )
+
+        return fields
 
     def get_boost_fields(self):
         return {
