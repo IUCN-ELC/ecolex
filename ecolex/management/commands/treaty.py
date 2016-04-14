@@ -324,16 +324,16 @@ class TreatyImporter(object):
                             langs = data[v]
                             data[v] = []
                             for lang in langs:
-                                lang = lang.lower()
-                                if lang in self.languages:
-                                    data['trLanguageOfDocument_en'].append(self.languages[lang]['en'])
-                                    data['trLanguageOfDocument_es'].append(self.languages[lang]['es'])
-                                    data['trLanguageOfDocument_fr'].append(self.languages[lang]['fr'])
+                                key = lang.lower()
+                                if key in self.languages:
+                                    data['trLanguageOfDocument_en'].append(self.languages[key]['en'])
+                                    data['trLanguageOfDocument_es'].append(self.languages[key]['es'])
+                                    data['trLanguageOfDocument_fr'].append(self.languages[key]['fr'])
                                 else:
                                     data['trLanguageOfDocument_en'].append(lang)
                                     data['trLanguageOfDocument_es'].append(lang)
                                     data['trLanguageOfDocument_fr'].append(lang)
-                                    logger.error('Language not found %s' % (lang.lower()))
+                                    logger.error('Language not found %s' % (lang))
                         elif v in FALSE_LIST_FIELDS:
                             data[v] = self._clean_text(field_values[0].text)
                             if len(field_values) > 1:

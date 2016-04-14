@@ -70,9 +70,6 @@ FIELD_MAP = {
     'typeoftext_es_es': 'litTypeOfText_es',
 
     'languageofdocument': 'litLanguageOfDocument_en',
-    'languageofdocument_fr_fr': 'litLanguageOfDocument_fr',
-    'languageofdocument_es_es': 'litLanguageOfDocument_es',
-
     'subject': 'litSubject_en',
     'subject_fr_fr': 'litSubject_fr',
     'subject_es_es': 'litSubject_es',
@@ -173,8 +170,7 @@ MULTIVALUED_FIELDS = [
     'litContributor', 'litISBN',
     'litRegion_en', 'litRegion_fr', 'litRegion_es',
     'litBasin_en', 'litBasin_fr', 'litBasin_es',
-    'litLanguageOfDocument_en', 'litLanguageOfDocument_fr',
-    'litLanguageOfDocument_es',
+    'litLanguageOfDocument_en',
     'litLinkToFullText',
     'litTypeOfText_en', 'litTypeOfText_fr', 'litTypeOfText_es',
     'litCountry_en', 'litCountry_fr', 'litCountry_es',
@@ -192,6 +188,12 @@ DOCUMENT_TYPE_MAP = {
         'litDisplayType_es': 'Artículo en publicación',
     }
 }
+
+FALLBACK_FIELDS = ['litLongTitle_', 'litPaperTitleOfText_', 'litAbstract_',
+                   'litConfName_']
+DEFAULT_LANGUAGE = 'en'
+FALLBACK_LANGUAGES = ['fr', 'es', 'other']
+LANGUAGE_FIELD = 'litLanguageOfDocument_en'
 
 URL_CHANGE_FROM = 'http://www.ecolex.org/server2.php/server2neu.php/'
 URL_CHANGE_TO = 'http://www.ecolex.org/server2neu.php/'
@@ -309,7 +311,10 @@ class LiteratureImporter(object):
         for raw_lit in raw_literatures:
             bs = BeautifulSoup(raw_lit)
             for doc in bs.findAll(DOCUMENT):
-                data = {'type': LITERATURE}
+                data = {'type': LITERATURE,
+                        'litLanguageOfDocument_es': [],
+                        'litLanguageOfDocument_fr': [],
+                }
 
                 for k, v in FIELD_MAP.items():
                     field_values = doc.findAll(k)
@@ -325,6 +330,30 @@ class LiteratureImporter(object):
                             data[v] = clean_values
                         if v in data and v not in MULTIVALUED_FIELDS:
                             data[v] = data[v][0]
+
+                if LANGUAGE_FIELD in data:
+                    langs = data[LANGUAGE_FIELD]
+                    data[LANGUAGE_FIELD] = []
+                    for lang in langs:
+                        key = lang.lower()
+                        if key in self.languages:
+                            data['litLanguageOfDocument_en'].append(self.languages[key]['en'])
+                            data['litLanguageOfDocument_es'].append(self.languages[key]['es'])
+                            data['litLanguageOfDocument_fr'].append(self.languages[key]['fr'])
+                        else:
+                            data['litLanguageOfDocument_en'].append(lang)
+                            data['litLanguageOfDocument_es'].append(lang)
+                            data['litLanguageOfDocument_fr'].append(lang)
+                            logger.error('Language not found %s' % (lang))
+
+                for field in FALLBACK_FIELDS:
+                    field_en = field + DEFAULT_LANGUAGE
+                    if field_en not in data:
+                        for lang_code in FALLBACK_LANGUAGES:
+                            other_field = field + lang_code
+                            if other_field in data:
+                                data[field_en] = data[other_field]
+                                break
 
                 for field in TEXT_DATE_FIELDS:
                     if field in data:
