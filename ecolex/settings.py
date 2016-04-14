@@ -137,7 +137,7 @@ LANGUAGES = (
     ('es', _('Spanish')),
 )
 
-# TODO: ...
+# TODO: refactor and DRY ...
 LANGUAGE_MAP = OrderedDict([
     ('en', 'English'),
     ('fr', 'French'),
@@ -145,6 +145,19 @@ LANGUAGE_MAP = OrderedDict([
     ('ru', 'Russian'),
     ('other', 'Other'),
 ])
+
+EXTRA_LANG_INFO = {
+    'other': {
+        'bidi': False,
+        'code': 'other',
+        'name': 'Other',
+        'name_local': _('Other'),
+    },
+}
+
+# Let Django know about the "Other" language
+import django.conf.locale
+django.conf.locale.LANG_INFO.update(EXTRA_LANG_INFO)
 
 TIME_ZONE = 'UTC'
 

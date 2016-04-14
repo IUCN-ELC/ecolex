@@ -51,19 +51,14 @@
 
   <section id="details">
     <dl>
-      {% if document.title_translations %}
-        <dt>Title (translation)</dt>
-        <dd>
-          {% for title in document.title_translations %}
-            {% if title.language != LANGUAGE_CODE %}
-            <p class="alttitle">
-              {{ title.value|safe }}
-              <sup>{{ title.language|language_name_translated|capfirst  }}</sup>
-            </p>
-            {% endif %}
-          {% endfor %}
-        </dd>
-      {% endif %}
+      {% for title in document.title_translations %}
+        {% if title.language != LANGUAGE_CODE and title.value != document.title %}
+          <dt>Title ({{ title.language|language_name_translated|capfirst }})</dt>
+          <dd>
+            <p class="alttitle">{{ title.value|safe }}</p>
+          </dd>
+        {% endif %}
+      {% endfor %}
 
       {% if document.publisher %}
         <dt>Publisher</dt>

@@ -189,10 +189,6 @@ DOCUMENT_TYPE_MAP = {
     }
 }
 
-FALLBACK_FIELDS = ['litLongTitle_', 'litPaperTitleOfText_', 'litAbstract_',
-                   'litConfName_']
-DEFAULT_LANGUAGE = 'en'
-FALLBACK_LANGUAGES = ['fr', 'es', 'other']
 LANGUAGE_FIELD = 'litLanguageOfDocument_en'
 
 URL_CHANGE_FROM = 'http://www.ecolex.org/server2.php/server2neu.php/'
@@ -346,15 +342,6 @@ class LiteratureImporter(object):
                             data['litLanguageOfDocument_es'].append(lang)
                             data['litLanguageOfDocument_fr'].append(lang)
                             logger.error('Language not found %s' % (lang))
-
-                for field in FALLBACK_FIELDS:
-                    field_en = field + DEFAULT_LANGUAGE
-                    if field_en not in data:
-                        for lang_code in FALLBACK_LANGUAGES:
-                            other_field = field + lang_code
-                            if other_field in data:
-                                data[field_en] = data[other_field]
-                                break
 
                 for field in TEXT_DATE_FIELDS:
                     if field in data:

@@ -99,7 +99,6 @@ class Treaty(DocumentModel):
     @property
     def title(self):
         return (self.paper_title_of_text or
-                self.paper_title_of_text_other or
                 self.title_of_text_short or
                 DEFAULT_TITLE)
 
@@ -229,7 +228,7 @@ class Literature(DocumentModel):
             return self.paper_title_of_text
         elif self.document_id.startswith('MON'):
             return self.long_title
-        return 'Untitled'
+        return DEFAULT_TITLE
 
     @cached_property
     def people_authors(self):

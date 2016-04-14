@@ -143,7 +143,7 @@ class TreatySchema(CommonSchema):
         solr_fetch = CommonSchema.Meta.solr_fetch + [
             'title_of_text', 'status', 'place_of_adoption',
             'date_of_entry', 'date_of_text', 'date_of_modification',
-            'paper_title_of_text', 'paper_title_of_text_other',
+            'paper_title_of_text',
             'title_of_text_short', 'type_of_document',
         ]
         solr_boost = dict(CommonSchema.Meta.solr_boost, **{
@@ -195,8 +195,6 @@ class TreatySchema(CommonSchema):
     internet_reference = fields.List(fields.String(),
                                      load_from='trInternetReference',
                                      multilingual=True)
-    internet_reference_other = fields.List(
-        fields.String(), load_from='trInternetReference_other')
     into_force_treaty = fields.List(fields.String(),
                                     load_from='trIntoForceTreaty')
     intro_text = fields.List(fields.String(), load_from='trIntroText')
@@ -213,8 +211,6 @@ class TreatySchema(CommonSchema):
     link_to_full_text = fields.List(fields.String(),
                                     load_from='trLinkToFullText',
                                     multilingual=True)
-    link_to_full_text_other = fields.List(fields.String(),
-                                          load_from='trLinkToFullText_other')
     logo_medium = fields.String(load_from='trLogoMedium')
     number_of_pages = fields.List(fields.String(), load_from='trNumberOfPages')
     number_of_parties = fields.List(fields.String(),
@@ -225,8 +221,6 @@ class TreatySchema(CommonSchema):
     paper_title_of_text = fields.String(load_from='trPaperTitleOfText',
                                         multilingual=True,
                                         missing='')
-    paper_title_of_text_other = fields.String(
-        load_from='trPaperTitleOfText_other', missing='')
     parent_id = fields.Integer(load_from='trParentId')
     place_of_adoption = fields.String(load_from='trPlaceOfAdoption')
     primary = fields.List(fields.String(), load_from='trPrimary')
@@ -267,13 +261,8 @@ class TreatySchema(CommonSchema):
 
     @pre_load
     def handle_translations(self, data):
-        # TODO See if 'other' should be left out; if not, change the
-        # 'language_name_translated' template filter that caused the crash
-        translations = [{'language': k.split('_')[-1], 'value': v}
-                        for k, v in data.items()
-                        if k.startswith('trPaperTitleOfText')
-                        and not k.endswith('other')]
-        data['title_translations'] = translations
+        data['title_translations'] = extract_translations(data,
+                                                          'trPaperTitleOfText')
         return data
 
 
@@ -339,13 +328,12 @@ class LiteratureSchema(CommonSchema):
         ]
         solr_fetch = CommonSchema.Meta.solr_fetch + [
             'type_of_text',
-            'long_title', 'long_title_other', 'paper_title_of_text',
-            'paper_title_of_text_other', 'orig_serial_title',
-            'title_of_text_short', 'title_of_text_short_other',
+            'long_title', 'paper_title_of_text',
+            'orig_serial_title', 'title_of_text_short',
             'title_of_text_transl', 'year_of_text',
             'date_of_entry', 'date_of_modification',
             'date_of_text', 'date_of_text_ser',
-            'abstract', 'abstract_other',
+            'abstract',
             'jurisdiction',  # "scope"
             # 'author',
             'author_a', 'author_m', 'corp_author_a', 'corp_author_m',
@@ -355,13 +343,10 @@ class LiteratureSchema(CommonSchema):
         ]
         solr_boost = dict(CommonSchema.Meta.solr_boost, **{
             'long_title': 100,
-            'long_title_other': 100,
 
             'paper_title_of_text': 100,
-            'paper_title_of_text_other': 100,
 
             'abstract': 50,
-            'abstract_other': 50,
 
             'basin': 25,
             'region': 25,
@@ -378,7 +363,6 @@ class LiteratureSchema(CommonSchema):
     title_translations = fields.Nested(TranslationSchema, many=True)
 
     abstract = fields.String(load_from='litAbstract', multilingual=True)
-    abstract_other = fields.String(load_from='litAbstract_other')
     available_in = fields.String(load_from='litAvailableIn')
     basin = fields.List(fields.String(), load_from='litBasin',
                         multilingual=True)
@@ -387,7 +371,6 @@ class LiteratureSchema(CommonSchema):
     conf_date = fields.String(load_from='litConfDate', missing='')
     conf_name = fields.String(load_from='litConfName', multilingual=True,
                               missing='')
-    conf_name_other = fields.String(load_from='litConfName_other')
     conf_no = fields.String(load_from='litConfNo', missing='')
     conf_place = fields.String(load_from='litConfPlace', missing='')
     contributor = fields.List(fields.String(), load_from='litContributor')
@@ -437,15 +420,12 @@ class LiteratureSchema(CommonSchema):
     location = fields.String(load_from='litLocation')
     long_title = fields.String(load_from='litLongTitle', multilingual=True,
                                missing='')
-    long_title_other = fields.String(load_from='litLongTitle_other')
     mode_of_acquisition = fields.String(load_from='litModeOfAcquisition')
     national_legislation_reference = fields.List(
         fields.String(), load_from='litNationalLegislationReference',
         missing=[])
     paper_title_of_text = fields.String(load_from='litPaperTitleOfText',
                                         multilingual=True, missing='')
-    paper_title_of_text_other = fields.String(
-        load_from='litPaperTitleOfText_other')
     publication_place = fields.String(load_from='litPublPlace')
     publisher = fields.String(load_from='litPublisher')
     region = fields.List(fields.String(), load_from='litRegion',
@@ -464,8 +444,6 @@ class LiteratureSchema(CommonSchema):
     title_abbreviation = fields.String(load_from='litTitleAbbreviation')
     title_of_text_short = fields.String(load_from='litTitleOfTextShort',
                                         multilingual=True, missing='')
-    title_of_text_short_other = fields.String(
-        load_from='litTitleOfTextShort_other')
     title_of_text_transl = fields.String(load_from='litTitleOfTextTransl',
                                          multilingual=True, missing='')
     treaty_reference = fields.List(fields.String(),
@@ -494,10 +472,7 @@ class LiteratureSchema(CommonSchema):
         else:
             return data
 
-        translations = [{'language': k.split('_')[-1], 'value': v}
-                        for k, v in data.items()
-                        if k.startswith(title_field)]
-        data['title_translations'] = translations
+        data['title_translations'] = extract_translations(data, title_field)
         return data
 
 
@@ -754,3 +729,13 @@ BOOST_FIELDS = OrderedDict(
 
 # hardcode the sort field. 'cause practicality...
 SORT_FIELD = __FPROPS['_']['xdate']
+
+def extract_translations(data, field_name):
+    translations = [{'language': k.split('_')[-1], 'value': v}
+                    for k, v in data.items()
+                    if k.startswith(field_name)]
+    # make sure the order of languages is the same as settings.LANGUAGE_MAP
+    return sorted(
+        translations,
+        key = lambda x: list(settings.LANGUAGE_MAP.keys()).index(x['language'])
+    )
