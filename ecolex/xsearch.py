@@ -65,7 +65,9 @@ class Searcher(object):
             pass
         else:
             if q:
-                self.qargs.append(q)
+                self.qargs.extend([s.strip()
+                                   for s in q.split()
+                                   if s.strip()])
 
         types = data.get('type', [])
 
