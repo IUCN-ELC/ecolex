@@ -144,6 +144,10 @@ class Searcher(object):
                 except KeyError:
                     continue
 
+                # meh
+                if value == ['']:
+                    continue
+
                 # we're only dealing with dates (i.e. int years) for the moment
                 # form should give us all this stuff of the proper datatype
                 if STATS_FIELDS[field].datatype in ('date', 'datetime'):
