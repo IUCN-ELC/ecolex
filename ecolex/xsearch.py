@@ -273,8 +273,9 @@ class Searcher(object):
 
     def get_boost_fields(self):
         return {
-            f.get_source_field(self.language): f.solr_boost
+            field: f.solr_boost
             for k, f in BOOST_FIELDS.items()
+            for field in f.get_source_fields()
             #if self.is_used_field(k)
         }
 
