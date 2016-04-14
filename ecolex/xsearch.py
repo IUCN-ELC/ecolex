@@ -34,6 +34,7 @@ DEFAULT_INTERFACE = __DefaultInterface()
 
 class Searcher(object):
     SEARCH_OPTIONS = {
+        'q.op': 'AND',
         'facet.limit': -1,
         'facet.sort': 'index',
         'facet.method': 'enum',
@@ -70,9 +71,7 @@ class Searcher(object):
             pass
         else:
             if q:
-                self.qargs.extend([s.strip()
-                                   for s in q.split()
-                                   if s.strip()])
+                self.qargs.append(DismaxString(q))
 
         types = data.get('type', [])
 
