@@ -97,6 +97,9 @@ class CommonSchema(BaseSchema):
             'document_id': 100,
             'keywords': 30,
         }
+        solr_fetch = [
+            'document_id', 'keywords', 'subjects',
+        ]
 
 
 class TranslationSchema(Schema):
@@ -153,6 +156,9 @@ class TreatySchema(CommonSchema):
             'basin': 25,
             'region': 25,
         })
+        solr_highlight = [
+            'title_of_text', 'title_of_text_short',# 'abstract'
+        ]
 
     type_of_document = fields.String(load_from='trTypeOfText',
                                      multilingual=True)
@@ -284,6 +290,9 @@ class DecisionSchema(CommonSchema):
             'summary': 50,
             'body': 20,
         })
+        solr_highlight = [
+            'short_title', #'body',
+        ]
 
     ID_FIELD = 'decNumber'
     KEYWORDS_FIELD = 'decKeyword'
@@ -351,6 +360,9 @@ class LiteratureSchema(CommonSchema):
             'basin': 25,
             'region': 25,
         })
+        solr_highlight = [
+            'paper_title_of_text', 'long_title', 'abstract',
+        ]
 
     ID_FIELD = 'litId'  # this is actually multivalued (?)
     KEYWORDS_FIELD = 'litKeyword'
@@ -492,6 +504,9 @@ class CourtDecisionSchema(CommonSchema):
             'abstract': 50,
             'region': 25,
         })
+        solr_highlight = [
+            'title_of_text', #'abstract',
+        ]
 
     ID_FIELD = 'cdLeoId'
     KEYWORDS_FIELD = 'cdKeyword'
@@ -550,10 +565,13 @@ class LegislationSchema(CommonSchema):
         solr_boost = dict(CommonSchema.Meta.solr_boost, **{
             'long_title': 100,
             'short_title': 100,
-
+            'abstract': 50,
             'basin': 25,
             'region': 25,
         })
+        solr_highlight = [
+            'short_title', 'long_title', #'abstract',
+        ]
 
     ID_FIELD = 'legId'
     KEYWORDS_FIELD = 'legKeyword'
@@ -725,6 +743,11 @@ FETCH_FIELDS = OrderedDict(
 BOOST_FIELDS = OrderedDict(
     (k, p) for _fps in __FPROPS.values() for k, p in _fps.items()
     if p.solr_boost
+)
+
+HIGHLIGHT_FIELDS = OrderedDict(
+    (k, p) for _fps in __FPROPS.values() for k, p in _fps.items()
+    if p.solr_highlight
 )
 
 # hardcode the sort field. 'cause practicality...

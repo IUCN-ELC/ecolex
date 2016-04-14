@@ -74,6 +74,10 @@ class _CustomOptions(SchemaOpts):
         self.solr_highlight = getattr(meta, 'solr_highlight', [])
         self.form_single_choice = getattr(meta, 'form_single_choice', [])
 
+        diff = set(self.solr_highlight).difference(self.solr_fetch)
+        if diff:
+            raise ValueError("`%s.solr_highlight` contains non-fetched fields: "
+                             "'%s'." % (meta.__qualname__, "', '".join(diff)))
 
 class Schema(_Schema):
     """

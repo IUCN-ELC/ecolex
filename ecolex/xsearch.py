@@ -10,10 +10,12 @@ from scorched.strings import DismaxString
 from unidecode import unidecode
 from django.conf import settings
 from django.utils.functional import LazyObject
+from django.utils.html import strip_tags
 
 from .schema import (
     SCHEMA_MAP, FIELD_MAP,
-    FILTER_FIELDS, FACET_FIELDS, STATS_FIELDS, FETCH_FIELDS, BOOST_FIELDS,
+    FILTER_FIELDS, FACET_FIELDS, STATS_FIELDS,
+    FETCH_FIELDS, BOOST_FIELDS, HIGHLIGHT_FIELDS,
     SORT_FIELD,
 )
 
@@ -36,6 +38,9 @@ class Searcher(object):
         'facet.sort': 'index',
         'facet.method': 'enum',
         'facet.mincount': 1,
+        'hl': 'true',
+        'hl.fragsize': '0',
+        'hl.simple.pre': '<em class="hl">',
     }
 
     STATS_KEYS = ('min', 'max')
@@ -279,6 +284,14 @@ class Searcher(object):
             #if self.is_used_field(k)
         }
 
+    def get_highlight_fields(self):
+        return tuple(
+            field
+            for k, f in HIGHLIGHT_FIELDS.items()
+            for field in f.get_source_fields()
+            if self.is_used_field(k)
+        )
+
     def set_search_options(self, search):
         # hack search.options() to set our custom preferences
         # (because setting faceting options as arguments to .facet_by()
@@ -344,13 +357,10 @@ class Searcher(object):
         # set search options last or they'll get overwritten
         self.set_search_options(search)
 
-        _constructor=partial(self.to_object, language=self.language)
-        response = search.execute(constructor=_constructor)
+        response = search.execute()
 
         if do_facets:
             self._handle_facets(response)
-
-        self._handle_stats(response)
 
         return response
 
@@ -395,6 +405,30 @@ class Searcher(object):
 
             stats[k] = parsed
 
+    def _handle_highlight(self, response):
+        for doc in response.result.docs:
+            try:
+                hls = response.highlighting[doc['id']]
+            except KeyError:
+                continue
+
+            for field, hl in hls.items():
+                original = doc[field]
+
+                if not isinstance(original, list):
+                    doc[field] = hl[0]
+
+                elif len(original) == 1:
+                    doc[field] = hl
+
+                else:
+                    # we need to iterate through the items and replace
+                    # the proper ones
+                    for highlighted in hl:
+                        # TODO: do we ever return other html with the results?
+                        idx = original.index(strip_tags(highlighted))
+                        original[idx] = highlighted
+
     def search(self, page=1, page_size=None, date_sort=None):
         if not self.valid:
             return SearchResponse()
@@ -407,6 +441,7 @@ class Searcher(object):
             self._search()
             .stats_on(self.get_stats_fields())
             .field_limit(self.get_fetch_fields())
+            .highlight(self.get_highlight_fields())
             .paginate(start=start, rows=page_size)
         )
 
@@ -416,6 +451,12 @@ class Searcher(object):
             search = search.sort_by("%s%s" % (sort_dir, sort_field))
 
         response = self._execute(search)
+        self._handle_stats(response)
+        self._handle_highlight(response)
+
+        response = search.constructor(
+            response, partial(self.to_object, language=self.language))
+
         return SearchResponse(response)
 
     def get_facets(self, facets):
