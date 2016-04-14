@@ -558,6 +558,12 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         $(target).select2('val', '')
     });
 
+    // Reset query string
+    $('#query-remove').click(function(e) {
+        $('#search').val('');
+        submit();
+    });
+
     // Slider
     $("#slider-years")
         .slider()
