@@ -281,7 +281,7 @@ class Searcher(object):
         return {
             f.get_source_field(self.language): f.solr_boost
             for k, f in BOOST_FIELDS.items()
-            if self.is_used_field(k)
+            #if self.is_used_field(k)
         }
 
     def set_search_options(self, search):
