@@ -1,8 +1,9 @@
 import logging
+import datetime
 from collections import Iterable, defaultdict
-from datetime import datetime, timedelta
 from functools import partial, reduce
 from operator import and_, or_, itemgetter
+from marshmallow.exceptions import ValidationError
 from scorched import SolrInterface
 from scorched.response import SolrResponse
 from scorched.strings import DismaxString
@@ -36,6 +37,8 @@ class Searcher(object):
         'facet.method': 'enum',
         'facet.mincount': 1,
     }
+
+    STATS_KEYS = ('min', 'max')
 
     # The secret to understanding what happens here is that the
     # `self.prepare_*()` logic during `__init__` is paired with the
@@ -129,34 +132,29 @@ class Searcher(object):
 
     def prepare_range_filters(self, data):
         # this one depends on prepare_stats() above
-        range_filters = defaultdict(lambda: {'min': None, 'max': None})
+        stats_keys = self.STATS_KEYS
+        range_filters = defaultdict(lambda: dict.fromkeys(stats_keys))
 
         for field in self.stats_fields:
-            for typ in ('min', 'max'):
+            for typ in stats_keys:
                 try:
                     value = data["%s_%s" % (field, typ)]
                 except KeyError:
                     continue
-                # TODO: all this should be handled in form
-                # we'll only deal with integers for now
-                try:
-                    value = int(value[0])
-                except ValueError:
-                    continue
 
-                # handling only dates for the moment.
+                # we're only dealing with dates (i.e. int years) for the moment
                 # form should give us all this stuff of the proper datatype
                 if STATS_FIELDS[field].datatype in ('date', 'datetime'):
                     if typ == 'max':
                         value += 1
 
                     try:
-                        value = datetime(value, 1, 1)
+                        value = datetime.datetime(value, 1, 1)
                     except TypeError:
                         continue
 
                     if typ == 'max':
-                        value -= timedelta(seconds=1)
+                        value -= datetime.timedelta(seconds=1)
 
                 range_filters[field][typ] = value
 
@@ -218,13 +216,10 @@ class Searcher(object):
         return filters
 
     def _get_stats_key(self, field):
-        paramkws = {
-            # override default statistics
-            'min': 'true',
-            'max': 'true',
-            # and key returned fields to our field names
-            'key': field,
-        }
+        # override default statistics,
+        paramkws = dict.fromkeys(self.STATS_KEYS, 'true')
+        # key returned fields to our field names,
+        paramkws['key'] = field
         # and exclude fields used for filtering
         if (field in self.range_filters):
             paramkws['ex'] = field
@@ -316,7 +311,7 @@ class Searcher(object):
         schema = SCHEMA_MAP[typ]
         result, errors = schema.load(data, language=language)
         if errors:
-            logger.error("Error parse error: %s", errors)
+            logger.error("Parse error: %s", errors)
         return result
 
     @staticmethod
@@ -355,6 +350,8 @@ class Searcher(object):
         if do_facets:
             self._handle_facets(response)
 
+        self._handle_stats(response)
+
         return response
 
     @staticmethod
@@ -376,6 +373,27 @@ class Searcher(object):
         for k, data in facets.items():
             facets[k] = sorted(map(self._convert_facet, data),
                                key=itemgetter('id', 'text'))
+
+    def _handle_stats(self, response):
+        stats = response.stats.stats_fields
+        for k, data in stats.items():
+            field = STATS_FIELDS[k]._field
+            parsed = {}
+            for item, value in data.items():
+                try:
+                    value = field.deserialize(value)
+                except ValidationError as e:
+                    logger.error("Stats parse error: %s", e)
+                    continue
+
+                # we will convert dates to their year component alone,
+                # because that's what we deal with for now
+                if isinstance(value, datetime.date):
+                    value = value.year
+
+                parsed[item] = value
+
+            stats[k] = parsed
 
     def search(self, page=1, page_size=None, date_sort=None):
         if not self.valid:

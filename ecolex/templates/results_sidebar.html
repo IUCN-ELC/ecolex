@@ -100,37 +100,37 @@ select.selection-facet {
 
 {% include "bits/selection_facet.html" with title="Language" placeholder="Add languages…" viewname="api:xlanguage-list" facet=facets.xlanguage field=form.xlanguage op_field=form.xlanguage_and_ %}
 
-{% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
-{# TODO: this logic needs fixing. min/max years should default to the dataset's values, with this here facet excluded #}
+
+{% with dmin=stats.xdate.min dmax=stats.xdate.max %}
       <div class="filter-header">
         <h6>Year / Period</h6>
       </div>
       <input id="slider-years" type="text"
-             data-slider-min="1860"
-             data-slider-max="2015"
-             data-slider-value="[{{ form.yearmin.data|default:1860 }},{{ form.yearmax.data|default:2015 }}]"
+             data-slider-min="{{ dmin }}"
+             data-slider-max="{{ dmax }}"
+             data-slider-value="[{{ form.xdate_min.data|default:dmin }},{{ form.xdate_max.data|default:dmax }}]"
              data-slider-tooltip="hide"/>
       <div class="slider-years">
         <div class="slider-min">
           <!-- <label for="year-min">From</label> -->
           <input id="year-min" type="number"
-                 name="{{ form.yearmin.name }}"
-                 value="{{ form.yearmin.data }}"
-                 min="1860"
-                 max="2016"
-                 placeholder="From {{ stats_fields.docDate.min|just_year }}">
+                 name="{{ form.xdate_min.name }}"
+                 value="{{ form.xdate_min.data }}"
+                 min="{{ dmin }}"
+                 max="{{ dmax }}"
+                 placeholder="From {{ dmin }}">
         </div>
         <div class="slider-max">
           <!-- <label for="year-max">To</label> -->
           <input id="year-max" type="number"
-                 name="{{ form.yearmax.name }}"
-                 value="{{ form.yearmax.data }}"
-                 min="1860"
-                 max="{% now "Y" %}"
-                 placeholder="To {{ stats_fields.docDate.max|just_year }}">
+                 name="{{ form.xdate_max.name }}"
+                 value="{{ form.xdate_max.data }}"
+                 min="{{ dmin }}"
+                 max="{{ dmax }}"
+                 placeholder="To {{ dmax }}">
         </div>
       </div>
-{% endif %}
+{% endwith %}
 
   </div>
 </fieldset>

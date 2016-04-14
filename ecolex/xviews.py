@@ -59,7 +59,9 @@ class SearchResultsView(SearchViewMixin, TemplateView):
 
         if any(f in form.errors
                for f in (
-                'page', 'sortby'
+                'page', 'sortby',
+                # hardcoded. oh well.
+                'xdate_min', 'xdate_max',
                )):
             response = SearchResponse()
             page = 1

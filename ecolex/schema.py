@@ -625,7 +625,8 @@ class __FieldProperties(object):
     __slots__ = (
         'type', 'name', 'load_from', 'multilingual', 'multivalue', 'datatype',
         'solr_filter', 'solr_facet', 'solr_fetch', 'solr_boost',
-        'solr_highlight', 'form_single_choice'
+        'solr_highlight', 'form_single_choice',
+        '_field',
     )
 
     def __init__(self, **kwargs):
@@ -673,6 +674,7 @@ def __get_field_properties(base_schema, schemas):
                 continue
 
             fp = __FieldProperties()
+            fp._field = field
             fp.type = typ
             fp.name = name
             fp.load_from = field.load_from
