@@ -21,7 +21,7 @@ class LegislationImporter(object):
     def __init__(self, config):
         self.solr_timeout = config.getint('solr_timeout')
         self.solr = EcolexSolr(self.solr_timeout)
-    
+
         logger.info('Started legislation manager')
 
 
@@ -53,15 +53,19 @@ class LegislationImporter(object):
                 logger.debug('Indexing: %s' % (obj.url,))
                 text = self.solr.extract(file_obj)
                 if not text:
-                    logger.warn('Nothing to index for %s'  % (obj.url,))
+                    logger.warn('Nothing to index for %s' % (obj.url,))
 
             # Load record and store text
             try:
                 legislation = self.solr.search(LEGISLATION, obj.doc_id)
             except SolrError as e:
-                logger.error('Error reading legislation %s' % (obj.doc_id,) )
+                logger.error('Error reading legislation %s' % (obj.doc_id,))
                 if settings.DEBUG:
                     logging.getLogger('solr').exception(e)
+                continue
+
+            if not legislation:
+                logger.error('Failed to find legislation %s' % (obj.doc_id))
                 continue
 
             legislation['legText'] = text

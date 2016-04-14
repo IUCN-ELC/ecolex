@@ -103,12 +103,21 @@ def harvest_file(upfile):
     legislations = []
     count_ignored = 0
 
-    with open(settings.LANGUAGES_JSON) as f:
+    with open(settings.REGIONS_JSON) as f:
         json_regions = json.load(f)
+
+    with open(settings.LANGUAGES_JSON) as f:
+        languages_codes = json.load(f)
+    all_languages = {}
+    for k, v in languages_codes.items():
+        key = v['en'].lower()
+        all_languages[key] = v
 
     for document in documents:
         legislation = {
             'type': LEGISLATION,
+            'legLanguage_es': [],
+            'legLanguage_fr': [],
         }
 
         for k, v in FIELD_MAP.items():
@@ -129,6 +138,20 @@ def harvest_file(upfile):
             if field_values:
                 legislation[field_name] = list(
                     OrderedDict.fromkeys(field_values).keys())
+
+        langs = legislation.get('legLanguage_en', [])
+        legislation['legLanguage_en'] = []
+        for lang in langs:
+            key = lang.lower()
+            if key in all_languages:
+                legislation['legLanguage_en'].append(all_languages[key]['en'])
+                legislation['legLanguage_es'].append(all_languages[key]['es'])
+                legislation['legLanguage_fr'].append(all_languages[key]['fr'])
+            else:
+                legislation['legLanguage_en'].append(lang)
+                legislation['legLanguage_es'].append(lang)
+                legislation['legLanguage_fr'].append(lang)
+                logger.error('Language not found %s' % (lang))
 
         if ('legTypeCode' in legislation):
             if legislation['legTypeCode'] == 'A':
