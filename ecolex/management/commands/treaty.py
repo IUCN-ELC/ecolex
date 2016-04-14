@@ -559,6 +559,9 @@ class TreatyImporter(object):
         for k, v in languages_codes.items():
             key = v['en'].lower()
             langs[key] = v
+            if 'en2' in v:
+                key = v['en2'].lower()
+                langs[key] = v
         return langs
 
     def update_status(self):

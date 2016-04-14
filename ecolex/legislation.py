@@ -112,6 +112,9 @@ def harvest_file(upfile):
     for k, v in languages_codes.items():
         key = v['en'].lower()
         all_languages[key] = v
+        if 'en2' in v:
+            key = v['en2'].lower()
+            all_languages[key] = v
 
     for document in documents:
         legislation = {

@@ -331,6 +331,7 @@ class LiteratureImporter(object):
                         if v in data and v not in MULTIVALUED_FIELDS:
                             data[v] = data[v][0]
 
+
                 if LANGUAGE_FIELD in data:
                     langs = data[LANGUAGE_FIELD]
                     data[LANGUAGE_FIELD] = []
@@ -529,4 +530,7 @@ class LiteratureImporter(object):
         for k, v in languages_codes.items():
             key = v['en'].lower()
             langs[key] = v
+            if 'en2' in v:
+                key = v['en2'].lower()
+                langs[key] = v
         return langs

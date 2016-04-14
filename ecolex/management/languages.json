@@ -61,6 +61,7 @@
     },
     "az": {
         "en": "Azerbaijani",
+        "en2": "Azerbaidzhan",
         "fr": "az\u00e9ri",
         "es": "azer\u00ed"
     },
@@ -71,6 +72,7 @@
     },
     "be": {
         "en": "Belarusian",
+        "en2": "Belorussian",
         "fr": "bi\u00e9lorusse",
         "es": "bielorruso"
     },
@@ -256,6 +258,7 @@
     },
     "gd": {
         "en": "Gaelic, Scottish Gaelic",
+        "en2": "Gaelic",
         "fr": "ga\u00e9lique \u00e9cossais",
         "es": "ga\u00e9lico escoc\u00e9s"
     },
@@ -456,6 +459,7 @@
     },
     "ky": {
         "en": "Kyrgyz",
+        "en2": "Kirgiz",
         "fr": "kirghize",
         "es": "kirghiz"
     },
@@ -533,6 +537,11 @@
         "en": "Mongolian",
         "fr": "mongol",
         "es": "mongol"
+    },
+    "mo": {
+        "en": "Moldavian",
+        "fr": "moldavian",
+        "es": "moldavo"
     },
     "mr": {
         "en": "Marathi",
@@ -786,6 +795,7 @@
     },
     "tg": {
         "en": "Tajik",
+        "en2": "Tadzhik",
         "fr": "tadjik",
         "es": "tayiko"
     },
