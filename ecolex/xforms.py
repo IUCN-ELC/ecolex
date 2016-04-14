@@ -40,6 +40,16 @@ def patched(field):
     return field
 
 
+class AlwaysValidChoiceField(forms.ChoiceField):
+    def valid_value(self, v):
+        return True
+
+
+class AlwaysValidMultipleChoiceField(forms.MultipleChoiceField):
+    def valid_value(self, v):
+        return True
+
+
 class SearchForm(forms.Form):
     SORT_DEFAULT = ''
     SORT_ASC = 'oldest'
@@ -64,6 +74,15 @@ class SearchForm(forms.Form):
 
     clean_page = partialmethod(__clean_field_with_initial, 'page')
     clean_sortby = partialmethod(__clean_field_with_initial, 'sortby')
+
+    def clean(self):
+        # don't return any empty choice sets
+        return {
+            k: v
+            for k, v in self.cleaned_data.items()
+            if not (v == [] and
+                    isinstance(self.fields[k], AlwaysValidMultipleChoiceField))
+        }
 
     def mk_sortby(self):
         # we normally get a regular field
@@ -124,10 +143,10 @@ class SearchForm(forms.Form):
                 # (multiple by default)
                 if field.form_single_choice:
                     new_fields.append((name,
-                                       forms.ChoiceField()))
+                                       AlwaysValidChoiceField()))
                 else:
                     new_fields.append((name,
-                                       forms.MultipleChoiceField()))
+                                       AlwaysValidMultipleChoiceField()))
 
                     # if this is a multi-valued field, support AND-ing choices
                     if field.multivalue:
