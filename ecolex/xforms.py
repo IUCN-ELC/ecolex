@@ -26,6 +26,7 @@ def _urlencoded(self, value):
 
     return form_data.urlencode()
 
+# TODO: make urlencoded a form method and get rid of this logic
 def patched(field):
     """
     Patch the field so that its bound field instance gets a `urlencoded` method.
@@ -64,7 +65,7 @@ class SearchForm(forms.Form):
     _ALT_SORT_CHOICES = (
     )
 
-    q = forms.CharField(required=False)
+    q = patched(forms.CharField(required=False))
     page = patched(forms.IntegerField(min_value=1, required=False, initial=1))
 
     def __clean_field_with_initial(self, fname):

@@ -2,9 +2,11 @@
 
 {% include 'bits/type_facet.html' %}
 
-{% if text_suggestion and results.get_suggested_text %}
+{% if suggestions %}
 <p id="suggestion">
-  <em>Did you mean: <a href="?q={{ results.get_suggested_text }}" id="suggestion-link">{{ results.get_suggested_text }}</a>?</em>
+  <em>Did you mean: {% for suggestion in suggestions %}{% if not forloop.first  %} / {% endif %}
+    <a href="{% url "results" %}?{{ form.q|field_urlencoded:suggestion }}">{{ suggestion }}</a>
+  {% endfor %}?</em>
 </p>
 {% endif %}
 

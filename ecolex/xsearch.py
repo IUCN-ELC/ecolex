@@ -42,6 +42,7 @@ class Searcher(object):
         'hl': 'true',
         'hl.fragsize': '0',
         'hl.simple.pre': '<em class="hl">',
+        'spellcheck.collate': 'true',
     }
 
     STATS_KEYS = ('min', 'max')
@@ -428,6 +429,10 @@ class Searcher(object):
                         idx = original.index(strip_tags(highlighted))
                         original[idx] = highlighted
 
+    def _handle_suggestions(self, response):
+        rsp = response.spellcheck
+        rsp['collations'] = rsp.get('collations', [])[1:]
+
     def search(self, page=1, page_size=None, date_sort=None):
         if not self.valid:
             return SearchResponse()
@@ -441,6 +446,7 @@ class Searcher(object):
             .stats_on(self.get_stats_fields())
             .field_limit(self.get_fetch_fields())
             .highlight(self.get_highlight_fields())
+            .spellcheck()
             .paginate(start=start, rows=page_size)
         )
 
@@ -452,6 +458,7 @@ class Searcher(object):
         response = self._execute(search)
         self._handle_stats(response)
         self._handle_highlight(response)
+        self._handle_suggestions(response)
 
         response = search.constructor(
             response, partial(self.to_object, language=self.language))
@@ -495,6 +502,7 @@ class SearchResponse(object):
         self.start = response.result.start
         self.facets = response.facet_counts.facet_fields
         self.stats = response.stats.stats_fields
+        self.suggestions = response.spellcheck['collations']
         self.results = response.result.docs
 
     def __len__(self):

@@ -59,6 +59,8 @@ class SearchResultsView(SearchViewMixin, TemplateView):
         ctx['results'] = response
         ctx['facets'] = response.facets
         ctx['stats'] = response.stats
+        ctx['suggestions'] = (response.suggestions if settings.TEXT_SUGGESTION
+                              else [])
         # TODO: rename ctx to 'pages'
         ctx['page'] = self.get_page_details(page, response.count)
 
