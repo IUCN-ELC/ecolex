@@ -248,8 +248,9 @@ class Literature(DocumentModel):
         from ecolex.search import get_documents_by_field
         if self.is_chapter and self.related_monograph:
             docs = get_documents_by_field('litId', [self.related_monograph], rows=1)
-            doc = [x for x in docs][0]
-            return doc.details_url
+            if len(docs) > 0:
+                doc = [x for x in docs][0]
+                return doc.details_url
         return None
 
     @property
