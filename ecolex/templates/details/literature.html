@@ -39,7 +39,10 @@
 
       {% if document.is_chapter and document.parent_title %}
         <dt>Monograph</dt>
-        <dd><a href="{{ document.parent_url }}?{{ query }}">{{ document.parent_title|safe }}</a></dd>
+        <dd>{% if document.parent_url %}
+          <a href="{{ document.parent_url }}?{{ query }}">{{ document.parent_title|safe }}</a>{% else %}
+          {{ document.parent_title|safe }}
+        {% endif %}</dd>
       {% endif %}
 
       {% if document.date %}

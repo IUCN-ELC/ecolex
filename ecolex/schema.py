@@ -440,7 +440,8 @@ class LiteratureSchema(CommonSchema):
     publisher = fields.String(load_from='litPublisher')
     region = fields.List(fields.String(), load_from='litRegion',
                          multilingual=True)
-    related_monograph = fields.String(load_from='litRelatedMonograph')
+    related_monograph = fields.String(load_from='litRelatedMonograph',
+                                      missing=None)
     related_web_site = fields.String(load_from='litRelatedWebSite')
     jurisdiction = fields.String(load_from='litScope', multilingual=True)
     search_date = fields.String(load_from='litSearchDate')
