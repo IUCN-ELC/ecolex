@@ -29,7 +29,7 @@
   "cdLinkToFullText": null,
   "cdCourtDecisionSubdivision": null,
   "cdCountry_es": "Bangladesh",
-  "cdAbstractOther": null,
+  "cdAbstract_other": null,
   "cdCourtDecisionIdNumber": null,
   "cdAvailableIn": "UNEP/UNDP/Dutch Government Joint Project on Environmental Law in Africa, Compendium of Judicial Decisions on Matters related to Environment, National Decisions, Volume II, Page 112",
   "type": "court_decision",
@@ -58,7 +58,7 @@
   "cdSubject_en": [
     "Environment gen."
   ],
-  "cdTitleOfTextOther": null,
+  "cdTitleOfText_other": null,
   "cdNotes": null,
   "cdTypeOfText": "Judicial decision of a higher court",
 }

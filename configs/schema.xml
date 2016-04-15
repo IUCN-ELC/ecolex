@@ -287,18 +287,24 @@
     <field name="evIsIndexed" type="boolean" indexed="true" stored="true" multiValued="true"/>
 
     <!-- Court decision fields -->
-    <!-- TODO cdTitleOfText should be deleted?  -->
-    <field name="cdTitleOfText" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_en" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_es" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_fr" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_ru" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdTitleOfText_other" type="string" indexed="true" stored="true" multiValued="false"/>
+
+    <field name="cdTitleOfTextShort" type="string" indexed="true" stored="false" multiValued="false"/>
+
     <field name="cdLeoId" type="string" indexed="true" stored="true" multiValued="false"/>
+
     <field name="cdAbstract_en" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_es" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_fr" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_ru" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdAbstract_other" type="string" indexed="true" stored="true" multiValued="false"/>
+
     <field name="cdAlternativeRecordId" type="string" indexed="false" stored="false" multiValued="false"/>
+
     <field name="cdSeatOfCourt_en" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdSeatOfCourt_es" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdSeatOfCourt_fr" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -375,7 +381,6 @@
     <field name="cdLinkToFullText_ru" type="string" indexed="false" stored="true" multiValued="false"/>
 
     <field name="cdNotes" type="string" indexed="false" stored="false" multiValued="true"/>
-    <field name="cdAbstractOther" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdAvailableIn" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdCourtDecisionReference" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdFaolexReference" type="string" indexed="true" stored="false" multiValued="false"/>
@@ -386,9 +391,6 @@
     <field name="cdRegion_fr" type="text" indexed="true" stored="false" multiValued="false"/>
     <field name="cdRegion_es" type="text" indexed="true" stored="false" multiValued="false"/>
 
-    <!-- TODO Move '*Other' to '*_other'  -->
-    <field name="cdTitleOfTextOther" type="string" indexed="true" stored="false" multiValued="false"/>
-    <field name="cdTitleOfTextShort" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdTreatyReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdUrlOther" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdLeoDefaultUrl" type="string" indexed="false" stored="true" multiValued="false"/>
