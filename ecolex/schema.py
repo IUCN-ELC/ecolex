@@ -62,10 +62,9 @@ class BaseSchema(Schema):
     class Meta:
         solr_filters = [
             'type', 'xkeywords', 'xsubjects', 'xcountry', 'xregion',
-            'xlanguage', 'xdate',
+            'xlanguage',
         ]
         solr_facets = solr_filters.copy()
-        solr_facets.remove('xdate')
         solr_fetch = ['id', 'slug', 'type']
         solr_boost = {
             'text': 20,
