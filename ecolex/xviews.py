@@ -41,8 +41,6 @@ class SearchResultsView(SearchViewMixin, TemplateView):
         else:
             data = form.cleaned_data
 
-            print(data)
-
             page = data.pop('page')
             sortby = data.pop('sortby')
 

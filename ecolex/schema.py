@@ -62,9 +62,9 @@ class BaseSchema(Schema):
     class Meta:
         solr_filters = [
             'type', 'xkeywords', 'xsubjects', 'xcountry', 'xregion',
-            'xlanguage',
+            'xlanguage', 'xdate',
         ]
-        solr_facets = solr_filters.copy()
+        solr_facets = [f for f in solr_filters if f != 'xdate']
         solr_fetch = ['id', 'slug', 'type']
         solr_boost = {
             'text': 20,
@@ -96,9 +96,6 @@ class CommonSchema(BaseSchema):
             'document_id': 100,
             'keywords': 30,
         }
-        solr_fetch = [
-            'document_id', 'keywords', 'subjects',
-        ]
 
 
 class TranslationSchema(Schema):

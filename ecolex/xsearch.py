@@ -148,9 +148,7 @@ class Searcher(object):
                     value = data["%s_%s" % (field, typ)]
                 except KeyError:
                     continue
-
-                # meh
-                if value == ['']:
+                if not value:
                     continue
 
                 # we're only dealing with dates (i.e. int years) for the moment
