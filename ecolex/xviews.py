@@ -39,7 +39,7 @@ class SearchResultsView(SearchViewMixin, TemplateView):
             response = SearchResponse()
             page = 1
         else:
-            data = form.cleaned_data
+            data = form.cleaned_data.copy()
 
             page = data.pop('page')
             sortby = data.pop('sortby')

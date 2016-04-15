@@ -48,9 +48,10 @@ class UrlencodingMixin(object):
 
         return out
 
-    def urlencoded(self, **kwargs):
+    def urlencoded(self, only=None, **kwargs):
         data = self._normalized_data.copy()
         parent = super(QueryDict, data)
+
 
         for k, v in kwargs.items():
             # skip default / empty things
@@ -62,5 +63,10 @@ class UrlencodingMixin(object):
                 parent.setlist(k, v)
             else:
                 parent.__setitem__(k, v)
+
+        if only:
+            drop = [k for k in data.keys() if k not in only]
+            for k in drop:
+                del data[k]
 
         return data.urlencode()

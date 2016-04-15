@@ -176,3 +176,10 @@ class SearchForm(UrlencodingMixin, forms.Form):
     has_literature = partialmethod(__has_document_type, 'literature')
     has_legislation = partialmethod(__has_document_type, 'legislation')
     has_court_decision = partialmethod(__has_document_type, 'court_decision')
+
+    def get_base_qs(self):
+        """
+        Returns the form's basic fields in querystring format.
+        """
+        return self.urlencoded(only=('q', 'type', 'sortby',
+                                     'xdate_min', 'xdate_max'))

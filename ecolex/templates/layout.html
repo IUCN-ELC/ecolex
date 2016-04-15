@@ -53,14 +53,14 @@
             <strong>{{ LANGUAGE_CODE|language_name_local|capfirst }}</strong>
             <span class="caret"></span>
           </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu">{% with form.get_base_qs as query %}
             {% get_language_info_list for LANGUAGES as langs %}
             {% for lang in langs %}
               <li>
-                <a href="{% translate_url lang.code %}?{{ query }}">{{ lang.name_local|capfirst }}</a>
+                <a href="{% translate_url lang.code %}{% if query %}?{{ query }}{% endif %}">{{ lang.name_local|capfirst }}</a>
               </li>
             {% endfor %}
-          </ul>
+          {% endwith %}</ul>
         </li>
       </ul>
     </div>
