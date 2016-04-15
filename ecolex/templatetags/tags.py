@@ -119,7 +119,7 @@ def apify_f(data):
 
 @register.filter
 def field_urlencoded(field, value):
-    return field.urlencoded(value)
+    return field.form.urlencoded(**{field.name: value})
 
 @register.filter
 def get_facet_counts(fdata):

@@ -1,44 +1,10 @@
 from functools import partialmethod
-from types import MethodType
 from django import forms
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext as _
+from ecolex.lib.forms import UrlencodingMixin
 from ecolex.lib.schema import fields
 from .schema import FIELD_MAP, FILTER_FIELDS, STATS_FIELDS, SCHEMA_MAP
-
-
-def _urlencoded(self, value):
-    """
-    Returns a form field "as a url querystring", with the given value
-    replacing the current one.
-    """
-    form_data = self.form.data.copy()
-    if not form_data:
-        return ""
-
-    if value == self.field.initial:
-        try:
-            del form_data[self.name]
-        except KeyError:
-            pass
-    else:
-        form_data[self.name] = value
-
-    return form_data.urlencode()
-
-# TODO: make urlencoded a form method and get rid of this logic
-def patched(field):
-    """
-    Patch the field so that its bound field instance gets a `urlencoded` method.
-    """
-    _orig_gbf = field.get_bound_field
-    def _new_gbf(self, *args, **kwargs):
-        bfield = _orig_gbf(*args, **kwargs)
-        bfield.urlencoded = MethodType(_urlencoded, bfield)
-        return bfield
-
-    field.get_bound_field = MethodType(_new_gbf, field)
-    return field
 
 
 class AlwaysValidChoiceField(forms.ChoiceField):
@@ -51,7 +17,7 @@ class AlwaysValidMultipleChoiceField(forms.MultipleChoiceField):
         return True
 
 
-class SearchForm(forms.Form):
+class SearchForm(UrlencodingMixin, forms.Form):
     SORT_DEFAULT = ''
     SORT_ASC = 'oldest'
     SORT_DESC = 'newest'
@@ -62,11 +28,8 @@ class SearchForm(forms.Form):
         (SORT_DEFAULT, _('relevance')),
     )
 
-    _ALT_SORT_CHOICES = (
-    )
-
-    q = patched(forms.CharField(required=False))
-    page = patched(forms.IntegerField(min_value=1, required=False, initial=1))
+    q = forms.CharField(required=False)
+    page = forms.IntegerField(min_value=1, required=False, initial=1)
 
     def __clean_field_with_initial(self, fname):
         if fname not in self.data or self.cleaned_data[fname] is None:
@@ -115,13 +78,12 @@ class SearchForm(forms.Form):
 
             cls = _AltChoiceField
 
-        self.fields['sortby'] = patched(cls(
-            choices=choices, initial=initial, required=False))
+        return cls(choices=choices, initial=initial, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.mk_sortby()
+        self.fields['sortby'] = self.mk_sortby()
 
         # dynamically add all filterable fields
         new_fields = []
@@ -136,8 +98,7 @@ class SearchForm(forms.Form):
                 # special-case type to set available choices
                 choices = list(FIELD_MAP.keys())
                 choices.remove('_')
-                field = patched(
-                    forms.MultipleChoiceField(choices=zip(choices, choices)))
+                field = forms.MultipleChoiceField(choices=zip(choices, choices))
                 new_fields.append(('type', field))
             else:
                 # this will be faceted upon. create a choice field
