@@ -342,7 +342,9 @@ class Searcher(object):
             self.interface.query(*self.qargs, **self.qkwargs)
             .filter(**self.get_filters())
             .filter(**self.get_range_filters())
-            .alt_parser('edismax', qf=self.get_boost_fields())
+            # Boosting is done by solrconfig.xml as of now. Leaving this line
+            # for reference.
+            # .alt_parser('edismax', qf=self.get_boost_fields())
         )
 
         return search

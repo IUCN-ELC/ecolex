@@ -287,6 +287,7 @@
     <field name="evIsIndexed" type="boolean" indexed="true" stored="true" multiValued="true"/>
 
     <!-- Court decision fields -->
+    <!-- TODO cdTitleOfText should be deleted?  -->
     <field name="cdTitleOfText" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_en" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_es" type="text" indexed="true" stored="true" multiValued="false"/>
@@ -385,6 +386,7 @@
     <field name="cdRegion_fr" type="text" indexed="true" stored="false" multiValued="false"/>
     <field name="cdRegion_es" type="text" indexed="true" stored="false" multiValued="false"/>
 
+    <!-- TODO Move '*Other' to '*_other'  -->
     <field name="cdTitleOfTextOther" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdTitleOfTextShort" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdTreatyReference" type="string" indexed="true" stored="true" multiValued="true"/>

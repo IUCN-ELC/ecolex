@@ -845,6 +845,54 @@
       <str name="echoParams">explicit</str>
       <int name="rows">10</int>
       <str name="df">text</str>
+      <str name="defType">edismax</str>
+      <str name="qf">
+        <!-- General fields -->
+        text^20
+        <!-- Document id -->
+        legId^100 cdLeoId^100 litId^100 decNumber^100 trElisId^100
+        <!-- Keywords -->
+        legKeyword_en^30 cdKeyword_en^30 litKeyword_en^30 decKeyword_en^30 trKeyword_en^30
+        legKeyword_fr^30 cdKeyword_fr^30 litKeyword_fr^30 decKeyword_fr^30 trKeyword_fr^30
+        legKeyword_es^30 cdKeyword_es^30 litKeyword_es^30 decKeyword_es^30 trKeyword_es^30
+
+        <!-- Treaty -->
+        trPaperTitleOfText_en^110 trPaperTitleOfText_es^110
+        trPaperTitleOfText_fr^110 trPaperTitleOfText_other^110
+        trTitleAbbreviation^75
+        trAbstract_en^50 trAbstract_fr^50 trAbstract_es^50
+        trBasin_en^25 trBasin_fr^25 trBasin_es^25
+        trRegion_en^25 trRegion_fr^25 trRegion_es^25
+
+        <!-- COP Decision -->
+        decShortTitle_en^100 decShortTitle_es^100 decShortTitle_fr^100
+        decShortTitle_ar^100 decShortTitle_ru^100 decShortTitle_zh^100
+        decLongTitle_en^100 decLongTitle_es^100 decLongTitle_fr^100
+        decLongTitle_ar^100 decLongTitle_ru^100 decLongTitle_zh^100
+        decSummary_en^50 decSummary_es^50 decSummary_fr^50
+        decBody_en^20 decBody_es^20 decBody_fr^20
+        decBody_ru^20 decBody_ar^20 decBody_zh^20
+
+        <!-- Literature -->
+        litLongTitle_en^100 litLongTitle_fr^100
+        litLongTitle_es^100 litLongTitle_other^100
+        litPaperTitleOfText_en^100 litPaperTitleOfText_fr^100
+        litPaperTitleOfText_es^100 litPaperTitleOfText_other^100
+        litAbstract_en^50 litAbstract_fr^50 litAbstract_es^50 litAbstract_other^50
+        litBasin_en^25 litBasin_fr^25 litBasin_es^25
+        litRegion_en^25 litRegion_fr^25 litRegion_es^25
+
+        <!-- Court Decision -->
+        cdTitleOfText_en^100 cdTitleOfText_es^100 cdTitleOfText_fr^100 cdTitleOfText_ru^100
+        cdAbstract_en^50 cdAbstract_es^50 cdAbstract_fr^50 cdAbstract_ru^50
+        cdRegion_en^25 cdRegion_fr^25 cdRegion_es^25
+
+        <!-- Legislation -->
+        legLongTitle^100 legTitle^100
+        legAbstract^50
+        legBasin_en^25 legBasin_fr^25 legBasin_es^25
+        legGeoArea_en^25 legGeoArea_fr^25 legGeoArea_es^25
+      </str>
       <!-- Solr will use suggestions from both the 'default' spellchecker
                       and from the 'wordbreak' spellchecker and combine them.
            collations (re-written queries) can include a combination of
