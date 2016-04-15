@@ -502,7 +502,7 @@ class SearchResponse(object):
         self.start = response.result.start
         self.facets = response.facet_counts.facet_fields
         self.stats = response.stats.stats_fields
-        self.suggestions = response.spellcheck['collations']
+        self.suggestions = response.spellcheck.get('collations')
         self.results = response.result.docs
 
     def __len__(self):

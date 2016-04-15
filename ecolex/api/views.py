@@ -1,7 +1,7 @@
 import re
+from django.conf import settings
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin#, RetrieveModelMixin
-from django.utils.translation import get_language
 from ecolex.xviews import SearchViewMixin
 from ecolex.xsearch import Searcher
 from . import serializers
@@ -40,10 +40,19 @@ class BaseFacetViewSet(ApiViewMixin,
     field = None
 
     def get_queryset(self, *args, **kwargs):
-        field = self.field
-        data = self.get_query_data()
+        if not self.form.is_valid():
+            return []
 
-        language = data.pop('lang')[0]
+        field = self.field
+        data = self.form.cleaned_data
+        language = self.form.data.get('lang')
+
+        if not language:
+            language = settings.LANGUAGE_CODE
+        else:
+            if language not in dict(settings.LANGUAGES).keys():
+                return []
+
         searcher = Searcher(data, language=language)
         response = searcher.search()
 
