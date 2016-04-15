@@ -103,6 +103,11 @@ class TranslationSchema(Schema):
     value = fields.String(load_from='value')
 
 
+class TranslationListSchema(Schema):
+    language = fields.String(load_from='language')
+    value = fields.List(fields.String(), load_from='value')
+
+
 class TreatyPartySchema(Schema):
     country = fields.String(load_from='partyCountry', multilingual=True)
     acceptance_approval = fields.Date(load_from='partyDateOfAcceptanceApproval')
@@ -161,6 +166,7 @@ class TreatySchema(CommonSchema):
 
     parties = fields.Nested(TreatyPartySchema, many=True)
     title_translations = fields.Nested(TranslationSchema, many=True)
+    link_translations = fields.Nested(TranslationListSchema, many=True)
 
     abstract = fields.List(fields.String(), load_from='trAbstract',
                            multilingual=True)
@@ -263,8 +269,10 @@ class TreatySchema(CommonSchema):
 
     @pre_load
     def handle_translations(self, data):
-        data['title_translations'] = extract_translations(data,
-                                                          'trPaperTitleOfText')
+        data['title_translations'] = extract_translations(
+            data, 'trPaperTitleOfText')
+        data['link_translations'] = extract_translations(
+            data, 'trLinkToFullText')
         return data
 
 

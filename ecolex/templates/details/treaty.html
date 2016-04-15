@@ -109,13 +109,15 @@
         {% endfor %}
       {% endif %}
 
-      {# TODO #}
-      {% if document.link_to_full_text %}
+      {% if document.link_translations %}
         <dt>Full text</dt>
         <dd>
-          {% for link in document.link_to_full_text %}
-            <a href="{{ link.url }}" target="_blank" class="file-link">{{ link.language }}</a>
-            &nbsp;
+          {% for link in document.link_translations %}
+            {% for value in link.value %}
+              <a href="{{ value }}" class="file-link"
+                 target="_blank" >{{ link.language|language_name_translated|capfirst }}</a>
+              &nbsp;
+            {% endfor %}
           {% endfor %}
         </dd>
       {% endif %}
