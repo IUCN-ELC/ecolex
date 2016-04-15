@@ -48,15 +48,25 @@ class UrlencodingMixin(object):
 
         return out
 
-    def urlencoded(self, only=None, **kwargs):
+    def urlencoded(self, skip=None, only=None, **kwargs):
         data = self._normalized_data.copy()
         parent = super(QueryDict, data)
 
+        if skip:
+            for k in skip:
+                try:
+                    del data[k]
+                except KeyError:
+                    pass
 
         for k, v in kwargs.items():
             # skip default / empty things
             if (v in forms.Field.empty_values
                 or v == self.fields[k].initial):
+                try:
+                    del data[k]
+                except KeyError:
+                    pass
                 continue
 
             if isinstance(v, list):

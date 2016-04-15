@@ -59,8 +59,7 @@ class SearchResultsView(SearchViewMixin, TemplateView):
         ctx['stats'] = response.stats
         ctx['suggestions'] = (response.suggestions if settings.TEXT_SUGGESTION
                               else [])
-        # TODO: rename ctx to 'pages'
-        ctx['page'] = self.get_page_details(page, response.count)
+        ctx['pages'] = self.get_page_details(page, response.count)
 
         return ctx
 
@@ -68,18 +67,15 @@ class SearchResultsView(SearchViewMixin, TemplateView):
         if page_size is None:
             page_size = settings.SEARCH_PAGE_SIZE
 
-        _get_query = self.request.GET.copy()
-        _get_query.pop('page', None)
-
         page_count = math.ceil(result_count / page_size)
 
         if page_count <= 1:
-            _url = _get_query.urlencode()
+            _url = self.form.urlencoded()
             return {
                 'number': 1,
-                'no_pages': 1,
-                'pages_list': [1],
-                'pages_urls': {1: _url},
+                'count': 1,
+                'list': [1],
+                'urls': {1: _url},
                 'next_url': None,
                 'prev_url': None,
                 'first_url': _url,
@@ -87,11 +83,7 @@ class SearchResultsView(SearchViewMixin, TemplateView):
             }
 
         def _get_url(page):
-            if page != 1:
-                _get_query['page'] = page
-            else:
-                _get_query.pop('page', None)
-            return _get_query.urlencode()
+            return self.form.urlencoded(page=page)
 
         pages = OrderedDict((p, _get_url(p))
                             for p in range(max(current - 2, 1),
@@ -99,9 +91,9 @@ class SearchResultsView(SearchViewMixin, TemplateView):
 
         return {
             'number': current,
-            'no_pages': page_count,
-            'pages_list': pages.keys(),
-            'pages_urls': pages,
+            'count': page_count,
+            'list': pages.keys(),
+            'urls': pages,
 
             'next_url': current < page_count and _get_url(current + 1) or None,
             'prev_url': current > 1 and _get_url(current - 1) or None,

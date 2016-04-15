@@ -177,6 +177,9 @@ class SearchForm(UrlencodingMixin, forms.Form):
     has_legislation = partialmethod(__has_document_type, 'legislation')
     has_court_decision = partialmethod(__has_document_type, 'court_decision')
 
+    def urlencoded(self, skip=('page',), only=None, **kwargs):
+        return super().urlencoded(skip=skip, only=only, **kwargs)
+
     def get_base_qs(self):
         """
         Returns the form's basic fields in querystring format.

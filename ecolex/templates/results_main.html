@@ -70,41 +70,41 @@
 
 <div class="clearfix">
 
-  {% if page.no_pages %}
+  {% if pages.count %}
 
     <div class="pull-right">
 
       <a class="btn btn-sm btn-default"
-         href="?{{ page.prev_url }}"
-         {% if page.number == 1 %}disabled{% endif %}>Previous</a>
+         href="?{{ pages.prev_url }}"
+         {% if pages.number == 1 %}disabled{% endif %}>Previous</a>
 
-        {% if 1 not in page.pages_list%}
+        {% if 1 not in pages.list%}
             <a class="btn btn-sm btn-default"
-               href="?{{ page.first_url }}">1</a>
+               href="?{{ pages.first_url }}">1</a>
              ...
         {% endif %}
-        {% for page_no in page.pages_list %}
-            {% if page_no != page.number %}
+        {% for page_no in pages.list %}
+            {% if page_no != pages.number %}
                 <a class="btn btn-sm btn-default"
-                   href="?{{ page.pages_urls|lookup:page_no }}">{{ page_no }}</a>
+                   href="?{{ pages.urls|lookup:page_no }}">{{ page_no }}</a>
             {% else %}
                 <a class="btn btn-sm btn-default"
-                   href="?{{ page.pages_urls|lookup:page_no }}" disabled>
+                   href="?{{ pages.urls|lookup:page_no }}" disabled>
                     <b>{{ page_no }}</b>
                 </a>
             {% endif %}
         {% endfor %}
-        {% if page.no_pages not in page.pages_list%}
-            {% if page.no_pages|add:"-1" not in page.pages_list %}
+        {% if pages.count not in pages.list%}
+            {% if pages.count|add:"-1" not in pages.list %}
              ...
             {% endif %}
             <a class="btn btn-sm btn-default"
-               href="?{{ page.last_url }}">{{ page.no_pages }}</a>
+               href="?{{ pages.last_url }}">{{ pages.count }}</a>
         {% endif %}
 
       <a class="btn btn-sm btn-default"
-         href="?{{ page.next_url }}"
-         {% if page.number == page.no_pages %}disabled{% endif %}>Next</a>
+         href="?{{ pages.next_url }}"
+         {% if pages.number == pages.count %}disabled{% endif %}>Next</a>
 
     </div>
 
