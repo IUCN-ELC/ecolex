@@ -337,8 +337,7 @@ class LiteratureSchema(CommonSchema):
         solr_fetch = CommonSchema.Meta.solr_fetch + [
             'type_of_text',
             'long_title', 'paper_title_of_text',
-            'orig_serial_title', 'title_of_text_short',
-            'title_of_text_transl', 'year_of_text',
+            'orig_serial_title', 'year_of_text',
             'date_of_entry', 'date_of_modification',
             'date_of_text', 'date_of_text_ser',
             'abstract',
