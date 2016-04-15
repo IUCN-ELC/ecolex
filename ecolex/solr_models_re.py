@@ -246,7 +246,7 @@ class Literature(DocumentModel):
     def parent_url(self):
         # only for chapters
         from ecolex.search import get_documents_by_field
-        if self.is_chapter:
+        if self.is_chapter and hasattr(self, 'related_monograph'):
             docs = get_documents_by_field('litId', [self.related_monograph], rows=1)
             doc = [x for x in docs][0]
             return doc.details_url
