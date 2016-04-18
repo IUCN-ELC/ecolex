@@ -32,8 +32,6 @@ class BaseSchema(Schema):
     updated_at = fields.DateTime(load_from='updatedDate')
 
     text = fields.List(fields.String())
-    # skipping this momentarily because it's not indexed
-    # doc_content = fields.List(fields.String())
 
     # common fields, used for filtering / faceting
     # TODO: redundant with CommonSchema below?
@@ -55,10 +53,6 @@ class BaseSchema(Schema):
 
     xdate = fields.Date(load_from='docDate')
 
-    text = fields.List(fields.String())
-    # skipping this momentarily because it's not indexed. TODO.
-    # doc_content = fields.List(fields.String())
-
     class Meta:
         solr_filters = [
             'type', 'xkeywords', 'xsubjects', 'xcountry', 'xregion',
@@ -68,7 +62,6 @@ class BaseSchema(Schema):
         solr_fetch = ['id', 'slug', 'type']
         solr_boost = {
             'text': 20,
-            # 'doc_content': 10, # not indexed, see above
         }
 
     @post_load

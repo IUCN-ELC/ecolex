@@ -46,6 +46,21 @@
       </analyzer>
     </fieldType>
 
+    <fieldType name="text_stripped" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+        <charFilter class="solr.HTMLStripCharFilterFactory"/>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.StandardFilterFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.ASCIIFoldingFilterFactory"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt,lang/stopwords_es.txt,lang/stopwords_fr.txt"/>
+      </analyzer>
+    </fieldType>
+
     <field name="_version_" type="long" indexed="true" stored="true"/>
     <field name="id" type="string" indexed="true" stored="true" required="true"/>
     <field name="type" type="string" indexed="true" stored="true" required="true"/>
@@ -218,12 +233,12 @@
     <field name="decSummary_es" type="text" indexed="true" stored="true"/>
     <field name="decSummary_fr" type="text" indexed="true" stored="true"/>
 
-    <field name="decBody_en" type="text" indexed="true" stored="true"/>
-    <field name="decBody_es" type="text" indexed="true" stored="true"/>
-    <field name="decBody_fr" type="text" indexed="true" stored="true"/>
-    <field name="decBody_ru" type="text" indexed="true" stored="true"/>
-    <field name="decBody_ar" type="text" indexed="true" stored="true"/>
-    <field name="decBody_zh" type="text" indexed="true" stored="true"/>
+    <field name="decBody_en" type="text_stripped" indexed="true" stored="true"/>
+    <field name="decBody_es" type="text_stripped" indexed="true" stored="true"/>
+    <field name="decBody_fr" type="text_stripped" indexed="true" stored="true"/>
+    <field name="decBody_ru" type="text_stripped" indexed="true" stored="true"/>
+    <field name="decBody_ar" type="text_stripped" indexed="true" stored="true"/>
+    <field name="decBody_zh" type="text_stripped" indexed="true" stored="true"/>
 
     <field name="decType" type="string" indexed="true" stored="true"/>
     <field name="decStatus" type="string" indexed="true" stored="true"/>
@@ -454,9 +469,6 @@
     <field name="legAmends" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="legRepeals" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="legText" type="text" indexed="true" stored="false"/>
-
-    <!-- Document text field -->
-    <field name="doc_content" type="text_general" indexed="false" stored="true" multiValued="true"/>
 
     <!-- General fields -->
     <field name="docId" type="text" indexed="true" stored="false" multiValued="true"/>
