@@ -196,27 +196,27 @@
     <field name="decId" type="string" indexed="true" stored="true"/>
     <field name="decLink" type="string" indexed="false" stored="true"/>
 
-    <field name="decShortTitle_en" type="string" indexed="true" stored="true"/>
-    <field name="decShortTitle_es" type="string" indexed="true" stored="true"/>
-    <field name="decShortTitle_fr" type="string" indexed="true" stored="true"/>
-    <field name="decShortTitle_ar" type="string" indexed="true" stored="true"/>
-    <field name="decShortTitle_ru" type="string" indexed="true" stored="true"/>
-    <field name="decShortTitle_zh" type="string" indexed="true" stored="true"/>
+    <field name="decShortTitle_en" type="text" indexed="true" stored="true"/>
+    <field name="decShortTitle_es" type="text" indexed="true" stored="true"/>
+    <field name="decShortTitle_fr" type="text" indexed="true" stored="true"/>
+    <field name="decShortTitle_ar" type="text" indexed="true" stored="true"/>
+    <field name="decShortTitle_ru" type="text" indexed="true" stored="true"/>
+    <field name="decShortTitle_zh" type="text" indexed="true" stored="true"/>
 
-    <field name="decLongTitle_en" type="string" indexed="true" stored="true"/>
-    <field name="decLongTitle_es" type="string" indexed="true" stored="true"/>
-    <field name="decLongTitle_fr" type="string" indexed="true" stored="true"/>
-    <field name="decLongTitle_ar" type="string" indexed="true" stored="true"/>
-    <field name="decLongTitle_ru" type="string" indexed="true" stored="true"/>
-    <field name="decLongTitle_zh" type="string" indexed="true" stored="true"/>
+    <field name="decLongTitle_en" type="text" indexed="true" stored="true"/>
+    <field name="decLongTitle_es" type="text" indexed="true" stored="true"/>
+    <field name="decLongTitle_fr" type="text" indexed="true" stored="true"/>
+    <field name="decLongTitle_ar" type="text" indexed="true" stored="true"/>
+    <field name="decLongTitle_ru" type="text" indexed="true" stored="true"/>
+    <field name="decLongTitle_zh" type="text" indexed="true" stored="true"/>
 
     <field name="decKeyword_en" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="decKeyword_fr" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="decKeyword_es" type="text" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="decSummary_en" type="string" indexed="true" stored="true"/>
-    <field name="decSummary_es" type="string" indexed="true" stored="true"/>
-    <field name="decSummary_fr" type="string" indexed="true" stored="true"/>
+    <field name="decSummary_en" type="text" indexed="true" stored="true"/>
+    <field name="decSummary_es" type="text" indexed="true" stored="true"/>
+    <field name="decSummary_fr" type="text" indexed="true" stored="true"/>
 
     <field name="decBody_en" type="text" indexed="true" stored="true"/>
     <field name="decBody_es" type="text" indexed="true" stored="true"/>
@@ -291,7 +291,7 @@
     <field name="cdTitleOfText_es" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_fr" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_ru" type="text" indexed="true" stored="true" multiValued="false"/>
-    <field name="cdTitleOfText_other" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdTitleOfText_other" type="text" indexed="true" stored="true" multiValued="false"/>
 
     <field name="cdTitleOfTextShort" type="string" indexed="true" stored="false" multiValued="false"/>
 
@@ -301,7 +301,7 @@
     <field name="cdAbstract_es" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_fr" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_ru" type="text" indexed="true" stored="true" multiValued="false"/>
-    <field name="cdAbstract_other" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdAbstract_other" type="text" indexed="true" stored="true" multiValued="false"/>
 
     <field name="cdAlternativeRecordId" type="string" indexed="false" stored="false" multiValued="false"/>
 
@@ -459,6 +459,8 @@
     <field name="doc_content" type="text_general" indexed="false" stored="true" multiValued="true"/>
 
     <!-- General fields -->
+    <field name="docId" type="text" indexed="true" stored="false" multiValued="true"/>
+
     <field name="docSubject_en" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="docSubject_fr" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="docSubject_es" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -647,6 +649,13 @@
     <copyField source="decLongTitle_ru" dest="decTitleOfText"/>
     <copyField source="decLongTitle_ar" dest="decTitleOfText"/>
     <copyField source="decLongTitle_zh" dest="decTitleOfText"/>
+
+    <!-- Copy fields for boosting -->
+    <copyField source="legId" dest="docId"/>
+    <copyField source="cdLeoId" dest="docId"/>
+    <copyField source="litId" dest="docId"/>
+    <copyField source="decNumber" dest="docId"/>
+    <copyField source="trElisId" dest="docId"/>
 
     <!-- Copy fields for common filters -->
     <copyField source="trSubject_en" dest="docSubject_en"/>

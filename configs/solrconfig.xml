@@ -850,7 +850,7 @@
         <!-- General fields -->
         text^20
         <!-- Document id -->
-        legId^100 cdLeoId^100 litId^100 decNumber^100 trElisId^100
+        docId^100
         <!-- Keywords -->
         legKeyword_en^30 cdKeyword_en^30 litKeyword_en^30 decKeyword_en^30 trKeyword_en^30
         legKeyword_fr^30 cdKeyword_fr^30 litKeyword_fr^30 decKeyword_fr^30 trKeyword_fr^30
@@ -883,8 +883,10 @@
         litRegion_en^25 litRegion_fr^25 litRegion_es^25
 
         <!-- Court Decision -->
-        cdTitleOfText_en^100 cdTitleOfText_es^100 cdTitleOfText_fr^100 cdTitleOfText_ru^100
-        cdAbstract_en^50 cdAbstract_es^50 cdAbstract_fr^50 cdAbstract_ru^50
+        cdTitleOfText_en^100 cdTitleOfText_es^100 cdTitleOfText_fr^100
+        cdTitleOfText_ru^100 cdTitleOfText_other^100
+        cdAbstract_en^50 cdAbstract_es^50 cdAbstract_fr^50
+        cdAbstract_ru^50 cdAbstract_other^50
         cdRegion_en^25 cdRegion_fr^25 cdRegion_es^25
 
         <!-- Legislation -->
