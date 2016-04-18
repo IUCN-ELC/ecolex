@@ -26,3 +26,8 @@ class DocumentText(models.Model):
 
     def __str__(self):
         return self.doc_id + ' ' + self.status
+
+    class Meta:
+        index_together = [
+            ("doc_type", "status"),
+        ]
