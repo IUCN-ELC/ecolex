@@ -283,6 +283,8 @@ class LiteratureImporter(object):
                     while skip < total_docs - found_docs:
                         skip += found_docs
                         url = self._create_url(year, month, skip)
+                        logger.debug('Getting next page (%s/%s)' %
+                            (skip, total_docs,))
                         content = get_content_from_url(url)
                         bs = BeautifulSoup(content)
                         if bs.find('error'):
