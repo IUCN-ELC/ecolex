@@ -140,11 +140,12 @@ class TreatySchema(CommonSchema):
         solr_fetch = CommonSchema.Meta.solr_fetch + [
             'title_of_text', 'status', 'place_of_adoption',
             'date_of_entry', 'date_of_text', 'date_of_modification',
-            'title_of_text_short', 'type_of_document',
+            'title_of_text_short', 'title_abbreviation', 'type_of_document',
         ]
         solr_boost = dict(CommonSchema.Meta.solr_boost, **{
             'title_of_text': 110,
             'title_abbreviation': 75,
+            'title_of_text_short': 75,
             'abstract': 50,
             'basin': 25,
             'region': 25,
@@ -750,7 +751,7 @@ SORT_FIELD = __FPROPS['_']['xdate']
 def extract_translations(data, field_name):
     translations = [{'language': k.split('_')[-1], 'value': v}
                     for k, v in data.items()
-                    if k.startswith(field_name)]
+                    if k.startswith('%s_'%(field_name,))]
     # make sure the order of languages is the same as settings.LANGUAGE_MAP
     return sorted(
         translations,
