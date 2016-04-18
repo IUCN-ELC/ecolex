@@ -41,6 +41,7 @@ class Searcher(object):
         'facet.mincount': 1,
         'hl': 'true',
         'hl.fragsize': '0',
+        'hl.snippets': 100,
         'hl.simple.pre': '<em class="hl">',
         'spellcheck.collate': 'true',
     }
