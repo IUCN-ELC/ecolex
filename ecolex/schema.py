@@ -159,6 +159,7 @@ class TreatySchema(CommonSchema):
         })
         solr_highlight = [
             'title_of_text', 'title_of_text_short',# 'abstract'
+            'paper_title_of_text',
         ]
 
     type_of_document = fields.String(load_from='trTypeOfText',
