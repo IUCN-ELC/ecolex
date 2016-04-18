@@ -68,8 +68,8 @@ FIELD_MAP = {
     'placeofadoption': 'trPlaceOfAdoption',
 
     'depository': 'trDepository_en',
-    'depository_fr': 'trDepository_fr',
-    'depository_es': 'trDepository_es',
+    'depository_fr_fr': 'trDepository_fr',
+    'depository_es_es': 'trDepository_es',
 
     'entryintoforcedate': 'trEntryIntoForceDate',
     'keyword': 'trKeyword_en',
