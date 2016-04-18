@@ -140,11 +140,10 @@ class TreatySchema(CommonSchema):
         solr_fetch = CommonSchema.Meta.solr_fetch + [
             'title_of_text', 'status', 'place_of_adoption',
             'date_of_entry', 'date_of_text', 'date_of_modification',
-            'paper_title_of_text',
             'title_of_text_short', 'type_of_document',
         ]
         solr_boost = dict(CommonSchema.Meta.solr_boost, **{
-            'paper_title_of_text': 110,
+            'title_of_text': 110,
             'title_abbreviation': 75,
             'abstract': 50,
             'basin': 25,
@@ -152,7 +151,6 @@ class TreatySchema(CommonSchema):
         })
         solr_highlight = [
             'title_of_text', 'title_of_text_short',# 'abstract'
-            'paper_title_of_text',
         ]
 
     type_of_document = fields.String(load_from='trTypeOfText',
@@ -220,7 +218,7 @@ class TreatySchema(CommonSchema):
     official_publication = fields.List(fields.String(),
                                        load_from='trOfficialPublication')
     order = fields.String(load_from='trOrder')
-    paper_title_of_text = fields.String(load_from='trPaperTitleOfText',
+    title_of_text = fields.String(load_from='trTitleOfText',
                                         multilingual=True,
                                         missing='')
     parent_id = fields.Integer(load_from='trParentId')
@@ -237,8 +235,6 @@ class TreatySchema(CommonSchema):
     theme_secondary = fields.List(fields.String(), load_from='trThemeSecondary')
     title_abbreviation = fields.List(fields.String(),
                                      load_from='trTitleAbbreviation')
-    title_of_text = fields.List(fields.String(), load_from='trTitleOfText',
-                                missing=[])
     title_of_text_short = fields.String(load_from='trTitleOfTextShort',
                                         missing='')
     url = fields.List(fields.String(), load_from='trUrl')
@@ -264,7 +260,7 @@ class TreatySchema(CommonSchema):
     @pre_load
     def handle_translations(self, data):
         data['title_translations'] = extract_translations(
-            data, 'trPaperTitleOfText')
+            data, 'trTitleOfText')
         data['link_translations'] = extract_translations(
             data, 'trLinkToFullText')
         return data

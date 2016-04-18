@@ -98,8 +98,9 @@ class Treaty(DocumentModel):
 
     @property
     def title(self):
-        return (self.paper_title_of_text or
+        return (self.title_of_text or
                 self.title_of_text_short or
+                self.title_abbreviation or
                 DEFAULT_TITLE)
 
     @property

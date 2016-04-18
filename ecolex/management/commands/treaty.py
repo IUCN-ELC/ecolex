@@ -41,10 +41,10 @@ FIELD_MAP = {
     'dateoftext': 'trDateOfText',
     'searchdate': 'trSearchDate',
 
-    'titleoftext': 'trPaperTitleOfText_en',
-    'titleoftextsp': 'trPaperTitleOfText_es',
-    'titleoftextfr': 'trPaperTitleOfText_fr',
-    'titleoftextother': 'trPaperTitleOfText_other',
+    'titleoftext': 'trTitleOfText_en',
+    'titleoftextsp': 'trTitleOfText_es',
+    'titleoftextfr': 'trTitleOfText_fr',
+    'titleoftextother': 'trTitleOfText_other',
 
     'typeoftext': 'trTypeOfText_en',
     'typeoftext_es_es': 'trTypeOfText_es',
@@ -183,10 +183,10 @@ FALSE_LIST_FIELDS = [
     'trAvailableIn',
     'trPlaceOfAdoption',
     'trTitleOfTextShort',
-    'trPaperTitleOfText_en',
-    'trPaperTitleOfText_es',
-    'trPaperTitleOfText_fr',
-    'trPaperTitleOfText_other',
+    'trTitleOfText_en',
+    'trTitleOfText_es',
+    'trTitleOfText_fr',
+    'trTitleOfText_other',
 ]
 
 
@@ -417,13 +417,14 @@ class TreatyImporter(object):
                 data = self._apply_custom_rules(data)
                 treaties[elis_id] = data
 
-                title = (data.get('trPaperTitleOfText_en') or
-                         data.get('trPaperTitleOfText_fr') or
-                         data.get('trPaperTitleOfText_es') or
-                         data.get('trPaperTitleOfText_other') or
-                         data.get('trTitleOfTextShort'))
-                title_list = [title] if title else data.get('trTitleOfText')
-                slug = title_list[0] + ' ' + elis_id
+                title = (data.get('trTitleOfText_en') or
+                         data.get('trTitleOfText_fr') or
+                         data.get('trTitleOfText_es') or
+                         data.get('trTitleOfText_other') or
+                         data.get('trTitleOfTextShort') or
+                         data.get('trTitleAbbreviation') or
+                         '')
+                slug = title + ' ' + elis_id
                 data['slug'] = slugify(slug)
 
         return treaties

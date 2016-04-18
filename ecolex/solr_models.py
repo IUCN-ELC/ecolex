@@ -251,13 +251,13 @@ class TreatyParticipant(object):
 class Treaty(ObjectNormalizer):
     ID_FIELD = 'trElisId'
     SUMMARY_FIELD = 'trAbstract_en'
-    TITLE_FIELD = 'trPaperTitleOfText'  # multilangual
+    TITLE_FIELD = 'trTitleOfText'  # multilangual
     # IUCN asked to show all translations of the title
     # TODO: do not repeat the title of the current language
     TITLE_FIELDS = [
-        'trPaperTitleOfText_en', 'trPaperTitleOfText_fr',
-        'trPaperTitleOfText_es', 'trPaperTitleOfText_other',
-        'trTitleOfText', 'trTitleOfTextShort',
+        'trTitleOfText_en', 'trTitleOfText_fr',
+        'trTitleOfText_es', 'trTitleOfText_other',
+        'trTitleAbbreviation', 'trTitleOfTextShort',
     ]
     DATE_FIELDS = ['trDateOfText', 'trDateOfEntry', 'trDateOfModification']
     DOCTYPE_FIELD = 'trTypeOfText_en'

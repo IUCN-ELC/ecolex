@@ -857,9 +857,9 @@
         legKeyword_es^30 cdKeyword_es^30 litKeyword_es^30 decKeyword_es^30 trKeyword_es^30
 
         <!-- Treaty -->
-        trPaperTitleOfText_en^110 trPaperTitleOfText_es^110
-        trPaperTitleOfText_fr^110 trPaperTitleOfText_other^110
-        trTitleAbbreviation^75
+        trTitleOfText_en^110 trTitleOfText_es^110
+        trTitleOfText_fr^110 trTitleOfText_other^110
+        trTitleAbbreviation^75 trTitleOfTextShort^75
         trAbstract_en^50 trAbstract_fr^50 trAbstract_es^50
         trBasin_en^25 trBasin_fr^25 trBasin_es^25
         trRegion_en^25 trRegion_fr^25 trRegion_es^25

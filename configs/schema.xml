@@ -64,7 +64,6 @@
     <field name="_version_" type="long" indexed="true" stored="true"/>
     <field name="id" type="string" indexed="true" stored="true" required="true"/>
     <field name="type" type="string" indexed="true" stored="true" required="true"/>
-    <field name="source" type="string" indexed="false" stored="false" required="false"/>
     <field name="indexedDate" type="tdate" indexed="false" stored="true" default="NOW"/>
     <field name="updatedDate" type="tdate" indexed="false" stored="true"/>
     <field name="slug" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -78,13 +77,12 @@
     <field name="trDateOfLastLegalAction" type="tdate" indexed="true" stored="true"/>
     <field name="trStatus" type="string" indexed="true" stored="true" multiValued="false"/>
 
-    <field name="trTitleOfText" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trTitleAbbreviation" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trTitleOfTextShort" type="text" indexed="true" stored="true" multiValued="false"/>
-    <field name="trPaperTitleOfText_en" type="text" indexed="true" stored="true" multiValued="false"/>
-    <field name="trPaperTitleOfText_es" type="text" indexed="true" stored="true" multiValued="false"/>
-    <field name="trPaperTitleOfText_fr" type="text" indexed="true" stored="true" multiValued="false"/>
-    <field name="trPaperTitleOfText_other" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trTitleOfText_en" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trTitleOfText_es" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trTitleOfText_fr" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trTitleOfText_other" type="text" indexed="true" stored="true" multiValued="false"/>
 
     <field name="trIntroText" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trAbstract_en" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -638,13 +636,6 @@
 
     <uniqueKey>id</uniqueKey>
 
-    <copyField source="trTitleAbbreviation" dest="trTitleOfText"/>
-    <copyField source="trTitleOfTextShort" dest="trTitleOfText"/>
-    <copyField source="trPaperTitleOfText_en" dest="trTitleOfText"/>
-    <copyField source="trPaperTitleOfText_es" dest="trTitleOfText"/>
-    <copyField source="trPaperTitleOfText_fr" dest="trTitleOfText"/>
-    <copyField source="trPaperTitleOfText_other" dest="trTitleOfText"/>
-
     <copyField source="trComment" dest="trIntroText"/>
     <copyField source="trAbstract_en" dest="trIntroText"/>
 
@@ -765,10 +756,10 @@
     <!-- Full search field -->
     <copyField source="trTitleAbbreviation" dest="text"/>
     <copyField source="trTitleOfTextShort" dest="text"/>
-    <copyField source="trPaperTitleOfText_en" dest="text"/>
-    <copyField source="trPaperTitleOfText_es" dest="text"/>
-    <copyField source="trPaperTitleOfText_fr" dest="text"/>
-    <copyField source="trPaperTitleOfText_other" dest="text"/>
+    <copyField source="trTitleOfText_en" dest="text"/>
+    <copyField source="trTitleOfText_es" dest="text"/>
+    <copyField source="trTitleOfText_fr" dest="text"/>
+    <copyField source="trTitleOfText_other" dest="text"/>
 
     <copyField source="trComment" dest="text"/>
     <copyField source="trAbstract_en" dest="text"/>
@@ -802,7 +793,6 @@
     <copyField source="trKeyword_en" dest="text"/>
     <copyField source="trKeyword_es" dest="text"/>
     <copyField source="trKeyword_fr" dest="text"/>
-    <copyField source="doc_content" dest="text"/>
 
     <copyField source="legTitle" dest="text"/>
     <copyField source="legSubject_en" dest="text"/>

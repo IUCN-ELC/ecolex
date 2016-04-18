@@ -56,9 +56,9 @@ FIELD_MAP = {
 }
 
 TREATY_FIELDS_MAP = {
-    'trPaperTitleOfText_en': 'decTreatyName_en',
-    'trPaperTitleOfText_fr': 'decTreatyName_fr',
-    'trPaperTitleOfText_es': 'decTreatyName_es',
+    'trTitleOfText_en': 'decTreatyName_en',
+    'trTitleOfText_fr': 'decTreatyName_fr',
+    'trTitleOfText_es': 'decTreatyName_es',
 }
 
 
