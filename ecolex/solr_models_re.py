@@ -116,9 +116,10 @@ class Treaty(DocumentModel):
 
     @cached_property
     def decisions(self):
-        from ecolex.search import get_documents_by_field
-        return get_documents_by_field('decTreatyId',
-                                      [self.informea_id], rows=MAX_ROWS)
+        # TODO: refactor here
+        if hasattr(self, 'informea_id'):
+            from ecolex.search import get_documents_by_field
+            return get_documents_by_field('decTreatyId', [self.informea_id], rows=MAX_ROWS)
 
     @cached_property
     def literatures(self):
