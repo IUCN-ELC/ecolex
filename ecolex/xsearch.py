@@ -39,11 +39,11 @@ class Searcher(object):
         'facet.sort': 'index',
         'facet.method': 'enum',
         'facet.mincount': 1,
-        'hl': 'true',
-        'hl.fragsize': '0',
+        'hl': True,
+        'hl.fragsize': 0,
         'hl.snippets': 100,
         'hl.simple.pre': '<em class="hl">',
-        'spellcheck.collate': 'true',
+        'spellcheck.collate': True,
     }
 
     STATS_KEYS = ('min', 'max')
