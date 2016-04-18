@@ -136,8 +136,9 @@ select.selection-facet {
   </div>
 </fieldset>
 
+{% with facets.type|get_facet_counts as type_count %}
 
-{% if form.has_treaty %}
+{% if form.has_treaty and type_count.treaty > 0 %}
 <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_treaty %}class="collapsed"{% endif %}
         data-target="#filter-treaties">Treaty filters</h5>
@@ -160,7 +161,7 @@ select.selection-facet {
 {% endif %}
 
 
-{% if form.has_decision %}
+{% if form.has_decision and type_count.decision > 0 %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_decision %}class="collapsed"{% endif %}
         data-target="#filter-cop-decisions">COP Decision filters</h5>
@@ -180,7 +181,21 @@ select.selection-facet {
 {% endif %}
 
 
-{% if not form.type.data or form.has_court_decision %}
+{% if form.has_legislation and type_count.legislation > 0 %}
+  <fieldset class="special-filter">
+    <h5 data-toggle="collapse" {% if not form.has_legislation %}class="collapsed"{% endif %}data-target="#filter-legislation">Legislation filters</h5>
+    <div id="filter-legislation" class="collapse {% if form.has_legislation %}in{% endif %}">
+
+{% include 'bits/checkbox_facet.html' with title="Document type" facet=facets.leg_type_of_document field=form.leg_type_of_document show_empty=True %}
+
+{% include "bits/selection_facet.html" with title="Sub-national/state level" placeholder="Add territory…" viewname="api:leg-territorial-subdivision-list" facet=facets.leg_territorial_subdivision field=form.leg_territorial_subdivision op_field=form.leg_territorial_subdivision_and_ %}
+
+    </div>
+  </fieldset>
+{% endif %}
+
+
+{% if form.has_court_decision and type_count.court_decision > 0 %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_court_decision %}class="collapsed"{% endif %}
         data-target="#filter-court-decisions">Court decision filters</h5>
@@ -195,21 +210,7 @@ select.selection-facet {
 {% endif %}
 
 
-{% if form.has_legislation %}
-  <fieldset class="special-filter">
-    <h5 data-toggle="collapse" {% if not form.has_legislation %}class="collapsed"{% endif %}data-target="#filter-legislation">Legislation filters</h5>
-    <div id="filter-legislation" class="collapse {% if form.has_legislation %}in{% endif %}">
-
-{% include 'bits/checkbox_facet.html' with title="Document type" facet=facets.leg_type_of_document field=form.leg_type_of_document show_empty=True %}
-
-{% include "bits/selection_facet.html" with title="Sub-national/state level" placeholder="Add territory…" viewname="api:leg-territorial-subdivision-list" facet=facets.leg_territorial_subdivision field=form.leg_territorial_subdivision op_field=form.leg_territorial_subdivision_and_ %}
-
-    </div>
-  </fieldset>
-{% endif %}
-
-
-{% if form.has_literature %}
+{% if form.has_literature and type_count.literature > 0 %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">Literature filters</h5>
     <div id="filter-literatures" class="collapse {% if form.has_literature %}in{% endif %}">
@@ -225,6 +226,8 @@ select.selection-facet {
     </div>
   </fieldset>
 {% endif %}
+
+{% endwith %}
 
 
 
