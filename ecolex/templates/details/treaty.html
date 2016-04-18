@@ -233,7 +233,9 @@
       {% if document.literatures.count %}
         <dt>Literature</dt>
         <dd>
-          <strong>{{ literatures|length }} record(s)</strong> related to this treaty.
+        {% with document.literatures.count as lit_count %}
+          <strong>{{ lit_count }} record{{ lit_count|pluralize:"s" }} </strong> related to this treaty.
+        {% endwith %}
           <a href="{% url 'resultLiteratures' document.slug %}?{{ query }}">View literature</a>
         </dd>
       {% endif %}
@@ -243,7 +245,7 @@
       {% if document.court_decisions.count %}
         <dt>Court Decision</dt>
         <dd>
-          <strong>{{ court_decisions|length }} court decisions</strong> related to this treaty.
+          <strong>{{ document.court_decisions.count }} court decisions</strong> related to this treaty.
           <a href="{% url 'resultCourtDecisions' document.slug %}?{{ query }}">View court decisions</a>
         </dd>
       {% endif %}
