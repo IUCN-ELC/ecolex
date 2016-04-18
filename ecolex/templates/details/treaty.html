@@ -55,7 +55,7 @@
 
       {% if document.language_of_document %}
         <dt>Language</dt>
-        <dd>{{ document.language_of_document|join:", " }}</dd>
+        <dd>{{ document.language_of_document|capfirstseq|join:", " }}</dd>
       {% endif %}
 
       {% if document.entry_into_force_date %}
