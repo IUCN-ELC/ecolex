@@ -9,6 +9,7 @@ from scorched.response import SolrResponse
 from scorched.strings import DismaxString
 from unidecode import unidecode
 from django.conf import settings
+from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.utils.functional import LazyObject
 from django.utils.html import strip_tags
 
@@ -32,19 +33,134 @@ class __DefaultInterface(LazyObject):
 DEFAULT_INTERFACE = __DefaultInterface()
 
 
-class Searcher(object):
+class Queryer(object):
     SEARCH_OPTIONS = {
+        'hl': True,
+        'hl.fragsize': 0,
+        'hl.snippets': 100,
+        'hl.simple.pre': '<em class="hl">',
+    }
+
+    def __init__(self, data, language, interface=DEFAULT_INTERFACE):
+        self.language = language
+        self.interface = interface
+        self.qargs = []
+        self.qkwargs = {}
+
+        try:
+            q = data.pop('q')
+        except KeyError:
+            pass
+        else:
+            if q:
+                self.qargs.append(DismaxString(q))
+
+    def _execute(self, search, options=None):
+        # set search options last or they'll get overwritten
+        self.set_search_options(search, options)
+        response = search.execute()
+        return response
+
+    def set_search_options(self, search, options=None):
+        # hack search.options() to set our custom preferences
+        extra_options = self.SEARCH_OPTIONS
+        if options:
+            extra_options.update(options)
+
+        _super_options = search.options
+        def wrapped_options(self):
+            options = _super_options()
+            options.update(extra_options)
+            return options
+
+        search.options = type(search.options)(wrapped_options, search)
+
+    @staticmethod
+    def to_object(language, **data):
+        typ = data['type']
+        schema = SCHEMA_MAP[typ]
+        result, errors = schema.load(data, language=language)
+        if errors:
+            logger.error("Parse error: %s", errors)
+        return result
+
+    def get_highlight_fields(self):
+        return tuple(
+            field
+            for k, f in HIGHLIGHT_FIELDS.items()
+            for field in f.get_source_fields()
+        )
+
+    def _handle_highlight(self, response):
+        for doc in response.result.docs:
+            try:
+                hls = response.highlighting[doc['id']]
+            except KeyError:
+                continue
+
+            for field, hl in hls.items():
+                original = doc[field]
+
+                if not isinstance(original, list):
+                    doc[field] = hl[0]
+
+                elif len(original) == 1:
+                    doc[field] = hl
+
+                else:
+                    # we need to iterate through the items and replace
+                    # the proper ones
+                    for highlighted in hl:
+                        # TODO: do we ever return other html with the results?
+                        idx = original.index(strip_tags(highlighted))
+                        original[idx] = highlighted
+
+    def to_query(self, data, op=or_):
+        if isinstance(data, str) or not isinstance(data, Iterable) or not data:
+            return data
+
+        if len(data) == 1:
+            return data[0]
+
+        Q = self.interface.Q
+        # this part needed to be able to do "field:(some\\ thing OR an\\ other)"
+        return DismaxString(
+            "(%s)" % reduce(op, (Q(item) for item in data))
+        )
+
+    def get(self, **kwargs):
+        search = (
+            self.interface.query(*self.qargs, **self.qkwargs)
+            .filter(**{
+                k: self.to_query(v)
+                for k, v in kwargs.items()
+            })
+            .highlight(self.get_highlight_fields())
+            .paginate(start=0, rows=1) # fetch a single row
+        )
+
+        response = self._execute(search)
+
+        if response.result.numFound > 1:
+            raise MultipleObjectsReturned()
+        try:
+            result = response.result.docs[0]
+        except IndexError:
+            raise ObjectDoesNotExist()
+
+        self._handle_highlight(response)
+        return self.to_object(self.language, **result)
+
+
+class Searcher(Queryer):
+    SEARCH_OPTIONS = dict(Queryer.SEARCH_OPTIONS, **{
         'q.op': 'AND',
         'facet.limit': -1,
         'facet.sort': 'index',
         'facet.method': 'enum',
         'facet.mincount': 1,
-        'hl': True,
-        'hl.fragsize': 0,
-        'hl.snippets': 100,
-        'hl.simple.pre': '<em class="hl">',
         'spellcheck.collate': True,
-    }
+    })
 
     STATS_KEYS = ('min', 'max')
 
@@ -60,20 +176,9 @@ class Searcher(object):
     #   filtering, and they are likewise tagged / excluded.
 
     def __init__(self, data, language, interface=DEFAULT_INTERFACE):
-        self.language = language
-        self.interface = interface
-        self.valid = True
-        self.qargs = []
-        self.qkwargs = {}
+        super().__init__(data, language, interface=interface)
 
-        # `q` and `type` will be used for query-ing, the rest are filters
-        try:
-            q = data.pop('q')
-        except KeyError:
-            pass
-        else:
-            if q:
-                self.qargs.append(DismaxString(q))
+        self.valid = True
 
         types = data.get('type', [])
 
@@ -291,41 +396,6 @@ class Searcher(object):
             if self.is_used_field(k)
         )
 
-    def set_search_options(self, search):
-        # hack search.options() to set our custom preferences
-        # (because setting faceting options as arguments to .facet_by()
-        # won't work, due to the forced tagging above)
-        extra_options = self.SEARCH_OPTIONS
-        _super_options = search.options
-        def wrapped_options(self):
-            options = _super_options()
-            options.update(extra_options)
-            return options
-
-        search.options = type(search.options)(wrapped_options, search)
-
-    def to_query(self, data, op=or_):
-        if isinstance(data, str) or not isinstance(data, Iterable) or not data:
-            return data
-
-        if len(data) == 1:
-            return data[0]
-
-        Q = self.interface.Q
-        # this part needed to be able to do "field:(some\\ thing OR an\\ other)"
-        return DismaxString(
-            "(%s)" % reduce(op, (Q(item) for item in data))
-        )
-
-    @staticmethod
-    def to_object(language, **data):
-        typ = data['type']
-        schema = SCHEMA_MAP[typ]
-        result, errors = schema.load(data, language=language)
-        if errors:
-            logger.error("Parse error: %s", errors)
-        return result
-
     @staticmethod
     def mk_local_params(**params):
         if not params:
@@ -355,10 +425,7 @@ class Searcher(object):
         if do_facets:
             search = search.facet_by(self.get_facet_fields())
 
-        # set search options last or they'll get overwritten
-        self.set_search_options(search)
-
-        response = search.execute()
+        response = super()._execute(search)
 
         if do_facets:
             self._handle_facets(response)
@@ -405,30 +472,6 @@ class Searcher(object):
                 parsed[item] = value
 
             stats[k] = parsed
-
-    def _handle_highlight(self, response):
-        for doc in response.result.docs:
-            try:
-                hls = response.highlighting[doc['id']]
-            except KeyError:
-                continue
-
-            for field, hl in hls.items():
-                original = doc[field]
-
-                if not isinstance(original, list):
-                    doc[field] = hl[0]
-
-                elif len(original) == 1:
-                    doc[field] = hl
-
-                else:
-                    # we need to iterate through the items and replace
-                    # the proper ones
-                    for highlighted in hl:
-                        # TODO: do we ever return other html with the results?
-                        idx = original.index(strip_tags(highlighted))
-                        original[idx] = highlighted
 
     def _handle_suggestions(self, response):
         rsp = response.spellcheck
