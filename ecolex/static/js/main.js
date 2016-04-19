@@ -555,7 +555,14 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     $('button.reset-multiple').click(function(e) {
         e.preventDefault();
         var target = $(this).data('target');
-        $(target).select2('val', '')
+        $(target).select2('val', '');
+    });
+
+    $('button.reset-year').click(function(e) {
+        e.preventDefault();
+        $('#year-min').val('');
+        $('#year-max').val('');
+        submit();
     });
 
     // Reset query string
@@ -592,8 +599,8 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         $form[0].reset();
         $('#search-form input:checkbox:checked').prop("checked", false);
         $('#search-form option:selected').prop("selected", false);
-        $('#year-min').val(1860);
-        $('#year-max').val(2015);
+        $('#year-min').val('');
+        $('#year-max').val('');
         $('#id_type option:selected').prop("selected", false);
         $form.submit();
     });
