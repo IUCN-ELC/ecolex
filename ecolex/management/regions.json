@@ -30,9 +30,9 @@
         "es": "Ant\u00e1rtida"
     },
     "aral sea": {
-        "en": "Aral sea",
-        "fr": "Mer d\u2019aral",
-        "es": "Mar aral"
+        "en": "Aral Sea",
+        "fr": "Mer d\u2019Aral",
+        "es": "Mar Aral"
     },
     "arctic": {
         "en": "Arctic",
@@ -65,7 +65,7 @@
         "es": "Benelux"
     },
     "black sea": {
-        "en": "Black sea",
+        "en": "Black Sea",
         "fr": "Mer Noire",
         "es": "Mar Negro"
     },
@@ -99,9 +99,14 @@
         "fr": "Europe Centrale",
         "es": "Europa Central"
     },
+    "cis (commonwealth of independent states)": {
+        "en": "CIS (Commonwealth of Independent States)",
+        "fr": "CEI (Communaut\u00e9 des \u00c9tats ind\u00e9pendants)",
+        "es": "CEI (Comunidad de Estados Independientes)"
+    },
     "cis (com. of indep. states)": {
-        "en": "CIS (Commonealth of Independent States)",
-        "fr": "CEI (Communaut\u00e9 des \u00e9tats ind\u00e9pendants)",
+        "en": "CIS (Commonwealth of Independent States)",
+        "fr": "CEI (Communaut\u00e9 des \u00c9tats ind\u00e9pendants)",
         "es": "CEI (Comunidad de Estados Independientes)"
     },
     "east asian seas": {
