@@ -6924,23 +6924,6 @@ ul.select2-selection__rendered {
     border-bottom: 1px solid #cccccc;
   }
 }
-.sprite-credits {
-  display: block;
-  height: 64px;
-  width: 64px;
-  background: url('../img/logos-credits-colour-en.png') no-repeat top left;
-  background-size: cover;
-}
-.sprite-iucn {
-  background-position: 0 0;
-}
-.sprite-unep {
-  background-position: -64px 0;
-}
-.sprite-fao {
-  background-position: -128px 0;
-  width: 180px;
-}
 .homepage-categories {
   list-style: none;
   padding-left: 0;

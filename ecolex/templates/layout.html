@@ -13,6 +13,26 @@
   <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/bootstrap-tour.min.css' %}">
   <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/select2.css' %}">
   <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/main.css' %}">
+  {# TODO This should probably go back to main.css. In this case, credits logo should be split into 3 different images #}
+  <style>
+    .sprite-credits {
+      display: block;
+      height: 64px;
+      width: 64px;
+      background: url('/static/img/logos-credits-{{ LANGUAGE_CODE }}.png') no-repeat top left;
+      background-size: cover;
+    }
+    .sprite-iucn {
+      background-position: 0 0;
+    }
+    .sprite-unep {
+      background-position: -64px 0;
+    }
+    .sprite-fao {
+      background-position: -128px 0;
+      width: 215px;
+    }
+  </style>
   {% block style %}{% endblock %}
   <script src="https://code.jquery.com/jquery-1.12.1.min.js"
           integrity="sha256-I1nTg78tSrZev3kjvfdM5A5Ak/blglGzlaZANLPDl3I="
@@ -191,16 +211,13 @@
                     <br><a href="http://www.iucn.org/">IUCN</a>, <a href="http://www.unep.org/">UNEP</a>, <a href="http://www.fao.org/">FAO</a></span>
           <ul class="list-inline">
               <li>
-                  <div class="sprite-credits sprite-iucn">
-                  </div>
+                <div class="sprite-credits sprite-iucn"></div>
               </li>
               <li>
-                  <div class="sprite-credits sprite-unep">
-                  </div>
+                <div class="sprite-credits sprite-unep"></div>
               </li>
               <li>
-                  <div class="sprite-credits sprite-fao">
-                  </div>
+                <div class="sprite-credits sprite-fao"></div>
               </li>
           </ul>
         </div>
