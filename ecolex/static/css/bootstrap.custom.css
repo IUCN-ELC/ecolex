@@ -5745,6 +5745,34 @@ fieldset[disabled] .slick-arrow.active {
 .slick-next {
   right: 0;
 }
+.sprite-credits {
+  display: block;
+  height: 64px;
+  width: 64px;
+  background: url('../img/logos-credits-en.png') no-repeat top left;
+}
+[lang="es"] .sprite-credits {
+  background-image: url('../img/logos-credits-es.png');
+}
+[lang="fr"] .sprite-credits {
+  background-image: url('../img/logos-credits-fr.png');
+}
+.sprite-iucn {
+  background-position: 0 0;
+}
+.sprite-unep {
+  background-position: -64px 0;
+}
+.sprite-fao {
+  background-position: -128px 0;
+  width: 165px;
+}
+[lang="es"] .sprite-fao {
+  width: 205px;
+}
+[lang="fr"] .sprite-fao {
+  width: 215px;
+}
 .search-form {
   position: relative;
   padding: 5px;
