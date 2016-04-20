@@ -498,12 +498,6 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         search_field.attr('id', search_field_id);
         self.change(submit);
 
-        self.on("select2:closing", function (e) {
-            $(this).next().find('li.select2-search').hide();
-            $(this).parent().find('label.filter-label').removeClass('dropup');
-            $(this).data('open', false);
-        });
-
         // add clearfix to select2 widget
         //self.next().addClass('clearfix');
     });
@@ -518,20 +512,6 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     function submit() {
         $('#search-form').submit();
     };
-
-    $('.filter-label').on('click', function (e) {
-        var data_target = $(this).data('target');
-        var input_selector = data_target + '-search-field';
-        var open = $(data_target).data('open');
-        if (open) {
-            target.select2('close');
-        } else {
-            $(this).data('open', true);
-            $(this).parent().find('li.select2-search').show();
-            $(input_selector).trigger('click');
-            $(this).addClass('dropup');
-        }
-    });
 
     // TODO: not the most beautiful approach this
     $('#search-form input:checkbox').change(submit);
