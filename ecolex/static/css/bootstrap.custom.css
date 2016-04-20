@@ -5818,14 +5818,14 @@ fieldset[disabled] .slick-arrow.active {
   background-position: -64px 0;
 }
 .sprite-fao {
-  width: 165px;
+  width: 185px;
   background-position: -128px 0;
 }
 [lang="es"] .sprite-fao {
-  width: 205px;
+  width: 230px;
 }
 [lang="fr"] .sprite-fao {
-  width: 215px;
+  width: 235px;
 }
 .search-form {
   position: relative;

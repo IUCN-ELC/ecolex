@@ -217,9 +217,10 @@
         "es": "Vasco"
     },
     "fa": {
-        "en": "Persian",
-        "fr": "Persan",
-        "es": "Persa"
+        "en": "Farsi",
+        "en2": "Persian",
+        "fr": "Farsi",
+        "es": "Farsi"
     },
     "ff": {
         "en": "Fulah",
@@ -418,9 +419,10 @@
         "es": "Groenland\u00e9s"
     },
     "km": {
-        "en": "Central Khmer",
+        "en": "Khmer",
+        "en2": "Central Khmer",
         "fr": "Khmer",
-        "es": "Jemer"
+        "es": "Khmer"
     },
     "kn": {
         "en": "Kannada",
@@ -928,5 +930,15 @@
         "en": "Zulu",
         "fr": "Zoulou",
         "es": "Zul\u00fa"
+    },
+    "mis": {
+        "en": "Montenegrin",
+        "fr": "Mont\u00e9n\u00e9grin",
+        "es": "Montenegrino"
+    },
+    "tet": {
+        "en": "Tetum",
+        "fr": "Tetum",
+        "es": "Tetun"
     }
 }
