@@ -180,11 +180,15 @@ class __FieldProperties(object):
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-    def get_source_field(self, lang):
+    def get_source_field(self, lang=None):
         if not self.multilingual:
             return self.load_from
-        else:
-            return "%s_%s" % (self.load_from, lang)
+
+        if not lang:
+            raise ValueError("Trying to get source field for multilingual "
+                             "field, but no language specified.")
+
+        return "%s_%s" % (self.load_from, lang)
 
     def get_source_fields(self):
         if not self.multilingual:
