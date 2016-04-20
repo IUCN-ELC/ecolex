@@ -5961,6 +5961,10 @@ body {
 .body-colored #site-body {
   vertical-align: middle;
 }
+main {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
 .body-colored {
   background-color: #173663;
 }
