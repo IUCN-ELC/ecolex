@@ -5880,93 +5880,85 @@ body {
     padding-bottom: 129px;
   }
 }
+body {
+  display: table;
+  width: 100%;
+  min-height: 100%;
+  table-layout: auto;
+}
+#site-header,
+#site-body,
+#site-footer {
+  display: table-row;
+}
+.body-colored #site-body {
+  vertical-align: middle;
+}
 .body-colored {
   background-color: #173663;
-  /*@media (min-width: @grid-float-breakpoint) {*/
-  height: 100%;
-  /*}*/
 }
 .body-colored .jumbotron-brand {
   text-align: center;
-}
-.body-colored #search-form {
-  height: 100%;
-}
-.body-colored main {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.body-colored .footer {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-main {
-  min-height: 420px;
-  padding: 22px 0 30px;
-  /*background-color: #fff;*/
 }
 .logo-credits img {
   height: 4em;
   width: auto;
   margin: -1em;
 }
-.footer {
+#site-footer {
   padding: 30px 0;
   background-color: #fff;
   font-size: 14px;
   color: #808080;
 }
 @media (min-width: 768px) {
-  .footer {
+  #site-footer {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
   }
 }
-.footer .img {
+#site-footer .img {
   height: 3em;
   margin: -0.8em 0;
 }
-.footer .img img {
+#site-footer .img img {
   height: 100%;
   width: auto;
 }
 @media (max-width: 767px) {
-  .footer .img {
+  #site-footer .img {
     margin-bottom: 22px;
   }
 }
-.footer .list-inline {
+#site-footer .list-inline {
   margin-bottom: auto;
 }
-.footer a {
+#site-footer a {
   color: inherit;
 }
-.footer a:hover,
-.footer a:focus {
+#site-footer a:hover,
+#site-footer a:focus {
   color: #666666;
 }
 @media (max-width: 991px) {
-  .footer .list-inline > li {
+  #site-footer .list-inline > li {
     display: block;
     margin-bottom: .5em;
   }
 }
 @media (min-width: 768px) {
-  .footer .footer-inner {
+  #site-footer .footer-inner {
     display: table;
     width: 100%;
   }
-  .footer .footer-nav,
-  .footer .footer-credits {
+  #site-footer .footer-nav,
+  #site-footer .footer-credits {
     display: table-cell;
     vertical-align: middle;
   }
-  .footer .footer-credits {
+  #site-footer .footer-credits {
     width: 1%;
     white-space: nowrap;
   }

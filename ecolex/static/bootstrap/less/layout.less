@@ -9,39 +9,40 @@ body {
   }
 }
 
+
+
+
+body {
+  display: table;
+  width: 100%;
+  min-height: 100%;
+  table-layout: auto;
+}
+
+#site-header,
+#site-body,
+#site-footer {
+  display: table-row;
+}
+
+#site-body {
+  .body-colored & {
+    vertical-align: middle;  
+  }
+}
+
+
+
+
 .body-colored {
   background-color: @jumbotron-bg;
   .jumbotron-brand {
     text-align: center;
   }
-  /*@media (min-width: @grid-float-breakpoint) {*/
-    height: 100%;
-
-    #search-form {
-      height: 100%;
-    }
-    main {
-      position: relative;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    .footer {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-  /*}*/
 }
 
 .navbar-brand {
   // header logo
-}
-
-main {
-  min-height: 420px;
-  padding: @line-height-computed 0 @jumbotron-padding;
-  /*background-color: #fff;*/
 }
 
 .logo-credits {
@@ -52,7 +53,7 @@ main {
     }
   }
 
-.footer {
+#site-footer {
   @media (min-width: @screen-sm) {
     position: absolute;
     bottom: 0;
