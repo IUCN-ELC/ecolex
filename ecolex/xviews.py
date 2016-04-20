@@ -1,12 +1,13 @@
 import math
 from collections import OrderedDict
 from django.conf import settings
+from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
+from django.http import Http404
 from django.views.generic import TemplateView
-from django.http import QueryDict
 from django.utils.functional import cached_property
 from django.utils.translation import get_language
 from .xforms import SearchForm
-from .xsearch import Searcher, SearchResponse
+from .xsearch import Queryer, Searcher, SearchResponse
 
 
 class HomepageView(TemplateView):
@@ -19,6 +20,11 @@ class SearchViewMixin(object):
     @cached_property
     def form(self):
         return SearchForm(self.request.GET)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['form'] = self.form
+        return ctx
 
 
 class SearchResultsView(SearchViewMixin, TemplateView):
@@ -53,7 +59,6 @@ class SearchResultsView(SearchViewMixin, TemplateView):
             searcher = Searcher(data, language=get_language())
             response = searcher.search(page=page, date_sort=date_sort)
 
-        ctx['form'] = self.form
         ctx['results'] = response
         ctx['facets'] = response.facets
         ctx['stats'] = response.stats
@@ -101,3 +106,51 @@ class SearchResultsView(SearchViewMixin, TemplateView):
             'first_url': _get_url(1),
             'last_url': _get_url(page_count),
         }
+
+
+class DetailsView(SearchViewMixin, TemplateView):
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        slug = kwargs['slug']
+
+        form = self.form
+
+        if not form.is_valid():
+            response = SearchResponse()
+            page = 1
+        else:
+            data = form.cleaned_data.copy()
+
+            queryer = Queryer(data, language=get_language())
+
+            try:
+                result = queryer.get(slug=slug)
+            except ObjectDoesNotExist:
+                raise Http404()
+            except MultipleObjectsReturned:
+                # TODO. this is either data or code error.
+                raise
+
+            ctx['document'] = result
+
+            return ctx
+
+
+class DecisionDetails(DetailsView):
+    template_name = 'details/decision.html'
+
+
+class TreatyDetails(DetailsView):
+    template_name = 'details/treaty.html'
+
+
+class LiteratureDetails(DetailsView):
+    template_name = 'details/literature.html'
+
+
+class CourtDecisionDetails(DetailsView):
+    template_name = 'details/court_decision.html'
+
+
+class LegislationDetails(DetailsView):
+    template_name = 'details/legislation.html'

@@ -10,7 +10,7 @@ from .views import (
     ResultDetailsLiteratures, ResultDetailsParticipants, SearchResults,
     TreatyDetails, debug,
 )
-from .xviews import SearchResultsView
+from . import xviews as views
 from .api import urls as api_urls
 
 urlpatterns = [
@@ -23,7 +23,7 @@ urlpatterns += i18n_patterns(
     #url(r'^result/$', SearchResults.as_view(),
     #    name="results"),
 
-    url(r'^result/$', SearchResultsView.as_view(),
+    url(r'^result/$', views.SearchResultsView.as_view(),
         name="results"),
 
     url(r'^details/(?P<slug>[^/]+)/decisions/$',
@@ -35,22 +35,30 @@ urlpatterns += i18n_patterns(
     url(r'^details/(?P<slug>[^/]+)/participants/$',
         ResultDetailsParticipants.as_view(), name="resultParticipants"),
 
-    url(r'^details/decision/(?P<slug>[^/]+)/$', DecisionDetails.as_view(),
+    url(r'^details/decision/(?P<slug>[^/]+)/$',
+        views.DecisionDetails.as_view(),
         name="decision_details"),
-    url(r'^details/treaty/(?P<slug>[^/]+)/$', TreatyDetails.as_view(),
+    url(r'^details/treaty/(?P<slug>[^/]+)/$',
+        views.TreatyDetails.as_view(),
         name="treaty_details"),
-    url(r'^details/literature/(?P<slug>[^/]+)/$', LiteratureDetails.as_view(),
+    url(r'^details/literature/(?P<slug>[^/]+)/$',
+        views.LiteratureDetails.as_view(),
         name="literature_details"),
     url(r'^details/court-decision/(?P<slug>[^/]+)/$',
-        CourtDecisionDetails.as_view(), name="court_decision_details"),
+        views.CourtDecisionDetails.as_view(),
+        name="court_decision_details"),
     url(r'^details/legislation/(?P<slug>[^/]+)/$',
-        LegislationDetails.as_view(), name="legislation_details"),
+        views.LegislationDetails.as_view(),
+        name="legislation_details"),
+
+
     url(r'^p/(?P<slug>\w+)/', PageView.as_view(),
         name="page"),
 
     url(r'^(?P<doc_type>\w+)/details/(?P<doc_id>[^/]+)/$',
         LegislationRedirectView.as_view(), name="legislation_redirect"),
 )
+
 
 urlpatterns += [
     url(r'^api/', include(api_urls, namespace="api")),
