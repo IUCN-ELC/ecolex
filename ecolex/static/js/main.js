@@ -211,7 +211,7 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     CachingAjaxAdapter.prototype.templateSelection = function (data, container) {
         return '' +
             Utils.escapeMarkup(data.text) +
-            '&ensp;' + // non breaking space
+            '&nbsp;' + // non breaking space
             '<span class="select2-selection__choice__count">' +
                 (data.count !== undefined ? data.count : '0') +
             '</span>';
