@@ -1,22 +1,27 @@
-<div class="clearfix filter-header">
-  <h6>{{ title }}</h6>
-</div>
+<div class="filter">
 
-<ul class="filter-treaty">
-{% for f in facet %}
-  {% if show_empty or f.count > 0 %}
-  <li>
-    <label class="facet-checkbox {% if not f.count %}disabled{% endif %}" for="{{ field.name }}_{{ f.id }}">
-      <input type="checkbox"
-             id="{{ field.name }}_{{ f.id }}"
-             name="{{ field.name }}"
-             value="{{ f.text }}"
-             {% if f.text in field.data %}checked{% endif %}
-             {% if not f.count %}disabled{% endif %}>
-      <span class="facet-counter">{{ f.count }}</span>
-      <span class="facet-text">{{ f.text|capfirst }}</span>
-    </label>
-  </li>
-  {% endif %}
-{% endfor %}
-</ul>
+  <div class="filter-header">
+    <strong class="filter-label">{{ title }}</strong>
+  </div>
+  <div class="filter-body">
+    <ul>
+    {% for f in facet %}
+      {% if show_empty or f.count > 0 %}
+      <li>
+        <label class="facet-checkbox {% if not f.count %}disabled{% endif %}" for="{{ field.name }}_{{ f.id }}">
+          <input type="checkbox"
+                 id="{{ field.name }}_{{ f.id }}"
+                 name="{{ field.name }}"
+                 value="{{ f.text }}"
+                 {% if f.text in field.data %}checked{% endif %}
+                 {% if not f.count %}disabled{% endif %}>
+          <span class="facet-text">{{ f.text|capfirst }}</span>
+          &ensp;
+          <span class="facet-count">{{ f.count }}</span>
+        </label>
+      </li>
+      {% endif %}
+    {% endfor %}
+    </ul>
+  </div>
+</div>

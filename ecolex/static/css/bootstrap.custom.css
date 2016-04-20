@@ -2003,8 +2003,7 @@ fieldset[disabled] .checkbox label {
   padding-right: 0;
   padding-left: 0;
 }
-.input-sm,
-.multiselect-wrapper .multiselect-search {
+.input-sm {
   height: 33px;
   padding: 5px 10px;
   font-size: 14px;
@@ -5200,69 +5199,72 @@ button.close {
   background-color: #06c;
   border-color: #06c;
 }
-/**
- * Bootstrap Multiselect v0.9.8 (https://github.com/davidstutz/bootstrap-multiselect)
- *
- * Copyright 2012 - 2014 David Stutz
- *
- * Dual licensed under the BSD-3-Clause and the Apache License, Version 2.0.
- */
-.multiselect-container {
-  position: absolute;
-  padding-left: 0;
-  margin: 0;
-  list-style: none;
+/* avoid flicker before initialiazing */
+select.selection-facet {
+  height: 32px;
+  padding: 0;
+  visibility: hidden;
+  /* pretty random, eh? */
+  border: none;
 }
-.multiselect-container .input-group {
-  margin: 6px 12px;
+.select2-container {
+  display: block;
+  clear: both;
 }
-.multiselect-container > li {
+/* this is a bad fix to https://github.com/select2/select2/issues/1538 */
+.select2-results__option[aria-selected=true] {
+  display: none;
+}
+/* mimic the old look */
+.select2-container .select2-selection {
+  border: none !important;
+}
+.select2-container .select2-selection .select2-selection__rendered {
   padding: 0;
 }
-.multiselect-container > li > a.multiselect-all label {
-  font-weight: bold;
+.select2-selection__choice {
+  clear: left;
 }
-.multiselect-container > li.multiselect-group label {
-  height: 100%;
-  padding: 6px 22px;
+.select2-search--inline {
+  float: none;
+  clear: left;
+}
+.select2-container .select2-dropdown {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+  font-size: 14px;
+  line-height: 1.2;
+  -webkit-background-clip: padding-box;
+          background-clip: padding-box;
+  border: 1px solid #eee !important;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+}
+.select2-container--default .select2-results__option {
+  padding: 6px 10px;
   margin: 0;
-  font-weight: bold;
 }
-.multiselect-container > li.multiselect-group-clickable label {
-  cursor: pointer;
+.select2-container--default .select2-results__option div.pull-right {
+  margin-left: 3px;
 }
-.multiselect-container > li > a {
-  padding: 0;
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  color: #141414;
+  background-color: #f5f5f5;
+  -webkit-box-shadow: inset 2px 0 0 #1c5479;
+          box-shadow: inset 2px 0 0 #1c5479;
 }
-.multiselect-container > li > a > label {
-  height: 100%;
-  padding: 6px 22px;
-  margin: 0;
+/* prevent highlighted matches from dancing around */
+.select2-container .select2-results__option strong {
   font-weight: normal;
-  cursor: pointer;
+  color: #000;
+  /*text-shadow: 1px 0 0 #000;*/
+  /*text-decoration: underline;*/
+  border-bottom: 1px solid #1c5479;
 }
-.multiselect-container > li > a > label.radio,
-.multiselect-container > li > a > label.checkbox {
-  margin: 0;
-}
-.multiselect-container > li > a > label > input[type="checkbox"] {
-  margin-bottom: 5px;
-}
-.btn-group > .btn-group:nth-child(2) > .multiselect.btn {
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-.form-inline .multiselect-container label.checkbox,
-.form-inline .multiselect-container label.radio {
-  padding: 6px 22px;
-}
-.form-inline .multiselect-container li a label.checkbox input[type="checkbox"],
-.form-inline .multiselect-container li a label.radio input[type="radio"] {
-  margin-right: 0;
-  margin-left: -22px;
-}
-.filter-label {
-  cursor: pointer;
+.select2 .selection {
+  display: block;
 }
 .offcanvas {
   display: none;
@@ -6199,9 +6201,6 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-box-shadow: none;
           box-shadow: none;
 }
-.facet-counter {
-  float: right;
-}
 .slider {
   margin: 6px 22px 11px;
 }
@@ -6222,26 +6221,6 @@ fieldset ul {
   margin-top: auto;
   margin-bottom: 6px;
   list-style: none;
-}
-fieldset ul label {
-  padding: 3px 8px;
-  margin: 0 -8px;
-}
-fieldset ul label:after {
-  display: block;
-  clear: both;
-  content: '';
-}
-fieldset ul label input {
-  float: left;
-  width: 22px;
-  text-align: center;
-}
-fieldset ul label .facet-text {
-  margin: 0 22px;
-}
-fieldset ul label .facet-counter {
-  float: right;
 }
 fieldset h5 {
   margin: 0;
@@ -6283,93 +6262,84 @@ fieldset h5[data-toggle="collapse"].collapsed:before {
 fieldset h5[data-toggle="collapse"]:hover {
   cursor: pointer;
 }
-fieldset h6 {
-  margin: 0;
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 22px;
-  color: #212121;
+.filter {
+  margin: 10px 0;
 }
-fieldset .filter-header {
+.filter-header {
   margin-right: 22px;
   margin-bottom: 6px;
   margin-left: 22px;
 }
-.multiselect-wrapper {
-  position: relative;
-  margin-bottom: 6px;
+.filter-header:before,
+.filter-header:after {
+  display: table;
+  content: " ";
 }
-.multiselect-wrapper .button-text-item {
+.filter-header:after {
+  clear: both;
+}
+.filter-header:before,
+.filter-header:after {
+  display: table;
+  content: " ";
+}
+.filter-header:after {
+  clear: both;
+}
+.filter-body {
+  margin: 6px 0 10px;
+}
+.filter-label {
   display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.multiselect-wrapper .multiselect {
-  position: relative;
-  display: block;
-  width: 100%;
-  padding: 0;
-  line-height: inherit;
-  color: inherit;
-  text-align: left;
-  background-color: transparent;
-  border: 0;
-}
-.multiselect-wrapper .multiselect:hover {
+  float: left;
+  font-weight: bold;
   color: #212121;
 }
-.multiselect-wrapper .multiselect:before {
+label[for] {
+  cursor: pointer;
+}
+.filter-label-add::before {
+  position: relative;
+  display: block;
   float: left;
   width: 22px;
-  font-family: "ecolex-icons";
-  font-size: 125%;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 19.6px;
+  margin-left: -22px;
+  color: #ccc;
   text-align: center;
-  content: "\e60a";
-
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  content: '+';
+  -webkit-transition: color .2s;
+       -o-transition: color .2s;
+          transition: color .2s;
 }
-.multiselect-wrapper .multiselect-container {
-  padding-top: 0;
-  font-size: inherit;
-  line-height: inherit;
+.filter-label-add:hover::before,
+.filter-label-add:focus::before {
+  color: #1cb54b;
 }
-@media (min-width: 992px) {
-  .multiselect-wrapper .multiselect-container {
-    top: -16px;
-    right: 100%;
-    left: auto;
-    float: none;
-    max-width: 320px;
-    border: 3px solid #fff;
-    -webkit-box-shadow: 0 0 10px;
-            box-shadow: 0 0 10px;
-  }
-  .multiselect-wrapper .multiselect-container:after {
-    position: absolute;
-    top: 8px;
-    left: 100%;
-    display: block;
-    width: 0;
-    height: 0;
-    margin-top: -5px;
-    content: '';
-    border: 5px solid transparent;
-    border-left-color: #fff;
-  }
+.filter-options {
+  float: right;
 }
-.multiselect-wrapper label {
-  color: inherit;
+.facet-checkbox {
+  padding: 5px 22px;
+  border: 1px solid transparent;
+  border-radius: 3px;
 }
-.multiselect-wrapper .filter {
-  padding: 3px;
+.facet-checkbox:hover,
+.facet-checkbox:focus {
+  border-color: #eee;
 }
-.multiselect-wrapper .multiselect-search {
-  border-radius: 0;
+.facet-checkbox input {
+  float: left;
+  width: 22px;
+  margin-left: -22px;
+  text-align: center;
+}
+.facet-count {
+  display: inline;
+  padding: .2em .4em;
+  font-size: smaller;
+  color: #808080;
+  background-color: #eee;
+  border-radius: 3px;
 }
 .selection-facet {
   width: 100%;
@@ -6385,6 +6355,42 @@ span.select2-selection {
 }
 ul.select2-selection__rendered {
   display: block !important;
+}
+#filters .select2 .select2-selection.select2-selection--multiple {
+  margin: 0;
+}
+#filters .select2 .select2-selection.select2-selection--multiple .select2-selection__rendered {
+  padding: 0;
+}
+#filters .select2 .select2-selection.select2-selection--multiple .select2-selection__choice {
+  float: none;
+  padding: 5px 22px;
+  margin: 0;
+  clear: both;
+  white-space: normal;
+  background: none;
+  border: 1px solid transparent;
+
+  orphans: 2;
+}
+#filters .select2 .select2-selection.select2-selection--multiple .select2-selection__choice:hover {
+  border-color: #eee;
+}
+#filters .select2 .select2-selection.select2-selection--multiple .select2-selection__choice .select2-selection__choice__remove {
+  display: block;
+  float: right;
+  width: 22px;
+  margin-right: -22px;
+  color: #d9534f;
+  text-align: center;
+}
+#filters .select2 .select2-selection.select2-selection--multiple .select2-selection__choice__count {
+  display: inline;
+  padding: .2em .4em;
+  font-size: smaller;
+  color: #808080;
+  background-color: #eee;
+  border-radius: 3px;
 }
 .html-disclaimer {
   padding: 6px 16px;
@@ -7048,4 +7054,16 @@ ul.select2-selection__rendered {
 .homepage-categories a:hover,
 .homepage-categories a:focus {
   color: #0095f3;
+}
+.no-leading {
+  margin-bottom: 0;
+}
+.leading-small {
+  margin-bottom: 11px;
+}
+.leading {
+  margin-bottom: 22px;
+}
+.leading-large {
+  margin-bottom: 44px;
 }

@@ -1,6 +1,8 @@
 {% load tags %}
 
-<input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">
+<div class="leading">
+  <input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">
+</div>
 
 {% comment %}
 <script>
@@ -8,81 +10,6 @@
 var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 </script>
 {% endcomment %}
-
-{# TODO: please move me to my proper place #}
-<style>
-/* avoid flicker before initialiazing */
-select.selection-facet {
-  height: 32px; /* pretty random, eh? */
-  border: none;
-  padding: 0;
-  visibility: hidden;
-}
-
-.select2-container {
-  display: block;
-  clear: both;
-}
-
-/* this is a bad fix to https://github.com/select2/select2/issues/1538 */
-.select2-results__option[aria-selected=true] {
-  display: none;
-}
-
-
-/* mimic the old look */
-.select2-container .select2-selection {
-  border: none !important;
-}
-
-.select2-container .select2-selection .select2-selection__rendered {
-  padding: 0;
-}
-
-.select2-selection__choice {
-  clear: left;
-}
-.select2-search--inline {
-  clear: left;
-  float: none;
-}
-
-.select2-container .select2-dropdown {
-  border: 1px solid #eee !important;
-  border-radius: 3px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  background-clip: padding-box;
-  box-sizing: content-box;
-
-  font-size: 14px;
-  line-height: 1.2;
-}
-
-.select2-container--default .select2-results__option {
-  margin: 0;
-  padding: 6px 10px;
-}
-
-.select2-container--default .select2-results__option div.pull-right {
-  margin-left: 3px;
-}
-
-.select2-container--default .select2-results__option--highlighted[aria-selected] {
-  color: #141414;
-  background-color: #f5f5f5;
-  box-shadow: inset 2px 0 0 #1c5479;
-}
-
-/* prevent highlighted matches from dancing around */
-.select2-container .select2-results__option strong {
-  font-weight: normal;
-  color: #000;
-  /*text-shadow: 1px 0 0 #000;*/
-  /*text-decoration: underline;*/
-  border-bottom: 1px solid #1c5479;
-}
-
-</style>
 
 
 <fieldset class="global-filter">
@@ -101,18 +28,19 @@ select.selection-facet {
 {% include "bits/selection_facet.html" with title="Language" placeholder="Add languages…" viewname="api:xlanguage-list" facet=facets.xlanguage field=form.xlanguage op_field=form.xlanguage_and_ %}
 
 {% with dmin=stats.xdate.min dmax=stats.xdate.max %}
-      <div class="clearfix filter-header">
-        <label class="pull-left filter-label">
-          <h6>Year / Period</h6>
-        </label>
-        {% if form.xdate_min.data or form.xdate_max.data %}
-          <span class="filter-global pull-right">
-            <button class="no-btn small reset-year">
-              Reset
-            </button>
-          </span>
-        {% endif %}
-      </div>
+  
+  <div class="filter">
+    <header class="filter-header">
+      <strong class="filter-label">Year / Period</strong>
+      {% if form.xdate_min.data or form.xdate_max.data %}
+        <span class="filter-options">
+          <button class="no-btn small reset-year">
+            Reset
+          </button>
+        </span>
+      {% endif %}
+    </header>
+    <div class="filter-body">
       <input id="slider-years" type="text"
              data-slider-min="{{ dmin }}"
              data-slider-max="{{ dmax }}"
@@ -140,6 +68,9 @@ select.selection-facet {
                  placeholder="To {{ dmax }}">
         </div>
       </div>
+    </div>
+  </div>
+      
 {% endwith %}
 
   </div>
