@@ -359,13 +359,13 @@ class TreatyImporter(object):
                             value_es = values['es']
                             value_fr = values['fr']
                             if value_es != reg_es:
-                                logger.error('Region name error: %s %s %s' %
+                                logger.debug('Region name different: %s %s %s' %
                                              (data['trElisId'], value_es,
                                               reg_es))
                             new_regions['es'].append(value_es)
 
                             if value_fr != reg_fr:
-                                logger.error('Region name error: %s %s %s' %
+                                logger.debug('Region name different: %s %s %s' %
                                              (data['trElisId'], value_fr,
                                               reg_fr))
                             new_regions['fr'].append(value_fr)
