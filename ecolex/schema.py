@@ -13,8 +13,7 @@ from collections import OrderedDict
 from django.conf import settings
 from marshmallow import post_load, pre_load
 
-from ecolex.lib.utils import OrderedDefaultDict
-from ecolex.lib.schema import Schema, fields
+from ecolex.lib.schema import Schema, fields, get_field_properties
 from ecolex.solr_models_re import (
     CourtDecision, Decision, Legislation, Literature, Treaty, TreatyParty,
 )
@@ -609,87 +608,6 @@ class LegislationSchema(CommonSchema):
     repeals = fields.List(fields.String(), load_from='legRepeals')
 
 
-class __FieldProperties(object):
-    __slots__ = (
-        'type', 'name', 'load_from', 'multilingual', 'multivalue', 'datatype',
-        'solr_filter', 'solr_facet', 'solr_fetch', 'solr_boost',
-        'solr_highlight', 'form_single_choice',
-        '_field',
-    )
-
-    def __init__(self, **kwargs):
-        for k, v in kwargs.items():
-            setattr(self, k, v)
-
-    def get_source_field(self, lang):
-        if not self.multilingual:
-            return self.load_from
-        else:
-            return "%s_%s" % (self.load_from, lang)
-
-    def get_source_fields(self):
-        if not self.multilingual:
-            return [self.load_from]
-        else:
-            return ['{}_{}'.format(self.load_from, lang)
-                    for lang in settings.LANGUAGE_MAP]
-
-    def __repr__(self):
-        props = []
-        for prop in 'multilingual', 'multivalue':
-            if getattr(self, prop):
-                props.append(prop)
-        return "< {}.{} ({}) : {} >".format(
-            self.type, self.name, self.load_from, ', '.join(props))
-
-
-def __get_field_properties(base_schema, schemas):
-    props = OrderedDefaultDict(OrderedDict)
-
-    for schema in (base_schema, ) + schemas:
-        if schema is base_schema:
-            typ = '_'
-        else:
-            typ = schema.opts.type
-
-        for name, field in schema().declared_fields.items():
-            # don't duplicate inherited fields
-            if (schema != base_schema and
-                name in props['_'] and
-                (base_schema._declared_fields.get(name) is
-                 schema._declared_fields.get(name))
-            ):
-                continue
-
-            fp = __FieldProperties()
-            fp._field = field
-            fp.type = typ
-            fp.name = name
-            fp.load_from = field.load_from
-            fp.multilingual = field.multilingual
-            multivalue = isinstance(field, fields.List)
-            fp.multivalue = multivalue
-            if multivalue:
-                inst = field.container
-            else:
-                inst = field
-            fp.datatype = inst.__class__.__name__.lower()
-
-            fp.solr_filter = name in schema.opts.solr_filters
-            fp.solr_facet = name in schema.opts.solr_facets
-            for prop in ('solr_fetch', 'solr_highlight', 'form_single_choice'):
-                setattr(fp, prop,
-                        name in getattr(schema.opts, prop))
-            try:
-                fp.solr_boost = schema.opts.solr_boost[name]
-            except KeyError:
-                fp.solr_boost = None
-
-            props[typ][field.canonical_name] = fp
-
-    return props
-
-
 __OBJECT_SCHEMAS = (
     TreatySchema,
     DecisionSchema,
@@ -703,21 +621,21 @@ SCHEMA_MAP = {
     for schema in __OBJECT_SCHEMAS
 }
 
-__FPROPS = __get_field_properties(
+FIELD_PROPERTIES = get_field_properties(
     BaseSchema, __OBJECT_SCHEMAS
 )
 
 FIELD_MAP = OrderedDict(
-    (k, v.keys()) for k, v in __FPROPS.items()
+    (k, v.keys()) for k, v in FIELD_PROPERTIES.items()
 )
 
 FILTER_FIELDS = OrderedDict(
-    (k, p) for _fps in __FPROPS.values() for k, p in _fps.items()
+    (k, p) for _fps in FIELD_PROPERTIES.values() for k, p in _fps.items()
     if p.solr_filter
 )
 
 FACET_FIELDS = OrderedDict(
-    (k, p) for _fps in __FPROPS.values() for k, p in _fps.items()
+    (k, p) for _fps in FIELD_PROPERTIES.values() for k, p in _fps.items()
     if p.solr_facet
 )
 
@@ -731,22 +649,22 @@ STATS_FIELDS = OrderedDict(
 )
 
 FETCH_FIELDS = OrderedDict(
-    (k, p) for _fps in __FPROPS.values() for k, p in _fps.items()
+    (k, p) for _fps in FIELD_PROPERTIES.values() for k, p in _fps.items()
     if p.solr_fetch
 )
 
 BOOST_FIELDS = OrderedDict(
-    (k, p) for _fps in __FPROPS.values() for k, p in _fps.items()
+    (k, p) for _fps in FIELD_PROPERTIES.values() for k, p in _fps.items()
     if p.solr_boost
 )
 
 HIGHLIGHT_FIELDS = OrderedDict(
-    (k, p) for _fps in __FPROPS.values() for k, p in _fps.items()
+    (k, p) for _fps in FIELD_PROPERTIES.values() for k, p in _fps.items()
     if p.solr_highlight
 )
 
 # hardcode the sort field. 'cause practicality...
-SORT_FIELD = __FPROPS['_']['xdate']
+SORT_FIELD = FIELD_PROPERTIES['_']['xdate']
 
 def extract_translations(data, field_name):
     translations = [{'language': k.split('_')[-1], 'value': v}
