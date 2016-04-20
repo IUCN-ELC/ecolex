@@ -54,8 +54,6 @@ FIELD_MAP = {
     'relatedWebSite': 'legRelatedWebSite',
     'recordLanguage': 'legLanguage_code',
     'documentLanguage_en': 'legLanguage_en',
-    'documentLanguage_fr': 'legLanguage_fr',
-    'documentLanguage_es': 'legLanguage_es',
 
     'textAbstract': 'legAbstract',
     'abstract': 'legAbstract',
@@ -74,10 +72,8 @@ FIELD_MAP = {
 
 }
 
-LANGUAGE_FIELDS = ['legLanguage_en', 'legLanguage_fr', 'legLanguage_es']
-
 MULTIVALUED_FIELDS = [
-    'legLanguage_en', 'legLanguage_fr', 'legLanguage_es',
+    'legLanguage_en',
     'legKeyword_code', 'legKeyword_en', 'legKeyword_fr', 'legKeyword_es',
     'legGeoArea_en', 'legGeoArea_fr', 'legGeoArea_es',
     'legBasin_en', 'legBasin_fr', 'legBasin_es',
