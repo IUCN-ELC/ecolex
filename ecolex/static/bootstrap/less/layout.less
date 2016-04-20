@@ -4,25 +4,6 @@ html {
 body {
   position: relative;
   min-height: 100%;
-  @media (min-width: @screen-sm) {
-    padding-bottom: 129px;
-  }
-}
-
-
-
-
-body {
-  display: table;
-  width: 100%;
-  min-height: 100%;
-  table-layout: auto;
-}
-
-#site-header,
-#site-body,
-#site-footer {
-  display: table-row;
 }
 
 #site-body {
@@ -31,13 +12,29 @@ body {
   }
 }
 
-
-
-
 .body-colored {
   background-color: @jumbotron-bg;
   .jumbotron-brand {
     text-align: center;
+  }
+  #search-form {
+    display: table;
+    width: 100%;
+  }
+  #search-form,
+  main {
+    min-height: inherit;
+  }
+  main {
+    display: table-cell;
+    vertical-align: middle;
+    min-height: inherit;
+    /*position: absolute;
+    top: 50%;
+    transform: translateY(-50%);*/
+  }
+  .jumbotron {
+    padding: 0;
   }
 }
 
@@ -45,41 +42,12 @@ body {
   // header logo
 }
 
-.logo-credits {
-    img {
-      height: 4em;
-      width: auto;
-      margin: -1em;
-    }
-  }
-
 #site-footer {
-  @media (min-width: @screen-sm) {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  padding: @jumbotron-padding 0;
-  //border-top: 1px solid @hr-border;
+  padding: 1em 0;
+  border-top: 1px solid @hr-border;
   background-color: #fff;
-
   font-size: @font-size-small;
   color: @text-muted;
-
-  .img {
-    height: 3em;
-    margin: -.8em 0;
-    img {
-      height: 100%;
-      width: auto;
-    }
-    @media (max-width: @screen-xs-max) {
-      margin-bottom: @line-height-computed;
-    }
-  }
-
-  .list-inline { margin-bottom: auto; }
 
   a {
     color: inherit;
@@ -89,36 +57,35 @@ body {
     }
   }
 
-  @media (max-width: @screen-sm-max) {
-    .list-inline {
-      > li {
-        display: block;
-        margin-bottom: .5em;
-      }
+  .footer-inner {
+    text-align: justify;
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 100%;
+      height: 0;
     }
   }
 
-  @media (min-width: @screen-sm-min) {
-    .footer-inner {
-      display: table;
-      width: 100%;
-    }
-    .footer-nav,
-    .footer-credits {
-      display: table-cell;
+  .footer-nav,
+  .footer-credits {
+    display: inline-block;
+  }
+  .footer-credits {
+    > span {
+      display: inline-block;
       vertical-align: middle;
     }
-    .footer-credits {
-      width: 1%;
-      white-space: nowrap;
-    }
   }
-}
 
-.footer-credits {
-  .list-inline {
-    display: inline-block;
-    vertical-align: middle;
+  @media (max-width: @screen-xs-max) {
+    &,
+    .footer-inner {
+      text-align: center;
+    }
+    .footer-nav {
+      margin-bottom: 1em;
+    }
   }
 }
 

@@ -117,7 +117,9 @@ module.exports = function (grunt) {
           'js/offcanvas.js',
           'js/typeahead.js',
           'js/tagmanager.js',
-          'node_modules/slick-carousel/slick/slick.js'
+          'node_modules/slick-carousel/slick/slick.js',
+          // Custom components
+          'js/layout.js'
           // 'js/tokenfield.js'
         ],
         dest: '../js/<%= pkg.name %>.js'

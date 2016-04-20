@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load tags %}
 
-<!doctype html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="{{ LANGUAGE_CODE }}">
 
 <head>
@@ -77,7 +77,6 @@
 
     {% if page_type == "homepage" %}
     <!-- #TODO: Clean better -->
-
     <main>
         <div id="masthead" class="jumbotron text-center">
             <div class="container">
@@ -186,28 +185,25 @@
     <div class="container">
       <div class="footer-inner">
         <nav class="footer-nav">
-          <ul class="list-inline" style="margin-bottom: 0;">
-              <li><a href="{% url 'page' slug='agreement' %}">User Agreement</a></li>
-              <li><a href="{% url 'page' slug='privacy' %}">Privacy</a></li>
-              <li><a href="{% url 'page' slug='acknowledgements' %}">Acknowledgments</a></li>
-          </ul>
+          <a href="{% url 'page' slug='agreement' %}">User Agreement</a>
+          &ensp; | &ensp;
+          <a href="{% url 'page' slug='privacy' %}">Privacy</a>
+          &ensp; | &ensp;
+          <a href="{% url 'page' slug='acknowledgements' %}">Acknowledgments</a>
         </nav>
 
-        <div class="footer-credits">
-          <span style="display: inline-block; vertical-align: middle;">Joint initiative of
-                    <br><a href="http://www.iucn.org/">IUCN</a>, <a href="http://www.unep.org/">UNEP</a>, <a href="http://www.fao.org/">FAO</a></span>
-          <ul class="list-inline">
-              <li>
-                <div class="sprite-credits sprite-iucn"></div>
-              </li>
-              <li>
-                <div class="sprite-credits sprite-unep"></div>
-              </li>
-              <li>
-                <div class="sprite-credits sprite-fao"></div>
-              </li>
-          </ul>
-        </div>
+        <span class="footer-credits">
+          <span>
+            Joint initiative of <br>
+            <a href="http://www.iucn.org/">IUCN</a>,
+            <a href="http://www.unep.org/">UNEP</a>, 
+            <a href="http://www.fao.org/">FAO</a>
+          </span>
+          &ensp;
+          <span class="sprite-credits sprite-iucn"></span>
+          <span class="sprite-credits sprite-unep"></span>
+          <span class="sprite-credits sprite-fao"></span>
+        </span>
       </div>
     </div>
   </footer>
