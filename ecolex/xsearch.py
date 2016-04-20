@@ -45,7 +45,6 @@ class Queryer(object):
         self.language = language
         self.interface = interface
         self.qargs = []
-        self.qkwargs = {}
 
         try:
             q = data.pop('q')
@@ -130,7 +129,7 @@ class Queryer(object):
 
     def get(self, **kwargs):
         search = (
-            self.interface.query(*self.qargs, **self.qkwargs)
+            self.interface.query(*self.qargs)
             .filter(**{
                 k: self.to_query(v)
                 for k, v in kwargs.items()
@@ -210,9 +209,6 @@ class Searcher(Queryer):
         self._used_fields = reduce(or_,
                                    (set(FIELD_MAP[t]) for t in types),
                                    set(FIELD_MAP['_']))
-
-        # we'll filter on types instead, so we can get facet counts
-        #self.qkwargs['type'] = self.to_query(list(types))
 
     def is_used_field(self, field):
         return field in self._used_fields
@@ -408,7 +404,7 @@ class Searcher(Queryer):
 
     def _search(self):
         search = (
-            self.interface.query(*self.qargs, **self.qkwargs)
+            self.interface.query(*self.qargs)
             .filter(**self.get_filters())
             .filter(**self.get_range_filters())
             # Boosting is done by solrconfig.xml as of now. Leaving this line
