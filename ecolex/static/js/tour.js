@@ -148,6 +148,7 @@ var tour = new Tour({
   name: "tour",
   animation: true,
   keyboard: false,
+  storage: false,
   template: templateDefault,
   onShown: function(tour) {
     $('.popover-help [data-role="current"]').text(tour.getCurrentStep() + 1);
