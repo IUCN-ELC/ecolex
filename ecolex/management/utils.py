@@ -13,6 +13,8 @@ from ecolex.management.commands.logging import LOG_DICT
 from django.conf import settings
 
 
+UNLIMITED_ROWS_COUNT = 999999
+
 TREATY = 'treaty'
 COP_DECISION = 'decision'
 LEGISLATION = 'legislation'

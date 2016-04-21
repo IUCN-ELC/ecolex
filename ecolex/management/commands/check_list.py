@@ -1,9 +1,7 @@
 from django.core.management.base import BaseCommand
 from optparse import make_option
 
-from ecolex.management.utils import EcolexSolr
-
-UNLIMITED_ROWS_COUNT = 999999
+from ecolex.management.utils import EcolexSolr, UNLIMITED_ROWS_COUNT
 
 
 class Command(BaseCommand):
