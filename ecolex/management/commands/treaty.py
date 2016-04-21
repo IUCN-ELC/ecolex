@@ -12,7 +12,7 @@ from pysolr import SolrError
 
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.definitions import TREATY
-from ecolex.management.utils import EcolexSolr, format_date
+from ecolex.management.utils import EcolexSolr, format_date, clenup_copyfields
 from ecolex.management.utils import get_content_from_url, get_file_from_url
 from ecolex.models import DocumentText
 from ecolex.search import get_documents_by_field
@@ -575,6 +575,7 @@ class TreatyImporter(object):
             print(index)
             docs = self.solr.solr.search('type:treaty', rows=rows, start=index)
             for treaty in docs:
+                treaty = clenup_copyfields(treaty)
                 if treaty.get('trTypeOfText_en', '') == 'Bilateral':
                     treaty['trStatus'] = 'In force'
                 else:
