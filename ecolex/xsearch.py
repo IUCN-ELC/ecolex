@@ -1,6 +1,7 @@
 import logging
 import datetime
-from collections import Iterable, defaultdict
+from collections import defaultdict
+from ecolex.lib.utils import is_iterable
 from functools import partial, reduce
 from operator import and_, or_, itemgetter
 from marshmallow.exceptions import ValidationError
@@ -14,10 +15,11 @@ from django.utils.functional import LazyObject
 from django.utils.html import strip_tags
 
 from .schema import (
-    SCHEMA_MAP, FIELD_MAP,
+    SCHEMA_MAP, FIELD_PROPERTIES, FIELD_MAP,
     FILTER_FIELDS, FACET_FIELDS, STATS_FIELDS,
     FETCH_FIELDS, BOOST_FIELDS, HIGHLIGHT_FIELDS,
     SORT_FIELD,
+    to_object,
 )
 
 
@@ -74,15 +76,6 @@ class Queryer(object):
 
         search.options = type(search.options)(wrapped_options, search)
 
-    @staticmethod
-    def to_object(language, **data):
-        typ = data['type']
-        schema = SCHEMA_MAP[typ]
-        result, errors = schema.load(data, language=language)
-        if errors:
-            logger.error("Parse error: %s", errors)
-        return result
-
     def get_highlight_fields(self):
         return tuple(
             field
@@ -115,7 +108,7 @@ class Queryer(object):
                         original[idx] = highlighted
 
     def to_query(self, data, op=or_):
-        if isinstance(data, str) or not isinstance(data, Iterable) or not data:
+        if not is_iterable(data) or not data:
             return data
 
         if len(data) == 1:
@@ -148,7 +141,53 @@ class Queryer(object):
             raise ObjectDoesNotExist()
 
         self._handle_highlight(response)
-        return self.to_object(self.language, **result)
+        return to_object(result, self.language)
+
+    def _paginate(self, search, page=1, page_size=None):
+        if page_size is None:
+            page_size = settings.SEARCH_PAGE_SIZE
+        start = (page - 1) * page_size
+        return search.paginate(start=start, rows=page_size)
+
+    def _sort(self, search, date_sort=None):
+        if date_sort is None:
+            return search
+
+        sort_dir = "" if date_sort else "-"
+        sort_field = SORT_FIELD.get_source_field(self.language)
+        return search.sort_by("%s%s" % (sort_dir, sort_field))
+
+    def get_fetch_fields(self, extra_fields=None):
+        # TODO: this is used only in contexts where a single type of document
+        # is retrieved. make it aware of the type / unify with below.
+        ffs = set(FETCH_FIELDS.values())
+        if extra_fields:
+            ffs.update(extra_fields)
+
+        return tuple(
+            field
+            for f in ffs
+            for field in f.get_source_fields()
+        )
+
+    def findany(self, page=1, page_size=None, date_sort=None,
+                fetch_fields=None, **kwargs):
+        Q = self.interface.Q
+        _f = reduce(or_,(Q(**{k: self.to_query(v)})
+                         for k, v in kwargs.items()))
+
+        search = (
+            self.interface.query()
+            .filter(_f)
+            .field_limit(self.get_fetch_fields(fetch_fields))
+        )
+
+        search = self._paginate(search, page=page, page_size=page_size)
+        search = self._sort(search, date_sort=date_sort)
+
+        response = self._execute(search)
+
+        return QueryResponse(response, language=self.language)
 
 
 class Searcher(Queryer):
@@ -477,33 +516,23 @@ class Searcher(Queryer):
         if not self.valid:
             return SearchResponse()
 
-        if page_size is None:
-            page_size = settings.SEARCH_PAGE_SIZE
-        start = (page - 1) * page_size
-
         search = (
             self._search()
             .stats_on(self.get_stats_fields())
             .field_limit(self.get_fetch_fields())
             .highlight(self.get_highlight_fields())
             .spellcheck()
-            .paginate(start=start, rows=page_size)
         )
 
-        if date_sort is not None:
-            sort_dir = "" if date_sort else "-"
-            sort_field = SORT_FIELD.get_source_field(self.language)
-            search = search.sort_by("%s%s" % (sort_dir, sort_field))
+        search = self._paginate(search, page=page, page_size=page_size)
+        search = self._sort(search, date_sort=date_sort)
 
         response = self._execute(search)
         self._handle_stats(response)
         self._handle_highlight(response)
         self._handle_suggestions(response)
 
-        response = search.constructor(
-            response, partial(self.to_object, language=self.language))
-
-        return SearchResponse(response)
+        return SearchResponse(response, language=self.language)
 
     def get_facets(self, facets):
         if facets:
@@ -522,7 +551,7 @@ class Searcher(Queryer):
         )
 
         response = self._execute(search)
-        return SearchResponse(response).facets
+        return SearchResponse(response, language=self.language).facets
 
 
 _empty_response = SolrResponse.from_json(repr({
@@ -533,17 +562,43 @@ _empty_response = SolrResponse.from_json(repr({
 }).replace("'", '"'))
 
 
-class SearchResponse(object):
-    def __init__(self, response=None):
+class QueryResponse(object):
+    def __init__(self, response=None, language=None):
         if response is None:
             response = _empty_response
+        else:
+            assert language is not None
 
         self.count = response.result.numFound
         self.start = response.result.start
+        self.results = [
+            to_object(item, language)
+            for item in response.result.docs
+        ]
+
+    @staticmethod
+    def to_object(data, language):
+        typ = data['type']
+        schema = SCHEMA_MAP[typ]
+        result, errors = schema.load(data, language=language)
+        if errors:
+            logger.error("Parse error: %s", errors)
+        return result
+
+    def __len__(self):
+        return self.count
+
+    def __iter__(self):
+        return iter(self.results)
+
+
+class SearchResponse(QueryResponse):
+    def __init__(self, response=None, language=None):
+        super().__init__(response=response, language=language)
+
         self.facets = response.facet_counts.facet_fields
         self.stats = response.stats.stats_fields
         self.suggestions = response.spellcheck.get('collations')
-        self.results = response.result.docs
 
     def __len__(self):
         return self.count

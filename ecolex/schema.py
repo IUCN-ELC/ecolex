@@ -9,6 +9,8 @@ Usage:
 
 """
 
+import logging
+
 from collections import OrderedDict
 from django.conf import settings
 from marshmallow import post_load, pre_load
@@ -17,6 +19,9 @@ from ecolex.lib.schema import Schema, fields, get_field_properties
 from ecolex.solr_models_re import (
     CourtDecision, Decision, Legislation, Literature, Treaty, TreatyParty,
 )
+
+
+logger = logging.getLogger(__name__)
 
 
 class BaseSchema(Schema):
@@ -620,6 +625,16 @@ SCHEMA_MAP = {
     schema.opts.type: schema()
     for schema in __OBJECT_SCHEMAS
 }
+
+
+def to_object(data, language):
+    typ = data['type']
+    schema = SCHEMA_MAP[typ]
+    result, errors = schema.load(data, language=language)
+    if errors:
+        logger.error("Parse error: %s", errors)
+    return result
+
 
 FIELD_PROPERTIES = get_field_properties(
     BaseSchema, __OBJECT_SCHEMAS

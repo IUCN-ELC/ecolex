@@ -1,6 +1,6 @@
 import re
 import unicodedata
-from collections import OrderedDict, defaultdict
+from collections import Iterable, OrderedDict, defaultdict
 
 
 def unaccent(txt):
@@ -25,6 +25,10 @@ def camel_case_to__(txt):
             '((?<=.)[A-Z](?=[a-z0-9])|(?<=[a-z0-9])[A-Z])')
 
     return re.sub(cc_re, r'_\1', txt).lower()
+
+
+def is_iterable(v):
+    return not isinstance(v, str) and isinstance(v, Iterable)
 
 
 class MutableLookupDict(dict):

@@ -7,6 +7,8 @@ from datetime import date
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.functional import cached_property
+from django.utils.translation import get_language
+from ecolex.lib.utils import OrderedDefaultDict, is_iterable, camel_case_to__
 
 
 DEFAULT_TITLE = 'Unknown Document'
@@ -24,38 +26,108 @@ def join_available_values(separator, *values):
 
 
 class BaseModel(object):
+    @property
+    def type(self):
+        return camel_case_to__(self.__class__.__name__)
+
     def __init__(self, **kwargs):
+        # set everything as attrs
         for k, v in kwargs.items():
+            # (except for type)
+            if k == 'type':
+                if v != self.type:
+                    raise ValueError("Object is of type '%s' but received "
+                                     "type '%s'." % (self.type, v))
+                continue
+
             setattr(self, k, v)
 
 
 class DocumentModel(BaseModel):
     REFERENCES = []
+    BACKREFERENCES = {}
+
+    @cached_property
+    def schema(self):
+        from .schema import SCHEMA_MAP
+        return SCHEMA_MAP[self.type]
 
     @property
     def details_url(self):
         return reverse(self.URL_NAME, kwargs={'slug': self.slug})
 
+    def _resolve_field(self, field):
+        # TODO: this is ugly. schema map should be.. better...
+        field = "%s_%s" % (self.schema.opts.abbr, field)
+        from .schema import FIELD_PROPERTIES
+        return FIELD_PROPERTIES[self.type][field].get_source_field()
+
+    @property
+    def abbr(self):
+        return self.schema.opts.abbr
+
     @cached_property
     def references(self):
-        from ecolex.search import get_documents_by_field
-        refs = OrderedDict()
-        for field in self.REFERENCES:
-            backref_field = self.BACKREF_FIELDS.get(field)
-            if not backref_field:
-                value = getattr(self, field, [])
-                if not value:
-                    continue
-                solr_field = self.ID_FIELD
-            else:
-                value = [self.document_id]
-                solr_field = self.BACKREF_FIELDS[field]
+        lookups = {}
+        groupers = OrderedDict()
+        fields = set()
 
-            new_value = get_documents_by_field(solr_field, value, rows=MAX_ROWS,
-                                               sortby='last')
-            if new_value:
-                refs[field] = new_value
-        return refs
+        from .xsearch import Queryer
+        queryer = Queryer({}, language=get_language())
+
+        # TODO: field resolving logic should live in search,
+        # the models shouldn't be aware of the underlying data structure.
+        for ref in self.REFERENCES:
+            try:
+                backref = self.BACKREFERENCES[ref]
+            except KeyError:
+                try:
+                    lookup = getattr(self, ref)
+                except AttributeError:
+                    continue
+                field = ref
+            else:
+                lookup = self.document_id
+                field = backref
+
+            fields.add(field)
+            groupers[ref] = (field, lookup)
+            lookups[self._resolve_field(field)] = lookup
+
+        if not lookups:
+            return []
+
+        # (this is getting really, really silly)
+        from .schema import FIELD_PROPERTIES
+        fields = [f for f in FIELD_PROPERTIES[self.type].values()
+                  if f.name in fields]
+
+        # set a ridiculously high page size to be certain we fetch all results
+        # TODO: may be a bad™ idea
+        response = queryer.findany(page_size=1000, fetch_fields=fields,
+                                   **lookups)
+
+        # we need to re-group according to the lookups
+        out = OrderedDefaultDict(list)
+        for item in response.results:
+            for k, v in groupers.items():
+                field, lookup = v
+                try:
+                    val = getattr(item, field)
+                except AttributeError:
+                    continue
+                if ((is_iterable(val)
+                     and (is_iterable(lookup) and set(lookup).intersection(val)
+                          or lookup in val)
+                     ) or
+                    (is_iterable(lookup) and val in lookup
+                     or lookup == val)
+                ):
+                    out[k].append(item)
+                    break
+        # because things get really silly when django template meets this
+        out.default_factory = None
+        return out
 
 
 class Treaty(DocumentModel):
@@ -89,11 +161,11 @@ class Treaty(DocumentModel):
         'enables', 'supersedes', 'cites', 'amends',
         'enabled_by', 'superseded_by', 'cited_by', 'amended_by',
     ]
-    BACKREF_FIELDS = {
-        'amended_by': 'trAmendsTreaty',
-        'cited_by': 'trCitesTreaty',
-        'enables': 'trEnabledByTreaty',
-        'superseded_by': 'trSupersedesTreaty',
+    BACKREFERENCES = {
+        'amended_by': 'amends',
+        'cited_by': 'cites',
+        'enables': 'enabled_by',
+        'superseded_by': 'supersedes',
     }
 
     @property
@@ -198,10 +270,10 @@ class Legislation(DocumentModel):
         'implements', 'amends', 'repeals',
         'implemented_by', 'amended_by', 'repealed_by',
     ]
-    BACKREF_FIELDS = {
-        'amended_by': 'legAmends',
-        'implemented_by': 'legImplement',
-        'repealed_by': 'legRepeals',
+    BACKREFERENCES = {
+        'amended_by': 'amends',
+        'implemented_by': 'implements',
+        'repealed_by': 'repeals',
     }
 
     @property
@@ -319,6 +391,7 @@ class Literature(DocumentModel):
 
     @cached_property
     def references(self):
+        # TODO. why the special case?
         from ecolex.search import get_documents_by_field
         return get_documents_by_field('litLiteratureReference',
                                       [self.document_id], rows=MAX_ROWS)
