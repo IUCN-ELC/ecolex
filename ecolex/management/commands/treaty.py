@@ -11,9 +11,9 @@ from django.template.defaultfilters import slugify
 from pysolr import SolrError
 
 from ecolex.management.commands.logging import LOG_DICT
-from ecolex.management.utils import EcolexSolr, TREATY, get_content_from_url
-from ecolex.management.utils import get_file_from_url
-from ecolex.management.utils import format_date
+from ecolex.management.definitions import TREATY
+from ecolex.management.utils import EcolexSolr, format_date
+from ecolex.management.utils import get_content_from_url, get_file_from_url
 from ecolex.models import DocumentText
 from ecolex.search import get_documents_by_field
 
@@ -279,7 +279,7 @@ class TreatyImporter(object):
                         skip += found_docs
                         url = self._create_url(year, month, skip)
                         logger.debug('Getting next page (%s/%s)' %
-                            (skip, total_docs,))
+                                     (skip, total_docs,))
                         content = get_content_from_url(url)
                         bs = BeautifulSoup(content)
                         if bs.find('error'):

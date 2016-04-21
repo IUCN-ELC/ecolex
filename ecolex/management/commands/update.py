@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from ecolex.management.utils import EcolexSolr, UNLIMITED_ROWS_COUNT
+from ecolex.management.definitions import UNLIMITED_ROWS_COUNT
+from ecolex.management.utils import EcolexSolr
 
 
 class Command(BaseCommand):

@@ -7,8 +7,8 @@ import logging
 
 from django.core.management.base import BaseCommand
 
-from ecolex.management.utils import OBJ_TYPES, COURT_DECISION, TREATY
-from ecolex.management.utils import LITERATURE, COP_DECISION, LEGISLATION
+from ecolex.management.definitions import OBJ_TYPES, COURT_DECISION, TREATY
+from ecolex.management.definitions import LITERATURE, COP_DECISION, LEGISLATION
 from ecolex.management.commands.court_decision import CourtDecisionImporter
 from ecolex.management.commands.treaty import TreatyImporter
 from ecolex.management.commands.legislation import LegislationImporter

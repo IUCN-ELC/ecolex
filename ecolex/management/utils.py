@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.conf import settings
 from io import BytesIO
 import json
 import logging
@@ -10,22 +11,10 @@ import hashlib
 import random
 
 from ecolex.management.commands.logging import LOG_DICT
-from django.conf import settings
+from ecolex.management.definitions import (
+    COP_DECISION, COURT_DECISION, LEGISLATION, LITERATURE, TREATY,
+)
 
-
-UNLIMITED_ROWS_COUNT = 999999
-
-TREATY = 'treaty'
-COP_DECISION = 'decision'
-LEGISLATION = 'legislation'
-COURT_DECISION = 'court_decision'
-LITERATURE = 'literature'
-LEGISLATION = 'legislation'
-
-
-OBJ_TYPES = [TREATY, COP_DECISION, LEGISLATION, COURT_DECISION, LITERATURE]
-
-DEC_TREATY_FIELDS = ['partyCountry_en', 'trSubject_en']
 
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('import')

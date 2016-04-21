@@ -11,9 +11,9 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 
 from ecolex.management.commands.logging import LOG_DICT
-from ecolex.management.utils import EcolexSolr, LITERATURE
-from ecolex.management.utils import get_content_from_url, valid_date
-from ecolex.management.utils import format_date, get_file_from_url
+from ecolex.management.definitions import LITERATURE
+from ecolex.management.utils import EcolexSolr, format_date, valid_date
+from ecolex.management.utils import get_content_from_url, get_file_from_url
 from ecolex.models import DocumentText
 
 logging.config.dictConfig(LOG_DICT)
@@ -284,7 +284,7 @@ class LiteratureImporter(object):
                         skip += found_docs
                         url = self._create_url(year, month, skip)
                         logger.debug('Getting next page (%s/%s)' %
-                            (skip, total_docs,))
+                                     (skip, total_docs,))
                         content = get_content_from_url(url)
                         bs = BeautifulSoup(content)
                         if bs.find('error'):
@@ -309,9 +309,10 @@ class LiteratureImporter(object):
         for raw_lit in raw_literatures:
             bs = BeautifulSoup(raw_lit)
             for doc in bs.findAll(DOCUMENT):
-                data = {'type': LITERATURE,
-                        'litLanguageOfDocument_es': [],
-                        'litLanguageOfDocument_fr': [],
+                data = {
+                    'type': LITERATURE,
+                    'litLanguageOfDocument_es': [],
+                    'litLanguageOfDocument_fr': [],
                 }
 
                 for k, v in FIELD_MAP.items():
@@ -328,7 +329,6 @@ class LiteratureImporter(object):
                             data[v] = clean_values
                         if v in data and v not in MULTIVALUED_FIELDS:
                             data[v] = data[v][0]
-
 
                 if LANGUAGE_FIELD in data:
                     langs = data[LANGUAGE_FIELD]

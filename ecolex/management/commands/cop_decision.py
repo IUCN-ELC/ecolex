@@ -9,8 +9,8 @@ import requests
 
 from django.template.defaultfilters import slugify
 
+from ecolex.management.definitions import COP_DECISION, DEC_TREATY_FIELDS
 from ecolex.management.utils import EcolexSolr, get_date, get_file_from_url
-from ecolex.management.utils import COP_DECISION, DEC_TREATY_FIELDS
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.models import DocumentText
 

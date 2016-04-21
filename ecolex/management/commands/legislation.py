@@ -3,12 +3,12 @@ import logging
 import logging.config
 
 from django.conf import settings
-from django.db import transaction
 from pysolr import SolrError
 
 from ecolex.management.commands.logging import LOG_DICT
-from ecolex.management.utils import EcolexSolr, get_file_from_url, get_content_length_from_url
-from ecolex.management.utils import LEGISLATION
+from ecolex.management.definitions import LEGISLATION
+from ecolex.management.utils import EcolexSolr, get_file_from_url
+from ecolex.management.utils import get_content_length_from_url
 from ecolex.models import DocumentText
 
 
@@ -21,9 +21,7 @@ class LegislationImporter(object):
     def __init__(self, config):
         self.solr_timeout = config.getint('solr_timeout')
         self.solr = EcolexSolr(self.solr_timeout)
-
         logger.info('Started legislation manager')
-
 
     def update_full_text(self):
         objs = (DocumentText.objects.filter(
@@ -33,7 +31,8 @@ class LegislationImporter(object):
             # Check if already parsed
             text = None
             if obj.doc_size and obj.text:
-                logger.info('Checking content length of %s (%s)' % (obj.doc_id, obj.url,))
+                logger.info('Checking content length of %s (%s)' %
+                            (obj.doc_id, obj.url,))
                 doc_size = get_content_length_from_url(obj.url)
                 if doc_size == obj.doc_size:
                     # File not changed, reuse obj.text
@@ -78,21 +77,21 @@ class LegislationImporter(object):
                 obj.save()
             else:
                 logger.error('Failed doc extract %s %s' % (obj.url,
-                                                          legislation['id']))
+                                                           legislation['id']))
 
     def reindex_failed(self):
         objs = DocumentText.objects.filter(
-               status=DocumentText.INDEX_FAIL, doc_type=LEGISLATION)
+            status=DocumentText.INDEX_FAIL, doc_type=LEGISLATION)
         if objs.count() > 0:
             for obj in objs:
                 legislation = json.loads(obj.parsed_data)
                 # Check if already present in Solr
-                if not 'id' in legislation:
+                if 'id' not in legislation:
                     try:
                         old_legislation = self.solr.search(LEGISLATION, obj.doc_id)
                         legislation['id'] = old_legislation['id']
                     except SolrError as e:
-                        logger.error('Error reading legislation %s' % (obj.doc_id,) )
+                        logger.error('Error reading legislation %s' % (obj.doc_id,))
                         if settings.DEBUG:
                             logging.getLogger('solr').exception(e)
                         continue

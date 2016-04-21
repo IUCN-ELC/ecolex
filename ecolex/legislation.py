@@ -11,7 +11,8 @@ from django.conf import settings
 from django.template.defaultfilters import slugify
 
 from ecolex.management.commands.logging import LOG_DICT
-from ecolex.management.utils import EcolexSolr, LEGISLATION
+from ecolex.management.definitions import LEGISLATION
+from ecolex.management.utils import EcolexSolr
 from ecolex.models import DocumentText
 
 logging.config.dictConfig(LOG_DICT)
@@ -85,6 +86,7 @@ MULTIVALUED_FIELDS = [
 def get_content(values):
     values = [v.get(CONTENT, None) for v in values]
     return values
+
 
 def harvest_file(upfile):
     if settings.DEBUG:
@@ -185,8 +187,8 @@ def harvest_file(upfile):
                                       reg_fr))
                 else:
                     logger.warn('New region name: %s %s %s %s' %
-                                 (legislation['legId'], reg_en, reg_es,
-                                  reg_fr))
+                                (legislation['legId'], reg_en, reg_es,
+                                 reg_fr))
                     new_regions['en'].append(reg_en.capitalize())
                     new_regions['es'].append(reg_es.capitalize())
                     new_regions['fr'].append(reg_fr.capitalize())

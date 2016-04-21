@@ -7,9 +7,9 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 
 from ecolex.management.commands.logging import LOG_DICT
+from ecolex.management.definitions import COURT_DECISION
 from ecolex.management.utils import EcolexSolr, get_json_from_url
 from ecolex.management.utils import get_file_from_url
-from ecolex.management.utils import COURT_DECISION
 
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('import')
