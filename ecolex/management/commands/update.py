@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from ecolex.management.definitions import UNLIMITED_ROWS_COUNT
-from ecolex.management.utils import EcolexSolr
+from ecolex.management.utils import EcolexSolr, cleanup_copyfields
 
 
 class Command(BaseCommand):
@@ -30,6 +30,7 @@ class Command(BaseCommand):
 
         count = 0
         for doc in docs:
+            doc = cleanup_copyfields(doc)
             if isinstance(doc[replace_field], list):
                 if replace_from not in doc[replace_field]:
                     continue

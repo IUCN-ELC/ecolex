@@ -12,7 +12,7 @@ import random
 
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.definitions import (
-    COP_DECISION, COURT_DECISION, LEGISLATION, LITERATURE, TREATY,
+    COP_DECISION, COURT_DECISION, LEGISLATION, LITERATURE, TREATY, COPY_FIELDS,
 )
 
 
@@ -100,6 +100,12 @@ def get_content_from_url(url):
     if not resp.status_code == 200:
         raise RuntimeError('Unexpected request status code')
     return resp.content
+
+
+def cleanup_copyfields(doc):
+    for field in COPY_FIELDS:
+        doc[field] = None
+    return doc
 
 
 class EcolexSolr(object):
