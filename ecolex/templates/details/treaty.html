@@ -138,7 +138,8 @@
 
       <dt>Source</dt>
       <dd>
-        {% if document.type_of_document == 'Bilateral' %}
+        {# Ugly #}
+        {% if document.type_of_document|slice:":2" == 'Bi' %}
           <a target="_blank" href="http://faolex.fao.org/">FAO, FAOLEX;</a>&nbsp;
         {% endif %}
         <a target="_blank" href="http://iucn.org">IUCN</a> (ID: {{ document.document_id }})
