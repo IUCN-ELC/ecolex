@@ -1,6 +1,6 @@
 // Bootstrap tour
 var _templateHelp = "<div class='popover-help'><button class='no-btn pull-right' data-role='end'>End tour</button><strong><span data-role='current'></span>/<span data-role='steps'></span></strong></div>",
-    _templateNav = "<div class='popover-navigation'><button class='btn btn-sm btn-default' data-role='next'>Continue</button></div>",
+    _templateNav = "<div class='popover-navigation'><button class='btn btn-sm btn-default' data-role='next'>Next</button></div>",
     _templateStart = "<div class='popover-navigation clearfix'><button class='btn btn-success btn-sm col-xs-6' data-role='next'>Start tour</button><button class='btn btn-sm btn-link col-xs-6' style='color: #aaa' data-role='end'>No, thanks!</button></div>",
     _templateEnd = "<div class='popover-navigation text-center'><button class='btn btn-success' data-role='end'>End tour</button></div>";
 var templateNoNav = "<div class='popover tour'><div class='arrow'></div>" + _templateHelp + "<h3 class='popover-title'></h3><div class='popover-content'></div></div>",
@@ -9,138 +9,138 @@ var templateNoNav = "<div class='popover tour'><div class='arrow'></div>" + _tem
     templateDefault = "<div class='popover tour'><div class='arrow'></div>" + _templateHelp + "<h3 class='popover-title'></h3><div class='popover-content'></div>" + _templateNav + "</div>";
 
 var tourSteps = [
+  // Step 1: Welcome
   {
     orphan: true,
-    title: "Welcome to the tour",
+    title: "Welcome to ECOLEX",
     content: "<p>Please follow the tour to the end. It only takes 5 minutes.</p>"
   },
-  // The search bar
+  // Step 2: The search bar
   {
+    path: "/",
     element: "#search",
     placement: "bottom",
     title: "Permanent search bar",
-    content: "<p>Always visible from any page. Provides <strong>quick access</strong> to the website's main function.</p><p>We'll start by searching for <em>Access to Genetic Resourses</em>.</p>",
+    content: "<p>Always visible from any page. Provides <strong>quick access</strong> to the website's main function.</p><p>We'll start by searching for <em>Fishery conservation</em>.</p>",
     onShow: function() {
-      str = "Access to Genetic Resourses";
-      $("#search").val(str);
+      $("#search").val("Fishery consrvation");
     }
   },
-  // Speed
-  // {
-  //   element: "#number-of-results",
-  //   placement: "bottom",
-  //   title: "Search results",
-  //   content: "We just found 7594 results for 'Access to Genetic Resourses' in less than 1 second. "
-  // }
-
-  // Interactive categories
+  // Step 3: Search suggestions
   {
-    path: "/en/result/?q=Access+to+Genetic+Resourses&yearmin=&yearmax=&sortby=",
-    element: ".btn-group.filter-type",
-    placement: "right",
-    title: "Interactive categories",
-    content: "<p>This approach allows you to filter results from more than category, meaning you can search for Treaties and COP Decisions simultaneously.</p>"
-  },
-  // Highlighted results
-  {
-    element: ".search-result:first-child .search-result-title a",
-    placement: "right",
-    title: "Highlighted results",
-    content: "<p>Every matched word is in bold, like <em>Access to genetic</em>, but not <em>resourses</em>. That's because 'resources' is spelled wrong.</p>"
-  },
-  // The suggestions
-  {
+    path: "/result/?q=Fishery+consrvation",
     element: "#suggestion em",
     placement: "right",
-    title: "Resour<strong>c</strong>es, not Resour<strong>s</strong>es!",
-    content: "<p><strong>Spelling corrections</strong> lead to more relevant results and a better user experience.</p><div class='popover-hint'>Click the suggested text!</div>",
-    template: templateNoNav,
-    onShow: function(tour) {
-      $('body').on('onajax', function() {
-        if (tour.getCurrentStep() < 6) {
-          tour.next();
-
-        }
-      });
-    }
-  },
-  // The result relevance
-  {
-    element: ".search-result:first-child .hl:first-child",
-    placement: "top",
-    title: "Relevant results",
-    content: "<p>A smart search engine doesn't rely on <em>Match all/Match any these Words</em>. For example, <em>Access to Genetic Resources</em> matches perfectly and is therefor first in the list of results.</p><p>For details regarding relevancy, check the Technical description document.</p>"
-  },
-  // Filters
-  {
-    element: "#filters",
-    placement: "top",
-    title: "Why are category filters hidden?",
-    content: "<p>Because no category was selected. The reason is&hellip;</p>",
+    title: "Oops, a typo!",
+    content: "<p><strong>Spelling corrections</strong> lead to more relevant results and a better user experience.</p><div class='popover-hint'>Click on the suggested text!</div>",
     onNext: function() {
-      $('.btn[data-value="treaty"]').click();
+      // In case user presses Next and not the link
+      if (document.location.href.indexOf('conservation') == -1) {
+        document.location.href = '/result/?q=Fishery+conservation';
+        return (new jQuery.Deferred()).promise();
+      }
     }
   },
-  // Contextual filters
+  // Step 4: Highlighted results
   {
-    element: "#filters",
-    placement: "top",
-    title: "Contextual filters",
-    content: "<p>Filters are opened automatically when you select between one or more categories.</p><p><strong>Smart interfaces anticipate and react to user's behaviour.</strong></p>",
+    element: ".search-result:first-child .search-result-title a em:first-child",
+    placement: "right",
+    title: "Highlighted results",
+    content: "<p>Every matched word is in bold, like <em>Conservation</em>.</p>",
   },
-  // The content types
+  // Step 5: Dataset links
   {
-    element: "#filters",
+    element: ".btn-group.filter-type",
+    placement: "right",
+    title: "Multiple datasets",
+    content: "<p>You may search within any combination of datasets.</p><p>Let's select treaties.</p>",
+    onNext: function() {
+      $("button[data-filter='#treaty-fieldset']").click();
+    }
+  },
+  // Step 6: Sorting
+  {
+    element: "a.sortby:first-child",
+    placement: "bottom",
+    title: "Sorting results",
+    content: "<p>When searching for a phrase, results are sorted by relevance.</p><p>You can also sort them by date.</p>"
+  },
+  // Step 7: Common filters
+  {
+    element: ".global-filter",
     placement: "left",
-    title: "Faceted navigation",
-    content: "<p>Try it yourself:</p><ol><li>Look for <strong>multilateral</strong> treaties</li><li>Add <strong>Waste management</strong> as a keyword</li><li>Only show records <strong>after 1900</strong></li></ol>",
+    title: "Filtering",
+    content: "<p>You can obtain more specific results by appling filters.</p><p>Click on Geographical Area and select South America.</p><p>Try using the keyboard to search for values and ENTER to select them.</p>",
+  },
+  // Step 8: More filters
+  {
+    element: "#filter-treaties",
+    placement: "left",
+    title: "More filters",
+    content: "<p>Each dataset has its own specific fields for filtering. They are shown or hidden when more datasets are selected.</p>",
     onNext: function(tour) {
       var nextUrl = $('.result-links').eq(0).attr('href')
       var nextStep = tour.getCurrentStep() + 1;
       tour._options['steps'][nextStep]['path'] = nextUrl;
     }
   },
-  // The details page
+  // Step 9: The details page
   {
     element: ".record-title",
     placement: "top",
     title: "The details page",
-    content: "Designed to emphasize structure and readibility.",
+    content: "<p>The full display pages are designed to emphasize structure and readability.</p>",
   },
-  // Participants
+  // Step 10: Language picker
   {
-    element: "#participants",
-    placement: "top",
-    title: "Unobtrusive Participants Table",
-    content: "Of <strong>2141</strong> treaties, only <strong>473</strong> have more than <strong>5</strong> participants.<br>Since not all users analyze this table, we have redesigned it to be more discreet.However&hellip;"
-  },
-  // Extras on demand
-  {
-    element: "#participants-extras",
+    element: "#language-picker",
     placement: "left",
-    title: "Extras on demand",
-    content: "We have a separate view for the users that want to examine this section in detail."
+    title: "ECOLEX is multilingual",
+    content: "<p>You can switch the language and translated content will be presented, where available.</p><p>Let's change to Spanish.</p>",
   },
-  // References
+  // Step 11: Spanish treaty
   {
-    element: "#treaty-references",
+    path: "/es/details/treaty/convention-on-the-conservation-and-management-of-fishery-resources-in-the-south-east-atlantic-ocean-seafo-tre-001384/",
+    element: ".record-title",
+    placement: "bottom",
+    title: "The treaty title is now translated",
+    content: "<p>And most of the other fields, as well.</p>",
+  },
+  // Step 12: Breadcrumbs
+  {
+    element: "main div.container a:first",
+    placement: "bottom",
+    title: "Simple navigation",
+    content: "<p>You can return to the search results without losing the search criteria by clicking on the breadcrumb links.</p>",
+  },
+  // Step 13: And/Or
+  {
+    path: "/result/?q=&xkeywords_and_=on&xkeywords=biodiversity&xkeywords=aquaculture&xdate_min=&xdate_max=",
+    element: "#facet-xkeywords-container .onoffswitch-label",
     placement: "top",
-    title: "Treaty references",
-    content: "For the finished product, we wish to draw a graphic timeline of the treaty references.<br>NOT in the prototype."
+    title: "Complex filter options",
+    content: "<p>You can combine the filters in various ways. For instance, treaties tagged with both <em>Biodiversity</em> and <em>Aquaculture</em>, by using the AND/OR switch when more values are present.</p>",
   },
-  // References
+  // Step 14: Reset
+  {
+    element: "#facet-xkeywords-container .reset-multiple",
+    placement: "top",
+    title: "Reset filters",
+    content: "<p>Filters can be easily removed using their individual <em>Reset</em> link, or the global <em>Reset all filters</em> button.</p>",
+  },
+  // Step 15: Remove
+  {
+    element: ".select2-selection__choice__remove:first",
+    placement: "bottom",
+    title: "Change filters",
+    content: "<p>To remove just one value, use the small red [x] button on the right.</p>",
+  },
+  // Step 16: Cross-device
   {
     orphan: true,
-    title: "Beyond the prototype",
-    content: "<p>This prototype offers an improved search and filter engine.  To reach the mature envisioned application more features need to be added.</p><p><strong>More suggestions for improving Ecolex</strong> can be found in the <em>Technical description</em>.</p>",
-  },
-  // Cross-device
-  {
-    path: "/en/",
-    orphan: true,
-    title: "Mobile &amp; Tablet support",
-    content: "Please have a look at this prototype from your mobile or tablet as well.",
-    template: templateEnd
+    title: "Mobile and tablet support",
+    content: "<p>You can use ECOLEX on your smartphone or tablet, as well. The layout will automatically adjust to the size of your device.</p><p>Thank you for taking the time and we hope you enjoy using ECOLEX.</p>",
+    template: templateNoNav
   }
 ];
 
@@ -148,7 +148,6 @@ var tour = new Tour({
   name: "tour",
   animation: true,
   keyboard: false,
-  storage: false,
   template: templateDefault,
   onShown: function(tour) {
     $('.popover-help [data-role="current"]').text(tour.getCurrentStep() + 1);
@@ -164,7 +163,7 @@ $(document).ready(function() {
     tour.init();
   }
 
-  $('#suggestion-link').on('click', function() {
+  $('#suggestion a').on('click', function() {
     $('.popover.tour-tour').hide();
   });
 
