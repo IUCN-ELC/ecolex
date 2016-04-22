@@ -92,7 +92,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% include 'bits/checkbox_facet.html' with title="Status" facet=facets.tr_status field=form.tr_status show_empty=True %}
 
 {# TODO: this is badly named deposit*o*ry in code #}
-{% include "bits/selection_facet.html" with title="Depositary" placeholder="Add depositary…" viewname="api:tr-depository-list" facet=facets.tr_depository field=form.tr_depository op_field=form.tr_depository_and_ %}
+{% include "bits/selection_facet.html" with title="Depository" placeholder="Add depository…" viewname="api:tr-depository-list" facet=facets.tr_depository field=form.tr_depository op_field=form.tr_depository_and_ %}
 
 {% include "bits/selection_facet.html" with title="Place of adoption" placeholder="Add place…" viewname="api:tr-place-of-adoption-list" facet=facets.tr_place_of_adoption field=form.tr_place_of_adoption op_field=form.tr_place_of_adoption_and_ %}
 
