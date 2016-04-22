@@ -595,9 +595,7 @@ class LegislationSchema(CommonSchema):
     language = fields.List(fields.String(), load_from='legLanguage',
                            multilingual=True)
     link_to_full_text = fields.String(load_from='legLinkToFullText')
-    modification_date = fields.Date(load_from='legModificationDate')
     related_web_site = fields.String(load_from='legRelatedWebSite')
-    search_date = fields.Date(load_from='legSearchDate')
     source = fields.String(load_from='legSource')
     status = fields.String(load_from='legStatus')
     subject_code = fields.List(fields.String(), load_from='legSubject_code')
