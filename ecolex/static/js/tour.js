@@ -48,41 +48,62 @@ var tourSteps = [
     title: "Highlighted results",
     content: "<p>Every matched word is in bold, like <em>Conservation</em>.</p>",
     onShow: function(tour) {
+      if (document.location.href.indexOf('%22Fishery+conservation%22') != -1) {
+        tour.next();
+        return (new jQuery.Deferred()).promise();
+      }
       if ($("button[data-filter='#treaty-fieldset']").hasClass('active')) {
         tour.next();
+        return (new jQuery.Deferred()).promise();
+      }
+    }
+  },
+  // Step 5: Use of double quotes
+  {
+    element: "#search",
+    placement: "left",
+    title: "Using double quotes",
+    content: '<p>Double quotes may be used to find more specific results.</p><p>All results must contain <strong>Fishery conservation</strong> (together) now.</p>',
+    onShow: function(tour) {
+      if ($("button[data-filter='#treaty-fieldset']").hasClass('active')) {
+        tour.next();
+        return (new jQuery.Deferred()).promise();
+      }
+      if (document.location.href.indexOf('%22Fishery+conservation%22') == -1) {
+        document.location.href = '/result/?q="Fishery+conservation"';
         return (new jQuery.Deferred()).promise();
       }
     },
     onNext: function(tour) {
       // In case user presses Next and not the link
       if (!$("button[data-filter='#treaty-fieldset']").hasClass('active')) {
-        $("button[data-filter='#treaty-fieldset']").click();
+        document.location.href = '/result/?q="Fishery+conservation"&type=treaty&type=legislation';
         return (new jQuery.Deferred()).promise();
       }
     }
   },
-  // Step 5: Dataset links
+  // Step 6: Dataset links
   {
     element: ".btn-group.filter-type",
-    placement: "right",
+    placement: "left",
     title: "Multiple datasets",
-    content: "<p>You may search within any combination of datasets.</p><p>Let's select treaties.</p>"
+    content: "<p>You may search within any combination of datasets.</p><p>We have just selected treaties and legislation.</p>"
   },
-  // Step 6: Sorting
+  // Step 7: Sorting
   {
     element: "a.sortby:first-child",
     placement: "bottom",
     title: "Sorting results",
     content: "<p>When searching for a phrase, results are sorted by relevance.</p><p>You can also sort them by date.</p>"
   },
-  // Step 7: Common filters
+  // Step 8: Common filters
   {
     element: ".global-filter",
     placement: "left",
     title: "Filtering",
     content: "<p>You can obtain more specific results by applying filters.</p><p>Click on Geographical Area and select South America.</p><p>Try using the keyboard to search for values and ENTER to select them.</p>",
   },
-  // Step 8: More filters
+  // Step 9: More filters
   {
     element: "#filter-treaties",
     placement: "left",
@@ -94,36 +115,36 @@ var tourSteps = [
       tour._options['steps'][nextStep]['path'] = nextUrl;
     }
   },
-  // Step 9: The details page
+  // Step 10: The details page
   {
     element: ".record-title",
     placement: "top",
     title: "The details page",
     content: "<p>The full display pages are designed to emphasize structure and readability.</p>",
   },
-  // Step 10: Language picker
+  // Step 11: Language picker
   {
     element: "#language-picker",
     placement: "left",
     title: "ECOLEX is multilingual",
     content: "<p>You can switch the language and translated content will be presented, where available.</p><p>Let's change to Spanish.</p>",
   },
-  // Step 11: Spanish treaty
+  // Step 12: Spanish treaty
   {
     path: "/es/details/treaty/convention-on-the-conservation-and-management-of-fishery-resources-in-the-south-east-atlantic-ocean-seafo-tre-001384/",
     element: ".record-title",
     placement: "bottom",
     title: "",
-    content: "<p>The treaty title is now translated.</p><p>The rest of the page is also in Spanish, where applicable.</p>",
+    content: "<p>The treaty title is now translated where applicable.</p>",
   },
-  // Step 12: Breadcrumbs
+  // Step 13: Breadcrumbs
   {
     element: "main div.container a:first",
     placement: "bottom",
     title: "Simple navigation",
     content: "<p>You can return to the search results without losing the search criteria by clicking on the breadcrumb links.</p>",
   },
-  // Step 13: And/Or
+  // Step 14: And/Or
   {
     path: "/result/?q=&xkeywords_and_=on&xkeywords=biodiversity&xkeywords=aquaculture&xdate_min=&xdate_max=",
     element: "#facet-xkeywords-container .onoffswitch-label",
@@ -131,21 +152,21 @@ var tourSteps = [
     title: "Complex filter options",
     content: "<p>You can combine the filters in various ways. For instance, treaties tagged with both <em>Biodiversity</em> and <em>Aquaculture</em>, by using the AND/OR switch when more values are present.</p>",
   },
-  // Step 14: Reset
+  // Step 15: Reset
   {
     element: "#facet-xkeywords-container .reset-multiple",
     placement: "top",
     title: "Reset filters",
     content: "<p>Filters can be easily removed using their individual <em>Reset</em> link, or the global <em>Reset all filters</em> button.</p>",
   },
-  // Step 15: Remove
+  // Step 16: Remove
   {
     element: ".select2-selection__choice__remove:first",
     placement: "bottom",
     title: "Change filters",
     content: "<p>To remove just one value, use the small red [x] button on the right.</p>",
   },
-  // Step 16: Cross-device
+  // Step 17: Cross-device
   {
     orphan: true,
     title: "Mobile and tablet support",
