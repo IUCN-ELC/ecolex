@@ -5222,6 +5222,7 @@ button.close {
   height: 100%;
   top: 0;
   bottom: 0;
+  background-color: #1cb54b;
 }
 .slider.slider-horizontal .slider-handle {
   margin-left: -5px;
