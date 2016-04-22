@@ -70,7 +70,7 @@ var tourSteps = [
     element: ".global-filter",
     placement: "left",
     title: "Filtering",
-    content: "<p>You can obtain more specific results by appling filters.</p><p>Click on Geographical Area and select South America.</p><p>Try using the keyboard to search for values and ENTER to select them.</p>",
+    content: "<p>You can obtain more specific results by applying filters.</p><p>Click on Geographical Area and select South America.</p><p>Try using the keyboard to search for values and ENTER to select them.</p>",
   },
   // Step 8: More filters
   {
