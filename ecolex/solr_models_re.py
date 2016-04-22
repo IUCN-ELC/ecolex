@@ -4,6 +4,7 @@ schema. They will eventually replace actual solr_models.
 """
 from collections import defaultdict
 from datetime import date
+from functools import partialmethod
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.functional import cached_property
@@ -46,28 +47,26 @@ class BaseModel(object):
 class DocumentModel(BaseModel):
     REFERENCES = []
     BACKREFERENCES = {}
-
-    @cached_property
-    def schema(self):
-        from .schema import SCHEMA_MAP
-        return SCHEMA_MAP[self.type]
+    OTHER_REFERENCES = {}
 
     @property
     def details_url(self):
         return reverse(self.URL_NAME, kwargs={'slug': self.slug})
 
-    def _resolve_field(self, field):
+    def _resolve_field(self, field, type=None):
+        if type is None:
+            type = self.type
         # TODO: this is ugly. schema map should be.. better...
-        field = "%s_%s" % (self.schema.opts.abbr, field)
-        from .schema import FIELD_PROPERTIES
-        return FIELD_PROPERTIES[self.type][field].get_source_field()
-
-    @property
-    def abbr(self):
-        return self.schema.opts.abbr
+        from . import schema
+        sch = schema.SCHEMA_MAP[type]
+        field = "%s_%s" % (sch.opts.abbr, field)
+        return schema.FIELD_PROPERTIES[type][field].get_source_field()
 
     @cached_property
     def references(self):
+        """
+        Relationships with documents of the same type.
+        """
         lookups = {}
         groupers = {}
         fields = set()
@@ -144,6 +143,44 @@ class DocumentModel(BaseModel):
             if k in out
         }
 
+    @cached_property
+    def other_references(self):
+        """
+        Returns counts of relationships with objects of different types.
+        """
+        from .xsearch import DEFAULT_INTERFACE as interface
+        Q = interface.Q
+
+        q = Q()
+
+        for typ, v in self.OTHER_REFERENCES.items():
+            remote_field, local_field = v
+            try:
+                value = getattr(self, local_field)
+            except AttributeError:
+                continue
+
+            q |= Q(**{self._resolve_field(remote_field, typ): value})
+
+        if not q:
+            return {}
+
+        response = (
+            interface.query()
+            .filter(q)
+            .facet_by('type', mincount=1)
+            .paginate(rows=0)
+            .execute()
+        )
+
+        return dict(response.facet_counts.facet_fields['type'])
+
+    def _get_reference_count(self, typ):
+        try:
+            return self.other_references[typ]
+        except KeyError:
+            return 0
+
 
 class Treaty(DocumentModel):
     URL_NAME = 'treaty_details'
@@ -182,6 +219,12 @@ class Treaty(DocumentModel):
         'enables': 'enabled_by',
         'superseded_by': 'supersedes',
     }
+    OTHER_REFERENCES = {
+        'decision': ('treaty_id', 'informea_id'),
+        'literature': ('treaty_reference', 'document_id'),
+        'court_decision': ('treaty_reference', 'document_id'),
+    }
+
 
     @property
     def title(self):
@@ -201,24 +244,17 @@ class Treaty(DocumentModel):
         events = set().union(*[party.events for party in self.parties])
         return sorted(events, key=lambda x: self.EVENTS_ORDER.index(x))
 
-    @cached_property
-    def decisions(self):
-        # TODO: refactor here
-        if hasattr(self, 'informea_id'):
-            from ecolex.search import get_documents_by_field
-            return get_documents_by_field('decTreatyId', [self.informea_id], rows=MAX_ROWS)
+    @property
+    def decision_count(self):
+        return self._get_reference_count('decision')
 
-    @cached_property
-    def literatures(self):
-        from ecolex.search import get_documents_by_field
-        return get_documents_by_field('litTreatyReference',
-                                      [self.document_id], rows=MAX_ROWS)
+    @property
+    def literature_count(self):
+        return self._get_reference_count('literature')
 
-    @cached_property
-    def court_decisions(self):
-        from ecolex.search import get_documents_by_field
-        return get_documents_by_field('cdTreatyReference',
-                                      [self.document_id], rows=MAX_ROWS)
+    @property
+    def court_decision_count(self):
+        return self._get_reference_count('court_decision')
 
 
 class TreatyParty(BaseModel):

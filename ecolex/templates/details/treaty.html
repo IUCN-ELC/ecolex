@@ -218,24 +218,24 @@
   </section>
   {% endif %}
 
-  {% if document.decisions.count or document.literatures.count or document.court_decisions.count %}
+  {% if document.other_references %}
   <section id="other-references">
     <h2 class="section-title">Other references</h2>
     <dl>
-      {% if document.decisions.count %}
+      {% if document.decision_count %}
         <dt>COP decisions</dt>
         <dd>
-          <strong>{{ document.decisions.count }} decisions</strong> related to this treaty.
+          <strong>{{ document.decision_count }} decisions</strong> related to this treaty.
           <a href="{% url 'resultDecisions' document.slug %}?{{ query }}">View decisions</a>
         </dd>
       {% endif %}
     </dl>
 
     <dl>
-      {% if document.literatures.count %}
+      {% if document.literature_count %}
         <dt>Literature</dt>
         <dd>
-        {% with document.literatures.count as lit_count %}
+        {% with document.literature_count as lit_count %}
           <strong>{{ lit_count }} record{{ lit_count|pluralize:"s" }} </strong> related to this treaty.
         {% endwith %}
           <a href="{% url 'resultLiteratures' document.slug %}?{{ query }}">View literature</a>
@@ -244,10 +244,10 @@
     </dl>
 
     <dl>
-      {% if document.court_decisions.count %}
+      {% if document.court_decision_count %}
         <dt>Court Decision</dt>
         <dd>
-          <strong>{{ document.court_decisions.count }} court decisions</strong> related to this treaty.
+          <strong>{{ document.court_decision_count }} court decisions</strong> related to this treaty.
           <a href="{% url 'resultCourtDecisions' document.slug %}?{{ query }}">View court decisions</a>
         </dd>
       {% endif %}
