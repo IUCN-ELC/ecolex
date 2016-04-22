@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "Search results" 'results' request.GET.urlencode %}
   {% breadcrumb "Legislation" %}
 {% endblock %}
 
@@ -122,7 +122,7 @@
         {% for legislation in legislations %}
           <dd>
             <h3 class="search-result-title">
-              <a href="{{ legislation.details_url }}?{{ query }}"
+              <a href="{{ legislation.details_url }}?{{ request.GET.urlencode }}"
                  title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
             </h3>
             {% include 'short_display/legislation.html' with result=legislation %}
