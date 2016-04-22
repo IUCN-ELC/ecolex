@@ -206,7 +206,7 @@
           <dd>
             <div class="treaty-link-container">
               <h3 class="search-result-title">
-                <a href="{{ treaty.details_url }}?{{ query }}"
+                <a href="{{ treaty.details_url }}"
                    title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
               </h3>
               {% include 'short_display/treaty.html' with result=treaty %}
