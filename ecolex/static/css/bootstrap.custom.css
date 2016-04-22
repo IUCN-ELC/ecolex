@@ -703,6 +703,30 @@ a.bg-danger:hover {
 .page-header .h1 .small {
   font-size: 75%;
 }
+.page-header h2,
+.page-header .h2 {
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #212121;
+  margin-top: 11px;
+  margin-bottom: 11px;
+  font-size: 18px;
+}
+.page-header h2 small,
+.page-header .h2 small,
+.page-header h2 .small,
+.page-header .h2 .small {
+  font-weight: normal;
+  line-height: 1;
+  color: #cccccc;
+}
+.page-header h2 small,
+.page-header .h2 small,
+.page-header h2 .small,
+.page-header .h2 .small {
+  font-size: 75%;
+}
 ul,
 ol {
   margin-top: 0;
@@ -6500,6 +6524,30 @@ ul.select2-selection__rendered {
 .record-details header .h1 .small {
   font-size: 75%;
 }
+.record-details header h2,
+.record-details header .h2 {
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #212121;
+  margin-top: 11px;
+  margin-bottom: 11px;
+  font-size: 18px;
+}
+.record-details header h2 small,
+.record-details header .h2 small,
+.record-details header h2 .small,
+.record-details header .h2 .small {
+  font-weight: normal;
+  line-height: 1;
+  color: #cccccc;
+}
+.record-details header h2 small,
+.record-details header .h2 small,
+.record-details header h2 .small,
+.record-details header .h2 .small {
+  font-size: 75%;
+}
 .record-details header .record-title {
   margin-bottom: 22px;
 }
@@ -6752,20 +6800,20 @@ ul.select2-selection__rendered {
   font-size: 20px;
   color: #212121;
 }
-.record-details-participants .table thead th {
+.participants-table thead th {
   text-align: right;
 }
-.record-details-participants .table .col-country {
+.participants-table .col-country {
   max-width: 180px;
   text-align: left;
 }
-.record-details-participants .table tbody {
+.participants-table tbody {
   font-size: 14px;
 }
-.record-details-participants .table tbody td {
+.participants-table tbody td {
   text-align: right;
 }
-.record-details-participants .table time {
+.participants-table time {
   white-space: nowrap;
 }
 .table-wrapper {

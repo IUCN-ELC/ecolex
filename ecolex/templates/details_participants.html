@@ -12,19 +12,16 @@
 {% endblock %}
 
 {% block content %}
-<p>
-  <span class="treaty-name">{{ treaty.title|safe }} ({{ treaty.date }})</span>
-</p>
 
-<hr>
-
-<article class="record-details-participants">
+<article class="record-details">
   <header>
-    <h1>Country/Participant</h1>
+    <div class="record-title">
+      <h1>{{ treaty.title|safe }} ({{ treaty.date }})</h1>
+    </div>
   </header>
 
   <div class="table-wrapper">
-    <table class="table table-bordered" id="country-party">
+    <table class="table table-bordered participants-table" id="country-party">
       <thead>
         <tr>
           <th class="col-country">Countries</th>
@@ -57,7 +54,7 @@
   </div>
 
   <br>
-  {% include 'bits/participants_legend.html' with events=treaty.participants.events %}
+  {% include 'bits/participants_legend.html' with events=treaty.parties_events %}
 
 </article>
 {% endblock %}
