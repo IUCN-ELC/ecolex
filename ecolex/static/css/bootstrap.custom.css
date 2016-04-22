@@ -5616,21 +5616,31 @@ select.selection-facet {
   width: 1em;
   height: 1em;
   background: #FFFFFF;
-  border: 1px solid #dddddd;
+  border: 1px solid #1cb54b;
   border-radius: 50%;
 }
 .onoffswitch-checkbox.checked + .onoffswitch-label,
 .onoffswitch-checkbox:checked + .onoffswitch-label {
   text-indent: -3em;
 }
+.onoffswitch-checkbox:checked + .onoffswitch-label {
+  border-color: #42e045;
+  background-color: #1cb54b;
+  color: #eee;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+  border-color: #42e045;
+  background-color: #fff;
+}
 .onoffswitch-checkbox:hover + .onoffswitch-label,
 .onoffswitch-checkbox:focus + .onoffswitch-label {
   border-color: #ddd;
+  color: #666;
   background-color: #eee;
 }
 .onoffswitch-checkbox:hover + .onoffswitch-label .onoffswitch-switch,
 .onoffswitch-checkbox:focus + .onoffswitch-label .onoffswitch-switch {
-  border-color: #ddd;
+  border-color: #1cb54b;
   background-color: #fff;
 }
 /* Slider */

@@ -46,7 +46,7 @@
   width: 1em;
   height: 1em;
   background: #FFFFFF;
-  border: 1px solid @input-border;
+  border: 1px solid @brand-green-darker;
   border-radius: 50%;
 }
 
@@ -57,14 +57,26 @@
   }
 }
 
+.onoffswitch-checkbox:checked {
+  & + .onoffswitch-label {
+    border-color: @brand-green;
+    background-color: @brand-green-darker;
+    color: #eee;
+    .onoffswitch-switch {
+      border-color: @brand-green;
+      background-color: #fff;
+    }
+  }
+}
 
 .onoffswitch-checkbox:hover,
 .onoffswitch-checkbox:focus {
   & + .onoffswitch-label {
     border-color: #ddd;
+    color: #666;
     background-color: #eee;
     .onoffswitch-switch {
-      border-color: #ddd;
+      border-color: @brand-green-darker;
       background-color: #fff;
     }
   }
