@@ -1,5 +1,5 @@
 COPY_FIELDS = [
-    "trIntroText",
+    "trIntroText", # TODO - remove this
     "decTitleOfText",
     "docSubject_en",
     "docSubject_fr",

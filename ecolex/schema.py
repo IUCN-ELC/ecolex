@@ -202,7 +202,6 @@ class TreatySchema(CommonSchema):
                                      multilingual=True)
     into_force_treaty = fields.List(fields.String(),
                                     load_from='trIntoForceTreaty')
-    intro_text = fields.List(fields.String(), load_from='trIntroText')
     is_protocol = fields.String(load_from='trIsProtocol')
     jurisdiction = fields.List(fields.String(), load_from='trJurisdiction',
                                multilingual=True)
