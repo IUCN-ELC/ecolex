@@ -1,5 +1,6 @@
 import math
 from collections import OrderedDict
+from urllib.parse import urlencode
 from django.conf import settings
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.http import Http404
@@ -24,6 +25,7 @@ class SearchViewMixin(object):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['form'] = self.form
+        ctx['query'] = urlencode(self.request.GET)
         return ctx
 
 
