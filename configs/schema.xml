@@ -739,31 +739,6 @@
     <copyField source="legText" dest="text"/>
     <copyField source="litText" dest="text"/>
 
-    <copyField source="decKeyword_en" dest="text"/>
-    <copyField source="decKeyword_es" dest="text"/>
-    <copyField source="decKeyword_fr" dest="text"/>
-
-    <copyField source="trSubject_en" dest="text"/>
-    <copyField source="trSubject_es" dest="text"/>
-    <copyField source="trSubject_fr" dest="text"/>
-    <copyField source="trKeyword_en" dest="text"/>
-    <copyField source="trKeyword_es" dest="text"/>
-    <copyField source="trKeyword_fr" dest="text"/>
-
-    <copyField source="legSubject_en" dest="text"/>
-    <copyField source="legSubject_es" dest="text"/>
-    <copyField source="legSubject_fr" dest="text"/>
-    <copyField source="legKeyword_en" dest="text"/>
-    <copyField source="legKeyword_es" dest="text"/>
-    <copyField source="legKeyword_fr" dest="text"/>
-
-    <copyField source="litSubject_en" dest="text"/>
-    <copyField source="litSubject_es" dest="text"/>
-    <copyField source="litSubject_fr" dest="text"/>
-    <copyField source="litKeyword_en" dest="text"/>
-    <copyField source="litKeyword_es" dest="text"/>
-    <copyField source="litKeyword_fr" dest="text"/>
-
     <copyField source="litAuthorA" dest="litAuthor"/>
     <copyField source="litAuthorM" dest="litAuthor"/>
     <copyField source="litCorpAuthorA" dest="litAuthor"/>

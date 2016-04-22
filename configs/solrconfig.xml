@@ -856,6 +856,11 @@
         legKeyword_fr^30 cdKeyword_fr^30 litKeyword_fr^30 decKeyword_fr^30 trKeyword_fr^30
         legKeyword_es^30 cdKeyword_es^30 litKeyword_es^30 decKeyword_es^30 trKeyword_es^30
 
+        <!-- Subjects -->
+        legSubject_en^30 cdSubject_en^30 litSubject_en^30 decSubject_en^30 trSubject_en^30
+        legSubject_fr^30 cdSubject_fr^30 litSubject_fr^30 decSubject_fr^30 trSubject_fr^30
+        legSubject_es^30 cdSubject_es^30 litSubject_es^30 decSubject_es^30 trSubject_es^30
+
         <!-- Treaty -->
         trTitleOfText_en^110 trTitleOfText_es^110
         trTitleOfText_fr^110 trTitleOfText_other^110
