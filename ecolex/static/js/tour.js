@@ -47,16 +47,26 @@ var tourSteps = [
     placement: "right",
     title: "Highlighted results",
     content: "<p>Every matched word is in bold, like <em>Conservation</em>.</p>",
+    onShow: function(tour) {
+      if ($("button[data-filter='#treaty-fieldset']").hasClass('active')) {
+        tour.next();
+        return (new jQuery.Deferred()).promise();
+      }
+    },
+    onNext: function(tour) {
+      // In case user presses Next and not the link
+      if (!$("button[data-filter='#treaty-fieldset']").hasClass('active')) {
+        $("button[data-filter='#treaty-fieldset']").click();
+        return (new jQuery.Deferred()).promise();
+      }
+    }
   },
   // Step 5: Dataset links
   {
     element: ".btn-group.filter-type",
     placement: "right",
     title: "Multiple datasets",
-    content: "<p>You may search within any combination of datasets.</p><p>Let's select treaties.</p>",
-    onNext: function() {
-      $("button[data-filter='#treaty-fieldset']").click();
-    }
+    content: "<p>You may search within any combination of datasets.</p><p>Let's select treaties.</p>"
   },
   // Step 6: Sorting
   {
@@ -103,8 +113,8 @@ var tourSteps = [
     path: "/es/details/treaty/convention-on-the-conservation-and-management-of-fishery-resources-in-the-south-east-atlantic-ocean-seafo-tre-001384/",
     element: ".record-title",
     placement: "bottom",
-    title: "The treaty title is now translated",
-    content: "<p>And most of the other fields, as well.</p>",
+    title: "",
+    content: "<p>The treaty title is now translated.</p><p>The rest of the page is also in Spanish, where applicable.</p>",
   },
   // Step 12: Breadcrumbs
   {
