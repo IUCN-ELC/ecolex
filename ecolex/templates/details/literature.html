@@ -142,9 +142,9 @@
         <dd>{{ document.basin|join:", "|safe }}</dd>
       {% endif %}
 
-      {% if document.summary %}
+      {% if document.abstract %}
         <dt>Abstract</dt>
-        <dd><p class="abstract">{{ document.summary|safe }}</p></dd>
+        <dd><p class="abstract">{{ document.abstract|safe }}</p></dd>
       {% endif %}
 
       {% if document.link_to_full_text %}
