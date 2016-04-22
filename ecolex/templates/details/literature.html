@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block breadcrumbs %}
-  {% breadcrumb "Search results" 'results' request.GET.urlencode %}
+  {% breadcrumb "Search results" 'results' query %}
   {% breadcrumb "Literature" %}
 {% endblock %}
 
@@ -39,14 +39,10 @@
 
       {% if document.is_chapter and document.parent_title %}
         <dt>Monograph</dt>
-        <dd>
-          {% if document.parent_url %}
-            <a href="{{ document.parent_url }}?{{ request.GET.urlencode }}"
-               >{{ document.parent_title|safe }}</a>
-          {% else %}
-            {{ document.parent_title|safe }}
-          {% endif %}
-        </dd>
+        <dd>{% if document.parent_url %}
+          <a href="{{ document.parent_url }}?{{ query }}">{{ document.parent_title|safe }}</a>{% else %}
+          {{ document.parent_title|safe }}
+        {% endif %}</dd>
       {% endif %}
 
       {% if document.date %}
@@ -190,7 +186,7 @@
         <dt>Treaty</dt>
         <dd>
           <h3 class="search-result-title">
-            <a href="{{ treaty.details_url }}?{{ request.GET.urlencode }}"
+            <a href="{{ treaty.details_url }}?{{ query }}"
                title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
           </h3>
           {% include 'short_display/treaty.html' with result=treaty %}
@@ -203,7 +199,7 @@
         <dt>Legislation</dt>
         <dd>
           <h3 class="search-result-title">
-            <a href="{{ legislation.details_url }}?{{ request.GET.urlencode }}"
+            <a href="{{ legislation.details_url }}?{{ query }}"
                title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
           </h3>
           {% include 'short_display/legislation.html' with result=legislation %}
@@ -216,7 +212,7 @@
         <dt>Court decision</dt>
         <dd>
           <h3 class="search-result-title">
-            <a href="{{ court_decision.details_url }}?{{ request.GET.urlencode }}"
+            <a href="{{ court_decision.details_url }}?{{ query }}"
                title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
           </h3>
           {% include 'short_display/court_decision.html' with result=court_decision %}
@@ -229,7 +225,7 @@
         <dt>Literature</dt>
         <dd>
           <h3 class="search-result-title">
-            <a href="{{ literature.details_url }}?{{ request.GET.urlencode }}"
+            <a href="{{ literature.details_url }}?{{ query }}"
                title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
           </h3>
           {% include 'short_display/literature.html' with result=literature %}
@@ -245,7 +241,7 @@
         <dt>Literature</dt>
         <dd>
           <h3 class="search-result-title">
-            <a href="{{ literature.details_url }}?{{ request.GET.urlencode }}"
+            <a href="{{ literature.details_url }}?{{ query }}"
                title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
           </h3>
           {% include 'short_display/literature.html' with result=literature %}

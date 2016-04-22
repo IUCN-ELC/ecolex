@@ -2,8 +2,8 @@
 {% load tags %}
 
 {% block breadcrumbs %}
-  {% breadcrumb "Search results" 'results' request.GET.urlencode %}
-  {% breadcrumb "Treaty" 'treaty_details' request.GET.urlencode slug=treaty.slug %}
+  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "Treaty" 'treaty_details' query slug=treaty.slug %}
   {% breadcrumb "Court decisions" %}
 {% endblock %}
 
@@ -28,7 +28,7 @@
       <tr>
         <td>
           <h3 class="search-result-title">
-            <a href="{{ court_decision.details_url }}?{{ request.GET.urlencode }}"
+            <a href="{{ court_decision.details_url }}?{{ query }}"
                title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
           </h3>
           {% include 'short_display/court_decision.html' with result=court_decision %}

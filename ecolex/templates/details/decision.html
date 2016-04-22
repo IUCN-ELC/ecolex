@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-  {% breadcrumb "Search results" 'results' request.GET.urlencode %}
+  {% breadcrumb "Search results" 'results' query %}
   {% breadcrumb "COP decision" %}
 {% endblock %}
 
@@ -56,7 +56,7 @@
       {% if document.treaty %}
         <dt>Treaty</dt>
         <dd>
-          <a href="{{ document.treaty.details_url }}?{{ request.GET.urlencode }}">
+          <a href="{{ document.treaty.details_url }}?{{ query }}">
             {{ document.treaty.title|safe }} ({{ document.treaty.date|date:"b j, Y"|capfirst  }})
           </a>
         </dd>

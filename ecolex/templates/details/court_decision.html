@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-  {% breadcrumb "Search results" 'results' request.GET.urlencode %}
+  {% breadcrumb "Search results" 'results' query %}
   {% breadcrumb "Court decision" %}
 {% endblock %}
 
@@ -102,7 +102,7 @@
             <dd>
               <div class="treaty-link-container">
                 <h3 class="search-result-title">
-                  <a href="{{ doc.details_url }}?{{ request.GET.urlencode }}"
+                  <a href="{{ doc.details_url }}?{{ query }}"
                      title="{{ doc.title|safe|striptags }}">{{ doc.title|safe }}</a>
                 </h3>
               </div>
@@ -122,7 +122,7 @@
           <dd>
               <div class="treaty-link-container">
                 <h3 class="search-result-title">
-                  <a href="{{ doc.details_url }}?{{ request.GET.urlencode }}"
+                  <a href="{{ doc.details_url }}?{{ query }}"
                      title="{{ doc.title|safe|striptags }}">{{ doc.title|safe }}</a>
                 </h3>
               </div>
