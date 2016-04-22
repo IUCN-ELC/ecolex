@@ -2,13 +2,13 @@
 These models define the documents' behaviour that could not be included in the
 schema. They will eventually replace actual solr_models.
 """
-from collections import OrderedDict
+from collections import defaultdict
 from datetime import date
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import get_language
-from ecolex.lib.utils import OrderedDefaultDict, is_iterable, camel_case_to__
+from ecolex.lib.utils import is_iterable, camel_case_to__
 
 
 DEFAULT_TITLE = 'Unknown Document'
@@ -69,7 +69,7 @@ class DocumentModel(BaseModel):
     @cached_property
     def references(self):
         lookups = {}
-        groupers = OrderedDict()
+        groupers = {}
         fields = set()
 
         from .xsearch import Queryer
@@ -96,7 +96,12 @@ class DocumentModel(BaseModel):
             groupers[ref] = (field, lookup)
             # TODO: field resolving logic should live in search,
             # the models shouldn't be aware of the underlying data structure.
-            lookups[self._resolve_field(field)] = lookup
+            lookup_field = self._resolve_field(field)
+            if lookup_field in lookups:
+                # these better be both lists
+                lookups[lookup_field].extend(lookup)
+            else:
+                lookups[lookup_field] = lookup
 
         if not lookups:
             return {}
@@ -112,7 +117,7 @@ class DocumentModel(BaseModel):
                                    date_sort=False, **lookups)
 
         # we need to re-group according to the lookups
-        out = OrderedDefaultDict(list)
+        out = defaultdict(list)
         for item in response.results:
             for k, v in groupers.items():
                 field, lookup = v
@@ -120,6 +125,7 @@ class DocumentModel(BaseModel):
                     val = getattr(item, field)
                 except AttributeError:
                     continue
+
                 if ((is_iterable(val)
                      and (is_iterable(lookup) and set(lookup).intersection(val)
                           or lookup in val)
@@ -128,10 +134,15 @@ class DocumentModel(BaseModel):
                      or lookup == val)
                 ):
                     out[k].append(item)
-                    break
-        # because things get really silly when django template meets this
-        out.default_factory = None
-        return out
+                    # don't break on a positive match, because a document
+                    # might belong in multiple categories
+
+        # and re-order
+        return {
+            k: out[k]
+            for k in self.REFERENCES
+            if k in out
+        }
 
 
 class Treaty(DocumentModel):
