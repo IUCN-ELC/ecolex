@@ -241,6 +241,7 @@ class TreatySchema(CommonSchema):
                                      load_from='trTitleAbbreviation')
     title_of_text_short = fields.String(load_from='trTitleOfTextShort',
                                         missing='')
+    related_web_site = fields.List(fields.String(), load_from='trRelatedWebSite')
     url = fields.List(fields.String(), load_from='trUrl')
     url_elearning = fields.List(fields.String(), load_from='trUrlElearning')
     url_parties = fields.List(fields.String(), load_from='trUrlParties')

@@ -127,11 +127,12 @@
         <dd>{{ document.available_in|safe }}</dd>
       {% endif %}
 
-      {% if document.url %}
+      {% if document.related_web_site %}
         <dt>Available web site</dt>
         <dd>
-          {% for doc_url in document.url %}
-            <a target="_blank" href="{{ document.url }}">{{ document.url }}</a>
+          {% for url in document.related_web_site %}
+            {% if not forloop.first %}<br>{% endif %}
+            <a target="_blank" href="{{ url|url_normalize }}">{{ url }}</a>
           {% endfor %}
         </dd>
       {% endif %}
