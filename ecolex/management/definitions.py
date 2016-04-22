@@ -1,6 +1,7 @@
+# The list below contains fields that are the destination of a copyField
+# directive and also have the property stored=True. The list is used for
+# cleaning up these fields, to prevent their multiplication on document update.
 COPY_FIELDS = [
-    "trIntroText", # TODO - remove this
-    "decTitleOfText",
     "docSubject_en",
     "docSubject_fr",
     "docSubject_es",
@@ -13,10 +14,10 @@ COPY_FIELDS = [
     "docRegion_en",
     "docRegion_fr",
     "docRegion_es",
-    "docDate",
     "docLanguage_en",
     "docLanguage_fr",
     "docLanguage_es",
+    "litAuthor",
 ]
 
 TREATY = 'treaty'
