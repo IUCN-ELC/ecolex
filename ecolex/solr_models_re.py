@@ -75,27 +75,31 @@ class DocumentModel(BaseModel):
         from .xsearch import Queryer
         queryer = Queryer({}, language=get_language())
 
-        # TODO: field resolving logic should live in search,
-        # the models shouldn't be aware of the underlying data structure.
         for ref in self.REFERENCES:
             try:
                 backref = self.BACKREFERENCES[ref]
             except KeyError:
+                # if it's a forward reference, we search for documents with
+                # document_id matching the current value
+                field = 'document_id'
                 try:
                     lookup = getattr(self, ref)
                 except AttributeError:
                     continue
-                field = ref
             else:
-                lookup = self.document_id
+                # if it's a backwards reference, we search for documents
+                # whose reverse attribute contains our document_id
                 field = backref
+                lookup = self.document_id
 
             fields.add(field)
             groupers[ref] = (field, lookup)
+            # TODO: field resolving logic should live in search,
+            # the models shouldn't be aware of the underlying data structure.
             lookups[self._resolve_field(field)] = lookup
 
         if not lookups:
-            return []
+            return {}
 
         # (this is getting really, really silly)
         from .schema import FIELD_PROPERTIES
@@ -105,7 +109,7 @@ class DocumentModel(BaseModel):
         # set a ridiculously high page size to be certain we fetch all results
         # TODO: may be a bad™ idea
         response = queryer.findany(page_size=1000, fetch_fields=fields,
-                                   **lookups)
+                                   date_sort=False, **lookups)
 
         # we need to re-group according to the lookups
         out = OrderedDefaultDict(list)
