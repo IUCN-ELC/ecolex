@@ -11,6 +11,7 @@ from ecolex.management.utils import EcolexSolr, get_file_from_url, cleanup_copyf
 
 from ecolex.management.utils import get_content_length_from_url
 from ecolex.models import DocumentText
+from django.db.models import Count
 
 
 logging.config.dictConfig(LOG_DICT)
@@ -26,9 +27,15 @@ class LegislationImporter(object):
 
     def update_full_text(self):
         while True:
+            count = (DocumentText.objects.filter(
+                    status=DocumentText.INDEXED, doc_type=LEGISLATION)
+                    .exclude(url__isnull=True)).count()
             objs = (DocumentText.objects.filter(
                     status=DocumentText.INDEXED, doc_type=LEGISLATION)
                     .exclude(url__isnull=True))[:100]
+            logger.info('%s records remaining' % (count,))
+            if count == 0:
+                break
             for obj in objs:
                 # Check if already parsed
                 text = None
