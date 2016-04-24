@@ -20,14 +20,14 @@
 </p>
 <p class="search-result-details">
   {% if result.publisher %}<strong>Publisher: </strong><span>{{ result.publisher }}</span>{% endif %}
-  {% if result.publication_place %} | <span>{{ result.publication_place }}</span>{% endif %}
-  {% if result.date %} | <span>{{ result.date|safe }}</span>{% endif %}
+  {% if result.publication_place %} | <span class="sr-pubplace sr-help" title="Publication place">{{ result.publication_place }}</span>{% endif %}
+  {% if result.date %} | <span class="sr-pubdate sr-help" title="Publication date">{{ result.date|safe }}</span>{% endif %}
 </p>
 
 <p class="search-result-details">
   <strong class="sr-type">{{ result.type|capfirst }}</strong>
-  {% if result.jurisdiction %} | <span>{{ result.jurisdiction }}</span> {% endif %}
-  {% if result.countries %} | <span>{{ result.countries|join:", "|safe }}</span> {% endif %}
+  {% if result.jurisdiction %} | <span class="sr-jurisdiction sr-help" title="Jurisdiction">{{ result.jurisdiction }}</span> {% endif %}
+  {% if result.countries %} | <span class="sr-country sr-help" title="Country">{{ result.countries|join:", "|safe }}</span> {% endif %}
 </p>
 
 <p class="search-result-details"><strong>Keywords:</strong>

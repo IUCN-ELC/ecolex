@@ -2,12 +2,12 @@
 
 <div class="search-result-details">
   <strong class="sr-type">{{ result.type|capfirst }}</strong> |
-  <span class="sr-doctype">{{ result.type_of_document }}</span>
+  <span class="sr-doctype sr-help" title="Document type">{{ result.type_of_document }}</span>
   {% if result.place_of_adoption %} |
-    <span class="sr-place"> {{ result.place_of_adoption }}</span>
+    <span class="sr-place sr-help" title="Place of adoption"> {{ result.place_of_adoption }}</span>
   {% endif %}
   {% if result.date %} |
-    <time class="sr-date" title="Date: {{ result.date }}">
+    <time class="sr-date sr-help" title="Date: {{ result.date }}">
       {{ result.date|date:"b j, Y"|capfirst }}
     </time>
   {% endif %}
@@ -18,7 +18,7 @@
   </p>
 {% endif %}
 <p class="search-result-source"><strong>Source:</strong>
-  {% if result.type_of_document == 'Bilateral' %}
+  {% if result.type_of_document|slice:":2" == 'Bi' %}
     <a target="_blank" href="http://faolex.fao.org/">FAO, FAOLEX;</a>
   {% endif %}
     <a target="_blank" href="http://iucn.org">IUCN</a> (ID: {{ result.document_id }})</p>

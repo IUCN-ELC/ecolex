@@ -2,11 +2,11 @@
 
 <div class="search-result-details">
     <strong class="sr-type">Legislation</strong> {% if result.country %} |
-    <span class="sr-jurisdiction">{{ result.country }}</span> {% endif %}
+    <span class="sr-jurisdiction sr-help" title="Country">{{ result.country }}</span> {% endif %}
     {% if result.date %} |
-      <span class="sr-date" title="Original">{{ result.date }}
+      <span class="sr-date sr-help" title="Original date">{{ result.date }}
         {% if result.consolidation_date %}
-          <span class="sr-date" title="Consolidation">({{ result.consolidation_date }})</span>
+          <span class="sr-date sr-help" title="Consolidation date">({{ result.consolidation_date }})</span>
         {% endif %}
       </span>
     {% endif %}

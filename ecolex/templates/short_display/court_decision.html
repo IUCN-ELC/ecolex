@@ -2,20 +2,18 @@
 
 <div class="search-result-details">
   <strong class="sr-type">Court Decision</strong> |
-  <span class="sr-doctype">{{ result.type_of_document }}</span>
+  <span class="sr-doctype sr-help" title="Type of court">{{ result.type_of_document }}</span>
 
   {% if result.country %} |
-    <span class="sr-country">{{ result.country }}</span>
+    <span class="sr-country sr-help" title="Country">{{ result.country }}</span>
   {% endif %}
 
   {% if result.date %} |
-   <time class="sr-date" title="Date: {{ result.date }}">
+   <time class="sr-date sr-help" title="Date: {{ result.date }}">
       {{ result.date|date:"b j, Y"|capfirst }}
    </time>
   {% endif %}
 </div>
-
-<p class="search-result-description">{# result.summary|safe #}</p>
 
 {% if result.keywords %}
   <p class="search-result-details">

@@ -5909,6 +5909,9 @@ input[type="search"]::-webkit-search-results-decoration {
   padding-left: 32px;
   padding-right: 122px;
 }
+.search-form .form-control[type="search"] {
+  padding-right: 132px;
+}
 .search-form .form-control,
 .search-form .form-control:hover,
 .search-form .form-control:focus {
@@ -6006,8 +6009,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .sr-jurisdiction {
   color: #666666;
 }
-.sr-status:hover,
-.sr-date:hover {
+.sr-help:hover {
   cursor: help;
 }
 .search-result-description {
