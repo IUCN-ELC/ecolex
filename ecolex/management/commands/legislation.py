@@ -25,61 +25,62 @@ class LegislationImporter(object):
         logger.info('Started legislation manager')
 
     def update_full_text(self):
-        objs = (DocumentText.objects.filter(
-                status=DocumentText.INDEXED, doc_type=LEGISLATION)
-                .exclude(url__isnull=True))
-        for obj in objs:
-            # Check if already parsed
-            text = None
-            if obj.doc_size and obj.text:
-                logger.info('Checking content length of %s (%s)' %
-                            (obj.doc_id, obj.url,))
-                doc_size = get_content_length_from_url(obj.url)
-                if doc_size == obj.doc_size:
-                    # File not changed, reuse obj.text
-                    logger.debug('Not changed: %s' % (obj.url,))
-                    text = obj.text
+        while True:
+            objs = (DocumentText.objects.filter(
+                    status=DocumentText.INDEXED, doc_type=LEGISLATION)
+                    .exclude(url__isnull=True))[:100]
+            for obj in objs:
+                # Check if already parsed
+                text = None
+                if obj.doc_size and obj.text:
+                    logger.info('Checking content length of %s (%s)' %
+                                (obj.doc_id, obj.url,))
+                    doc_size = get_content_length_from_url(obj.url)
+                    if doc_size == obj.doc_size:
+                        # File not changed, reuse obj.text
+                        logger.debug('Not changed: %s' % (obj.url,))
+                        text = obj.text
 
-            # Download file
-            if not text:
-                logger.info('Downloading: %s (%s)' % (obj.doc_id, obj.url,))
-                file_obj = get_file_from_url(obj.url)
-                if not file_obj:
-                    logger.error('Failed downloading: %s' % (obj.url,))
-                    continue
-                doc_size = file_obj.getbuffer().nbytes
-
-                # Extract text
-                logger.debug('Indexing: %s' % (obj.url,))
-                text = self.solr.extract(file_obj)
+                # Download file
                 if not text:
-                    logger.warn('Nothing to index for %s' % (obj.url,))
+                    logger.info('Downloading: %s (%s)' % (obj.doc_id, obj.url,))
+                    file_obj = get_file_from_url(obj.url)
+                    if not file_obj:
+                        logger.error('Failed downloading: %s' % (obj.url,))
+                        continue
+                    doc_size = file_obj.getbuffer().nbytes
 
-            # Load record and store text
-            try:
-                legislation = self.solr.search(LEGISLATION, obj.doc_id)
-                legislation = cleanup_copyfields(legislation)
-            except SolrError as e:
-                logger.error('Error reading legislation %s' % (obj.doc_id,))
-                if settings.DEBUG:
-                    logging.getLogger('solr').exception(e)
-                continue
+                    # Extract text
+                    logger.debug('Indexing: %s' % (obj.url,))
+                    text = self.solr.extract(file_obj)
+                    if not text:
+                        logger.warn('Nothing to index for %s' % (obj.url,))
 
-            if not legislation:
-                logger.error('Failed to find legislation %s' % (obj.doc_id))
-                continue
+                # Load record and store text
+                try:
+                    legislation = self.solr.search(LEGISLATION, obj.doc_id)
+                    legislation = cleanup_copyfields(legislation)
+                except SolrError as e:
+                    logger.error('Error reading legislation %s' % (obj.doc_id,))
+                    if settings.DEBUG:
+                        logging.getLogger('solr').exception(e)
+                    continue
 
-            legislation['legText'] = text
-            result = self.solr.add(legislation)
-            if result:
-                logger.info('Success download & indexed: %s' % (obj.doc_id,))
-                obj.status = DocumentText.FULL_INDEXED
-                obj.doc_size = doc_size
-                obj.text = text
-                obj.save()
-            else:
-                logger.error('Failed doc extract %s %s' % (obj.url,
-                                                           legislation['id']))
+                if not legislation:
+                    logger.error('Failed to find legislation %s' % (obj.doc_id))
+                    continue
+
+                legislation['legText'] = text
+                result = self.solr.add(legislation)
+                if result:
+                    logger.info('Success download & indexed: %s' % (obj.doc_id,))
+                    obj.status = DocumentText.FULL_INDEXED
+                    obj.doc_size = doc_size
+                    obj.text = text
+                    obj.save()
+                else:
+                    logger.error('Failed doc extract %s %s' % (obj.url,
+                                                               legislation['id']))
 
     def reindex_failed(self):
         objs = DocumentText.objects.filter(
