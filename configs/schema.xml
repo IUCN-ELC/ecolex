@@ -88,7 +88,7 @@
     <field name="trAbstract_fr" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trAbstract_es" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trComment" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trText" type="text" indexed="true" stored="false"/>
+    <field name="trText" type="text" indexed="true" stored="true"/>
 
     <field name="trTypeOfText_en" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="trTypeOfText_es" type="text" indexed="true" stored="true" multiValued="false"/>
@@ -265,7 +265,7 @@
 
     <!-- Decision copyfields-->
     <field name="decTitleOfText" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="decText" type="text" indexed="true" stored="false"/>
+    <field name="decText" type="text" indexed="true" stored="true"/>
 
     <!-- InforMEA event -->
     <field name="evId" type="int" indexed="true" stored="true" multiValued="false"/>
@@ -396,13 +396,13 @@
     <field name="cdNotes" type="string" indexed="false" stored="false" multiValued="true"/>
     <field name="cdAvailableIn" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdCourtDecisionReference" type="string" indexed="true" stored="false" multiValued="false"/>
-    <field name="cdFaolexReference" type="string" indexed="true" stored="false" multiValued="false"/>
+    <field name="cdFaolexReference" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdInstance" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdOfficialPublication" type="string" indexed="true" stored="false" multiValued="false"/>
 
-    <field name="cdRegion_en" type="text" indexed="true" stored="false" multiValued="false"/>
-    <field name="cdRegion_fr" type="text" indexed="true" stored="false" multiValued="false"/>
-    <field name="cdRegion_es" type="text" indexed="true" stored="false" multiValued="false"/>
+    <field name="cdRegion_en" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdRegion_fr" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdRegion_es" type="text" indexed="true" stored="true" multiValued="false"/>
 
     <field name="cdTreatyReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdUrlOther" type="string" indexed="true" stored="false" multiValued="false"/>
@@ -418,6 +418,7 @@
 
     <field name="legYear" type="string" indexed="true" stored="true"/>
     <field name="legOriginalYear" type="string" indexed="true" stored="true"/>
+    <field name="legDate" type="tdate" indexed="true" stored="true"/>
 
     <field name="legEntryIntoForce" type="string" indexed="true" stored="true"/>
     <field name="legCountry_iso" type="string" indexed="true" stored="true"/>
@@ -487,7 +488,7 @@
     <field name="docRegion_fr" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="docRegion_es" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="docDate" type="tdate" indexed="true" stored="false" multiValued="false"/>
+    <field name="docDate" type="tdate" indexed="true" stored="true" multiValued="false"/>
 
     <field name="docLanguage_en" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="docLanguage_fr" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -496,6 +497,7 @@
     <!-- ELIS Literature -->
     <field name="litId" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="litId2" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litDate" type="tdate" indexed="true" stored="true"/>
     <field name="litAuthor" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litAuthorM" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="litAuthorA" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -632,7 +634,7 @@
     <field name="litEULegislationReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litNationalLegislationReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litFaolexReference" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="litText" type="text" indexed="true" stored="false"/>
+    <field name="litText" type="text" indexed="true" stored="true"/>
 
     <uniqueKey>id</uniqueKey>
 
@@ -710,8 +712,8 @@
     <copyField source="trDateOfText" dest="docDate"/>
     <copyField source="decPublishDate" dest="docDate"/>
     <copyField source="cdDateOfText" dest="docDate"/>
-    <!--copyField source="legDate" dest="docDate"/-->
-    <!--copyField source="litDateOfText" dest="docDate"/-->
+    <copyField source="legDate" dest="docDate"/>
+    <copyField source="litDate" dest="docDate"/>
 
     <copyField source="trLanguageOfDocument_en" dest="docLanguage_en"/>
     <copyField source="decLanguage_en" dest="docLanguage_en"/>

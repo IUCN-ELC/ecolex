@@ -348,11 +348,11 @@ class LiteratureImporter(object):
                 for field in TEXT_DATE_FIELDS:
                     if field in data:
                         data[field], temp_doc_date = self._clean_text_date(data[field])
-                        if temp_doc_date and 'docDate' not in data:
-                            data['docDate'] = temp_doc_date
+                        if temp_doc_date and 'litDate' not in data:
+                            data['litDate'] = temp_doc_date
                 # litDateOfText parsing error log
-                if 'litDateOfText' in data and ('docDate' not in data or
-                                                not data['docDate']):
+                if 'litDateOfText' in data and ('litDate' not in data or
+                                                not data['litDate']):
                     logger.error('Invalid date format (dateoftext) %s: %s' %
                                  (data['litId'], data['litDateOfText']))
 

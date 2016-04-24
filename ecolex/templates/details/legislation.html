@@ -35,9 +35,9 @@
       <dt>Document type</dt><dd>{{ document.type|capfirst }}</dd>
       <dt>Date</dt>
       <dd>
-        <span class="sr-date" title="Original">{{ document.date }}
+        <span class="sr-date sr-help" title="Original date">{{ document.year }}
         {% if document.consolidation_date %}
-          <span class="sr-date" title="Consolidation">({{ document.consolidation_date }})</span>
+          <span class="sr-date sr-help" title="Consolidation date">({{ document.consolidation_date }})</span>
         {% endif %}
       </dd>
       {% if document.long_title %}

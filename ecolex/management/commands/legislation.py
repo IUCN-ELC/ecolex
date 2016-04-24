@@ -7,7 +7,8 @@ from pysolr import SolrError
 
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.definitions import LEGISLATION
-from ecolex.management.utils import EcolexSolr, get_file_from_url
+from ecolex.management.utils import EcolexSolr, get_file_from_url, cleanup_copyfields
+
 from ecolex.management.utils import get_content_length_from_url
 from ecolex.models import DocumentText
 
@@ -57,6 +58,7 @@ class LegislationImporter(object):
             # Load record and store text
             try:
                 legislation = self.solr.search(LEGISLATION, obj.doc_id)
+                legislation = cleanup_copyfields(legislation)
             except SolrError as e:
                 logger.error('Error reading legislation %s' % (obj.doc_id,))
                 if settings.DEBUG:
@@ -90,6 +92,7 @@ class LegislationImporter(object):
                     try:
                         old_legislation = self.solr.search(LEGISLATION, obj.doc_id)
                         legislation['id'] = old_legislation['id']
+                        legislation = cleanup_copyfields(legislation)
                     except SolrError as e:
                         logger.error('Error reading legislation %s' % (obj.doc_id,))
                         if settings.DEBUG:

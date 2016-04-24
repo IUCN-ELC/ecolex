@@ -395,6 +395,7 @@ class LiteratureSchema(CommonSchema):
     date_of_text = fields.String(load_from='litDateOfText', missing=None)
     year_of_text = fields.String(load_from='litYearOfText', missing=None)
     date_of_text_ser = fields.String(load_from='litDateOfTextSer', missing=None)
+    lit_date = fields.Date(load_from='litDate', missing=None)
     display_details = fields.String(load_from='litDisplayDetails')
     display_region = fields.String(load_from='litDisplayRegion',
                                    multilingual=True)
@@ -558,7 +559,7 @@ class LegislationSchema(CommonSchema):
         ]
         solr_fetch = CommonSchema.Meta.solr_fetch + [
             'short_title', 'long_title', 'country',
-            'date', 'consolidation_date',  # "year" / "original year"
+            'year', 'consolidation_date',  # "year" / "original year"
             'status', 'territorial_subdivision',
         ]
         solr_boost = dict(CommonSchema.Meta.solr_boost, **{
@@ -602,7 +603,8 @@ class LegislationSchema(CommonSchema):
     territorial_subdivision = fields.String(
         load_from='legTerritorialSubdivision')
     type_code = fields.String(load_from='legTypeCode')
-    date = fields.String(load_from='legYear')
+    year = fields.String(load_from='legYear')
+    date = fields.Date(load_from='legDate', missing=None)
     consolidation_date = fields.String(load_from='legOriginalYear')
 
     # References

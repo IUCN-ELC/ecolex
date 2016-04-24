@@ -461,7 +461,7 @@ class TreatyImporter(object):
                     logger.info('Downloading: %s' % url)
                     file_obj = get_file_from_url(url)
                     if file_obj:
-                        # Donwload successfull
+                        # Download successful
                         try:
                             treaty['trText'] += self.solr.extract(file_obj)
                         except:
@@ -612,7 +612,7 @@ class TreatyImporter(object):
                     logger.info('Downloading: %s' % url)
                     file_obj = get_file_from_url(url)
                     if file_obj:
-                        # Donwload successfull
+                        # Download successful
                         try:
                             treaty_data['trText'] += self.solr.extract(file_obj)
                         except:

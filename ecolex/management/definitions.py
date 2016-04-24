@@ -2,6 +2,7 @@
 # directive and also have the property stored=True. The list is used for
 # cleaning up these fields, to prevent their multiplication on document update.
 COPY_FIELDS = [
+    "docDate",
     "docSubject_en",
     "docSubject_fr",
     "docSubject_es",

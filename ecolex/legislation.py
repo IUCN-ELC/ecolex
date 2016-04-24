@@ -200,7 +200,7 @@ def harvest_file(upfile):
         if legYear:
             try:
                 legDate = datetime.strptime(legYear, '%Y')
-                legislation['docDate'] = legDate.strftime('%Y-%m-%dT%H:%M:%SZ')
+                legislation['legDate'] = legDate.strftime('%Y-%m-%dT%H:%M:%SZ')
             except Exception:
                 logger.debug('Error parsing legYear %s' % (legYear))
 
