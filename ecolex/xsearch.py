@@ -492,6 +492,8 @@ class Searcher(Queryer):
         for k, data in stats.items():
             field = STATS_FIELDS[k]._field
             parsed = {}
+            if data is None:
+                continue
             for item, value in data.items():
                 try:
                     value = field.deserialize(value)
