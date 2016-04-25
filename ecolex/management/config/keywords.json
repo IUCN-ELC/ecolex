@@ -1,0 +1,2306 @@
+{
+  "financial agricultural measures": {
+    "es": "medidas financieras agr\u00edcolas",
+    "fr": "mesures financi\u00e8res agricoles"
+  },
+  "Codex Alimentarius": {
+    "es": "Codex Alimentarius",
+    "fr": "Codex Alimentarius"
+  },
+  "coral": {
+    "es": "coral",
+    "fr": "corail"
+  },
+  "animal reproduction": {
+    "es": "reproducci\u00f3n animal",
+    "fr": "reproduction des animaux"
+  },
+  "priorities": {
+    "es": "prioridades",
+    "fr": "priorit\u00e9s"
+  },
+  "reforestation": {
+    "es": "reforestaci\u00f3n",
+    "fr": "reboisement"
+  },
+  "sub-national agreement": {
+    "es": "acuerdo subnacional",
+    "fr": "accord sous-national"
+  },
+  "industrial noise": {
+    "es": "ruidos industriales",
+    "fr": "bruit industriel"
+  },
+  "noise standards": {
+    "es": "normas sobre ruido",
+    "fr": "normes acoustiques"
+  },
+  "food security": {
+    "es": "seguridad alimentaria",
+    "fr": "s\u00e9curit\u00e9 alimentaire"
+  },
+  "integrated pest management-IPM/pest management strategies": {
+    "es": "manejo integrado de plagas/estrategias de manejo de plagas",
+    "fr": "gestion int\u00e9gr\u00e9e du risque phytosanitaire/strat\u00e9gie phytosanitaire"
+  },
+  "radiation": {
+    "es": "radiaci\u00f3n",
+    "fr": "radiation"
+  },
+  "aquatic animal products": {
+    "es": "productos acu\u00e1ticos de origen animal",
+    "fr": "produits d'origine animale aquatique"
+  },
+  "agricultural land": {
+    "es": "terrenos agr\u00edcolas",
+    "fr": "terrains agricoles"
+  },
+  "hunting authorization/permit fee": {
+    "es": "tarifas por autorizaci\u00f3n/permiso de caza",
+    "fr": "droit pour l'autorisation/permis de chasse"
+  },
+  "fishing gear/fishing method": {
+    "es": "aparejos de pesca/m\u00e9todos de pesca",
+    "fr": "engins de p\u00eache/m\u00e9thodes de p\u00eache"
+  },
+  "condiments/herbs/spices": {
+    "es": "condimentos/hierbas/especias",
+    "fr": "condiments/herbes/\u00e9pices"
+  },
+  "ownership": {
+    "es": "propiedad",
+    "fr": "propri\u00e9t\u00e9"
+  },
+  "weeds": {
+    "es": "malezas",
+    "fr": "mauvaises herbes"
+  },
+  "land reform": {
+    "es": "reforma agraria",
+    "fr": "r\u00e9forme agraire"
+  },
+  "biodiversity": {
+    "es": "biodiversidad",
+    "fr": "biodiversit\u00e9"
+  },
+  "vessel ownership": {
+    "es": "propiedad de embarcaciones pesqueras",
+    "fr": "propri\u00e9t\u00e9 du navire"
+  },
+  "foreign land tenure": {
+    "es": "propiedad de extranjeros",
+    "fr": "propri\u00e9t\u00e9 \u00e9trang\u00e8re"
+  },
+  "environmental security": {
+    "es": "seguridad ambiental",
+    "fr": "s\u00e9curit\u00e9 environnementale"
+  },
+  "quota": {
+    "es": "cuota",
+    "fr": "quota"
+  },
+  "internal trade": {
+    "es": "comercio interior",
+    "fr": "commerce int\u00e9rieur"
+  },
+  "tourism": {
+    "es": "turismo",
+    "fr": "tourisme"
+  },
+  "concession": {
+    "es": "concesi\u00f3n",
+    "fr": "concession"
+  },
+  "standing to sue": {
+    "es": "legitimaci\u00f3n para actuar",
+    "fr": "droit d'agir en justice"
+  },
+  "size": {
+    "es": "talla",
+    "fr": "taille"
+  },
+  "decentralisation": {
+    "es": "decentralizaci\u00f3n",
+    "fr": "d\u00e9centralisation"
+  },
+  "farmers' rights/breeders' rights": {
+    "es": "derechos de agricultores/derechos de seleccionadores",
+    "fr": "droits des cultivateurs/droits des obtenteurs"
+  },
+  "transshipment": {
+    "es": "transbordo",
+    "fr": "transbordement"
+  },
+  "disinfestation/disinfection": {
+    "es": "desinfestaci\u00f3n/desinfecci\u00f3n",
+    "fr": ""
+  },
+  "drought/water shortage": {
+    "es": "sequ\u00eda/escasez de agua",
+    "fr": "s\u00e9cheresse/insuffisance d'eau"
+  },
+  "mountain area": {
+    "es": "zona de monta\u00f1a",
+    "fr": "zone de montagne"
+  },
+  "desert/oasis": {
+    "es": "desierto/oasis",
+    "fr": "d\u00e9sert/oasis"
+  },
+  "emissions trading": {
+    "es": "comercio de emisiones",
+    "fr": "\u00e9change de droits d'\u00e9mission"
+  },
+  "public trust doctrine": {
+    "es": "public trust doctrine (doctrina del fideicomiso p\u00fablico)",
+    "fr": "public trust doctrine (doctrine du mandat public)"
+  },
+  "harvesting/collecting": {
+    "es": "cosecha/recolecci\u00f3n",
+    "fr": "r\u00e9colte/ramassage"
+  },
+  "dispute settlement": {
+    "es": "soluci\u00f3n de controversias",
+    "fr": "r\u00e8glement des diff\u00e9rends"
+  },
+  "standards": {
+    "es": "normas",
+    "fr": "normes"
+  },
+  "packaging/labelling": {
+    "es": "envasado/etiquetado",
+    "fr": "emballage/\u00e9tiquetage"
+  },
+  "institution": {
+    "es": "instituci\u00f3n",
+    "fr": "institution"
+  },
+  "emission standards": {
+    "es": "normas sobre emisi\u00f3n",
+    "fr": "normes sur l'\u00e9mission"
+  },
+  "traditional knowledge/indigenous knowledge": {
+    "es": "conocimientos tradicionales/ conocimiento ind\u00edgena",
+    "fr": "savoir traditionnel/savoir autochtones"
+  },
+  "ecolabelling": {
+    "es": "ecoetiquetado",
+    "fr": "\u00e9tiquetage \u00e9cologique"
+  },
+  "research": {
+    "es": "investigaci\u00f3n",
+    "fr": "recherche"
+  },
+  "hunting methods": {
+    "es": "m\u00e9todos de caza",
+    "fr": "m\u00e9thodes de chasse"
+  },
+  "post-harvest treatment": {
+    "es": "tratamientos de postcosecha",
+    "fr": "traitement post-r\u00e9colte"
+  },
+  "customary rights/traditional rights": {
+    "es": "derechos consuetudinarios/derechos tradicionales",
+    "fr": "droits coutumiers/droits traditionnels"
+  },
+  "forestry licence/permit": {
+    "es": "licencia/permiso forestal",
+    "fr": "licence/permis forestier"
+  },
+  "desertification": {
+    "es": "desertificaci\u00f3n",
+    "fr": "d\u00e9sertification"
+  },
+  "capacity building": {
+    "es": "fortalecimiento de la capacidad",
+    "fr": "renforcement des capacit\u00e9s"
+  },
+  "fishing licence": {
+    "es": "licencia de pesca",
+    "fr": "licence de p\u00eache"
+  },
+  "international organization": {
+    "es": "organizaci\u00f3n internacional",
+    "fr": "organisation internationale"
+  },
+  "light pollution": {
+    "es": "contaminaci\u00f3n lum\u00ednica",
+    "fr": "pollution lumineuse"
+  },
+  "nutrients/fertilizers": {
+    "es": "nutrientes/fertilizantes",
+    "fr": "nutriments/engrais"
+  },
+  "public private partnership (PPP)": {
+    "es": "participaci\u00f3n p\u00fablico privada (PPP)",
+    "fr": "partenariats public-priv\u00e9 (PPP)"
+  },
+  "adverse possession/prescription": {
+    "es": "usucapi\u00f3n/prescripci\u00f3n",
+    "fr": "usucapion/prescription acquisitive"
+  },
+  "allocation/quota": {
+    "es": "asignaci\u00f3n/cuota",
+    "fr": "allocation/quota"
+  },
+  "biosafety": {
+    "es": "seguridad de la biotecnolog\u00eda",
+    "fr": "pr\u00e9vention des risques biotechnologiques"
+  },
+  "artisanal fishing": {
+    "es": "pesca artesanal",
+    "fr": "p\u00eache artisanale"
+  },
+  "extension": {
+    "es": "extensi\u00f3n",
+    "fr": "vulgarisation agricole"
+  },
+  "rainforests": {
+    "es": "bosques pluviales",
+    "fr": "for\u00eats pluviales"
+  },
+  "use restrictions": {
+    "es": "restricciones para el uso",
+    "fr": "restrictions \u00e0 l'utilisation"
+  },
+  "environmental standards": {
+    "es": "normas sobre calidad ambiental",
+    "fr": "normes environnementales"
+  },
+  "registration": {
+    "es": "registro",
+    "fr": "enregistrement"
+  },
+  "groundwater recharge": {
+    "es": "recarga de aguas subterr\u00e1neas",
+    "fr": "alimentation des nappes"
+  },
+  "aquatic plants": {
+    "es": "plantas acu\u00e1ticas",
+    "fr": "plantes aquatiques"
+  },
+  "soft law": {
+    "es": "soft law",
+    "fr": "soft law"
+  },
+  "outer space": {
+    "es": "espacio exterior",
+    "fr": "espace extra-atmosph\u00e9rique"
+  },
+  "effluent waste (industrial sources)": {
+    "es": "efluente de aguas (residuales industriales)",
+    "fr": "eaux us\u00e9es (source industrielle)"
+  },
+  "fishing vessel marking": {
+    "es": "marcado de embarcaciones de pesca",
+    "fr": "marquage des navires de p\u00eache"
+  },
+  "islands": {
+    "es": "islas",
+    "fr": "\u00eeles"
+  },
+  "apiculture/sericulture": {
+    "es": "apicultura/sericultura",
+    "fr": "apiculture/s\u00e9riciculture"
+  },
+  "national parks": {
+    "es": "parques nacionales",
+    "fr": "parcs nationaux"
+  },
+  "hunting gear/hunting methods": {
+    "es": "armas de caza/m\u00e9todos de caza",
+    "fr": "\u00e9quipement de chasse/m\u00e9thodes de chasse"
+  },
+  "sovereignty": {
+    "es": "soberan\u00eda",
+    "fr": "souverainet\u00e9"
+  },
+  "ownership of natural resources": {
+    "es": "propiedad de los recursos naturales",
+    "fr": "propri\u00e9t\u00e9 des ressources naturelles"
+  },
+  "climate change": {
+    "es": "cambio clim\u00e1tico",
+    "fr": "changement de climat"
+  },
+  "contract farming": {
+    "es": "agricultura por contrato",
+    "fr": "agriculture contractuelle"
+  },
+  "vehicle noise": {
+    "es": "ruido de veh\u00edculos",
+    "fr": "bruit des v\u00e9hicules"
+  },
+  "right to food": {
+    "es": "derecho a la alimentaci\u00f3n",
+    "fr": "droit \u00e0 l'alimentation"
+  },
+  "law reform/harmonization/deregulation": {
+    "es": "reforma legal/armonizaci\u00f3n/desregulaci\u00f3n",
+    "fr": "r\u00e9forme du droit/harmonisation/d\u00e9r\u00e9gulation"
+  },
+  "comprehensive description": {
+    "es": "descripci\u00f3n completa",
+    "fr": "description compl\u00e8te"
+  },
+  "pesticides": {
+    "es": "plaguicidas",
+    "fr": "pesticides"
+  },
+  "water conservation zone": {
+    "es": "zona de conservaci\u00f3n de aguas",
+    "fr": "zone de conservation des eaux"
+  },
+  "waterworks": {
+    "es": "instalaciones",
+    "fr": "ouvrages"
+  },
+  "genetic resources": {
+    "es": "recursos gen\u00e9ticos",
+    "fr": "ressources g\u00e9n\u00e9tiques"
+  },
+  "labelling/packaging": {
+    "es": "etiquetado/envasado",
+    "fr": "\u00e9tiquetage/emballage"
+  },
+  "vending": {
+    "es": "venta",
+    "fr": "vente"
+  },
+  "management/conservation": {
+    "es": "ordenaci\u00f3n/conservaci\u00f3n",
+    "fr": "gestion/conservation"
+  },
+  "land clearing": {
+    "es": "roza",
+    "fr": "d\u00e9frichement"
+  },
+  "marine mammals": {
+    "es": "mam\u00edferos marinos",
+    "fr": "mammif\u00e8res marins"
+  },
+  "disasters": {
+    "es": "desastres",
+    "fr": "catastrophe"
+  },
+  "agreement/contract": {
+    "es": "acuerdo/contrato",
+    "fr": "accord/contrat"
+  },
+  "transboundary effects": {
+    "es": "efectos transfronterizos",
+    "fr": "effet transfronti\u00e8re"
+  },
+  "air pollution (stationary sources)": {
+    "es": "contaminaci\u00f3n del aire (fuentes fijas)",
+    "fr": "pollution atmosph\u00e9rique (sources fixes)"
+  },
+  "compensation/liability": {
+    "es": "indemnizaci\u00f3n/responsabilidad",
+    "fr": "indemnisation/responsabilit\u00e9"
+  },
+  "swine": {
+    "es": "porcinos",
+    "fr": "porcins"
+  },
+  "developing countries": {
+    "es": "pa\u00edses en desarrollo",
+    "fr": "pays en voie de d\u00e9veloppement"
+  },
+  "mangroves": {
+    "es": "manglares",
+    "fr": "mangroves"
+  },
+  "population growth": {
+    "es": "crecimiento poblacional",
+    "fr": "croissance de la population"
+  },
+  "community wildlife management": {
+    "es": "gesti\u00f3n de animales selv\u00e1ticos por las comunidades",
+    "fr": "gestion communautaire de la faune et de la flore sauvage"
+  },
+  "sustainable use": {
+    "es": "uso sostenible",
+    "fr": "utilisation durable"
+  },
+  "plant protection": {
+    "es": "protecci\u00f3n vegetal",
+    "fr": "protection des v\u00e9g\u00e9taux"
+  },
+  "emissions": {
+    "es": "emisiones",
+    "fr": "\u00e9missions"
+  },
+  "hygiene/sanitary procedures": {
+    "es": "higiene/procedimientos sanitarios",
+    "fr": "hygi\u00e8ne/proc\u00e9dures sanitaires"
+  },
+  "deceit/fraud/adulteration; adulteration/fraud/deceit": {
+    "es": "enga\u00f1o/fraude/adulteraci\u00f3n; adulteraci\u00f3n/fraude/enga\u00f1o",
+    "fr": "adult\u00e9ration/fraude"
+  },
+  "fishing vessel": {
+    "es": "embarcaci\u00f3n de pesca",
+    "fr": "navire de p\u00eache"
+  },
+  "amparo": {
+    "es": "amparo",
+    "fr": "amparo"
+  },
+  "environmental indicators": {
+    "es": "indicatores ambientales",
+    "fr": "indicateurs environnementaux"
+  },
+  "mariculture": {
+    "es": "marinocultura",
+    "fr": "mariculture"
+  },
+  "foreign fishing": {
+    "es": "pesca por extranjeros",
+    "fr": "p\u00eache \u00e9trang\u00e8re"
+  },
+  "local government": {
+    "es": "gobierno local",
+    "fr": "collectivit\u00e9 locale"
+  },
+  "seeds": {
+    "es": "semillas",
+    "fr": "semences"
+  },
+  "procedural matters": {
+    "es": "cuestiones de procedimiento",
+    "fr": "questions de proc\u00e9dures"
+  },
+  "federal state": {
+    "es": "estado federal",
+    "fr": "\u00e9tat f\u00e9d\u00e9ral"
+  },
+  "non-governmental entity": {
+    "es": "entidad no gubernamental",
+    "fr": "entit\u00e9 non-gouvernementale"
+  },
+  "protected fishing area": {
+    "es": "\u00e1rea de pesca protegida",
+    "fr": "zone de p\u00eache prot\u00e9g\u00e9e"
+  },
+  "abandoned land/unoccupied land": {
+    "es": "tierras abandonadas/terrenos bald\u00edos",
+    "fr": "terres abandonn\u00e9es/terres vacantes"
+  },
+  "future generations": {
+    "es": "generaciones futuras",
+    "fr": "g\u00e9n\u00e9rations futures"
+  },
+  "business/industry/corporations": {
+    "es": "negocios/industria/corporaciones",
+    "fr": "commerce/industrie/soci\u00e9t\u00e9s"
+  },
+  "oilseeds/oils/fats; fats/oils/oilseeds": {
+    "es": "semillas oleaginosas/aceites/grasas; grasas/aceites/semillas oleaginosas",
+    "fr": "ol\u00e9agineux/huiles/graisses; graisses/huiles/ol\u00e9agineux"
+  },
+  "goats/sheep": {
+    "es": "caprinos/ovinos",
+    "fr": "caprins/ovins"
+  },
+  "long-range air pollution": {
+    "es": "contaminaci\u00f3n aerea de largo alcance",
+    "fr": "pollution de l'air \u00e0 longue distance"
+  },
+  "territorial sea": {
+    "es": "mar territorial",
+    "fr": "mer territoriale"
+  },
+  "hydropower generation": {
+    "es": "producci\u00f3n de energ\u00eda hidroel\u00e9ctrica",
+    "fr": "production d'\u00e9nergie hydro\u00e9lectrique"
+  },
+  "special dietary uses": {
+    "es": "reg\u00edmenes diet\u00e9ticos especiales",
+    "fr": "aliments di\u00e9t\u00e9tiques et de r\u00e9gime"
+  },
+  "damage valuation/resource valuation": {
+    "es": "valoraci\u00f3n del recurso/valoraci\u00f3n del da\u00f1o",
+    "fr": "\u00e9valuation des dommages/\u00e9valuation des ressources"
+  },
+  "marine pollution": {
+    "es": "contaminaci\u00f3n marina",
+    "fr": "pollution de la mer"
+  },
+  "bank": {
+    "es": "ribera",
+    "fr": "berge"
+  },
+  "servitude": {
+    "es": "servidumbre",
+    "fr": "servitude"
+  },
+  "turtles": {
+    "es": "tortugas",
+    "fr": "tortues"
+  },
+  "stock enhancement/repopulation": {
+    "es": "incremento del stock/repoblaci\u00f3n",
+    "fr": "re-empoissonnement/repeuplement"
+  },
+  "levy/tax": {
+    "es": "impuesto/tasa",
+    "fr": "imp\u00f4t/taxe"
+  },
+  "uncodified constitution": {
+    "es": "constituci\u00f3n no codificada",
+    "fr": "constitution non codifi\u00e9e"
+  },
+  "fuelwood": {
+    "es": "le\u00f1a",
+    "fr": "bois de chauffe"
+  },
+  "harmful animal/dangerous animal": {
+    "es": "animal peligroso/animal da\u00f1ino",
+    "fr": "animal nocif/animal dangereux"
+  },
+  "fibres/textile plants": {
+    "es": "fibras/plantas textiles",
+    "fr": "fibres/textiles"
+  },
+  "protection of species": {
+    "es": "protec\u00edon de las especies",
+    "fr": "protection  des esp\u00e8ces"
+  },
+  "slaughtering": {
+    "es": "matanza",
+    "fr": "abattage"
+  },
+  "emergency intervention system/early warning system": {
+    "es": "sistema de intervenci\u00f3n de emergencia/sistema de alerta r\u00e1pida",
+    "fr": "intervention d'urgence/r\u00e9seau d'alerte"
+  },
+  "timber": {
+    "es": "madera",
+    "fr": "bois"
+  },
+  "zoning": {
+    "es": "zonificaci\u00f3n",
+    "fr": "zonage"
+  },
+  "free water use": {
+    "es": "uso libre del agua",
+    "fr": "usage libre de l'eau"
+  },
+  "fiscal and market measures": {
+    "es": "medidas fiscales y de mercado",
+    "fr": "mesures fiscales et de march\u00e9"
+  },
+  "constitutional court": {
+    "es": "corte constitucional",
+    "fr": "cour constitutionnelle"
+  },
+  "sheep/goats": {
+    "es": "ovinos/caprinos",
+    "fr": "ovins/caprins"
+  },
+  "basic legislation": {
+    "es": "legislaci\u00f3n b\u00e1sica",
+    "fr": "l\u00e9gislation de base"
+  },
+  "tracker/guide": {
+    "es": "rastreadores/gu\u00edas",
+    "fr": "pisteur/guide"
+  },
+  "meat": {
+    "es": "carne",
+    "fr": "viande"
+  },
+  "marine pollution (ship-based sources)": {
+    "es": "contaminaci\u00f3n marina (por buques)",
+    "fr": "pollution marine (imputable aux navires)"
+  },
+  "acid precipitation": {
+    "es": "precipitaci\u00f3n \u00e1cida",
+    "fr": "pluies acides"
+  },
+  "agricultural commodities": {
+    "es": "productos agr\u00edcolas",
+    "fr": "produits agricoles"
+  },
+  "environmental cost allocation": {
+    "es": "asignaci\u00f3n de costas ambientales",
+    "fr": "allocation des co\u00fbts environnementaux"
+  },
+  "ranching/captive breeding": {
+    "es": "cr\u00eda en ranchos/cr\u00eda en cautividad",
+    "fr": "ranch/reproduction en captivit\u00e9"
+  },
+  "school feeding": {
+    "es": "alimentaci\u00f3n escolar",
+    "fr": "alimentation scolaire"
+  },
+  "EEZ-Exclusive Economic Zone": {
+    "es": "ZEE-Zona Econ\u00f3mica Exclusiva",
+    "fr": "ZEE-Zone Economique Exclusive"
+  },
+  "aquatic animals": {
+    "es": "animales acu\u00e1ticos",
+    "fr": "animaux aquatiques"
+  },
+  "water shortage/drought": {
+    "es": "escasez de agua/sequ\u00eda",
+    "fr": "insuffisance d'eau/s\u00e9cheresse"
+  },
+  "land-use planning": {
+    "es": "manejo de tierras",
+    "fr": "planification territoriale"
+  },
+  "penalties/offences": {
+    "es": "sanciones/infracciones",
+    "fr": "sanctions/infractions"
+  },
+  "coffee/cocoa/tea": {
+    "es": "caf\u00e9/cacao/t\u00e9",
+    "fr": "caf\u00e9/cacao/th\u00e9"
+  },
+  "policy/planning": {
+    "es": "pol\u00edtica/planificaci\u00f3n",
+    "fr": "politique/planification"
+  },
+  "PIC-prior informed consent": {
+    "es": "ICP-procedimiento de informaci\u00f3n y consentimiento previos",
+    "fr": "ICP-information et consentement pr\u00e9alables"
+  },
+  "edible nuts/fruits": {
+    "es": "nueces comestibles/frutas",
+    "fr": "noix comestibles/fruits"
+  },
+  "court/tribunal": {
+    "es": "corte/tribunal",
+    "fr": "cour/tribunaux"
+  },
+  "marking/identification": {
+    "es": "marcado/identificaci\u00f3n",
+    "fr": "marquage/identificacion"
+  },
+  "reuse/recycling": {
+    "es": "reutilizaci\u00f3n/reciclado",
+    "fr": "r\u00e9emploi/recyclage"
+  },
+  "air pollution/air quality": {
+    "es": "contaminaci\u00f3n del aire/calidad del aire",
+    "fr": "pollution de l'air/qualit\u00e9 de l'air"
+  },
+  "hazardous waste": {
+    "es": "residuos peligrosos",
+    "fr": "d\u00e9chets dangereux"
+  },
+  "food waste": {
+    "es": "desperdicio de alimentos",
+    "fr": "gaspillage alimentaire"
+  },
+  "estuaries": {
+    "es": "estuarios",
+    "fr": "estuaires"
+  },
+  "inland waters": {
+    "es": "aguas continentales",
+    "fr": "eaux continentales"
+  },
+  "inland fisheries": {
+    "es": "pesca continental",
+    "fr": "p\u00eache continentale"
+  },
+  "joint implementation": {
+    "es": "implementaci\u00f3n conjunta",
+    "fr": "mise en application conjointe"
+  },
+  "amphibians": {
+    "es": "anfibios",
+    "fr": "amphibiens"
+  },
+  "total allowable catch": {
+    "es": "volumen admisible de captura",
+    "fr": "volume admissible de captures"
+  },
+  "wild fauna": {
+    "es": "fauna silvestre",
+    "fr": "faune sauvage"
+  },
+  "waste management": {
+    "es": "gesti\u00f3n de desechos",
+    "fr": "gestion des d\u00e9chets"
+  },
+  "watershed/catchment": {
+    "es": "cuenca colectora/\u00e1rea de captaci\u00f3n",
+    "fr": "bassin versant/captage"
+  },
+  "coastal zone management": {
+    "es": "ordenaci\u00f3n de \u00e1reas costeras",
+    "fr": "gestion des zones c\u00f4ti\u00e8res"
+  },
+  "wetlands": {
+    "es": "zonas h\u00famedas",
+    "fr": "zones humides"
+  },
+  "legal proceedings/administrative proceedings": {
+    "es": "procedimientos judiciales/procedimientos administrativos",
+    "fr": "proc\u00e9dures judiciaires/proc\u00e9dures administratives"
+  },
+  "recreational water use": {
+    "es": "agua de uso recreativo",
+    "fr": "eau \u00e0 usage r\u00e9cr\u00e9atif"
+  },
+  "rule of law": {
+    "es": "estado de derecho",
+    "fr": "\u00e9tat de droit"
+  },
+  "forest officers/forest service": {
+    "es": "oficiales forestales/servicio forestal",
+    "fr": "agents forestiers/service forestier"
+  },
+  "transfer": {
+    "es": "transferencia",
+    "fr": "transfert"
+  },
+  "resource/damage valuation": {
+    "es": "valoraci\u00f3n del da\u00f1o/recurso",
+    "fr": "\u00e9valuation des ressources/des dommages"
+  },
+  "flood": {
+    "es": "inundaci\u00f3n",
+    "fr": "inondation"
+  },
+  "forest conservation/forest management": {
+    "es": "conservaci\u00f3n de montes/ordenaci\u00f3n forestal",
+    "fr": ""
+  },
+  "breastfeeding/infant food": {
+    "es": "alactamiento/alimentos para ni\u00f1os",
+    "fr": "allaitement au sein/alimentation des enfants"
+  },
+  "siltation/saltwater intrusion": {
+    "es": "sedimentaci\u00f3n/infiltraci\u00f3n de aguas salinas",
+    "fr": "ensablement/invasion d'eau sal\u00e9e"
+  },
+  "soil conservation/soil improvement": {
+    "es": "conservaci\u00f3n de suelos/mejoramiento de suelos",
+    "fr": "conservation du sol/am\u00e9lioration du sol"
+  },
+  "environmental audit": {
+    "es": "auditor\u00eda ambiental",
+    "fr": "\u00e9co-audit"
+  },
+  "international agreement-implementation": {
+    "es": "acuerdo internacional-implementaci\u00f3n",
+    "fr": "accord international-mise en oeuvre"
+  },
+  "right to water": {
+    "es": "derecho al agua",
+    "fr": "droit \u00e0 l'eau"
+  },
+  "agro-forestry/silvo-pastoralism": {
+    "es": "agroforestal/silvopastoral",
+    "fr": "agro-foresterie/sylvopastoralisme"
+  },
+  "data collection/reporting": {
+    "es": "recopilaci\u00f3n de datos/informes",
+    "fr": "collecte de donn\u00e9es/d\u00e9clarations"
+  },
+  "water abstraction": {
+    "es": "captaci\u00f3n de agua",
+    "fr": "pr\u00e9l\u00e8vement d'eau"
+  },
+  "NGO": {
+    "es": "ONG",
+    "fr": "ONG"
+  },
+  "HACCP": {
+    "es": "HACCP",
+    "fr": "HACCP"
+  },
+  "GMO": {
+    "es": "OGM",
+    "fr": "OGM"
+  },
+  "land tenure": {
+    "es": "tenencia de tierras",
+    "fr": "r\u00e9gime foncier"
+  },
+  "dam": {
+    "es": "presa",
+    "fr": "barrage"
+  },
+  "indigenous peoples": {
+    "es": "pueblos ind\u00edgenas",
+    "fr": "populations autochtones"
+  },
+  "herbs/condiments/spices; spices/condiments/herbs": {
+    "es": "hierbas/condimentos/especias; especias/condimentos/hierbas",
+    "fr": "herbes/condiments/\u00e9pices; \u00e9pices/condiments/herbes"
+  },
+  "planting material/forestry seeds": {
+    "es": "materiales de propagaci\u00f3n/semillas forestales",
+    "fr": "mat\u00e9riel de reproduction/semences foresti\u00e8res"
+  },
+  "handling/processing": {
+    "es": "manipulaci\u00f3n/procesamiento",
+    "fr": "manutention/transformation"
+  },
+  "game": {
+    "es": "animales selv\u00e1ticos",
+    "fr": "gibier"
+  },
+  "human rights": {
+    "es": "derechos humanos",
+    "fr": "droits de l'homme"
+  },
+  "recycling/reuse": {
+    "es": "reciclado/reutilizaci\u00f3n",
+    "fr": "recyclage/r\u00e9emploi"
+  },
+  "equine-animals": {
+    "es": "equino",
+    "fr": "cheval"
+  },
+  "water supply": {
+    "es": "abastecimiento de agua",
+    "fr": "approvisionnement en eau"
+  },
+  "traceability/product tracing": {
+    "es": "rastreabilidad/rastreo de productos",
+    "fr": "tra\u00e7abilit\u00e9/tra\u00e7age du produit"
+  },
+  "forest species": {
+    "es": "especies forestales",
+    "fr": "essence foresti\u00e8re"
+  },
+  "transboundary movement of waste": {
+    "es": "movimientos transfronterizos de desechos",
+    "fr": "mouvement transfronti\u00e8re des d\u00e9chets"
+  },
+  "diadromous fish": {
+    "es": "peces di\u00e1dromos",
+    "fr": "poissons diadromes"
+  },
+  "marine fisheries": {
+    "es": "pesca mar\u00edtima",
+    "fr": "p\u00eache maritime"
+  },
+  "authorization/permit": {
+    "es": "autorizaci\u00f3n/permiso",
+    "fr": "autorisation/permis"
+  },
+  "unitary state": {
+    "es": "estado unitario",
+    "fr": "\u00e9tat unitaire"
+  },
+  "timber extraction/logging": {
+    "es": "corte y extracci\u00f3n/explotaci\u00f3n forestal",
+    "fr": "coupe de bois/exploitation foresti\u00e8re"
+  },
+  "protection of habitats": {
+    "es": "protecci\u00f3n del h\u00e1bitat",
+    "fr": "protection de l'habitat"
+  },
+  "alien species": {
+    "es": "especies ex\u00f3ticas",
+    "fr": "esp\u00e8ces exotiques"
+  },
+  "cattle": {
+    "es": "bovinos",
+    "fr": "bovins"
+  },
+  "resource accounting": {
+    "es": "contabilidad de recursos ambientales",
+    "fr": "comptabilisation des ressources"
+  },
+  "industrial water use": {
+    "es": "uso industrial del agua",
+    "fr": "eau \u00e0 usage industriel"
+  },
+  "oil pollution": {
+    "es": "contaminaci\u00f3n oleosa",
+    "fr": "pollution par les hydrocarbures"
+  },
+  "education": {
+    "es": "educaci\u00f3n",
+    "fr": "\u00e9ducation"
+  },
+  "rodents": {
+    "es": "roedores",
+    "fr": "rongeurs"
+  },
+  "continental shelf": {
+    "es": "plataforma continental",
+    "fr": "plateau continental"
+  },
+  "effluent waste standards": {
+    "es": "normas sobre efluentes residuales",
+    "fr": "normes relatives aux  rejets d'effluents"
+  },
+  "sericulture/apiculture": {
+    "es": "sericultura/apicultura",
+    "fr": "s\u00e9riciculture/apiculture"
+  },
+  "environmental technology": {
+    "es": "tecnolog\u00eda ambiental",
+    "fr": "technologie environnementale"
+  },
+  "diseases/pests": {
+    "es": "enfermedades/plagas",
+    "fr": "maladies/parasites"
+  },
+  "biofuel": {
+    "es": "biocombustible",
+    "fr": "biocarburant"
+  },
+  "air pollution (non-stationary sources)": {
+    "es": "contaminaci\u00f3n del aire (fuentes m\u00f3viles)",
+    "fr": "pollution atmosph\u00e9rique (sources mobiles)"
+  },
+  "community management": {
+    "es": "ordenaci\u00f3n comunitaria",
+    "fr": "gestion communautaire"
+  },
+  "herd book": {
+    "es": "libro geneal\u00f3gico",
+    "fr": "livre g\u00e9n\u00e9alogique"
+  },
+  "explicit mention of international treaties": {
+    "es": "menci\u00f3n expl\u00edcita de tratados internacionales",
+    "fr": "mention explicite de trait\u00e9s internationaux"
+  },
+  "polluted soil cleanups": {
+    "es": "descontaminaci\u00f3n de suelos",
+    "fr": "assainissement des sols pollu\u00e9s"
+  },
+  "agricultural development": {
+    "es": "desarrollo agr\u00edcola",
+    "fr": "d\u00e9veloppement agricole"
+  },
+  "freshwater fishes": {
+    "es": "peces de agua dulce",
+    "fr": "poissons d'eau douce"
+  },
+  "financing": {
+    "es": "financiamiento",
+    "fr": "financement"
+  },
+  "minerals": {
+    "es": "minerales",
+    "fr": "min\u00e9raux"
+  },
+  "captive breeding/ranching": {
+    "es": "cr\u00eda en cautividad/cr\u00eda en ranchos",
+    "fr": "reproduction en captivit\u00e9/ranch"
+  },
+  "EIA": {
+    "es": "EIA",
+    "fr": "EIA"
+  },
+  "fishing authorization": {
+    "es": "autorizaci\u00f3n de pesca",
+    "fr": "autorisation de p\u00eache"
+  },
+  "technology transfer": {
+    "es": "transferencia de tecnolog\u00eda",
+    "fr": "transfert de technologie"
+  },
+  "animal health": {
+    "es": "sanidad animal",
+    "fr": "sant\u00e9 des animaux"
+  },
+  "rural youth": {
+    "es": "juventud rural",
+    "fr": "jeunesse rurale"
+  },
+  "silvo-pastoralism": {
+    "es": "silvopastoral",
+    "fr": "sylvopastoralisme"
+  },
+  "public water": {
+    "es": "aguas p\u00fablicas",
+    "fr": "eau publique"
+  },
+  "nutrition": {
+    "es": "nutrici\u00f3n",
+    "fr": "nutrition"
+  },
+  "insects": {
+    "es": "insectos",
+    "fr": "insectes"
+  },
+  "water rights": {
+    "es": "derechos de agua",
+    "fr": "droits d'utilisation de l'eau"
+  },
+  "collecting/harvesting": {
+    "es": "recolecci\u00f3n/cosecha",
+    "fr": "ramassage/r\u00e9colte"
+  },
+  "biotechnology": {
+    "es": "biotecnolog\u00eda",
+    "fr": "biotechnologie"
+  },
+  "classification/declassification": {
+    "es": "clasificaci\u00f3n/declasificaci\u00f3n",
+    "fr": "classement/d\u00e9classement"
+  },
+  "saltwater intrusion/siltation": {
+    "es": "infiltraci\u00f3n de aguas salinas/sedimentaci\u00f3n",
+    "fr": "invasion d'eau sal\u00e9e/ensablement"
+  },
+  "agriculture and environment": {
+    "es": "agricultura y medio ambiente",
+    "fr": "agriculture et environnement"
+  },
+  "less favoured areas": {
+    "es": "\u00e1reas deprimidas",
+    "fr": "aires d\u00e9favoris\u00e9es"
+  },
+  "administrative proceedings/legal proceedings": {
+    "es": "procedimientos administrativos/procedimientos judiciales",
+    "fr": "proc\u00e9dures administratives/proc\u00e9dures judiciaires"
+  },
+  "tropical forests": {
+    "es": "bosques tropicales",
+    "fr": "for\u00eats tropicales"
+  },
+  "right of use": {
+    "es": "derecho de uso",
+    "fr": "droit d'usage"
+  },
+  "traditional rights/customary rights": {
+    "es": "derechos tradicionales/derechos consuetudinarios",
+    "fr": "droits traditionnels/droits coutumiers"
+  },
+  "recreational forest": {
+    "es": "bosques recreativos",
+    "fr": "for\u00eat r\u00e9cr\u00e9ative"
+  },
+  "waste disposal": {
+    "es": "eliminaci\u00f3n de desechos",
+    "fr": "\u00e9limination de d\u00e9chets"
+  },
+  "family farming": {
+    "es": "agricultura familiar",
+    "fr": "agriculture familiale"
+  },
+  "detergents/cleaning agents": {
+    "es": "detergentes/productos de limpieza",
+    "fr": "d\u00e9tergents/produits de nettoyage"
+  },
+  "fishery management and conservation": {
+    "es": "manejo y conservaci\u00f3n pesquera",
+    "fr": "gestion et conservation  des p\u00eaches"
+  },
+  "birds": {
+    "es": "p\u00e1jaros",
+    "fr": "oiseaux"
+  },
+  "potable water": {
+    "es": "agua potable",
+    "fr": "eau potable"
+  },
+  "logging/timber extraction": {
+    "es": "explotaci\u00f3n forestal/corte y extracci\u00f3n",
+    "fr": "exploitation foresti\u00e8re/coupe de bois"
+  },
+  "land consolidation": {
+    "es": "concentraci\u00f3n parcelaria",
+    "fr": "am\u00e9nagement foncier"
+  },
+  "air quality/air pollution": {
+    "es": "calidad del aire/contaminaci\u00f3n del aire",
+    "fr": "qualit\u00e9 de l'air/pollution de l'air"
+  },
+  "migratory species": {
+    "es": "especies migratorias",
+    "fr": "esp\u00e8ces migratoires"
+  },
+  "wildlife products": {
+    "es": "productos silvestres",
+    "fr": "produits de la chasse"
+  },
+  "poverty": {
+    "es": "pobreza",
+    "fr": "pauvret\u00e9"
+  },
+  "charcoal": {
+    "es": "carb\u00f3n vegetal",
+    "fr": "charbon de bois"
+  },
+  "product tracing/traceability": {
+    "es": "rastreo de productos/rastreabilidad",
+    "fr": "tra\u00e7age du produit/tra\u00e7abilit\u00e9"
+  },
+  "biosecurity": {
+    "es": "bioseguridad",
+    "fr": "bios\u00e9curit\u00e9"
+  },
+  "disinfection/disinfestation": {
+    "es": "desinfecci\u00f3n/desinfestaci\u00f3n",
+    "fr": "d\u00e9sinfection"
+  },
+  "grazing/transhumance": {
+    "es": "pastorear/trashumancia",
+    "fr": "p\u00e2turage/transhumance"
+  },
+  "sugar": {
+    "es": "az\u00facar",
+    "fr": "sucre"
+  },
+  "access right": {
+    "es": "derecho de acceso",
+    "fr": "droit d'acc\u00e8s"
+  },
+  "range": {
+    "es": "pastoreo",
+    "fr": "p\u00e2turages/terrains de parcours"
+  },
+  "non-commercial fishing": {
+    "es": "pesca no-comercial",
+    "fr": "p\u00eache non-commerciale"
+  },
+  "freshwater quality/freshwater pollution": {
+    "es": "calidad de las aguas dulces/contaminaci\u00f3n de las aguas dulces",
+    "fr": "pollution des eaux douces/qualit\u00e9 des eaux douces"
+  },
+  "surface water": {
+    "es": "aguas superficiales",
+    "fr": "eaux superficielles"
+  },
+  "marine pollution (dumping at sea)": {
+    "es": "contaminaci\u00f3n  marina  (vertimiento)",
+    "fr": "pollution de la mer (immersion de d\u00e9chets)"
+  },
+  "sanitary procedures/hygiene": {
+    "es": "procedimientos sanitarios/higiene",
+    "fr": "proc\u00e9dures sanitaires/hygi\u00e8ne"
+  },
+  "constitutional law": {
+    "es": "derecho constitutional",
+    "fr": "droit constitutionnel"
+  },
+  "oasis/desert": {
+    "es": "oasis/desierto",
+    "fr": "oasis/d\u00e9sert"
+  },
+  "feedstuffs/animal feed": {
+    "es": "piensos/alimentos para animales",
+    "fr": ""
+  },
+  "well sinking/boreholes": {
+    "es": "perforaci\u00f3n de pozos/pozos",
+    "fr": "forage de puits/puits"
+  },
+  "organic production/ecological production": {
+    "es": "producci\u00f3n org\u00e1nica/producci\u00f3n ecol\u00f3gica",
+    "fr": "production biologique/production \u00e9cologique"
+  },
+  "poultry": {
+    "es": "aves de corral",
+    "fr": "volaille"
+  },
+  "vaccination": {
+    "es": "vacunaci\u00f3n",
+    "fr": "vaccination"
+  },
+  "public forest": {
+    "es": "bosques demaniales",
+    "fr": "for\u00eat publique"
+  },
+  "certification": {
+    "es": "certificaci\u00f3n",
+    "fr": "certification"
+  },
+  "protected animal species": {
+    "es": "especies animales protegidas",
+    "fr": "esp\u00e8ces animales prot\u00e9g\u00e9es"
+  },
+  "quarantine": {
+    "es": "cuarentena",
+    "fr": "quarantaine"
+  },
+  "soil pollution/quality": {
+    "es": "contaminaci\u00f3n del suelo/calidad",
+    "fr": "pollution du sol/qualit\u00e9"
+  },
+  "international trade": {
+    "es": "comercio internacional",
+    "fr": "commerce international"
+  },
+  "air quality standards": {
+    "es": "normas sobre la calidad del aire",
+    "fr": "normes de qualit\u00e9 de l'air"
+  },
+  "ozone layer": {
+    "es": "capa de ozono",
+    "fr": "couche d'ozone"
+  },
+  "ex-situ conservation": {
+    "es": "conservaci\u00f3n ex-situ",
+    "fr": "conservation ex situ"
+  },
+  "noise pollution": {
+    "es": "contaminaci\u00f3n ac\u00fastica",
+    "fr": "pollution sonore (de l'environnement)"
+  },
+  "renewable energy": {
+    "es": "energ\u00eda renovable",
+    "fr": "\u00e9nergie renouvelable"
+  },
+  "enforcement/compliance": {
+    "es": "cumplimiento/aplicaci\u00f3n",
+    "fr": "mise en application"
+  },
+  "electro-magnetic pollution": {
+    "es": "contaminaci\u00f3n electro-magn\u00e9tica",
+    "fr": "pollution \u00e9lectro-magn\u00e9tique"
+  },
+  "lease": {
+    "es": "arrendamiento",
+    "fr": "location"
+  },
+  "textile plants/fibres": {
+    "es": "plantas textiles/fibras",
+    "fr": "textiles/fibres"
+  },
+  "protection of environment": {
+    "es": "protecci\u00f3n del medio ambiente",
+    "fr": "protection de l\u2019environnement"
+  },
+  "fish products": {
+    "es": "productos pesqueros",
+    "fr": "produits de la p\u00eache"
+  },
+  "grasses/crops": {
+    "es": "praderas/cultivos",
+    "fr": "p\u00e2tures/cultures"
+  },
+  "cadastre/land registration": {
+    "es": "catastro/registraci\u00f3n de tierras",
+    "fr": "cadastre/enregistrement des terres"
+  },
+  "ecosystem preservation": {
+    "es": "conservaci\u00f3n del ecosistema",
+    "fr": "pr\u00e9servation de l'\u00e9cosyst\u00e8me"
+  },
+  "cocoa/coffee/tea; tea/coffee/cocoa": {
+    "es": "cacao/caf\u00e9/t\u00e9; t\u00e9/caf\u00e9/cacao",
+    "fr": "cacao/caf\u00e9/th\u00e9; th\u00e9/caf\u00e9/cacao"
+  },
+  "protected fish species": {
+    "es": "especies de peces protegidas",
+    "fr": "esp\u00e8ces halieutiques prot\u00e9g\u00e9es"
+  },
+  "thermal and medicinal waters": {
+    "es": "aguas termales y medicinales",
+    "fr": "eaux thermales et m\u00e9dicinales"
+  },
+  "toxicity/poisoning": {
+    "es": "toxicidad/envenenamiento",
+    "fr": "toxicit\u00e9/empoisonnement"
+  },
+  "planning/policy": {
+    "es": "planificaci\u00f3n/pol\u00edtica",
+    "fr": "planification/politique"
+  },
+  "beverages": {
+    "es": "bebidas",
+    "fr": "boissons"
+  },
+  "vested rights/existing rights": {
+    "es": "derechos adquiridos/derechos preexistentes",
+    "fr": "droits acquis/droits pr\u00e9existants"
+  },
+  "fish disease": {
+    "es": "enfermedades de los peces",
+    "fr": "maladie des poissons"
+  },
+  "ecological production/organic production": {
+    "es": "producci\u00f3n ecol\u00f3gica/producci\u00f3n org\u00e1nica",
+    "fr": "production \u00e9cologique/production biologique"
+  },
+  "public participation": {
+    "es": "participaci\u00f3n p\u00fablica",
+    "fr": "participation du public"
+  },
+  "freshwater resources management": {
+    "es": "manejo de recursos h\u00eddricos",
+    "fr": "gestion des resources en eau douce"
+  },
+  "noise emission": {
+    "es": "emisiones ac\u00fasticas",
+    "fr": "\u00e9mission sonore"
+  },
+  "drainage/land reclamation": {
+    "es": "drenaje/bonificaci\u00f3n",
+    "fr": "drainage/ass\u00e8chement"
+  },
+  "aquaculture": {
+    "es": "acuicultura",
+    "fr": "aquaculture"
+  },
+  "public health": {
+    "es": "salud p\u00fablica",
+    "fr": "sant\u00e9 publique"
+  },
+  "declassification/classification": {
+    "es": "declasificaci\u00f3n/clasificaci\u00f3n",
+    "fr": "d\u00e9classement/classement"
+  },
+  "energy conservation/energy production": {
+    "es": "conservaci\u00f3n de energ\u00eda/producci\u00f3n de energ\u00eda",
+    "fr": "conservation de l'\u00e9nergie/production de l'\u00e9nergie"
+  },
+  "land valuation": {
+    "es": "valoraci\u00f3n de tierras",
+    "fr": "\u00e9valuation fonci\u00e8re"
+  },
+  "early warning system/emergency intervention system": {
+    "es": "sistema de alerta r\u00e1pida/sistema de intervenci\u00f3n de emergencia",
+    "fr": "r\u00e9seau d'alerte/intervention d'urgence"
+  },
+  "equity": {
+    "es": "equidad",
+    "fr": "\u00e9quit\u00e9"
+  },
+  "forest management/forest conservation": {
+    "es": "ordenaci\u00f3n forestal/conservaci\u00f3n de montes",
+    "fr": "gestion foresti\u00e8re/conservation des for\u00eats"
+  },
+  "sugar cane/sugar beet": {
+    "es": "ca\u00f1a de az\u00facar/remolacha de az\u00facar",
+    "fr": "canne \u00e0 sucre/betterave sucri\u00e8re"
+  },
+  "drugs": {
+    "es": "medicamentos",
+    "fr": "m\u00e9dicaments"
+  },
+  "forest service/forest officers": {
+    "es": "servicio forestal/oficiales forestales",
+    "fr": "service forestier/agents forestiers"
+  },
+  "plant variety": {
+    "es": "variedad vegetal",
+    "fr": "vari\u00e9t\u00e9 v\u00e9g\u00e9tale"
+  },
+  "institutional profiles": {
+    "es": "perfiles institucionales",
+    "fr": "profil institutionnel"
+  },
+  "nuclear energy": {
+    "es": "energ\u00eda nuclear",
+    "fr": "\u00e9nergie nucl\u00e9aire"
+  },
+  "compliance/enforcement": {
+    "es": "aplicaci\u00f3n/cumplimiento",
+    "fr": ""
+  },
+  "social forestry/community forestry": {
+    "es": "uso social del bosque/bosques comunitarios",
+    "fr": "foresterie communautaire"
+  },
+  "ostrich": {
+    "es": "avestruz",
+    "fr": "autruche"
+  },
+  "organic waste": {
+    "es": "desechos org\u00e1nicos",
+    "fr": "d\u00e9chets organiques"
+  },
+  "non-timber products": {
+    "es": "productos no maderables",
+    "fr": "sous-produits forestiers"
+  },
+  "private forest": {
+    "es": "bosques privados",
+    "fr": "for\u00eat priv\u00e9e"
+  },
+  "MRL-maximum residue limit": {
+    "es": "l\u00edmite m\u00e1ximo de residuos",
+    "fr": "limite maximum de r\u00e9sidu"
+  },
+  "treated food": {
+    "es": "alimentos tratados",
+    "fr": "produits alimentaires trait\u00e9s"
+  },
+  "steroids/hormones": {
+    "es": "esteroides/hormonas",
+    "fr": "st\u00e9ro\u00efdes/hormones"
+  },
+  "logging fee/charge": {
+    "es": "c\u00e1nones por explotaci\u00f3n forestal/tarifas",
+    "fr": "redevances d'exploitation foresti\u00e8re/droits"
+  },
+  "bed": {
+    "es": "lecho",
+    "fr": "lit"
+  },
+  "food sovereignty": {
+    "es": "soberan\u00eda alimentaria",
+    "fr": "souverainet\u00e9 alimentaire"
+  },
+  "development agencies and aid": {
+    "es": "agencias de ayuda y cooperaci\u00f3n",
+    "fr": "agences de d\u00e9veloppement et de l'aide"
+  },
+  "cleaning agents/detergents": {
+    "es": "productos de limpieza/detergentes",
+    "fr": "produits de nettoyage/d\u00e9tergents"
+  },
+  "monitoring": {
+    "es": "monitoreo",
+    "fr": "monitorage"
+  },
+  "animal welfare": {
+    "es": "protecci\u00f3n de los animales",
+    "fr": "protection des animaux"
+  },
+  "tribunal/court": {
+    "es": "tribunal/corte",
+    "fr": "tribunaux/cour"
+  },
+  "land commission": {
+    "es": "comisi\u00f3n de tierras",
+    "fr": "commission fonci\u00e8re"
+  },
+  "boreholes/well sinking": {
+    "es": "pozos/perforaci\u00f3n de pozos",
+    "fr": "puits/forage de puits"
+  },
+  "aircraft noise": {
+    "es": "ruido de las aeronaves",
+    "fr": "bruit des transports a\u00e9riens"
+  },
+  "fishing gear marking": {
+    "es": "marcado de aparejos de pesca",
+    "fr": "marquage des engins de p\u00eache"
+  },
+  "fishing permit fee": {
+    "es": "tarifas por permisos de pesca",
+    "fr": "redevances des permis de p\u00eache"
+  },
+  "dangerous animal/harmful animal": {
+    "es": "animal da\u00f1ino/animal peligroso",
+    "fr": "animal dangereux/animal nocif"
+  },
+  "land registration/cadastre": {
+    "es": "registraci\u00f3n de tierras/catastro",
+    "fr": "enregistrement des terres/cadastre"
+  },
+  "ornamental fish": {
+    "es": "pez ornamental",
+    "fr": "poisson ornemental"
+  },
+  "special fund": {
+    "es": "fondo especial",
+    "fr": "fonds sp\u00e9cial"
+  },
+  "planting material/seeds": {
+    "es": "materiales de propagaci\u00f3n/semillas",
+    "fr": "mat\u00e9riel de reproduction/semences"
+  },
+  "high seas": {
+    "es": "alta mar",
+    "fr": "haute mer"
+  },
+  "waste prevention": {
+    "es": "prevenci\u00f3n de residuos",
+    "fr": "pr\u00e9vention des d\u00e9chets"
+  },
+  "solid waste": {
+    "es": "residuos s\u00f3lidos",
+    "fr": "d\u00e9chets solides"
+  },
+  "access and benefit-sharing": {
+    "es": "acceso a la biodiversidad y distribuci\u00f3n de beneficios",
+    "fr": "acc\u00e8s et partage des avantages"
+  },
+  "irrigation": {
+    "es": "irrigaci\u00f3n",
+    "fr": "irrigation"
+  },
+  "marine resources management": {
+    "es": "manejo de recursos marinos",
+    "fr": "gestion des ressources marines"
+  },
+  "poultry products": {
+    "es": "productos de aves caseras",
+    "fr": "produits de volaille"
+  },
+  "fishing licence fee": {
+    "es": "tarifas por licencias de pesca",
+    "fr": "redevances des licences de p\u00eache"
+  },
+  "plant production": {
+    "es": "producci\u00f3n vegetal",
+    "fr": "production v\u00e9g\u00e9tale"
+  },
+  "environmental fees/charges": {
+    "es": "tarifas/c\u00e1nones relativos al medio ambiente",
+    "fr": "droits/redevances relatives \u00e0 l'environnement"
+  },
+  "dairy products/milk": {
+    "es": "productos l\u00e1cteos/leche",
+    "fr": "produits laitiers/lait"
+  },
+  "cereals/grains/rice": {
+    "es": "cereales/granos/arroz",
+    "fr": "c\u00e9r\u00e9ales/grains/riz"
+  },
+  "expropriation": {
+    "es": "expropiaci\u00f3n",
+    "fr": "expropriation"
+  },
+  "natural gas": {
+    "es": "gas natural",
+    "fr": "gaz naturel"
+  },
+  "vegetables/legumes": {
+    "es": "verduras/legumbres",
+    "fr": "l\u00e9gumes/l\u00e9gumineuses"
+  },
+  "fishing charge": {
+    "es": "c\u00e1non de pesca",
+    "fr": "redevances de p\u00eache"
+  },
+  "mineral water": {
+    "es": "agua mineral",
+    "fr": "eau min\u00e9rale"
+  },
+  "hunting rights": {
+    "es": "derechos de caza",
+    "fr": "droits de chasse"
+  },
+  "smallholders/peasants": {
+    "es": "peque\u00f1os agricultores/campesinos",
+    "fr": "petits exploitants/paysans"
+  },
+  "gender and natural resources": {
+    "es": "g\u00e9nero y recursos naturales",
+    "fr": "genre et ressources naturelles"
+  },
+  "fruits/edible nuts": {
+    "es": "frutas/nueces comestibles",
+    "fr": "fruits/noix comestibles"
+  },
+  "biological agents": {
+    "es": "agentes biol\u00f3gicos",
+    "fr": "agents biologiques"
+  },
+  "cartilaginous fishes": {
+    "es": "peces cartilaginosos",
+    "fr": "poissons cartilagineux"
+  },
+  "codified constitution": {
+    "es": "constituci\u00f3n codificada",
+    "fr": "constitution codifi\u00e9e"
+  },
+  "size ceilings": {
+    "es": "parcelaci\u00f3n",
+    "fr": "parcellisation"
+  },
+  "prohibited crops": {
+    "es": "cultivos prohibidos",
+    "fr": "cultures interdites"
+  },
+  "social protection": {
+    "es": "protecci\u00f3n social",
+    "fr": "protection sociale"
+  },
+  "jurisdictional competence": {
+    "es": "competencia jurisdiccional",
+    "fr": "comp\u00e9tence juriductionnelle"
+  },
+  "seasons": {
+    "es": "temporadas",
+    "fr": "p\u00e9riodes"
+  },
+  "afforestation/reforestation": {
+    "es": "forestaci\u00f3n/reforestaci\u00f3n",
+    "fr": "boisement/reboisement"
+  },
+  "forestry protection measures": {
+    "es": "medidas de protecci\u00f3n forestal",
+    "fr": "mesures de protection des for\u00eats"
+  },
+  "waste domestic sources": {
+    "es": "desechos urbanos",
+    "fr": "d\u00e9chets m\u00e9nagers"
+  },
+  "polluter pays principle": {
+    "es": "principio contaminador-pagador",
+    "fr": "principe pollueur-payeur"
+  },
+  "royalties/fees": {
+    "es": "derechos/c\u00e1nones",
+    "fr": "royalties/redevances"
+  },
+  "landing": {
+    "es": "desembarco",
+    "fr": "d\u00e9barquement"
+  },
+  "novel food": {
+    "es": "productos alimenticios nuevos",
+    "fr": "aliment nouveau"
+  },
+  "sewerage": {
+    "es": "alcantarillado",
+    "fr": "\u00e9gouts"
+  },
+  "access-to-justice": {
+    "es": "acceso-a-la-justicia",
+    "fr": "acc\u00e8s-\u00e0-la-justice"
+  },
+  "community forestry/social forestry": {
+    "es": "bosques comunitarios/uso social del bosque",
+    "fr": ""
+  },
+  "rural employment": {
+    "es": "empleo rural",
+    "fr": "emploi rural"
+  },
+  "hunting/capture": {
+    "es": "caza/captura",
+    "fr": "chasse/capture"
+  },
+  "offences/penalties": {
+    "es": "infracciones/sanciones",
+    "fr": "infractions/sanctions"
+  },
+  "international basin institution": {
+    "es": "organismo internacional de cuenca",
+    "fr": "institution de bassin internationale"
+  },
+  "freshwater pollution": {
+    "es": "contaminaci\u00f3n de las aguas dulces",
+    "fr": "qualit\u00e9 des eaux douces"
+  },
+  "Prior informed consent": {
+    "es": "Procedimiento de informaci\u00f3n y consentimiento previos",
+    "fr": "Information et consentement pr\u00e9alables"
+  },
+  "ethics and environment": {
+    "es": "\u00e9tica y medio ambiente",
+    "fr": "\u00e9thique et environnement"
+  },
+  "non-edible products": {
+    "es": "productos no comestibles",
+    "fr": "produits non commestibles"
+  },
+  "breeders' rights/farmers' rights": {
+    "es": "derechos de seleccionadores/derechos de agricultores",
+    "fr": "droits des obtenteurs/droits des cultivateurs"
+  },
+  "food safety/food quality control": {
+    "es": "inocuidad de los alimentos/control de calidad de los alimentos",
+    "fr": "innocuit\u00e9 des produits alimentaires/contr\u00f4le de qualit\u00e9 alimentaire"
+  },
+  "oleaginous plants": {
+    "es": "plantas oleaginosas",
+    "fr": "plantes ol\u00e9agineuses"
+  },
+  "access-to-information": {
+    "es": "acceso-a-la-informaci\u00f3n",
+    "fr": "acc\u00e8s-\u00e0-l'information"
+  },
+  "forest fires": {
+    "es": "incendios forestales",
+    "fr": "feux de for\u00eats"
+  },
+  "external debt": {
+    "es": "deuda externa",
+    "fr": "dette exterieure"
+  },
+  "crustaceans": {
+    "es": "crust\u00e1ceos",
+    "fr": "crustac\u00e9s"
+  },
+  "rainwater": {
+    "es": "agua de lluvia",
+    "fr": "eau de pluie"
+  },
+  "food quality control/food safety": {
+    "es": "control de calidad de los alimentos/inocuidad de los alimentos",
+    "fr": "contr\u00f4le de qualit\u00e9 alimentaire/innocuit\u00e9 des produits alimentaires"
+  },
+  "marine area": {
+    "es": "\u00e1rea marina",
+    "fr": "aire marine"
+  },
+  "grains/cereals/rice; rice/cereals/grains": {
+    "es": "granos/cereales/arroz; arroz/cereales/granos",
+    "fr": "grains/c\u00e9r\u00e9ales/riz; riz/c\u00e9r\u00e9ales/grains"
+  },
+  "right to clean/healthy environment": {
+    "es": "derecho a un medio ambiente limpio/sano",
+    "fr": "droit \u00e0 un environnement propre/sain"
+  },
+  "pollution control": {
+    "es": "control de la contaminaci\u00f3n",
+    "fr": "lutte contre la pollution"
+  },
+  "supremacy of international law": {
+    "es": "supremac\u00eda del derecho internacional",
+    "fr": "primaut\u00e9 du droit international"
+  },
+  "fees/royalties": {
+    "es": "c\u00e1nones/derechos",
+    "fr": "redevances/royalties"
+  },
+  "inheritance": {
+    "es": "sucesi\u00f3n",
+    "fr": "h\u00e9ritage"
+  },
+  "hormones/steroids": {
+    "es": "hormonas/esteroides",
+    "fr": "hormones/st\u00e9ro\u00efdes"
+  },
+  "fertilizers/nutrients": {
+    "es": "fertilizantes/nutrientes",
+    "fr": "engrais/nutriments"
+  },
+  "equipment": {
+    "es": "equipos",
+    "fr": "\u00e9quipement"
+  },
+  "mining licence": {
+    "es": "licencia minera",
+    "fr": "licence d'exploitation mini\u00e8re"
+  },
+  "cultural heritage": {
+    "es": "patrimonio cultural",
+    "fr": "patrimoine culturel"
+  },
+  "water charges": {
+    "es": "c\u00e1non de aguas",
+    "fr": "redevances pour les eaux"
+  },
+  "survey/mapping": {
+    "es": "levantamiento topogr\u00e1fico/cartograf\u00eda",
+    "fr": "relev\u00e9s/plans"
+  },
+  "discharge/effluent waste water": {
+    "es": "vertido/efluente de aguas residuales",
+    "fr": "d\u00e9versement/eaux us\u00e9es"
+  },
+  "international relations/cooperation": {
+    "es": "relaciones internacionales/cooperaci\u00f3n",
+    "fr": "relations internationales/coop\u00e9ration"
+  },
+  "ecofriendly products/ecofriendly processes": {
+    "es": "eco-productos/ecoprocesos",
+    "fr": "\u00e9co-produits/processus \u00e9cologique"
+  },
+  "environmental planning": {
+    "es": "planificaci\u00f3n ambiental",
+    "fr": "planification environnementale"
+  },
+  "erosion": {
+    "es": "erosi\u00f3n",
+    "fr": "\u00e9rosion"
+  },
+  "industry/business/corporations; corporations/business/industry": {
+    "es": "industria/negocios/corporaciones; corporaciones/negocios/industria",
+    "fr": "industrie/commerce/soci\u00e9t\u00e9s; soci\u00e9t\u00e9s/commerce/industrie"
+  },
+  "catchment/watershed": {
+    "es": "\u00e1rea de captaci\u00f3n/cuenca colectora",
+    "fr": "captage/bassin versant"
+  },
+  "radioactive waste": {
+    "es": "residuos radiactivos",
+    "fr": "d\u00e9chets radioactifs"
+  },
+  "exploration": {
+    "es": "exploraci\u00f3n",
+    "fr": "exploration"
+  },
+  "maritime zone": {
+    "es": "zona mar\u00edtima",
+    "fr": "zone marine"
+  },
+  "water quality standards": {
+    "es": "normas sobre calidad del agua",
+    "fr": "normes de qualit\u00e9 de l'eau"
+  },
+  "economic/social/cultural rights": {
+    "es": "derechos econ\u00f3micos, sociales y culturales",
+    "fr": "droits \u00e9conomiques, sociaux et culturels"
+  },
+  "clean development mechanism": {
+    "es": "mecanismo de desarrollo limpio",
+    "fr": "m\u00e9canisme de d\u00e9veloppement propre"
+  },
+  "ecofriendly processes/ecofriendly products": {
+    "es": "ecoprocesos/eco-productos",
+    "fr": "processus \u00e9cologique/\u00e9co-produits"
+  },
+  "prohibited fishing area": {
+    "es": "zona de pesca prohibida",
+    "fr": "zone de p\u00eache interdite"
+  },
+  "right to property": {
+    "es": "derecho a la propiedad",
+    "fr": "droit \u00e0 la propri\u00e9t\u00e9"
+  },
+  "animal feed/feedstuffs": {
+    "es": "alimentos para animales/piensos",
+    "fr": "aliments pour animaux"
+  },
+  "inspection": {
+    "es": "inspecci\u00f3n",
+    "fr": "inspection"
+  },
+  "animal production": {
+    "es": "producci\u00f3n animal",
+    "fr": "production animale"
+  },
+  "radioactive pollution": {
+    "es": "contaminaci\u00f3n radiactiva",
+    "fr": "pollution radioactive"
+  },
+  "agroecology": {
+    "es": "agroecolog\u00eda",
+    "fr": "agro\u00e9cologie"
+  },
+  "harbour": {
+    "es": "puerto",
+    "fr": "port"
+  },
+  "common property": {
+    "es": "propiedad com\u00fan",
+    "fr": "propri\u00e9t\u00e9 commune"
+  },
+  "keeping of live animals": {
+    "es": "animales en cautividad",
+    "fr": "d\u00e9tention d'animaux vivants"
+  },
+  "reporting/data collection": {
+    "es": "informes/recopilaci\u00f3n de datos",
+    "fr": "d\u00e9clarations/collecte de donn\u00e9es"
+  },
+  "exploration licence": {
+    "es": "licencia de exploraci\u00f3n",
+    "fr": "licence d'exploration"
+  },
+  "repopulation/stock enhancement": {
+    "es": "repoblaci\u00f3n/incremento del stock",
+    "fr": "repeuplement/re-empoissonnement"
+  },
+  "infant food/breastfeeding": {
+    "es": "alimentos para ni\u00f1os/alactamiento",
+    "fr": "alimentation des enfants/allaitement au sein"
+  },
+  "land based credit": {
+    "es": "cr\u00e9dito hipotecario",
+    "fr": "cr\u00e9dit hypoth\u00e9caire"
+  },
+  "property rights": {
+    "es": "derechos de propiedad",
+    "fr": "droits de propri\u00e9t\u00e9"
+  },
+  "water desalination": {
+    "es": "desalinaci\u00f3n del agua",
+    "fr": "dessalement de l'eau"
+  },
+  "guide/tracker": {
+    "es": "gu\u00edas/rastreadores",
+    "fr": "guide/pisteur"
+  },
+  "patents/intellectual property rights": {
+    "es": "patentes/derechos de propiedad intelectual",
+    "fr": "brevets/droits de propri\u00e9t\u00e9 intellectuelle"
+  },
+  "viticulture/oenological practices": {
+    "es": "viticultura/pr\u00e1cticas enol\u00f3gicas",
+    "fr": "viticulture/pratiques vinicoles"
+  },
+  "oenological practice/viticulture": {
+    "es": "pr\u00e1cticas enol\u00f3gicas/viticultura",
+    "fr": "pratiques vinicoles/viticulture"
+  },
+  "national implementation/transposal": {
+    "es": "implementaci\u00f3n nacional/transposici\u00f3n",
+    "fr": "mise en application au niveau national/transposition"
+  },
+  "endangered species": {
+    "es": "especies en peligro",
+    "fr": "esp\u00e8ces menac\u00e9es"
+  },
+  "international cooperation/nternational relations": {
+    "es": "cooperaci\u00f3n internacional/relaciones internacionales",
+    "fr": "coop\u00e9ration internationale/relations internationales"
+  },
+  "bycatch": {
+    "es": "capturas incidentales",
+    "fr": "prises accessoires"
+  },
+  "governance": {
+    "es": "gobernanza",
+    "fr": "gouvernance"
+  },
+  "waste non-domestic sources": {
+    "es": "residuos industriales",
+    "fr": "d\u00e9chets industriels"
+  },
+  "conservation/management": {
+    "es": "conservaci\u00f3n/ordenaci\u00f3n",
+    "fr": "conservation/gestion"
+  },
+  "fraud/deceit/adulteration": {
+    "es": "fraude/enga\u00f1o/adulteraci\u00f3n",
+    "fr": "fraude/adult\u00e9ration"
+  },
+  "unoccupied land": {
+    "es": "terrenos bald\u00edos",
+    "fr": "terres vacantes"
+  },
+  "subsidy/incentive": {
+    "es": "subvenci\u00f3n/incentivo",
+    "fr": "subvention/incitation"
+  },
+  "marine protected areas": {
+    "es": "\u00e1reas marinas protegidas",
+    "fr": "zones marines prot\u00e9g\u00e9es"
+  },
+  "private land": {
+    "es": "terrenos privados",
+    "fr": "terres priv\u00e9es"
+  },
+  "capture/hunting": {
+    "es": "captura/caza",
+    "fr": "capture/chasse"
+  },
+  "crops/grasses": {
+    "es": "cultivos/praderas",
+    "fr": "cultures/p\u00e2tures"
+  },
+  "risk assessment/management": {
+    "es": "evaluaci\u00f3n/manejo de riesgos",
+    "fr": "\u00e9valuation/gestion des risques"
+  },
+  "liability/compensation": {
+    "es": "responsabilidad/indemnizaci\u00f3n",
+    "fr": "responsabilit\u00e9/indemnisation"
+  },
+  "food additives": {
+    "es": "aditivos alimentarios",
+    "fr": "additifs alimentaires"
+  },
+  "wild flora": {
+    "es": "flora silvestre",
+    "fr": "flore sauvage"
+  },
+  "integrated management": {
+    "es": "manejo integrado",
+    "fr": "gestion int\u00e9gr\u00e9e"
+  },
+  "milk/dairy products": {
+    "es": "leche/productos l\u00e1cteos",
+    "fr": "lait/produits laitiers"
+  },
+  "precautionary principle": {
+    "es": "principio de cautela",
+    "fr": "principe de pr\u00e9caution"
+  },
+  "pests/diseases": {
+    "es": "plagas/enfermedades",
+    "fr": "parasites/maladies"
+  },
+  "protected area": {
+    "es": "zona protegida",
+    "fr": "aire prot\u00e9g\u00e9e"
+  },
+  "marine fishes": {
+    "es": "peces marinos",
+    "fr": "poissons marins"
+  },
+  "legumes/vegetables": {
+    "es": "legumbres/verduras",
+    "fr": "l\u00e9gumineuses/l\u00e9gumes"
+  },
+  "protection forest": {
+    "es": "bosques de protecci\u00f3n",
+    "fr": "for\u00eat de protection"
+  },
+  "hunting authorization/permit": {
+    "es": "autorizaci\u00f3n/permiso de caza",
+    "fr": "autorisation/permis de chasse"
+  },
+  "bioenergy": {
+    "es": "bioenerg\u00eda",
+    "fr": "bio\u00e9nergie"
+  },
+  "fishing area": {
+    "es": "zona de pesca",
+    "fr": "zone de p\u00eache"
+  },
+  "institution building": {
+    "es": "creaci\u00f3n de instituciones",
+    "fr": "d\u00e9veloppement des institutions"
+  },
+  "land reclamation/drainage": {
+    "es": "bonificaci\u00f3n/drenaje",
+    "fr": "ass\u00e8chement/drainage"
+  },
+  "pest management strategies/integrated pest management-IPM": {
+    "es": "estrategias de manejo de plagas/manejo integrado de plagas",
+    "fr": "strat\u00e9gie phytosanitaire/gestion int\u00e9gr\u00e9e du risque phytosanitaire"
+  },
+  "intellectual property rights/patents": {
+    "es": "derechos de propiedad intelectual/patentes",
+    "fr": "droits de propri\u00e9t\u00e9 intellectuelle/brevets"
+  },
+  "oil": {
+    "es": "hidrocarburos",
+    "fr": "hydrocarbures"
+  },
+  "framework law": {
+    "es": "ley marco",
+    "fr": "loi-cadre"
+  },
+  "prescription/adverse possession": {
+    "es": "prescripci\u00f3n/usucapi\u00f3n",
+    "fr": "prescription acquisitive/usucapion"
+  },
+  "protected plant species": {
+    "es": "especies de plantas protegidas",
+    "fr": "esp\u00e8ces v\u00e9g\u00e9tales prot\u00e9g\u00e9es"
+  },
+  "transhumance/grazing": {
+    "es": "trashumancia/pastorear",
+    "fr": "transhumance/p\u00e2turage"
+  },
+  "fundamental human rights": {
+    "es": "derechos humanos fundamentales",
+    "fr": "droits de l\u2019homme fondamentaux"
+  },
+  "fishing permit": {
+    "es": "permiso de pesca",
+    "fr": "permis de p\u00eache"
+  },
+  "urban land": {
+    "es": "terrenos urbanos",
+    "fr": "terrains urbains"
+  },
+  "subdivision of land": {
+    "es": "subdivisi\u00f3n de tierras",
+    "fr": "subdivision fonci\u00e8re"
+  },
+  "processing/handling": {
+    "es": "procesamiento/manipulaci\u00f3n",
+    "fr": "transformation/manutention"
+  },
+  "river basin institution": {
+    "es": "instituci\u00f3n de cuenca",
+    "fr": "institution de bassin"
+  },
+  "public land": {
+    "es": "terrenos p\u00fablicos",
+    "fr": "terres publiques"
+  },
+  "water users' associations": {
+    "es": "asociaci\u00f3n de usuarios de aguas",
+    "fr": "associations d'usagers de l'eau"
+  },
+  "military activities": {
+    "es": "actividades militares",
+    "fr": "activit\u00e9s militaires"
+  },
+  "consumer protection": {
+    "es": "protecci\u00f3n del consumidor",
+    "fr": "protection du consommateur"
+  },
+  "poisoning/toxicity": {
+    "es": "envenenamiento/toxicidad",
+    "fr": "empoisonnement/toxicit\u00e9"
+  },
+  "coal": {
+    "es": "carb\u00f3n",
+    "fr": "charbon"
+  },
+  "tax/levy": {
+    "es": "tasa/impuesto",
+    "fr": "taxe/imp\u00f4t"
+  },
+  "biosphere reserves": {
+    "es": "reservas de bi\u00f3sfera",
+    "fr": "r\u00e9serves de biosph\u00e8re"
+  },
+  "economy and environment": {
+    "es": "economi\u00e1 y medio ambiente",
+    "fr": "\u00e9conomie et environnement"
+  },
+  "cooperative/producer organization": {
+    "es": "cooperativa/organizaci\u00f3n de productores",
+    "fr": "coop\u00e9rative/organisation de producteurs"
+  },
+  "right to reasonable standard of living": {
+    "es": "derecho a un nivel de vida digno",
+    "fr": "droit \u00e0  un niveau de vie suffisant"
+  },
+  "soil rehabilitation": {
+    "es": "saneamiento de suelos",
+    "fr": "remise en \u00e9tat des sols"
+  },
+  "navigation": {
+    "es": "navegaci\u00f3n",
+    "fr": "navigation"
+  },
+  "farming": {
+    "es": "explotaci\u00f3n agr\u00edcola",
+    "fr": "exploitation agricole"
+  },
+  "inventory": {
+    "es": "inventarios",
+    "fr": "inventaire"
+  },
+  "mining": {
+    "es": "miner\u00eda",
+    "fr": "exploitation mini\u00e8re"
+  },
+  "floriculture": {
+    "es": "floricultura",
+    "fr": "floriculture"
+  },
+  "fish feed": {
+    "es": "alimentos para peces",
+    "fr": "aliments pour poissons"
+  },
+  "self-regulation": {
+    "es": "autoregulaci\u00f3n",
+    "fr": "autor\u00e9glementation"
+  },
+  "intergenerational equity": {
+    "es": "equidad intergeneracional",
+    "fr": "equit\u00e9 interg\u00e9n\u00e9rationnelle"
+  },
+  "credit": {
+    "es": "cr\u00e9dito",
+    "fr": "cr\u00e9dit"
+  },
+  "camelids": {
+    "es": "cam\u00e9lidos",
+    "fr": "cam\u00e9lid\u00e9s"
+  },
+  "effluent waste water/discharge": {
+    "es": "efluente de aguas residuales/vertido",
+    "fr": "eaux us\u00e9es/d\u00e9versement"
+  },
+  "existing rights/vested rights": {
+    "es": "derechos preexistentes/derechos adquiridos",
+    "fr": "droits pr\u00e9existants/droits acquis"
+  },
+  "comparative analysis": {
+    "es": "an\u00e1lisis comparativo",
+    "fr": "analyse comparative"
+  },
+  "storage/transport": {
+    "es": "dep\u00f3sito/transporte",
+    "fr": "d\u00e9p\u00f4t/transport"
+  },
+  "reptiles": {
+    "es": "reptiles",
+    "fr": "reptiles"
+  },
+  "incentive/subsidy": {
+    "es": "incentivo/subvenci\u00f3n",
+    "fr": "incitation/subvention"
+  },
+  "deep sea bed": {
+    "es": "fondo marino profundo",
+    "fr": "fonds marins"
+  },
+  "energy production/energy conservation": {
+    "es": "producci\u00f3n de energ\u00eda/conservaci\u00f3n de energ\u00eda",
+    "fr": "production de l\u2019\u00e9nergie/conservation de l'\u00e9nergie"
+  },
+  "fishing method/fishing gear": {
+    "es": "m\u00e9todos de pesca/aparejos de pesca",
+    "fr": "m\u00e9thodes de p\u00eache/engins de p\u00eache"
+  },
+  "hazardous substances": {
+    "es": "sustancias peligrosas",
+    "fr": "substances dangereuses"
+  },
+  "forestry seeds/planting material": {
+    "es": "semillas forestales/materiales de propagaci\u00f3n",
+    "fr": "semences foresti\u00e8res/mat\u00e9riel de reproduction"
+  },
+  "civil and political rights": {
+    "es": "derechos civiles y pol\u00edticos",
+    "fr": "droits civils et politiques"
+  },
+  "permit/authorization": {
+    "es": "permiso/autorizaci\u00f3n",
+    "fr": "permis/autorisation"
+  },
+  "marine pollution (land-based sources)": {
+    "es": "contaminaci\u00f3n marina (desde tierra)",
+    "fr": "pollution marine (d'origine tellurique)"
+  },
+  "international agreement-text": {
+    "es": "acuerdo internacional-texto",
+    "fr": "accord international-texte"
+  },
+  "peasants/smallholders": {
+    "es": "campesinos/peque\u00f1os agricultores",
+    "fr": "paysans/petits exploitants"
+  },
+  "residues": {
+    "es": "residuos",
+    "fr": "r\u00e9sidus"
+  },
+  "mapping/survey": {
+    "es": "cartograf\u00eda/levantamiento topogr\u00e1fico",
+    "fr": "plans/relev\u00e9s"
+  },
+  "oils/oilseeds/fats": {
+    "es": "aceites/semillas oleaginosas/grasas",
+    "fr": "huiles/ol\u00e9agineux/graisses"
+  },
+  "urban and peri-urban agriculture": {
+    "es": "agricultura urbana y periurbana",
+    "fr": "agriculture urbaine et p\u00e9ri-urbaine"
+  },
+  "groundwater": {
+    "es": "aguas subterr\u00e1neas",
+    "fr": "eaux souterraines"
+  },
+  "tobacco": {
+    "es": "tabaco",
+    "fr": "tabac"
+  },
+  "molluscs": {
+    "es": "moluscos",
+    "fr": "mollusques"
+  },
+  "sustainable development": {
+    "es": "desarrollo sostenible",
+    "fr": "d\u00e9veloppement durable"
+  },
+  "transport/storage": {
+    "es": "transporte/dep\u00f3sito",
+    "fr": "transport/d\u00e9p\u00f4t"
+  },
+  "mesh": {
+    "es": "mallas",
+    "fr": "maillage"
+  },
+  "contract/agreement": {
+    "es": "contrato/acuerdo",
+    "fr": "contrat/accord"
+  },
+  "mammals": {
+    "es": "mam\u00edferos",
+    "fr": "mammif\u00e8res"
+  },
+  "basin": {
+    "es": "cuenca",
+    "fr": "bassin"
+  },
+  "trade in species": {
+    "es": "comercio de especies",
+    "fr": "commerce d'esp\u00e8ces"
+  }
+}
