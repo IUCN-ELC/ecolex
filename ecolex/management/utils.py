@@ -55,6 +55,8 @@ def get_file_from_url(url):
     file_obj = BytesIO()
     file_obj.write(doc_content_bytes)
     setattr(file_obj, 'name', url)
+    if response.headers.get('Content-Type'):
+        setattr(file_obj, 'content_type', response.headers.get('Content-Type'))
     file_obj.seek(0)
     return file_obj
 
@@ -158,8 +160,11 @@ class EcolexSolr(object):
         return True
 
     def extract(self, file):
+        args = {}
+        if getattr(file, 'content_type', None):
+            args.update({'stream.type': getattr(file, 'content_type', None)})
         try:
-            response = self.solr.extract(file)
+            response = self.solr.extract(file, **args)
         except pysolr.SolrError as e:
             logger.error('Error extracting text from file %s' % (file.name,))
             if settings.DEBUG:
