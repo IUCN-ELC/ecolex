@@ -665,6 +665,16 @@
         "fr": "Portugais",
         "es": "Portugu\u00e9s"
     },
+    "pt-pt": {
+        "en": "Portuguese",
+        "fr": "Portugais",
+        "es": "Portugu\u00e9s"
+    },
+    "pt-br": {
+        "en": "Portuguese (Brazil)",
+        "fr": "Portugais (Br\u00e9sil)",
+        "es": "Portugu\u00e9s (Brasil)"
+    },
     "qu": {
         "en": "Quechua",
         "fr": "Langue quechua",
@@ -922,6 +932,11 @@
         "es": "Zhuang"
     },
     "zh": {
+        "en": "Chinese",
+        "fr": "Chinois",
+        "es": "Chino"
+    },
+    "zh-hans": {
         "en": "Chinese",
         "fr": "Chinois",
         "es": "Chino"
