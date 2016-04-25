@@ -54,7 +54,7 @@ SOLR_IMPORT = {
         'start_month': 1,
         'end_month': 12,
         'query_export': '?database=libcat&search_type=page_search&table=all',
-        'query_format': 'ES:I AND STAT:C AND DE:%d%02d',
+        'query_format': 'ES:I AND STAT:C AND DM:%d%02d',
         'import_field': 'dateofentry',
         'query_filter': '&spage_query=%s',
         'query_skip': '&spage_first=%d',
