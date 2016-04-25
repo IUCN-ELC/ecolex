@@ -41,6 +41,7 @@ SOLR_IMPORT = {
         'languages_json': os.path.join(CONFIG_DIR, 'languages.json'),
         'regions_json': os.path.join(CONFIG_DIR, 'regions.json'),
         'subdivisions_json': os.path.join(CONFIG_DIR, 'subdivisions.json'),
+        'keywords_json': os.path.join(CONFIG_DIR, 'keywords.json'),
     },
     'court_decision': {
         'test_input_file': os.path.join(TESTING_DIR, 'court_decision_in.json'),

@@ -4,7 +4,6 @@ import logging
 import logging.config
 
 from django.template.defaultfilters import slugify
-from django.conf import settings
 
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.definitions import COURT_DECISION
@@ -16,8 +15,6 @@ logger = logging.getLogger('import')
 
 # TODO Harvest French and Spanish translations for the following fields:
 #   - cdSubject  (the json field for this field is not multilingual)
-#   - cdKeyword (the json field for this field is not multilingual)
-#   - cdRegion (the json field for this field is not multilingual)
 
 JSON_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
@@ -55,7 +52,7 @@ FIELD_MAP = {
     'field_abstract_other': 'cdAbstract_other',
     'field_available_in': 'cdAvailableIn',
     'field_court_decision': 'cdCourtDecisionReference',
-    'field_ecolex_keywords': 'cdKeyword_en',
+    'field_ecolex_keywords': 'cdKeyword',
     'field_faolex_reference': 'cdFaolexReference',
     'field_instance': 'cdInstance',
     'field_official_publication': 'cdOfficialPublication',
@@ -111,6 +108,7 @@ INTEGER_FIELDS = ['field_number_of_pages']
 COUNTRY_FIELDS = ['field_country']
 LANGUAGE_FIELDS = ['field_source_language']
 REGION_FIELDS = ['field_ecolex_region']
+KEYWORD_FIELDS = ['field_ecolex_keywords']
 FILES_FIELDS = ['field_files']
 FULL_TEXT_FIELDS = ['field_url']
 SUBDIVISION_FIELDS = ['field_territorial_subdivision']
@@ -163,12 +161,13 @@ def get_value_from_dict(valdict):
 
 class CourtDecision(object):
     def __init__(self, data, countries, languages, regions, subdivisions,
-                 solr):
+                 keywords, solr):
         self.data = data
         self.countries = countries
         self.languages = languages
         self.regions = regions
         self.subdivisions = subdivisions
+        self.keywords = keywords
         self.solr = solr
 
     def is_recent(self, days_ago):
@@ -204,7 +203,11 @@ class CourtDecision(object):
                                              for e in json_value]
             elif json_field in LANGUAGE_FIELDS:
                 language_code = get_value(json_field, json_value['und'])
-                languages = self.languages.get(language_code)
+                if language_code not in self.languages:
+                    logger.warning('Language code missing from languages.json: '
+                                   '{} ({})'.format(language_code, leo_id))
+                    continue
+                languages = self.languages[language_code]
                 for lang in LANGUAGES:
                     field = '{}_{}'.format(solr_field, lang)
                     if languages:
@@ -225,6 +228,23 @@ class CourtDecision(object):
                 if values:
                     solr_decision[solr_field + '_es'] = values['es']
                     solr_decision[solr_field + '_fr'] = values['fr']
+            elif json_field in KEYWORD_FIELDS:
+                # This is shitty, must refactor TODO
+                keywords_en = get_value(json_field, json_value)
+                solr_decision[solr_field + '_en'] = []
+                solr_decision[solr_field + '_fr'] = []
+                solr_decision[solr_field + '_es'] = []
+                for kw_en in keywords_en:
+                    keyword_en = kw_en.lower()
+                    solr_decision[solr_field + '_en'].append(keyword_en)
+                    if keyword_en not in self.keywords:
+                        logger.warning('Keyword missing from keywords.json: '
+                                       '{} ({})'.format(keyword_en, leo_id))
+                        continue
+                    solr_decision[solr_field + '_fr'].append(
+                        self.keywords[keyword_en]['fr'])
+                    solr_decision[solr_field + '_es'].append(
+                        self.keywords[keyword_en]['es'])
             else:
                 solr_decision[solr_field] = get_value(json_field, json_value)
 
@@ -264,6 +284,7 @@ class CourtDecisionImporter(object):
         self.languages_json = config.get('languages_json')
         self.regions_json = config.get('regions_json')
         self.subdivisions_json = config.get('subdivisions_json')
+        self.keywords_json = config.get('keywords_json')
         self.court_decisions_url = config.get('court_decisions_url')
         self.test_input_file = config.get('test_input_file')
         self.test_output_file = config.get('test_output_file')
@@ -271,6 +292,7 @@ class CourtDecisionImporter(object):
         self.languages = self._get_languages()
         self.regions = self._get_regions()
         self.subdivisions = self._get_subdivisions()
+        self.keywords = self._get_keywords()
         self.solr = EcolexSolr(self.solr_timeout)
         logger.info('Started Court Decision importer')
 
@@ -304,7 +326,7 @@ class CourtDecisionImporter(object):
             return
         new_decision = CourtDecision(data, self.countries, self.languages,
                                      self.regions, self.subdivisions,
-                                     self.solr)
+                                     self.keywords, self.solr)
 
         existing_decision = self.solr.search(COURT_DECISION, decision['uuid'])
         if existing_decision and not new_decision.is_recent(self.days_ago):
@@ -342,3 +364,8 @@ class CourtDecisionImporter(object):
         with open(self.subdivisions_json) as f:
             subdivisions = json.load(f)
         return subdivisions
+
+    def _get_keywords(self):
+        with open(self.keywords_json) as f:
+            keywords = json.load(f)
+        return keywords
