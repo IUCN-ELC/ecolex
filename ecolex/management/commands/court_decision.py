@@ -178,7 +178,7 @@ class CourtDecision(object):
 
     def get_solr_format(self, leo_id, solr_id):
         solr_decision = {
-            'text': '',
+            'cdText': '',
             'type': COURT_DECISION,
             'cdLeoId': leo_id,
             'id': solr_id,
@@ -231,17 +231,17 @@ class CourtDecision(object):
             if json_field in FILES_FIELDS and json_value:
                 urls = [d.get('url') for d in json_value]
                 files = [get_file_from_url(url) for url in urls if url]
-                solr_decision['text'] += '\n'.join(self.solr.extract(f)
+                solr_decision['cdText'] += '\n'.join(self.solr.extract(f)
                                                    for f in files if f)
 
             if json_field in FULL_TEXT_FIELDS and json_value:
                 urls = [d.get('url') for val in json_value.values()
                         for d in val]
                 files = [get_file_from_url(url) for url in urls if url]
-                solr_decision['text'] += '\n'.join(self.solr.extract(f)
+                solr_decision['cdText'] += '\n'.join(self.solr.extract(f)
                                                    for f in files if f)
 
-        # Get faolex URL
+        # Get Leo URL
         json_value = self.data.get(SOURCE_URL_FIELD, None)
         if json_value:
             solr_decision['cdLeoDefaultUrl'] = json_value.get('default', None)

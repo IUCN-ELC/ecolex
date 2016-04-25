@@ -408,6 +408,7 @@
     <field name="cdUrlOther" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdLeoDefaultUrl" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdLeoEnglishUrl" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdText" type="text" indexed="true" stored="true"/>
 
     <!-- Legislation fields -->
     <field name="legId" type="string" indexed="true" stored="true"/>
@@ -740,6 +741,7 @@
     <copyField source="decText" dest="text"/>
     <copyField source="legText" dest="text"/>
     <copyField source="litText" dest="text"/>
+    <copyField source="cdText" dest="text"/>
 
     <copyField source="litAuthorA" dest="litAuthor"/>
     <copyField source="litAuthorM" dest="litAuthor"/>
