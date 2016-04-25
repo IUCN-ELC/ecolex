@@ -234,9 +234,9 @@ class TreatyImporter(object):
     ]
 
     def __init__(self, config):
-        self.solr_timeout = config.getint('solr_timeout')
-        self.regions_json = settings.REGIONS_JSON
-        self.languages_json = settings.LANGUAGES_JSON
+        self.solr_timeout = config.get('solr_timeout')
+        self.regions_json = config.get('regions_json')
+        self.languages_json = config.get('languages_json')
         self.treaties_url = config.get('treaties_url')
         self.import_field = config.get('import_field')
         self.query_format = config.get('query_format')
@@ -244,12 +244,12 @@ class TreatyImporter(object):
         self.query_export = config.get('query_export')
         self.query_skip = config.get('query_skip')
         self.query_type = config.get('query_type')
-        self.per_page = int(config.get('per_page'))
-        self.start_year = int(config.get('start_year'))
+        self.per_page = config.get('per_page')
+        self.start_year = config.get('start_year')
         now = datetime.now()
-        self.end_year = config.getint('end_year', now.year)
-        self.start_month = int(config.get('start_month', now.month))
-        self.end_month = int(config.get('end_month', now.month))
+        self.end_year = config.get('end_year', now.year)
+        self.start_month = config.get('start_month', now.month)
+        self.end_month = config.get('end_month', now.month)
         self.regions = self._get_regions()
         self.languages = self._get_languages()
         self.solr = EcolexSolr(self.solr_timeout)

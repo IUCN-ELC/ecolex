@@ -91,16 +91,16 @@ class CopDecision(object):
 class CopDecisionImporter(object):
 
     def __init__(self, config):
-        self.solr_timeout = config.getint('solr_timeout')
-        self.languages_json = settings.LANGUAGES_JSON
+        self.solr_timeout = config.get('solr_timeout')
+        self.languages_json = config.get('languages_json')
         self.decision_url = config.get('cop_decision_url')
         self.query_skip = config.get('query_skip')
         self.query_filter = config.get('query_filter')
         self.query_format = config.get('query_format')
         self.query_expand = config.get('query_expand')
         self.query_order = config.get('query_order')
-        self.days_ago = config.getint('days_ago')
-        self.per_page = config.getint('per_page')
+        self.days_ago = config.get('days_ago')
+        self.per_page = config.get('per_page')
         self.solr = EcolexSolr(self.solr_timeout)
         self.languages = self._get_languages()
         logger.info('Started COP Decision importer')

@@ -235,9 +235,9 @@ class Literature(object):
 class LiteratureImporter(object):
 
     def __init__(self, config):
-        self.solr_timeout = config.getint('solr_timeout')
-        self.regions_json = settings.REGIONS_JSON
-        self.languages_json = settings.LANGUAGES_JSON
+        self.solr_timeout = config.get('solr_timeout')
+        self.regions_json = config.get('regions_json')
+        self.languages_json = config.get('languages_json')
         self.literature_url = config.get('literature_url')
         self.import_field = config.get('import_field')
         self.query_format = config.get('query_format')
@@ -245,16 +245,16 @@ class LiteratureImporter(object):
         self.query_export = config.get('query_export')
         self.query_skip = config.get('query_skip')
         self.query_type = config.get('query_type')
-        self.per_page = config.getint('per_page')
+        self.per_page = config.get('per_page')
         now = datetime.now()
-        self.start_year = config.getint('start_year', now.year)
-        self.end_year = config.getint('end_year', now.year)
-        self.start_month = config.getint('start_month', now.month)
-        self.end_month = config.getint('end_month', now.month)
+        self.start_year = config.get('start_year', now.year)
+        self.end_year = config.get('end_year', now.year)
+        self.start_month = config.get('start_month', now.month)
+        self.end_month = config.get('end_month', now.month)
         self.solr = EcolexSolr(self.solr_timeout)
         self.regions = self._get_regions()
         self.languages = self._get_languages()
-        self.force_import_all = config.getboolean('force_import_all', False)
+        self.force_import_all = config.get('force_import_all', False)
         logger.info('Started literature importer')
 
     def harvest(self, batch_size):

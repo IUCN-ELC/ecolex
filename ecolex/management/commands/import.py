@@ -1,8 +1,8 @@
 """Import module."""
 
+from django.conf import settings
 from optparse import make_option
 import argparse
-import configparser
 import logging
 
 from django.core.management.base import BaseCommand
@@ -35,7 +35,6 @@ class Command(BaseCommand):
 
     option_list = BaseCommand.option_list + (
         make_option('--obj-type', choices=OBJ_TYPES),
-        make_option('--config'),
         make_option('--test', action='store_true', default=False),
         make_option('--batch-size', type=int, default=10),
         make_option('--update-status', action='store_true'),
@@ -47,7 +46,6 @@ class Command(BaseCommand):
         parser = argparse.ArgumentParser(description='Import data into Solr.')
         parser.add_argument('import')
         parser.add_argument('obj_type', choices=OBJ_TYPES)
-        parser.add_argument('--config', required=True)
         parser.add_argument('--test', action='store_true')
         parser.add_argument('--batch-size', type=int)
         parser.add_argument('--update-status', action='store_true')
@@ -56,10 +54,8 @@ class Command(BaseCommand):
         parser.set_defaults(test=False, batch_size=1)
         args = parser.parse_args()
 
-        config = configparser.RawConfigParser()
-        config.read(args.config)
-
-        importer_config = config['default']
+        config = settings.SOLR_IMPORT
+        importer_config = config['common']
         importer_config.update(config[args.obj_type])
         importer = CLASS_MAPPING[args.obj_type](importer_config)
 

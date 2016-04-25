@@ -1,3 +1,5 @@
+import os
+
 # API KEY FOR FAOLEX HARVESTER
 # Use generate_fao_api_key method from contrib/utils.py to generate a key
 FAOLEX_API_KEY = ''
@@ -25,4 +27,61 @@ SOLR_UPDATE = {
             'value': 'value for filtering',
         }
     ]
+}
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+MANAGEMENT_DIR = os.path.join(BASE_DIR, 'ecolex', 'management')
+CONFIG_DIR = os.path.join(MANAGEMENT_DIR, 'config')
+TESTING_DIR = os.path.join(MANAGEMENT_DIR, 'testing')
+
+SOLR_IMPORT = {
+    'common': {
+        'solr_timeout': 100,
+        'countries_json': os.path.join(CONFIG_DIR, 'countries.json'),
+        'languages_json': os.path.join(CONFIG_DIR, 'languages.json'),
+        'regions_json': os.path.join(CONFIG_DIR, 'regions.json'),
+        'subdivisions_json': os.path.join(CONFIG_DIR, 'subdivisions.json'),
+    },
+    'court_decision': {
+        'test_input_file': os.path.join(TESTING_DIR, 'court_decision_in.json'),
+        'test_output_file': os.path.join(TESTING_DIR, 'court_decision_out.json'),
+        'court_decisions_url': 'http://leo.informea.org/ws/court-decisions',
+        'days_ago': 7,
+    },
+    'treaty': {
+        'treaties_url': 'http://www.ecolex.org/elis_isis3w.php',
+        'start_year': 1980,
+        'start_month': 1,
+        'end_month': 12,
+        'query_export': '?database=libcat&search_type=page_search&table=all',
+        'query_format': 'ES:I AND STAT:C AND DE:%d%02d',
+        'import_field': 'dateofentry',
+        'query_filter': '&spage_query=%s',
+        'query_skip': '&spage_first=%d',
+        'query_type': '&format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD',
+        'per_page': 20,
+    },
+    'literature': {
+        'literature_url': 'http://www.ecolex.org/elis_isis3w.php',
+        'start_year': 1980,
+        'start_month': 1,
+        'end_month': 12,
+        'query_export': '?database=libcat&search_type=page_search&table=all',
+        'query_format': 'ES:I AND STAT:C AND DE:%d%02d',
+        'import_field': 'dateofentry',
+        'query_filter': '&spage_query=%s',
+        'query_skip': '&spage_first=%d',
+        'query_type': '&format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD',
+        'per_page': 20,
+    },
+    'decision': {
+        'cop_decision_url': 'http://odata.informea.org/informea.svc/Decisions',
+        'query_skip': '$top=%d&$skip=%d',
+        'query_filter': "$filter=updated gt datetime'%s'",
+        'query_format': '$format=json',
+        'query_expand': '$expand=title,longTitle,keywords,content,files,summary',
+        'query_order': '$orderby=updated asc',
+        'per_page': 100,
+        'days_ago': 7,
+    },
 }

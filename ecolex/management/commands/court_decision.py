@@ -255,12 +255,12 @@ class CourtDecision(object):
 
 class CourtDecisionImporter(object):
     def __init__(self, config):
-        self.solr_timeout = config.getint('solr_timeout')
-        self.days_ago = config.getint('days_ago')
-        self.countries_json = settings.COUNTRIES_JSON
-        self.languages_json = settings.LANGUAGES_JSON
-        self.regions_json = settings.REGIONS_JSON
-        self.subdivisions_json = settings.SUBDIVISIONS_JSON
+        self.solr_timeout = config.get('solr_timeout')
+        self.days_ago = config.get('days_ago')
+        self.countries_json = config.get('countries_json')
+        self.languages_json = config.get('languages_json')
+        self.regions_json = config.get('regions_json')
+        self.subdivisions_json = config.get('subdivisions_json')
         self.court_decisions_url = config.get('court_decisions_url')
         self.test_input_file = config.get('test_input_file')
         self.test_output_file = config.get('test_output_file')
