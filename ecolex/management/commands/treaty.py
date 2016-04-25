@@ -293,7 +293,7 @@ class TreatyImporter(object):
             self._clean_referred_treaties(treaties)
             new_treaties = list(filter(bool, [self._get_solr_treaty(treaty) for
                                        treaty in treaties.values()]))
-            # self._index_files(new_treaties)
+            self._index_files(new_treaties)
             logger.debug('Adding treaties')
             try:
                 self.solr.add_bulk(new_treaties)
