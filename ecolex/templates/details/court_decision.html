@@ -73,10 +73,9 @@
       {% if document.link_to_full_text %}
         <dt>Link to full text</dt>
         <dd>
-          {# TODO Check if language_of_document should be used here #}
           <a href="{{ document.link_to_full_text|url_normalize }}"
              class="file-link"
-             target="_blank">{{ document.language_of_document|join:", " }}</a>
+             target="_blank">{{ document.link_to_full_text|extract_hostname }}</a>
         </dd>
       {% endif %}
 
