@@ -204,10 +204,13 @@ class CourtDecision(object):
                                              for e in json_value]
             elif json_field in LANGUAGE_FIELDS:
                 language_code = get_value(json_field, json_value['und'])
-                languages = self.languages.get(language_code, language_code)
+                languages = self.languages.get(language_code)
                 for lang in LANGUAGES:
                     field = '{}_{}'.format(solr_field, lang)
-                    solr_decision[field] = languages[lang]
+                    if languages:
+                        solr_decision[field] = languages[lang]
+                    else:
+                        solr_decision[field] = language_code
             elif json_field in SUBDIVISION_FIELDS:
                 subdivision_en = get_value(json_field, json_value)
                 solr_decision[solr_field + '_en'] = subdivision_en

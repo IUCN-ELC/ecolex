@@ -56,7 +56,8 @@ def get_file_from_url(url):
     file_obj.write(doc_content_bytes)
     setattr(file_obj, 'name', url)
     if response.headers.get('Content-Type'):
-        setattr(file_obj, 'content_type', response.headers.get('Content-Type'))
+        content_type = response.headers.get('Content-Type').split(';')[0]
+        setattr(file_obj, 'content_type', content_type)
     file_obj.seek(0)
     return file_obj
 
