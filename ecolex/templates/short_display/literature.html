@@ -26,7 +26,7 @@
 
 <p class="search-result-details">
   <strong class="sr-type">{{ result.type|capfirst }}</strong>
-  {% if result.jurisdiction %} | <span class="sr-jurisdiction sr-help" title="Jurisdiction">{{ result.jurisdiction }}</span> {% endif %}
+  {% if result.jurisdiction %} | <span class="sr-jurisdiction sr-help" title="Field of application">{{ result.jurisdiction }}</span> {% endif %}
   {% if result.countries %} | <span class="sr-country sr-help" title="Country">{{ result.countries|join:", "|safe }}</span> {% endif %}
 </p>
 
