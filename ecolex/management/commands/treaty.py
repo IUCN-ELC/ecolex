@@ -100,7 +100,6 @@ FIELD_MAP = {
     'relatedwebsite': 'trRelatedWebSite',
     'linktoabstract': 'trLinkToAbstract',
 
-    'obsolete': 'trObsolete',
     'region': 'trRegion_en',
     'region_fr_fr': 'trRegion_fr',
     'region_es_es': 'trRegion_es',

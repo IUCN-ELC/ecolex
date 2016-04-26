@@ -35,19 +35,19 @@ FIELD_MAP = {
     'field_faolex_url': 'cdFaolexUrl',
     'field_files': 'cdFiles',
     'field_informea_tags': 'cdInformeaTags',
-    'field_internet_reference_url': 'cdInternetReference',
-    'field_isis_number': 'cdIsisNumber',  # IsisMfn
+    'field_internet_reference_url': 'cdInternetReference', # relatedWebsite
+    'field_isis_number': 'cdIsisNumber', # IsisMfn
     'field_jurisdiction': 'cdJurisdiction',
     'field_justices': 'cdJustices',
     'field_number_of_pages': 'cdNumberOfPages',
     'field_original_id': 'cdOriginalId',
     'field_reference_number': 'cdReferenceNumber',
-    'field_reference_to_legislation': 'cdReferenceToLegislation',
-    'field_related_url': 'cdRelatedUrl',  # relatedWebsite
+    'field_related_url': 'cdRelatedUrl', # relatedWebsite
     'field_source_language': 'cdLanguageOfDocument',
     'field_territorial_subdivision': 'cdTerritorialSubdivision',
     'field_type_of_text': 'cdTypeOfText',
     'field_url': 'cdLinkToFullText',
+    'field_url_other': 'cdLinkToFullText_other',
     'field_notes': 'cdNotes',
     'field_abstract_other': 'cdAbstract_other',
     'field_available_in': 'cdAvailableIn',
@@ -60,7 +60,6 @@ FIELD_MAP = {
     'field_title_of_text_other': 'cdTitleOfText_other',
     'field_title_of_text_short': 'cdTitleOfTextShort',
     'field_treaty': 'cdTreatyReference',
-    'field_url_other': 'cdUrlOther',
     'field_sorting_date': 'cdDateOfText',
 }
 MULTILINGUAL_FIELDS = [

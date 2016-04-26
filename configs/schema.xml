@@ -124,8 +124,6 @@
     <field name="trJurisdiction_fr" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trJurisdiction_es" type="text" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trPublisher" type="text" indexed="true" stored="false" multiValued="true"/>
-
     <field name="trConfName" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="trConfPlace" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -155,7 +153,7 @@
     <field name="trSupersedesTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trCitesTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trObsolete" type="string" indexed="true" stored="false"/>
+    <field name="trObsolete" type="string" indexed="true" stored="true"/>
 
     <field name="trAvailableIn" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="trLanguageOfTranslation" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -306,7 +304,7 @@
     <field name="cdTitleOfText_ru" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdTitleOfText_other" type="text" indexed="true" stored="true" multiValued="false"/>
 
-    <field name="cdTitleOfTextShort" type="string" indexed="true" stored="false" multiValued="false"/>
+    <field name="cdTitleOfTextShort" type="string" indexed="true" stored="true" multiValued="false"/>
 
     <field name="cdLeoId" type="string" indexed="true" stored="true" multiValued="false"/>
 
@@ -316,7 +314,7 @@
     <field name="cdAbstract_ru" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_other" type="text" indexed="true" stored="true" multiValued="false"/>
 
-    <field name="cdAlternativeRecordId" type="string" indexed="false" stored="false" multiValued="false"/>
+    <field name="cdAlternativeRecordId" type="string" indexed="false" stored="true" multiValued="false"/>
 
     <field name="cdSeatOfCourt_en" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdSeatOfCourt_es" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -327,8 +325,8 @@
     <field name="cdCountry_es" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdCountry_fr" type="string" indexed="true" stored="true" multiValued="false"/>
 
-    <field name="cdCourtDecisionIdNumber" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdCourtDecisionSubdivision" type="string" indexed="false" stored="false" multiValued="false"/>
+    <field name="cdCourtDecisionIdNumber" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdCourtDecisionSubdivision" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdCourtName" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdDateOfEntry" type="tdate" indexed="true" stored="true" multiValued="false"/>
     <field name="cdDateOfModification" type="tdate" indexed="true" stored="true" multiValued="false"/>
@@ -339,19 +337,19 @@
     <field name="cdSubject_fr" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="cdSubject_es" type="text" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="cdEcolexUrl" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdEcolexUrl_en" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdEcolexUrl_es" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdEcolexUrl_fr" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdEcolexUrl_ru" type="string" indexed="false" stored="false" multiValued="false"/>
+    <!-- TODO check if we really need cdEcolexUrl -->
+    <field name="cdEcolexUrl_en" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdEcolexUrl_es" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdEcolexUrl_fr" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdEcolexUrl_ru" type="string" indexed="false" stored="true" multiValued="false"/>
 
-    <field name="cdFaolexUrl_en" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdFaolexUrl_es" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdFaolexUrl_fr" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdFaolexUrl_ru" type="string" indexed="false" stored="false" multiValued="false"/>
+    <field name="cdFaolexUrl_en" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdFaolexUrl_es" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdFaolexUrl_fr" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdFaolexUrl_ru" type="string" indexed="false" stored="true" multiValued="false"/>
 
     <field name="cdFiles" type="string" indexed="false" stored="true" multiValued="true"/>
-    <field name="cdInformeaTags" type="string" indexed="false" stored="false" multiValued="true"/>
+    <field name="cdInformeaTags" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="cdInternetReference" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdInternetReference_en" type="string" indexed="false" stored="true" multiValued="false"/>
@@ -359,7 +357,7 @@
     <field name="cdInternetReference_fr" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdInternetReference_ru" type="string" indexed="false" stored="true" multiValued="false"/>
 
-    <field name="cdIsisNumber" type="string" indexed="false" stored="false" multiValued="false"/>
+    <field name="cdIsisNumber" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdJurisdiction" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdJustices" type="string" indexed="true" stored="true" multiValued="true"/>
 
@@ -367,16 +365,14 @@
     <field name="cdKeyword_fr" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="cdKeyword_es" type="text" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="cdNumberOfPages" type="int" indexed="false" stored="false" multiValued="false"/>
+    <field name="cdNumberOfPages" type="int" indexed="false" stored="true" multiValued="false"/>
     <field name="cdOriginalId" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdReferenceNumber" type="string" indexed="false" stored="true" multiValued="false"/>
-    <field name="cdReferenceToLegislation" type="string" indexed="true" stored="false" multiValued="false"/>
 
-    <field name="cdRelatedUrl" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdRelatedUrl_en" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdRelatedUrl_es" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdRelatedUrl_fr" type="string" indexed="false" stored="false" multiValued="false"/>
-    <field name="cdRelatedUrl_ru" type="string" indexed="false" stored="false" multiValued="false"/>
+    <field name="cdRelatedUrl_en" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdRelatedUrl_es" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdRelatedUrl_fr" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdRelatedUrl_ru" type="string" indexed="false" stored="true" multiValued="false"/>
 
     <field name="cdLanguageOfDocument_en" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdLanguageOfDocument_fr" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -392,20 +388,20 @@
     <field name="cdLinkToFullText_es" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdLinkToFullText_fr" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdLinkToFullText_ru" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdLinkToFullText_other" type="string" indexed="false" stored="true" multiValued="false"/>
 
-    <field name="cdNotes" type="string" indexed="false" stored="false" multiValued="true"/>
-    <field name="cdAvailableIn" type="string" indexed="true" stored="false" multiValued="false"/>
-    <field name="cdCourtDecisionReference" type="string" indexed="true" stored="false" multiValued="false"/>
+    <field name="cdNotes" type="string" indexed="false" stored="true" multiValued="true"/>
+    <field name="cdAvailableIn" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdCourtDecisionReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdFaolexReference" type="string" indexed="true" stored="true" multiValued="false"/>
-    <field name="cdInstance" type="string" indexed="true" stored="false" multiValued="false"/>
-    <field name="cdOfficialPublication" type="string" indexed="true" stored="false" multiValued="false"/>
+    <field name="cdInstance" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdOfficialPublication" type="string" indexed="true" stored="true" multiValued="false"/>
 
     <field name="cdRegion_en" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdRegion_fr" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdRegion_es" type="text" indexed="true" stored="true" multiValued="false"/>
 
     <field name="cdTreatyReference" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="cdUrlOther" type="string" indexed="true" stored="false" multiValued="false"/>
     <field name="cdLeoDefaultUrl" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdLeoEnglishUrl" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdText" type="text" indexed="true" stored="true"/>
@@ -471,7 +467,7 @@
     <field name="legText" type="text" indexed="true" stored="false"/>
 
     <!-- General fields -->
-    <field name="docId" type="text" indexed="true" stored="false" multiValued="true"/>
+    <field name="docId" type="text" indexed="true" stored="true" multiValued="false"/>
 
     <field name="docSubject_en" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="docSubject_fr" type="string" indexed="true" stored="true" multiValued="true"/>
