@@ -26,16 +26,14 @@
     </div>
 
     <dl>
+      <dt>Country</dt> <dd>{{ document.country }}</dd>
       <dt>Type of court</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
       <dt>Date</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
-      <dt>Source</dt>
-      <dd>UNEP, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
     </dl>
   </header>
 
   <section id="details">
     <dl>
-      <dt>Country</dt> <dd>{{ document.country }}</dd>
       <dt>Court name</dt> <dd>{{ document.court_name }}</dd>
 
       {% if document.justices %}
@@ -70,6 +68,17 @@
       <dt>Abstract</dt>
       <dd>{{ document.abstract|safe }}</dd>
 
+      {% if document.link_to_full_text %}
+        <dt>Full text</dt>
+        <dd>
+          <a href="{{ document.link_to_full_text|url_normalize }}"
+             class="file-link" target="_blank">{% if document.language_of_document %}
+               {{ document.language_of_document|join:", " }}
+             {% else %}
+               {{ document.link_to_full_text|extract_hostname }}
+             {% endif %}</a>
+        </dd>
+      {% endif %}
       {% if document.internet_reference %}
         <dt>Available web site</dt>
         <dd>
@@ -77,14 +86,8 @@
              target="_blank">{{ document.internet_reference|extract_hostname }}</a>
         </dd>
       {% endif %}
-      {% if document.link_to_full_text %}
-        <dt>Link to full text</dt>
-        <dd>
-          <a href="{{ document.link_to_full_text|url_normalize }}"
-             class="file-link"
-             target="_blank">{{ document.link_to_full_text|extract_hostname }}</a>
-        </dd>
-      {% endif %}
+      <dt>Source</dt>
+      <dd>UNEP, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
 
       {% if document.files %}
         <dt>Files</dt>
