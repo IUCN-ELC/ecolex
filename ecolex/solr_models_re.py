@@ -9,7 +9,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import get_language
-from ecolex.lib.utils import is_iterable, camel_case_to__
+from ecolex.lib.utils import OrderedDefaultDict, is_iterable, camel_case_to__
 
 
 DEFAULT_TITLE = 'Unknown Document'
@@ -116,7 +116,7 @@ class DocumentModel(BaseModel):
                                    date_sort=False, **lookups)
 
         # we need to re-group according to the lookups
-        out = defaultdict(list)
+        out = OrderedDefaultDict(list)
         for item in response.results:
             for k, v in groupers.items():
                 field, lookup = v
@@ -137,11 +137,16 @@ class DocumentModel(BaseModel):
                     # might belong in multiple categories
 
         # and re-order
-        return {
-            k: out[k]
-            for k in self.REFERENCES
-            if k in out
-        }
+        for k in self.REFERENCES:
+            try:
+                out.move_to_end(k)
+            except KeyError:
+                pass
+
+        # this is needed because django's template goes funny with defaultdicts
+        out.default_factory = None
+
+        return out
 
     @cached_property
     def other_references(self):
