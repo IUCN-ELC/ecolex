@@ -235,11 +235,12 @@ class CourtDecision(object):
                 solr_decision[solr_field + '_es'] = []
                 for kw_en in keywords_en:
                     keyword_en = kw_en.lower()
-                    solr_decision[solr_field + '_en'].append(keyword_en)
                     if keyword_en not in self.keywords:
                         logger.warning('Keyword missing from keywords.json: '
                                        '{} ({})'.format(keyword_en, leo_id))
                         continue
+                    solr_decision[solr_field + '_en'].append(
+                        self.keywords[keyword_en]['en'])
                     solr_decision[solr_field + '_fr'].append(
                         self.keywords[keyword_en]['fr'])
                     solr_decision[solr_field + '_es'].append(
@@ -252,11 +253,12 @@ class CourtDecision(object):
                 solr_decision[solr_field + '_es'] = []
                 for subj_en in subjects_en:
                     subject_en = subj_en.lower()
-                    solr_decision[solr_field + '_en'].append(subject_en)
                     if subject_en not in self.subjects:
                         logger.warning('Subject missing from subjects.json: '
                                        '{} ({})'.format(subject_en, leo_id))
                         continue
+                    solr_decision[solr_field + '_en'].append(
+                        self.subjects[subject_en]['en'])
                     solr_decision[solr_field + '_fr'].append(
                         self.subjects[subject_en]['fr'])
                     solr_decision[solr_field + '_es'].append(
