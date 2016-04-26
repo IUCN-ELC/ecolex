@@ -9,7 +9,9 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import get_language
-from ecolex.lib.utils import OrderedDefaultDict, is_iterable, camel_case_to__
+
+from ecolex.lib.utils import OrderedDefaultDict, any_match, camel_case_to__
+
 
 
 DEFAULT_TITLE = 'Unknown Document'
@@ -107,12 +109,12 @@ class DocumentModel(BaseModel):
 
         # (this is getting really, really silly)
         from .schema import FIELD_PROPERTIES
-        fields = [f for f in FIELD_PROPERTIES[self.type].values()
-                  if f.name in fields]
+        extra_fields = [f for f in FIELD_PROPERTIES[self.type].values()
+                        if f.name in fields]
 
         # set a ridiculously high page size to be certain we fetch all results
         # TODO: may be a bad™ idea
-        response = queryer.findany(page_size=1000, fetch_fields=fields,
+        response = queryer.findany(page_size=1000, fetch_fields=extra_fields,
                                    date_sort=False, **lookups)
 
         # we need to re-group according to the lookups
@@ -125,13 +127,7 @@ class DocumentModel(BaseModel):
                 except AttributeError:
                     continue
 
-                if ((is_iterable(val)
-                     and (is_iterable(lookup) and set(lookup).intersection(val)
-                          or lookup in val)
-                     ) or
-                    (is_iterable(lookup) and val in lookup
-                     or lookup == val)
-                ):
+                if any_match(val, lookup):
                     out[k].append(item)
                     # don't break on a positive match, because a document
                     # might belong in multiple categories
@@ -371,6 +367,14 @@ class CourtDecision(DocumentModel):
 class Literature(DocumentModel):
     URL_NAME = 'literature_details'
 
+    REFERENCES = [
+        'literature_reference',
+        'referenced_by',
+    ]
+    BACKREFERENCES = {
+        'referenced_by': 'literature_reference',
+    }
+
     @property
     def title(self):
         if self.document_id.startswith('ANA'):
@@ -438,35 +442,98 @@ class Literature(DocumentModel):
                                      self.conf_date, self.conf_place)
 
     @cached_property
+    def _all_references(self):
+        """
+        Fetches all existing relationships in one go.
+        """
+
+        REFERENCES = {
+            'treaties': (
+                'treaty', 'document_id', self.treaty_reference),
+            'legislations': (
+                'legislation', 'document_id', (
+                    self.faolex_reference +
+                    self.eu_legislation_reference +
+                    self.national_legislation_reference)),
+            'court_decisions': (
+                'court_decision', 'original_id', self.court_decision_reference),
+            'literatures': (
+                'literature', 'document_id', self.literature_reference),
+            'references': (
+                'literature', 'literature_reference', self.document_id)
+        }
+
+        _BY_TYPE = defaultdict(list)
+        fields = set()
+        lookups = {}
+
+        for name, v in REFERENCES.items():
+            typ, field, lookup = v
+
+            if not lookup:
+                continue
+
+            _BY_TYPE[typ].append(name)
+            fields.add((typ, field))
+
+            lookup_field = self._resolve_field(field, typ)
+            lookups[lookup_field] = lookup
+
+        if not lookups:
+            return {}
+
+        # (yup, silly)
+        from .schema import FIELD_PROPERTIES
+        extra_fields = [f
+                        for t, name in fields
+                        for f in FIELD_PROPERTIES[t].values()
+                        if f.name in fields]
+
+        from .xsearch import Queryer
+        queryer = Queryer({}, language=get_language())
+
+        response = queryer.findany(page_size=1000, fetch_fields=extra_fields,
+                                   date_sort=False, **lookups)
+
+        out = defaultdict(list)
+        for item in response.results:
+            names = _BY_TYPE[item.type]
+            # if there's only one lookup by that type,
+            # this item is guaranteed to match
+            if len(names) == 1:
+                out[names[0]].append(item)
+                continue
+
+            for name in names:
+                _t, field, lookup = REFERENCES[name]
+
+                try:
+                    val = getattr(item, field)
+                except AttributeError:
+                    continue
+
+                if any_match(val, lookup):
+                    out[name].append(item)
+                    break
+
+        return out
+
+    @property
     def treaties(self):
-        from ecolex.search import get_documents_by_field
-        return get_documents_by_field('trElisId', self.treaty_reference,
-                                      rows=MAX_ROWS)
+        return self._all_references['treaties']
 
-    @cached_property
+    @property
     def legislations(self):
-        from ecolex.search import get_documents_by_field
-        refs = (self.faolex_reference +
-                self.eu_legislation_reference +
-                self.national_legislation_reference)
-        return get_documents_by_field('legId', refs, rows=MAX_ROWS)
+        return self._all_references['legislations']
 
-    @cached_property
+    @property
     def court_decisions(self):
-        from ecolex.search import get_documents_by_field
-        return get_documents_by_field('cdOriginalId',
-                                      self.court_decision_reference,
-                                      rows=MAX_ROWS)
+        return self._all_references['court_decisions']
 
-    @cached_property
+    @property
     def literatures(self):
-        from ecolex.search import get_documents_by_field
-        return get_documents_by_field('litId', self.literature_reference,
-                                      rows=MAX_ROWS)
+        return self._all_references['literatures']
 
-    @cached_property
+    @property
     def references(self):
-        # TODO. why the special case?
-        from ecolex.search import get_documents_by_field
-        return get_documents_by_field('litLiteratureReference',
-                                      [self.document_id], rows=MAX_ROWS)
+        return self._all_references['references']

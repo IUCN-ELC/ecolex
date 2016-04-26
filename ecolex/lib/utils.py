@@ -31,6 +31,22 @@ def is_iterable(v):
     return not isinstance(v, str) and isinstance(v, Iterable)
 
 
+def any_match(a, b):
+    """
+    Returns true if any item in `a` is matched by any item in `b`,
+    handling the case when only one / neither is an iterable.
+    (basically testing for set intersection in the most efficient manner).
+    """
+    return (
+        (is_iterable(a)
+         and (is_iterable(b) and set(b).intersection(a)
+              or b in a)
+        ) or
+        (is_iterable(b) and a in b
+         or b == a)
+    )
+
+
 class MutableLookupDict(dict):
     """
     Dictionary that can mutate the lookup of keys specified in `mutables`,
