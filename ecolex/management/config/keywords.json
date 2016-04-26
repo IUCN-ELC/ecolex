@@ -2878,5 +2878,25 @@
     "es": "producci\u00f3n animal",
     "en": "animal production",
     "fr": "production animale"
+  },
+  "health": {
+    "es": "sanidad",
+    "en": "health",
+    "fr": "sant\u00e9"
+  },
+  "planning": {
+    "es": "planificaci\u00f3n",
+    "en": "planning",
+    "fr": "planification"
+  },
+  "food security/food shortage/food aid": {
+    "es": "seguridad alimentaria/",
+    "en": "food security",
+    "fr": "s\u00e9curit\u00e9 alimentaire/"
+  },
+  "biological diversity": {
+    "es": "biodiversidad",
+    "en": "biodiversity",
+    "fr": "biodiversit\u00e9"
   }
 }
