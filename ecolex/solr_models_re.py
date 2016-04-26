@@ -369,6 +369,76 @@ class CourtDecision(DocumentModel):
     def date(self):
         return self.date_of_text
 
+    @cached_property
+    def _all_references(self):
+        """
+        Fetches all existing relationships in one go.
+        """
+
+        REFERENCES = {
+            'treaties': (
+                'treaty', 'document_id', self.treaty_reference),
+        }
+
+        _BY_TYPE = defaultdict(list)
+        fields = set()
+        lookups = {}
+
+        for name, v in REFERENCES.items():
+            typ, field, lookup = v
+
+            if not lookup:
+                continue
+
+            _BY_TYPE[typ].append(name)
+            fields.add((typ, field))
+
+            lookup_field = self._resolve_field(field, typ)
+            lookups[lookup_field] = lookup
+
+        if not lookups:
+            return {}
+
+        # (yup, silly)
+        from .schema import FIELD_PROPERTIES
+        extra_fields = [f
+                        for t, name in fields
+                        for f in FIELD_PROPERTIES[t].values()
+                        if f.name in fields]
+
+        from .xsearch import Queryer
+        queryer = Queryer({}, language=get_language())
+
+        response = queryer.findany(page_size=1000, fetch_fields=extra_fields,
+                                   date_sort=False, **lookups)
+
+        out = defaultdict(list)
+        for item in response.results:
+            names = _BY_TYPE[item.type]
+            # if there's only one lookup by that type,
+            # this item is guaranteed to match
+            if len(names) == 1:
+                out[names[0]].append(item)
+                continue
+
+            for name in names:
+                _t, field, lookup = REFERENCES[name]
+
+                try:
+                    val = getattr(item, field)
+                except AttributeError:
+                    continue
+
+                if any_match(val, lookup):
+                    out[name].append(item)
+                    break
+
+        return out
+
+    @property
+    def treaties(self):
+        return self._all_references['treaties']
+
 
 class Literature(DocumentModel):
     URL_NAME = 'literature_details'
