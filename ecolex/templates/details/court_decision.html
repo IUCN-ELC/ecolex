@@ -136,6 +136,25 @@
   </section>
 {% endif %}
 
+{% if document.treaties %}
+  <section id="court-decision-references">
+    <h2 class="section-title">Treaty references</h2>
+
+    {% for treaty in document.treaties %}
+      <dl>
+        <dt>Cites</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ treaty.details_url }}?{{ query }}"
+               title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
+          </h3>
+          {% include 'short_display/treaty.html' with result=treaty %}
+        </dd>
+      </dl>
+    {% endfor %}
+  </section>
+{% endif %}
+
 {# TODO Update references #}
 {% if references.items or referenced_by.items %}
   <section id="other-references">
