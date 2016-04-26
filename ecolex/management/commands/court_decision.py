@@ -3,6 +3,7 @@ import json
 import logging
 import logging.config
 
+from django.conf import settings
 from django.template.defaultfilters import slugify
 
 from ecolex.management.commands.logging import LOG_DICT
@@ -19,6 +20,8 @@ SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 FIELD_MAP = {
     'title_field': 'cdTitleOfText',
     'field_abstract': 'cdAbstract',
+    'field_abstract_other': 'cdAbstract_other',
+    'field_link_to_abstract': 'cdLinkToAbstract',
     'field_alternative_record_id': 'cdAlternativeRecordId',
     'field_city': 'cdSeatOfCourt',
     'field_country': 'cdCountry',
@@ -47,7 +50,6 @@ FIELD_MAP = {
     'field_url': 'cdLinkToFullText',
     'field_url_other': 'cdLinkToFullText_other',
     'field_notes': 'cdNotes',
-    'field_abstract_other': 'cdAbstract_other',
     'field_available_in': 'cdAvailableIn',
     'field_court_decision': 'cdCourtDecisionReference',
     'field_ecolex_keywords': 'cdKeyword',
@@ -63,6 +65,7 @@ FIELD_MAP = {
 MULTILINGUAL_FIELDS = [
     'title_field',
     'field_abstract',
+    'field_link_to_abstract',
     'field_ecolex_url',
     'field_faolex_url',
     'field_internet_reference_url',
@@ -87,6 +90,7 @@ FALSE_MULTILINGUAL_FIELDS = [
     'field_instance',
     'field_title_of_text_other',
     'field_url_other',
+    'field_official_publication',
     'field_notes',
 ]
 MULTIVALUED_FIELDS = [
@@ -108,7 +112,7 @@ REGION_FIELDS = ['field_ecolex_region']
 KEYWORD_FIELDS = ['field_ecolex_keywords']
 SUBJECT_FIELDS = ['field_ecolex_tags']
 FILES_FIELDS = ['field_files']
-FULL_TEXT_FIELDS = ['field_url']
+FULL_TEXT_FIELDS = ['field_url', 'field_link_to_abstract']
 SUBDIVISION_FIELDS = ['field_territorial_subdivision']
 REFERENCE_FIELDS = {'field_treaty': 'original_id',
                     'field_court_decision': 'uuid'}
@@ -190,8 +194,9 @@ class CourtDecision(object):
                                                       json_value['und'])
             elif json_field in MULTILINGUAL_FIELDS:
                 for lang, value in json_value.items():
-                    key = '{}_{}'.format(solr_field, lang)
-                    solr_decision[key] = get_value(json_field, value)
+                    if lang in settings.LANGUAGE_MAP:
+                        key = '{}_{}'.format(solr_field, lang)
+                        solr_decision[key] = get_value(json_field, value)
             elif json_field in COUNTRY_FIELDS:
                 country = get_country_value(self.countries, json_value)
                 for lang, value in country.items():
@@ -287,7 +292,8 @@ class CourtDecision(object):
 
         title = (solr_decision.get('cdTitleOfText_en') or
                  solr_decision.get('cdTitleOfText_fr') or
-                 solr_decision.get('cdTitleOfText_es'))
+                 solr_decision.get('cdTitleOfText_es') or
+                 solr_decision.get('cdTitleOfText_other'))
         slug = title + ' ' + solr_decision.get('cdLeoId')
         solr_decision['slug'] = slugify(slug)
 
@@ -352,6 +358,7 @@ class CourtDecisionImporter(object):
 
     def _get_solr_decision(self, decision):
         data = self._get_decision(decision['data_url'])
+
         if not data:
             return
         new_decision = CourtDecision(data, self.countries, self.languages,

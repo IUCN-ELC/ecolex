@@ -517,6 +517,8 @@ class CourtDecisionSchema(CommonSchema):
 
     # TODO: this is common to more. group together?
     abstract = fields.String(load_from='cdAbstract', multilingual=True)
+    link_to_abstract = fields.String(load_from='cdLinkToAbstract',
+                                     multilingual=True)
     country = fields.String(load_from='cdCountry', multilingual=True)
 
     court_name = fields.String(load_from='cdCourtName')
@@ -524,6 +526,8 @@ class CourtDecisionSchema(CommonSchema):
     date_of_modification = fields.Date(load_from='cdDateOfModification')
     date_of_text = fields.Date(load_from='cdDateOfText', missing=None)
     files = fields.List(fields.String(), load_from='cdFiles')
+    available_in = fields.String(load_from='cdAvailableIn')
+
     internet_reference = fields.String(load_from='cdInternetReference',
                                        multilingual=True)
     jurisdiction = fields.String(load_from='cdJurisdiction')

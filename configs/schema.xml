@@ -313,6 +313,9 @@
     <field name="cdAbstract_fr" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_ru" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdAbstract_other" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdLinkToAbstract_en" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdLinkToAbstract_es" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdLinkToAbstract_fr" type="string" indexed="false" stored="true" multiValued="false"/>
 
     <field name="cdAlternativeRecordId" type="string" indexed="false" stored="true" multiValued="false"/>
 

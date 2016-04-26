@@ -66,9 +66,18 @@
 
 <section id="text">
     <dl>
-      <dt>{% trans 'Abstract' %}</dt>
-      <dd>{{ document.abstract|safe }}</dd>
-
+      {% if document.abstract %}
+        <dt>{% trans 'Abstract' %}</dt>
+        <dd>{{ document.abstract|safe }}</dd>
+      {% endif %}
+      {% if document.link_to_abstract %}
+        <dt>{% trans 'Link to abstract' %}</dt>
+        <dd>
+            <a class="decision-link" href="{{ document.link_to_abstract|url_normalize }}"
+                rel="nofollow" target="_blank" class="file-link">
+                  {{ document.link_to_abstract|extract_filename }}</a>
+        </dd>
+      {% endif %}
       {% if document.link_to_full_text %}
         <dt>{% trans 'Full text' %}</dt>
          <dd>
@@ -80,7 +89,10 @@
              {% endif %}</a>
         </dd>
       {% endif %}
-
+      {% if document.available_in %}
+        <dt>{% trans 'Available in' %}</dt>
+        <dd>{{ document.available_in|safe }}</dd>
+      {% endif %}
       {% if document.internet_reference %}
         <dt>{% trans 'Available web site' %}</dt>
         <dd>
