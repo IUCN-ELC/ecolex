@@ -8,25 +8,19 @@
 {% endblock %}
 
 {% block content %}
-<p>
-  <span class="treaty-name">{{ treaty.full_title }}</span>
-</p>
 
-<hr>
-
-<article class="record-details-decisions">
+<article class="record-details">
   <header>
-    <h1>Treaty decisions</h1>
+    <div class="record-title">
+      <h1>{{ treaty.title|safe }}</h1>
+      <h2>Related COP decisions</h2>
+    </div>
   </header>
 
   <table class="table decisions-expanded">
-    <thead>
-      <th>#</th>
-      <th>Title</th>
-    </thead>
+    <tbody>
     {% regroup treaty.decisions by meeting_title as decision_list %}
     {% for decision in decision_list %}
-      <tbody>
         <tr>
           <th colspan="3">{{ decision.grouper }}</th>
         </tr>
@@ -46,8 +40,8 @@
           </td>
         </tr>
         {% endfor %}
-      </tbody>
     {% endfor %}
+    </tbody>
   </table>
 
 </article>

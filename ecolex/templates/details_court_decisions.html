@@ -8,21 +8,16 @@
 {% endblock %}
 
 {% block content %}
-<p>
-  <span class="treaty-name">{{ treaty.full_title }}</span>
-</p>
 
-<hr>
-
-<article class="record-details-decisions">
+<article class="record-details">
   <header>
-    <h1>Treaty court decisions</h1>
+    <div class="record-title">
+      <h1>{{ treaty.title|safe }}</h1>
+      <h2>Related court decisions</h2>
+    </div>
   </header>
 
   <table class="table decisions-expanded">
-    <thead>
-      <th>Title</th>
-    </thead>
     <tbody>
       {% for court_decision in treaty.court_decisions %}
       <tr>
