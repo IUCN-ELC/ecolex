@@ -548,7 +548,7 @@ class CourtDecisionSchema(CommonSchema):
     title_of_text = fields.String(load_from='cdTitleOfText', multilingual=True,
                                   missing='')
     treaty_reference = fields.List(fields.String(),
-                                   load_from='cdTreatyReference')
+                                   load_from='cdTreatyReference', missing=None)
     region = fields.List(fields.String(), load_from='cdRegion',
                          multilingual=True)
     cites = fields.List(fields.String(), load_from='cdCourtDecisionReference')

@@ -437,7 +437,7 @@ class CourtDecision(DocumentModel):
 
     @property
     def treaties(self):
-        return self._all_references['treaties']
+        return self._all_references.get('treaties')
 
 
 class Literature(DocumentModel):
