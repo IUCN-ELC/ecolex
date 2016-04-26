@@ -101,10 +101,10 @@ def harvest_file(upfile):
     legislations = []
     count_ignored = 0
 
-    with open(settings.REGIONS_JSON) as f:
+    with open(settings.SOLR_IMPORT['common']['regions_json']) as f:
         json_regions = json.load(f)
 
-    with open(settings.LANGUAGES_JSON) as f:
+    with open(settings.SOLR_IMPORT['common']['languages_json']) as f:
         languages_codes = json.load(f)
     all_languages = {}
     for k, v in languages_codes.items():
