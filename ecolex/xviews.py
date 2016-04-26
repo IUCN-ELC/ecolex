@@ -20,7 +20,12 @@ homepage_view = HomepageView.as_view()
 class SearchViewMixin(object):
     @cached_property
     def form(self):
-        return SearchForm(self.request.GET)
+        data = self.request.GET.copy()
+        for k in data.keys():
+            if k.endswith('[]'):
+                v = data.pop(k)
+                data.setlist(k[:-2], v)
+        return SearchForm(data)
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
