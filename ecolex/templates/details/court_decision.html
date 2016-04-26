@@ -92,8 +92,7 @@
       {% if document.files %}
         <dt>Files</dt>
         {% for link in document.files %}
-          {# TODO Check if document.title should be used here #}
-          <dd><a href="{{ link }}">{{ document.title|safe }}</a></dd>
+          <dd><a href="{{ link }}" rel="nofollow">{{ link|extract_filename|safe }}</a></dd>
         {% endfor %}
       {% endif %}
     </dl>
