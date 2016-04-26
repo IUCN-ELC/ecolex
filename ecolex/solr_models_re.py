@@ -378,6 +378,8 @@ class CourtDecision(DocumentModel):
         REFERENCES = {
             'treaties': (
                 'treaty', 'document_id', self.treaty_reference),
+            'legislation': (
+                'legislation', 'document_id', self.legislation_reference),
             #'cited_court_decisions': (
             #    'court_decision', 'document_id', self.cites),
             #'cited_by_court_decisions': (
@@ -442,6 +444,9 @@ class CourtDecision(DocumentModel):
     @property
     def treaties(self):
         return self._all_references['treaties']
+    @property
+    def legislation(self):
+        return self._all_references['legislation']
 
 
 class Literature(DocumentModel):

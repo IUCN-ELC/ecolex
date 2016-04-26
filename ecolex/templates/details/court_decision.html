@@ -85,7 +85,7 @@
              class="file-link" target="_blank">{% if document.language_of_document %}
                {{ document.language_of_document|join:", " }}
              {% else %}
-               {{ document.link_to_full_text|extract_hostname }}
+               {{ document.link_to_full_text|url_normalize|extract_hostname }}
              {% endif %}</a>
         </dd>
       {% endif %}
@@ -97,7 +97,7 @@
         <dt>{% trans 'Available web site' %}</dt>
         <dd>
           <a href="{{ document.internet_reference|url_normalize }}" rel="nofollow"
-             target="_blank">{{ document.internet_reference|extract_hostname }}</a>
+             target="_blank">{{ document.internet_reference|url_normalize|extract_hostname }}</a>
         </dd>
       {% endif %}
 
@@ -112,7 +112,7 @@
       {% endif %}
     </dl>
   </section>
-{% if document.references or document.treaties %}
+{% if document.references or document.treaties or document.legislation %}
   <section id="court-decision-references">
     <h2 class="section-title">{% trans 'References' %}</h2>
     {% if document.references %}
@@ -140,10 +140,24 @@
         {% for treaty in document.treaties %}
           <dd>
             <h3 class="search-result-title">
-              <a href="{{ treaty.details_url }}?{{ query }}"
+              <a href="{{ treaty.details_url }}"
                  title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
             </h3>
             {% include 'short_display/treaty.html' with result=treaty %}
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endif %}
+    {% if document.legislation %}
+      <dl>
+        <dt>{% trans 'Cites' %}</dt>
+        {% for leg in document.legislation %}
+          <dd>
+            <h3 class="search-result-title">
+              <a href="{{ leg.details_url }}"
+                 title="{{ leg.title|safe|striptags }}">{{ leg.title|safe }}</a>
+            </h3>
+            {% include 'short_display/legislation.html' with result=leg %}
           </dd>
         {% endfor %}
       </dl>

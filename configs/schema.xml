@@ -396,7 +396,7 @@
     <field name="cdNotes" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="cdAvailableIn" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdCourtDecisionReference" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="cdFaolexReference" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdFaolexReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdInstance" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdOfficialPublication" type="string" indexed="true" stored="true" multiValued="false"/>
 
