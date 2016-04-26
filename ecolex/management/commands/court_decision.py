@@ -297,8 +297,10 @@ class CourtDecision(object):
         title = (solr_decision.get('cdTitleOfText_en') or
                  solr_decision.get('cdTitleOfText_fr') or
                  solr_decision.get('cdTitleOfText_es') or
-                 solr_decision.get('cdTitleOfText_other'))
-        slug = title + ' ' + solr_decision.get('cdLeoId')
+                 solr_decision.get('cdTitleOfText_other') or '')
+        if not title:
+            logger.warning('Title missing for {}'.format(leo_id))
+        slug = '{} {}'.format(title, leo_id)
         solr_decision['slug'] = slugify(slug)
 
         return solr_decision
