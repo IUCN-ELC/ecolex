@@ -1,92 +1,92 @@
 {
-	"agricultural and rural development": {
+    "agricultural and rural development": {
         "en": "Agricultural and Rural Development",
-		"es": "Agricultura y Desarrollo Rural",
-		"fr": "Agriculture et D\u00e9veloppement Rural"
-	},
-	"agriculture": {
+        "es": "Agricultura y Desarrollo Rural",
+        "fr": "Agriculture et D\u00e9veloppement Rural"
+    },
+    "agriculture": {
         "en": "Agriculture",
-		"es": "Agricultura",
-		"fr": "Agriculture"
-	},
-	"air & atmosphere": {
+        "es": "Agricultura",
+        "fr": "Agriculture"
+    },
+    "air & atmosphere": {
         "en": "Air & atmosphere",
-		"es": "Aire y atm\u00f3sfera",
-		"fr": "Air et atmosph\u00e8re"
-	},
-	"cultivated plants": {
+        "es": "Aire y atm\u00f3sfera",
+        "fr": "Air et atmosph\u00e8re"
+    },
+    "cultivated plants": {
         "en": "Cultivated plants",
-		"es": "Cultivos",
-		"fr": "Plantes cultiv\u00e9es"
-	},
-	"energy": {
+        "es": "Cultivos",
+        "fr": "Plantes cultiv\u00e9es"
+    },
+    "energy": {
         "en": "Energy",
-		"es": "Energ\u00eda",
-		"fr": "\u00c9nergie"
-	},
-	"environment gen.": {
+        "es": "Energ\u00eda",
+        "fr": "\u00c9nergie"
+    },
+    "environment gen.": {
         "en": "Environment gen.",
-		"es": "Medio ambiente gen.",
-		"fr": "Environnement g\u00e9n."
-	},
-	"fisheries": {
+        "es": "Medio ambiente gen.",
+        "fr": "Environnement g\u00e9n."
+    },
+    "fisheries": {
         "en": "Fisheries",
-		"es": "Pesca",
-		"fr": "P\u00eache"
-	},
-	"food and nutrition": {
+        "es": "Pesca",
+        "fr": "P\u00eache"
+    },
+    "food and nutrition": {
         "en": "Food and nutrition",
-		"es": "Alimentaci\u00f3n y nutrici\u00f3n",
-		"fr": "Alimentation et nutrition"
-	},
-	"food": {
+        "es": "Alimentaci\u00f3n y nutrici\u00f3n",
+        "fr": "Alimentation et nutrition"
+    },
+    "food": {
         "en": "Food",
-		"es": "Alimentaci\u00f3n",
-		"fr": "Alimentation"
-	},
-	"forestry": {
+        "es": "Alimentaci\u00f3n",
+        "fr": "Alimentation"
+    },
+    "forestry": {
         "en": "Forestry",
-		"es": "Bosques",
-		"fr": "For\u00eats"
-	},
-	"land & soil": {
+        "es": "Bosques",
+        "fr": "For\u00eats"
+    },
+    "land & soil": {
         "en": "Land & soil",
-		"es": "Tierra y suelos",
-		"fr": "Terre et sols"
-	},
-	"legal questions": {
+        "es": "Tierra y suelos",
+        "fr": "Terre et sols"
+    },
+    "legal questions": {
         "en": "Legal questions",
-		"es": "Cuestiones jur\u00eddicas",
-		"fr": "Questions juridiques"
-	},
-	"livestock": {
+        "es": "Cuestiones jur\u00eddicas",
+        "fr": "Questions juridiques"
+    },
+    "livestock": {
         "en": "Livestock",
-		"es": "Ganado",
-		"fr": "B\u00e9tail"
-	},
-	"mineral resources": {
+        "es": "Ganado",
+        "fr": "B\u00e9tail"
+    },
+    "mineral resources": {
         "en": "Mineral resources",
-		"es": "Recursos minerales",
-		"fr": "Ressources min\u00e9rales"
-	},
-	"sea": {
+        "es": "Recursos minerales",
+        "fr": "Ressources min\u00e9rales"
+    },
+    "sea": {
         "en": "Sea",
-		"es": "Mar",
-		"fr": "Mer"
-	},
-	"waste & hazardous substances": {
+        "es": "Mar",
+        "fr": "Mer"
+    },
+    "waste & hazardous substances": {
         "en": "Waste & hazardous substances",
-		"es": "Desechos y sustancias peligrosas",
-		"fr": "D\u00e9chets et substances dangereuses"
-	},
-	"water": {
+        "es": "Desechos y sustancias peligrosas",
+        "fr": "D\u00e9chets et substances dangereuses"
+    },
+    "water": {
         "en": "Water",
-		"es": "Agua",
-		"fr": "Eau"
-	},
-	"wild species & ecosystems": {
+        "es": "Agua",
+        "fr": "Eau"
+    },
+    "wild species & ecosystems": {
         "en": "Wild species & ecosystems",
-		"es": "Especies silvestres y ecosistemas",
-		"fr": "Esp\u00e8ces sauvages et \u00e9cosyst\u00e8mes"
-	}
+        "es": "Especies silvestres y ecosistemas",
+        "fr": "Esp\u00e8ces sauvages et \u00e9cosyst\u00e8mes"
+    }
 }
