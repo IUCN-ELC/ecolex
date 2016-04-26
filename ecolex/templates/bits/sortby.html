@@ -1,10 +1,11 @@
 {% load tags %}
+{% load i18n %}
 {# only create the field if we currently have a value. the url will be prettier without an empty param. #}
 {% if form.sortby.value %}<input id="id_{{ form.sortby.name }}" name="{{ form.sortby.name }}" type="hidden" value="{{ form.sortby.value }}">{% endif %}
 {% for val, txt in form.fields.sortby.choices %}{% if not forloop.first %} | {% endif %}
   {% if not val and not form.sortby.value or val == form.sortby.value %}
-<strong>Sorted by {{ txt }}</strong>
+<strong>{% trans 'Sorted by' %} {{ txt }}</strong>
   {% else %}
-<a rel="nofollow" class="sortby" href="{% url "results" %}?{{ form.sortby|field_urlencoded:val }}">Sort by {{ txt }}</a>
+<a rel="nofollow" class="sortby" href="{% url "results" %}?{{ form.sortby|field_urlencoded:val }}">{% trans 'Sort by' %} {{ txt }}</a>
   {% endif %}
 {% endfor %}

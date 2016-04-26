@@ -15,28 +15,28 @@
   <header>
     <div class="record-title">
       <div class="record-icon">
-        <span class="icon icon-treaty" title="Treaty"></span>
+        <span class="icon icon-treaty" title="{% trans 'Treaty' %}"></span>
       </div>
       <h1>{{ document.title|safe }}</h1>
     </div>
 
     <dl>
-      <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
-      <dt>Field of application</dt> <dd>{{ document.field_of_application|join:"," }}</dd>
-      <dt>Date</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
+      <dt>{% trans 'Document type' %}</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
+      <dt>{% trans 'Field of application' %}</dt> <dd>{{ document.field_of_application|join:"," }}</dd>
+      <dt>{% trans 'Date' %}</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
     </dl>
   </header>
 
   <section id="details">
     <dl>
       {% if document.title_abbreviation %}
-        <dt>Title abbreviation</dt>
+        <dt>{% trans 'Title abbreviation' %}</dt>
         <dd><p class="alttitle">{{ document.title_abbreviation|join:", " |safe }}</p></dd>
       {% endif %}
 
       {% for title in document.title_translations %}
         {% if title.language != LANGUAGE_CODE and title.value != document.title %}
-          <dt>Title ({{ title.language|language_name_translated|capfirst }})</dt>
+          <dt>{% trans 'Title' %} ({{ title.language|language_name_translated|capfirst }})</dt>
           <dd>
             <p class="alttitle">{{ title.value|safe }}</p>
           </dd>
@@ -44,32 +44,32 @@
       {% endfor %}
 
       {% if document.place_of_adoption %}
-        <dt>Place of adoption</dt>
+        <dt>{% trans 'Place of adoption' %}</dt>
         <dd>{{ document.place_of_adoption }}</dd>
       {% endif %}
 
       {% if document.depository %}
-        <dt>Depository</dt>
+        <dt>{% trans 'Depository' %}</dt>
         <dd>{{ document.depository|join:", " }}</dd>
       {% endif %}
 
       {% if document.language_of_document %}
-        <dt>Language</dt>
+        <dt>{% trans 'Language' %}</dt>
         <dd>{{ document.language_of_document|capfirstseq|join:", " }}</dd>
       {% endif %}
 
       {% if document.entry_into_force_date %}
-        <dt>Entry into force</dt>
+        <dt>{% trans 'Entry into force' %}</dt>
         <dd>{{ document.entry_into_force_date|date:"b j, Y"|capfirst  }}</dd>
       {% endif %}
 
       {% if document.subjects %}
-        <dt>Subject{{ document.subjects|length|pluralize:",s" }}</dt>
+        <dt>{% trans 'Subject' %}{{ document.subjects|length|pluralize:",s" }}</dt>
         <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.keywords %}
-        <dt>Keywords</dt>
+        <dt>{% trans 'Keywords' %}</dt>
         <dd>
         {% for keyword in document.keywords %}
           <span class="tag">{{ keyword|capfirst|safe }}</span>
@@ -78,12 +78,12 @@
       {% endif %}
 
       {% if document.region %}
-        <dt>Geographical area</dt>
+        <dt>{% trans 'Geographical area' %}</dt>
         <dd>{{ document.region|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.basin %}
-        <dt>Basin</dt>
+        <dt>{% trans 'Basin' %}</dt>
         <dd>{{ document.basin|join:", "|safe }}</dd>
       {% endif %}
     </dl>
@@ -92,7 +92,7 @@
   <section id="text">
     <dl>
       {% if document.abstract %}
-        <dt>Abstract</dt>
+        <dt>{% trans 'Abstract' %}</dt>
         <dd>
           {% for abstract in document.abstract %}
             <p class="abstract">{{ abstract|safe }}</p>
@@ -101,7 +101,7 @@
       {% endif %}
 
       {% if document.comment %}
-        <dt>Comment</dt>
+        <dt>{% trans 'Comment' %}</dt>
         {% for comment in document.comment %}
         <dd>
           <p class="comment">{{ comment|safe }}</p>
@@ -110,7 +110,7 @@
       {% endif %}
 
       {% if document.link_translations %}
-        <dt>Full text</dt>
+        <dt>{% trans 'Full text' %}</dt>
         <dd>
           {% for link in document.link_translations %}
             {% for value in link.value %}
@@ -123,12 +123,12 @@
       {% endif %}
 
       {% if document.available_in %}
-        <dt>Available in</dt>
+        <dt>{% trans 'Available in' %}</dt>
         <dd>{{ document.available_in|safe }}</dd>
       {% endif %}
 
       {% if document.related_web_site %}
-        <dt>Available web site</dt>
+        <dt>{% trans 'Available web site' %}</dt>
         <dd>
           {% for url in document.related_web_site %}
             {% if not forloop.first %}<br>{% endif %}
@@ -137,7 +137,7 @@
         </dd>
       {% endif %}
 
-      <dt>Source</dt>
+      <dt>{% trans 'Source' %}</dt>
       <dd>
         {# Ugly #}
         {% if document.type_of_document|slice:":2" == 'Bi' %}
@@ -153,14 +153,14 @@
     <div class="clearfix">
       <a id="participants-extras"
         href="{% url 'resultParticipants' document.slug %}?{{ query }}"
-         class="pull-right btn btn-link">See Expanded View</a>
-      <h2 class="section-title">Country/Participant</h2>
+         class="pull-right btn btn-link">{% trans 'See Expanded View' %}</a>
+      <h2 class="section-title">{% trans 'Country/Participant' %}</h2>
     </div>
 
     <table class="participants">
       <thead>
         <tr>
-          <th>Countries</th>
+          <th>{% trans 'Countries' %}</th>
           {% for event in document.parties_events %}
           <th nowrap="nowrap">{{ document.EVENTS_NAMES|lookup:event }}</th>
           {% endfor %}
@@ -180,7 +180,7 @@
                 {% if event.index %}[{{ event.index }}]{% endif %}
                 </time>
               {% else %}
-                <span class="text-muted" title="Not available">-</span>
+                <span class="text-muted" title="{% trans 'Not available' %}">-</span>
               {% endif %}
             {% endwith %}
           </td>
@@ -197,7 +197,7 @@
 
   {% if document.references %}
   <section id="treaty-references">
-    <h2 class="section-title">Treaty references</h2>
+    <h2 class="section-title">{% trans 'Treaty references' %}</h2>
 
     {% for name, value in document.references.items %}
       <dl class="dl-horizontal references">
@@ -220,35 +220,35 @@
 
   {% if document.other_references %}
   <section id="other-references">
-    <h2 class="section-title">Other references</h2>
+    <h2 class="section-title">{% trans 'Other references' %}</h2>
     <dl>
       {% if document.decision_count %}
-        <dt>COP decisions</dt>
+        <dt>{% trans 'COP decisions' %}</dt>
         <dd>
-          <strong>{{ document.decision_count }} decisions</strong> related to this treaty.
-          <a href="{% url 'resultDecisions' document.slug %}?{{ query }}">View decisions</a>
+          <strong>{{ document.decision_count }} {% trans 'decisions' %}</strong> {% trans 'related to this treaty.' %}
+          <a href="{% url 'resultDecisions' document.slug %}?{{ query }}">{% trans 'View decisions' %}</a>
         </dd>
       {% endif %}
     </dl>
 
     <dl>
       {% if document.literature_count %}
-        <dt>Literature</dt>
+        <dt>{% trans 'Literature' %}</dt>
         <dd>
         {% with document.literature_count as lit_count %}
-          <strong>{{ lit_count }} record{{ lit_count|pluralize:"s" }} </strong> related to this treaty.
+          <strong>{{ lit_count }} record{{ lit_count|pluralize:"s" }} </strong> {% trans 'related to this treaty.' %}
         {% endwith %}
-          <a href="{% url 'resultLiteratures' document.slug %}?{{ query }}">View literature</a>
+          <a href="{% url 'resultLiteratures' document.slug %}?{{ query }}">{% trans 'View literature' %}</a>
         </dd>
       {% endif %}
     </dl>
 
     <dl>
       {% if document.court_decision_count %}
-        <dt>Court Decision</dt>
+        <dt>{% trans 'Court Decision' %}</dt>
         <dd>
-          <strong>{{ document.court_decision_count }} court decisions</strong> related to this treaty.
-          <a href="{% url 'resultCourtDecisions' document.slug %}?{{ query }}">View court decisions</a>
+          <strong>{{ document.court_decision_count }} {% trans 'court decisions' %}</strong> {% trans 'related to this treaty.' %}
+          <a href="{% url 'resultCourtDecisions' document.slug %}?{{ query }}">{% trans 'View court decisions' %}</a>
         </dd>
       {% endif %}
     </dl>

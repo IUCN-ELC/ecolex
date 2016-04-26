@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load tags %}
+{% load i18n %}
 
 {% block scripts %}
   {% if document.treaty_id and document.treaty_slug %}
@@ -23,29 +24,29 @@
     {% include 'bits/disclaimer.html' with class='InforMEA-disclaimer' %}
     <div class="record-title">
       <div class="record-icon">
-        <span class="icon icon-cop-decision" title="COP Decision"></span>
+        <span class="icon icon-cop-decision" title="{% trans 'COP Decision' %}"></span>
       </div>
       <h1>{{ document.title|safe }}</h1>
     </div>
 
     <dl>
-      <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
-      <dt>Reference number</dt> <dd>{{ document.document_id|default:"-" }}</dd>
-      <dt>Date</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
+      <dt>{% trans 'Document type' %}</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
+      <dt>{% trans 'Reference number' %}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
+      <dt>{% trans 'Date' %}</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
     </dl>
   </header>
 
   <section id="details">
     <dl>
-      <dt>Status</dt> <dd>{{ document.status|capfirst }}</dd>
+      <dt>{% trans 'Status' %}</dt> <dd>{{ document.status|capfirst }}</dd>
 
       {% if document.subjects %}
-        <dt>Subject{{ document.subjects|length|pluralize:",s" }}</dt>
+        <dt>{% trans 'Subject' %}{{ document.subjects|length|pluralize:",s" }}</dt>
         <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.keywords %}
-        <dt>Keywords</dt>
+        <dt>{% trans 'Keywords' %}</dt>
         <dd>
         {% for keyword in document.keywords %}
             <span class="tag">{{ keyword|capfirst|safe }}</span>
@@ -54,7 +55,7 @@
       {% endif %}
 
       {% if document.treaty %}
-        <dt>Treaty</dt>
+        <dt>{% trans 'Treaty' %}</dt>
         <dd>
           <a href="{{ document.treaty.details_url }}?{{ query }}">
             {{ document.treaty.title|safe }} ({{ document.treaty.date|date:"b j, Y"|capfirst  }})
@@ -62,7 +63,7 @@
         </dd>
       {% endif %}
 
-      <dt>Meeting</dt>
+      <dt>{% trans 'Meeting' %}</dt>
       <dd>
         {% if document.meeting_url %}
           <a href="{{ document.meeting_url }}"
@@ -73,18 +74,18 @@
       </dd>
 
       {% if document.url %}
-        <dt>Available website</dt>
+        <dt>{% trans 'Available website' %}</dt>
         <dd>
           <a href="{{ document.url }}"
              target="_blank">{{ document.url|extract_hostname|default:"No link" }}</a>
         </dd>
       {% endif %}
 
-      <dt>Source</dt>
+      <dt>{% trans 'Source' %}</dt>
       <dd>UNEP, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
 
       {% if document.files %}
-        <dt>Files</dt>
+        <dt>{% trans 'Files' %}</dt>
           {% for url, name in document.files %}
             <dd>
               <a target="_blank" href="{{ url }}" class="file-link">{{ name }}</a>
@@ -97,7 +98,7 @@
   {% if document.body %}
     <section id="text">
       <dl>
-        <dt>Abstract</dt>
+        <dt>{% trans 'Abstract' %}</dt>
         <dd>
           <div class="html">{{ document.body|safe }}</div>
         </dd>

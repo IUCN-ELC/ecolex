@@ -1,10 +1,11 @@
 {% load tags %}
+{% load i18n %}
 
 {% include 'bits/type_facet.html' %}
 
 {% if suggestions %}
 <p id="suggestion">
-  <em>Did you mean: {% for suggestion in suggestions %}{% if not forloop.first  %} / {% endif %}
+  <em>{% trans 'Did you mean:' %} {% for suggestion in suggestions %}{% if not forloop.first  %} / {% endif %}
     <a href="{% url "results" %}?{{ form.q|field_urlencoded:suggestion }}">{{ suggestion }}</a>
   {% endfor %}?</em>
 </p>
@@ -12,36 +13,36 @@
 
 <p class="small clearfix">
   {# Ugly #}
-    Found <span id="number-of-results">{{ results.count|default:"no" }}</span>
+    {% trans 'Found' %} <span id="number-of-results">{{ results.count|default:"no" }}</span>
     {% if form.type.data|length != 1 %}
-      result{{ results.count|pluralize }}.
+      {% trans 'result' %}{{ results.count|pluralize }}.
     {% elif 'treaty' in form.type.data %}
       treat{{ results.count|pluralize:"y,ies" }}.
     {% elif 'decision' in form.type.data %}
-      COP decision{{ results.count|pluralize }}.
+      {% trans 'COP decision' %}{{ results.count|pluralize }}.
     {% elif 'literature' in form.type.data %}
-      literature item{{ results.count|pluralize }}.
+      {% trans 'literature item' %}{{ results.count|pluralize }}.
     {% elif 'court_decision' in form.type.data %}
-      court decision{{ results.count|pluralize }}.
+      {% trans 'court decision' %}{{ results.count|pluralize }}.
     {% elif 'legislation' in form.type.data %}
-      legislation record{{ results.count|pluralize }}.
+      {% trans 'legislation record' %}{{ results.count|pluralize }}.
     {% else %}
       {{ form.type.data|join:" or " }} thing, really.
     {% endif %}
 {% if results %}
   {% with facets.type|get_facet_counts as type_count %}
-    Show only
+    {% trans 'Show only' %}
     {% for id, txt in form.fields.type.choices %}{% if not forloop.first %} | {% endif %}
       {% with type_count|lookup:id as count %}
         {% if count %}
           <a href="{% url "results" %}?{{ form.type|field_urlencoded:id }}">
         {% endif %}
 
-        {% if id == "treaty" %}Treaties
-        {% elif id == "decision" %}COP Decisions
-        {% elif id == "legislation" %}Legislation
-        {% elif id == "court_decision" %}Court Decisions
-        {% elif id == "literature" %}Literature
+        {% if id == "treaty" %}{% trans 'Treaties' %}
+        {% elif id == "decision" %}{% trans 'COP Decisions' %}
+        {% elif id == "legislation" %}{% trans 'Legislation' %}
+        {% elif id == "court_decision" %}{% trans 'Court Decisions' %}
+        {% elif id == "literature" %}{% trans 'Literature' %}
         {% endif %}
 
         {% if count %}
@@ -79,7 +80,7 @@
 
       <a class="btn btn-sm btn-default"
          href="?{{ pages.prev_url }}"
-         {% if pages.number == 1 %}disabled{% endif %}>Previous</a>
+         {% if pages.number == 1 %}disabled{% endif %}>{% trans 'Previous' %}</a>
 
         {% if 1 not in pages.list%}
             <a class="btn btn-sm btn-default"
@@ -107,13 +108,13 @@
 
       <a class="btn btn-sm btn-default"
          href="?{{ pages.next_url }}"
-         {% if pages.number == pages.count %}disabled{% endif %}>Next</a>
+         {% if pages.number == pages.count %}disabled{% endif %}>{% trans 'Next' %}</a>
 
     </div>
 
   {% else %}
 
-  <div class="form-control-static">No more results</div>
+  <div class="form-control-static">{% trans 'No more results' %}</div>
 
   {% endif %}
 

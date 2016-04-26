@@ -1,38 +1,39 @@
 {% load tags %}
+{% load i18n %}
 
 {% if result.authors %}
 <p class="search-result-details">
-  <strong>Author{{ result.authors|length|pluralize:",s" }}: </strong>
+  <strong>{% trans 'Author' %}{{ result.authors|length|pluralize:",s" }}: </strong>
   <span>{{ result.authors|join:", "|safe }}</span>
 </p>
 {% endif %}
 
 <p class="search-result-details">
   {% if result.is_article and result.serial_title %}
-    <strong>In: </strong><span>{{ result.serial_title|safe }}</span>
+    <strong>{% trans 'In' %}: </strong><span>{{ result.serial_title|safe }}</span>
     {% if result.volume_no %} | {{ result.volume_no|safe }} {% endif %}
     {% if result.collation %} | {{ result.collation|safe }} {% endif %}
   {% elif result.is_chapter and result.parent_title %}
-  <strong>In: </strong><span>{{ result.parent_title|safe }}</span>
+  <strong>{% trans 'In' %}: </strong><span>{{ result.parent_title|safe }}</span>
     {% if result.volume_no %} | {{ result.volume_no|safe }} {% endif %}
     {% if result.collation %} | {{ result.collation|safe }} {% endif %}
   {% endif %}
 </p>
 <p class="search-result-details">
-  {% if result.publisher %}<strong>Publisher: </strong><span>{{ result.publisher }}</span>{% endif %}
-  {% if result.publication_place %} | <span class="sr-pubplace sr-help" title="Publication place">{{ result.publication_place }}</span>{% endif %}
-  {% if result.date %} | <span class="sr-pubdate sr-help" title="Publication date">{{ result.date|safe }}</span>{% endif %}
+  {% if result.publisher %}<strong>{% trans 'Publisher' %}: </strong><span>{{ result.publisher }}</span>{% endif %}
+  {% if result.publication_place %} | <span class="sr-pubplace sr-help" title="{% trans 'Publication place' %}">{{ result.publication_place }}</span>{% endif %}
+  {% if result.date %} | <span class="sr-pubdate sr-help" title="{% trans 'Publication date' %}">{{ result.date|safe }}</span>{% endif %}
 </p>
 
 <p class="search-result-details">
-  <strong class="sr-type">{{ result.type|capfirst }}</strong>
-  {% if result.jurisdiction %} | <span class="sr-jurisdiction sr-help" title="Field of application">{{ result.jurisdiction }}</span> {% endif %}
-  {% if result.countries %} | <span class="sr-country sr-help" title="Country">{{ result.countries|join:", "|safe }}</span> {% endif %}
+  <strong class="sr-type">{% trans 'Literature' %}</strong>
+  {% if result.jurisdiction %} | <span class="sr-jurisdiction sr-help" title="{% trans 'Field of application' %}">{{ result.jurisdiction }}</span> {% endif %}
+  {% if result.countries %} | <span class="sr-country sr-help" title="{% trans 'Country' %}">{{ result.countries|join:", "|safe }}</span> {% endif %}
 </p>
 
-<p class="search-result-details"><strong>Keywords:</strong>
+<p class="search-result-details"><strong>{% trans 'Keywords' %}:</strong>
   {{ result.keywords|capfirstseq|join:", "|safe }}
 </p>
-<p class="search-result-source"><strong>Source: </strong>
+<p class="search-result-source"><strong>{% trans 'Source' %}: </strong>
   <a target="_blank" href="http://iucn.org">IUCN</a> (ID: {{ result.document_id }})
 </p>

@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load tags %}
+{% load i18n %}
 
 {% block scripts %}
   <script>
@@ -20,40 +21,40 @@
   <header>
     <div class="record-title">
       <div class="record-icon">
-        <span class="icon icon-court-decision" title="Court Decision"></span>
+        <span class="icon icon-court-decision" title="{% trans 'Court Decision' %}"></span>
       </div>
       <h1>{{ document.title|safe }}</h1>
     </div>
 
     <dl>
-      <dt>Country</dt> <dd>{{ document.country }}</dd>
-      <dt>Type of court</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
-      <dt>Date</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
+      <dt>{% trans 'Country' %}</dt> <dd>{{ document.country }}</dd>
+      <dt>{% trans 'Type of court' %}</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
+      <dt>{% trans 'Date' %}</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
     </dl>
   </header>
 
   <section id="details">
     <dl>
-      <dt>Court name</dt> <dd>{{ document.court_name }}</dd>
+      <dt>{% trans 'Court name' %}</dt> <dd>{{ document.court_name }}</dd>
 
       {% if document.justices %}
-        <dt>Justices</dt> <dd>{{ document.justices|join:"<br>" }}</dd>
+        <dt>{% trans 'Justices' %}</dt> <dd>{{ document.justices|join:"<br>" }}</dd>
       {% endif %}
 
       {% if document.reference_number %}
-        <dt>Reference number</dt> <dd>{{ document.reference_number }}</dd>
+        <dt>{% trans 'Reference number' %}</dt> <dd>{{ document.reference_number }}</dd>
       {% endif %}
 
-      <dt>Language of document</dt>
+      <dt>{% trans 'Language of document' %}</dt>
       <dd>{{ document.language_of_document|join:", " }}</dd>
 
       {% if document.subjects %}
-        <dt>Subjects</dt>
+        <dt>{% trans 'Subjects' %}</dt>
         <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.keywords %}
-        <dt>Keywords</dt>
+        <dt>{% trans 'Keywords' %}</dt>
         <dd>
         {% for keyword in document.keywords %}
           <span class="tag">{{ keyword|capfirst|safe }}</span>
@@ -63,14 +64,14 @@
     </dl>
   </header>
 
-  <section id="text">
+<section id="text">
     <dl>
-      <dt>Abstract</dt>
+      <dt>{% trans 'Abstract' %}</dt>
       <dd>{{ document.abstract|safe }}</dd>
 
       {% if document.link_to_full_text %}
-        <dt>Full text</dt>
-        <dd>
+        <dt>{% trans 'Full text' %}</dt>
+         <dd>
           <a href="{{ document.link_to_full_text|url_normalize }}"
              class="file-link" target="_blank">{% if document.language_of_document %}
                {{ document.language_of_document|join:", " }}
@@ -79,24 +80,49 @@
              {% endif %}</a>
         </dd>
       {% endif %}
+
       {% if document.internet_reference %}
-        <dt>Available web site</dt>
+        <dt>{% trans 'Available web site' %}</dt>
         <dd>
           <a href="{{ document.internet_reference|url_normalize }}" rel="nofollow"
              target="_blank">{{ document.internet_reference|extract_hostname }}</a>
         </dd>
       {% endif %}
-      <dt>Source</dt>
+
+      <dt>{% trans 'Source' %}</dt>
       <dd>UNEP, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
 
       {% if document.files %}
-        <dt>Files</dt>
+        <dt>{% trans 'Files' %}</dt>
         {% for link in document.files %}
           <dd><a href="{{ link }}" rel="nofollow">{{ link|extract_filename|safe }}</a></dd>
         {% endfor %}
       {% endif %}
     </dl>
   </section>
+
+{% if document.references %}
+  <section id="court-decision-references">
+    <h2 class="section-title">Court Decision references</h2>
+
+    {% for name, value in document.references.items %}
+      <dl class="dl-horizontal references">
+        <dt>{{ name|labelify }}</dt>
+        {% for court_decision in value %}
+          <dd>
+            <div class="treaty-link-container">
+              <h3 class="search-result-title">
+                <a href="{{ court_decision.details_url }}"
+                   title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
+              </h3>
+              {% include 'short_display/court_decision.html' with result=court_decision %}
+            </div>
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endfor %}
+  </section>
+{% endif %}
 
 {# TODO Update references #}
 {% if references.items or referenced_by.items %}

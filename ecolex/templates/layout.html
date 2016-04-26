@@ -37,18 +37,18 @@
 
         <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav">
-            <li {% if page_type == "homepage" %}class="active"{% endif %}><a href="{% url 'homepage' %}">Home</a></li>
-            <li {% if page_slug == 'about' %}class="active"{% endif %}><a href="{% url 'page' slug='about' %}">About ECOLEX</a></li>
+            <li {% if page_type == "homepage" %}class="active"{% endif %}><a href="{% url 'homepage' %}">{% trans 'Home' %}</a></li>
+            <li {% if page_slug == 'about' %}class="active"{% endif %}><a href="{% url 'page' slug='about' %}">{% trans 'About ECOLEX' %}</a></li>
             <li>
-              <a data-toggle="dropdown">Knowledge tools<span class="caret"></span></a>
+              <a data-toggle="dropdown">{% trans 'Knowledge tools' %}<span class="caret"></span></a>
               {% include 'bits/knowledge_tools.html' %}
             </li>
-            <li><a data-toggle="tour" class="btn btn-blue">Take a tour</a></li>
+            <li><a data-toggle="tour" class="btn btn-blue">{% trans 'Take a tour' %}</a></li>
           </ul>
           <ul id="language-picker" class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown">
-                <span class="text-muted">Language:</span>
+                <span class="text-muted">{% trans 'Language:' %}</span>
                 <strong>{{ LANGUAGE_CODE|language_name_local|capfirst }}</strong>
                 <span class="caret"></span>
               </a>
@@ -82,7 +82,7 @@
                         <a href="{% url 'homepage' %}"><img src="/static/img/logo-ecolex-inverted.svg" alt="Ecolex Logo" title="Homepage"></a>
                     </div>
                     <div class="slogan">
-                        <strong>The gateway to <br>environmental law</strong>
+                        <strong>{% trans 'The gateway to ' %} <br>{% trans 'environmental law' %}</strong>
                     </div>
 
                 </div>
@@ -91,40 +91,40 @@
                         <span class="sr-only">Search</span>
                         <span class="icon icon-search"></span>
                     </label>
-                    <input id="search" type="search" autofocus {# autosave #} class="form-control" name="q" placeholder="Search in record and full text" value="{{ form.q.value|default:"" }}"> {# TODO: form.q.errors maybe? #} {% if form.q.value %}
+                    <input id="search" type="search" autofocus {# autosave #} class="form-control" name="q" placeholder="{% trans 'Search in record and full text' %}" value="{{ form.q.value|default:"" }}"> {# TODO: form.q.errors maybe? #} {% if form.q.value %}
                     <span id="query-remove" class="icon icon-close"></span> {% endif %}
-                    <button class="btn btn-search" type="submit">Search</button>
+                    <button class="btn btn-search" type="submit">{% trans 'Search' %}</button>
                 </div>
 
                 <ul class="homepage-categories">
                   <li>
                     <a href="{% url 'results' %}?type=treaty">
                       <span class="icon icon-treaty"></span>
-                      Treaties
+                      {% trans 'Treaties' %}
                     </a>
                   </li>
                   <li>
                     <a href="{% url 'results' %}?type=decision">
                       <span class="icon icon-cop-decision"></span>
-                      COP Decisions
+                      {% trans 'COP Decisions' %}
                     </a>
                   </li>
                   <li>
                     <a href="{% url 'results' %}?type=legislation">
                       <span class="icon icon-legislation"></span>
-                      Legislation
+                      {% trans 'Legislation' %}
                     </a>
                   </li>
                   <li>
                     <a href="{% url 'results' %}?type=court_decision">
                       <span class="icon icon-court-decision"></span>
-                      Court Decisions
+                      {% trans 'Court Decisions' %}
                     </a>
                   </li>
                   <li>
                     <a href="{% url 'results' %}?type=literature">
                       <span class="icon icon-literature"></span>
-                      Literature
+                      {% trans 'Literature' %}
                     </a>
                   </li>
                 </ul>
@@ -142,21 +142,21 @@
             <a href="{% url 'homepage' %}"><img src="/static/img/logo-ecolex-inverted.svg" alt="Ecolex Logo" title="Homepage"></a>
           </div>
           <div class="slogan">
-            <strong>The gateway to <br>environmental law</strong>
+            <strong>{% trans 'The gateway to ' %}<br>{% trans 'environmental law' %}</strong>
           </div>
 
         <div class="search-form {{ page_type|default:"results-page" }}">
           <label for="search">
-            <span class="sr-only">Search</span>
+            <span class="sr-only">{% trans 'Search' %}</span>
             <span class="icon icon-search"></span>
           </label>
 
-          <input id="search" type="search" autofocus {# autosave #} class="form-control" name="q" placeholder="Search in record and full text" value="{{ form.q.value|default:"" }}">
+          <input id="search" type="search" autofocus {# autosave #} class="form-control" name="q" placeholder="{% trans 'Search in record and full text' %}" value="{{ form.q.value|default:"" }}">
           {# TODO: form.q.errors maybe? #}
           {% if form.q.value %}
               <span id="query-remove" class="icon icon-close"></span>
           {% endif %}
-          <button class="btn btn-search" type="submit">Search</button>
+          <button class="btn btn-search" type="submit">{% trans 'Search' %}</button>
         </div>
 
         </div>
@@ -182,16 +182,16 @@
     <div class="container">
       <div class="footer-inner">
         <nav class="footer-nav">
-          <a href="{% url 'page' slug='agreement' %}">User Agreement</a>
+          <a href="{% url 'page' slug='agreement' %}">{% trans 'User Agreement' %}</a>
           &ensp; | &ensp;
-          <a href="{% url 'page' slug='privacy' %}">Privacy</a>
+          <a href="{% url 'page' slug='privacy' %}">{% trans 'Privacy' %}</a>
           &ensp; | &ensp;
-          <a href="{% url 'page' slug='acknowledgements' %}">Acknowledgments</a>
+          <a href="{% url 'page' slug='acknowledgements' %}">{% trans 'Acknowledgments' %}</a>
         </nav>
 
         <span class="footer-credits">
           <span>
-            Joint initiative of <br>
+            {% trans 'Joint initiative of ' %}<br>
             <a href="http://www.iucn.org/">IUCN</a>,
             <a href="http://www.unep.org/">UNEP</a>,
             <a href="http://www.fao.org/">FAO</a>
