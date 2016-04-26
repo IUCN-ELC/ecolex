@@ -59,7 +59,7 @@ FIELD_MAP = {
     'field_ecolex_region': 'cdRegion',
     'field_title_of_text_other': 'cdTitleOfText_other',
     'field_title_of_text_short': 'cdTitleOfTextShort',
-    'field_treaty': 'cdTreatyReference',
+    'field_ecolex_treaty_raw': 'cdTreatyReference',
     'field_sorting_date': 'cdDateOfText',
 }
 MULTILINGUAL_FIELDS = [
@@ -92,6 +92,7 @@ FALSE_MULTILINGUAL_FIELDS = [
     'field_url_other',
     'field_official_publication',
     'field_notes',
+    'field_ecolex_treaty_raw',
 ]
 MULTIVALUED_FIELDS = [
     'field_justices',
@@ -99,6 +100,7 @@ MULTIVALUED_FIELDS = [
     'field_informea_tags',
     'field_ecolex_keywords',
     'field_notes',
+    'field_ecolex_treaty_raw',
 ]
 DATE_FIELDS = [
     'field_date_of_entry',
@@ -114,7 +116,7 @@ SUBJECT_FIELDS = ['field_ecolex_tags']
 FILES_FIELDS = ['field_files']
 FULL_TEXT_FIELDS = ['field_url', 'field_link_to_abstract']
 SUBDIVISION_FIELDS = ['field_territorial_subdivision']
-REFERENCE_FIELDS = {'field_treaty': 'original_id',
+REFERENCE_FIELDS = {'field_ecolex_treaty_raw': 'value',
                     'field_court_decision': 'uuid'}
 SOURCE_URL_FIELD = 'url'
 LANGUAGES = ['en', 'es', 'fr']
@@ -189,6 +191,11 @@ class CourtDecision(object):
             json_value = self.data.get(json_field, None)
             if not json_value:
                 solr_decision[solr_field] = None
+            elif json_field in REFERENCE_FIELDS:
+                if json_field in FALSE_MULTILINGUAL_FIELDS:
+                    json_value = json_value['und']
+                solr_decision[solr_field] = [e.get(REFERENCE_FIELDS[json_field])
+                                             for e in json_value]
             elif json_field in FALSE_MULTILINGUAL_FIELDS:
                 solr_decision[solr_field] = get_value(json_field,
                                                       json_value['und'])
@@ -202,9 +209,6 @@ class CourtDecision(object):
                 for lang, value in country.items():
                     key = '{}_{}'.format(solr_field, lang)
                     solr_decision[key] = get_value(json_field, value)
-            elif json_field in REFERENCE_FIELDS:
-                solr_decision[solr_field] = [e.get(REFERENCE_FIELDS[json_field])
-                                             for e in json_value]
             elif json_field in LANGUAGE_FIELDS:
                 language_code = get_value(json_field, json_value['und'])
                 if language_code not in self.languages:
