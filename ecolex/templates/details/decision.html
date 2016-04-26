@@ -76,8 +76,8 @@
       {% if document.url %}
         <dt>{% trans 'Available website' %}</dt>
         <dd>
-          <a href="{{ document.url }}"
-             target="_blank">{{ document.url|extract_hostname|default:"No link" }}</a>
+          <a href="{{ document.url|url_normalize }}"
+             target="_blank">{{ document.url|url_normalize|extract_hostname|default:"No link" }}</a>
         </dd>
       {% endif %}
 
