@@ -24,12 +24,16 @@ class Command(BaseCommand):
         json_kw = {}
 
         for keyword in keywords:
-            json_kw[keyword['Name_en_US']] = {
+            name_en = keyword['Name_en_US']
+            json_kw[name_en.lower()] = {
+                'en': name_en,
                 'fr': keyword['Name_fr_FR'],
                 'es': keyword['Name_es_ES'],
             }
             if 'English_Variants' in keyword:
-                json_kw[keyword['English_Variants']] = {
+                variant_en = keyword['English_Variants']
+                json_kw[variant_en.lower()] = {
+                    'en': variant_en,
                     'fr': keyword.get('French_Variants', ''),
                     'es': keyword.get('Spanish_Variants', ''),
                 }
