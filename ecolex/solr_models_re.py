@@ -105,7 +105,7 @@ class DocumentModel(BaseModel):
                 lookups[lookup_field] = lookup
 
         if not lookups:
-            return {}
+            return defaultdict(list)
 
         # (this is getting really, really silly)
         from .schema import FIELD_PROPERTIES
@@ -378,6 +378,10 @@ class CourtDecision(DocumentModel):
         REFERENCES = {
             'treaties': (
                 'treaty', 'document_id', self.treaty_reference),
+            #'cited_court_decisions': (
+            #    'court_decision', 'document_id', self.cites),
+            #'cited_by_court_decisions': (
+            #    'court_decision', 'cites', self.document_id),
         }
 
         _BY_TYPE = defaultdict(list)
@@ -397,7 +401,7 @@ class CourtDecision(DocumentModel):
             lookups[lookup_field] = lookup
 
         if not lookups:
-            return {}
+            return defaultdict(list)
 
         # (yup, silly)
         from .schema import FIELD_PROPERTIES
@@ -437,7 +441,7 @@ class CourtDecision(DocumentModel):
 
     @property
     def treaties(self):
-        return self._all_references.get('treaties')
+        return self._all_references['treaties']
 
 
 class Literature(DocumentModel):
@@ -556,7 +560,7 @@ class Literature(DocumentModel):
             lookups[lookup_field] = lookup
 
         if not lookups:
-            return {}
+            return defaultdict(list)
 
         # (yup, silly)
         from .schema import FIELD_PROPERTIES

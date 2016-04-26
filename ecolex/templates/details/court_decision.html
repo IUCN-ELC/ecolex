@@ -112,93 +112,43 @@
       {% endif %}
     </dl>
   </section>
-
-{% if document.references %}
+{% if document.references or document.treaties %}
   <section id="court-decision-references">
-    <h2 class="section-title">Court Decision references</h2>
-
-    {% for name, value in document.references.items %}
-      <dl class="dl-horizontal references">
-        <dt>{{ name|labelify }}</dt>
-        {% for court_decision in value %}
-          <dd>
-            <div class="treaty-link-container">
-              <h3 class="search-result-title">
-                <a href="{{ court_decision.details_url }}"
-                   title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
-              </h3>
-              {% include 'short_display/court_decision.html' with result=court_decision %}
-            </div>
-          </dd>
-        {% endfor %}
-      </dl>
-    {% endfor %}
-  </section>
-{% endif %}
-
-{% if document.treaties %}
-  <section id="court-decision-references">
-    <h2 class="section-title">Treaty references</h2>
-
-    {% for treaty in document.treaties %}
-      <dl>
-        <dt>Cites</dt>
-        <dd>
-          <h3 class="search-result-title">
-            <a href="{{ treaty.details_url }}?{{ query }}"
-               title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
-          </h3>
-          {% include 'short_display/treaty.html' with result=treaty %}
-        </dd>
-      </dl>
-    {% endfor %}
-  </section>
-{% endif %}
-
-{# TODO Update references #}
-{% if references.items or referenced_by.items %}
-  <section id="other-references">
-    {% if references.items %}
-    <h2 class="section-title">Other references</h2>
-    {% for doc_type, docs in references.items %}
-      <dl>
-        <dt>{{ doc_type|capfirst }}</dt>
-          {% for doc in docs %}
+    <h2 class="section-title">{% trans 'References' %}</h2>
+    {% if document.references %}
+      {% for name, value in document.references.items %}
+        <dl class="dl-horizontal references">
+          <dt>{% trans name|labelify %}</dt>
+          {% for court_decision in value %}
             <dd>
               <div class="treaty-link-container">
                 <h3 class="search-result-title">
-                  <a href="{{ doc.details_url }}?{{ query }}"
-                     title="{{ doc.title|safe|striptags }}">{{ doc.title|safe }}</a>
+                  <a href="{{ court_decision.details_url }}"
+                     title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
                 </h3>
+                {% include 'short_display/court_decision.html' with result=court_decision %}
               </div>
-              {% include 'short_display/treaty.html' with result=doc %}
             </dd>
           {% endfor %}
-      </dl>
-    {% endfor %}
+        </dl>
+      {% endfor %}
     {% endif %}
 
-    {% if referenced_by.items %}
-    <h2 class="section-title">Referenced by</h2>
-    {% for doc_type, docs in referenced_by.items %}
+    {% if document.treaties %}
       <dl>
-        <dt>{{ doc_type|capfirst }}</dt>
-        {% for doc in docs %}
+        <dt>{% trans 'Cites' %}</dt>
+        {% for treaty in document.treaties %}
           <dd>
-              <div class="treaty-link-container">
-                <h3 class="search-result-title">
-                  <a href="{{ doc.details_url }}?{{ query }}"
-                     title="{{ doc.title|safe|striptags }}">{{ doc.title|safe }}</a>
-                </h3>
-              </div>
-              {% include 'short_display/literature.html' with result=doc %}
+            <h3 class="search-result-title">
+              <a href="{{ treaty.details_url }}?{{ query }}"
+                 title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
+            </h3>
+            {% include 'short_display/treaty.html' with result=treaty %}
           </dd>
         {% endfor %}
       </dl>
-    {% endfor %}
     {% endif %}
   </section>
 {% endif %}
-
 </article>
 {% endblock content %}
