@@ -70,6 +70,13 @@
       <dt>Abstract</dt>
       <dd>{{ document.abstract|safe }}</dd>
 
+      {% if document.internet_reference %}
+        <dt>Available web site</dt>
+        <dd>
+          <a href="{{ document.internet_reference|url_normalize }}" rel="nofollow"
+             target="_blank">{{ document.internet_reference|extract_hostname }}</a>
+        </dd>
+      {% endif %}
       {% if document.link_to_full_text %}
         <dt>Link to full text</dt>
         <dd>
