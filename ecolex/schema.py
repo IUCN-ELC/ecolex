@@ -547,6 +547,7 @@ class CourtDecisionSchema(CommonSchema):
                                    load_from='cdTreatyReference')
     region = fields.List(fields.String(), load_from='cdRegion',
                          multilingual=True)
+    cites = fields.List(fields.String(), load_from='cdCourtDecisionReference')
 
 
 class LegislationSchema(CommonSchema):
@@ -632,7 +633,7 @@ def to_object(data, language):
     schema = SCHEMA_MAP[typ]
     result, errors = schema.load(data, language=language)
     if errors:
-        logger.error("Parse error: %s", errors)
+        raise ValueError(errors)
     return result
 
 

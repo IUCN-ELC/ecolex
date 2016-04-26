@@ -354,6 +354,12 @@ class Legislation(DocumentModel):
 
 class CourtDecision(DocumentModel):
     URL_NAME = 'court_decision_details'
+    REFERENCES = [
+        'cites', 'cited_by',
+    ]
+    BACKREFERENCES = {
+        'cited_by': 'cites'
+    }
 
     @property
     def title(self):
