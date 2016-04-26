@@ -32,7 +32,7 @@
           <td>
             <div class="treaty-link-container">
               <h3 class="search-result-title">
-                <a href="{{ item.details_url }}?{{ query }}"
+                <a href="{{ item.details_url }}"
                    title="{{ item.title|safe|striptags }}">{{ item.title|safe }}</a>
               </h3>
               {% include 'short_display/decision.html' with result=item%}

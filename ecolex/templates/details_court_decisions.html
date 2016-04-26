@@ -23,7 +23,7 @@
       <tr>
         <td>
           <h3 class="search-result-title">
-            <a href="{{ court_decision.details_url }}?{{ query }}"
+            <a href="{{ court_decision.details_url }}"
                title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
           </h3>
           {% include 'short_display/court_decision.html' with result=court_decision %}
