@@ -36,14 +36,14 @@ FIELD_MAP = {
     'field_faolex_url': 'cdFaolexUrl',
     'field_files': 'cdFiles',
     'field_informea_tags': 'cdInformeaTags',
-    'field_internet_reference_url': 'cdInternetReference', # relatedWebsite
-    'field_isis_number': 'cdIsisNumber', # IsisMfn
+    'field_internet_reference_url': 'cdInternetReference',  # relatedWebsite
+    'field_isis_number': 'cdIsisNumber',  # IsisMfn
     'field_jurisdiction': 'cdJurisdiction',
     'field_justices': 'cdJustices',
     'field_number_of_pages': 'cdNumberOfPages',
     'field_original_id': 'cdOriginalId',
     'field_reference_number': 'cdReferenceNumber',
-    'field_related_url': 'cdRelatedUrl', # relatedWebsite
+    'field_related_url': 'cdRelatedUrl',  # relatedWebsite
     'field_source_language': 'cdLanguageOfDocument',
     'field_territorial_subdivision': 'cdTerritorialSubdivision',
     'field_type_of_text': 'cdTypeOfText',
@@ -245,6 +245,7 @@ class CourtDecision(object):
                 for kw_en in keywords_en:
                     keyword_en = kw_en.lower()
                     if keyword_en not in self.keywords:
+                        solr_decision[solr_field + '_en'].append(kw_en)
                         logger.warning('Keyword missing from keywords.json: '
                                        '{} ({})'.format(keyword_en, leo_id))
                         continue
@@ -263,6 +264,7 @@ class CourtDecision(object):
                 for subj_en in subjects_en:
                     subject_en = subj_en.lower()
                     if subject_en not in self.subjects:
+                        solr_decision[solr_field + '_en'].append(subj_en)
                         logger.warning('Subject missing from subjects.json: '
                                        '{} ({})'.format(subject_en, leo_id))
                         continue
@@ -279,14 +281,14 @@ class CourtDecision(object):
                 urls = [d.get('url') for d in json_value]
                 files = [get_file_from_url(url) for url in urls if url]
                 solr_decision['cdText'] += '\n'.join(self.solr.extract(f)
-                                                   for f in files if f)
+                                                     for f in files if f)
 
             if json_field in FULL_TEXT_FIELDS and json_value:
                 urls = [d.get('url') for val in json_value.values()
                         for d in val]
                 files = [get_file_from_url(url) for url in urls if url]
                 solr_decision['cdText'] += '\n'.join(self.solr.extract(f)
-                                                   for f in files if f)
+                                                     for f in files if f)
 
         # Get Leo URL
         json_value = self.data.get(SOURCE_URL_FIELD, None)
@@ -347,7 +349,7 @@ class CourtDecisionImporter(object):
     def harvest(self, batch_size):
         if self.uuid:
             logger.info('Adding court decision {}'.format(self.uuid))
-            decision = { 'data_url': self.data_url, 'uuid': self.uuid }
+            decision = {'data_url': self.data_url, 'uuid': self.uuid}
             self.solr.add_bulk([self._get_solr_decision(decision)])
             return
 
