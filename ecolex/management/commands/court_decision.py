@@ -293,6 +293,11 @@ class CourtDecisionImporter(object):
         self.subdivisions = self._get_subdivisions()
         self.keywords = self._get_keywords()
         self.solr = EcolexSolr(self.solr_timeout)
+        # When we need to import only one decision
+        self.uuid = config.get('uuid')
+        self.data_url = config.get('data_url')
+        if (self.uuid):
+            self.data_url = self.data_url % (self.uuid,)
         logger.info('Started Court Decision importer')
 
     def test(self):
@@ -307,8 +312,13 @@ class CourtDecisionImporter(object):
         return solr_decision == expected_decision
 
     def harvest(self, batch_size):
-        decisions = self._get_decisions()
+        if self.uuid:
+            logger.info('Adding court decision {}'.format(self.uuid))
+            decision = { 'data_url': self.data_url, 'uuid': self.uuid }
+            self.solr.add_bulk([self._get_solr_decision(decision)])
+            return
 
+        decisions = self._get_decisions()
         start = 0
         while start < len(decisions):
             end = min(start + batch_size, len(decisions))

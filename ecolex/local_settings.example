@@ -42,12 +42,15 @@ SOLR_IMPORT = {
         'regions_json': os.path.join(CONFIG_DIR, 'regions.json'),
         'subdivisions_json': os.path.join(CONFIG_DIR, 'subdivisions.json'),
         'keywords_json': os.path.join(CONFIG_DIR, 'keywords.json'),
+        'subjects_json': os.path.join(CONFIG_DIR, 'subjects.json'),
     },
     'court_decision': {
         'test_input_file': os.path.join(TESTING_DIR, 'court_decision_in.json'),
         'test_output_file': os.path.join(TESTING_DIR, 'court_decision_out.json'),
         'court_decisions_url': 'http://leo.informea.org/ws/court-decisions',
         'days_ago': 7,
+        #'uuid': '9f4e6967-46a8-4299-b1e2-8fe3a4ddb3bf',
+        'data_url': 'http://leo.informea.org/node/%s/json',
     },
     'treaty': {
         'treaties_url': 'http://www.ecolex.org/elis_isis3w.php',
