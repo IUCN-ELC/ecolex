@@ -178,8 +178,7 @@ class CourtDecision(object):
         self.keywords = keywords
         self.subjects = subjects
         self.solr = solr
-        self.changed = changed
-        if self.data['changed'] != self.changed:
+        if changed and self.data['changed'] != changed:
             logger.error('Changed timestamp incosistency on {}'.format(
                 self.data['uuid']))
 
@@ -373,7 +372,9 @@ class CourtDecisionImporter(object):
             start = end
 
     def needs_update(self, decision, existing_decision):
-        current_timestamp = decision['last_update']
+        current_timestamp = decision.get('last_update')
+        if not current_timestamp:
+            return True
         old_timestamp = existing_decision['cdDateOfModification']
         current_date = datetime.fromtimestamp(float(current_timestamp))
         old_date = datetime.strptime(old_timestamp, SOLR_DATE_FORMAT)
@@ -392,10 +393,11 @@ class CourtDecisionImporter(object):
         data = self._get_decision(decision['data_url'])
         if not data:
             return
+        last_update = decision.get('last_update')
         new_decision = CourtDecision(data, self.countries, self.languages,
                                      self.regions, self.subdivisions,
                                      self.keywords, self.subjects, self.solr,
-                                     decision['last_update'])
+                                     last_update)
         solr_id = existing_decision['id'] if existing_decision else None
         return new_decision.get_solr_format(decision['uuid'], solr_id)
 
