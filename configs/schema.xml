@@ -467,6 +467,8 @@
     <field name="legImplement" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="legAmends" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="legRepeals" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legImplementTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="legCitesTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="legText" type="text" indexed="true" stored="false"/>
 
     <!-- General fields -->

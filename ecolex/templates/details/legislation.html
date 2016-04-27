@@ -134,6 +134,37 @@
   </section>
   {% endif %}
 
+  {% if document.treaties_implemented or document.treaties_cited %}
+  <section id="other-references">
+    <h2 class="section-title">References to</h2>
+    {% for treaty in document.treaties_implemented %}
+      <dl>
+        <dt>Implements treaty</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ treaty.details_url }}?{{ query }}"
+               title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
+          </h3>
+          {% include 'short_display/treaty.html' with result=treaty %}
+        </dd>
+      </dl>
+    {% endfor %}
+
+    {% for treaty in document.treaties_cited %}
+      <dl>
+        <dt>Cites treaty</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ treaty.details_url }}?{{ query }}"
+               title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
+          </h3>
+          {% include 'short_display/treaty.html' with result=treaty %}
+        </dd>
+      </dl>
+    {% endfor %}
+  </section>
+  {% endif %}
+
   {% if document.court_decisions %}
   <section id="other-references">
     <h2 class="section-title">Court Decision references</h2>

@@ -71,6 +71,8 @@ FIELD_MAP = {
     'amends': 'legAmends',
     'repeals': 'legRepeals',
 
+    'implementsTre': 'legImplementTreaty',
+    'citesTre': 'legCitesTreaty',
 }
 
 MULTIVALUED_FIELDS = [
@@ -78,7 +80,8 @@ MULTIVALUED_FIELDS = [
     'legKeyword_code', 'legKeyword_en', 'legKeyword_fr', 'legKeyword_es',
     'legGeoArea_en', 'legGeoArea_fr', 'legGeoArea_es',
     'legBasin_en', 'legBasin_fr', 'legBasin_es',
-    'legImplement', 'legAmends', 'legRepeals',
+    'legImplement', 'legAmends', 'legRepeals', 'legImplementTreaty',
+    'legCitesTreaty',
     'legSubject_code', 'legSubject_en', 'legSubject_fr', 'legSubject_es',
 ]
 
@@ -213,6 +216,14 @@ def harvest_file(upfile):
             legislation['legStatus'] = REPEALED
         else:
             legislation['legStatus'] = IN_FORCE
+
+        treaties = legislation.get('legImplementTreaty', [])
+        cleaned_treaties = []
+        for treaty in treaties:
+            if treaty.endswith('.pdf'):
+                treaty = treaty[:-4]
+            cleaned_treaties.append(treaty)
+        legislation['legImplementTreaty'] = cleaned_treaties
 
         title = legislation.get('legTitle') or legislation.get('legLongTitle')
         slug = title + ' ' + legislation.get('legId')

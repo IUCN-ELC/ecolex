@@ -218,6 +218,46 @@
   </section>
   {% endif %}
 
+  {% if document.legislations_implemented_by or document.legislation_cited_by %}
+  <section id="treaty-references">
+    <h2 class="section-title">{% trans 'Legislation references' %}</h2>
+
+    {% if document.legislations_implemented_by %}
+      <dl class="dl-horizontal references">
+        <dt>Implemented by:</dt>
+        {% for legislation in document.legislations_implemented_by %}
+          <dd>
+            <div class="treaty-link-container">
+              <h3 class="search-result-title">
+                <a href="{{ legislation.details_url }}"
+                   title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
+              </h3>
+              {% include 'short_display/legislation.html' with result=legislation %}
+            </div>
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endif %}
+
+    {% if document.legislations_cited_by %}
+      <dl class="dl-horizontal references">
+        <dt>Cited by:</dt>
+        {% for legislation in document.legislations_cited_by %}
+          <dd>
+            <div class="treaty-link-container">
+              <h3 class="search-result-title">
+                <a href="{{ legislation.details_url }}"
+                   title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
+              </h3>
+              {% include 'short_display/legislation.html' with result=legislation %}
+            </div>
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endif %}
+  </section>
+  {% endif %}
+
   {% if document.other_references %}
   <section id="other-references">
     <h2 class="section-title">{% trans 'Other references' %}</h2>

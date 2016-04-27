@@ -226,7 +226,6 @@ class Treaty(DocumentModel):
         'court_decision': ('treaty_reference', 'document_id'),
     }
 
-
     @property
     def title(self):
         return (self.title_of_text or
@@ -274,6 +273,18 @@ class Treaty(DocumentModel):
     def court_decisions(self):
         from ecolex.search import get_documents_by_field
         return get_documents_by_field('cdTreatyReference',
+                                      [self.document_id], rows=MAX_ROWS)
+
+    @cached_property
+    def legislations_implemented_by(self):
+        from ecolex.search import get_documents_by_field
+        return get_documents_by_field('legImplementTreaty',
+                                      [self.document_id], rows=MAX_ROWS)
+
+    @cached_property
+    def legislations_cited_by(self):
+        from ecolex.search import get_documents_by_field
+        return get_documents_by_field('legCitesTreaty',
                                       [self.document_id], rows=MAX_ROWS)
 
 
@@ -347,6 +358,74 @@ class Legislation(DocumentModel):
         'repealed_by': 'repeals',
     }
 
+    @cached_property
+    def _all_references(self):
+        """
+        Fetches all existing relationships in one go.
+        """
+
+        REFERENCES = {
+            'treaties_implements': (
+                'treaty', 'document_id', self.treaty_implements),
+            'treaties_cites': (
+                'treaty', 'document_id', self.treaty_cites),
+        }
+
+        _BY_TYPE = defaultdict(list)
+        fields = set()
+        lookups = {}
+
+        for name, v in REFERENCES.items():
+            typ, field, lookup = v
+
+            if not lookup:
+                continue
+
+            _BY_TYPE[typ].append(name)
+            fields.add((typ, field))
+
+            lookup_field = self._resolve_field(field, typ)
+            lookups[lookup_field] = lookup
+
+        if not lookups:
+            return defaultdict(list)
+
+        # (yup, silly)
+        from .schema import FIELD_PROPERTIES
+        extra_fields = [f
+                        for t, name in fields
+                        for f in FIELD_PROPERTIES[t].values()
+                        if f.name in fields]
+
+        from .xsearch import Queryer
+        queryer = Queryer({}, language=get_language())
+
+        response = queryer.findany(page_size=1000, fetch_fields=extra_fields,
+                                   date_sort=False, **lookups)
+
+        out = defaultdict(list)
+        for item in response.results:
+            names = _BY_TYPE[item.type]
+            # if there's only one lookup by that type,
+            # this item is guaranteed to match
+            if len(names) == 1:
+                out[names[0]].append(item)
+                continue
+
+            for name in names:
+                _t, field, lookup = REFERENCES[name]
+
+                try:
+                    val = getattr(item, field)
+                except AttributeError:
+                    continue
+
+                if any_match(val, lookup):
+                    out[name].append(item)
+                    break
+
+        return out
+
     @property
     def title(self):
         return self.short_title or self.long_title
@@ -356,6 +435,14 @@ class Legislation(DocumentModel):
         from ecolex.search import get_documents_by_field
         return get_documents_by_field('cdFaolexReference',
                                       [self.document_id], rows=MAX_ROWS)
+
+    @property
+    def treaties_implemented(self):
+        return self._all_references['treaties_implements']
+
+    @property
+    def treaties_cited(self):
+        return self._all_references['treaties_cites']
 
 
 class CourtDecision(DocumentModel):
@@ -450,6 +537,7 @@ class CourtDecision(DocumentModel):
     @property
     def treaties(self):
         return self._all_references['treaties']
+
     @property
     def legislation(self):
         return self._all_references['legislation']

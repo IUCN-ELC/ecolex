@@ -620,6 +620,11 @@ class LegislationSchema(CommonSchema):
     implements = fields.List(fields.String(), load_from='legImplement')
     repeals = fields.List(fields.String(), load_from='legRepeals')
 
+    treaty_implements = fields.List(fields.String(),
+                                    load_from='legImplementTreaty', missing=None)
+    treaty_cites = fields.List(fields.String(),
+                               load_from='legCitesTreaty', missing=None)
+
 
 __OBJECT_SCHEMAS = (
     TreatySchema,
