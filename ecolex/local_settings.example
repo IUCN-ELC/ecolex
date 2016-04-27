@@ -51,6 +51,7 @@ SOLR_IMPORT = {
         'days_ago': 7,
         #'uuid': '9f4e6967-46a8-4299-b1e2-8fe3a4ddb3bf',
         'data_url': 'http://leo.informea.org/node/%s/json',
+        'update': False,
     },
     'treaty': {
         'treaties_url': 'http://www.ecolex.org/elis_isis3w.php',

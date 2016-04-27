@@ -29,7 +29,7 @@ FIELD_MAP = {
     'field_court_decision_subdivision': 'cdCourtDecisionSubdivision',
     'field_court_name': 'cdCourtName',
     'field_date_of_entry': 'cdDateOfEntry',
-    'field_date_of_modification': 'cdDateOfModification',
+    'changed': 'cdDateOfModification',
     'field_ecolex_decision_status': 'cdStatusOfDecision',
     'field_ecolex_tags': 'cdSubject',
     'field_ecolex_url': 'cdEcolexUrl',
@@ -77,7 +77,6 @@ FALSE_MULTILINGUAL_FIELDS = [
     'field_alternative_record_id',
     'field_court_name',
     'field_date_of_entry',
-    'field_date_of_modification',
     'field_sorting_date',
     'field_isis_number',
     'field_justices',
@@ -106,8 +105,10 @@ MULTIVALUED_FIELDS = [
 ]
 DATE_FIELDS = [
     'field_date_of_entry',
-    'field_date_of_modification',
     'field_sorting_date',
+]
+TIMESTAMP_FIELDS = [
+    'changed',
 ]
 INTEGER_FIELDS = ['field_number_of_pages']
 COUNTRY_FIELDS = ['field_country']
@@ -168,7 +169,7 @@ def get_value_from_dict(valdict):
 
 class CourtDecision(object):
     def __init__(self, data, countries, languages, regions, subdivisions,
-                 keywords, subjects,  solr):
+                 keywords, subjects, solr):
         self.data = data
         self.countries = countries
         self.languages = languages
@@ -177,11 +178,6 @@ class CourtDecision(object):
         self.keywords = keywords
         self.subjects = subjects
         self.solr = solr
-
-    def is_recent(self, days_ago):
-        changed = datetime.fromtimestamp(float(self.data['changed'] or '0'))
-        last_update = datetime.now() - timedelta(hours=24*days_ago)
-        return changed > last_update
 
     def get_solr_format(self, leo_id, solr_id):
         solr_decision = {
@@ -202,6 +198,10 @@ class CourtDecision(object):
             elif json_field in FALSE_MULTILINGUAL_FIELDS:
                 solr_decision[solr_field] = get_value(json_field,
                                                       json_value['und'])
+            elif json_field in TIMESTAMP_FIELDS:
+                date_value = datetime.fromtimestamp(float(json_value))
+                date_string = date_value.strftime(SOLR_DATE_FORMAT)
+                solr_decision[solr_field] = date_string
             elif json_field in MULTILINGUAL_FIELDS:
                 for lang, value in json_value.items():
                     if lang in settings.LANGUAGE_MAP:
@@ -315,6 +315,7 @@ class CourtDecisionImporter(object):
     def __init__(self, config):
         self.solr_timeout = config.get('solr_timeout')
         self.days_ago = config.get('days_ago')
+        self.update = config.get('update')
         self.countries_json = config.get('countries_json')
         self.languages_json = config.get('languages_json')
         self.regions_json = config.get('regions_json')
@@ -367,20 +368,30 @@ class CourtDecisionImporter(object):
             self.solr.add_bulk(new_decisions)
             start = end
 
-    def _get_solr_decision(self, decision):
-        data = self._get_decision(decision['data_url'])
+    def needs_update(self, decision, existing_decision):
+        current_timestamp = decision['last_update']
+        old_timestamp = existing_decision['cdDateOfModification']
+        current_date = datetime.fromtimestamp(float(current_timestamp))
+        old_date = datetime.strptime(old_timestamp, SOLR_DATE_FORMAT)
+        delta = current_date - old_date
+        if delta.total_seconds() == 0:
+            logger.info('Skip {} - no update'.format(decision['uuid']))
+            return False
+        return True
 
+    def _get_solr_decision(self, decision):
+        existing_decision = self.solr.search(COURT_DECISION, decision['uuid'])
+        if self.update and existing_decision:
+            if not self.needs_update(decision, existing_decision):
+                return
+
+        data = self._get_decision(decision['data_url'])
         if not data:
             return
         new_decision = CourtDecision(data, self.countries, self.languages,
                                      self.regions, self.subdivisions,
                                      self.keywords, self.subjects, self.solr)
-
-        existing_decision = self.solr.search(COURT_DECISION, decision['uuid'])
-        if existing_decision and not new_decision.is_recent(self.days_ago):
-            return
         solr_id = existing_decision['id'] if existing_decision else None
-
         return new_decision.get_solr_format(decision['uuid'], solr_id)
 
     def _get_decision(self, url):
