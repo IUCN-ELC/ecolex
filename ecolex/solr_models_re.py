@@ -351,6 +351,12 @@ class Legislation(DocumentModel):
     def title(self):
         return self.short_title or self.long_title
 
+    @cached_property
+    def court_decisions(self):
+        from ecolex.search import get_documents_by_field
+        return get_documents_by_field('cdFaolexReference',
+                                      [self.document_id], rows=MAX_ROWS)
+
 
 class CourtDecision(DocumentModel):
     URL_NAME = 'court_decision_details'

@@ -134,6 +134,24 @@
   </section>
   {% endif %}
 
+  {% if document.court_decisions %}
+  <section id="other-references">
+    <h2 class="section-title">Court Decision references</h2>
+      <dl class="dl-horizontal">
+        <dt>Cited by</dt>
+        {% for court_decision in document.court_decisions %}
+          <dd>
+            <h3 class="search-result-title">
+              <a href="{{ court_decision.details_url }}"
+                 title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
+            </h3>
+            {% include 'short_display/court_decision.html' with result=court_decision %}
+          </dd>
+        {% endfor %}
+      </dl>
+  </section>
+  {% endif %}
+
 </article>
 
 {% endblock %}
