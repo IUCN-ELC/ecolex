@@ -169,7 +169,7 @@ def get_value_from_dict(valdict):
 
 class CourtDecision(object):
     def __init__(self, data, countries, languages, regions, subdivisions,
-                 keywords, subjects, solr):
+                 keywords, subjects, solr, changed):
         self.data = data
         self.countries = countries
         self.languages = languages
@@ -178,6 +178,10 @@ class CourtDecision(object):
         self.keywords = keywords
         self.subjects = subjects
         self.solr = solr
+        self.changed = changed
+        if self.data['changed'] != self.changed:
+            logger.error('Changed timestamp incosistency on {}'.format(
+                self.data['uuid']))
 
     def get_solr_format(self, leo_id, solr_id):
         solr_decision = {
@@ -345,7 +349,7 @@ class CourtDecisionImporter(object):
             expected_decision = json.load(fo)
 
         decision = CourtDecision(init_decision, self.countries, self.languages,
-                                 self.solr)
+                                 self.solr, '0')
         solr_decision = decision.get_solr_format(None, None)
 
         return solr_decision == expected_decision
@@ -390,7 +394,8 @@ class CourtDecisionImporter(object):
             return
         new_decision = CourtDecision(data, self.countries, self.languages,
                                      self.regions, self.subdivisions,
-                                     self.keywords, self.subjects, self.solr)
+                                     self.keywords, self.subjects, self.solr,
+                                     decision['last_update'])
         solr_id = existing_decision['id'] if existing_decision else None
         return new_decision.get_solr_format(decision['uuid'], solr_id)
 
