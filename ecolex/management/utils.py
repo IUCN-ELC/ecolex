@@ -140,9 +140,9 @@ class EcolexSolr(object):
         if result.hits:
             return result.docs
 
-    def add(self, obj):
+    def add(self, obj, **kwargs):
         try:
-            self.solr.add([obj])
+            self.solr.add([obj], **kwargs)
             # self.solr.optimize()
         except pysolr.SolrError as e:
             if settings.DEBUG:
