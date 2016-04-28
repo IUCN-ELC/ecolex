@@ -145,6 +145,16 @@
         {% endif %}
         <a target="_blank" href="http://iucn.org">IUCN</a> (ID: {{ document.document_id }})
       </dd>
+
+    {% if document.link_to_abstract %}
+      <dt>{% trans 'Link to abstract' %}</dt>
+      {% for url in document.link_to_abstract %}
+      <dd>
+        <a target="_blank" href="{{ url }}">{{ url }}</a>
+      </dd>
+      {% endfor %}
+    {% endif %}
+
     </dl>
   </section>
 
