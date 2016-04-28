@@ -1,5 +1,6 @@
 {% load tags %}
 {% load i18n %}
+
 {# only create the field if we currently have a value. the url will be prettier without an empty param. #}
 {% if form.sortby.value %}<input id="id_{{ form.sortby.name }}" name="{{ form.sortby.name }}" type="hidden" value="{{ form.sortby.value }}">{% endif %}
 {% for val, txt in form.fields.sortby.choices %}{% if not forloop.first %} | {% endif %}
