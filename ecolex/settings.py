@@ -194,13 +194,8 @@ SOLR_SORTING = ''
 SEARCH_PROXIMITY = '100'
 
 GA_ENABLED = True
-
 TEXT_SUGGESTION = True
 
-LANGUAGES_JSON = '/ecolex/ecolex/management/languages.json'
-REGIONS_JSON = '/ecolex/ecolex/management/regions.json'
-COUNTRIES_JSON = '/ecolex/ecolex/management/countries.json'
-SUBDIVISIONS_JSON = '/ecolex/ecolex/management/subdivisions.json'
 
 # Local settings
 try:

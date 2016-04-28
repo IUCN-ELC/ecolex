@@ -5,11 +5,9 @@ from django.views.generic import TemplateView
 from solid_i18n.urls import solid_i18n_patterns as i18n_patterns
 
 from .views import (
-    CourtDecisionDetails, DecisionDetails, DesignPlayground, FaoFeedView,
-    Homepage, LegislationRedirectView,  LiteratureDetails,
+    DesignPlayground, FaoFeedView, Homepage, LegislationRedirectView,
     PageView, ResultDetailsCourtDecisions, ResultDetailsDecisions,
-    ResultDetailsLiteratures, ResultDetailsParticipants, SearchResults,
-    TreatyDetails, debug,
+    ResultDetailsLiteratures, ResultDetailsParticipants, debug,
 )
 from . import xviews as views
 from .api import urls as api_urls
