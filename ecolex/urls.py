@@ -1,11 +1,12 @@
 from django.conf import settings
 from django.conf.urls import include, url
+from django.views.generic import TemplateView
 # from django.conf.urls.i18n import i18n_patterns
 from solid_i18n.urls import solid_i18n_patterns as i18n_patterns
 
 from .views import (
     CourtDecisionDetails, DecisionDetails, DesignPlayground, FaoFeedView,
-    Homepage, LegislationDetails, LegislationRedirectView,  LiteratureDetails,
+    Homepage, LegislationRedirectView,  LiteratureDetails,
     PageView, ResultDetailsCourtDecisions, ResultDetailsDecisions,
     ResultDetailsLiteratures, ResultDetailsParticipants, SearchResults,
     TreatyDetails, debug,
@@ -69,6 +70,11 @@ if settings.DEBUG:
     urlpatterns += [
         url(r'^_debug', debug, name="debug"),
         url(r'^playground/$', DesignPlayground.as_view(), name="playground"),
+        # Do not allow indexing on staging (assuming DEBUG=True on staging)
+        # For more complex indexing rules, see:
+        # https://github.com/jazzband/django-robots
+        url(r'^robots.txt/$', TemplateView.as_view(template_name='robots.txt',
+            content_type='text/plain')),
     ]
     # Local urls
     try:
