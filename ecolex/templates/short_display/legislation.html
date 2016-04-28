@@ -1,18 +1,19 @@
 {% load tags %}
+{% load i18n %}
 
 <div class="search-result-details">
     <strong class="sr-type">Legislation</strong> {% if result.country %} |
-    <span class="sr-jurisdiction sr-help" title="Country">{{ result.country }}</span> {% endif %}
+    <span class="sr-jurisdiction sr-help" title="{% trans 'Country' %}">{{ result.country }}</span> {% endif %}
     {% if result.year %} |
-      <span class="sr-date sr-help" title="Original date">{{ result.year }}
+      <span class="sr-date sr-help" title="{% trans 'Original date' %}">{{ result.year }}
         {% if result.consolidation_date %}
-          <span class="sr-date sr-help" title="Consolidation date">({{ result.consolidation_date }})</span>
+          <span class="sr-date sr-help" title="{% trans 'Consolidation date' %}">({{ result.consolidation_date }})</span>
         {% endif %}
       </span>
     {% endif %}
 
     {% if result.status and result.status != "in force" %} |
-      <span class="sr-status" title="Status: {{ result.status|capfirst }}">
+      <span class="sr-status" title="{% trans 'Status' %}: {{ result.status|capfirst }}">
         {{ result.status|capfirst }}
       </span>
     {% endif %}
@@ -20,13 +21,13 @@
 
 {% if result.keywords %}
   <p class="search-result-details">
-    <strong>Keywords:</strong>
+    <strong>{% trans 'Keywords' %}:</strong>
     {{ result.keywords|capfirstseq|join:", "|safe }}
   </p>
 {% endif %}
 
 <p class="search-result-source">
-  <strong>Source:</strong>&nbsp;FAO,
+  <strong>{% trans 'Source' %}:</strong>&nbsp;FAO,
   <a target="_blank" href="http://faolex.fao.org/">FAOLEX</a>
   (ID: {{ result.document_id }})
 </p>

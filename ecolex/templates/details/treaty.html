@@ -234,7 +234,7 @@
 
     {% if document.legislations_implemented_by %}
       <dl class="dl-horizontal references">
-        <dt>Implemented by:</dt>
+        <dt>{% trans 'Implemented by' %}:</dt>
         {% for legislation in document.legislations_implemented_by %}
           <dd>
             <div class="treaty-link-container">
@@ -251,7 +251,7 @@
 
     {% if document.legislations_cited_by %}
       <dl class="dl-horizontal references">
-        <dt>Cited by:</dt>
+        <dt>{% trans 'Cited by' %}:</dt>
         {% for legislation in document.legislations_cited_by %}
           <dd>
             <div class="treaty-link-container">

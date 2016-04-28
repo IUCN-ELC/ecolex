@@ -1,7 +1,8 @@
 {% load tags %}
+{% load i18n %}
 
 <div class="leading">
-  <input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">
+  <input class="btn btn-default btn-sm btn-block" type="reset" value="{% trans 'Reset all filters' %}">
 </div>
 
 {% comment %}
@@ -14,7 +15,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 
 <fieldset class="global-filter">
   <h5 data-toggle="collapse"
-      data-target="#filter-global">Common filters</h5>
+      data-target="#filter-global">{% trans 'Common filters' %}</h5>
   <div id="filter-global" class="collapse in">
 
 {% include "bits/selection_facet.html" with title="Subject" placeholder="Add subjects…" viewname="api:xsubjects-list" facet=facets.xsubjects field=form.xsubjects op_field=form.xsubjects_and_ %}
@@ -28,14 +29,14 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% include "bits/selection_facet.html" with title="Language" placeholder="Add languages…" viewname="api:xlanguage-list" facet=facets.xlanguage field=form.xlanguage op_field=form.xlanguage_and_ %}
 
 {% with dmin=stats.xdate.min dmax=stats.xdate.max %}
-  
+
   <div class="filter">
     <header class="filter-header">
-      <strong class="filter-label">Year / Period</strong>
+      <strong class="filter-label">{% trans 'Year / Period' %}</strong>
       {% if form.xdate_min.data or form.xdate_max.data %}
         <span class="filter-options">
           <button class="no-btn small reset-year">
-            Reset
+            {% trans 'Reset' %}
           </button>
         </span>
       {% endif %}
@@ -70,7 +71,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
       </div>
     </div>
   </div>
-      
+
 {% endwith %}
 
   </div>
@@ -81,7 +82,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% if form.has_treaty and type_count.treaty > 0 %}
 <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_treaty %}class="collapsed"{% endif %}
-        data-target="#filter-treaties">Treaty filters</h5>
+        data-target="#filter-treaties">{% trans 'Treaty filters' %}</h5>
 
     <div id="filter-treaties" class="collapse {% if form.has_treaty %}in{% endif %}">
 
@@ -104,7 +105,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% if form.has_decision and type_count.decision > 0 %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_decision %}class="collapsed"{% endif %}
-        data-target="#filter-cop-decisions">COP Decision filters</h5>
+        data-target="#filter-cop-decisions">{% trans 'COP Decision filters' %}</h5>
 
     <div id="filter-cop-decisions" class="collapse {% if form.has_decision %}in{% endif %}">
 
@@ -123,7 +124,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 
 {% if form.has_legislation and type_count.legislation > 0 %}
   <fieldset class="special-filter">
-    <h5 data-toggle="collapse" {% if not form.has_legislation %}class="collapsed"{% endif %}data-target="#filter-legislation">Legislation filters</h5>
+    <h5 data-toggle="collapse" {% if not form.has_legislation %}class="collapsed"{% endif %}data-target="#filter-legislation">{% trans 'Legislation filters' %}</h5>
     <div id="filter-legislation" class="collapse {% if form.has_legislation %}in{% endif %}">
 
 {% include 'bits/checkbox_facet.html' with title="Document type" facet=facets.leg_type_of_document field=form.leg_type_of_document show_empty=True %}
@@ -138,7 +139,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% if form.has_court_decision and type_count.court_decision > 0 %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_court_decision %}class="collapsed"{% endif %}
-        data-target="#filter-court-decisions">Court decision filters</h5>
+        data-target="#filter-court-decisions">{% trans 'Court decision filters' %}</h5>
     <div id="filter-court-decisions" class="collapse {% if form.has_court_decision %}in{% endif %}">
 
 {% include 'bits/checkbox_facet.html' with title="Type of court" facet=facets.cd_type_of_document field=form.cd_type_of_document show_empty=True %}
@@ -152,7 +153,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 
 {% if form.has_literature and type_count.literature > 0 %}
   <fieldset class="special-filter">
-    <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">Literature filters</h5>
+    <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">{% trans 'Literature filters' %}</h5>
     <div id="filter-literatures" class="collapse {% if form.has_literature %}in{% endif %}">
 
 {% include "bits/selection_facet.html" with title="Author" placeholder="Add author…" viewname="api:lit-author-list" facet=facets.lit_author field=form.lit_author op_field=form.lit_author_and_ %}
@@ -171,4 +172,4 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 
 
 
-<input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">
+<input class="btn btn-default btn-sm btn-block" type="reset" value="{% trans 'Reset all filters' %}">

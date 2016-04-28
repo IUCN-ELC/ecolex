@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 08:53+0000\n"
+"POT-Creation-Date: 2016-04-28 16:21+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,32 +34,16 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
-#: templates/bits/knowledge_tools.html:4
-msgid "Protected Areas Law"
+#: xforms.py:26
+msgid "most recent"
 msgstr ""
 
-#: templates/bits/knowledge_tools.html:5
-msgid "Law for Sustainability"
+#: xforms.py:27
+msgid "least recent"
 msgstr ""
 
-#: templates/bits/knowledge_tools.html:6
-msgid "Water Law & Governance Support Platform"
-msgstr ""
-
-#: templates/bits/knowledge_tools.html:7
-msgid "Mesolex"
-msgstr ""
-
-#: templates/bits/knowledge_tools.html:8
-msgid "Law & Environment Ontology"
-msgstr ""
-
-#: templates/bits/knowledge_tools.html:9
-msgid "Fishlex"
-msgstr ""
-
-#: templates/bits/knowledge_tools.html:10
-msgid "Wildlex"
+#: xforms.py:28
+msgid "relevance"
 msgstr ""
 
 #: templates/layout.html:41
@@ -90,32 +74,37 @@ msgstr "Le portail au"
 msgid "environmental law"
 msgstr "droit de l'environment"
 
-#: templates/layout.html:95 templates/layout.html.py:155
-msgid "Search in record and full text"
-msgstr ""
-
 #: templates/layout.html:97 templates/layout.html.py:151
 #: templates/layout.html:160
 msgid "Search"
 msgstr ""
 
-#: templates/layout.html:104
+#: templates/layout.html:104 templates/results_main.html:41
+#: templates/bits/type_facet.html:17
 msgid "Treaties"
 msgstr ""
 
-#: templates/layout.html:110
+#: templates/layout.html:110 templates/results_main.html:42
+#: templates/bits/type_facet.html:36
 msgid "COP Decisions"
 msgstr ""
 
-#: templates/layout.html:116
+#: templates/layout.html:116 templates/results_main.html:43
+#: templates/bits/type_facet.html:55 templates/details/legislation.html:23
+#: templates/details/literature.html:199
 msgid "Legislation"
 msgstr ""
 
-#: templates/layout.html:122
+#: templates/layout.html:122 templates/results_main.html:44
+#: templates/bits/type_facet.html:74
 msgid "Court Decisions"
 msgstr ""
 
-#: templates/layout.html:128
+#: templates/layout.html:128 templates/results_main.html:45
+#: templates/bits/type_facet.html:93 templates/details/literature.html:18
+#: templates/details/literature.html:225 templates/details/literature.html:241
+#: templates/details/treaty.html:286
+#: templates/short_display/literature.html:29
 msgid "Literature"
 msgstr ""
 
@@ -135,14 +124,573 @@ msgstr ""
 msgid "Joint initiative of "
 msgstr ""
 
-#: xforms.py:26
-msgid "most recent"
+#: templates/results_main.html:8
+msgid "Did you mean:"
 msgstr ""
 
-#: xforms.py:27
-msgid "least recent"
+#: templates/results_main.html:16
+msgid "Found"
 msgstr ""
 
-#: xforms.py:28
-msgid "relevance"
+#: templates/results_main.html:18
+msgid "result"
+msgstr ""
+
+#: templates/results_main.html:22
+msgid "COP decision"
+msgstr ""
+
+#: templates/results_main.html:24
+msgid "literature item"
+msgstr ""
+
+#: templates/results_main.html:26
+msgid "court decision"
+msgstr ""
+
+#: templates/results_main.html:28
+msgid "legislation record"
+msgstr ""
+
+#: templates/results_main.html:34
+msgid "Show only"
+msgstr ""
+
+#: templates/results_main.html:83
+msgid "Previous"
+msgstr ""
+
+#: templates/results_main.html:111
+msgid "Next"
+msgstr ""
+
+#: templates/results_main.html:117
+msgid "No more results"
+msgstr ""
+
+#: templates/results_sidebar.html:5 templates/results_sidebar.html.py:175
+msgid "Reset all filters"
+msgstr ""
+
+#: templates/results_sidebar.html:18
+msgid "Common filters"
+msgstr ""
+
+#: templates/results_sidebar.html:35
+msgid "Year / Period"
+msgstr ""
+
+#: templates/results_sidebar.html:39
+msgid "Reset"
+msgstr ""
+
+#: templates/results_sidebar.html:85
+msgid "Treaty filters"
+msgstr ""
+
+#: templates/results_sidebar.html:108
+msgid "COP Decision filters"
+msgstr ""
+
+#: templates/results_sidebar.html:127
+msgid "Legislation filters"
+msgstr ""
+
+#: templates/results_sidebar.html:142
+msgid "Court decision filters"
+msgstr ""
+
+#: templates/results_sidebar.html:156
+msgid "Literature filters"
+msgstr ""
+
+#: templates/bits/disclaimer.html:5
+msgid ""
+"Information on this section of ECOLEX comes from the InforMEA Portal which "
+"compiled  information from MEA Secretariats with the support of the European "
+"Union. The accuracy of the information displayed is the responsibility of "
+"the originating data source. In case of discrepancy  the information as "
+"displayed on the respective MEA website prevails."
+msgstr ""
+
+#: templates/bits/knowledge_tools.html:4
+msgid "Protected Areas Law"
+msgstr ""
+
+#: templates/bits/knowledge_tools.html:5
+msgid "Law for Sustainability"
+msgstr ""
+
+#: templates/bits/knowledge_tools.html:6
+msgid "Water Law & Governance Support Platform"
+msgstr ""
+
+#: templates/bits/knowledge_tools.html:7
+msgid "Mesolex"
+msgstr ""
+
+#: templates/bits/knowledge_tools.html:8
+msgid "Law & Environment Ontology"
+msgstr ""
+
+#: templates/bits/knowledge_tools.html:9
+msgid "Fishlex"
+msgstr ""
+
+#: templates/bits/knowledge_tools.html:10
+msgid "Wildlex"
+msgstr ""
+
+#: templates/bits/sortby.html:7
+msgid "Sorted by"
+msgstr ""
+
+#: templates/bits/sortby.html:9
+msgid "Sort by"
+msgstr ""
+
+#: templates/details/court_decision.html:24 templates/details/treaty.html:298
+#: templates/short_display/court_decision.html:5
+msgid "Court Decision"
+msgstr ""
+
+#: templates/details/court_decision.html:30
+#: templates/details/legislation.html:29
+#: templates/short_display/court_decision.html:9
+#: templates/short_display/legislation.html:6
+#: templates/short_display/literature.html:31
+msgid "Country"
+msgstr ""
+
+#: templates/details/court_decision.html:31
+#: templates/short_display/court_decision.html:6
+msgid "Type of court"
+msgstr ""
+
+#: templates/details/court_decision.html:32 templates/details/decision.html:35
+#: templates/details/legislation.html:37 templates/details/treaty.html:26
+#: templates/short_display/court_decision.html:13
+#: templates/short_display/decision.html:13
+#: templates/short_display/treaty.html:10
+msgid "Date"
+msgstr ""
+
+#: templates/details/court_decision.html:38
+msgid "Court name"
+msgstr ""
+
+#: templates/details/court_decision.html:41
+msgid "Justices"
+msgstr ""
+
+#: templates/details/court_decision.html:45 templates/details/decision.html:34
+msgid "Reference number"
+msgstr ""
+
+#: templates/details/court_decision.html:48
+msgid "Language of document"
+msgstr ""
+
+#: templates/details/court_decision.html:52
+#: templates/details/legislation.html:53
+msgid "Subjects"
+msgstr ""
+
+#: templates/details/court_decision.html:57 templates/details/decision.html:49
+#: templates/details/legislation.html:58 templates/details/literature.html:124
+#: templates/details/treaty.html:72
+#: templates/short_display/court_decision.html:21
+#: templates/short_display/decision.html:20
+#: templates/short_display/legislation.html:24
+#: templates/short_display/literature.html:34
+#: templates/short_display/treaty.html:17
+msgid "Keywords"
+msgstr ""
+
+#: templates/details/court_decision.html:70
+#: templates/details/decision.html:101 templates/details/legislation.html:87
+#: templates/details/literature.html:142 templates/details/treaty.html:95
+msgid "Abstract"
+msgstr ""
+
+#: templates/details/court_decision.html:74 templates/details/treaty.html:150
+msgid "Link to abstract"
+msgstr ""
+
+#: templates/details/court_decision.html:82
+#: templates/details/legislation.html:92 templates/details/literature.html:147
+#: templates/details/treaty.html:113
+msgid "Full text"
+msgstr ""
+
+#: templates/details/court_decision.html:93 templates/details/treaty.html:126
+msgid "Available in"
+msgstr ""
+
+#: templates/details/court_decision.html:97
+#: templates/details/legislation.html:101
+#: templates/details/literature.html:166 templates/details/treaty.html:131
+msgid "Available web site"
+msgstr ""
+
+#: templates/details/court_decision.html:104
+#: templates/details/decision.html:84 templates/details/legislation.html:108
+#: templates/details/literature.html:173 templates/details/treaty.html:140
+#: templates/short_display/court_decision.html:26
+#: templates/short_display/decision.html:24
+#: templates/short_display/legislation.html:30
+#: templates/short_display/literature.html:37
+#: templates/short_display/treaty.html:20
+msgid "Source"
+msgstr ""
+
+#: templates/details/court_decision.html:108
+#: templates/details/decision.html:88
+msgid "Files"
+msgstr ""
+
+#: templates/details/court_decision.html:117
+msgid "References"
+msgstr ""
+
+#: templates/details/court_decision.html:139
+#: templates/details/court_decision.html:153
+msgid "Cites"
+msgstr ""
+
+#: templates/details/decision.html:27
+msgid "COP Decision"
+msgstr ""
+
+#: templates/details/decision.html:33 templates/details/legislation.html:36
+#: templates/details/literature.html:90 templates/details/treaty.html:24
+#: templates/short_display/treaty.html:5
+msgid "Document type"
+msgstr ""
+
+#: templates/details/decision.html:41 templates/short_display/decision.html:9
+#: templates/short_display/legislation.html:16
+msgid "Status"
+msgstr ""
+
+#: templates/details/decision.html:44 templates/details/literature.html:119
+#: templates/details/treaty.html:67
+msgid "Subject"
+msgstr ""
+
+#: templates/details/decision.html:58 templates/details/literature.html:186
+#: templates/details/treaty.html:18
+msgid "Treaty"
+msgstr ""
+
+#: templates/details/decision.html:66
+msgid "Meeting"
+msgstr ""
+
+#: templates/details/decision.html:77
+msgid "Available website"
+msgstr ""
+
+#: templates/details/legislation.html:33
+msgid "Territorial subdivision"
+msgstr ""
+
+#: templates/details/legislation.html:39
+#: templates/short_display/legislation.html:8
+msgid "Original date"
+msgstr ""
+
+#: templates/details/legislation.html:41
+#: templates/short_display/legislation.html:10
+msgid "Consolidation date"
+msgstr ""
+
+#: templates/details/legislation.html:45
+msgid "Long title"
+msgstr ""
+
+#: templates/details/legislation.html:67 templates/details/literature.html:132
+#: templates/details/treaty.html:81
+msgid "Geographical area"
+msgstr ""
+
+#: templates/details/legislation.html:72 templates/details/literature.html:137
+#: templates/details/treaty.html:86
+msgid "Basin"
+msgstr ""
+
+#: templates/details/legislation.html:77
+msgid "Entry into force notes"
+msgstr ""
+
+#: templates/details/legislation.html:139
+#: templates/details/literature.html:183
+msgid "References to"
+msgstr ""
+
+#: templates/details/legislation.html:142
+msgid "Implements treaty"
+msgstr ""
+
+#: templates/details/legislation.html:155
+msgid "Cites treaty"
+msgstr ""
+
+#: templates/details/legislation.html:170
+msgid "Court Decision references"
+msgstr ""
+
+#: templates/details/legislation.html:172 templates/details/treaty.html:254
+msgid "Cited by"
+msgstr ""
+
+#: templates/details/literature.html:24
+#: templates/short_display/literature.html:6
+msgid "Author"
+msgstr ""
+
+#: templates/details/literature.html:27
+msgid "Corporate author"
+msgstr ""
+
+#: templates/details/literature.html:32
+msgid "Journal/Series"
+msgstr ""
+
+#: templates/details/literature.html:41
+msgid "Monograph"
+msgstr ""
+
+#: templates/details/literature.html:49
+msgid "Publication year"
+msgstr ""
+
+#: templates/details/literature.html:59 templates/details/treaty.html:39
+msgid "Title"
+msgstr ""
+
+#: templates/details/literature.html:67
+#: templates/short_display/literature.html:23
+msgid "Publisher"
+msgstr ""
+
+#: templates/details/literature.html:85
+msgid "Pages"
+msgstr ""
+
+#: templates/details/literature.html:95
+msgid "Conference"
+msgstr ""
+
+#: templates/details/literature.html:100 templates/details/treaty.html:57
+msgid "Language"
+msgstr ""
+
+#: templates/details/literature.html:109 templates/details/treaty.html:25
+#: templates/short_display/literature.html:30
+msgid "Field of application"
+msgstr ""
+
+#: templates/details/literature.html:158
+msgid "Available DOI"
+msgstr ""
+
+#: templates/details/literature.html:212
+msgid "Court decision"
+msgstr ""
+
+#: templates/details/literature.html:238
+msgid "References from"
+msgstr ""
+
+#: templates/details/treaty.html:33
+msgid "Title abbreviation"
+msgstr ""
+
+#: templates/details/treaty.html:47 templates/short_display/treaty.html:7
+msgid "Place of adoption"
+msgstr ""
+
+#: templates/details/treaty.html:52
+msgid "Depository"
+msgstr ""
+
+#: templates/details/treaty.html:62
+msgid "Entry into force"
+msgstr ""
+
+#: templates/details/treaty.html:104
+msgid "Comment"
+msgstr ""
+
+#: templates/details/treaty.html:166
+msgid "See Expanded View"
+msgstr ""
+
+#: templates/details/treaty.html:167
+msgid "Country/Participant"
+msgstr ""
+
+#: templates/details/treaty.html:173
+msgid "Countries"
+msgstr ""
+
+#: templates/details/treaty.html:193
+msgid "Not available"
+msgstr ""
+
+#: templates/details/treaty.html:210
+msgid "Treaty references"
+msgstr ""
+
+#: templates/details/treaty.html:233
+msgid "Legislation references"
+msgstr ""
+
+#: templates/details/treaty.html:237
+msgid "Implemented by"
+msgstr ""
+
+#: templates/details/treaty.html:273
+msgid "Other references"
+msgstr ""
+
+#: templates/details/treaty.html:276
+msgid "COP decisions"
+msgstr ""
+
+#: templates/details/treaty.html:278
+msgid "decisions"
+msgstr ""
+
+#: templates/details/treaty.html:278 templates/details/treaty.html.py:289
+#: templates/details/treaty.html:300
+msgid "related to this treaty."
+msgstr ""
+
+#: templates/details/treaty.html:279
+msgid "View decisions"
+msgstr ""
+
+#: templates/details/treaty.html:291
+msgid "View literature"
+msgstr ""
+
+#: templates/details/treaty.html:300
+msgid "court decisions"
+msgstr ""
+
+#: templates/details/treaty.html:301
+msgid "View court decisions"
+msgstr ""
+
+#: templates/pages/about.html:8
+msgid ""
+"IUCN Environmental Law Centre (ELC) created a comprehensive information "
+"system on environmental law (ELIS) in the 1960's. ELIS, which was one of the "
+"first computerized legal information system, evolved into a large set of "
+"references to treaties, national legislation, soft law and legal literature, "
+"linked to documents held in the libraries of the ELC for the IUCN "
+"Environmental Law Programme. It continues to be one of the main assets of "
+"the capacity building activities of the IUCN Environmental Law Programme, as "
+"well as a constant source of expertise for the work of the Programme in the "
+"fields of law development, technical assistance, and expertise building."
+msgstr ""
+
+#: templates/pages/about.html:9
+msgid ""
+"While FAO was established in 1945, it draws on the legacy of the Institute "
+"of International Agriculture (IIA), which was founded in 1905 to collect and "
+"publish statistical information on farming and agricultural products. FAO’s "
+"core mandate has always included the collection, analysis, interpretation "
+"and dissemination of information relating to nutrition, food and agriculture "
+"and, in 1948, the functions and assets of the IIA were transferred to it. "
+"FAO has, in this way, been committed to the collection and dissemination of "
+"legal and policy instruments on food, agriculture and natural resources "
+"management for more than 70 years. From 1954 to 1994, the FAO Legal Office "
+"published “Food and Agricultural Legislation”, an annual compilation of "
+"significant, innovative and illustrative legislation. In 1995, this "
+"publication was replaced by FAOLEX; a global, open access, database of "
+"national legislation, policies and bilateral agreements in areas relevant to "
+"FAO’s mandate. FAOLEX is constantly being updated (with an average of 8,000 "
+"new entries per year) and currently contains legal and policy materials "
+"drawn from more than 200 countries and regional economic integration "
+"organizations, of which the key elements have been summarized in English, "
+"French or Spanish based on original texts in over 40 languages. FAOLEX "
+"complements the technical support for legislative and regulatory reform "
+"provided to the FAO Member States by the Development Law Service of the FAO "
+"Legal Office."
+msgstr ""
+
+#: templates/pages/about.html:10
+msgid ""
+"UNEP has over the years contributed the collection of jurisprudence and case "
+"law to the ECOLEX Portal. UNEP furthermore provides information decisions "
+"and resolutions by the governing bodies of Multilateral Environmental "
+"Agreements (MEAs)."
+msgstr ""
+
+#: templates/pages/about.html:11
+msgid ""
+"InforMEA (<a href=\"http://www.informea.org\">www.informea.org</a>) is the "
+"flagship of the MEA Information and Knowledge Management (MEA-IKM) "
+"Initiative, which comprises of over 20 Secretariats of Multilateral "
+"Environmental Agreements (MEAs) administered by 4 UN entities and IUCN and "
+"supported by the European Union. While the ECOLEX section containing COP "
+"decisions has been developed with the support of the European Union the "
+"contents of this portal are the sole responsibility of the ECOLEX partners "
+"and can in no way be taken to reflect the views of the European Union."
+msgstr ""
+
+#: templates/pages/about.html:12
+msgid ""
+"The Initiative seeks to harmonize data standards across MEA Secretariats to "
+"allow for easier and more cost-effective development of information and "
+"knowledge tools. The InforMEA Portal compiles decisions and resolutions of "
+"the Conferences/Meetings of Parties (COP/MOP), semantically analyzed treaty "
+"text, ratification data and focal point information, national reports and "
+"national implementation plans and a joint MEA calendar."
+msgstr ""
+
+#: templates/pages/about.html:13
+msgid ""
+"InforMEA further provides an <a href=\"http://www.informea.org/e-learning"
+"\">E-learning tool</a> offering self-paced and free introductory courses on "
+"MEAs and International Environmental Law and Conventions and <a href="
+"\"http://www.informea.org/leo\">LEO</a> – the InforMEA Thesaurus of term "
+"concepts governing this area of international law (<a href=\"https://youtu."
+"be/bKmNindEWFg\">learn more ></a>)."
+msgstr ""
+
+#: templates/pages/about.html:14
+msgid ""
+"To join forces and combine the strength of the three organizations therefore "
+"made eminent sense, and while cooperation in this field between UNEP and "
+"IUCN was firstly mandated by the Governing Council of UNEP in 1995, it is in "
+"2001 that a partnership Agreement was signed by FAO, IUCN and UNEP for the "
+"integration of their data, and of FAOLEX into ECOLEX."
+msgstr ""
+
+#: templates/pages/about.html:15
+msgid ""
+"The resulting combined information resource is the largest available on "
+"environmental law globally, with over hundred thousand references to "
+"relevant documents already being available on the web."
+msgstr ""
+
+#: templates/short_display/decision.html:5
+msgid "Decision"
+msgstr ""
+
+#: templates/short_display/literature.html:13
+#: templates/short_display/literature.html:17
+msgid "In"
+msgstr ""
+
+#: templates/short_display/literature.html:24
+msgid "Publication place"
+msgstr ""
+
+#: templates/short_display/literature.html:25
+msgid "Publication date"
 msgstr ""
