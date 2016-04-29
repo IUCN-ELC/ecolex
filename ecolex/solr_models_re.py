@@ -336,11 +336,11 @@ class Decision(DocumentModel):
         from ecolex.search import get_treaty_by_informea_id
         return get_treaty_by_informea_id(self.treaty_id)
 
-    @cached_property
+    @property
     def files(self):
         return list(zip(self.file_urls, self.file_names))
 
-    @cached_property
+    @property
     def language_names(self):
         return [settings.LANGUAGE_MAP.get(code, 'Undefined') for code in self.language]
 
@@ -562,11 +562,11 @@ class Literature(DocumentModel):
             return self.long_title
         return DEFAULT_TITLE
 
-    @cached_property
+    @property
     def people_authors(self):
         return self.author_a or self.author_m
 
-    @cached_property
+    @property
     def corp_authors(self):
         return self.corp_author_a or self.corp_author_m
 
@@ -594,16 +594,16 @@ class Literature(DocumentModel):
     def date(self):
         return self.date_of_text_ser or self.year_of_text or self.date_of_text
 
-    @cached_property
+    @property
     def is_article(self):
         # TODO: also check document_id ?
         return bool(self.date_of_text_ser)
 
-    @cached_property
+    @property
     def is_chapter(self):
         return self.document_id.startswith('ANA') and not self.is_article
 
-    @cached_property
+    @property
     def serial_title(self):
         if self.is_article:
             # TODO: why don't we include always volume and collation
@@ -614,7 +614,7 @@ class Literature(DocumentModel):
             return join_available_values(' | ',
                                          self.orig_serial_title, self.volume_no)
 
-    @cached_property
+    @property
     def conference(self):
         return join_available_values(' | ',
                                      self.conf_name, self.conf_no,
