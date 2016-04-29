@@ -61,6 +61,21 @@
       </analyzer>
     </fieldType>
 
+    <fieldType name="text_numeric_sortable" class="solr.TextField" omitNorms="true">
+      <analyzer>
+        <!-- keep everything as a single token -->
+        <tokenizer class="solr.KeywordTokenizerFactory" />
+
+        <!-- left-pad numbers with zeroes, to at least 3 digits -->
+        <!-- NOTE: increase this if needed, it's tailored to decNumber -->
+        <filter class="solr.PatternReplaceFilterFactory" replace="all"
+                pattern="([0-9]+)" replacement="00$1" />
+        <!-- and trim to 3 digits -->
+        <filter class="solr.PatternReplaceFilterFactory" replace="all"
+                pattern="0*([0-9]{3,})" replacement="$1" />
+      </analyzer>
+    </fieldType>
+
     <field name="_version_" type="long" indexed="true" stored="true"/>
     <field name="id" type="string" indexed="true" stored="true" required="true"/>
     <field name="type" type="string" indexed="true" stored="true" required="true"/>
@@ -238,7 +253,17 @@
 
     <field name="decType" type="string" indexed="true" stored="true"/>
     <field name="decStatus" type="string" indexed="true" stored="true"/>
+
     <field name="decNumber" type="string" indexed="false" stored="true"/>
+    <!-- TODO: this is ugly, but setting our custom type to decNumber won't work
+         without a full re-index (that is, everything, of all types).
+         Unless a full re-index is possible, it would be better if this were
+         pre-processed and copied into a
+         <field type="string" indexed="false" stored="false" docValues="true"/>.
+         (which can be done either in python or with an Update Request Processor. -->
+    <field name="decNumber_sort" type="text_numeric_sortable"
+           indexed="true" stored="false"/>
+    <copyField source="decNumber" dest="decNumber_sort"/>
 
     <field name="decTreatyId" type="string" indexed="true" stored="true"/>
     <field name="decTreaty" type="string" indexed="true" stored="true"/>
@@ -250,7 +275,13 @@
     <field name="decPublishDate" type="tdate" indexed="false" stored="true"/>
     <field name="decUpdateDate" type="tdate" indexed="false" stored="true"/>
 
-    <field name="decMeetingId" type="string" indexed="false" stored="true"/>
+    <field name="decMeetingId" type="string"
+           indexed="false" stored="true" docValues="true"/>
+    <!-- TODO: remove this after a full re-index -->
+    <field name="decMeetingId_group" type="string"
+           indexed="false" stored="false" docValues="true"/>
+    <copyField source="decMeetingId" dest="decMeetingId_group"/>
+
     <field name="decMeetingTitle" type="string" indexed="false" stored="true"/>
     <field name="decMeetingUrl" type="string" indexed="false" stored="true"/>
 
@@ -263,6 +294,7 @@
 
     <!-- Decision copyfields-->
     <field name="decTitleOfText" type="text" indexed="true" stored="true" multiValued="true"/>
+    <!-- TODO: don't index this, it's conflating the index uselessly -->
     <field name="decText" type="text" indexed="true" stored="true"/>
 
     <!-- InforMEA event -->

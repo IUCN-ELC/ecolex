@@ -325,6 +325,11 @@ class DecisionSchema(CommonSchema):
                                 multilingual=True)
     update_date = fields.Date(load_from='decUpdateDate', missing=None)
 
+    # these fields are used temporarily for grouping / ordering,
+    # and they should be removed after a full re-index.
+    _meeting_id = fields.String(load_from='decMeetingId_group')
+    _meeting_number = fields.String(load_from='decNumber_sort')
+
 
 class LiteratureSchema(CommonSchema):
     class Meta:
