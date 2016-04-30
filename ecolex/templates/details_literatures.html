@@ -3,7 +3,7 @@
 
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
-  {% breadcrumb "Treaty" 'treaty_details' query slug=treaty.slug %}
+  {% breadcrumb "Treaty" 'treaty_details' query slug=document.slug %}
   {% breadcrumb "Literature" %}
 {% endblock %}
 
@@ -12,14 +12,14 @@
 <article class="record-details">
   <header>
     <div class="record-title">
-      <h1>{{ treaty.title|safe }}</h1>
+      <h1>{{ document.title|safe }}</h1>
       <h2>Related literature</h2>
     </div>
   </header>
 
   <table class="table decisions-expanded">
     <tbody>
-      {% for literature in treaty.literatures %}
+      {% for literature in related_objects %}
       <tr>
         <td>
           <h3 class="search-result-title">

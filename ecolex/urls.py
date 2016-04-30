@@ -26,11 +26,15 @@ urlpatterns += i18n_patterns(
         name="results"),
 
     url(r'^details/(?P<slug>[^/]+)/decisions/$',
-        ResultDetailsDecisions.as_view(), name="resultDecisions"),
+        views.RelatedDecisions.as_view(),
+        name="related_decisions"),
     url(r'^details/(?P<slug>[^/]+)/literatures/$',
-        ResultDetailsLiteratures.as_view(), name="resultLiteratures"),
+        views.RelatedLiteratures.as_view(),
+        name="related_literatures"),
     url(r'^details/(?P<slug>[^/]+)/court-decisions/$',
-        ResultDetailsCourtDecisions.as_view(), name="resultCourtDecisions"),
+        views.RelatedCourtDecisions.as_view(),
+        name="related_court_decisions"),
+
     url(r'^details/(?P<slug>[^/]+)/participants/$',
         ResultDetailsParticipants.as_view(), name="resultParticipants"),
 

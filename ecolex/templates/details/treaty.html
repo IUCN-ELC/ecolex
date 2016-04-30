@@ -276,7 +276,7 @@
         <dt>{% trans 'COP decisions' %}</dt>
         <dd>
           <strong>{{ document.decision_count }} {% trans 'decisions' %}</strong> {% trans 'related to this treaty.' %}
-          <a href="{% url 'resultDecisions' document.slug %}?{{ query }}">{% trans 'View decisions' %}</a>
+          <a href="{% url 'related_decisions' document.slug %}?{{ query }}">{% trans 'View decisions' %}</a>
         </dd>
       {% endif %}
     </dl>
@@ -288,7 +288,7 @@
         {% with document.literature_count as lit_count %}
           <strong>{{ lit_count }} record{{ lit_count|pluralize:"s" }} </strong> {% trans 'related to this treaty.' %}
         {% endwith %}
-          <a href="{% url 'resultLiteratures' document.slug %}?{{ query }}">{% trans 'View literature' %}</a>
+          <a href="{% url 'related_literatures' document.slug %}?{{ query }}">{% trans 'View literature' %}</a>
         </dd>
       {% endif %}
     </dl>
@@ -298,7 +298,7 @@
         <dt>{% trans 'Court Decision' %}</dt>
         <dd>
           <strong>{{ document.court_decision_count }} {% trans 'court decisions' %}</strong> {% trans 'related to this treaty.' %}
-          <a href="{% url 'resultCourtDecisions' document.slug %}?{{ query }}">{% trans 'View court decisions' %}</a>
+          <a href="{% url 'related_court_decisions' document.slug %}?{{ query }}">{% trans 'View court decisions' %}</a>
         </dd>
       {% endif %}
     </dl>

@@ -34,7 +34,50 @@ class SearchViewMixin(object):
         return ctx
 
 
-class SearchResultsView(SearchViewMixin, TemplateView):
+class PagedViewMixin(object):
+    def _get_page_url(self, page=None):
+        raise NotImplementedError()
+
+    def get_page_details(self, current, result_count, page_size=None):
+        if page_size is None:
+            page_size = settings.SEARCH_PAGE_SIZE
+
+        page_count = math.ceil(result_count / page_size)
+
+        if page_count <= 1:
+            _url = self._get_page_url()
+            return {
+                'number': 1,
+                'count': 1,
+                'list': [1],
+                'urls': {1: _url},
+                'next_url': None,
+                'prev_url': None,
+                'first_url': _url,
+                'last_url': _url,
+            }
+
+        _get_url = self._get_page_url
+
+        pages = OrderedDict((p, _get_url(p))
+                            for p in range(max(current - 2, 1),
+                                           min(current + 2, page_count) + 1))
+
+        return {
+            'number': current,
+            'count': page_count,
+            'list': pages.keys(),
+            'urls': pages,
+
+            'next_url': current < page_count and _get_url(current + 1) or None,
+            'prev_url': current > 1 and _get_url(current - 1) or None,
+
+            'first_url': _get_url(1),
+            'last_url': _get_url(page_count),
+        }
+
+
+class SearchResultsView(SearchViewMixin, PagedViewMixin, TemplateView):
     template_name = 'list_results.html'
 
     def get(self, request, *args, **kwargs):
@@ -75,44 +118,11 @@ class SearchResultsView(SearchViewMixin, TemplateView):
 
         return ctx
 
-    def get_page_details(self, current, result_count, page_size=None):
-        if page_size is None:
-            page_size = settings.SEARCH_PAGE_SIZE
-
-        page_count = math.ceil(result_count / page_size)
-
-        if page_count <= 1:
-            _url = self.form.urlencoded()
-            return {
-                'number': 1,
-                'count': 1,
-                'list': [1],
-                'urls': {1: _url},
-                'next_url': None,
-                'prev_url': None,
-                'first_url': _url,
-                'last_url': _url,
-            }
-
-        def _get_url(page):
+    def _get_page_url(self, page=None):
+        if page is None:
+            return self.form.urlencoded()
+        else:
             return self.form.urlencoded(page=page)
-
-        pages = OrderedDict((p, _get_url(p))
-                            for p in range(max(current - 2, 1),
-                                           min(current + 2, page_count) + 1))
-
-        return {
-            'number': current,
-            'count': page_count,
-            'list': pages.keys(),
-            'urls': pages,
-
-            'next_url': current < page_count and _get_url(current + 1) or None,
-            'prev_url': current > 1 and _get_url(current - 1) or None,
-
-            'first_url': _get_url(1),
-            'last_url': _get_url(page_count),
-        }
 
 
 class DetailsView(SearchViewMixin, TemplateView):
@@ -123,24 +133,23 @@ class DetailsView(SearchViewMixin, TemplateView):
         form = self.form
 
         if not form.is_valid():
-            response = SearchResponse()
-            page = 1
-        else:
-            data = form.cleaned_data.copy()
+            raise Http404()
 
-            queryer = Queryer(data, language=get_language())
+        data = form.cleaned_data.copy()
 
-            try:
-                result = queryer.get(slug=slug)
-            except ObjectDoesNotExist:
-                raise Http404()
-            except MultipleObjectsReturned:
-                # TODO. this is either data or code error.
-                raise
+        queryer = Queryer(data, language=get_language())
 
-            ctx['document'] = result
+        try:
+            result = queryer.get(slug=slug)
+        except ObjectDoesNotExist:
+            raise Http404()
+        except MultipleObjectsReturned:
+            # TODO. this is either data or code error.
+            raise
 
-            return ctx
+        ctx['document'] = result
+
+        return ctx
 
 
 class DecisionDetails(DetailsView):
@@ -161,3 +170,43 @@ class CourtDecisionDetails(DetailsView):
 
 class LegislationDetails(DetailsView):
     template_name = 'details/legislation.html'
+
+
+class RelatedObjectsView(DetailsView):
+    # this is looked up in the object's OTHER_REFERENCES
+    related_type = None
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        # TODO: this query is wasteful. much unneeded data fetched is.
+        doc = ctx['document']
+
+        remote_field, local_field = doc.OTHER_REFERENCES[self.related_type]
+        try:
+            value = getattr(doc, local_field)
+        except AttributeError:
+            raise Http404()
+
+        lookups = {doc._resolve_field(remote_field, self.related_type): value}
+
+        queryer = Queryer({}, language=get_language())
+        response = queryer.findany(page_size=100, date_sort=False, **lookups)
+
+        ctx['related_objects'] = response.results
+
+        return ctx
+
+
+class RelatedLiteratures(RelatedObjectsView):
+    related_type = 'literature'
+    template_name = 'details_literatures.html'
+
+
+class RelatedCourtDecisions(RelatedObjectsView):
+    related_type = 'court_decision'
+    template_name = 'details_court_decisions.html'
+
+
+class RelatedDecisions(RelatedObjectsView):
+    related_type = 'decision'
+    template_name = 'details_decisions.html'

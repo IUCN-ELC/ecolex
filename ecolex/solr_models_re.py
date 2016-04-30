@@ -257,25 +257,6 @@ class Treaty(DocumentModel):
         return self._get_reference_count('court_decision')
 
     @cached_property
-    def decisions(self):
-        # TODO: refactor here
-        if hasattr(self, 'informea_id'):
-            from ecolex.search import get_documents_by_field
-            return get_documents_by_field('decTreatyId', [self.informea_id], rows=MAX_ROWS)
-
-    @cached_property
-    def literatures(self):
-        from ecolex.search import get_documents_by_field
-        return get_documents_by_field('litTreatyReference',
-                                      [self.document_id], rows=MAX_ROWS)
-
-    @cached_property
-    def court_decisions(self):
-        from ecolex.search import get_documents_by_field
-        return get_documents_by_field('cdTreatyReference',
-                                      [self.document_id], rows=MAX_ROWS)
-
-    @cached_property
     def legislations_implemented_by(self):
         from ecolex.search import get_documents_by_field
         return get_documents_by_field('legImplementTreaty',
