@@ -305,6 +305,12 @@ class Treaty(DocumentModel):
         'literature': ('treaty_reference', 'document_id'),
         'court_decision': ('treaty_reference', 'document_id'),
     }
+    CROSSREFERENCES = {
+        'legislations_implemented_by': (
+            'legislation', 'treaty_implements', 'document_id'),
+        'legislations_cited_by': (
+            'legislation', 'treaty_cites', 'document_id'),
+    }
 
     @property
     def title(self):
@@ -336,17 +342,13 @@ class Treaty(DocumentModel):
     def court_decision_count(self):
         return self._get_reference_count('court_decision')
 
-    @cached_property
+    @property
     def legislations_implemented_by(self):
-        from ecolex.search import get_documents_by_field
-        return get_documents_by_field('legImplementTreaty',
-                                      [self.document_id], rows=MAX_ROWS)
+        return self._all_references['legislations_implemented_by']
 
-    @cached_property
+    @property
     def legislations_cited_by(self):
-        from ecolex.search import get_documents_by_field
-        return get_documents_by_field('legCitesTreaty',
-                                      [self.document_id], rows=MAX_ROWS)
+        return self._all_references['legislations_cited_by']
 
 
 class TreatyParty(BaseModel):
@@ -423,17 +425,17 @@ class Legislation(DocumentModel):
             'treaty', 'document_id', 'treaty_implements'),
         'treaties_cites': (
             'treaty', 'document_id', 'treaty_cites'),
+        'court_decisions': (
+            'court_decision', 'legislation_reference', 'document_id'),
     }
 
     @property
     def title(self):
         return self.short_title or self.long_title
 
-    @cached_property
+    @property
     def court_decisions(self):
-        from ecolex.search import get_documents_by_field
-        return get_documents_by_field('cdFaolexReference',
-                                      [self.document_id], rows=MAX_ROWS)
+        return self._all_references['court_decisions']
 
     @property
     def treaties_implemented(self):
