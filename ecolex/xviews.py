@@ -194,6 +194,13 @@ class RelatedObjectsView(PagedViewMixin, DetailsView):
 
         return query_dict.urlencode()
 
+    def fetch_results(self, lookups, page):
+        queryer = Queryer({}, language=get_language())
+        # TODO: make the sorting variable?
+        response = queryer.findany(page=page, date_sort=False, **lookups)
+
+        return response
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         doc = ctx['document']
@@ -208,9 +215,7 @@ class RelatedObjectsView(PagedViewMixin, DetailsView):
 
         lookups = {doc._resolve_field(remote_field, self.related_type): value}
 
-        queryer = Queryer({}, language=get_language())
-        # TODO: make the sorting variable?
-        response = queryer.findany(page=page, date_sort=False, **lookups)
+        response = self.fetch_results(lookups, page)
 
         ctx['related_objects'] = response.results
         ctx['pages'] = self.get_page_details(page, response.count)
@@ -231,3 +236,23 @@ class RelatedCourtDecisions(RelatedObjectsView):
 class RelatedDecisions(RelatedObjectsView):
     related_type = 'decision'
     template_name = 'details_decisions.html'
+
+    def fetch_results(self, lookups, page):
+        queryer = Queryer({}, language=get_language())
+
+        # TODO: this is really ugly
+        options = {
+            'group': True,
+            'group.field': 'decMeetingId_group',
+            'group.sort': 'decNumber_sort asc',
+            'group.limit': 1000,
+            'group.main': True,
+            #'group.ngroups': True, # we could use this in template
+            #'group.format': 'simple', # this is implied by group.main
+        }
+
+        # TODO: make the sorting variable?
+        response = queryer.findany(page=page, date_sort=False,
+                                   options=options, **lookups)
+
+        return response

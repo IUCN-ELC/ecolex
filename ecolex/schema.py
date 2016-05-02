@@ -282,6 +282,7 @@ class DecisionSchema(CommonSchema):
         solr_fetch = CommonSchema.Meta.solr_fetch + [
             'title_of_text', 'status', 'publish_date', 'update_date',
             'treaty_name', 'short_title',
+            'meeting_id', 'meeting_title',
         ]
         solr_boost = dict(CommonSchema.Meta.solr_boost, **{
             'long_title': 100,
