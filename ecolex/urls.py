@@ -6,8 +6,7 @@ from solid_i18n.urls import solid_i18n_patterns as i18n_patterns
 
 from .views import (
     DesignPlayground, FaoFeedView, Homepage, LegislationRedirectView,
-    PageView, ResultDetailsCourtDecisions, ResultDetailsDecisions,
-    ResultDetailsLiteratures, ResultDetailsParticipants, debug,
+    PageView, debug,
 )
 from . import xviews as views
 from .api import urls as api_urls
@@ -19,10 +18,8 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     url(r'^$', Homepage.as_view(), name="homepage"),
-    #url(r'^result/$', SearchResults.as_view(),
-    #    name="results"),
 
-    url(r'^result/$', views.SearchResultsView.as_view(),
+    url(r'^result/$', views.SearchResults.as_view(),
         name="results"),
 
     url(r'^details/(?P<slug>[^/]+)/decisions/$',

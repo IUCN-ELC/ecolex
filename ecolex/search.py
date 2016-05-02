@@ -401,13 +401,6 @@ def get_document(document_id, query='*', **kwargs):
     return result
 
 
-def get_document_by_slug(slug, query='*', **kwargs):
-    result = search(query, raw=True, filters={'slug': [slug]}, **kwargs)
-    if not len(result):
-        result = search('*', raw=True, filters={'slug': [slug]}, **kwargs)
-    return result
-
-
 def get_treaty_by_informea_id(informea_id):
     result = search('trInformeaId:' + informea_id, raw=True)
     if not len(result):

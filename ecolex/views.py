@@ -13,7 +13,7 @@ from django.views.generic.base import RedirectView
 from ecolex.legislation import harvest_file
 from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS
 from ecolex.search import (
-    SearchMixin, get_documents_by_field, get_document_by_slug
+    SearchMixin, get_documents_by_field,
 )
 
 
@@ -57,83 +57,6 @@ class Homepage(SearchView):
         return ctx
 
 
-class SearchResults(SearchView):
-    template_name = 'list_results.html'
-
-    def page_details(self, page, results):
-        def _get_url(page):
-            get_query['page'] = page
-            return get_query.urlencode()
-
-        get_query = self.request.GET.copy()
-        get_query.pop(page, None)
-        pages_list = [p for p in range(max(page - 2, 1),
-                                       min(page + 2, results.pages()) + 1)]
-        pages_urls = dict((page_no, _get_url(page_no))
-                          for page_no in pages_list)
-
-        return {
-            'number': page,
-            'no_pages': results.pages,
-            'pages_list': pages_list,
-            'pages_urls': pages_urls,
-            'next_url': _get_url(page + 1),
-            'prev_url': _get_url(page - 1),
-            'first_url': _get_url(1),
-            'last_url': _get_url(results.pages()),
-        }
-
-    def get_context_data(self, **kwargs):
-        ctx = super(SearchResults, self).get_context_data(**kwargs)
-        page = int(self.request.GET.get('page', 1))
-
-        # fetch one extra facet result, to let the frontend know
-        # if it should use ajax for the next pages
-        results = self.search(facets_page_size=settings.FACETS_PAGE_SIZE + 1)
-
-        results.set_page(page)
-        results.fetch()
-        ctx['results'] = results
-
-        facets = results.get_facets()
-
-        # hack the (select) facets to have "pretty" keys.
-        # TODO: move this logic into Queryset.get_facets().
-        #       multilinguality could live there too!
-        #       (or even better, make the names pretty in schema...)
-        for old_key, new_key in SELECT_FACETS.items():
-            if old_key not in facets:
-                continue
-            # also convert them to the api serializer format
-            # (or not, handle it client-side for now)
-            # facets[new_key] = SearchFacetSerializer.convert_results(
-            #    facets.pop(old_key))
-
-            # also hack them into a {results: [], more: bool} dict,
-            # accounting for that odd extra-result
-            f_data = facets.pop(old_key)
-            more = False
-
-            if len(f_data) > settings.FACETS_PAGE_SIZE:
-                more = True
-                f_data.popitem()
-
-            facets[new_key] = {
-                'results': f_data,
-                'more': more,
-            }
-
-        ctx['facets'] = facets
-        ctx['stats_fields'] = results.get_field_stats()
-        ctx['page'] = self.page_details(page, results)
-        self.update_form_choices(ctx['facets'])
-        return ctx
-
-    def get(self, request, **kwargs):
-        ctx = self.get_context_data(**kwargs)
-        return render(request, 'list_results.html', ctx)
-
-
 class PageView(SearchView):
 
     def get(self, request, **kwargs):
@@ -145,100 +68,6 @@ class PageView(SearchView):
         ctx = self.get_context_data()
         ctx['page_slug'] = slug
         return render(request, 'pages/' + slug + '.html', ctx)
-
-
-class DetailsView(SearchView):
-
-    def get_context_data(self, **kwargs):
-        context = super(DetailsView, self).get_context_data(**kwargs)
-        slug = kwargs['slug']
-
-        results = get_document_by_slug(slug, query=self.query, hl_details=True)
-        if not results:
-            raise Http404()
-        context['document'] = results.first()
-        context['results'] = results
-        context['debug'] = settings.DEBUG
-
-        return context
-
-
-class DecisionDetails(DetailsView):
-    template_name = 'details/decision.html'
-
-
-class TreatyDetails(DetailsView):
-    template_name = 'details/treaty.html'
-
-
-class LiteratureDetails(DetailsView):
-    template_name = 'details/literature.html'
-
-
-class CourtDecisionDetails(DetailsView):
-    template_name = 'details/court_decision.html'
-
-
-class LegislationDetails(DetailsView):
-    template_name = 'details/legislation.html'
-
-
-class ResultDetailsDecisions(SearchView):
-    template_name = 'details_decisions.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ResultDetailsDecisions, self).get_context_data(**kwargs)
-        slug = kwargs['slug']
-        results = get_document_by_slug(slug, query=self.query, hl_details=True)
-        if not results.count():
-            raise Http404()
-
-        context['treaty'] = results.first()
-        return context
-
-
-class ResultDetailsLiteratures(SearchView):
-
-    template_name = 'details_literatures.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super(ResultDetailsLiteratures, self).get_context_data(**kwargs)
-        slug = kwargs['slug']
-        results = get_document_by_slug(slug, query=self.query, hl_details=True)
-        if not results.count():
-            raise Http404
-
-        ctx['treaty'] = results.first()
-        return ctx
-
-
-class ResultDetailsCourtDecisions(SearchView):
-
-    template_name = 'details_court_decisions.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super(ResultDetailsCourtDecisions, self).get_context_data(**kwargs)
-        slug = kwargs['slug']
-        results = get_document_by_slug(slug, query=self.query, hl_details=True)
-        if not results.count():
-            raise Http404
-
-        ctx['treaty'] = results.first()
-        return ctx
-
-
-class ResultDetailsParticipants(SearchView):
-    template_name = 'details_participants.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super(ResultDetailsParticipants, self).get_context_data(**kwargs)
-        slug = kwargs['slug']
-        results = get_document_by_slug(slug, query=self.query, hl_details=True)
-        if not results:
-            raise Http404()
-
-        ctx['treaty'] = results.first()
-        return ctx
 
 
 class FaoFeedView(View):

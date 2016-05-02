@@ -77,7 +77,7 @@ class PagedViewMixin(object):
         }
 
 
-class SearchResultsView(SearchViewMixin, PagedViewMixin, TemplateView):
+class SearchResults(SearchViewMixin, PagedViewMixin, TemplateView):
     template_name = 'list_results.html'
 
     def get(self, request, *args, **kwargs):
