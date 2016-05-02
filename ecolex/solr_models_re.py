@@ -10,8 +10,9 @@ from django.core.urlresolvers import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import get_language
 
-from ecolex.lib.utils import OrderedDefaultDict, any_match, camel_case_to__
-
+from ecolex.lib.utils import (
+    OrderedDefaultDict, any_match, camel_case_to__, is_iterable
+)
 
 
 DEFAULT_TITLE = 'Unknown Document'
@@ -141,6 +142,85 @@ class DocumentModel(BaseModel):
 
         # this is needed because django's template goes funny with defaultdicts
         out.default_factory = None
+
+        return out
+
+    # TODO: this could easily be merged with `references` above
+    @cached_property
+    def _all_references(self):
+        """
+        Fetches all existing relationships in one go.
+        """
+
+        _BY_TYPE = defaultdict(list)
+        fields = set()
+        lookups = {}
+
+        for name, v in self.CROSSREFERENCES.items():
+            typ, field, lookup_field = v
+
+            if not is_iterable(lookup_field):
+                try:
+                    lookup = getattr(self, lookup_field)
+                except AttributeError:
+                    continue
+            else:
+                lookup = []
+                for lf in lookup_field:
+                    try:
+                        _look += getattr(self, lf)
+                    except AttributeError:
+                        continue
+                    else:
+                        if not is_iterable(_look):
+                            _look = [_look]
+                        lookup += _look
+
+            if not lookup:
+                continue
+
+            _BY_TYPE[typ].append(name)
+            fields.add((typ, field))
+
+            lookup_field = self._resolve_field(field, typ)
+            lookups[lookup_field] = lookup
+
+        if not lookups:
+            return defaultdict(list)
+
+        # (yup, silly)
+        from .schema import FIELD_PROPERTIES
+        extra_fields = [f
+                        for t, name in fields
+                        for f in FIELD_PROPERTIES[t].values()
+                        if f.name in fields]
+
+        from .xsearch import Queryer
+        queryer = Queryer({}, language=get_language())
+
+        response = queryer.findany(page_size=1000, fetch_fields=extra_fields,
+                                   date_sort=False, **lookups)
+
+        out = defaultdict(list)
+        for item in response.results:
+            names = _BY_TYPE[item.type]
+            # if there's only one lookup by that type,
+            # this item is guaranteed to match
+            if len(names) == 1:
+                out[names[0]].append(item)
+                continue
+
+            for name in names:
+                _t, field, lookup = self.CROSSREFERENCES[name]
+
+                try:
+                    val = getattr(item, field)
+                except AttributeError:
+                    continue
+
+                if any_match(val, lookup):
+                    out[name].append(item)
+                    break
 
         return out
 
@@ -338,74 +418,12 @@ class Legislation(DocumentModel):
         'implemented_by': 'implements',
         'repealed_by': 'repeals',
     }
-
-    @cached_property
-    def _all_references(self):
-        """
-        Fetches all existing relationships in one go.
-        """
-
-        REFERENCES = {
-            'treaties_implements': (
-                'treaty', 'document_id', self.treaty_implements),
-            'treaties_cites': (
-                'treaty', 'document_id', self.treaty_cites),
-        }
-
-        _BY_TYPE = defaultdict(list)
-        fields = set()
-        lookups = {}
-
-        for name, v in REFERENCES.items():
-            typ, field, lookup = v
-
-            if not lookup:
-                continue
-
-            _BY_TYPE[typ].append(name)
-            fields.add((typ, field))
-
-            lookup_field = self._resolve_field(field, typ)
-            lookups[lookup_field] = lookup
-
-        if not lookups:
-            return defaultdict(list)
-
-        # (yup, silly)
-        from .schema import FIELD_PROPERTIES
-        extra_fields = [f
-                        for t, name in fields
-                        for f in FIELD_PROPERTIES[t].values()
-                        if f.name in fields]
-
-        from .xsearch import Queryer
-        queryer = Queryer({}, language=get_language())
-
-        response = queryer.findany(page_size=1000, fetch_fields=extra_fields,
-                                   date_sort=False, **lookups)
-
-        out = defaultdict(list)
-        for item in response.results:
-            names = _BY_TYPE[item.type]
-            # if there's only one lookup by that type,
-            # this item is guaranteed to match
-            if len(names) == 1:
-                out[names[0]].append(item)
-                continue
-
-            for name in names:
-                _t, field, lookup = REFERENCES[name]
-
-                try:
-                    val = getattr(item, field)
-                except AttributeError:
-                    continue
-
-                if any_match(val, lookup):
-                    out[name].append(item)
-                    break
-
-        return out
+    CROSSREFERENCES = {
+        'treaties_implements': (
+            'treaty', 'document_id', 'treaty_implements'),
+        'treaties_cites': (
+            'treaty', 'document_id', 'treaty_cites'),
+    }
 
     @property
     def title(self):
@@ -434,6 +452,16 @@ class CourtDecision(DocumentModel):
     BACKREFERENCES = {
         'cited_by': 'cites'
     }
+    CROSSREFERENCES = {
+        'treaties': (
+            'treaty', 'document_id', 'treaty_reference'),
+        'legislation': (
+            'legislation', 'document_id', 'legislation_reference'),
+        #'cited_court_decisions': (
+        #    'court_decision', 'document_id', 'cites'),
+        #'cited_by_court_decisions': (
+        #    'court_decision', 'cites', 'document_id'),
+    }
 
     @property
     def title(self):
@@ -442,78 +470,6 @@ class CourtDecision(DocumentModel):
     @property
     def date(self):
         return self.date_of_text
-
-    @cached_property
-    def _all_references(self):
-        """
-        Fetches all existing relationships in one go.
-        """
-
-        REFERENCES = {
-            'treaties': (
-                'treaty', 'document_id', self.treaty_reference),
-            'legislation': (
-                'legislation', 'document_id', self.legislation_reference),
-            #'cited_court_decisions': (
-            #    'court_decision', 'document_id', self.cites),
-            #'cited_by_court_decisions': (
-            #    'court_decision', 'cites', self.document_id),
-        }
-
-        _BY_TYPE = defaultdict(list)
-        fields = set()
-        lookups = {}
-
-        for name, v in REFERENCES.items():
-            typ, field, lookup = v
-
-            if not lookup:
-                continue
-
-            _BY_TYPE[typ].append(name)
-            fields.add((typ, field))
-
-            lookup_field = self._resolve_field(field, typ)
-            lookups[lookup_field] = lookup
-
-        if not lookups:
-            return defaultdict(list)
-
-        # (yup, silly)
-        from .schema import FIELD_PROPERTIES
-        extra_fields = [f
-                        for t, name in fields
-                        for f in FIELD_PROPERTIES[t].values()
-                        if f.name in fields]
-
-        from .xsearch import Queryer
-        queryer = Queryer({}, language=get_language())
-
-        response = queryer.findany(page_size=1000, fetch_fields=extra_fields,
-                                   date_sort=False, **lookups)
-
-        out = defaultdict(list)
-        for item in response.results:
-            names = _BY_TYPE[item.type]
-            # if there's only one lookup by that type,
-            # this item is guaranteed to match
-            if len(names) == 1:
-                out[names[0]].append(item)
-                continue
-
-            for name in names:
-                _t, field, lookup = REFERENCES[name]
-
-                try:
-                    val = getattr(item, field)
-                except AttributeError:
-                    continue
-
-                if any_match(val, lookup):
-                    out[name].append(item)
-                    break
-
-        return out
 
     @property
     def treaties(self):
@@ -533,6 +489,20 @@ class Literature(DocumentModel):
     ]
     BACKREFERENCES = {
         'referenced_by': 'literature_reference',
+    }
+    CROSSREFERENCES = {
+        'treaties': (
+            'treaty', 'document_id', 'treaty_reference'),
+        'legislations': (
+            'legislation', 'document_id', (
+                'faolex_reference', 'eu_legislation_reference',
+                'national_legislation_reference')),
+        'court_decisions': (
+            'court_decision', 'original_id', 'court_decision_reference'),
+        'literatures': (
+            'literature', 'document_id', 'literature_reference'),
+        'references': (
+            'literature', 'literature_reference', 'document_id')
     }
 
     @property
@@ -600,83 +570,6 @@ class Literature(DocumentModel):
         return join_available_values(' | ',
                                      self.conf_name, self.conf_no,
                                      self.conf_date, self.conf_place)
-
-    @cached_property
-    def _all_references(self):
-        """
-        Fetches all existing relationships in one go.
-        """
-
-        REFERENCES = {
-            'treaties': (
-                'treaty', 'document_id', self.treaty_reference),
-            'legislations': (
-                'legislation', 'document_id', (
-                    self.faolex_reference +
-                    self.eu_legislation_reference +
-                    self.national_legislation_reference)),
-            'court_decisions': (
-                'court_decision', 'original_id', self.court_decision_reference),
-            'literatures': (
-                'literature', 'document_id', self.literature_reference),
-            'references': (
-                'literature', 'literature_reference', self.document_id)
-        }
-
-        _BY_TYPE = defaultdict(list)
-        fields = set()
-        lookups = {}
-
-        for name, v in REFERENCES.items():
-            typ, field, lookup = v
-
-            if not lookup:
-                continue
-
-            _BY_TYPE[typ].append(name)
-            fields.add((typ, field))
-
-            lookup_field = self._resolve_field(field, typ)
-            lookups[lookup_field] = lookup
-
-        if not lookups:
-            return defaultdict(list)
-
-        # (yup, silly)
-        from .schema import FIELD_PROPERTIES
-        extra_fields = [f
-                        for t, name in fields
-                        for f in FIELD_PROPERTIES[t].values()
-                        if f.name in fields]
-
-        from .xsearch import Queryer
-        queryer = Queryer({}, language=get_language())
-
-        response = queryer.findany(page_size=1000, fetch_fields=extra_fields,
-                                   date_sort=False, **lookups)
-
-        out = defaultdict(list)
-        for item in response.results:
-            names = _BY_TYPE[item.type]
-            # if there's only one lookup by that type,
-            # this item is guaranteed to match
-            if len(names) == 1:
-                out[names[0]].append(item)
-                continue
-
-            for name in names:
-                _t, field, lookup = REFERENCES[name]
-
-                try:
-                    val = getattr(item, field)
-                except AttributeError:
-                    continue
-
-                if any_match(val, lookup):
-                    out[name].append(item)
-                    break
-
-        return out
 
     @property
     def treaties(self):
