@@ -72,52 +72,6 @@
 
 <hr>
 
-<div class="clearfix">
+{% include "bits/pagination.html" with pages=pages %}
 
-  {% if pages.count %}
-
-    <div class="pull-right">
-
-      <a class="btn btn-sm btn-default"
-         href="?{{ pages.prev_url }}"
-         {% if pages.number == 1 %}disabled{% endif %}>{% trans 'Previous' %}</a>
-
-        {% if 1 not in pages.list%}
-            <a class="btn btn-sm btn-default"
-               href="?{{ pages.first_url }}">1</a>
-             ...
-        {% endif %}
-        {% for page_no in pages.list %}
-            {% if page_no != pages.number %}
-                <a class="btn btn-sm btn-default"
-                   href="?{{ pages.urls|lookup:page_no }}">{{ page_no }}</a>
-            {% else %}
-                <a class="btn btn-sm btn-default"
-                   href="?{{ pages.urls|lookup:page_no }}" disabled>
-                    <b>{{ page_no }}</b>
-                </a>
-            {% endif %}
-        {% endfor %}
-        {% if pages.count not in pages.list%}
-            {% if pages.count|add:"-1" not in pages.list %}
-             ...
-            {% endif %}
-            <a class="btn btn-sm btn-default"
-               href="?{{ pages.last_url }}">{{ pages.count }}</a>
-        {% endif %}
-
-      <a class="btn btn-sm btn-default"
-         href="?{{ pages.next_url }}"
-         {% if pages.number == pages.count %}disabled{% endif %}>{% trans 'Next' %}</a>
-
-    </div>
-
-  {% else %}
-
-  <div class="form-control-static">{% trans 'No more results' %}</div>
-
-  {% endif %}
-
-
-</div>
 {% endif %}{# /if results  #}

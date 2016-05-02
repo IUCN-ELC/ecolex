@@ -172,13 +172,30 @@ class LegislationDetails(DetailsView):
     template_name = 'details/legislation.html'
 
 
-class RelatedObjectsView(DetailsView):
+# this extends DetailsView just because we need access to the parent object,
+# which is wasteful. TODO: write a view that fetches only the needed fields.
+class RelatedObjectsView(PagedViewMixin, DetailsView):
     # this is looked up in the object's OTHER_REFERENCES
     related_type = None
 
+    @cached_property
+    def __query_dict(self):
+        return self.request.GET.copy()
+
+    def _get_page_url(self, page=None):
+        query_dict = self.__query_dict
+        try:
+            del query_dict['xpage']
+        except KeyError:
+            pass
+
+        if page != 1:
+            query_dict['xpage'] = page
+
+        return query_dict.urlencode()
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        # TODO: this query is wasteful. much unneeded data fetched is.
         doc = ctx['document']
 
         remote_field, local_field = doc.OTHER_REFERENCES[self.related_type]
@@ -187,12 +204,16 @@ class RelatedObjectsView(DetailsView):
         except AttributeError:
             raise Http404()
 
+        page = int(self.request.GET.get('xpage', 1))
+
         lookups = {doc._resolve_field(remote_field, self.related_type): value}
 
         queryer = Queryer({}, language=get_language())
-        response = queryer.findany(page_size=100, date_sort=False, **lookups)
+        # TODO: make the sorting variable?
+        response = queryer.findany(page=page, date_sort=False, **lookups)
 
         ctx['related_objects'] = response.results
+        ctx['pages'] = self.get_page_details(page, response.count)
 
         return ctx
 
