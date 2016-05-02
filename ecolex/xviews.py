@@ -172,6 +172,11 @@ class LegislationDetails(DetailsView):
     template_name = 'details/legislation.html'
 
 
+# TODO: it's wasteful to fetch all treaty details for this view
+class TreatyParticipants(TreatyDetails):
+    template_name = 'details_participants.html'
+
+
 # this extends DetailsView just because we need access to the parent object,
 # which is wasteful. TODO: write a view that fetches only the needed fields.
 class RelatedObjectsView(PagedViewMixin, DetailsView):

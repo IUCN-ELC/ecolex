@@ -36,7 +36,7 @@ urlpatterns += i18n_patterns(
         name="related_court_decisions"),
 
     url(r'^details/(?P<slug>[^/]+)/participants/$',
-        ResultDetailsParticipants.as_view(), name="resultParticipants"),
+        views.TreatyParticipants.as_view(), name="treaty-participants"),
 
     url(r'^details/decision/(?P<slug>[^/]+)/$',
         views.DecisionDetails.as_view(),

@@ -7,11 +7,11 @@
 
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
-  {% breadcrumb "Treaty" 'treaty_details' query slug=treaty.slug %}
+  {% breadcrumb "Treaty" 'treaty_details' query slug=document.slug %}
   {% breadcrumb "Country/Participant" %}
 {% endblock %}
 
-{% block content %}
+{% block content %}{% with document as treaty %}
 
 <article class="record-details">
   <header>
@@ -57,7 +57,7 @@
   {% include 'bits/participants_legend.html' with events=treaty.parties_events %}
 
 </article>
-{% endblock %}
+{% endwith %}{% endblock %}
 
 {% block endscripts %}
   <script src="/static/js/jquery.dataTables.min.js"></script>
