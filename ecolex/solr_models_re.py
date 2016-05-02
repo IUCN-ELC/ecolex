@@ -157,7 +157,8 @@ class DocumentModel(BaseModel):
         lookups = {}
 
         for name, v in self.CROSSREFERENCES.items():
-            typ, field, lookup_field = v
+            remote, lookup_field = v
+            typ, field = remote.split(".")
 
             if not is_iterable(lookup_field):
                 try:
@@ -307,9 +308,9 @@ class Treaty(DocumentModel):
     }
     CROSSREFERENCES = {
         'legislations_implemented_by': (
-            'legislation', 'treaty_implements', 'document_id'),
+            'legislation.treaty_implements', 'document_id'),
         'legislations_cited_by': (
-            'legislation', 'treaty_cites', 'document_id'),
+            'legislation.treaty_cites', 'document_id'),
     }
 
     @property
@@ -422,11 +423,11 @@ class Legislation(DocumentModel):
     }
     CROSSREFERENCES = {
         'treaties_implements': (
-            'treaty', 'document_id', 'treaty_implements'),
+            'treaty.document_id', 'treaty_implements'),
         'treaties_cites': (
-            'treaty', 'document_id', 'treaty_cites'),
+            'treaty.document_id', 'treaty_cites'),
         'court_decisions': (
-            'court_decision', 'legislation_reference', 'document_id'),
+            'court_decision.legislation_reference', 'document_id'),
     }
 
     @property
@@ -456,13 +457,13 @@ class CourtDecision(DocumentModel):
     }
     CROSSREFERENCES = {
         'treaties': (
-            'treaty', 'document_id', 'treaty_reference'),
+            'treaty.document_id', 'treaty_reference'),
         'legislation': (
-            'legislation', 'document_id', 'legislation_reference'),
+            'legislation.document_id', 'legislation_reference'),
         #'cited_court_decisions': (
-        #    'court_decision', 'document_id', 'cites'),
+        #    'court_decision.document_id', 'cites'),
         #'cited_by_court_decisions': (
-        #    'court_decision', 'cites', 'document_id'),
+        #    'court_decision.cites', 'document_id'),
     }
 
     @property
@@ -494,17 +495,17 @@ class Literature(DocumentModel):
     }
     CROSSREFERENCES = {
         'treaties': (
-            'treaty', 'document_id', 'treaty_reference'),
+            'treaty.document_id', 'treaty_reference'),
         'legislations': (
-            'legislation', 'document_id', (
+            'legislation.document_id', (
                 'faolex_reference', 'eu_legislation_reference',
                 'national_legislation_reference')),
         'court_decisions': (
-            'court_decision', 'original_id', 'court_decision_reference'),
+            'court_decision.original_id', 'court_decision_reference'),
         'literatures': (
-            'literature', 'document_id', 'literature_reference'),
+            'literature.document_id', 'literature_reference'),
         'references': (
-            'literature', 'literature_reference', 'document_id')
+            'literature.literature_reference', 'document_id')
     }
 
     @property
