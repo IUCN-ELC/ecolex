@@ -147,7 +147,7 @@
     <field name="trLinkToFullText_es" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="trLinkToFullText_fr" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="trLinkToFullText_other" type="string" indexed="false" stored="true" multiValued="true"/>
-    <field name="trLinkToAbstract" type="string" indexed="false" stored="true" multiValued="true"/>
+    <field name="trLinkToAbstract" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trRelatedWebSite" type="string" indexed="false" stored="true" multiValued="true"/>
 
     <field name="trRegion_en" type="text" indexed="true" stored="true" multiValued="true"/>

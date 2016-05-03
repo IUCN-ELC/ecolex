@@ -57,7 +57,6 @@ def get_file_from_url(url):
     setattr(file_obj, 'name', url)
     content_type = response.headers.get('Content-Type', None)
     if content_type and 'text/html' in content_type:
-        print(content_type)
         setattr(file_obj, 'content_type', 'text/html')
     file_obj.seek(0)
     return file_obj

@@ -447,7 +447,8 @@ class TreatyImporter(object):
 
         # fix server2.php/server2neu.php in full text links
         field_names = ['trLinkToFullText_en', 'trLinkToFullText_es',
-                       'trLinkToFullText_fr', 'trLinkToFullText_other']
+                       'trLinkToFullText_fr', 'trLinkToFullText_other',
+                       'trLinkToAbstract']
         for key, value in data.items():
             if key in field_names:
                 data[key] = list(map(replace_url, data[key]))
