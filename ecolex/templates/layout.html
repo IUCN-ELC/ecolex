@@ -43,7 +43,7 @@
             <li {% if page_type == "homepage" %}class="active"{% endif %}><a href="{% url 'homepage' %}">{% trans 'Home' %}</a></li>
             <li {% if page_slug == 'about' %}class="active"{% endif %}><a href="{% url 'page' slug='about' %}">{% trans 'About ECOLEX' %}</a></li>
             <li>
-              <a data-toggle="dropdown">{% trans 'Knowledge tools' %}<span class="caret"></span></a>
+              <a data-toggle="dropdown">{% trans 'Other tools' %}<span class="caret"></span></a>
               {% include 'bits/knowledge_tools.html' %}
             </li>
             <li><a data-toggle="tour" class="btn btn-blue">{% trans 'Take a tour' %}</a></li>
