@@ -1,7 +1,7 @@
 from operator import itemgetter
 from django import template
 from django.conf import settings
-from django.core.urlresolvers import resolve, reverse
+from django.core.urlresolvers import resolve, reverse, Resolver404
 from django.utils import translation
 from django.utils.html import format_html
 from django.template.defaultfilters import capfirst
@@ -101,7 +101,10 @@ def breadcrumb(label, viewname='', query='', *args, **kwargs):
 
 @register.simple_tag(takes_context=True)
 def translate_url(context, language):
-    view = resolve(context['view'].request.path)
+    try:
+        view = resolve(context['view'].request.path)
+    except Resolver404:
+        view = resolve('/')
     request_language = translation.get_language()
     translation.activate(language)
     url = reverse(view.url_name, args=view.args, kwargs=view.kwargs)
