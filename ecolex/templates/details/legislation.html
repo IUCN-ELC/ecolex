@@ -101,7 +101,7 @@
         <dt>{% trans 'Available web site' %}</dt>
         <dd>
           <a href="{{ document.related_web_site|url_normalize}}"
-             target="_blank">{{ document.related_web_site }}</a>
+             target="_blank">{{ document.related_web_site|url_normalize|extract_hostname }}</a>
         </dd>
       {% endif %}
 

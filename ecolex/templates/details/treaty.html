@@ -132,7 +132,7 @@
         <dd>
           {% for url in document.related_web_site %}
             {% if not forloop.first %}<br>{% endif %}
-            <a target="_blank" href="{{ url|url_normalize }}">{{ url }}</a>
+            <a target="_blank" href="{{ url|url_normalize }}">{{ url|url_normalize|extract_hostname }}</a>
           {% endfor %}
         </dd>
       {% endif %}
