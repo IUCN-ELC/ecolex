@@ -7,11 +7,6 @@ from solid_i18n.urls import solid_i18n_patterns as i18n_patterns
 from .views import (
     DesignPlayground, FaoFeedView, Homepage, LegislationRedirectView,
     PageView, debug,
-    CourtDecisionDetails, DecisionDetails,
-    LegislationDetails, LegislationRedirectView, LiteratureDetails,
-    PageView, ResultDetailsCourtDecisions, ResultDetailsDecisions,
-    ResultDetailsLiteratures, ResultDetailsParticipants, SearchResults,
-    TreatyDetails, PageNotFoundView, InternalErrorView,
 )
 from . import xviews as views
 from .api import urls as api_urls
@@ -69,8 +64,8 @@ urlpatterns += [
     url(r'^api/', include(api_urls, namespace="api")),
 ]
 
-handler404 = PageNotFoundView.as_view()
-handler500 = InternalErrorView.as_view()
+handler404 = views.PageNotFound.as_view()
+handler500 = views.InternalError.as_view()
 
 
 if settings.DEBUG:

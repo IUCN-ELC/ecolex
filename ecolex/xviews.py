@@ -261,3 +261,19 @@ class RelatedDecisions(RelatedObjectsView):
                                    options=options, **lookups)
 
         return response
+
+
+class PageNotFound(SearchViewMixin, TemplateView):
+    template_name = '404.html'
+
+    def get(self, request, *args, **kwargs):
+        ctx = super(PageNotFound, self).get_context_data(**kwargs)
+        return self.render_to_response(ctx, status=404)
+
+
+class InternalError(SearchViewMixin, TemplateView):
+    template_name = '500.html'
+
+    def get(self, request, *args, **kwargs):
+        ctx = super(InternalError, self).get_context_data(**kwargs)
+        return self.render_to_response(ctx, status=500)
