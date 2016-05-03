@@ -169,7 +169,7 @@ class DocumentModel(BaseModel):
                 lookup = []
                 for lf in lookup_field:
                     try:
-                        _look += getattr(self, lf)
+                        _look = getattr(self, lf)
                     except AttributeError:
                         continue
                     else:
