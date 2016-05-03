@@ -268,7 +268,11 @@ class TreatyImporter(object):
                     logger.info('For %d/%d found 0 treaties' % (month, year))
                     continue
 
-                total_docs = int(bs.find('result').attrs[TOTAL_DOCS])
+                result = bs.find('result')
+                if result is None:
+                    total_docs = 0
+                else:
+                    total_docs = int(result.attrs[TOTAL_DOCS])
                 found_docs = len(bs.findAll(DOCUMENT))
                 raw_treaties.append(content)
                 logger.info(url)
