@@ -68,11 +68,11 @@ msgstr ""
 
 #: templates/layout.html:86 templates/layout.html.py:146
 msgid "The gateway to "
-msgstr "El portal "
+msgstr "El portal del"
 
 #: templates/layout.html:86 templates/layout.html.py:146
 msgid "environmental law"
-msgstr "del derecho ambiental"
+msgstr "derecho ambiental"
 
 #: templates/layout.html:97 templates/layout.html.py:151
 #: templates/layout.html:160
