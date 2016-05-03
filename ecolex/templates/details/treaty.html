@@ -3,6 +3,13 @@
 {% load tags %}
 {% load i18n %}
 
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+    <script type="text/javascript" src="/static/js/datamaps.none.min.js"></script>
+{% endblock %}
+
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
   {% breadcrumb "Treaty" %}
@@ -164,9 +171,10 @@
       <a id="participants-extras"
         href="{% url 'treaty-participants' document.slug %}?{{ query }}"
          class="pull-right btn btn-link">{% trans 'See Expanded View' %}</a>
+      <a id="participants-map"
+         class="pull-right btn btn-link">{% trans 'Show Map' %}</a>
       <h2 class="section-title">{% trans 'Country/Participant' %}</h2>
     </div>
-
     <table class="participants">
       <thead>
         <tr>
@@ -201,6 +209,8 @@
     </table>
 
     {% include 'bits/participants_legend.html' with events=document.parties_events %}
+    <div id="regions_div" style="position:relative; height: 600px;"></div>
+    {% include 'bits/participants_map.html' with events=document.parties_events parties=document.parties %}
 
   </section>
   {% endif %}

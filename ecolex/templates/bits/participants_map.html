@@ -1,0 +1,60 @@
+<script type="text/javascript">
+    var map_data = {
+        'ROU': {
+            'fillKey': 'entry_into_force',
+            'status': 'blah'
+        },
+        {% for party in parties %}
+          {# ISO_2DIGIT here instead of country name #}
+          '{{ party.country }}': {
+
+            'fillKey': 'entry_into_force',
+            {# one of entry_into_force, ratification or simple_signature #}
+
+            'status': 'test'
+            {# Additional info for the popup - same info as in the table, explicit event types #}
+          },
+        {% endfor %}
+    };
+    
+    var map_options = {
+        element: document.getElementById('regions_div'),
+        responsive: true,
+        fills: {
+            'entry_into_force': '#FF2222',
+            'ratification': 'green',
+            'simple_signature': 'blue',
+            defaultFill: '#DDDDDD'
+        },
+        geographyConfig: {
+            dataUrl: '/static/json/world.topo.json',
+            hideAntarctica: true,
+            highlightOnHover: true,
+            highlightFillColor: '#18983f',
+            highlightBorderColor: 'rgba(30, 30, 30, 0.2)',
+            highlightBorderWidth: 1,
+            highlightBorderOpacity: 0,
+            borderColor: '#FDFDFD',
+            popupTemplate: function(geo, data) {
+                return ['<div class="hoverinfo">',
+                    geo.properties.name,
+                    // data.status if exists
+                    '</div>'].join('');
+            }
+        },
+        data: map_data,
+        scope: 'ESRI_country08',
+        setProjection: function(element) {
+          var projection = d3.geo.mercator()
+            //.center([0, 30])
+            //.scale(180)
+            .translate([element.offsetWidth / 2, element.offsetHeight / 2 + 100]);
+
+           var path = d3.geo.path().projection(projection);
+           return {path: path, projection: projection};
+        }
+    };
+    $("#regions_div").datamaps(map_options);
+</script>
+{{ events }}
+
