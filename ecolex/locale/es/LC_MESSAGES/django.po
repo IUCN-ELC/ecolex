@@ -82,23 +82,23 @@ msgstr ""
 #: templates/layout.html:104 templates/results_main.html:41
 #: templates/bits/type_facet.html:17
 msgid "Treaties"
-msgstr ""
+msgstr "Tratados"
 
 #: templates/layout.html:110 templates/results_main.html:42
 #: templates/bits/type_facet.html:36
 msgid "COP Decisions"
-msgstr ""
+msgstr "Decisiones de la COP"
 
 #: templates/layout.html:116 templates/results_main.html:43
 #: templates/bits/type_facet.html:55 templates/details/legislation.html:23
 #: templates/details/literature.html:199
 msgid "Legislation"
-msgstr ""
+msgstr "Legislación"
 
 #: templates/layout.html:122 templates/results_main.html:44
 #: templates/bits/type_facet.html:74
 msgid "Court Decisions"
-msgstr ""
+msgstr "Decisiones judiciales"
 
 #: templates/layout.html:128 templates/results_main.html:45
 #: templates/bits/type_facet.html:93 templates/details/literature.html:18
@@ -106,7 +106,7 @@ msgstr ""
 #: templates/details/treaty.html:286
 #: templates/short_display/literature.html:29
 msgid "Literature"
-msgstr ""
+msgstr "Doctrina"
 
 #: templates/layout.html:186
 msgid "User Agreement"
