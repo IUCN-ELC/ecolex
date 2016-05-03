@@ -355,7 +355,7 @@ class TreatyImporter(object):
                         values = self.regions.get(reg_en.lower())
 
                         if values:
-                            new_regions['en'].append(reg_en)
+                            new_regions['en'].append(values['en'])
                             value_es = values['es']
                             value_fr = values['fr']
                             if value_es != reg_es:
@@ -386,7 +386,7 @@ class TreatyImporter(object):
                     new_regions = {'en': [], 'es': [], 'fr': []}
                     for reg_en in regions_en:
                         values = self.regions.get(reg_en.lower())
-                        new_regions['en'].append(reg_en)
+                        new_regions['en'].append(values['en'])
                         new_regions['es'].append(values['es'])
                         new_regions['fr'].append(values['fr'])
                     data['trRegion_en'] = new_regions['en']
