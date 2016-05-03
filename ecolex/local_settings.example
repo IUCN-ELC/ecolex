@@ -1,5 +1,6 @@
 import os
 
+DEBUG=True
 # API KEY FOR FAOLEX HARVESTER
 # Use generate_fao_api_key method from contrib/utils.py to generate a key
 FAOLEX_API_KEY = ''
@@ -60,7 +61,7 @@ SOLR_IMPORT = {
         'end_month': 12,
         'query_export': '?database=libcat&search_type=page_search&table=all',
         'query_format': 'ES:I AND STAT:C AND DM:%d%02d',
-        'import_field': 'dateofentry',
+        'import_field': 'dateofmodification',
         'query_filter': '&spage_query=%s',
         'query_skip': '&spage_first=%d',
         'query_type': '&format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD',
