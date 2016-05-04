@@ -152,6 +152,7 @@ class DocumentModel(BaseModel):
         """
 
         _BY_TYPE = defaultdict(list)
+        _LOOKUPS = {}
         fields = set()
         lookups = {}
 
@@ -180,6 +181,7 @@ class DocumentModel(BaseModel):
                 continue
 
             _BY_TYPE[typ].append(name)
+            _LOOKUPS[name] = (field, lookup)
             fields.add((typ, field))
 
             lookup_field = self._resolve_field(field, typ)
@@ -201,6 +203,7 @@ class DocumentModel(BaseModel):
         response = queryer.findany(page_size=1000, fetch_fields=extra_fields,
                                    date_sort=False, **lookups)
 
+        # we need to re-group by the initial name
         out = defaultdict(list)
         for item in response.results:
             names = _BY_TYPE[item.type]
@@ -210,8 +213,9 @@ class DocumentModel(BaseModel):
                 out[names[0]].append(item)
                 continue
 
+            # else, search for the first lookup that matches this item
             for name in names:
-                _t, field, lookup = self.CROSSREFERENCES[name]
+                field, lookup = _LOOKUPS[name]
 
                 try:
                     val = getattr(item, field)
@@ -220,6 +224,7 @@ class DocumentModel(BaseModel):
 
                 if any_match(val, lookup):
                     out[name].append(item)
+                    # TODO: any situation when we don't want to break here?
                     break
 
         return out
