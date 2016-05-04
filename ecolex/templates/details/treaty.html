@@ -172,7 +172,9 @@
         href="{% url 'treaty-participants' document.slug %}?{{ query }}"
          class="pull-right btn btn-link">{% trans 'See Expanded View' %}</a>
       <a id="participants-map"
-         class="pull-right btn btn-link">{% trans 'Show Map' %}</a>
+         class="pull-right btn btn-link"
+         data-toggle="collapse"
+         data-target="#regions_div">{% trans 'Show Map' %}</a>
       <h2 class="section-title">{% trans 'Country/Participant' %}</h2>
     </div>
     <table class="participants">
@@ -207,10 +209,13 @@
         {% endfor %}
       </tbody>
     </table>
-
     {% include 'bits/participants_legend.html' with events=document.parties_events %}
+
+
+    {{ document.parties|format_countries|length }}
+    {{ document.parties|length }}
     <div id="regions_div" style="position:relative; height: 600px;"></div>
-    {% include 'bits/participants_map.html' with events=document.parties_events parties=document.parties %}
+    {% include 'bits/participants_map.html' with events=document.parties_events parties=document.parties|format_countries %}
 
   </section>
   {% endif %}

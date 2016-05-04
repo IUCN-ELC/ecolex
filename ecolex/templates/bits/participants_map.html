@@ -4,26 +4,26 @@
             'fillKey': 'entry_into_force',
             'status': 'blah'
         },
-        {% for party in parties %}
-          {# ISO_2DIGIT here instead of country name #}
-          '{{ party.country }}': {
-
-            'fillKey': 'entry_into_force',
+        {% for party_code, data in parties.items %}
+          {# ISO_3DIGIT here instead of country name #}
+          '{{ party_code }}': {
+            'fillKey': '{{ data.fillKey }}',
             {# one of entry_into_force, ratification or simple_signature #}
-
-            'status': 'test'
+            'stats': '{{ data.stats|safe }}',
             {# Additional info for the popup - same info as in the table, explicit event types #}
           },
         {% endfor %}
     };
-    
+    console.log(map_data);
     var map_options = {
         element: document.getElementById('regions_div'),
         responsive: true,
         fills: {
-            'entry_into_force': '#FF2222',
-            'ratification': 'green',
-            'simple_signature': 'blue',
+            'entry_into_force': '#31a354',
+            'ratification': '#a1d99b',
+            'simple_signature': '#e5f5e0',
+            'provisional_application': '#9ecae1',
+            'withdrawal': '#3182bd',
             defaultFill: '#DDDDDD'
         },
         geographyConfig: {
@@ -37,8 +37,8 @@
             borderColor: '#FDFDFD',
             popupTemplate: function(geo, data) {
                 return ['<div class="hoverinfo">',
-                    geo.properties.name,
-                    // data.status if exists
+                    '<h4>', geo.properties.name, '</h4>',
+                    data.stats,
                     '</div>'].join('');
             }
         },
@@ -54,7 +54,8 @@
            return {path: path, projection: projection};
         }
     };
-    $("#regions_div").datamaps(map_options);
-</script>
-{{ events }}
+    var map = new Datamap(map_options);
+    map.legend();
 
+    $('#regions_div').addClass("collapse");
+</script>

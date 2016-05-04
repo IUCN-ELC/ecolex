@@ -10,6 +10,8 @@ from django.core.urlresolvers import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import get_language
 
+from pycountry import countries
+
 from ecolex.lib.utils import (
     OrderedDefaultDict, any_match, camel_case_to__, is_iterable
 )
@@ -369,6 +371,7 @@ class TreatyParty(BaseModel):
 
     def __init__(self, **kwargs):
         self.country = kwargs.pop('country')
+        self.country_en = kwargs.pop('country_en')
         self.events = []
 
         # This could be prettier

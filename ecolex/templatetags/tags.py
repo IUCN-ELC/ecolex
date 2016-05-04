@@ -1,4 +1,4 @@
-from operator import itemgetter
+from collections import OrderedDict
 from django import template
 from django.conf import settings
 from django.core.urlresolvers import resolve, reverse, Resolver404
@@ -10,6 +10,8 @@ import datetime
 import os
 from os.path import basename
 from urllib import parse as urlparse
+
+from pycountry import countries
 
 register = template.Library()
 INITIAL_DATE = datetime.date(1, 1, 1)
@@ -120,9 +122,11 @@ def apify_f(data):
         'results': data[:settings.FACETS_PAGE_SIZE],
     }
 
+
 @register.filter
 def field_urlencoded(field, value):
     return field.form.urlencoded(**{field.name: value})
+
 
 @register.filter
 def get_facet_counts(fdata):
@@ -130,3 +134,37 @@ def get_facet_counts(fdata):
         f['id']: f['count']
         for f in fdata
     }
+
+
+@register.filter
+def format_countries(parties):
+    event_priority = OrderedDict([
+        ('withdrawal', 'Withdrawal'),
+        ('entry_into_force', 'Entry into force'),
+        ('ratification_group', 'Ratification'),
+        ('simple_signature', 'Simple signature'),
+        ('provisional_application', 'Provisional application'),
+    ])
+    data = {}
+    for party in parties:
+        try:
+            country_code = countries.get(name=party.country_en).alpha3
+        except KeyError:
+            print(party.country_en)
+            continue
+        main_event = None
+        stats = ''
+        for event in event_priority.keys():
+            party_event = getattr(party, event, {})
+            party_event_date = party_event.get('date', None)
+            if party_event_date:
+                if not main_event:
+                    main_event = event
+                stats += '<strong>' + event_priority[event] + '</strong><br>'
+                stats += party_event_date.strftime('%B %d, %Y') + '<br>'
+
+        data[country_code] = {
+            'fillKey': main_event,
+            'stats': stats,
+        }
+    return data
