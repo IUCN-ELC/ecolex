@@ -4,14 +4,16 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseForbidden, HttpResponseServerError
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
+from django.utils.translation import get_language
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
 from django.views.generic.base import RedirectView
 
 from ecolex.legislation import harvest_file
 from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS, STATIC_PAGES
+from ecolex.models import StaticContent
 from ecolex.search import (
     SearchMixin, get_documents_by_field,
 )
@@ -157,6 +159,11 @@ class PageView(SearchView):
         if slug not in STATIC_PAGES:
             raise Http404()
         ctx = self.get_context_data()
+        obj = get_object_or_404(StaticContent, name=slug)
+        lang_code = get_language()
+        content = getattr(obj, 'body_' + lang_code, 'No translation for ' +
+                          lang_code)
+        ctx['content'] = content
         ctx['page_slug'] = slug
         return render(request, 'pages/' + slug + '.html', ctx)
 

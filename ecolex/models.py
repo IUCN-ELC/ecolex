@@ -31,3 +31,15 @@ class DocumentText(models.Model):
         index_together = [
             ("doc_type", "status"),
         ]
+
+
+class StaticContent(models.Model):
+
+    name = models.CharField(max_length=64, null=False, blank=False,
+                            unique=True)
+    body_en = models.TextField(null=False, blank=False)
+    body_es = models.TextField()
+    body_fr = models.TextField()
+
+    def __str__(self):
+        return self.name

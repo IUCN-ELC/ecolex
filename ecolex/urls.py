@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib.sitemaps.views import sitemap
+from django.contrib import admin
 from django.views.generic import TemplateView
 # from django.conf.urls.i18n import i18n_patterns
 from solid_i18n.urls import solid_i18n_patterns as i18n_patterns
@@ -17,6 +18,7 @@ from .api import urls as api_urls
 sitemaps = {
     'static': StaticViewSitemap,
 }
+admin.autodiscover()
 
 urlpatterns = [
     url(r'^fao/$', FaoFeedView.as_view(), name='fao_feeder'),
@@ -70,6 +72,7 @@ urlpatterns += i18n_patterns(
 
 urlpatterns += [
     url(r'^api/', include(api_urls, namespace="api")),
+    url(r'^admin/', include(admin.site.urls)),
 ]
 
 handler404 = views.PageNotFound.as_view()

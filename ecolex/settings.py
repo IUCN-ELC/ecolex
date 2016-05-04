@@ -34,13 +34,13 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = (
-    #'django.contrib.admin',
-    #'django.contrib.auth',
+    'django.contrib.admin',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
-    #'django.contrib.sessions',
-    #'django.contrib.messages',
     'django.contrib.sitemaps',
     'django.contrib.sites',
+    'django.contrib.sessions',
+    'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
     'ecolex',
@@ -52,9 +52,9 @@ MIDDLEWARE_CLASSES = (
     'solid_i18n.middleware.SolidLocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
-    #'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     #'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    #'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     #'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'ecolex.middleware.CacheControlMiddleware',
 )
@@ -65,13 +65,13 @@ TEMPLATES = [{
     'OPTIONS': {
         'debug': DEBUG,
         'context_processors': {
-            #"django.contrib.auth.context_processors.auth",
+            "django.contrib.auth.context_processors.auth",
             "django.template.context_processors.debug",
             "django.template.context_processors.i18n",
             "django.template.context_processors.media",
             "django.template.context_processors.static",
             "django.template.context_processors.tz",
-            #"django.contrib.messages.context_processors.messages",
+            "django.contrib.messages.context_processors.messages",
             "ecolex.global_config",
         },
     },
