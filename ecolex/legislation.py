@@ -192,9 +192,9 @@ def harvest_file(upfile):
                     logger.warn('New region name: %s %s %s %s' %
                                 (legislation['legId'], reg_en, reg_es,
                                  reg_fr))
-                    new_regions['en'].append(reg_en.capitalize())
-                    new_regions['es'].append(reg_es.capitalize())
-                    new_regions['fr'].append(reg_fr.capitalize())
+                    new_regions['en'].append(reg_en)
+                    new_regions['es'].append(reg_es)
+                    new_regions['fr'].append(reg_fr)
             legislation['legGeoArea_en'] = new_regions['en']
             legislation['legGeoArea_es'] = new_regions['es']
             legislation['legGeoArea_fr'] = new_regions['fr']
