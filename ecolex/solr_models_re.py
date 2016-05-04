@@ -4,7 +4,6 @@ schema. They will eventually replace actual solr_models.
 """
 from collections import defaultdict
 from datetime import date
-from functools import partialmethod
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.functional import cached_property
@@ -378,6 +377,8 @@ class TreatyParty(BaseModel):
             value = {'date': v, 'details': k}
             if k in self.GROUPED_FIELDS:
                 key = self.GROUPED_FIELDS[k]
+                if getattr(self, key, None) and not v:
+                    continue
                 value['details'] = k
                 value['index'] = self.FIELD_GROUPS[key].index(k) + 1
             setattr(self, key, value)
@@ -406,7 +407,8 @@ class Decision(DocumentModel):
 
     @property
     def language_names(self):
-        return [settings.LANGUAGE_MAP.get(code, 'Undefined') for code in self.language]
+        return [settings.LANGUAGE_MAP.get(code, 'Undefined')
+                for code in self.language]
 
 
 class Legislation(DocumentModel):
@@ -533,7 +535,8 @@ class Literature(DocumentModel):
         # only for chapters
         from ecolex.search import get_documents_by_field
         if self.is_chapter and self.related_monograph:
-            docs = get_documents_by_field('litId', [self.related_monograph], rows=1)
+            docs = get_documents_by_field('litId', [self.related_monograph],
+                                          rows=1)
             if len(docs) > 0:
                 doc = [x for x in docs][0]
                 return doc.details_url
