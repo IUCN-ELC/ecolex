@@ -125,6 +125,7 @@ LOGGING = {
         'logfile': {
             'class': 'logging.handlers.WatchedFileHandler',
             'filename': os.path.join(BASE_DIR, 'django_errors.log'),
+            'formatter': 'verbose',
         }
     },
     'loggers': {
