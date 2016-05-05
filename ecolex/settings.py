@@ -60,7 +60,6 @@ MIDDLEWARE_CLASSES = (
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
     'DIRS': [],
-    'APP_DIRS': True,
     'OPTIONS': {
         'debug': DEBUG,
         'context_processors': {
@@ -77,7 +76,9 @@ TEMPLATES = [{
 }]
 
 # do template caching only on production
-if not DEBUG:
+if DEBUG:
+    TEMPLATES[0]['OPTIONS']['APP_DIRS'] = True
+else:
     TEMPLATES[0]['OPTIONS']['loaders'] = [
         ('django.template.loaders.cached.Loader', [
             'django.template.loaders.filesystem.Loader',
