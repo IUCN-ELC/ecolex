@@ -2,7 +2,7 @@ import logging
 import datetime
 from collections import defaultdict
 from ecolex.lib.utils import is_iterable
-from functools import partial, reduce
+from functools import reduce
 from operator import and_, or_, itemgetter
 from marshmallow.exceptions import ValidationError
 from scorched import SolrInterface
@@ -15,7 +15,7 @@ from django.utils.functional import LazyObject
 from django.utils.html import strip_tags
 
 from .schema import (
-    SCHEMA_MAP, FIELD_PROPERTIES, FIELD_MAP,
+    SCHEMA_MAP, FIELD_MAP,
     FILTER_FIELDS, FACET_FIELDS, STATS_FIELDS,
     FETCH_FIELDS, BOOST_FIELDS, HIGHLIGHT_FIELDS,
     SORT_FIELD,
@@ -69,6 +69,7 @@ class Queryer(object):
             extra_options.update(options)
 
         _super_options = search.options
+
         def wrapped_options(self):
             options = _super_options()
             options.update(extra_options)
@@ -128,7 +129,7 @@ class Queryer(object):
                 for k, v in kwargs.items()
             })
             .highlight(self.get_highlight_fields())
-            .paginate(start=0, rows=1) # fetch a single row
+            .paginate(start=0, rows=1)  # fetch a single row
         )
 
         response = self._execute(search)
@@ -236,7 +237,7 @@ class Searcher(Queryer):
         if not types:
             # momentarily set _used_fields even with no given type,
             # to protect agains rogue form fields. TODO: fix.
-            #self._used_fields = None
+            # self._used_fields = None
             self._used_fields = reduce(or_,
                                        (set(fs) for fs in FIELD_MAP.values()))
             return
@@ -320,8 +321,7 @@ class Searcher(Queryer):
 
     def _get_filter_key(self, field):
         # tag fields used for faceting if OR-ed
-        if (field in self.facet_fields
-             and self.filters[field]['op'] is or_):
+        if (field in self.facet_fields and self.filters[field]['op'] is or_):
             params = self.mk_local_params(tag=field)
         else:
             params = ''
@@ -391,8 +391,7 @@ class Searcher(Queryer):
             'key': field
         }
         # and exclude fields used for filtering that are OR-ed
-        if (field in self.filters
-            and self.filters[field]['op'] is or_):
+        if (field in self.filters and self.filters[field]['op'] is or_):
             paramkws['ex'] = field
 
         params = self.mk_local_params(**paramkws)
@@ -420,7 +419,7 @@ class Searcher(Queryer):
             field: f.solr_boost
             for k, f in BOOST_FIELDS.items()
             for field in f.get_source_fields()
-            #if self.is_used_field(k)
+            # if self.is_used_field(k)
         }
 
     def get_highlight_fields(self):
