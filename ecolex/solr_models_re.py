@@ -10,8 +10,6 @@ from django.core.urlresolvers import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import get_language
 
-from pycountry import countries
-
 from ecolex.lib.utils import (
     OrderedDefaultDict, any_match, camel_case_to__, is_iterable
 )
