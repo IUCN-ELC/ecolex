@@ -34,6 +34,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 MANAGEMENT_DIR = os.path.join(BASE_DIR, 'ecolex', 'management')
 CONFIG_DIR = os.path.join(MANAGEMENT_DIR, 'config')
 TESTING_DIR = os.path.join(MANAGEMENT_DIR, 'testing')
+PARTY_COUNTRIES = os.path.join(CONFIG_DIR, 'party_countries.json')
 
 SOLR_IMPORT = {
     'common': {

@@ -211,9 +211,6 @@
     </table>
     {% include 'bits/participants_legend.html' with events=document.parties_events %}
 
-
-    {{ document.parties|format_countries|length }}
-    {{ document.parties|length }}
     <div id="regions_div" style="position:relative; height: 600px;"></div>
     {% include 'bits/participants_map.html' with events=document.parties_events parties=document.parties|format_countries %}
 

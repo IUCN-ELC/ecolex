@@ -7,11 +7,11 @@ from django.utils.html import format_html
 from django.template.defaultfilters import capfirst
 from django.contrib.staticfiles.finders import get_finders
 import datetime
+import json
 import os
 from os.path import basename
 from urllib import parse as urlparse
 
-from pycountry import countries
 
 register = template.Library()
 INITIAL_DATE = datetime.date(1, 1, 1)
@@ -145,11 +145,12 @@ def format_countries(parties):
         ('simple_signature', 'Simple signature'),
         ('provisional_application', 'Provisional application'),
     ])
+    with open(settings.PARTY_COUNTRIES) as f:
+        codes = json.load(f)
     data = {}
     for party in parties:
-        try:
-            country_code = countries.get(name=party.country_en).alpha3
-        except KeyError:
+        country_code = codes.get(party.country_en, None)
+        if not country_code:
             print(party.country_en)
             continue
         main_event = None

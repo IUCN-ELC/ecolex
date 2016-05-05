@@ -1,9 +1,5 @@
 <script type="text/javascript">
     var map_data = {
-        'ROU': {
-            'fillKey': 'entry_into_force',
-            'status': 'blah'
-        },
         {% for party_code, data in parties.items %}
           {# ISO_3DIGIT here instead of country name #}
           '{{ party_code }}': {
