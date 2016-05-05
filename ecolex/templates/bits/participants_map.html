@@ -1,12 +1,12 @@
+{% load i18n %}
+{% spaceless %}
+
 <script type="text/javascript">
     var map_data = {
         {% for party_code, data in parties.items %}
-          {# ISO_3DIGIT here instead of country name #}
           '{{ party_code }}': {
             'fillKey': '{{ data.fillKey }}',
-            {# one of entry_into_force, ratification or simple_signature #}
             'stats': '{{ data.stats|safe }}',
-            {# Additional info for the popup - same info as in the table, explicit event types #}
           },
         {% endfor %}
     };
@@ -15,11 +15,11 @@
         element: document.getElementById('regions_div'),
         responsive: true,
         fills: {
-            'entry_into_force': '#31a354',
-            'ratification': '#a1d99b',
-            'simple_signature': '#9ecae1',
-            'provisional_application': '#e5f5e0',
-            'withdrawal': '#3182bd',
+            'Entry into force': '#31a354',
+            'Ratification': '#a1d99b',
+            'Simple signature': '#9ecae1',
+            'Provisional application': '#e5f5e0',
+            'Withdrawal': '#3182bd',
             defaultFill: '#DDDDDD'
         },
         geographyConfig: {
@@ -54,4 +54,11 @@
     map.legend();
 
     $('#regions_div').addClass("collapse");
+    $('#participants-map').click(function(e) {
+        console.log('ay');
+        $(this).text(function(i, old){
+            return old == "{% trans 'Show Map' %}" ? "{% trans 'Hide Map' %}" : "{% trans 'Show Map' %}";
+        });
+    });
 </script>
+{% endspaceless %}

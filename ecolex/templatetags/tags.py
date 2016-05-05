@@ -160,8 +160,8 @@ def format_countries(parties):
             party_event_date = party_event.get('date', None)
             if party_event_date:
                 if not main_event:
-                    main_event = event
-                stats += '<strong>' + event_priority[event] + '</strong><br>'
+                    main_event = event_priority[event]
+                stats += '<strong>' + event_priority[event] + ': </strong>'
                 stats += party_event_date.strftime('%B %d, %Y') + '<br>'
 
         data[country_code] = {
