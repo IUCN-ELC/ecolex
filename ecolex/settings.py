@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     #'django.contrib.sessions',
     #'django.contrib.messages',
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'rest_framework',
     'ecolex',
@@ -207,6 +209,8 @@ SEARCH_PROXIMITY = '100'
 
 GA_ENABLED = True
 TEXT_SUGGESTION = True
+
+SITE_ID = 1
 
 
 # Local settings

@@ -1,6 +1,9 @@
 from .schema import FIELD_MAP, FILTER_FIELDS, FETCH_FIELDS, BOOST_FIELDS
 
 
+STATIC_PAGES = ('about', 'privacy', 'agreement', 'acknowledgements',
+                'knowledge_tools')
+
 DOC_TYPE = (
     ('treaty', "Treaty"),
     ('decision', "Decision"),

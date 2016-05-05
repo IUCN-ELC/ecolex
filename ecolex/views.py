@@ -11,7 +11,7 @@ from django.views.generic import TemplateView, View
 from django.views.generic.base import RedirectView
 
 from ecolex.legislation import harvest_file
-from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS
+from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS, STATIC_PAGES
 from ecolex.search import (
     SearchMixin, get_documents_by_field,
 )
@@ -154,9 +154,7 @@ class PageView(SearchView):
 
     def get(self, request, **kwargs):
         slug = kwargs.pop('slug', '')
-        PAGES = ('about', 'privacy', 'agreement', 'acknowledgements',
-                 'knowledge_tools')
-        if slug not in PAGES:
+        if slug not in STATIC_PAGES:
             raise Http404()
         ctx = self.get_context_data()
         ctx['page_slug'] = slug
