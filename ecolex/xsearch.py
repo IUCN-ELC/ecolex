@@ -174,8 +174,8 @@ class Queryer(object):
     def findany(self, page=1, page_size=None, date_sort=None,
                 fetch_fields=None, options=None, **kwargs):
         Q = self.interface.Q
-        _f = reduce(or_,(Q(**{k: self.to_query(v)})
-                         for k, v in kwargs.items()))
+        _f = reduce(
+            or_, (Q(**{k: self.to_query(v)}) for k, v in kwargs.items()), Q())
 
         search = (
             self.interface.query()
