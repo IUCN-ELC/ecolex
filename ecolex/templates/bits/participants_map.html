@@ -32,9 +32,14 @@
             highlightBorderOpacity: 0,
             borderColor: '#FDFDFD',
             popupTemplate: function(geo, data) {
+                if (data == null) {
+                    var stats = 'Status N/A';
+                } else {
+                    var stats = data.stats;
+                }
                 return ['<div class="hoverinfo">',
                     '<h4>', geo.properties.name, '</h4>',
-                    data.stats,
+                    stats,
                     '</div>'].join('');
             }
         },
@@ -55,7 +60,6 @@
 
     $('#regions_div').addClass("collapse");
     $('#participants-map').click(function(e) {
-        console.log('ay');
         $(this).text(function(i, old){
             return old == "{% trans 'Show Map' %}" ? "{% trans 'Hide Map' %}" : "{% trans 'Show Map' %}";
         });

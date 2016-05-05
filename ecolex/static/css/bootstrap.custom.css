@@ -7143,4 +7143,10 @@ ul.select2-selection__rendered {
   padding: 0;
   border: 0;
 }
+.datamaps-legend {
+  top: 75%;
+}
+.datamaps-legend dd {
+  margin-left: 10px!important;
+}
 /*# sourceMappingURL=bootstrap.custom.css.map */
