@@ -77,7 +77,7 @@ TEMPLATES = [{
 
 # do template caching only on production
 if DEBUG:
-    TEMPLATES[0]['OPTIONS']['APP_DIRS'] = True
+    TEMPLATES[0]['APP_DIRS'] = True
 else:
     TEMPLATES[0]['OPTIONS']['loaders'] = [
         ('django.template.loaders.cached.Loader', [
