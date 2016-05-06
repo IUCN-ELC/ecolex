@@ -581,6 +581,7 @@ class TreatyImporter(object):
             docs = self.solr.solr.search('type:treaty', rows=rows, start=index)
             for treaty in docs:
                 treaty = cleanup_copyfields(treaty)
+                treaty.pop('_version_')
                 if treaty.get('trTypeOfText_en', '') == 'Bilateral':
                     treaty['trStatus'] = 'In force'
                 else:
@@ -589,12 +590,12 @@ class TreatyImporter(object):
                                                      [treaty_id], rows=100)
                     if len(results):
                         treaty['trStatus'] = 'Superseded'
-                        print('super')
                     else:
                         if 'trEntryIntoForceDate' in treaty:
                             treaty['trStatus'] = 'In force'
                         else:
                             treaty['trStatus'] = 'Not in force'
+
                 treaties.append(treaty)
 
             if len(docs) < rows:

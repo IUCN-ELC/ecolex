@@ -3,6 +3,7 @@
 # cleaning up these fields, to prevent their multiplication on document update.
 COPY_FIELDS = [
     "docDate",
+    "docId",
     "docSubject_en",
     "docSubject_fr",
     "docSubject_es",
@@ -26,7 +27,6 @@ COP_DECISION = 'decision'
 LEGISLATION = 'legislation'
 COURT_DECISION = 'court_decision'
 LITERATURE = 'literature'
-LEGISLATION = 'legislation'
 
 OBJ_TYPES = [TREATY, COP_DECISION, LEGISLATION, COURT_DECISION, LITERATURE]
 

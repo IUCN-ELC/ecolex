@@ -11,7 +11,6 @@ from ecolex.management.utils import EcolexSolr, get_file_from_url, cleanup_copyf
 
 from ecolex.management.utils import get_content_length_from_url
 from ecolex.models import DocumentText
-from django.db.models import Count
 
 
 logging.config.dictConfig(LOG_DICT)
@@ -21,15 +20,15 @@ logger = logging.getLogger('legislation_import')
 class LegislationImporter(object):
 
     def __init__(self, config):
-        self.solr_timeout = config.getint('solr_timeout')
+        self.solr_timeout = config.get('solr_timeout')
         self.solr = EcolexSolr(self.solr_timeout)
         logger.info('Started legislation manager')
 
     def update_full_text(self):
         while True:
             count = (DocumentText.objects.filter(
-                    status=DocumentText.INDEXED, doc_type=LEGISLATION)
-                    .exclude(url__isnull=True)).count()
+                     status=DocumentText.INDEXED, doc_type=LEGISLATION)
+                     .exclude(url__isnull=True)).count()
             objs = (DocumentText.objects.filter(
                     status=DocumentText.INDEXED, doc_type=LEGISLATION)
                     .exclude(url__isnull=True))[:100]
@@ -66,7 +65,8 @@ class LegislationImporter(object):
                 # Load record and store text
                 try:
                     legislation = self.solr.search(LEGISLATION, obj.doc_id)
-                    legislation = cleanup_copyfields(legislation)
+                    if legislation:
+                        legislation = cleanup_copyfields(legislation)
                 except SolrError as e:
                     logger.error('Error reading legislation %s' % (obj.doc_id,))
                     if settings.DEBUG:

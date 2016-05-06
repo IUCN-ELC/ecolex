@@ -90,4 +90,5 @@ SOLR_IMPORT = {
         'per_page': 100,
         'days_ago': 7,
     },
+    'legislation': {},
 }
