@@ -137,14 +137,21 @@ var tourSteps = [
     title: "",
     content: "<p>The treaty title is now translated where applicable.</p>",
   },
-  // Step 13: Breadcrumbs
+  // Step 13: Treaty participants map
+  {
+    element: "#participants-map",
+    placement: "top",
+    title: "Treaty participants map",
+    content: "<div class='popover-hint'>Click on the Show Map to view the treaty participants!</div>",
+  },
+  // Step 14: Breadcrumbs
   {
     element: "main div.container a:first",
     placement: "bottom",
     title: "Simple navigation",
     content: "<p>You can return to the search results without losing the search criteria by clicking on the breadcrumb links.</p>",
   },
-  // Step 14: And/Or
+  // Step 15: And/Or
   {
     path: "/result/?q=&xkeywords_and_=on&xkeywords=biodiversity&xkeywords=aquaculture&xdate_min=&xdate_max=",
     element: "#facet-xkeywords-container .onoffswitch-label",
@@ -152,21 +159,21 @@ var tourSteps = [
     title: "Complex filter options",
     content: "<p>You can combine the filters in various ways. For instance, treaties tagged with both <em>Biodiversity</em> and <em>Aquaculture</em>, by using the AND/OR switch when more values are present.</p>",
   },
-  // Step 15: Reset
+  // Step 16: Reset
   {
     element: "#facet-xkeywords-container .reset-multiple",
     placement: "top",
     title: "Reset filters",
     content: "<p>Filters can be easily removed using their individual <em>Reset</em> link, or the global <em>Reset all filters</em> button.</p>",
   },
-  // Step 16: Remove
+  // Step 17: Remove
   {
     element: ".select2-selection__choice__remove:first",
     placement: "bottom",
     title: "Change filters",
     content: "<p>To remove just one value, use the small red [x] button on the right.</p>",
   },
-  // Step 17: Cross-device
+  // Step 18: Cross-device
   {
     orphan: true,
     title: "Mobile and tablet support",
