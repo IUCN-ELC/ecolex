@@ -7272,18 +7272,18 @@ div.datamaps-legend {
 .datamaps-legend dt,
 .datamaps-legend dd {
   display: inline-block;
-  float: none;
-  margin: 0;
+  float: none!important;
+  margin: 0!important;
   vertical-align: middle;
 }
 .datamaps-legend dt {
-  width: auto;
+  width: auto!important;
 }
 .datamaps-legend dd {
-  margin: 0;
-  margin-right: 1em;
+  margin-right: 1em!important;
+  margin-left: .5em!important;
 }
-.hoverinfo {
+.datamaps-hoverover .hoverinfo {
   padding: 1em;
   font-size: 12px;
   background-color: #fff;
@@ -7292,7 +7292,7 @@ div.datamaps-legend {
   -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, .4);
           box-shadow: 0 1px 5px rgba(0, 0, 0, .4);
 }
-.hoverinfo h4 {
+.datamaps-hoverover .hoverinfo h4 {
   margin-top: 0;
   margin-bottom: .5em;
   font-size: 18px;
