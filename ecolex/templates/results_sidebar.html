@@ -79,7 +79,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 
 {% with facets.type|get_facet_counts as type_count %}
 
-{% if form.has_treaty and type_count.treaty > 0 %}
+{% if form.has_treaty %}
 <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_treaty %}class="collapsed"{% endif %}
         data-target="#filter-treaties">{% trans 'Treaty filters' %}</h5>
@@ -102,7 +102,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% endif %}
 
 
-{% if form.has_decision and type_count.decision > 0 %}
+{% if form.has_decision %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_decision %}class="collapsed"{% endif %}
         data-target="#filter-cop-decisions">{% trans 'COP Decision filters' %}</h5>
@@ -122,7 +122,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% endif %}
 
 
-{% if form.has_legislation and type_count.legislation > 0 %}
+{% if form.has_legislation %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_legislation %}class="collapsed"{% endif %}data-target="#filter-legislation">{% trans 'Legislation filters' %}</h5>
     <div id="filter-legislation" class="collapse {% if form.has_legislation %}in{% endif %}">
@@ -136,7 +136,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% endif %}
 
 
-{% if form.has_court_decision and type_count.court_decision > 0 %}
+{% if form.has_court_decision %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_court_decision %}class="collapsed"{% endif %}
         data-target="#filter-court-decisions">{% trans 'Court decision filters' %}</h5>
@@ -151,7 +151,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% endif %}
 
 
-{% if form.has_literature and type_count.literature > 0 %}
+{% if form.has_literature %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">{% trans 'Literature filters' %}</h5>
     <div id="filter-literatures" class="collapse {% if form.has_literature %}in{% endif %}">
