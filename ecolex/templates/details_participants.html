@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load tags %}
+{% spaceless %}
 
 {% block style %}
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
@@ -71,3 +72,4 @@
     });
   </script>
 {% endblock %}
+{% endspaceless %}

@@ -107,6 +107,7 @@ class TranslationListSchema(Schema):
 
 class TreatyPartySchema(Schema):
     country = fields.String(load_from='partyCountry', multilingual=True)
+    country_en = fields.String(load_from='partyCountry_en')
     acceptance_approval = fields.Date(load_from='partyDateOfAcceptanceApproval')
     accession_approbation = fields.Date(
         load_from='partyDateOfAccessionApprobation')

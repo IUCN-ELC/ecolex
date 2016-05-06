@@ -324,10 +324,35 @@
 }
 
 
-.visuallyhidden { 
-  position: absolute; 
-  overflow: hidden; 
-  clip: rect(0 0 0 0); 
-  height: 1px; width: 1px; 
-  margin: -1px; padding: 0; border: 0; 
+.visuallyhidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px; width: 1px;
+  margin: -1px; padding: 0; border: 0;
+}
+
+div.datamaps-legend {
+  position: relative;
+}
+
+#regions_div {
+  padding-bottom: 0!important;
+}
+
+#regions_div > svg {
+  position: relative!important;
+}
+
+.datamaps-legend dt {
+  display: inline-block!important;
+  float: none!important;
+}
+
+.datamaps-legend dd {
+  margin-left: 10px!important;
+  display: inline-block!important;
+  float: none!important;
+  vertical-align: top;
+  margin-top: 3px;
 }

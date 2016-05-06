@@ -373,6 +373,7 @@ class TreatyParty(BaseModel):
 
     def __init__(self, **kwargs):
         self.country = kwargs.pop('country')
+        self.country_en = kwargs.pop('country_en')
         self.events = []
 
         # This could be prettier
