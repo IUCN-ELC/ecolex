@@ -234,7 +234,7 @@ class CopDecisionImporter(object):
         if 'results' in info:
             for result in info['results']:
                 language = result['language']
-                if language not in LANGUAGES:
+                if language not in LANGUAGES or not result.get('value'):
                     continue
                 value = regex.sub('', result['value'])
                 values[language] = value.strip()
