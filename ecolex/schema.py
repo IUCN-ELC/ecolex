@@ -32,8 +32,8 @@ class BaseSchema(Schema):
     id = fields.String()
     slug = fields.String()
     type = fields.String()
-    indexed_at = fields.DateTime(load_from='indexedDate')
-    updated_at = fields.DateTime(load_from='updatedDate')
+    indexed_at = fields.DateTime(load_from='indexedDate', missing=None)
+    updated_at = fields.DateTime(load_from='updatedDate', missing=None)
 
     text = fields.List(fields.String())
 
@@ -63,7 +63,9 @@ class BaseSchema(Schema):
             'xlanguage', 'xdate',
         ]
         solr_facets = [f for f in solr_filters if f != 'xdate']
-        solr_fetch = ['id', 'slug', 'type']
+        # TODO Move indexed_at, updated_at to query fetch_fields (used only for
+        # sitemap.xml)
+        solr_fetch = ['id', 'slug', 'type', 'indexed_at', 'updated_at']
         solr_boost = {
             'text': 20,
         }

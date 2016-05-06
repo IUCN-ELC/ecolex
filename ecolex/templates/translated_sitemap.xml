@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{% load tags %}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  {% for url in urlset %}
+  <url>
+    <loc>{{ url.location }}</loc>
+    <xhtml:link
+                 rel="alternate"
+                 hreflang="fr"
+                 href="{{ url.location|translate_absolute_url:'fr' }}"
+                 />
+    <xhtml:link
+                 rel="alternate"
+                 hreflang="es"
+                 href="{{ url.location|translate_absolute_url:'es' }}"
+                 />
+    <xhtml:link
+                 rel="alternate"
+                 hreflang="en"
+                 href="{{ url.location }}"
+                 />
+  </url>
+
+  <url>
+    <loc>{{ url.location|translate_absolute_url:'fr' }}</loc>
+    <xhtml:link
+                 rel="alternate"
+                 hreflang="en"
+                 href="{{ url.location }}"
+                 />
+    <xhtml:link
+                 rel="alternate"
+                 hreflang="es"
+                 href="{{ url.location|translate_absolute_url:'es' }}"
+                 />
+    <xhtml:link
+                 rel="alternate"
+                 hreflang="fr"
+                 href="{{ url.location|translate_absolute_url:'fr' }}"
+                 />
+  </url>
+
+  <url>
+    <loc>{{ url.location|translate_absolute_url:'es' }}</loc>
+    <xhtml:link
+                 rel="alternate"
+                 hreflang="en"
+                 href="{{ url.location }}"
+                 />
+    <xhtml:link
+                 rel="alternate"
+                 hreflang="fr"
+                 href="{{ url.location|translate_absolute_url:'fr' }}"
+                 />
+    <xhtml:link
+                 rel="alternate"
+                 hreflang="es"
+                 href="{{ url.location|translate_absolute_url:'es' }}"
+                 />
+  </url>
+  {% endfor %}
+</urlset>

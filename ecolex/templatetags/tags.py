@@ -8,6 +8,7 @@ from django.template.defaultfilters import capfirst
 from django.contrib.staticfiles.finders import get_finders
 import datetime
 import json
+import re
 import os
 from os.path import basename
 from urllib import parse as urlparse
@@ -88,6 +89,12 @@ def total_seconds(d):
 @register.filter
 def url_normalize(value):
     return value if value.startswith('http') else 'http://' + value
+
+
+@register.filter
+def translate_absolute_url(url, language=''):
+    repl = '/{}/'.format(language) if language else '/'
+    return re.sub(r'(?=\b)\/', repl, url, count=1)
 
 
 @register.simple_tag
