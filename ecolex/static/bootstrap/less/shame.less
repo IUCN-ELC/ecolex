@@ -345,8 +345,10 @@ div.datamaps-legend {
 }
 
 .datamaps-legend {
-  font: inherit;
+  font-family: @font-family-base!important;
+  font-size: @font-size-small;
 }
+
 .datamaps-legend dl {
   text-align: center;
 }
@@ -356,17 +358,20 @@ div.datamaps-legend {
   float: none!important;
   margin: 0!important;
   vertical-align: middle;
+  font-weight: normal!important;
+  color: @text-muted!important;
 }
 .datamaps-legend dt {
   width: auto!important;
 }
 .datamaps-legend dd {
   margin-left: .5em!important;
-  margin-right: 1em!important;
+  margin-right: 3em!important;
 }
 .datamaps-hoverover .hoverinfo {
   padding: 1em;
-  font-size: 12px;
+  font-family: @font-family-base;
+  font-size: @font-size-small;
   background-color: #fff;
   border: 0;
   border-radius: 0;
@@ -376,5 +381,5 @@ div.datamaps-legend {
 .datamaps-hoverover .hoverinfo h4 {
   margin-top: 0;
   margin-bottom: .5em;
-  font-size: 18px;
+  font-size: @font-size-h5;
 }
