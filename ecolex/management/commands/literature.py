@@ -174,6 +174,9 @@ MULTIVALUED_FIELDS = [
     'litLinkToFullText',
     'litTypeOfText_en', 'litTypeOfText_fr', 'litTypeOfText_es',
     'litCountry_en', 'litCountry_fr', 'litCountry_es',
+    'litTreatyReference', 'litCourtDecisionReference',
+    'litLiteratureReference', 'litFaolexReference',
+    'litNationalLegislationReference', 'litEULegislationReference',
 ]
 
 DOCUMENT_TYPE_MAP = {
@@ -295,7 +298,7 @@ class LiteratureImporter(object):
                 literatures = self._parse(raw_literatures)
                 new_literatures = list(filter(bool, [self._get_solr_lit(lit) for
                                                      lit in literatures]))
-                # self._index_files(new_literatures)
+                self._index_files(new_literatures)
                 logger.debug('Adding literatures')
                 self.solr.add_bulk(new_literatures)
                 year -= 1
