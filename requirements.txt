@@ -1,4 +1,5 @@
 Django>=1.9.4,<1.10
+django-ckeditor==5.0.3
 djangorestframework>=3.3.3,<3.4
 # TODO: remove me (after removing me form management commands)
 pysolr==3.3.0
