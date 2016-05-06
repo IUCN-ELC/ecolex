@@ -228,6 +228,7 @@ class LegislationRedirectView(RedirectView):
         'legislation': 'legId',
         'treaty': 'trElisId',
         'literature': 'litId',
+        'court_decision': 'cdOriginalId',
     }
 
     def get_redirect_url(self, *args, **kwargs):
@@ -241,7 +242,7 @@ class LegislationRedirectView(RedirectView):
             return None
         leg = [x for x in results][0]
         doc_details = doc_type + '_details'
-        return reverse(doc_details, kwargs={'slug': leg.solr.get('slug')})
+        return reverse(doc_details, kwargs={'slug': leg.slug})
 
     def get(self, request, *args, **kwargs):
         url = self.get_redirect_url(*args, **kwargs)
