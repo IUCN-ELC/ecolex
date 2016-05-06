@@ -51,7 +51,7 @@ FIELD_MAP = {
     'field_url_other': 'cdLinkToFullText_other',
     'field_notes': 'cdNotes',
     'field_available_in': 'cdAvailableIn',
-    'field_court_decision': 'cdCourtDecisionReference',
+    'field_court_decision_raw': 'cdCourtDecisionReference',
     'field_ecolex_keywords': 'cdKeyword',
     'field_faolex_reference_raw': 'cdFaolexReference',
     'field_instance': 'cdInstance',
@@ -93,6 +93,7 @@ FALSE_MULTILINGUAL_FIELDS = [
     'field_notes',
     'field_ecolex_treaty_raw',
     'field_faolex_reference_raw',
+    'field_court_decision_raw',
 ]
 MULTIVALUED_FIELDS = [
     'field_justices',
@@ -121,7 +122,7 @@ FULL_TEXT_FIELDS = ['field_url', 'field_link_to_abstract']
 SUBDIVISION_FIELDS = ['field_territorial_subdivision']
 REFERENCE_FIELDS = {'field_ecolex_treaty_raw': 'value',
                     'field_faolex_reference_raw': 'value',
-                    'field_court_decision': 'uuid'}
+                    'field_court_decision_raw': 'value'}
 SOURCE_URL_FIELD = 'url'
 LANGUAGES = ['en', 'es', 'fr']
 
