@@ -121,6 +121,7 @@ def translate_url(context, language):
     return url
 
 
+@register.filter
 def field_urlencoded(field, value):
     return field.form.urlencoded(**{field.name: value})
 
