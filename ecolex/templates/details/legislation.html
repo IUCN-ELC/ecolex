@@ -116,7 +116,7 @@
 
   {% if document.references %}
   <section id="other-references">
-    <h2 class="section-title">Legislation references</h2>
+    <h2 class="section-title">References</h2>
     {% for field, legislations in document.references.items %}
       <dl class="dl-horizontal">
         <dt>{{ field|labelify }}</dt>
@@ -136,13 +136,12 @@
 
   {% if document.treaties_implemented or document.treaties_cited %}
   <section id="other-references">
-    <h2 class="section-title">{% trans 'References to' %}</h2>
     {% for treaty in document.treaties_implemented %}
       <dl>
         <dt>{% trans 'Implements treaty' %}</dt>
         <dd>
           <h3 class="search-result-title">
-            <a href="{{ treaty.details_url }}?{{ query }}"
+            <a href="{{ treaty.details_url }}"
                title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
           </h3>
           {% include 'short_display/treaty.html' with result=treaty %}
@@ -155,7 +154,7 @@
         <dt>{% trans 'Cites treaty' %}</dt>
         <dd>
           <h3 class="search-result-title">
-            <a href="{{ treaty.details_url }}?{{ query }}"
+            <a href="{{ treaty.details_url }}"
                title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
           </h3>
           {% include 'short_display/treaty.html' with result=treaty %}
