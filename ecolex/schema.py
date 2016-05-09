@@ -291,7 +291,7 @@ class DecisionSchema(CommonSchema):
             'long_title': 100,
             'short_title': 100,
             'summary': 50,
-            'body': 20,
+            'abstract': 20,
         })
         solr_highlight = [
             'short_title', #'body',
@@ -303,7 +303,7 @@ class DecisionSchema(CommonSchema):
 
     type_of_document = fields.String(load_from='decType')
 
-    body = fields.String(load_from='decBody', multilingual=True)
+    abstract = fields.String(load_from='decBody', multilingual=True)
     file_names = fields.List(fields.String(), load_from='decFileNames',
                              missing=[])
     file_urls = fields.List(fields.String(), load_from='decFileUrls',

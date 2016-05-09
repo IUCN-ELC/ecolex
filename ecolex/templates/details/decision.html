@@ -95,12 +95,12 @@
     </dl>
   </section>
 
-  {% if document.body %}
+  {% if document.abstract %}
     <section id="text">
       <dl>
         <dt>{% trans 'Abstract' %}</dt>
         <dd>
-          <div class="html">{{ document.body|safe }}</div>
+          <div class="html">{{ document.abstract|safe }}</div>
         </dd>
       </dl>
     </section>
