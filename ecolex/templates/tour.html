@@ -1,3 +1,6 @@
+{% load i18n %}
+
+<script type="text/javascript">
 // Bootstrap tour
 var _templateHelp = "<div class='popover-help'><button class='no-btn pull-right' data-role='end'>End tour</button><strong><span data-role='current'></span>/<span data-role='steps'></span></strong></div>",
     _templateNav = "<div class='popover-navigation'><button class='btn btn-sm btn-default' data-role='next'>Next</button></div>",
@@ -12,31 +15,31 @@ var tourSteps = [
   // Step 1: Welcome
   {
     orphan: true,
-    title: "Welcome to ECOLEX",
-    content: "<p>Please follow the tour to the end. It only takes 5 minutes.</p>"
+    title: "{% blocktrans %}Welcome to ECOLEX{% endblocktrans %}",
+    content: "{% blocktrans %}<p>Please follow the tour to the end. It only takes 5 minutes.</p>{% endblocktrans %}"
   },
   // Step 2: The search bar
   {
-    path: "/",
+    path: "{% url 'homepage' %}",
     element: "#search",
     placement: "bottom",
-    title: "Permanent search bar",
-    content: "<p>Always visible from any page. Provides <strong>quick access</strong> to the website's main function.</p><p>We'll start by searching for <em>Fishery conservation</em>.</p>",
+    title: "{% blocktrans %}Permanent search bar{% endblocktrans %}",
+    content: "{% blocktrans %}<p>Always visible from any page. Provides <strong>quick access</strong> to the website's main function.</p><p>We'll start by searching for <em>Fishery conservation</em>.</p>{% endblocktrans %}",
     onShow: function() {
       $("#search").val("Fishery consrvation");
     }
   },
   // Step 3: Search suggestions
   {
-    path: "/result/?q=Fishery+consrvation",
+    path: "{% url 'results' %}?q=Fishery+consrvation",
     element: "#suggestion em",
     placement: "right",
-    title: "Oops, a typo!",
-    content: "<p><strong>Spelling corrections</strong> lead to more relevant results and a better user experience.</p><div class='popover-hint'>Click on the suggested text!</div>",
+    title: "{% blocktrans %}Oops, a typo!{% endblocktrans %}",
+    content: "{% blocktrans %}<p><strong>Spelling corrections</strong> lead to more relevant results and a better user experience.</p><div class='popover-hint'>Click on the suggested text!</div>{% endblocktrans %}",
     onNext: function() {
       // In case user presses Next and not the link
       if (document.location.href.indexOf('conservation') == -1) {
-        document.location.href = '/result/?q=Fishery+conservation';
+        document.location.href = '{% url "results" %}?q=Fishery+conservation';
         return (new jQuery.Deferred()).promise();
       }
     }
@@ -45,8 +48,8 @@ var tourSteps = [
   {
     element: ".search-result:first-child .search-result-title a em:first-child",
     placement: "right",
-    title: "Highlighted results",
-    content: "<p>Every matched word is in bold, like <em>Conservation</em>.</p>",
+    title: "{% blocktrans %}Highlighted results{% endblocktrans %}",
+    content: "{% blocktrans %}<p>Every matched word is in bold, like <em>Conservation</em>.</p>{% endblocktrans %}",
     onShow: function(tour) {
       if (document.location.href.indexOf('%22Fishery+conservation%22') != -1) {
         tour.next();
@@ -62,22 +65,22 @@ var tourSteps = [
   {
     element: "#search",
     placement: "left",
-    title: "Using double quotes",
-    content: '<p>Double quotes may be used to find more specific results.</p><p>All results must contain <strong>Fishery conservation</strong> (together) now.</p>',
+    title: "{% blocktrans %}Using double quotes{% endblocktrans %}",
+    content: '{% blocktrans %}<p>Double quotes may be used to find more specific results.</p><p>All results must contain <strong>Fishery conservation</strong> (together) now.</p>{% endblocktrans %}',
     onShow: function(tour) {
       if ($("button[data-filter='#treaty-fieldset']").hasClass('active')) {
         tour.next();
         return (new jQuery.Deferred()).promise();
       }
-      if (document.location.href.indexOf('%22Fishery+conservation%22') == -1) {
-        document.location.href = '/result/?q="Fishery+conservation"';
+      if (document.location.href.indexOf('Fishery+conservation') == -1) {
+        document.location.href = "{% url 'results' %}?q=Fishery+conservation";
         return (new jQuery.Deferred()).promise();
       }
     },
     onNext: function(tour) {
       // In case user presses Next and not the link
       if (!$("button[data-filter='#treaty-fieldset']").hasClass('active')) {
-        document.location.href = '/result/?q="Fishery+conservation"&type=treaty&type=legislation';
+        document.location.href = '{% url "results" %}?q="Fishery+conservation"&type=treaty&type=legislation';
         return (new jQuery.Deferred()).promise();
       }
     }
@@ -86,29 +89,29 @@ var tourSteps = [
   {
     element: ".btn-group.filter-type",
     placement: "left",
-    title: "Multiple datasets",
-    content: "<p>You may search within any combination of datasets.</p><p>We have just selected treaties and legislation.</p>"
+    title: "{% blocktrans %}Multiple datasets{% endblocktrans %}",
+    content: "{% blocktrans %}<p>You may search within any combination of datasets.</p><p>We have just selected treaties and legislation.</p>{% endblocktrans %}"
   },
   // Step 7: Sorting
   {
     element: "a.sortby:first-child",
     placement: "bottom",
-    title: "Sorting results",
-    content: "<p>When searching for a phrase, results are sorted by relevance.</p><p>You can also sort them by date.</p>"
+    title: "{% blocktrans %}Sorting results{% endblocktrans %}",
+    content: "{% blocktrans %}<p>When searching for a phrase, results are sorted by relevance.</p><p>You can also sort them by date.</p>{% endblocktrans %}"
   },
   // Step 8: Common filters
   {
     element: ".global-filter",
     placement: "left",
-    title: "Filtering",
-    content: "<p>You can obtain more specific results by applying filters.</p><p>Click on Geographical Area and select South America.</p><p>Try using the keyboard to search for values and ENTER to select them.</p>",
+    title: "{% blocktrans %}Filtering{% endblocktrans %}",
+    content: "{% blocktrans %}<p>You can obtain more specific results by applying filters.</p><p>Click on Geographical Area and select South America.</p><p>Try using the keyboard to search for values and ENTER to select them.</p>{% endblocktrans %}",
   },
   // Step 9: More filters
   {
     element: "#filter-treaties",
     placement: "left",
-    title: "More filters",
-    content: "<p>Each dataset has its own specific fields for filtering. They are shown or hidden when more datasets are selected.</p>",
+    title: "{% blocktrans %}More filters{% endblocktrans %}",
+    content: "{% blocktrans %}<p>Each dataset has its own specific fields for filtering. They are shown or hidden when more datasets are selected.</p>{% endblocktrans %}",
     onNext: function(tour) {
       var nextUrl = $('.result-links').eq(0).attr('href')
       var nextStep = tour.getCurrentStep() + 1;
@@ -119,15 +122,15 @@ var tourSteps = [
   {
     element: ".record-title",
     placement: "top",
-    title: "The details page",
-    content: "<p>The full display pages are designed to emphasize structure and readability.</p>",
+    title: "{% blocktrans %}The details page{% endblocktrans %}",
+    content: "{% blocktrans %}<p>The full display pages are designed to emphasize structure and readability.</p>{% endblocktrans %}",
   },
   // Step 11: Language picker
   {
     element: "#language-picker",
     placement: "left",
-    title: "ECOLEX is multilingual",
-    content: "<p>You can switch the language and translated content will be presented, where available.</p><p>Let's change to Spanish.</p>",
+    title: "{% blocktrans %}ECOLEX is multilingual{% endblocktrans %}",
+    content: "{% blocktrans %}<p>You can switch the language and translated content will be presented, where available.</p><p>Let's change to Spanish.</p>{% endblocktrans %}",
   },
   // Step 12: Spanish treaty
   {
@@ -135,49 +138,49 @@ var tourSteps = [
     element: ".record-title",
     placement: "bottom",
     title: "",
-    content: "<p>The treaty title is now translated where applicable.</p>",
+    content: "{% blocktrans %}<p>The treaty title is now translated where applicable.</p>{% endblocktrans %}",
   },
   // Step 13: Treaty participants map
   {
     element: "#participants-map",
     placement: "top",
-    title: "Treaty participants map",
-    content: "<div class='popover-hint'>Click on the Show Map to view the treaty participants!</div>",
+    title: "{% blocktrans %}Treaty participants map{% endblocktrans %}",
+    content: "{% blocktrans %}<div class='popover-hint'>Click on the Show Map to view the treaty participants!</div>{% endblocktrans %}",
   },
   // Step 14: Breadcrumbs
   {
     element: "main div.container a:first",
     placement: "bottom",
-    title: "Simple navigation",
-    content: "<p>You can return to the search results without losing the search criteria by clicking on the breadcrumb links.</p>",
+    title: "{% blocktrans %}Simple navigation{% endblocktrans %}",
+    content: "{% blocktrans %}<p>You can return to the search results without losing the search criteria by clicking on the breadcrumb links.</p>{% endblocktrans %}",
   },
   // Step 15: And/Or
   {
-    path: "/result/?q=&xkeywords_and_=on&xkeywords=biodiversity&xkeywords=aquaculture&xdate_min=&xdate_max=",
+    path: "{% url 'results' %}?q=&xkeywords_and_=on&xkeywords=biodiversity&xkeywords=aquaculture&xdate_min=&xdate_max=",
     element: "#facet-xkeywords-container .onoffswitch-label",
     placement: "top",
-    title: "Complex filter options",
-    content: "<p>You can combine the filters in various ways. For instance, treaties tagged with both <em>Biodiversity</em> and <em>Aquaculture</em>, by using the AND/OR switch when more values are present.</p>",
+    title: "{% blocktrans %}Complex filter options{% endblocktrans %}",
+    content: "{% blocktrans %}<p>You can combine the filters in various ways. For instance, treaties tagged with both <em>Biodiversity</em> and <em>Aquaculture</em>, by using the AND/OR switch when more values are present.</p>{% endblocktrans %}",
   },
   // Step 16: Reset
   {
     element: "#facet-xkeywords-container .reset-multiple",
     placement: "top",
-    title: "Reset filters",
-    content: "<p>Filters can be easily removed using their individual <em>Reset</em> link, or the global <em>Reset all filters</em> button.</p>",
+    title: "{% blocktrans %}Reset filters{% endblocktrans %}",
+    content: "{% blocktrans %}<p>Filters can be easily removed using their individual <em>Reset</em> link, or the global <em>Reset all filters</em> button.</p>{% endblocktrans %}",
   },
   // Step 17: Remove
   {
     element: ".select2-selection__choice__remove:first",
     placement: "bottom",
-    title: "Change filters",
-    content: "<p>To remove just one value, use the small red [x] button on the right.</p>",
+    title: "{% blocktrans %}Change filters{% endblocktrans %}",
+    content: "{% blocktrans %}<p>To remove just one value, use the small red [x] button on the right.</p>{% endblocktrans %}",
   },
   // Step 18: Cross-device
   {
     orphan: true,
-    title: "Mobile and tablet support",
-    content: "<p>You can use ECOLEX on your smartphone or tablet, as well. The layout will automatically adjust to the size of your device.</p><p>Thank you for taking the time and we hope you enjoy using ECOLEX.</p>",
+    title: "{% blocktrans %}Mobile and tablet support{% endblocktrans %}",
+    content: "{% blocktrans %}<p>You can use ECOLEX on your smartphone or tablet, as well. The layout will automatically adjust to the size of your device.</p><p>Thank you for taking the time and we hope you enjoy using ECOLEX.</p>{% endblocktrans %}",
     template: templateNoNav
   }
 ];
@@ -210,3 +213,4 @@ $(document).ready(function() {
   });
 
 });
+</script>
