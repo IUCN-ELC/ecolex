@@ -121,6 +121,55 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
 
     Utils.Extend(CachingAjaxAdapter, AjaxAdapter);
 
+    CachingAjaxAdapter.prototype.item = function ($option) {
+        // a total copy-paste of SelectAdapter.prototype.item,
+        // that preserves item data from html data-* attributes
+
+        var data = {};
+
+        data = $.data($option[0], 'data');
+
+        if (data != null) {
+            return data;
+        }
+
+        if ($option.is('option')) {
+            data = $.extend({
+                id: $option.val(),
+                text: $option.text(),
+                disabled: $option.prop('disabled'),
+                selected: $option.prop('selected'),
+                title: $option.prop('title')
+            }, $option.data());
+        } else if ($option.is('optgroup')) {
+            data = $.extend({
+                text: $option.prop('label'),
+                children: [],
+                title: $option.prop('title')
+            }, $option.data());
+
+            var $children = $option.children('option');
+            var children = [];
+
+            for (var c = 0; c < $children.length; c++) {
+                var $child = $($children[c]);
+
+                var child = this.item($child);
+
+                children.push(child);
+            }
+
+            data.children = children;
+        }
+
+        data = this._normalizeItem(data);
+        data.element = $option[0];
+
+        $.data($option[0], 'data', data);
+
+        return data;
+    };
+
     CachingAjaxAdapter.prototype.templateResult = function (result, container) {
         // .loading means this item is the "loading" message
         if (result.loading) return result.text;
@@ -260,17 +309,17 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         var txt = _stripDiacritics(data.text);
         var words = RegExp.escape(_stripDiacritics(term)).split(/ +/);
 
-        var matches = true;
+        var matching = true;
         $.each(words, function(idx, word) {
             if (new RegExp('\\b' + word, 'i').test(txt)) {
                 return true;
             } else {
-                matches = false;
+                matching = false;
                 return false;
             }
         });
 
-        if (matches) return data;
+        if (matching) return data;
 
         // If it doesn't contain the term, don't return anything
         return null;
@@ -373,7 +422,6 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
         }
 
         _super_query.call(this, params, wrapper);
-
     };
 
     CachingAjaxAdapter.prototype._cached_query = function(params, callback) {
@@ -396,10 +444,6 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
 
     CachingAjaxAdapter.prototype._ajax_query = function (params, callback) {
         //console.log(':: query :: ajax');
-
-        // TODO: fix bug:
-        // items are doubled in results when they're aleady selected
-
         AjaxAdapter.prototype.query.call(this, params, callback);
     };
 
@@ -413,15 +457,14 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
             return this._ajax_query(params, callback);
         else
             return this._default_query(params, callback);
-
     };
 
-    CachingAjaxAdapter._processData = function (data, selected) {
-        if (data === '""') return [];
+    CachingAjaxAdapter._processData = function (data) {
+        //
+        if (data === '""') return;
         $.each(data, function(idx, item) {
-            item._key = item.id;
+            //item._key = item.id;
             item.id = item.text;
-            item.selected = selected && $.inArray(item.text, selected) != -1;
         });
     };
 
@@ -483,14 +526,14 @@ $.fn.select2.amd.define('ecolex/select2/adapter', [
     $('.selection-facet').each(function(idx) {
         var self = $(this);
         var _data = self.data('data');
-        _DataAdapter._processData(_data, self.data('selected'));
+
         // strip away the initial data, for performance reasons
         self.removeData('data');
         self.removeAttr('data-data');
 
         self.select2({
             data: _data,
-            dataAdapter: _DataAdapter,
+            dataAdapter: _DataAdapter
         });
 
         var search_field_id = self.attr('id') + '-search-field';

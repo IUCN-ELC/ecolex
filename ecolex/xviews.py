@@ -109,6 +109,8 @@ class SearchResults(SearchViewMixin, PagedViewMixin, TemplateView):
             searcher = Searcher(data, language=get_language())
             response = searcher.search(page=page, date_sort=date_sort)
 
+        form.set_facet_data(response.facets)
+
         ctx['results'] = response
         ctx['facets'] = response.facets
         ctx['stats'] = response.stats

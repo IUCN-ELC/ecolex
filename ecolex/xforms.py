@@ -1,5 +1,9 @@
 from functools import partialmethod
+from itertools import islice
+from types import MethodType
 from django import forms
+from django.forms.boundfield import BoundField
+from django.conf import settings
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext as _
 from ecolex.lib.forms import UrlencodingMixin
@@ -7,14 +11,69 @@ from ecolex.lib.schema import fields
 from .schema import FIELD_MAP, FILTER_FIELDS, STATS_FIELDS, SCHEMA_MAP
 
 
-class AlwaysValidChoiceField(forms.ChoiceField):
+class FacetBoundField(BoundField):
+    def set_facet_data(self, data):
+        self._facet_data = data
+
+    @cached_property
+    def facet(self):
+        """
+        Returns a dictionary of truncated facet data, and a boolean
+        providing for more data.
+        """
+        facet_data = self._facet_data
+        data = facet_data[:settings.FACETS_PAGE_SIZE]
+
+        def _find(what, where):
+            # TODO: this is really inefficient
+            try:
+                return next(x for x in where if x['text'] == what)
+            except StopIteration:
+                return None
+
+        requested = self.form.cleaned_data.get(self.name, [])
+        additional = 0
+        for r in requested:
+            item = _find(r, data)
+
+            if item is None:
+                item = _find(r, facet_data)
+
+                if item is None:
+                    item = {"text": r, "count": 0}
+                else:
+                    additional += 1
+
+                data.append(item)
+
+            item['selected'] = True
+
+        return {
+            'data': data,
+            'more': len(facet_data) - additional > settings.FACETS_PAGE_SIZE,
+        }
+
+class FacetFieldMixin(object):
     def valid_value(self, v):
+        """
+        Considers any given value as valid.
+        """
         return True
 
+    def get_bound_field(self, form, field_name):
+        """
+        Return a BoundField instance that will be used when accessing the form
+        field in a template.
+        """
+        return FacetBoundField(form, self, field_name)
 
-class AlwaysValidMultipleChoiceField(forms.MultipleChoiceField):
-    def valid_value(self, v):
-        return True
+
+class FacetChoiceField(FacetFieldMixin, forms.ChoiceField):
+    pass
+
+
+class FacetMultipleChoiceField(FacetFieldMixin, forms.MultipleChoiceField):
+    pass
 
 
 class SearchForm(UrlencodingMixin, forms.Form):
@@ -30,6 +89,8 @@ class SearchForm(UrlencodingMixin, forms.Form):
 
     q = forms.CharField(required=False)
     page = forms.IntegerField(min_value=1, required=False, initial=1)
+    sortby = forms.ChoiceField(choices=SORT_CHOICES, required=False,
+                               initial=SORT_DEFAULT)
 
     def __clean_field_with_initial(self, fname):
         if fname not in self.data or self.cleaned_data[fname] is None:
@@ -45,46 +106,52 @@ class SearchForm(UrlencodingMixin, forms.Form):
             k: v
             for k, v in self.cleaned_data.items()
             if not (v == [] and
-                    isinstance(self.fields[k], AlwaysValidMultipleChoiceField))
+                    isinstance(self.fields[k], FacetMultipleChoiceField))
         }
-
-    def mk_sortby(self):
-        # we normally get a regular field
-        choices = self.SORT_CHOICES
-        initial = self.SORT_DEFAULT
-        cls = forms.ChoiceField
-
-        # unless q is empty. then sortby defaults to most recent
-        if not self.data.get('q', '').strip():
-            _c = dict(self.SORT_CHOICES)
-            choices = (
-                (self.SORT_DEFAULT, _c[self.SORT_DESC]),
-                (self.SORT_ASC, _c[self.SORT_ASC]),
-            )
-            initial = old_default = self.SORT_DESC
-            new_default = self.SORT_DEFAULT
-
-            # we need to massage the data so that both the old and new defaults
-            # are treated the same, while we still pass the expected value
-            # to the code downstream
-            class _AltChoiceField(forms.ChoiceField):
-                def clean(self, value):
-                    if value == old_default:
-                        value = new_default
-                    value = super().clean(value)
-                    if value == new_default:
-                        value = old_default
-                    return value
-
-            cls = _AltChoiceField
-
-        return cls(choices=choices, initial=initial, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self._alter_sortby()
+        self._add_filter_fields()
 
-        self.fields['sortby'] = self.mk_sortby()
+    def _alter_sortby(self):
+        """
+        If `q` is empty, sortby defaults to newest first.
+        """
+        if self.data.get('q', '').strip():
+            return
 
+        field = self.fields['sortby']
+
+        # the old default key is assigned to SORT_DESC,
+        # while the old default entry goes away
+        default_default = self.SORT_DEFAULT
+        new_default = self.SORT_DESC
+
+        field.initial = new_default
+        field.choices = tuple(
+            (default_default if k is new_default else k, v)
+            for k, v in self.SORT_CHOICES
+            if k != default_default
+        )
+
+        def _clean(self, value):
+            # we need to massage the data so that both the old and new
+            # defaults are treated the same
+            if value == new_default:
+                value = default_default
+
+            value = super(type(field), self).clean(value)
+
+            # while we pass the expected value to the code downstream
+            if value == default_default:
+                value = new_default
+
+            return value
+
+        field.clean = MethodType(_clean, field)
+
+    def _add_filter_fields(self):
         # dynamically add all filterable fields
         new_fields = []
         and_fields = []
@@ -105,10 +172,10 @@ class SearchForm(UrlencodingMixin, forms.Form):
                 # (multiple by default)
                 if field.form_single_choice:
                     new_fields.append((name,
-                                       AlwaysValidChoiceField()))
+                                       FacetChoiceField()))
                 else:
                     new_fields.append((name,
-                                       AlwaysValidMultipleChoiceField()))
+                                       FacetMultipleChoiceField()))
 
                     # if this is a multi-valued field, support AND-ing choices
                     if field.multivalue:
@@ -129,6 +196,19 @@ class SearchForm(UrlencodingMixin, forms.Form):
         for name, and_name in and_fields:
             self[name].and_field = self[and_name]
             #self[and_name].parent_field = self[name]
+
+    def set_facet_data(self, data):
+        for k, v in data.items():
+            # type is special-cased
+            if k == 'type':
+                continue
+            try:
+                field = self[k]
+            except KeyError:
+                # warn?
+                pass
+            else:
+                field.set_facet_data(v)
 
     @cached_property
     def _FIELD_TYPE_MAP(self):

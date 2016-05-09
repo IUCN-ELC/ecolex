@@ -3,7 +3,7 @@
 {% load tags %}
 
 <div class="filter">
-  
+
   <div class="filter-header" id="facet-{{ field.name }}-container">
     <label class="filter-label filter-label-add"
            title="Add {{ title }} filter"
@@ -12,14 +12,14 @@
       {{ title }}
     </label>
     <span class="filter-options" data-formid="#id_{{ name }}_op">
-      {% if op_field and field.value|length > 1 %}
-        {% include 'bits/facet_operation.html' with field=op_field target=field.name %}
+      {% if field.and_field and field.value|length > 1 %}
+        {% include 'bits/facet_operation.html' with field=field.and_field %}
       {% endif %}
       {% if field.value|length > 0 %}
         {% include 'bits/facet_reset.html' with target=field.name %}
       {% endif %}
     </span>
-    
+
   </div>
   <div class="filter-body">
     <select id="facet-{{ field.name }}"
@@ -27,12 +27,10 @@
             class="selection-facet clearfix"
             multiple="true"
             data-placeholder="{{ placeholder }}"{% if viewname %}
-            data-ajax--url="{% url viewname %}?lang={{ LANGUAGE_CODE }}"{% endif %}{% with facet|apify_f as data %}
-            data-data="{{ data.results|json }}"
-            data-more="{{ data.more|yesno:"true,false" }}"{% endwith %}
-            data-selected="{{ field.value|json }}">
-      {% for option in field.value %}
-          <option id="{{ option }}" selected data-count="0">{{ option }}</option>
+            data-ajax--url="{% url viewname %}?lang={{ LANGUAGE_CODE }}"{% endif %}
+            data-more="{{ field.facet.more|yesno:"true,false" }}">
+      {% for item in field.facet.data %}
+          <option id="{{ item.text }}"{% if item.selected %} selected{% endif %} data-count="{{ item.count }}">{{ item.text }}</option>
       {% endfor %}
     </select>
   </div>

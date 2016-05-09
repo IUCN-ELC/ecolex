@@ -5,19 +5,19 @@
   </div>
   <div class="filter-body">
     <ul>
-    {% for f in facet %}
-      {% if show_empty or f.count > 0 %}
+    {% for item in field.facet.data %}
+      {% if show_empty or item.count > 0 %}
       <li>
-        <label class="facet-checkbox {% if not f.count %}disabled{% endif %}" for="{{ field.name }}_{{ f.id }}">
+        <label class="facet-checkbox {% if not item.count %}disabled{% endif %}" for="{{ field.name }}_{{ item.id }}">
           <input type="checkbox"
-                 id="{{ field.name }}_{{ f.id }}"
+                 id="{{ field.name }}_{{ item.id }}"
                  name="{{ field.name }}"
-                 value="{{ f.text }}"
-                 {% if f.text in field.data %}checked{% endif %}
-                 {% if not f.count %}disabled{% endif %}>
-          <span class="facet-text">{{ f.text|capfirst }}</span>
+                 value="{{ item.text }}"{% if item.selected %}
+                 checked{% endif %}{% if not item.count %}
+                 disabled{% endif %}>
+          <span class="facet-text">{{ item.text|capfirst }}</span>
           &nbsp;
-          <span class="facet-count">{{ f.count }}</span>
+          <span class="facet-count">{{ item.count }}</span>
         </label>
       </li>
       {% endif %}

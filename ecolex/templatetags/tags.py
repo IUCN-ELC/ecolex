@@ -121,16 +121,6 @@ def translate_url(context, language):
     return url
 
 
-@register.filter
-def apify_f(data):
-    # truncates the facet and returns a {results: [], more: bool} dict
-    return {
-        'more': len(data) > settings.FACETS_PAGE_SIZE,
-        'results': data[:settings.FACETS_PAGE_SIZE],
-    }
-
-
-@register.filter
 def field_urlencoded(field, value):
     return field.form.urlencoded(**{field.name: value})
 
