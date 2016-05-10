@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block meta %}
+  <title>{{ ECOLEX | The gateway to environmental law }}</title>
+{% endblock %}
+
 {% block content %}
 
   {% include 'bits/type_facet.html' with page_type="homepage" %}

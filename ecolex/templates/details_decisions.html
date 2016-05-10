@@ -1,6 +1,10 @@
 {% extends 'layout.html' %}
 {% load tags %}
 
+{% block meta %}
+  <title>{{ document.title }}</title>
+{% endblock %}
+
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
   {% breadcrumb "Treaty" 'treaty_details' query slug=document.slug %}

@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% load i18n %}
 
+{% block meta %}
+  <title>{{ ECOLEX | About }}</title>
+{% endblock %}
+
 {% block content %}
 
 {{ content|safe }}

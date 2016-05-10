@@ -2,6 +2,8 @@
 {% load tags %}
 {% load i18n %}
 
+{% include 'bits/document_details_meta.html' %}
+
 {% block scripts %}
   {% if document.treaty_id and document.treaty_slug %}
   <script>

@@ -1,0 +1,6 @@
+{% block meta %}
+  <title>{{ document.title }}</title>
+  {% if document.abstract %}
+  <meta name="description" content="{{ document.abstract }}" />
+  {% endif %}
+{% endblock %}

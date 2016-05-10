@@ -2,6 +2,10 @@
 {% load tags %}
 {% spaceless %}
 
+{% block meta %}
+  <title>{{ document.title }}</title>
+{% endblock %}
+
 {% block style %}
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
 {% endblock %}
