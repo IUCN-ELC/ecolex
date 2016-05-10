@@ -14,6 +14,10 @@ from ecolex.management.utils import get_file_from_url
 
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('import')
+URL_CHANGE_FROM = 'http://www.ecolex.org/server2.php/server2neu.php/'
+URL_CHANGE_TO = 'http://www.ecolex.org/server2neu.php/'
+replace_url = lambda text: (URL_CHANGE_TO + text.split(URL_CHANGE_FROM)[-1]) if text.startswith(URL_CHANGE_FROM) else text
+
 
 JSON_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
@@ -291,7 +295,7 @@ class CourtDecision(object):
                                                      for f in files if f)
 
             if json_field in FULL_TEXT_FIELDS and json_value:
-                urls = [d.get('url') for val in json_value.values()
+                urls = [replace_url(d.get('url')) for val in json_value.values()
                         for d in val]
                 files = [get_file_from_url(url) for url in urls if url]
                 solr_decision['cdText'] += '\n'.join(self.solr.extract(f)
