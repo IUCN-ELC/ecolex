@@ -193,6 +193,9 @@ class CourtDecision(object):
             'type': COURT_DECISION,
             'cdLeoId': leo_id,
             'id': solr_id,
+            'cdCountry_en': [],
+            'cdCountry_es': [],
+            'cdCountry_fr': [],
         }
         for json_field, solr_field in FIELD_MAP.items():
             json_value = self.data.get(json_field, None)
@@ -216,10 +219,11 @@ class CourtDecision(object):
                         key = '{}_{}'.format(solr_field, lang)
                         solr_decision[key] = get_value(json_field, value)
             elif json_field in COUNTRY_FIELDS:
-                country = get_country_value(self.countries, json_value)
-                for lang, value in country.items():
-                    key = '{}_{}'.format(solr_field, lang)
-                    solr_decision[key] = get_value(json_field, value)
+                for country_code in json_value:
+                    countries = self.countries.get(country_code, {})
+                    for lang, country_name in countries.items():
+                        key = '{}_{}'.format(solr_field, lang)
+                        solr_decision[key].append(country_name)
             elif json_field in LANGUAGE_FIELDS:
                 language_code = get_value(json_field, json_value['und'])
                 if language_code not in self.languages:
