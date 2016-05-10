@@ -195,7 +195,7 @@ class DocumentModel(BaseModel):
         extra_fields = [f
                         for t, name in fields
                         for f in FIELD_PROPERTIES[t].values()
-                        if f.name in fields]
+                        if (t, f.name) in fields]
 
         from .xsearch import Queryer
         queryer = Queryer({}, language=get_language())
