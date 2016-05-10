@@ -149,8 +149,8 @@
       <dt>{% trans 'Full text' %}</dt>
       <dd>
           {% for link in document.link_to_full_text %}
-            <a class="decision-link" href="{{ link }}" target="_blank"
-               class="file-link">{{ link|extract_filename }}</a>
+            <a href="{{ link }}" class="decision-link file-link" rel="nofollow"
+               target="_blank">{{ link|extract_filename }}</a>
             &nbsp;
           {% endfor %}
       </dd>
@@ -159,7 +159,7 @@
       {% if document.link_doi %}
       <dt>{% trans 'Available DOI' %}</dt>
       <dd>
-        <a href="{{ document.link_doi|url_normalize }}"
+        <a href="{{ document.link_doi|url_normalize }}" rel="nofollow"
            target="_blank">{{ document.link_doi }}</a>
       </dd>
       {% endif %}
@@ -167,7 +167,7 @@
       {% if document.related_web_site %}
       <dt>{% trans 'Available web site' %}</dt>
       <dd>
-        <a href="{{ document.related_web_site|url_normalize }}"
+        <a href="{{ document.related_web_site|url_normalize }}" rel="nofollow"
            target="_blank">{{ document.related_web_site|url_normalize|extract_hostname }}</a>
       </dd>
       {% endif %}

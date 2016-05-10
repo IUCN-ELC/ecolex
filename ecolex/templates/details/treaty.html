@@ -112,8 +112,8 @@
         <dt>{% trans 'Link to abstract' %}</dt>
         {% for url in document.link_to_abstract %}
         <dd>
-          <a target="_blank" href="{{ url|url_normalize }}"
-            class="file-link">{{ url|url_normalize|extract_filename }}</a>
+          <a href="{{ url|url_normalize }}" class="file-link" rel="nofollow"
+             target="_blank">{{ url|url_normalize|extract_filename }}</a>
         </dd>
         {% endfor %}
       {% endif %}
@@ -132,7 +132,7 @@
         <dd>
           {% for link in document.link_translations %}
             {% for value in link.value %}
-              <a href="{{ value }}" class="file-link"
+              <a href="{{ value }}" class="file-link" rel="nofollow"
                  target="_blank" >{{ link.language|language_name_translated|capfirst }}</a>
               &nbsp;
             {% endfor %}
@@ -150,7 +150,8 @@
         <dd>
           {% for url in document.related_web_site %}
             {% if not forloop.first %}<br>{% endif %}
-            <a target="_blank" href="{{ url|url_normalize }}">{{ url|url_normalize|extract_hostname }}</a>
+            <a href="{{ url|url_normalize }}" rel="nofollow"
+               target="_blank">{{ url|url_normalize|extract_hostname }}</a>
           {% endfor %}
         </dd>
       {% endif %}

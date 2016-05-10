@@ -68,7 +68,7 @@
       <dt>{% trans 'Meeting' %}</dt>
       <dd>
         {% if document.meeting_url %}
-          <a href="{{ document.meeting_url }}"
+          <a href="{{ document.meeting_url }}" rel="nofollow"
              target="_blank">{{ document.meeting_title|safe }}</a>
         {% else %}
           {{ document.meeting_title|safe }}
@@ -78,7 +78,7 @@
       {% if document.url %}
         <dt>{% trans 'Available web site' %}</dt>
         <dd>
-          <a href="{{ document.url|url_normalize }}"
+          <a href="{{ document.url|url_normalize }}" rel="nofollow"
              target="_blank">{{ document.url|url_normalize|extract_hostname|default:"No link" }}</a>
         </dd>
       {% endif %}
@@ -90,7 +90,8 @@
         <dt>{% trans 'Files' %}</dt>
           {% for url, name in document.files %}
             <dd>
-              <a target="_blank" href="{{ url }}" class="file-link">{{ name }}</a>
+              <a href="{{ url }}" class="file-link" rel="nofollow"
+                 target="_blank">{{ name }}</a>
             </dd>
           {% endfor %}
       {% endif %}

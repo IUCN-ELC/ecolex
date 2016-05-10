@@ -75,16 +75,16 @@
       {% if document.link_to_abstract %}
         <dt>{% trans 'Link to abstract' %}</dt>
         <dd>
-            <a class="decision-link" href="{{ document.link_to_abstract|url_normalize }}"
-                rel="nofollow" target="_blank" class="file-link">
-                  {{ document.link_to_abstract|extract_filename }}</a>
+          <a href="{{ document.link_to_abstract|url_normalize }}"
+             class="decision-link file-link" rel="nofollow"
+             target="_blank">{{ document.link_to_abstract|extract_filename }}</a>
         </dd>
       {% endif %}
       {% if document.link_to_full_text %}
         <dt>{% trans 'Full text' %}</dt>
          <dd>
-          <a href="{{ document.link_to_full_text|url_normalize }}"
-             class="file-link" target="_blank">{% if document.language_of_document %}
+           <a href="{{ document.link_to_full_text|url_normalize }}" class="file-link"
+              rel="nofollow" target="_blank">{% if document.language_of_document %}
                {{ document.language_of_document|join:", " }}
              {% else %}
                {{ document.link_to_full_text|url_normalize|extract_hostname }}

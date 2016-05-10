@@ -94,7 +94,7 @@
       <dt>{% trans 'Full text' %}</dt>
       {# TODO Check if language is the right thing to display here #}
       <dd>
-        <a href="{{ document.link_to_full_text }}" class="file-link"
+        <a href="{{ document.link_to_full_text }}" class="file-link" rel="nofollow"
            target="_blank">{{ document.language|join:"/" }}</a>
       </dd>
       {% endif %}
@@ -102,7 +102,7 @@
       {% if document.related_web_site %}
         <dt>{% trans 'Available web site' %}</dt>
         <dd>
-          <a href="{{ document.related_web_site|url_normalize}}"
+          <a href="{{ document.related_web_site|url_normalize}}" rel="nofollow"
              target="_blank">{{ document.related_web_site|url_normalize|extract_hostname }}</a>
         </dd>
       {% endif %}
