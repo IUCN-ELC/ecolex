@@ -517,7 +517,7 @@ class CourtDecisionSchema(CommonSchema):
             'title_of_text', #'abstract',
         ]
 
-    ID_FIELD = 'cdLeoId'
+    ID_FIELD = 'cdOriginalId'
     KEYWORDS_FIELD = 'cdKeyword'
     SUBJECTS_FIELD = 'cdSubject'
 
@@ -528,7 +528,8 @@ class CourtDecisionSchema(CommonSchema):
     abstract = fields.String(load_from='cdAbstract', multilingual=True)
     link_to_abstract = fields.String(load_from='cdLinkToAbstract',
                                      multilingual=True)
-    country = fields.String(load_from='cdCountry', multilingual=True)
+    country = fields.List(fields.String(), load_from='cdCountry',
+                          multilingual=True)
 
     court_name = fields.String(load_from='cdCourtName')
     date_of_entry = fields.Date(load_from='cdDateOfEntry')

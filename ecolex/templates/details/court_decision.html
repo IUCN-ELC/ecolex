@@ -29,7 +29,7 @@
     </div>
 
     <dl>
-      <dt>{% trans 'Country' %}</dt> <dd>{{ document.country }}</dd>
+      <dt>{% trans 'Country' %}</dt> <dd>{{ document.country|join:", " }}</dd>
       <dt>{% trans 'Type of court' %}</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
       <dt>{% trans 'Date' %}</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
     </dl>
@@ -114,6 +114,7 @@
       {% endif %}
     </dl>
   </section>
+
 {% if document.references or document.treaties or document.legislation %}
   <section id="court-decision-references">
     <h2 class="section-title">{% trans 'References' %}</h2>

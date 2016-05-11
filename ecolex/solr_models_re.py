@@ -116,7 +116,6 @@ class DocumentModel(BaseModel):
         # TODO: may be a bad™ idea
         response = queryer.findany(page_size=1000, fetch_fields=extra_fields,
                                    date_sort=False, **lookups)
-
         # we need to re-group according to the lookups
         out = OrderedDefaultDict(list)
         for item in response.results:

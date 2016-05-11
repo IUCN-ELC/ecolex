@@ -6,7 +6,7 @@
   <span class="sr-doctype sr-help" title="{% trans 'Type of court' %}">{{ result.type_of_document }}</span>
 
   {% if result.country %} |
-    <span class="sr-country sr-help" title="{% trans 'Country' %}">{{ result.country }}</span>
+    <span class="sr-country sr-help" title="{% trans 'Country' %}">{{ result.country|join:", " }}</span>
   {% endif %}
 
   {% if result.date %} |
