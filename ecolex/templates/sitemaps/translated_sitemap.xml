@@ -2,9 +2,11 @@
 {% load tags %}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{% spaceless %}
   {% for url in urlset %}
   <url>
     <loc>{{ url.location }}</loc>
+    {% include 'sitemaps/bits/url_properties.xml' %}
     <xhtml:link
                  rel="alternate"
                  hreflang="fr"
@@ -24,6 +26,7 @@
 
   <url>
     <loc>{{ url.location|translate_absolute_url:'fr' }}</loc>
+    {% include 'sitemaps/bits/url_properties.xml' %}
     <xhtml:link
                  rel="alternate"
                  hreflang="en"
@@ -43,6 +46,7 @@
 
   <url>
     <loc>{{ url.location|translate_absolute_url:'es' }}</loc>
+    {% include 'sitemaps/bits/url_properties.xml' %}
     <xhtml:link
                  rel="alternate"
                  hreflang="en"
@@ -60,4 +64,5 @@
                  />
   </url>
   {% endfor %}
+{% endspaceless %}
 </urlset>

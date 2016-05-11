@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^sitemap\.xml$', index, {'sitemaps': sitemaps}),
     url(r'^sitemap-(?P<section>.+)\.xml$', sitemap, {
         'sitemaps': sitemaps,
-        'template_name': 'translated_sitemap.xml',
+        'template_name': 'sitemaps/translated_sitemap.xml',
     }),
 ]
 
