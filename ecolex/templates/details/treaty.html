@@ -3,13 +3,15 @@
 {% load tags %}
 {% load i18n %}
 
-{% include 'bits/document_details_meta.html' %}
+{% block meta %}
+  {% include 'bits/document_details_meta.html' %}
+{% endblock %}
 
 {% block scripts %}
-    {{ block.super }}
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
-    <script type="text/javascript" src="/static/js/datamaps.none.min.js"></script>
+  {{ block.super }}
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+  <script type="text/javascript" src="/static/js/datamaps.none.min.js"></script>
 {% endblock %}
 
 {% block breadcrumbs %}
