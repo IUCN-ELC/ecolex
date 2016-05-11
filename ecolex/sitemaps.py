@@ -1,8 +1,28 @@
 from django.contrib.sitemaps import Sitemap
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator
 
 from ecolex.definitions import STATIC_PAGES
 from ecolex.xsearch import Queryer
+
+
+class SolrQueryPaginator(Paginator):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.queryer = self.object_list
+        self.object_list = self.queryer.findany(page_size=0)
+
+    def page(self, number):
+        number = self.validate_number(number)
+        sliced_obj_list = self.queryer.findany(page=number,
+                                               page_size=self.per_page)
+        return self._get_page(sliced_obj_list, number, self)
+
+
+class CustomSitemap(Sitemap):
+    def _get_paginator(self):
+        return SolrQueryPaginator(self.queryer(), self.limit)
+    paginator = property(_get_paginator)
 
 
 class StaticViewSitemap(Sitemap):
@@ -16,15 +36,13 @@ class StaticViewSitemap(Sitemap):
         return reverse('page', kwargs={'slug': item})
 
 
-class DocumentSitemap(Sitemap):
+class DocumentSitemap(CustomSitemap):
     pritiority = 1
     changefreq = 'weekly'
-    limit = 15000
+    limit = 1000
 
-    def items(self):
-        queryer = Queryer({}, language='en')
-        response = queryer.findany(page_size=999999)
-        return response.results
+    def queryer(self):
+        return Queryer({}, language='en')
 
     def location(self, item):
         return item.details_url
