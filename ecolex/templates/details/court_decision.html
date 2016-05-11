@@ -80,38 +80,30 @@
              target="_blank">{{ document.link_to_abstract|extract_filename }}</a>
         </dd>
       {% endif %}
-      {% if document.link_to_full_text %}
+
+      {% if document.files %}
         <dt>{% trans 'Full text' %}</dt>
-         <dd>
-           <a href="{{ document.link_to_full_text|url_normalize }}" class="file-link"
-              rel="nofollow" target="_blank">{% if document.language_of_document %}
-               {{ document.language_of_document|join:", " }}
-             {% else %}
-               {{ document.link_to_full_text|url_normalize|extract_hostname }}
-             {% endif %}</a>
-        </dd>
+        {% for link in document.files %}
+          <dd><a href="{{ link }}" class="file-link" rel="nofollow">{{ link|extract_filename|safe }}</a></dd>
+        {% endfor %}
       {% endif %}
+
       {% if document.available_in %}
         <dt>{% trans 'Available in' %}</dt>
         <dd>{{ document.available_in|safe }}</dd>
       {% endif %}
-      {% if document.internet_reference %}
+
+      {% if document.link_to_full_text %}
         <dt>{% trans 'Available web site' %}</dt>
-        <dd>
-          <a href="{{ document.internet_reference|url_normalize }}" rel="nofollow"
-             target="_blank">{{ document.internet_reference|url_normalize|extract_hostname }}</a>
+         <dd>
+          <a href="{{ document.link_to_full_text|url_normalize }}"
+             class="file-link" target="_blank">
+               {{ document.link_to_full_text|url_normalize|extract_hostname }}</a>
         </dd>
       {% endif %}
 
       <dt>{% trans 'Source' %}</dt>
       <dd>UNEP, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
-
-      {% if document.files %}
-        <dt>{% trans 'Files' %}</dt>
-        {% for link in document.files %}
-          <dd><a href="{{ link }}" rel="nofollow">{{ link|extract_filename|safe }}</a></dd>
-        {% endfor %}
-      {% endif %}
     </dl>
   </section>
 

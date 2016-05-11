@@ -25,7 +25,7 @@ FIELD_MAP = {
     'title_field': 'cdTitleOfText',
     'field_abstract': 'cdAbstract',
     'field_abstract_other': 'cdAbstract_other',
-    'field_link_to_abstract': 'cdLinkToAbstract',
+    'field_document_abstract': 'cdLinkToAbstract',
     'field_alternative_record_id': 'cdAlternativeRecordId',
     'field_city': 'cdSeatOfCourt',
     'field_country': 'cdCountry',
@@ -40,7 +40,6 @@ FIELD_MAP = {
     'field_faolex_url': 'cdFaolexUrl',
     'field_files': 'cdFiles',
     'field_informea_tags': 'cdInformeaTags',
-    'field_internet_reference_url': 'cdInternetReference',  # relatedWebsite
     'field_isis_number': 'cdIsisNumber',  # IsisMfn
     'field_jurisdiction': 'cdJurisdiction',
     'field_justices': 'cdJustices',
@@ -69,16 +68,15 @@ FIELD_MAP = {
 MULTILINGUAL_FIELDS = [
     'title_field',
     'field_abstract',
-    'field_link_to_abstract',
     'field_ecolex_url',
     'field_faolex_url',
-    'field_internet_reference_url',
     'field_related_url',
     'field_city',
     'field_url',
 ]
 FALSE_MULTILINGUAL_FIELDS = [
     'field_alternative_record_id',
+    'field_document_abstract',
     'field_court_name',
     'field_date_of_entry',
     'field_sorting_date',
@@ -122,7 +120,7 @@ REGION_FIELDS = ['field_ecolex_region']
 KEYWORD_FIELDS = ['field_ecolex_keywords']
 SUBJECT_FIELDS = ['field_ecolex_tags']
 FILES_FIELDS = ['field_files']
-FULL_TEXT_FIELDS = ['field_url', 'field_link_to_abstract']
+FULL_TEXT_FIELDS = ['field_url', 'field_document_abstract']
 SUBDIVISION_FIELDS = ['field_territorial_subdivision']
 REFERENCE_FIELDS = {'field_ecolex_treaty_raw': 'value',
                     'field_faolex_reference_raw': 'value',

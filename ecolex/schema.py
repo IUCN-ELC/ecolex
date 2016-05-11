@@ -538,8 +538,6 @@ class CourtDecisionSchema(CommonSchema):
     files = fields.List(fields.String(), load_from='cdFiles')
     available_in = fields.String(load_from='cdAvailableIn')
 
-    internet_reference = fields.String(load_from='cdInternetReference',
-                                       multilingual=True)
     jurisdiction = fields.String(load_from='cdJurisdiction')
     justices = fields.List(fields.String(), load_from='cdJustices')
     language_of_document = fields.List(fields.String(),
