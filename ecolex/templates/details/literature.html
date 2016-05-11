@@ -4,7 +4,10 @@
 {% load i18n %}
 
 {% block meta %}
-  {% include 'bits/document_details_meta.html' %}
+  <title>{{ document.title }}</title>
+  {% if document.abstract %}
+  <meta name="description" content="{{ document.abstract }}" />
+  {% endif %}
 {% endblock %}
 
 {% block breadcrumbs %}
