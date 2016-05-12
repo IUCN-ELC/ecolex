@@ -328,7 +328,8 @@ class CourtDecision(object):
 
         for url in full_text_urls:
             file_obj = get_file_from_url(url)
-            solr_decision['cdText'] += '\n'.join(self.solr.extract(file_obj))
+            if file_obj:
+                solr_decision['cdText'] += '\n'.join(self.solr.extract(file_obj))
 
         # Get Leo URL
         json_value = self.data.get(SOURCE_URL_FIELD, None)
