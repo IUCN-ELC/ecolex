@@ -213,7 +213,9 @@ class CourtDecision(object):
             elif json_field in FIELD_URL:
                 urls = [x.get('url') for x in json_value.get('en', [])
                         if x.get('url')]
-                solr_decision['cdLinkToFullText'].extend(urls)
+                for url in urls:
+                    if url not in solr_decision['cdLinkToFullText']:
+                        solr_decision['cdLinkToFullText'].append(url)
             elif json_field in TIMESTAMP_FIELDS:
                 date_value = datetime.fromtimestamp(float(json_value))
                 date_string = date_value.strftime(SOLR_DATE_FORMAT)
@@ -303,7 +305,6 @@ class CourtDecision(object):
                 files = [get_file_from_url(url) for url in urls if url]
                 solr_decision['cdText'] += '\n'.join(self.solr.extract(f)
                                                      for f in files if f)
-
         # cdRegion fallback on field_ecolex_region
         if not solr_decision.get('cdRegion_en'):
             backup_field = 'field_ecolex_region'
