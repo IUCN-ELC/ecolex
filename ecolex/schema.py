@@ -526,8 +526,7 @@ class CourtDecisionSchema(CommonSchema):
 
     # TODO: this is common to more. group together?
     abstract = fields.String(load_from='cdAbstract', multilingual=True)
-    link_to_abstract = fields.String(load_from='cdLinkToAbstract',
-                                     multilingual=True)
+    link_to_abstract = fields.String(load_from='cdLinkToAbstract')
     country = fields.List(fields.String(), load_from='cdCountry',
                           multilingual=True)
 
