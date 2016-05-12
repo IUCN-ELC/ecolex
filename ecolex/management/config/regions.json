@@ -4,6 +4,11 @@
         "fr": "Afrique",
         "es": "Africa"
     },
+    "afrique": {
+        "en": "Africa",
+        "fr": "Afrique",
+        "es": "Africa"
+    },
     "alps": {
         "en": "Alps",
         "fr": "Alpes",
@@ -68,6 +73,11 @@
         "en": "Black Sea",
         "fr": "Mer Noire",
         "es": "Mar Negro"
+    },
+    "canada": {
+        "en": "Canada",
+        "fr": "Canada",
+        "es": "Canad\u00e1"
     },
     "caribbean": {
         "en": "Caribbean",
@@ -148,6 +158,11 @@
         "en": "European Union Countries",
         "fr": "Pays de l'Union Europ\u00e9enne",
         "es": "Pa\u00edses de la Uni\u00f3n Europea"
+    },
+    "global": {
+        "en": "Global",
+        "fr": "Global",
+        "es": "Global"
     },
     "indian ocean": {
         "en": "Indian Ocean",
@@ -254,6 +269,11 @@
         "fr": "Golfe Persique",
         "es": "Golfo P\u00e9rsico"
     },
+    "polar: arctic": {
+        "en": "Arctic",
+        "fr": "Arctique",
+        "es": "\u00c1rtico"
+    },
     "polynesia": {
         "en": "Polynesia",
         "fr": "Polinesie",
@@ -323,6 +343,11 @@
         "en": "Southern Europe",
         "fr": "Europe du Sud",
         "es": "Europa Meridional"
+    },
+    "west asia": {
+        "en": "Western Asia",
+        "fr": "Asie Occidentale",
+        "es": "Asia Occidental"
     },
     "western africa": {
         "en": "Western Africa",
