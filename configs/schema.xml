@@ -383,7 +383,6 @@
     <field name="cdFaolexUrl_fr" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdFaolexUrl_ru" type="string" indexed="false" stored="true" multiValued="false"/>
 
-    <field name="cdFiles" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="cdInformeaTags" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="cdInternetReference" type="string" indexed="false" stored="true" multiValued="false"/>
@@ -419,10 +418,7 @@
 
     <field name="cdTypeOfText" type="string" indexed="true" stored="true" multiValued="false"/>
 
-    <field name="cdLinkToFullText_en" type="string" indexed="false" stored="true" multiValued="false"/>
-    <field name="cdLinkToFullText_es" type="string" indexed="false" stored="true" multiValued="false"/>
-    <field name="cdLinkToFullText_fr" type="string" indexed="false" stored="true" multiValued="false"/>
-    <field name="cdLinkToFullText_ru" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="cdLinkToFullText" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="cdLinkToFullText_other" type="string" indexed="false" stored="true" multiValued="false"/>
 
     <field name="cdNotes" type="string" indexed="false" stored="true" multiValued="true"/>

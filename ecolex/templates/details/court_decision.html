@@ -86,9 +86,9 @@
         </dd>
       {% endif %}
 
-      {% if document.files %}
+      {% if document.link_to_full_text %}
         <dt>{% trans 'Full text' %}</dt>
-        {% for link in document.files %}
+        {% for link in document.link_to_full_text %}
           <dd><a href="{{ link }}" class="file-link" rel="nofollow">{{ link|extract_filename|safe }}</a></dd>
         {% endfor %}
       {% endif %}
@@ -98,12 +98,12 @@
         <dd>{{ document.available_in|safe }}</dd>
       {% endif %}
 
-      {% if document.link_to_full_text %}
+      {% if document.related_web_site %}
         <dt>{% trans 'Available web site' %}</dt>
          <dd>
-          <a href="{{ document.link_to_full_text|url_normalize }}"
+          <a href="{{ document.related_web_site|url_normalize }}"
              class="file-link" target="_blank">
-               {{ document.link_to_full_text|url_normalize|extract_hostname }}</a>
+               {{ document.related_web_site|url_normalize|extract_hostname }}</a>
         </dd>
       {% endif %}
 

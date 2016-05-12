@@ -18,6 +18,7 @@ from ecolex.management.definitions import (
 
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('import')
+HEADERS = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
 
 def get_content_length_from_url(url):
@@ -36,7 +37,7 @@ def get_file_from_url(url):
     if 'http' not in url:
         url = 'http://' + url
     try:
-        response = requests.get(url, timeout=60)
+        response = requests.get(url, timeout=60, headers=HEADERS)
     except:
         if settings.DEBUG:
             logger.exception('Error downloading file {}'.format(url))

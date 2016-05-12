@@ -545,8 +545,9 @@ class CourtDecisionSchema(CommonSchema):
                                        multilingual=True)
     leo_default_url = fields.String(load_from='cdLeoDefaultUrl')
     leo_english_url = fields.String(load_from='cdLeoEnglishUrl')
-    link_to_full_text = fields.String(load_from='cdLinkToFullText',
-                                      multilingual=True)
+    link_to_full_text = fields.List(fields.String(),
+                                    load_from='cdLinkToFullText')
+    related_web_site = fields.String(load_from='cdRelatedUrl_en', missing=None)
     original_id = fields.String(load_from='cdOriginalId')
     reference_number = fields.String(load_from='cdReferenceNumber')
     seat_of_court = fields.String(load_from='cdSeatOfCourt', multilingual=True)
@@ -558,9 +559,9 @@ class CourtDecisionSchema(CommonSchema):
     treaty_reference = fields.List(fields.String(),
                                    load_from='cdTreatyReference', missing=None)
     legislation_reference = fields.List(fields.String(),
-                                   load_from='cdFaolexReference', missing=None)
-    region = fields.List(fields.String(), load_from='cdRegion',
-                         multilingual=True)
+                                        load_from='cdFaolexReference',
+                                        missing=None)
+    region = fields.String(load_from='cdRegion', multilingual=True)
     cites = fields.List(fields.String(), load_from='cdCourtDecisionReference',
                         missing=None)
 

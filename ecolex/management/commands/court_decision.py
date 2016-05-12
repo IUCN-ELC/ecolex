@@ -59,7 +59,7 @@ FIELD_MAP = {
     'field_faolex_reference_raw': 'cdFaolexReference',
     'field_instance': 'cdInstance',
     'field_official_publication': 'cdOfficialPublication',
-    'field_ecolex_region': 'cdRegion',
+    'field_region': 'cdRegion',  # fallback on field_region_ecolex
     'field_title_of_text_other': 'cdTitleOfText_other',
     'field_title_of_text_short': 'cdTitleOfTextShort',
     'field_ecolex_treaty_raw': 'cdTreatyReference',
@@ -72,8 +72,10 @@ MULTILINGUAL_FIELDS = [
     'field_faolex_url',
     'field_related_url',
     'field_city',
-    'field_url',
 ]
+
+FIELD_URL = ['field_url', 'field_files']
+
 FALSE_MULTILINGUAL_FIELDS = [
     'field_alternative_record_id',
     'field_document_abstract',
@@ -116,15 +118,15 @@ TIMESTAMP_FIELDS = [
 INTEGER_FIELDS = ['field_number_of_pages']
 COUNTRY_FIELDS = ['field_country']
 LANGUAGE_FIELDS = ['field_source_language']
-REGION_FIELDS = ['field_ecolex_region']
+REGION_FIELDS = ['field_region']
 KEYWORD_FIELDS = ['field_ecolex_keywords']
 SUBJECT_FIELDS = ['field_ecolex_tags']
-FILES_FIELDS = ['field_files']
-FULL_TEXT_FIELDS = ['field_url', 'field_document_abstract']
+FULL_TEXT_FIELDS = ['field_document_abstract']
 SUBDIVISION_FIELDS = ['field_territorial_subdivision']
 REFERENCE_FIELDS = {'field_ecolex_treaty_raw': 'value',
                     'field_faolex_reference_raw': 'value',
                     'field_court_decision_raw': 'value'}
+FILES_FIELDS = ['field_files', 'field_url']  # copy to cdLinkToFullText
 SOURCE_URL_FIELD = 'url'
 LANGUAGES = ['en', 'es', 'fr']
 
@@ -194,6 +196,7 @@ class CourtDecision(object):
             'cdCountry_en': [],
             'cdCountry_es': [],
             'cdCountry_fr': [],
+            'cdLinkToFullText': [],
         }
         for json_field, solr_field in FIELD_MAP.items():
             json_value = self.data.get(json_field, None)
@@ -207,6 +210,10 @@ class CourtDecision(object):
             elif json_field in FALSE_MULTILINGUAL_FIELDS:
                 solr_decision[solr_field] = get_value(json_field,
                                                       json_value['und'])
+            elif json_field in FIELD_URL:
+                urls = [x.get('url') for x in json_value.get('en', [])
+                        if x.get('url')]
+                solr_decision['cdLinkToFullText'].extend(urls)
             elif json_field in TIMESTAMP_FIELDS:
                 date_value = datetime.fromtimestamp(float(json_value))
                 date_string = date_value.strftime(SOLR_DATE_FORMAT)
@@ -290,18 +297,35 @@ class CourtDecision(object):
             else:
                 solr_decision[solr_field] = get_value(json_field, json_value)
 
-            if json_field in FILES_FIELDS and json_value:
-                urls = [d.get('url') for d in json_value]
-                files = [get_file_from_url(url) for url in urls if url]
-                solr_decision['cdText'] += '\n'.join(self.solr.extract(f)
-                                                     for f in files if f)
-
             if json_field in FULL_TEXT_FIELDS and json_value:
                 urls = [replace_url(d.get('url')) for val in json_value.values()
                         for d in val]
                 files = [get_file_from_url(url) for url in urls if url]
                 solr_decision['cdText'] += '\n'.join(self.solr.extract(f)
                                                      for f in files if f)
+
+        # cdRegion fallback on field_ecolex_region
+        if not solr_decision.get('cdRegion_en'):
+            backup_field = 'field_ecolex_region'
+            solr_field = 'cdRegion'
+            json_value = self.data.get(backup_field, None)
+            if json_value:
+                region_en = get_value(backup_field, json_value)
+                solr_decision[solr_field + '_en'] = region_en
+                values = self.regions.get(region_en.lower(), None)
+                if values:
+                    solr_decision[solr_field + '_es'] = values['es']
+                    solr_decision[solr_field + '_fr'] = values['fr']
+
+        full_text_urls = solr_decision.get('cdLinkToFullText') or []
+        if not full_text_urls and solr_decision.get('cdRelatedUrl_en'):
+            url = solr_decision.pop('cdRelatedUrl_en')
+            solr_decision['cdLinkToFullText'] = [url]
+            full_text_urls.append(url)
+
+        for url in full_text_urls:
+            file_obj = get_file_from_url(url)
+            solr_decision['cdText'] += '\n'.join(self.solr.extract(file_obj))
 
         # Get Leo URL
         json_value = self.data.get(SOURCE_URL_FIELD, None)
