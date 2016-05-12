@@ -213,6 +213,8 @@ class CourtDecision(object):
             elif json_field in FIELD_URL:
                 urls = [x.get('url') for x in json_value.get('en', [])
                         if x.get('url')]
+                if solr_decision['cdLinkToFullText'] is None:
+                    solr_decision['cdLinkToFullText'] = []
                 for url in urls:
                     if url not in solr_decision['cdLinkToFullText']:
                         solr_decision['cdLinkToFullText'].append(url)

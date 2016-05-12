@@ -34,15 +34,24 @@
     </div>
 
     <dl>
-      <dt>{% trans 'Country' %}</dt> <dd>{{ document.country|join:", " }}</dd>
-      <dt>{% trans 'Type of court' %}</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
+      {% if document.country %}
+        <dt>{% trans 'Country' %}</dt>
+        <dd>{{ document.country|join:", " }}</dd>
+      {% endif %}
+      {% if document.type_of_document %}
+        <dt>{% trans 'Type of court' %}</dt>
+        <dd>{{ document.type_of_document|capfirst }}</dd>
+      {% endif %}
       <dt>{% trans 'Date' %}</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
     </dl>
   </header>
 
   <section id="details">
     <dl>
-      <dt>{% trans 'Court name' %}</dt> <dd>{{ document.court_name }}</dd>
+      {% if document.court_name %}
+        <dt>{% trans 'Court name' %}</dt>
+        <dd>{{ document.court_name }}</dd>
+      {% endif %}
 
       {% if document.justices %}
         <dt>{% trans 'Justices' %}</dt> <dd>{{ document.justices|join:"<br>" }}</dd>
@@ -52,8 +61,10 @@
         <dt>{% trans 'Reference number' %}</dt> <dd>{{ document.reference_number }}</dd>
       {% endif %}
 
-      <dt>{% trans 'Language of document' %}</dt>
-      <dd>{{ document.language_of_document|join:", " }}</dd>
+      {% if document.language_of_document %}
+        <dt>{% trans 'Language of document' %}</dt>
+        <dd>{{ document.language_of_document|join:", " }}</dd>
+      {% endif %}
 
       {% if document.subjects %}
         <dt>{% trans 'Subjects' %}</dt>
