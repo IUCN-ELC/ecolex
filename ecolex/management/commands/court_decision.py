@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 import json
 import logging
 import logging.config
@@ -16,7 +16,12 @@ logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('import')
 URL_CHANGE_FROM = 'http://www.ecolex.org/server2.php/server2neu.php/'
 URL_CHANGE_TO = 'http://www.ecolex.org/server2neu.php/'
-replace_url = lambda text: (URL_CHANGE_TO + text.split(URL_CHANGE_FROM)[-1]) if text.startswith(URL_CHANGE_FROM) else text
+
+
+def replace_url(text):
+    if text.startswith(URL_CHANGE_FROM):
+        return (URL_CHANGE_TO + text.split(URL_CHANGE_FROM)[-1])
+    return text
 
 
 JSON_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
@@ -424,8 +429,8 @@ class CourtDecisionImporter(object):
         while start < len(decisions):
             end = min(start + batch_size, len(decisions))
             new_decisions = list(
-                filter(bool, [self._get_solr_decision(decision)
-                              for decision in decisions[start:end]]))
+                filter(bool, [self._get_solr_decision(dec)
+                              for dec in decisions[start:end]]))
             logger.info('Adding {} court decisions'.format(len(new_decisions)))
             self.solr.add_bulk(new_decisions)
             start = end
