@@ -426,9 +426,9 @@
     <field name="cdInstance" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="cdOfficialPublication" type="string" indexed="true" stored="true" multiValued="false"/>
 
-    <field name="cdRegion_en" type="text" indexed="true" stored="true" multiValued="false"/>
-    <field name="cdRegion_fr" type="text" indexed="true" stored="true" multiValued="false"/>
-    <field name="cdRegion_es" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdRegion_en" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="cdRegion_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="cdRegion_es" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="cdTreatyReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdLeoDefaultUrl" type="string" indexed="false" stored="true" multiValued="false"/>
