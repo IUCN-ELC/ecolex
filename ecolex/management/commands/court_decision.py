@@ -107,6 +107,8 @@ MULTIVALUED_FIELDS = [
     'field_notes',
     'field_ecolex_treaty_raw',
     'field_faolex_reference_raw',
+    'field_ecolex_region',
+    'field_region',
 ]
 DATE_FIELDS = [
     'field_date_of_entry',
@@ -254,12 +256,23 @@ class CourtDecision(object):
                     solr_decision[solr_field + '_es'] = values['Spanish']
                     solr_decision[solr_field + '_fr'] = values['French']
             elif json_field in REGION_FIELDS:
-                region_en = get_value(json_field, json_value)
-                solr_decision[solr_field + '_en'] = region_en
-                values = self.regions.get(region_en.lower(), None)
-                if values:
-                    solr_decision[solr_field + '_es'] = values['es']
-                    solr_decision[solr_field + '_fr'] = values['fr']
+                regions_en = get_value(json_field, json_value)
+                solr_decision[solr_field + '_en'] = []
+                solr_decision[solr_field + '_fr'] = []
+                solr_decision[solr_field + '_es'] = []
+                for reg_en in regions_en:
+                    region_en = reg_en.lower()
+                    if region_en not in self.regions:
+                        solr_decision[solr_field + '_en'].append(reg_en)
+                        logger.warning('Region missing from regions.json: '
+                                       '{} ({})'.format(region_en, leo_id))
+                        continue
+                    solr_decision[solr_field + '_en'].append(
+                        self.regions[region_en]['en'])
+                    solr_decision[solr_field + '_fr'].append(
+                        self.regions[region_en]['fr'])
+                    solr_decision[solr_field + '_es'].append(
+                        self.regions[region_en]['es'])
             elif json_field in KEYWORD_FIELDS:
                 # This is shitty, must refactor TODO
                 keywords_en = get_value(json_field, json_value)
@@ -313,12 +326,23 @@ class CourtDecision(object):
             solr_field = 'cdRegion'
             json_value = self.data.get(backup_field, None)
             if json_value:
-                region_en = get_value(backup_field, json_value)
-                solr_decision[solr_field + '_en'] = region_en
-                values = self.regions.get(region_en.lower(), None)
-                if values:
-                    solr_decision[solr_field + '_es'] = values['es']
-                    solr_decision[solr_field + '_fr'] = values['fr']
+                regions_en = get_value(backup_field, json_value)
+                solr_decision[solr_field + '_en'] = []
+                solr_decision[solr_field + '_fr'] = []
+                solr_decision[solr_field + '_es'] = []
+                for reg_en in regions_en:
+                    region_en = reg_en.lower()
+                    if region_en not in self.regions:
+                        solr_decision[solr_field + '_en'].append(reg_en)
+                        logger.warning('Region missing from regions.json: '
+                                       '{} ({})'.format(region_en, leo_id))
+                        continue
+                    solr_decision[solr_field + '_en'].append(
+                        self.regions[region_en]['en'])
+                    solr_decision[solr_field + '_fr'].append(
+                        self.regions[region_en]['fr'])
+                    solr_decision[solr_field + '_es'].append(
+                        self.regions[region_en]['es'])
 
         full_text_urls = solr_decision.get('cdLinkToFullText') or []
         if not full_text_urls and solr_decision.get('cdRelatedUrl_en'):
