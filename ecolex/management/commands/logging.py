@@ -37,6 +37,12 @@ LOG_DICT = {
             'filename': path.join(BASE_DIR, 'cop_decision_import.log'),
             'formatter': 'verbose',
         },
+        'court_decision_import': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': path.join(BASE_DIR, 'court_decision_import.log'),
+            'formatter': 'verbose',
+        },
         'literature_import': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
@@ -72,6 +78,10 @@ LOG_DICT = {
         },
         'cop_decision_import': {
             'handlers': ['cop_decision_import', 'console'],
+            'level': 'DEBUG',
+        },
+        'court_decision_import': {
+            'handlers': ['court_decision_import', 'console'],
             'level': 'DEBUG',
         },
         'literature_import': {
