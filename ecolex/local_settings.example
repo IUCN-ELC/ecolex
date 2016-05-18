@@ -49,10 +49,10 @@ SOLR_IMPORT = {
     'court_decision': {
         'test_input_file': os.path.join(TESTING_DIR, 'court_decision_in.json'),
         'test_output_file': os.path.join(TESTING_DIR, 'court_decision_out.json'),
-        'court_decisions_url': 'http://leo.informea.org/ws/court-decisions',
+        'court_decisions_url': 'http://informea.org/ws/court-decisions',
         'days_ago': 7,
         #'uuid': '9f4e6967-46a8-4299-b1e2-8fe3a4ddb3bf',
-        'data_url': 'http://leo.informea.org/node/%s/json',
+        'data_url': 'http://informea.org/node/%s/json',
         'update': False,
     },
     'treaty': {
