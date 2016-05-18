@@ -560,7 +560,8 @@ class CourtDecisionSchema(CommonSchema):
     legislation_reference = fields.List(fields.String(),
                                         load_from='cdFaolexReference',
                                         missing=None)
-    region = fields.String(load_from='cdRegion', multilingual=True)
+    region = fields.List(fields.String(), load_from='cdRegion',
+                         multilingual=True)
     cites = fields.List(fields.String(), load_from='cdCourtDecisionReference',
                         missing=None)
 
