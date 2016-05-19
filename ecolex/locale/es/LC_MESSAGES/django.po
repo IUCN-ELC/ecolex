@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-09 14:01+0000\n"
+"POT-Creation-Date: 2016-05-19 09:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,23 +18,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ecolex/settings.py:150
+#: settings.py:150
 msgid "English"
 msgstr ""
 
-#: ecolex/settings.py:151
+#: settings.py:151
 msgid "French"
 msgstr ""
 
-#: ecolex/settings.py:152
+#: settings.py:152
 msgid "Spanish"
 msgstr ""
 
-#: ecolex/settings.py:169
+#: settings.py:169
 msgid "Other"
 msgstr ""
 
-#: ecolex/templates/bits/disclaimer.html:5
+#: templates/bits/disclaimer.html:5
 msgid ""
 "Information on this section of ECOLEX comes from the InforMEA Portal which "
 "compiled  information from MEA Secretariats with the support of the European "
@@ -43,582 +43,567 @@ msgid ""
 "displayed on the respective MEA website prevails."
 msgstr ""
 
-#: ecolex/templates/bits/knowledge_tools.html:11
+#: templates/bits/knowledge_tools.html:11
 msgid "Wildlex"
 msgstr ""
 
-#: ecolex/templates/bits/pagination.html:11
+#: templates/bits/pagination.html:11
 msgid "Previous"
 msgstr "Anterior"
 
-#: ecolex/templates/bits/pagination.html:39
+#: templates/bits/pagination.html:39
 msgid "Next"
 msgstr "Siguiente"
 
-#: ecolex/templates/bits/pagination.html:45
+#: templates/bits/pagination.html:45
 msgid "No more results"
 msgstr "No hay más resultados"
 
-#: ecolex/templates/bits/participants_map.html:73
-#: ecolex/templates/details/treaty.html:177
+#: templates/bits/participants_map.html:73 templates/details/treaty.html:180
 msgid "Show Map"
 msgstr "Mostrar el mapa"
 
-#: ecolex/templates/bits/participants_map.html:73
+#: templates/bits/participants_map.html:73
 msgid "Hide Map"
 msgstr "Ocultar mapa"
 
-#: ecolex/templates/bits/sortby.html:8
+#: templates/bits/sortby.html:8
 msgid "Sorted by"
 msgstr "Ordenado por"
 
-#: ecolex/templates/bits/sortby.html:10
+#: templates/bits/sortby.html:10
 msgid "Sort by"
 msgstr "Ordenar por"
 
-#: ecolex/templates/bits/type_facet.html:21 ecolex/templates/layout.html:107
-#: ecolex/templates/results_main.html:41
+#: templates/bits/type_facet.html:21 templates/layout.html:107
+#: templates/results_main.html:41
 msgid "Treaties"
 msgstr "Tratados"
 
-#: ecolex/templates/bits/type_facet.html:40 ecolex/templates/layout.html:113
-#: ecolex/templates/results_main.html:42
+#: templates/bits/type_facet.html:40 templates/layout.html:113
+#: templates/results_main.html:42
 msgid "COP Decisions"
 msgstr "Decisiones de la COP"
 
-#: ecolex/templates/bits/type_facet.html:59
-#: ecolex/templates/details/legislation.html:23
-#: ecolex/templates/details/literature.html:199
-#: ecolex/templates/layout.html:119 ecolex/templates/results_main.html:43
+#: templates/bits/type_facet.html:59 templates/details/legislation.html:30
+#: templates/details/literature.html:206 templates/layout.html:119
+#: templates/results_main.html:43
 msgid "Legislation"
 msgstr "Legislación"
 
-#: ecolex/templates/bits/type_facet.html:78 ecolex/templates/layout.html:125
-#: ecolex/templates/results_main.html:44
+#: templates/bits/type_facet.html:78 templates/layout.html:125
+#: templates/results_main.html:44
 msgid "Court Decisions"
 msgstr "Decision judiciale"
 
-#: ecolex/templates/bits/type_facet.html:97
-#: ecolex/templates/details/literature.html:18
-#: ecolex/templates/details/literature.html:225
-#: ecolex/templates/details/literature.html:241
-#: ecolex/templates/details/treaty.html:298 ecolex/templates/layout.html:131
-#: ecolex/templates/results_main.html:45
-#: ecolex/templates/short_display/literature.html:29
+#: templates/bits/type_facet.html:97 templates/details/literature.html:25
+#: templates/details/literature.html:232 templates/details/literature.html:248
+#: templates/details/treaty.html:301 templates/layout.html:131
+#: templates/results_main.html:45 templates/short_display/literature.html:29
 msgid "Literature"
 msgstr "Doctrina"
 
-#: ecolex/templates/details/court_decision.html:24
-#: ecolex/templates/details/treaty.html:310
-#: ecolex/templates/short_display/court_decision.html:5
+#: templates/details/court_decision.html:31 templates/details/treaty.html:313
+#: templates/short_display/court_decision.html:5
 msgid "Court Decision"
 msgstr "Decision judiciale"
 
-#: ecolex/templates/details/court_decision.html:30
-#: ecolex/templates/details/legislation.html:29
-#: ecolex/templates/short_display/court_decision.html:9
-#: ecolex/templates/short_display/legislation.html:6
-#: ecolex/templates/short_display/literature.html:31
+#: templates/details/court_decision.html:38
+#: templates/details/legislation.html:36 templates/results_sidebar.html:27
+#: templates/short_display/court_decision.html:9
+#: templates/short_display/legislation.html:6
+#: templates/short_display/literature.html:31
 msgid "Country"
 msgstr "País"
 
-#: ecolex/templates/details/court_decision.html:31
-#: ecolex/templates/short_display/court_decision.html:6
+#: templates/details/court_decision.html:42 templates/results_sidebar.html:160
+#: templates/short_display/court_decision.html:6
 msgid "Type of court"
 msgstr "Tipo de tribunal"
 
-#: ecolex/templates/details/court_decision.html:32
-#: ecolex/templates/details/decision.html:35
-#: ecolex/templates/details/legislation.html:37
-#: ecolex/templates/details/treaty.html:33
-#: ecolex/templates/short_display/court_decision.html:13
-#: ecolex/templates/short_display/decision.html:13
-#: ecolex/templates/short_display/treaty.html:11
+#: templates/details/court_decision.html:45 templates/details/decision.html:42
+#: templates/details/legislation.html:44 templates/details/treaty.html:40
+#: templates/short_display/court_decision.html:13
+#: templates/short_display/decision.html:13
+#: templates/short_display/treaty.html:11
 msgid "Date"
 msgstr "Fecha"
 
-#: ecolex/templates/details/court_decision.html:38
-msgid "Court name"
-msgstr "Nombre del Tribunal"
-
-#: ecolex/templates/details/court_decision.html:41
-msgid "Justices"
-msgstr "Jueces"
-
-#: ecolex/templates/details/court_decision.html:45
-#: ecolex/templates/details/decision.html:34
-msgid "Reference number"
-msgstr "Número de referencia"
-
-#: ecolex/templates/details/court_decision.html:48
-msgid "Language of document"
-msgstr "Idioma del documento"
-
-#: ecolex/templates/details/court_decision.html:52
-#: ecolex/templates/details/legislation.html:53
-msgid "Subjects"
-msgstr "Materias"
-
-#: ecolex/templates/details/court_decision.html:57
-#: ecolex/templates/details/decision.html:49
-#: ecolex/templates/details/legislation.html:58
-#: ecolex/templates/details/literature.html:124
-#: ecolex/templates/details/treaty.html:79
-#: ecolex/templates/short_display/court_decision.html:21
-#: ecolex/templates/short_display/decision.html:20
-#: ecolex/templates/short_display/legislation.html:24
-#: ecolex/templates/short_display/literature.html:34
-#: ecolex/templates/short_display/treaty.html:18
-msgid "Keywords"
-msgstr "Palabra clave"
-
-#: ecolex/templates/details/court_decision.html:70
-#: ecolex/templates/details/decision.html:101
-#: ecolex/templates/details/legislation.html:87
-#: ecolex/templates/details/literature.html:142
-#: ecolex/templates/details/treaty.html:102
-msgid "Abstract"
-msgstr "Resumen"
-
-#: ecolex/templates/details/court_decision.html:74
-#: ecolex/templates/details/treaty.html:110
-msgid "Link to abstract"
-msgstr "Enlace al resumen"
-
-#: ecolex/templates/details/court_decision.html:82
-#: ecolex/templates/details/legislation.html:92
-#: ecolex/templates/details/literature.html:147
-#: ecolex/templates/details/treaty.html:129
-msgid "Full text"
-msgstr "Texto completo"
-
-#: ecolex/templates/details/court_decision.html:93
-#: ecolex/templates/details/treaty.html:142
-msgid "Available in"
-msgstr "Disponible en"
-
-#: ecolex/templates/details/court_decision.html:97
-#: ecolex/templates/details/decision.html:77
-#: ecolex/templates/details/legislation.html:101
-#: ecolex/templates/details/literature.html:166
-#: ecolex/templates/details/treaty.html:147
-msgid "Available web site"
-msgstr "Página web relacionada"
-
-#: ecolex/templates/details/court_decision.html:104
-#: ecolex/templates/details/decision.html:84
-#: ecolex/templates/details/legislation.html:108
-#: ecolex/templates/details/literature.html:173
-#: ecolex/templates/details/treaty.html:156
-#: ecolex/templates/short_display/court_decision.html:26
-#: ecolex/templates/short_display/decision.html:24
-#: ecolex/templates/short_display/legislation.html:30
-#: ecolex/templates/short_display/literature.html:37
-#: ecolex/templates/short_display/treaty.html:21
+#: templates/details/court_decision.html:46 templates/details/decision.html:43
+#: templates/details/legislation.html:51 templates/details/literature.html:59
+#: templates/details/treaty.html:42
+#: templates/short_display/court_decision.html:26
+#: templates/short_display/decision.html:24
+#: templates/short_display/legislation.html:30
+#: templates/short_display/literature.html:37
+#: templates/short_display/treaty.html:21
 msgid "Source"
 msgstr "Fuente"
 
-#: ecolex/templates/details/court_decision.html:108
-#: ecolex/templates/details/decision.html:88
-msgid "Files"
-msgstr "Archivos"
+#: templates/details/court_decision.html:54
+msgid "Court name"
+msgstr "Nombre del Tribunal"
 
-#: ecolex/templates/details/court_decision.html:117
+#: templates/details/court_decision.html:59
+msgid "Justices"
+msgstr "Jueces"
+
+#: templates/details/court_decision.html:63 templates/details/decision.html:41
+msgid "Reference number"
+msgstr "Número de referencia"
+
+#: templates/details/court_decision.html:67
+msgid "Language of document"
+msgstr "Idioma del documento"
+
+#: templates/details/court_decision.html:72
+#: templates/details/legislation.html:68
+msgid "Subjects"
+msgstr "Materias"
+
+#: templates/details/court_decision.html:77 templates/details/decision.html:57
+#: templates/details/legislation.html:73 templates/details/literature.html:136
+#: templates/details/treaty.html:95 templates/results_sidebar.html:24
+#: templates/short_display/court_decision.html:21
+#: templates/short_display/decision.html:20
+#: templates/short_display/legislation.html:24
+#: templates/short_display/literature.html:34
+#: templates/short_display/treaty.html:18
+msgid "Keywords"
+msgstr "Palabra clave"
+
+#: templates/details/court_decision.html:90
+#: templates/details/decision.html:107 templates/details/legislation.html:102
+#: templates/details/literature.html:154 templates/details/treaty.html:118
+msgid "Abstract"
+msgstr "Resumen"
+
+#: templates/details/court_decision.html:94 templates/details/treaty.html:126
+msgid "Link to abstract"
+msgstr "Enlace al resumen"
+
+#: templates/details/court_decision.html:103
+#: templates/details/legislation.html:107
+#: templates/details/literature.html:159 templates/details/treaty.html:145
+msgid "Full text"
+msgstr "Texto completo"
+
+#: templates/details/court_decision.html:110
+msgid "Available in"
+msgstr "Disponible en"
+
+#: templates/details/court_decision.html:115
+#: templates/details/decision.html:85 templates/details/legislation.html:116
+#: templates/details/literature.html:178 templates/details/treaty.html:158
+msgid "Available web site"
+msgstr "Página web relacionada"
+
+#: templates/details/court_decision.html:128
 msgid "References"
 msgstr "Referencias"
 
-#: ecolex/templates/details/court_decision.html:139
-#: ecolex/templates/details/court_decision.html:153
+#: templates/details/court_decision.html:150
+#: templates/details/court_decision.html:164
 msgid "Cites"
 msgstr "Cita"
 
-#: ecolex/templates/details/decision.html:27
+#: templates/details/decision.html:34
 msgid "COP Decision"
 msgstr "Decision de COP"
 
-#: ecolex/templates/details/decision.html:33
-#: ecolex/templates/details/legislation.html:36
-#: ecolex/templates/details/literature.html:90
-#: ecolex/templates/details/treaty.html:31
-#: ecolex/templates/short_display/treaty.html:6
+#: templates/details/decision.html:40 templates/details/legislation.html:43
+#: templates/details/literature.html:102 templates/details/treaty.html:38
+#: templates/results_sidebar.html:94 templates/results_sidebar.html:143
+#: templates/results_sidebar.html:185 templates/short_display/treaty.html:6
 msgid "Document type"
 msgstr "Tipo de documento"
 
-#: ecolex/templates/details/decision.html:41
-#: ecolex/templates/short_display/decision.html:9
-#: ecolex/templates/short_display/legislation.html:16
+#: templates/details/decision.html:49 templates/results_sidebar.html:100
+#: templates/short_display/decision.html:9
+#: templates/short_display/legislation.html:16
 msgid "Status"
 msgstr "Estado"
 
-#: ecolex/templates/details/decision.html:44
-#: ecolex/templates/details/literature.html:119
-#: ecolex/templates/details/treaty.html:74
+#: templates/details/decision.html:52 templates/details/literature.html:131
+#: templates/details/treaty.html:90 templates/results_sidebar.html:21
 msgid "Subject"
 msgstr "Área"
 
-#: ecolex/templates/details/decision.html:58
-#: ecolex/templates/details/literature.html:186
-#: ecolex/templates/details/treaty.html:25
+#: templates/details/decision.html:66 templates/details/literature.html:193
+#: templates/details/treaty.html:32 templates/results_sidebar.html:122
 msgid "Treaty"
 msgstr "Tratado"
 
-#: ecolex/templates/details/decision.html:66
+#: templates/details/decision.html:74
 msgid "Meeting"
 msgstr "Reunión"
 
-#: ecolex/templates/details/legislation.html:33
+#: templates/details/decision.html:93
+msgid "Files"
+msgstr "Archivos"
+
+#: templates/details/legislation.html:40
 msgid "Territorial subdivision"
 msgstr "Subdivisión territorial"
 
-#: ecolex/templates/details/legislation.html:39
-#: ecolex/templates/short_display/legislation.html:8
+#: templates/details/legislation.html:46
+#: templates/short_display/legislation.html:8
 msgid "Original date"
 msgstr "Fecha original"
 
-#: ecolex/templates/details/legislation.html:41
-#: ecolex/templates/short_display/legislation.html:10
+#: templates/details/legislation.html:48
+#: templates/short_display/legislation.html:10
 msgid "Consolidation date"
 msgstr "Fecha de consolidación"
 
-#: ecolex/templates/details/legislation.html:45
+#: templates/details/legislation.html:60
 msgid "Long title"
 msgstr "Título completo de texto"
 
-#: ecolex/templates/details/legislation.html:67
-#: ecolex/templates/details/literature.html:132
-#: ecolex/templates/details/treaty.html:88
+#: templates/details/legislation.html:82 templates/details/literature.html:144
+#: templates/details/treaty.html:104
 msgid "Geographical area"
 msgstr "Área geográphica"
 
-#: ecolex/templates/details/legislation.html:72
-#: ecolex/templates/details/literature.html:137
-#: ecolex/templates/details/treaty.html:93
+#: templates/details/legislation.html:87 templates/details/literature.html:149
+#: templates/details/treaty.html:109
 msgid "Basin"
 msgstr "Cuenca"
 
-#: ecolex/templates/details/legislation.html:77
+#: templates/details/legislation.html:92
 msgid "Entry into force notes"
 msgstr ""
 
-#: ecolex/templates/details/legislation.html:139
-#: ecolex/templates/details/literature.html:183
-msgid "References to"
-msgstr ""
-
-#: ecolex/templates/details/legislation.html:142
+#: templates/details/legislation.html:150
 msgid "Implements treaty"
 msgstr "Implementa tratados"
 
-#: ecolex/templates/details/legislation.html:155
+#: templates/details/legislation.html:163
 msgid "Cites treaty"
 msgstr "Cita tratados"
 
-#: ecolex/templates/details/legislation.html:170
+#: templates/details/legislation.html:178
 msgid "Court Decision references"
 msgstr ""
 
-#: ecolex/templates/details/legislation.html:172
-#: ecolex/templates/details/treaty.html:266
+#: templates/details/legislation.html:180 templates/details/treaty.html:269
 msgid "Cited by"
 msgstr "Citado por"
 
-#: ecolex/templates/details/literature.html:24
-#: ecolex/templates/short_display/literature.html:6
+#: templates/details/literature.html:31 templates/results_sidebar.html:176
+#: templates/short_display/literature.html:6
 msgid "Author"
 msgstr "Autor"
 
-#: ecolex/templates/details/literature.html:27
+#: templates/details/literature.html:34
 msgid "Corporate author"
 msgstr "Autor corporativo"
 
-#: ecolex/templates/details/literature.html:32
+#: templates/details/literature.html:39 templates/results_sidebar.html:179
 msgid "Journal/Series"
 msgstr "Título de serie"
 
-#: ecolex/templates/details/literature.html:41
+#: templates/details/literature.html:48
 msgid "Monograph"
 msgstr "Monografía"
 
-#: ecolex/templates/details/literature.html:49
+#: templates/details/literature.html:56
 msgid "Publication year"
 msgstr ""
 
-#: ecolex/templates/details/literature.html:59
-#: ecolex/templates/details/treaty.html:46
+#: templates/details/literature.html:71 templates/details/treaty.html:62
 msgid "Title"
 msgstr "Título"
 
-#: ecolex/templates/details/literature.html:67
-#: ecolex/templates/short_display/literature.html:23
+#: templates/details/literature.html:79 templates/results_sidebar.html:182
+#: templates/short_display/literature.html:23
 msgid "Publisher"
 msgstr "Editor"
 
-#: ecolex/templates/details/literature.html:85
+#: templates/details/literature.html:97
 msgid "Pages"
 msgstr "Número de páginas"
 
-#: ecolex/templates/details/literature.html:95
+#: templates/details/literature.html:107
 msgid "Conference"
 msgstr "Conferencia"
 
-#: ecolex/templates/details/literature.html:100
-#: ecolex/templates/details/treaty.html:64
+#: templates/details/literature.html:112 templates/details/treaty.html:80
+#: templates/results_sidebar.html:33
 msgid "Language"
 msgstr "Idioma"
 
-#: ecolex/templates/details/literature.html:109
-#: ecolex/templates/details/treaty.html:32
-#: ecolex/templates/short_display/literature.html:30
+#: templates/details/literature.html:121 templates/details/treaty.html:39
+#: templates/results_sidebar.html:97
+#: templates/short_display/literature.html:30
 msgid "Field of application"
 msgstr "Campo de aplicación"
 
-#: ecolex/templates/details/literature.html:158
+#: templates/details/literature.html:170
 msgid "Available DOI"
 msgstr ""
 
-#: ecolex/templates/details/literature.html:212
+#: templates/details/literature.html:190
+msgid "References to"
+msgstr ""
+
+#: templates/details/literature.html:219
 msgid "Court decision"
 msgstr "Decisiones judiciales"
 
-#: ecolex/templates/details/literature.html:238
+#: templates/details/literature.html:245
 msgid "References from"
 msgstr "Las referencias de"
 
-#: ecolex/templates/details/treaty.html:40
+#: templates/details/treaty.html:56
 msgid "Title abbreviation"
 msgstr "Título abreviado"
 
-#: ecolex/templates/details/treaty.html:54
-#: ecolex/templates/short_display/treaty.html:8
+#: templates/details/treaty.html:70 templates/results_sidebar.html:107
+#: templates/short_display/treaty.html:8
 msgid "Place of adoption"
 msgstr "Lugar de adopción"
 
-#: ecolex/templates/details/treaty.html:59
+#: templates/details/treaty.html:75 templates/results_sidebar.html:104
 msgid "Depository"
 msgstr "Depositario"
 
-#: ecolex/templates/details/treaty.html:69
+#: templates/details/treaty.html:85
 msgid "Entry into force"
 msgstr "Entrada en vigor"
 
-#: ecolex/templates/details/treaty.html:120
+#: templates/details/treaty.html:136
 msgid "Comment"
 msgstr "Comentario"
 
-#: ecolex/templates/details/treaty.html:173
+#: templates/details/treaty.html:176
 msgid "See Expanded View"
 msgstr "Vista ampliada"
 
-#: ecolex/templates/details/treaty.html:178
+#: templates/details/treaty.html:181
 msgid "Country/Participant"
 msgstr "País/Participante"
 
-#: ecolex/templates/details/treaty.html:183
+#: templates/details/treaty.html:186
 msgid "Countries"
 msgstr "Países"
 
-#: ecolex/templates/details/treaty.html:203
+#: templates/details/treaty.html:206
 msgid "Not available"
 msgstr "No disponible"
 
-#: ecolex/templates/details/treaty.html:222
+#: templates/details/treaty.html:225
 msgid "Treaty references"
 msgstr "Referencias a tratados"
 
-#: ecolex/templates/details/treaty.html:245
+#: templates/details/treaty.html:248
 msgid "Legislation references"
 msgstr "Referencias en la legislación nacional"
 
-#: ecolex/templates/details/treaty.html:249
+#: templates/details/treaty.html:252
 msgid "Implemented by"
 msgstr "Implementado por"
 
-#: ecolex/templates/details/treaty.html:285
+#: templates/details/treaty.html:288
 msgid "Other references"
 msgstr "Otras referencias"
 
-#: ecolex/templates/details/treaty.html:288
+#: templates/details/treaty.html:291
 msgid "COP decisions"
 msgstr "Decisiones de la COP"
 
-#: ecolex/templates/details/treaty.html:290
+#: templates/details/treaty.html:293
 msgid "decisions"
 msgstr "decisiones"
 
-#: ecolex/templates/details/treaty.html:290
-#: ecolex/templates/details/treaty.html:301
-#: ecolex/templates/details/treaty.html:312
+#: templates/details/treaty.html:293 templates/details/treaty.html:304
+#: templates/details/treaty.html:315
 msgid "related to this treaty."
 msgstr "relacionada con este tratado"
 
-#: ecolex/templates/details/treaty.html:291
+#: templates/details/treaty.html:294
 msgid "View decisions"
 msgstr "Ver las decisiones"
 
-#: ecolex/templates/details/treaty.html:303
+#: templates/details/treaty.html:306
 msgid "View literature"
 msgstr "Ver las literaturas"
 
-#: ecolex/templates/details/treaty.html:312
+#: templates/details/treaty.html:315
 msgid "court decisions"
 msgstr "decisiones judiciales"
 
-#: ecolex/templates/details/treaty.html:313
+#: templates/details/treaty.html:316
 msgid "View court decisions"
 msgstr "Ver las decisiones judiciales"
 
-#: ecolex/templates/layout.html:44
+#: templates/layout.html:44
 msgid "Home"
 msgstr "Inicio"
 
-#: ecolex/templates/layout.html:45
+#: templates/layout.html:45
 msgid "About ECOLEX"
 msgstr "Sobre"
 
-#: ecolex/templates/layout.html:47
+#: templates/layout.html:47
 msgid "Other tools"
 msgstr "Otras herramientas"
 
-#: ecolex/templates/layout.html:50
+#: templates/layout.html:50
 msgid "Take a tour"
 msgstr "Hacer un recorrido"
 
-#: ecolex/templates/layout.html:55
+#: templates/layout.html:55
 msgid "Language:"
 msgstr "Idioma:"
 
-#: ecolex/templates/layout.html:89 ecolex/templates/layout.html.py:149
+#: templates/layout.html:89 templates/layout.html:149
 msgid "The gateway to "
 msgstr "El portal del"
 
-#: ecolex/templates/layout.html:89 ecolex/templates/layout.html.py:149
+#: templates/layout.html:89 templates/layout.html:149
 msgid "environmental law"
 msgstr "derecho ambiental"
 
-#: ecolex/templates/layout.html:98 ecolex/templates/layout.html.py:158
+#: templates/layout.html:98 templates/layout.html:158
 msgid "Search in record and full text"
 msgstr "Buscar en el registro y el texto completo"
 
-#: ecolex/templates/layout.html:100 ecolex/templates/layout.html.py:154
-#: ecolex/templates/layout.html:163
+#: templates/layout.html:100 templates/layout.html:154
+#: templates/layout.html:163
 msgid "Search"
 msgstr "Buscar"
 
-#: ecolex/templates/layout.html:189
+#: templates/layout.html:189
 msgid "User Agreement"
 msgstr "Acuerdo del Usuario"
 
-#: ecolex/templates/layout.html:191
+#: templates/layout.html:191
 msgid "Privacy"
 msgstr "Privacidad"
 
-#: ecolex/templates/layout.html:193
+#: templates/layout.html:193
 msgid "Acknowledgments"
 msgstr "Econocimientos"
 
-#: ecolex/templates/layout.html:198
+#: templates/layout.html:198
 msgid "Joint initiative of "
 msgstr "Iniciativa conjunta de"
 
-#: ecolex/templates/results_main.html:8
+#: templates/results_main.html:8
 msgid "Did you mean:"
 msgstr "Querías decir:"
 
-#: ecolex/templates/results_main.html:16
+#: templates/results_main.html:16
 msgid "Found"
 msgstr "Encontró"
 
-#: ecolex/templates/results_main.html:18
+#: templates/results_main.html:18
 msgid "result"
 msgstr "resultado"
 
-#: ecolex/templates/results_main.html:22
+#: templates/results_main.html:22
 msgid "COP decision"
 msgstr "Decision de COP"
 
-#: ecolex/templates/results_main.html:24
+#: templates/results_main.html:24
 msgid "literature item"
 msgstr "elemento de la literatura"
 
-#: ecolex/templates/results_main.html:26
+#: templates/results_main.html:26
 msgid "court decision"
 msgstr "Decision judicial"
 
-#: ecolex/templates/results_main.html:28
+#: templates/results_main.html:28
 msgid "legislation record"
 msgstr ""
 
-#: ecolex/templates/results_main.html:34
+#: templates/results_main.html:34
 msgid "Show only"
 msgstr "Mostrar solo"
 
-#: ecolex/templates/results_sidebar.html:5
-#: ecolex/templates/results_sidebar.html:175
+#: templates/results_sidebar.html:5 templates/results_sidebar.html:196
 msgid "Reset all filters"
 msgstr "Reajustar todos los filtros"
 
-#: ecolex/templates/results_sidebar.html:18
+#: templates/results_sidebar.html:18
 msgid "Common filters"
 msgstr "Filtros comunes"
 
-#: ecolex/templates/results_sidebar.html:35
+#: templates/results_sidebar.html:30
+msgid "Geographical Area"
+msgstr "Área geográphica"
+
+#: templates/results_sidebar.html:40
 msgid "Year / Period"
 msgstr "Año / Período"
 
-#: ecolex/templates/results_sidebar.html:39
+#: templates/results_sidebar.html:44
 msgid "Reset"
 msgstr "Reiniciar"
 
-#: ecolex/templates/results_sidebar.html:85
+#: templates/results_sidebar.html:90
 msgid "Treaty filters"
 msgstr "Filtros de tratados"
 
-#: ecolex/templates/results_sidebar.html:108
+#: templates/results_sidebar.html:118
 msgid "COP Decision filters"
 msgstr "Filtros de decision de la COP"
 
-#: ecolex/templates/results_sidebar.html:127
+#: templates/results_sidebar.html:126
+msgid "Type of document"
+msgstr "Tipo de documento"
+
+#: templates/results_sidebar.html:130
+msgid "Decision status"
+msgstr "Estado de decisión"
+
+#: templates/results_sidebar.html:140
 msgid "Legislation filters"
 msgstr "Filtros de legislación"
 
-#: ecolex/templates/results_sidebar.html:142
+#: templates/results_sidebar.html:146 templates/results_sidebar.html:163
+msgid "Sub-national/state level"
+msgstr "Nivel sub-nacional / estatal"
+
+#: templates/results_sidebar.html:157
 msgid "Court decision filters"
 msgstr "Filtros de decision judiciale"
 
-#: ecolex/templates/results_sidebar.html:156
+#: templates/results_sidebar.html:173
 msgid "Literature filters"
 msgstr "Filtros de doctrina"
 
-#: ecolex/templates/short_display/decision.html:5
+#: templates/short_display/decision.html:5
 msgid "Decision"
 msgstr "Decision"
 
-#: ecolex/templates/short_display/literature.html:13
-#: ecolex/templates/short_display/literature.html:17
+#: templates/short_display/literature.html:13
+#: templates/short_display/literature.html:17
 msgid "In"
 msgstr "En"
 
-#: ecolex/templates/short_display/literature.html:24
+#: templates/short_display/literature.html:24
 msgid "Publication place"
 msgstr "Lugar de publicación"
 
-#: ecolex/templates/short_display/literature.html:25
+#: templates/short_display/literature.html:25
 msgid "Publication date"
 msgstr "Fecha del texto"
 
-#: ecolex/templates/tour.html:18
+#: templates/tour.html:18
 msgid "Welcome to ECOLEX"
 msgstr "Bienvenido a ECOLEX"
 
-#: ecolex/templates/tour.html:19
+#: templates/tour.html:19
 msgid "<p>Please follow the tour to the end. It only takes 5 minutes.</p>"
 msgstr ""
 
-#: ecolex/templates/tour.html:26
+#: templates/tour.html:26
 msgid "Permanent search bar"
 msgstr ""
 
-#: ecolex/templates/tour.html:27
+#: templates/tour.html:27
 msgid ""
 "<p>Always visible from any page. Provides <strong>quick access</strong> to "
 "the website's main function.</p><p>We'll start by searching for <em>Fishery "
@@ -628,170 +613,170 @@ msgstr ""
 "rápido </strong> para la función principal del sitio web.</p><p> Vamos a "
 "empezar por la búsqueda de <em> conservación de pesquerías</em>.</p>"
 
-#: ecolex/templates/tour.html:37
+#: templates/tour.html:37
 msgid "Oops, a typo!"
 msgstr ""
 
-#: ecolex/templates/tour.html:38
+#: templates/tour.html:38
 msgid ""
 "<p><strong>Spelling corrections</strong> lead to more relevant results and a "
 "better user experience.</p><div class='popover-hint'>Click on the suggested "
 "text!</div>"
 msgstr ""
 
-#: ecolex/templates/tour.html:51
+#: templates/tour.html:51
 msgid "Highlighted results"
 msgstr ""
 
-#: ecolex/templates/tour.html:52
+#: templates/tour.html:52
 msgid "<p>Every matched word is in bold, like <em>Conservation</em>.</p>"
 msgstr ""
 
-#: ecolex/templates/tour.html:68
+#: templates/tour.html:68
 msgid "Using double quotes"
 msgstr ""
 
-#: ecolex/templates/tour.html:69
+#: templates/tour.html:69
 msgid ""
 "<p>Double quotes may be used to find more specific results.</p><p>All "
 "results must contain <strong>Fishery conservation</strong> (together) now.</"
 "p>"
 msgstr ""
 
-#: ecolex/templates/tour.html:92
+#: templates/tour.html:92
 msgid "Multiple datasets"
 msgstr ""
 
-#: ecolex/templates/tour.html:93
+#: templates/tour.html:93
 msgid ""
 "<p>You may search within any combination of datasets.</p><p>We have just "
 "selected treaties and legislation.</p>"
 msgstr ""
 
-#: ecolex/templates/tour.html:99
+#: templates/tour.html:99
 msgid "Sorting results"
 msgstr ""
 
-#: ecolex/templates/tour.html:100
+#: templates/tour.html:100
 msgid ""
 "<p>When searching for a phrase, results are sorted by relevance.</p><p>You "
 "can also sort them by date.</p>"
 msgstr ""
 
-#: ecolex/templates/tour.html:106
+#: templates/tour.html:106
 msgid "Filtering"
 msgstr ""
 
-#: ecolex/templates/tour.html:107
+#: templates/tour.html:107
 msgid ""
 "<p>You can obtain more specific results by applying filters.</p><p>Click on "
 "Geographical Area and select South America.</p><p>Try using the keyboard to "
 "search for values and ENTER to select them.</p>"
 msgstr ""
 
-#: ecolex/templates/tour.html:113
+#: templates/tour.html:113
 msgid "More filters"
 msgstr ""
 
-#: ecolex/templates/tour.html:114
+#: templates/tour.html:114
 msgid ""
 "<p>Each dataset has its own specific fields for filtering. They are shown or "
 "hidden when more datasets are selected.</p>"
 msgstr ""
 
-#: ecolex/templates/tour.html:125
+#: templates/tour.html:125
 msgid "The details page"
 msgstr ""
 
-#: ecolex/templates/tour.html:126
+#: templates/tour.html:126
 msgid ""
 "<p>The full display pages are designed to emphasize structure and "
 "readability.</p>"
 msgstr ""
 
-#: ecolex/templates/tour.html:132
+#: templates/tour.html:132
 msgid "ECOLEX is multilingual"
 msgstr ""
 
-#: ecolex/templates/tour.html:133
+#: templates/tour.html:133
 msgid ""
 "<p>You can switch the language and translated content will be presented, "
 "where available.</p><p>Let's change to Spanish.</p>"
 msgstr ""
 
-#: ecolex/templates/tour.html:141
+#: templates/tour.html:141
 msgid "<p>The treaty title is now translated where applicable.</p>"
 msgstr ""
 
-#: ecolex/templates/tour.html:147
+#: templates/tour.html:147
 msgid "Treaty participants map"
 msgstr ""
 
-#: ecolex/templates/tour.html:148
+#: templates/tour.html:148
 msgid ""
 "<div class='popover-hint'>Click on the Show Map to view the treaty "
 "participants!</div>"
 msgstr ""
 
-#: ecolex/templates/tour.html:154
+#: templates/tour.html:154
 msgid "Simple navigation"
 msgstr ""
 
-#: ecolex/templates/tour.html:155
+#: templates/tour.html:155
 msgid ""
 "<p>You can return to the search results without losing the search criteria "
 "by clicking on the breadcrumb links.</p>"
 msgstr ""
 
-#: ecolex/templates/tour.html:162
+#: templates/tour.html:162
 msgid "Complex filter options"
 msgstr ""
 
-#: ecolex/templates/tour.html:163
+#: templates/tour.html:163
 msgid ""
 "<p>You can combine the filters in various ways. For instance, treaties "
 "tagged with both <em>Biodiversity</em> and <em>Aquaculture</em>, by using "
 "the AND/OR switch when more values are present.</p>"
 msgstr ""
 
-#: ecolex/templates/tour.html:169
+#: templates/tour.html:169
 msgid "Reset filters"
 msgstr ""
 
-#: ecolex/templates/tour.html:170
+#: templates/tour.html:170
 msgid ""
 "<p>Filters can be easily removed using their individual <em>Reset</em> link, "
 "or the global <em>Reset all filters</em> button.</p>"
 msgstr ""
 
-#: ecolex/templates/tour.html:176
+#: templates/tour.html:176
 msgid "Change filters"
 msgstr ""
 
-#: ecolex/templates/tour.html:177
+#: templates/tour.html:177
 msgid ""
 "<p>To remove just one value, use the small red [x] button on the right.</p>"
 msgstr ""
 
-#: ecolex/templates/tour.html:182
+#: templates/tour.html:182
 msgid "Mobile and tablet support"
 msgstr ""
 
-#: ecolex/templates/tour.html:183
+#: templates/tour.html:183
 msgid ""
 "<p>You can use ECOLEX on your smartphone or tablet, as well. The layout will "
 "automatically adjust to the size of your device.</p><p>Thank you for taking "
 "the time and we hope you enjoy using ECOLEX.</p>"
 msgstr ""
 
-#: ecolex/xforms.py:26
+#: xforms.py:85
 msgid "most recent"
 msgstr "más reciente"
 
-#: ecolex/xforms.py:27
+#: xforms.py:86
 msgid "least recent"
 msgstr "menos reciente"
 
-#: ecolex/xforms.py:28
+#: xforms.py:87
 msgid "relevance"
 msgstr "pertinencia"

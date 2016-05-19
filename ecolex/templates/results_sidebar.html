@@ -18,15 +18,20 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
       data-target="#filter-global">{% trans 'Common filters' %}</h5>
   <div id="filter-global" class="collapse in">
 
-{% include "bits/selection_facet.html" with title="Subject" placeholder="Add subjects…" viewname="api:xsubjects-list" field=form.xsubjects %}
+{% trans "Subject" as title %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add subjects…" viewname="api:xsubjects-list" field=form.xsubjects %}
 
-{% include "bits/selection_facet.html" with title="Keywords" placeholder="Add keywords…" viewname="api:xkeywords-list" field=form.xkeywords %}
+{% trans "Keywords" as title %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add keywords…" viewname="api:xkeywords-list" field=form.xkeywords %}
 
-{% include "bits/selection_facet.html" with title="Country" placeholder="Add countries…" viewname="api:xcountry-list" field=form.xcountry %}
+{% trans "Country" as title %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add countries…" viewname="api:xcountry-list" field=form.xcountry %}
 
-{% include "bits/selection_facet.html" with title="Geographical Area" placeholder="Add geographical areas…" viewname="api:xregion-list" field=form.xregion %}
+{% trans "Geographical Area" as title %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add geographical areas…" viewname="api:xregion-list" field=form.xregion %}
 
-{% include "bits/selection_facet.html" with title="Language" placeholder="Add languages…" viewname="api:xlanguage-list" field=form.xlanguage %}
+{% trans "Language" as title %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add languages…" viewname="api:xlanguage-list" field=form.xlanguage %}
 
 {% with dmin=stats.xdate.min dmax=stats.xdate.max %}
 
@@ -86,16 +91,21 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 
     <div id="filter-treaties" class="collapse {% if form.has_treaty %}in{% endif %}">
 
-{% include 'bits/checkbox_facet.html' with title="Document type" field=form.tr_type_of_document show_empty=True %}
+{% trans "Document type" as title %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.tr_type_of_document show_empty=True %}
 
-{% include 'bits/checkbox_facet.html' with title="Field of application" field=form.tr_field_of_application show_empty=True %}
+{% trans "Field of application" as title %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.tr_field_of_application show_empty=True %}
 
-{% include 'bits/checkbox_facet.html' with title="Status" field=form.tr_status show_empty=True %}
+{% trans "Status" as title %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.tr_status show_empty=True %}
 
 {# TODO: this is badly named deposit*o*ry in code #}
-{% include "bits/selection_facet.html" with title="Depository" placeholder="Add depository…" viewname="api:tr-depository-list" field=form.tr_depository %}
+{% trans "Depository" as title %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add depository…" viewname="api:tr-depository-list" field=form.tr_depository %}
 
-{% include "bits/selection_facet.html" with title="Place of adoption" placeholder="Add place…" viewname="api:tr-place-of-adoption-list" field=form.tr_place_of_adoption %}
+{% trans "Place of adoption" as title %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add place…" viewname="api:tr-place-of-adoption-list" field=form.tr_place_of_adoption %}
 
     </div>
 </fieldset>
@@ -109,13 +119,16 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 
     <div id="filter-cop-decisions" class="collapse {% if form.has_decision %}in{% endif %}">
 
-{% include "bits/selection_facet.html" with title="Treaty" placeholder="Add treaties…" viewname="api:dec-treaty-name-list" field=form.dec_treaty_name %}
+{% trans "Treaty" as title %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add treaties…" viewname="api:dec-treaty-name-list" field=form.dec_treaty_name %}
 
 {% if facets.dec_type_of_document.results %}
-{% include 'bits/checkbox_facet.html' with title="Type of document" field=form.dec_type_of_document %}
+{% trans "Type of document" as title %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.dec_type_of_document %}
 {% endif %}
 
-{% include 'bits/checkbox_facet.html' with title="Decision status" field=form.dec_status show_empty=True %}
+{% trans "Decision status" as title %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.dec_status show_empty=True %}
 
     </div>
 </fieldset>
@@ -127,9 +140,11 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
     <h5 data-toggle="collapse" {% if not form.has_legislation %}class="collapsed"{% endif %}data-target="#filter-legislation">{% trans 'Legislation filters' %}</h5>
     <div id="filter-legislation" class="collapse {% if form.has_legislation %}in{% endif %}">
 
-{% include 'bits/checkbox_facet.html' with title="Document type" field=form.leg_type_of_document show_empty=True %}
+{% trans "Document type" as title %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.leg_type_of_document show_empty=True %}
 
-{% include "bits/selection_facet.html" with title="Sub-national/state level" placeholder="Add territory…" viewname="api:leg-territorial-subdivision-list" field=form.leg_territorial_subdivision %}
+{% trans "Sub-national/state level" as title %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add territory…" viewname="api:leg-territorial-subdivision-list" field=form.leg_territorial_subdivision %}
 
     </div>
   </fieldset>
@@ -142,9 +157,11 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
         data-target="#filter-court-decisions">{% trans 'Court decision filters' %}</h5>
     <div id="filter-court-decisions" class="collapse {% if form.has_court_decision %}in{% endif %}">
 
-{% include 'bits/checkbox_facet.html' with title="Type of court" field=form.cd_type_of_document show_empty=True %}
+{% trans "Type of court" as title %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.cd_type_of_document show_empty=True %}
 
-{% include "bits/selection_facet.html" with title="Sub-national/state level" placeholder="Add territory…" viewname="api:cd-territorial-subdivision-list" field=form.cd_territorial_subdivision %}
+{% trans "Sub-national/state level" as title %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add territory…" viewname="api:cd-territorial-subdivision-list" field=form.cd_territorial_subdivision %}
 
     </div>
   </fieldset>
@@ -156,13 +173,17 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
     <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">{% trans 'Literature filters' %}</h5>
     <div id="filter-literatures" class="collapse {% if form.has_literature %}in{% endif %}">
 
-{% include "bits/selection_facet.html" with title="Author" placeholder="Add author…" viewname="api:lit-author-list" field=form.lit_author %}
+{% trans "Author" as title %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add author…" viewname="api:lit-author-list" field=form.lit_author %}
 
-{% include "bits/selection_facet.html" with title="Journal/Series" placeholder="Add journal/series…" viewname="api:lit-orig-serial-title-list" field=form.lit_orig_serial_title %}
+{% trans "Journal/Series" as title %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add journal/series…" viewname="api:lit-orig-serial-title-list" field=form.lit_orig_serial_title %}
 
-{% include "bits/selection_facet.html" with title="Publisher" placeholder="Add publisher…" viewname="api:lit-publisher-list" field=form.lit_publisher %}
+{% trans "Publisher" as title %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add publisher…" viewname="api:lit-publisher-list" field=form.lit_publisher %}
 
-{% include "bits/selection_facet.html" with title="Document type" placeholder="Add document type…" viewname="api:lit-type-of-text-list" field=form.lit_type_of_text %}
+{% trans "Document type" as title %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add document type…" viewname="api:lit-type-of-text-list" field=form.lit_type_of_text %}
 
     </div>
   </fieldset>
