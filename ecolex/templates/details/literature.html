@@ -56,6 +56,11 @@
         <dt>{% trans 'Publication year' %}</dt>
         <dd>{{ document.date|safe }}</dd>
       {% endif %}
+      <dt>{% trans 'Source' %}</dt>
+      <dd>
+        <a target="_blank" href="http://iucn.org">IUCN</a>
+        (ID: {{ document.document_id }})
+      </dd>
     </dl>
   </header>
 
@@ -177,11 +182,6 @@
       </dd>
       {% endif %}
 
-      <dt>{% trans 'Source' %}</dt>
-      <dd>
-        <a target="_blank" href="http://iucn.org">IUCN</a>
-        (ID: {{ document.document_id }})
-      </dd>
     </dl>
   </section>
 

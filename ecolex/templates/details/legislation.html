@@ -47,6 +47,14 @@
         {% if document.consolidation_date %}
           <span class="sr-date sr-help" title="{% trans 'Consolidation date' %}">({{ document.consolidation_date }})</span>
         {% endif %}
+
+      <dt>{% trans 'Source' %}</dt>
+      <dd>
+        FAO,
+        <a target="_blank" href="http://faolex.fao.org/">FAOLEX</a>
+        (ID: {{ document.document_id }})
+      </dd>
+
       </dd>
       {% if document.long_title %}
         <dt>{% trans 'Long title' %}</dt><dd>{{ document.long_title }}</dd>
@@ -112,12 +120,6 @@
         </dd>
       {% endif %}
 
-      <dt>{% trans 'Source' %}</dt>
-      <dd>
-        FAO,
-        <a target="_blank" href="http://faolex.fao.org/">FAOLEX</a>
-        (ID: {{ document.document_id }})
-      </dd>
     </dl>
   </section>
 

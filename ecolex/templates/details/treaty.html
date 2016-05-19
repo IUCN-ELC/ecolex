@@ -38,6 +38,15 @@
       <dt>{% trans 'Document type' %}</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
       <dt>{% trans 'Field of application' %}</dt> <dd>{{ document.field_of_application|join:"," }}</dd>
       <dt>{% trans 'Date' %}</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
+
+      <dt>{% trans 'Source' %}</dt>
+      <dd>
+        {# Ugly #}
+        {% if document.type_of_document|slice:":2" == 'Bi' %}
+          <a target="_blank" href="http://faolex.fao.org/">FAO, FAOLEX;</a>&nbsp;
+        {% endif %}
+        <a target="_blank" href="http://iucn.org">IUCN</a> (ID: {{ document.document_id }})
+      </dd>
     </dl>
   </header>
 
@@ -160,15 +169,6 @@
           {% endfor %}
         </dd>
       {% endif %}
-
-      <dt>{% trans 'Source' %}</dt>
-      <dd>
-        {# Ugly #}
-        {% if document.type_of_document|slice:":2" == 'Bi' %}
-          <a target="_blank" href="http://faolex.fao.org/">FAO, FAOLEX;</a>&nbsp;
-        {% endif %}
-        <a target="_blank" href="http://iucn.org">IUCN</a> (ID: {{ document.document_id }})
-      </dd>
 
     </dl>
   </section>

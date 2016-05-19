@@ -40,6 +40,7 @@
       <dt>{% trans 'Document type' %}</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
       <dt>{% trans 'Reference number' %}</dt> <dd>{{ document.document_id|default:"-" }}</dd>
       <dt>{% trans 'Date' %}</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
+      <dt>{% trans 'Source' %}</dt><dd>UNEP, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
     </dl>
   </header>
 
@@ -87,9 +88,6 @@
              target="_blank">{{ document.url|url_normalize|extract_hostname|default:"No link" }}</a>
         </dd>
       {% endif %}
-
-      <dt>{% trans 'Source' %}</dt>
-      <dd>UNEP, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
 
       {% if document.files %}
         <dt>{% trans 'Files' %}</dt>

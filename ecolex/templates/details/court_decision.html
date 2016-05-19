@@ -43,6 +43,8 @@
         <dd>{{ document.type_of_document|capfirst }}</dd>
       {% endif %}
       <dt>{% trans 'Date' %}</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
+      <dt>{% trans 'Source' %}</dt>
+      <dd>UNEP, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
     </dl>
   </header>
 
@@ -118,8 +120,6 @@
         </dd>
       {% endif %}
 
-      <dt>{% trans 'Source' %}</dt>
-      <dd>UNEP, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
     </dl>
   </section>
 
