@@ -791,4 +791,4 @@ msgstr "moins récente"
 
 #: ecolex/xforms.py:28
 msgid "relevance"
-msgstr ""
+msgstr "pertinence"

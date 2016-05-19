@@ -131,11 +131,21 @@ class Queryer(object):
             .highlight(self.get_highlight_fields())
             .paginate(start=0, rows=1)  # fetch a single row
         )
-
         response = self._execute(search)
-
         if response.result.numFound > 1:
             raise MultipleObjectsReturned()
+        elif response.result.numFound == 0:
+            search = (
+                self.interface.query()
+                .filter(**{
+                    k: self.to_query(v)
+                    for k, v in kwargs.items()
+                })
+                .highlight(self.get_highlight_fields())
+                .paginate(start=0, rows=1)  # fetch a single row
+            )
+            response = self._execute(search)
+
         try:
             result = response.result.docs[0]
         except IndexError:
