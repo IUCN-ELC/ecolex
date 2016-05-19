@@ -294,10 +294,10 @@ class DecisionSchema(CommonSchema):
             'abstract': 20,
         })
         solr_highlight = [
-            'short_title', #'body',
+            'short_title',  # 'body',
         ]
 
-    ID_FIELD = 'decNumber'
+    ID_FIELD = 'decId'
     KEYWORDS_FIELD = 'decKeyword'
     SUBJECTS_FIELD = 'docSubject'  # COP decisions don't have subjects (?)
 

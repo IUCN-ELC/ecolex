@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block meta %}
-  <title>{{ document.title }}</title>
+  <title>{{ document.title|striptags }}</title>
   {% if document.abstract %}
   <meta name="description" content="{{ document.abstract }}" />
   {% endif %}
@@ -57,7 +57,7 @@
 
       </dd>
       {% if document.long_title %}
-        <dt>{% trans 'Long title' %}</dt><dd>{{ document.long_title }}</dd>
+        <dt>{% trans 'Long title' %}</dt><dd>{{ document.long_title|safe }}</dd>
       {% endif %}
     </dl>
   </header>
