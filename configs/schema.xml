@@ -39,10 +39,10 @@
       </analyzer>
       <analyzer type="query">
         <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.ASCIIFoldingFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt,lang/stopwords_es.txt,lang/stopwords_fr.txt" />
         <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
         <filter class="solr.LowerCaseFilterFactory"/>
-        <filter class="solr.ASCIIFoldingFilterFactory"/>
       </analyzer>
     </fieldType>
 
