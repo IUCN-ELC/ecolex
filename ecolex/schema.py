@@ -508,7 +508,7 @@ class CourtDecisionSchema(CommonSchema):
             'type_of_document', 'territorial_subdivision',
         ]
         solr_fetch = CommonSchema.Meta.solr_fetch + [
-            'title_of_text', 'type_of_document', 'country', 'date_of_text',
+            'title_of_text', 'type_of_document', 'country', 'date_of_text', 'leo_english_url'
         ]
         solr_boost = dict(CommonSchema.Meta.solr_boost, **{
             'title_of_text': 100,

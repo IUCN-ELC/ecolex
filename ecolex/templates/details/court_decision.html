@@ -44,7 +44,7 @@
       {% endif %}
       <dt>{% trans 'Date' %}</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
       <dt>{% trans 'Source' %}</dt>
-      <dd>UNEP, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
+      <dd>UNEP, <a target="_blank" href="{{ document.leo_english_url }}">InforMEA</a></dd>
     </dl>
   </header>
 
