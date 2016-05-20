@@ -3,8 +3,8 @@
 
 <div class="search-result-details">
   <strong class="sr-type">{% trans 'Decision' %}</strong>
-  {% if result.document_id %}
-    <span class="sr-id"> {{ result.document_id }} </span>
+  {% if result.dec_number %}
+    <span class="sr-id"> {{ result.dec_number }} </span>
   {% endif %} &ndash;
   <span class="sr-status sr-help" title="{% trans 'Status' %}: {{ result.status|capfirst }}">
     {{ result.status|capfirst }}
