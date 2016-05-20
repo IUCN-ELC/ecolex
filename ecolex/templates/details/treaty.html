@@ -232,7 +232,7 @@
           <dd>
             <div class="treaty-link-container">
               <h3 class="search-result-title">
-                <a href="{{ treaty.details_url }}"
+                <a href="{{ treaty.details_url }}?{{ query }}"
                    title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
               </h3>
               {% include 'short_display/treaty.html' with result=treaty %}
@@ -255,7 +255,7 @@
           <dd>
             <div class="treaty-link-container">
               <h3 class="search-result-title">
-                <a href="{{ legislation.details_url }}"
+                <a href="{{ legislation.details_url }}?{{ query }}"
                    title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
               </h3>
               {% include 'short_display/legislation.html' with result=legislation %}
@@ -272,7 +272,7 @@
           <dd>
             <div class="treaty-link-container">
               <h3 class="search-result-title">
-                <a href="{{ legislation.details_url }}"
+                <a href="{{ legislation.details_url }}?{{ query }}"
                    title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
               </h3>
               {% include 'short_display/legislation.html' with result=legislation %}

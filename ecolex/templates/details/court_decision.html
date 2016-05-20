@@ -134,7 +134,7 @@
             <dd>
               <div class="treaty-link-container">
                 <h3 class="search-result-title">
-                  <a href="{{ court_decision.details_url }}"
+                  <a href="{{ court_decision.details_url }}?{{ query }}"
                      title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
                 </h3>
                 {% include 'short_display/court_decision.html' with result=court_decision %}
@@ -151,7 +151,7 @@
         {% for treaty in document.treaties %}
           <dd>
             <h3 class="search-result-title">
-              <a href="{{ treaty.details_url }}"
+              <a href="{{ treaty.details_url }}?{{ query }}"
                  title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
             </h3>
             {% include 'short_display/treaty.html' with result=treaty %}
@@ -165,7 +165,7 @@
         {% for leg in document.legislation %}
           <dd>
             <h3 class="search-result-title">
-              <a href="{{ leg.details_url }}"
+              <a href="{{ leg.details_url }}?{{ query }}"
                  title="{{ leg.title|safe|striptags }}">{{ leg.title|safe }}</a>
             </h3>
             {% include 'short_display/legislation.html' with result=leg %}

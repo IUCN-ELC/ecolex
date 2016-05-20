@@ -248,7 +248,7 @@
         <dt>{% trans 'Literature' %}</dt>
         <dd>
           <h3 class="search-result-title">
-            <a href="{{ literature.details_url }}"
+            <a href="{{ literature.details_url }}?{{ query }}"
                title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
           </h3>
           {% include 'short_display/literature.html' with result=literature %}
