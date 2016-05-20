@@ -250,7 +250,7 @@ class CopDecisionImporter(object):
         for file_dict in files:
             url = file_dict['url']
             filename = file_dict['filename']
-            if url and filename:
+            if url and url not in urls and filename:
                 urls.append(url)
                 filenames.append(filename)
         return urls, filenames
