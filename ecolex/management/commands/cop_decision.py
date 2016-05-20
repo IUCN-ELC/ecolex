@@ -199,6 +199,9 @@ class CopDecisionImporter(object):
                     for k, v in TREATY_FIELDS_MAP.items():
                         if k in treaties[0]:
                             data[v] = treaties[0][k]
+                else:
+                    logger.warning('Treaty %s was not found for decision %s' %
+                                   (data['decTreatyId'], data['decId']))
 
             title = (data.get('decShortTitle_en') or
                      data.get('decShortTitle_es') or
