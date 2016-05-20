@@ -223,7 +223,9 @@ class CourtDecision(object):
         for json_field, solr_field in FIELD_MAP.items():
             json_value = self.data.get(json_field, None)
             if not json_value:
-                solr_decision[solr_field] = None
+                solr_decision[solr_field] = (None if solr_field
+                                             not in solr_decision else
+                                             solr_decision[solr_field])
             elif json_field in REFERENCE_FIELDS:
                 if json_field in FALSE_MULTILINGUAL_FIELDS:
                     json_value = json_value['und']
