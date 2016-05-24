@@ -281,7 +281,7 @@ msgstr ""
 
 #: templates/details/legislation.html:149
 msgid "Implements treaty"
-msgstr "Mis en oeuvre les traités"
+msgstr "Met en oeuvre les traités"
 
 #: templates/details/legislation.html:162
 msgid "Cites treaty"
@@ -828,10 +828,31 @@ msgid "Adopted"
 msgstr "Adopté"
 
 msgid "Amended"
-msgstr "Modificada"
+msgstr "Modifié"
 
 msgid "Draft"
 msgstr "Brouillon"
+
+msgid "Implements"
+msgstr "Implemente"
+
+msgid "Amended by"
+msgstr "Modifié par"
+
+msgid "Amends"
+msgstr "Modifie"
+
+msgid "Superseded by"
+msgstr "Remplacée par"
+
+msgid "Supersedes"
+msgstr "Remplace"
+
+msgid "Enabled by"
+msgstr ""
+
+msgid "Enables"
+msgstr ""
 
 #~ msgid "Found"
 #~ msgstr "Trouvé"

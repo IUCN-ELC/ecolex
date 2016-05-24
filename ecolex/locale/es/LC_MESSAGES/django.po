@@ -95,7 +95,7 @@ msgstr "Legislación"
 #: templates/bits/type_facet.html:78 templates/layout.html:125
 #: templates/results_main.html:37
 msgid "Court Decisions"
-msgstr "Decision judiciale"
+msgstr "Decisiones judiciales"
 
 #: templates/bits/type_facet.html:97 templates/details/literature.html:25
 #: templates/details/literature.html:232 templates/details/literature.html:248
@@ -835,6 +835,27 @@ msgstr "Modificada"
 
 msgid "Draft"
 msgstr "Borrador"
+
+msgid "Implements"
+msgstr "Implementa"
+
+msgid "Amended by"
+msgstr "Modificado por"
+
+msgid "Amends"
+msgstr "Modifica"
+
+msgid "Superseded by"
+msgstr "Sustituida por"
+
+msgid "Supersedes"
+msgstr "Reemplaza"
+
+msgid "Enabled by"
+msgstr ""
+
+msgid "Enables"
+msgstr ""
 
 #~ msgid "Found"
 #~ msgstr "Encontró"

@@ -40,7 +40,7 @@
       {% endif %}
       {% if document.type_of_document %}
         <dt>{% trans 'Type of court' %}</dt>
-        <dd>{{ document.type_of_document|capfirst }}</dd>
+        <dd>{% trans document.type_of_document %}</dd>
       {% endif %}
       <dt>{% trans 'Date' %}</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
       <dt>{% trans 'Source' %}</dt>

@@ -3,7 +3,7 @@
 
 <div class="search-result-details">
   <strong class="sr-type">{% trans 'Court Decision' %}</strong> |
-  <span class="sr-doctype sr-help" title="{% trans 'Type of court' %}">{{ result.type_of_document }}</span>
+  <span class="sr-doctype sr-help" title="{% trans 'Type of court' %}">{% trans result.type_of_document %}</span>
 
   {% if result.country %} |
     <span class="sr-country sr-help" title="{% trans 'Country' %}">{{ result.country|join:", " }}</span>
