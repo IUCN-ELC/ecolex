@@ -293,7 +293,7 @@ msgstr "Referencias a las decisiones judiciales"
 
 #: templates/details/legislation.html:179 templates/details/treaty.html:270
 msgid "Cited by"
-msgstr "Citado por"
+msgstr "Citada por"
 
 #: templates/details/literature.html:31 templates/results_sidebar.html:176
 #: templates/short_display/literature.html:6
@@ -840,22 +840,22 @@ msgid "Implements"
 msgstr "Implementa"
 
 msgid "Amended by"
-msgstr "Modificado por"
+msgstr "Enmendado porr"
 
 msgid "Amends"
-msgstr "Modifica"
+msgstr "Enmienda"
 
 msgid "Superseded by"
-msgstr "Sustituida por"
+msgstr "Remplazado por"
 
 msgid "Supersedes"
-msgstr "Reemplaza"
+msgstr "Remplaza"
 
 msgid "Enabled by"
-msgstr ""
+msgstr "Habilitado por"
 
 msgid "Enables"
-msgstr ""
+msgstr "Habilita"
 
 msgid "Repeals"
 msgstr ""

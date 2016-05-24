@@ -403,7 +403,7 @@ msgstr "Référence à des traités"
 
 #: templates/details/treaty.html:249
 msgid "Legislation references"
-msgstr "Références à la législation nationale"
+msgstr "Références dans la législation nationale"
 
 #: templates/details/treaty.html:253
 msgid "Implemented by"
@@ -411,7 +411,7 @@ msgstr "Implementé par"
 
 #: templates/details/treaty.html:289
 msgid "Other references"
-msgstr "Autres références"
+msgstr "D'autres références"
 
 #: templates/details/treaty.html:292
 msgid "COP decisions"
@@ -837,22 +837,22 @@ msgid "Implements"
 msgstr "Implemente"
 
 msgid "Amended by"
-msgstr "Modifié par"
+msgstr "Amendé par"
 
 msgid "Amends"
-msgstr "Modifie"
+msgstr "Amende"
 
 msgid "Superseded by"
-msgstr "Remplacée par"
+msgstr "Replacé par"
 
 msgid "Supersedes"
 msgstr "Remplace"
 
 msgid "Enabled by"
-msgstr ""
+msgstr "Habilité par"
 
 msgid "Enables"
-msgstr ""
+msgstr "Habilite"
 
 msgid "Repeals"
 msgstr ""
