@@ -120,7 +120,7 @@ msgstr "País"
 #: templates/details/court_decision.html:42 templates/results_sidebar.html:160
 #: templates/short_display/court_decision.html:6
 msgid "Type of court"
-msgstr "Tipo de tribunal"
+msgstr "Tipo de corte"
 
 #: templates/details/court_decision.html:45 templates/details/decision.html:42
 #: templates/details/legislation.html:44 templates/details/treaty.html:40
