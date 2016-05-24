@@ -235,7 +235,6 @@ class TreatySchema(CommonSchema):
                          multilingual=True)
     relevant_text_treaty = fields.List(fields.String(),
                                        load_from='trRelevantTextTreaty')
-    scope = fields.List(fields.String(), load_from='trScope')
     search_date = fields.Date(load_from='trSearchDate')
     seat_of_court = fields.List(fields.String(), load_from='trSeatOfCourt')
     status = fields.String(load_from='trStatus')

@@ -105,9 +105,9 @@
     <field name="trComment" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trText" type="text" indexed="true" stored="true"/>
 
-    <field name="trTypeOfText_en" type="text" indexed="true" stored="true" multiValued="false"/>
-    <field name="trTypeOfText_es" type="text" indexed="true" stored="true" multiValued="false"/>
-    <field name="trTypeOfText_fr" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="trTypeOfText_en" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="trTypeOfText_es" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="trTypeOfText_fr" type="string" indexed="true" stored="true" multiValued="false"/>
 
     <field name="trFieldOfApplication_en" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trFieldOfApplication_es" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -127,17 +127,17 @@
     <field name="trKeyword_es" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trKeyword_fr" type="text" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trLanguageOfDocument_en" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trLanguageOfDocument_es" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trLanguageOfDocument_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trLanguageOfDocument_en" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trLanguageOfDocument_es" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trLanguageOfDocument_fr" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="trSeatOfCourt" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="trCourtName" type="text" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trJurisdiction_en" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trJurisdiction_fr" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="trJurisdiction_es" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="trJurisdiction_en" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trJurisdiction_fr" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="trJurisdiction_es" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="trConfName" type="text" indexed="true" stored="true" multiValued="true"/>
 
@@ -158,7 +158,6 @@
     <field name="trBasin_es" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trBasin_fr" type="text" indexed="true" stored="true" multiValued="true"/>
 
-    <field name="trScope" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="trIntoForceTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="trRelevantTextTreaty" type="string" indexed="true" stored="true" multiValued="true"/>
 
@@ -586,6 +585,7 @@
     <field name="litKeyword_fr" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="litKeyword_es" type="text" indexed="true" stored="true" multiValued="true"/>
 
+    <!-- to be removed -->
     <field name="litScope_en" type="text" indexed="true" stored="true"/>
     <field name="litScope_fr" type="text" indexed="true" stored="true"/>
     <field name="litScope_es" type="text" indexed="true" stored="true"/>

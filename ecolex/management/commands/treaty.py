@@ -104,7 +104,6 @@ FIELD_MAP = {
     'region_fr_fr': 'trRegion_fr',
     'region_es_es': 'trRegion_es',
     'relevanttexttreaty': 'trRelevantTextTreaty',
-    'scope': 'trScope',
     'searchdate': 'trSearchDate',
     'seatofcourt': 'trSeatOfCourt',
 
