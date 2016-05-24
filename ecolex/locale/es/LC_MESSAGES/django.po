@@ -32,7 +32,7 @@ msgstr ""
 
 #: settings.py:169
 msgid "Other"
-msgstr ""
+msgstr "Otro"
 
 #: templates/bits/disclaimer.html:5
 msgid ""
@@ -790,6 +790,18 @@ msgstr "menos reciente"
 #: xforms.py:87
 msgid "relevance"
 msgstr "pertinencia"
+
+msgid "International court"
+msgstr "Corte internacional"
+
+msgid "National - higher court"
+msgstr "Nacional - corte superior"
+
+msgid "National - lower court"
+msgstr "Nacional - corte inferior"
+
+msgid "Others"
+msgstr "Otros"
 
 #~ msgid "Found"
 #~ msgstr "Encontró"

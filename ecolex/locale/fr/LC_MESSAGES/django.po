@@ -32,7 +32,7 @@ msgstr ""
 
 #: settings.py:169
 msgid "Other"
-msgstr ""
+msgstr "Autre"
 
 #: templates/bits/disclaimer.html:5
 msgid ""
@@ -788,6 +788,19 @@ msgstr "moins récente"
 msgid "relevance"
 msgstr "pertinence"
 
+msgid "International court"
+msgstr "Cour internationale"
+
+msgid "National - higher court"
+msgstr "Nationale - cour supérieure"
+
+msgid "National - lower court"
+msgstr "Nationale- cour inférieure"
+
+msgid "Others"
+msgstr "Autres"
+
+
 #~ msgid "Found"
 #~ msgstr "Trouvé"
 
@@ -802,3 +815,4 @@ msgstr "pertinence"
 
 #~ msgid "court decision"
 #~ msgstr "jurisprudence"
+

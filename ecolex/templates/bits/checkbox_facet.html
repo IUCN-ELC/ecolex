@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="filter">
 
   <div class="filter-header">
@@ -15,7 +17,7 @@
                  value="{{ item.text }}"{% if item.selected %}
                  checked{% endif %}{% if not item.count %}
                  disabled{% endif %}>
-          <span class="facet-text">{{ item.text|capfirst }}</span>
+          <span class="facet-text">{% trans item.text %}</span>
           &nbsp;
           <span class="facet-count">{{ item.count }}</span>
         </label>
