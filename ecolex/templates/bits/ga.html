@@ -3,7 +3,7 @@
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
   var ecolex_code = 'UA-75793139-1',
       informea_code = 'UA-75793139-3',
@@ -25,7 +25,7 @@
   }
 
   function send_hit(tracker_name, url) {
-    ga(tracker_name + '.set', 'referrer', "http://" + document.domain);
+    ga(tracker_name + '.set', 'referrer', document.referrer);
     ga(tracker_name + '.set', 'hostname', document.hostname);
     ga(tracker_name + '.set', 'location', url);
     ga(tracker_name + '.send', 'pageview');
