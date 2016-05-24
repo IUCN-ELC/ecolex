@@ -98,6 +98,7 @@ class DocumentModel(BaseModel):
             # TODO: field resolving logic should live in search,
             # the models shouldn't be aware of the underlying data structure.
             lookup_field = self._resolve_field(field)
+            lookup = list(lookup) if isinstance(lookup, list) else [lookup]
             if lookup_field in lookups:
                 # these better be both lists
                 lookups[lookup_field].extend(lookup)
