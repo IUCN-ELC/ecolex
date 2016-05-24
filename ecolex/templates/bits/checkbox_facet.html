@@ -17,7 +17,9 @@
                  value="{{ item.text }}"{% if item.selected %}
                  checked{% endif %}{% if not item.count %}
                  disabled{% endif %}>
-          <span class="facet-text">{% trans item.text %}</span>
+          {% with text=item.text|capfirst %}
+            <span class="facet-text">{% trans text %}</span>
+          {% endwith %}
           &nbsp;
           <span class="facet-count">{{ item.count }}</span>
         </label>

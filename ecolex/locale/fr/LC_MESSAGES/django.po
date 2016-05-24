@@ -797,9 +797,41 @@ msgstr "Nationale - cour supérieure"
 msgid "National - lower court"
 msgstr "Nationale- cour inférieure"
 
+msgid "Preliminary decision"
+msgstr "Décision préliminaire"
+
+msgid "Regulation"
+msgstr "Règlement"
+
 msgid "Others"
 msgstr "Autres"
 
+msgid "In force"
+msgstr "En force"
+
+msgid "Not in force"
+msgstr "Non en vigueur"
+
+msgid "Superseded"
+msgstr "Remplacé"
+
+msgid "Bilateral"
+msgstr "Bilatéral"
+
+msgid "Multilateral"
+msgstr "Multilatéral"
+
+msgid "Active"
+msgstr "Actif"
+
+msgid "Adopted"
+msgstr "Modifié"
+
+msgid "Amended"
+msgstr "Modificada"
+
+msgid "Draft"
+msgstr "Brouillon"
 
 #~ msgid "Found"
 #~ msgstr "Trouvé"

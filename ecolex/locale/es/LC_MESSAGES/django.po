@@ -800,8 +800,41 @@ msgstr "Nacional - corte superior"
 msgid "National - lower court"
 msgstr "Nacional - corte inferior"
 
+msgid "Preliminary decision"
+msgstr "Decisión preliminar"
+
+msgid "Regulation"
+msgstr "Regulación"
+
 msgid "Others"
 msgstr "Otros"
+
+msgid "In force"
+msgstr "En vigor"
+
+msgid "Not in force"
+msgstr "No vigente"
+
+msgid "Superseded"
+msgstr "Sustituida"
+
+msgid "Bilateral"
+msgstr "Bilateral"
+
+msgid "Multilateral"
+msgstr "Multilateral"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Adopted"
+msgstr "Adoptado"
+
+msgid "Amended"
+msgstr "Modificada"
+
+msgid "Draft"
+msgstr "Borrador"
 
 #~ msgid "Found"
 #~ msgstr "Encontró"
