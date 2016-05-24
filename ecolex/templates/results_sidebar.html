@@ -61,7 +61,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
                  min="{{ dmin }}"
                  max="{{ dmax }}"
                  novalidate
-                 placeholder="From {{ dmin }}">
+                 placeholder="{% trans 'From' %} {{ dmin }}">
         </div>
         <div class="slider-max">
           <!-- <label for="year-max">To</label> -->
@@ -71,7 +71,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
                  min="{{ dmin }}"
                  max="{{ dmax }}"
                  novalidate
-                 placeholder="To {{ dmax }}">
+                 placeholder="{% trans 'To' %} {{ dmax }}">
         </div>
       </div>
     </div>

@@ -12,23 +12,16 @@
 {% endif %}
 
 <p class="small clearfix">
-  {# Ugly #}
-    {% trans 'Found' %} <span id="number-of-results">{{ results.count|default:"no" }}</span>
-    {% if form.type.data|length != 1 %}
-      {% trans 'result' %}{{ results.count|pluralize }}.
-    {% elif 'treaty' in form.type.data %}
-      treat{{ results.count|pluralize:"y,ies" }}.
-    {% elif 'decision' in form.type.data %}
-      {% trans 'COP decision' %}{{ results.count|pluralize }}.
-    {% elif 'literature' in form.type.data %}
-      {% trans 'literature item' %}{{ results.count|pluralize }}.
-    {% elif 'court_decision' in form.type.data %}
-      {% trans 'court decision' %}{{ results.count|pluralize }}.
-    {% elif 'legislation' in form.type.data %}
-      {% trans 'legislation record' %}{{ results.count|pluralize }}.
-    {% else %}
-      {{ form.type.data|join:" or " }} thing, really.
-    {% endif %}
+  {% if results.count %}
+    {% blocktrans count counter=results.count %}
+      One result found.
+    {% plural %}
+      {{ counter }} results found.
+    {% endblocktrans %}
+  {% else %}
+    {%trans 'No matches found.' %}
+  {% endif %}
+
 {% if results %}
   {% with facets.type|get_facet_counts as type_count %}
     {% trans 'Show only' %}
