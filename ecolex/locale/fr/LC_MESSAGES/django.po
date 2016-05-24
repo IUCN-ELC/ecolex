@@ -854,6 +854,12 @@ msgstr ""
 msgid "Enables"
 msgstr ""
 
+msgid "Repeals"
+msgstr ""
+
+msgid "Repealed by"
+msgstr ""
+
 #~ msgid "Found"
 #~ msgstr "Trouvé"
 
