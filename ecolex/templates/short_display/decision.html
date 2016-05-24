@@ -6,9 +6,9 @@
   {% if result.dec_number %}
     <span class="sr-id"> {{ result.dec_number }} </span>
   {% endif %} &ndash;
-  <span class="sr-status sr-help" title="{% trans 'Status' %}: {{ result.status|capfirst }}">
-    {{ result.status|capfirst }}
-  </span>
+  {% with status=result.status|capfirst %}
+    <span class="sr-status sr-help" title="{% trans 'Status' %}: {% trans status %}">{% trans status %}</span>
+  {% endwith %}
   {% if result.date %} |
     <time class="sr-date sr-help" title="{% trans 'Date' %}: {{ result.date }}">
       {{ result.date|date:"b j, Y"|capfirst }}
