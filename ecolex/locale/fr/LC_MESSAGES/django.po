@@ -825,7 +825,7 @@ msgid "Active"
 msgstr "Actif"
 
 msgid "Adopted"
-msgstr "Modifié"
+msgstr "Adopté"
 
 msgid "Amended"
 msgstr "Modificada"
