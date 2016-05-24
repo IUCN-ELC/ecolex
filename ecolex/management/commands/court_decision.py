@@ -1,4 +1,5 @@
 from datetime import datetime
+from html import unescape
 import json
 import logging
 import logging.config
@@ -174,9 +175,8 @@ def get_value(key, value):
 
 
 def get_value_from_dict(valdict):
-    return valdict.get('safe_value',
-                       valdict.get('value',
-                                   valdict.get('label', valdict.get('url'))))
+    return unescape(valdict.get('value', valdict.get('safe_value',
+                    valdict.get('label', valdict.get('url')))))
 
 
 def get_json_values(import_field, import_value, json_dict, subject, doc_id):
