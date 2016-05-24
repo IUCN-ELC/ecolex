@@ -4,11 +4,14 @@ from urllib.parse import urlencode
 from django.conf import settings
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.http import Http404
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.utils.functional import cached_property
 from django.utils.translation import get_language
+
 from .xforms import SearchForm
 from .xsearch import Queryer, Searcher, SearchResponse
+from ecolex.export import get_exporter
+from ecolex.utils import RawSolr
 
 
 class HomepageView(TemplateView):
@@ -263,6 +266,28 @@ class RelatedDecisions(RelatedObjectsView):
                                    options=options, **lookups)
 
         return response
+
+
+class ExportView(View):
+    def get(self, request, **kwargs):
+        doctype = request.GET.get('type')
+        format = request.GET.get('format')
+        download = request.GET.get('download')
+
+        solr = RawSolr(settings.SOLR_URI)
+        q = 'type:{}'.format(doctype)
+        export_fields = [
+            'slug',
+            'cdTitleOfText_en',
+            'decShortTitle_en',
+            'trTitleOfText_en',
+            'litPaperTitleOfText_en',
+        ]
+        fl = ','.join(export_fields)
+        resp = solr.query(q, fl, format)
+
+        exporter = get_exporter(format)(resp)
+        return exporter.get_response(download)
 
 
 class PageNotFound(SearchViewMixin, TemplateView):

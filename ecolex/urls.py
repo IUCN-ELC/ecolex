@@ -29,6 +29,7 @@ urlpatterns = [
         'sitemaps': sitemaps,
         'template_name': 'sitemaps/translated_sitemap.xml',
     }),
+    url(r'^export/$', views.ExportView.as_view(), name='export'),
 ]
 
 urlpatterns += i18n_patterns(
