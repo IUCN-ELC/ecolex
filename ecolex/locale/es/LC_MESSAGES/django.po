@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-24 13:56+0000\n"
+"POT-Creation-Date: 2016-05-24 14:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,30 +77,30 @@ msgid "Sort by"
 msgstr "Ordenar por"
 
 #: templates/bits/type_facet.html:21 templates/layout.html:107
-#: templates/results_main.html:41
+#: templates/results_main.html:34
 msgid "Treaties"
 msgstr "Tratados"
 
 #: templates/bits/type_facet.html:40 templates/layout.html:113
-#: templates/results_main.html:42
+#: templates/results_main.html:35
 msgid "COP Decisions"
 msgstr "Decisiones de la COP"
 
 #: templates/bits/type_facet.html:59 templates/details/legislation.html:30
 #: templates/details/literature.html:206 templates/layout.html:119
-#: templates/results_main.html:43
+#: templates/results_main.html:36
 msgid "Legislation"
 msgstr "Legislación"
 
 #: templates/bits/type_facet.html:78 templates/layout.html:125
-#: templates/results_main.html:44
+#: templates/results_main.html:37
 msgid "Court Decisions"
 msgstr "Decision judiciale"
 
 #: templates/bits/type_facet.html:97 templates/details/literature.html:25
 #: templates/details/literature.html:232 templates/details/literature.html:248
 #: templates/details/treaty.html:302 templates/layout.html:131
-#: templates/results_main.html:45 templates/short_display/literature.html:29
+#: templates/results_main.html:38 templates/short_display/literature.html:29
 msgid "Literature"
 msgstr "Doctrina"
 
@@ -496,30 +496,23 @@ msgid "Did you mean:"
 msgstr "Querías decir:"
 
 #: templates/results_main.html:16
-msgid "Found"
-msgstr "Encontró"
-
-#: templates/results_main.html:18
-msgid "result"
-msgstr "resultado"
+#, python-format
+msgid ""
+"\n"
+"      One result found.\n"
+"    "
+msgid_plural ""
+"\n"
+"      %(counter)s results found.\n"
+"    "
+msgstr[0] ""
+msgstr[1] ""
 
 #: templates/results_main.html:22
-msgid "COP decision"
-msgstr "Decision de COP"
-
-#: templates/results_main.html:24
-msgid "literature item"
-msgstr "elemento de la literatura"
-
-#: templates/results_main.html:26
-msgid "court decision"
-msgstr "Decision judicial"
-
-#: templates/results_main.html:28
-msgid "legislation record"
+msgid "No matches found."
 msgstr ""
 
-#: templates/results_main.html:34
+#: templates/results_main.html:27
 msgid "Show only"
 msgstr "Mostrar solo"
 
@@ -542,6 +535,14 @@ msgstr "Año / Período"
 #: templates/results_sidebar.html:44
 msgid "Reset"
 msgstr "Reiniciar"
+
+#: templates/results_sidebar.html:64
+msgid "From"
+msgstr ""
+
+#: templates/results_sidebar.html:74
+msgid "To"
+msgstr ""
 
 #: templates/results_sidebar.html:90
 msgid "Treaty filters"
@@ -781,3 +782,18 @@ msgstr "menos reciente"
 #: xforms.py:87
 msgid "relevance"
 msgstr "pertinencia"
+
+#~ msgid "Found"
+#~ msgstr "Encontró"
+
+#~ msgid "result"
+#~ msgstr "resultado"
+
+#~ msgid "COP decision"
+#~ msgstr "Decision de COP"
+
+#~ msgid "literature item"
+#~ msgstr "elemento de la literatura"
+
+#~ msgid "court decision"
+#~ msgstr "Decision judicial"
