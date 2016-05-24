@@ -40,7 +40,7 @@
       <dt>{% trans 'Document type' %}</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
       <dt>{% trans 'Reference number' %}</dt> <dd>{{ document.dec_number|default:"-" }}</dd>
       <dt>{% trans 'Date' %}</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
-      <dt>{% trans 'Source' %}</dt><dd>UNEP, <a target="_blank" href="http://www.informea.org/">InforMEA</a></dd>
+      <dt>{% trans 'Source' %}</dt><dd>UNEP, <a target="_blank" href="http://www.informea.org/uuid/node/{{ document.decision_id }}">InforMEA</a></dd>
     </dl>
   </header>
 

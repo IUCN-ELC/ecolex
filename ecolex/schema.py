@@ -286,7 +286,7 @@ class DecisionSchema(CommonSchema):
             'title_of_text', 'status', 'publish_date', 'update_date',
             'treaty_name', 'short_title',
             'meeting_id', 'meeting_title',
-            'dec_number'
+            'dec_number', 'decId'
         ]
         solr_boost = dict(CommonSchema.Meta.solr_boost, **{
             'long_title': 100,
