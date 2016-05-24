@@ -112,7 +112,7 @@
       {% endif %}
 
       {% if document.related_web_site %}
-        <dt>{% trans 'Available web site' %}</dt>
+        <dt>{% trans 'Website' %}</dt>
         <dd>
           <a href="{{ document.related_web_site|url_normalize}}" rel="nofollow"
              target="_blank">{{ document.related_web_site|url_normalize|extract_hostname }}</a>

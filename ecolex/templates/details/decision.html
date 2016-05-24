@@ -82,7 +82,7 @@
       </dd>
 
       {% if document.url %}
-        <dt>{% trans 'Available web site' %}</dt>
+        <dt>{% trans 'Website' %}</dt>
         <dd>
           <a href="{{ document.url|url_normalize }}" rel="nofollow"
              target="_blank">{{ document.url|url_normalize|extract_hostname|default:"No link" }}</a>

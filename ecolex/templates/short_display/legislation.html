@@ -2,7 +2,7 @@
 {% load i18n %}
 
 <div class="search-result-details">
-    <strong class="sr-type">Legislation</strong> {% if result.country %} |
+    <strong class="sr-type">{% trans 'Legislation' %}</strong> {% if result.country %} |
     <span class="sr-jurisdiction sr-help" title="{% trans 'Country' %}">{{ result.country }}</span> {% endif %}
     {% if result.year %} |
       <span class="sr-date sr-help" title="{% trans 'Original date' %}">{{ result.year }}

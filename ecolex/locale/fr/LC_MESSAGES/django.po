@@ -120,7 +120,7 @@ msgstr "Pays"
 #: templates/details/court_decision.html:42 templates/results_sidebar.html:160
 #: templates/short_display/court_decision.html:6
 msgid "Type of court"
-msgstr "Type de tribunal"
+msgstr "Type de cour"
 
 #: templates/details/court_decision.html:45 templates/details/decision.html:42
 #: templates/details/legislation.html:44 templates/details/treaty.html:40
@@ -145,8 +145,12 @@ msgstr "Source"
 msgid "Court name"
 msgstr "Nom du tribunal"
 
+#: templates/details/court_decision.html:58
+msgid "Seat of court"
+msgstr "Siège de la cour"
+
 #: templates/details/court_decision.html:59
-msgid "Justices"
+msgid "Judges"
 msgstr "Juges"
 
 #: templates/details/court_decision.html:63 templates/details/decision.html:41
@@ -196,8 +200,8 @@ msgstr "Disponible en"
 #: templates/details/court_decision.html:115
 #: templates/details/decision.html:85 templates/details/legislation.html:115
 #: templates/details/literature.html:178 templates/details/treaty.html:158
-msgid "Available web site"
-msgstr "Site Web concerné"
+msgid "Website"
+msgstr "Site internet"
 
 #: templates/details/court_decision.html:128
 msgid "References"
@@ -285,7 +289,7 @@ msgstr "Cites traités"
 
 #: templates/details/legislation.html:177
 msgid "Court Decision references"
-msgstr ""
+msgstr "Références à la jurispridence"
 
 #: templates/details/legislation.html:179 templates/details/treaty.html:270
 msgid "Cited by"
@@ -399,7 +403,7 @@ msgstr "Référence à des traités"
 
 #: templates/details/treaty.html:249
 msgid "Legislation references"
-msgstr "Références dans la législation nationale"
+msgstr "Références à la législation nationale"
 
 #: templates/details/treaty.html:253
 msgid "Implemented by"
@@ -407,7 +411,7 @@ msgstr "Implementé par"
 
 #: templates/details/treaty.html:289
 msgid "Other references"
-msgstr "D'autres références"
+msgstr "Autres références"
 
 #: templates/details/treaty.html:292
 msgid "COP decisions"
@@ -506,11 +510,15 @@ msgid_plural ""
 "      %(counter)s results found.\n"
 "    "
 msgstr[0] ""
+"\n"
+"Un résultat trouvé."
 msgstr[1] ""
+"\n"
+"%(counter)s résultats trouvés."
 
 #: templates/results_main.html:22
 msgid "No matches found."
-msgstr ""
+msgstr "Aucun resultat trouvé."
 
 #: templates/results_main.html:27
 msgid "Show only"
@@ -538,11 +546,11 @@ msgstr "Réinitialiser"
 
 #: templates/results_sidebar.html:64
 msgid "From"
-msgstr ""
+msgstr "De"
 
 #: templates/results_sidebar.html:74
 msgid "To"
-msgstr ""
+msgstr "À"
 
 #: templates/results_sidebar.html:90
 msgid "Treaty filters"

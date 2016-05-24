@@ -55,8 +55,13 @@
         <dd>{{ document.court_name }}</dd>
       {% endif %}
 
+      {% if document.seat_of_court %}
+        <dt>{% trans 'Seat of court' %}</dt>
+        <dd>{{ document.seat_of_court }}</dd>
+      {% endif %}
+
       {% if document.justices %}
-        <dt>{% trans 'Justices' %}</dt> <dd>{{ document.justices|join:"<br>" }}</dd>
+        <dt>{% trans 'Judges' %}</dt> <dd>{{ document.justices|join:"<br>" }}</dd>
       {% endif %}
 
       {% if document.reference_number %}
@@ -112,7 +117,7 @@
       {% endif %}
 
       {% if document.related_web_site %}
-        <dt>{% trans 'Available web site' %}</dt>
+        <dt>{% trans 'Website' %}</dt>
          <dd>
           <a href="{{ document.related_web_site|url_normalize }}"
              class="file-link" target="_blank">

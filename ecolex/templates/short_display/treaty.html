@@ -2,7 +2,7 @@
 {% load i18n %}
 
 <div class="search-result-details">
-  <strong class="sr-type">{{ result.type|capfirst }}</strong> |
+  <strong class="sr-type">{% trans 'Treaty' %}</strong> |
   <span class="sr-doctype sr-help" title="{% trans 'Document type' %}">{{ result.type_of_document }}</span>
   {% if result.place_of_adoption %} |
     <span class="sr-place sr-help" title="{% trans 'Place of adoption' %}"> {{ result.place_of_adoption }}</span>

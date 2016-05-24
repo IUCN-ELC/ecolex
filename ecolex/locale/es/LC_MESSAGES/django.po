@@ -145,9 +145,13 @@ msgstr "Fuente"
 msgid "Court name"
 msgstr "Nombre del Tribunal"
 
+#: templates/details/court_decision.html:58
+msgid "Seat of court"
+msgstr "Sede de la corte"
+
 #: templates/details/court_decision.html:59
-msgid "Justices"
-msgstr "Jueces"
+msgid "Judges"
+msgstr "Juezes"
 
 #: templates/details/court_decision.html:63 templates/details/decision.html:41
 msgid "Reference number"
@@ -196,8 +200,8 @@ msgstr "Disponible en"
 #: templates/details/court_decision.html:115
 #: templates/details/decision.html:85 templates/details/legislation.html:115
 #: templates/details/literature.html:178 templates/details/treaty.html:158
-msgid "Available web site"
-msgstr "Página web relacionada"
+msgid "Website"
+msgstr "Página web"
 
 #: templates/details/court_decision.html:128
 msgid "References"
@@ -285,7 +289,7 @@ msgstr "Cita tratados"
 
 #: templates/details/legislation.html:177
 msgid "Court Decision references"
-msgstr ""
+msgstr "Referencias a las decisiones judiciales"
 
 #: templates/details/legislation.html:179 templates/details/treaty.html:270
 msgid "Cited by"
@@ -399,7 +403,7 @@ msgstr "Referencias a tratados"
 
 #: templates/details/treaty.html:249
 msgid "Legislation references"
-msgstr "Referencias en la legislación nacional"
+msgstr "Referencias a la legislación nacional"
 
 #: templates/details/treaty.html:253
 msgid "Implemented by"
@@ -506,11 +510,15 @@ msgid_plural ""
 "      %(counter)s results found.\n"
 "    "
 msgstr[0] ""
+"\n"
+"Un resultado encontrado."
 msgstr[1] ""
+"\n"
+"%(counter)s resultados encontrados."
 
 #: templates/results_main.html:22
 msgid "No matches found."
-msgstr ""
+msgstr "No existen resultados."
 
 #: templates/results_main.html:27
 msgid "Show only"
