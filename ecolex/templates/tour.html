@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load tags %}
 
 <script type="text/javascript">
 // Bootstrap tour
@@ -142,6 +143,7 @@ var tourSteps = [
   },
   // Step 13: Treaty participants map
   {
+    path: "{% translate_url 'en' %}",
     element: "#participants-map",
     placement: "top",
     title: "{% blocktrans %}Treaty participants map{% endblocktrans %}",
