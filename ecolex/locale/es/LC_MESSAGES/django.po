@@ -451,7 +451,7 @@ msgstr "Monografía"
 
 #: templates/details/literature.html:56
 msgid "Publication year"
-msgstr ""
+msgstr "Año de publicación"
 
 #: templates/details/literature.html:71 templates/details/treaty.html:62
 msgid "Title"
@@ -483,7 +483,7 @@ msgstr "Campo de aplicación"
 
 #: templates/details/literature.html:170
 msgid "Available DOI"
-msgstr ""
+msgstr "DOI"
 
 #: templates/details/literature.html:190
 msgid "References to"
