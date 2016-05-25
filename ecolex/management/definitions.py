@@ -30,6 +30,7 @@ LITERATURE = 'literature'
 
 OBJ_TYPES = [TREATY, COP_DECISION, LEGISLATION, COURT_DECISION, LITERATURE]
 
-DEC_TREATY_FIELDS = ['partyCountry_en', 'trSubject_en']
+DEC_TREATY_FIELDS = ['partyCountry_en', 'trSubject_en', 'trSubject_fr',
+                     'trSubject_es']
 
 UNLIMITED_ROWS_COUNT = 999999
