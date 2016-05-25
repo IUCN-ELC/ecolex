@@ -123,7 +123,7 @@
       {% endif %}
 
       {% if document.countries %}
-        <dt>Countr{{ document.countries|length|pluralize:"y,ies" }}</dt>
+        <dt>{%trans 'Country' %}</dt>
         <dd>{{ document.countries|join:", "|safe }}</dd>
       {% endif %}
 

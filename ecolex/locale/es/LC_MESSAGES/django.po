@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-25 09:17+0000\n"
+"POT-Creation-Date: 2016-05-25 11:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -173,6 +173,10 @@ msgstr "o"
 msgid "and"
 msgstr "y"
 
+#: templates/bits/facet_reset.html:4 templates/results_sidebar.html:44
+msgid "Reset"
+msgstr "Reiniciar"
+
 #: templates/bits/knowledge_tools.html:11
 msgid "Wildlex"
 msgstr ""
@@ -240,7 +244,8 @@ msgid "Court Decision"
 msgstr "Decision judiciale"
 
 #: templates/details/court_decision.html:38
-#: templates/details/legislation.html:36 templates/results_sidebar.html:27
+#: templates/details/legislation.html:36 templates/details/literature.html:126
+#: templates/results_sidebar.html:27
 #: templates/short_display/court_decision.html:9
 #: templates/short_display/legislation.html:6
 #: templates/short_display/literature.html:31
@@ -472,6 +477,7 @@ msgstr "Idioma"
 
 #: templates/details/literature.html:121 templates/details/treaty.html:39
 #: templates/results_sidebar.html:97
+#: templates/short_display/literature.html:30
 msgid "Field of application"
 msgstr "Campo de aplicación"
 
@@ -679,10 +685,6 @@ msgstr "Área geográphica"
 msgid "Year / Period"
 msgstr "Año / Período"
 
-#: templates/results_sidebar.html:44
-msgid "Reset"
-msgstr "Reiniciar"
-
 #: templates/results_sidebar.html:64
 msgid "From"
 msgstr "De"
@@ -739,10 +741,6 @@ msgstr "Lugar de publicación"
 #: templates/short_display/literature.html:25
 msgid "Publication date"
 msgstr "Fecha del texto"
-
-#: templates/short_display/literature.html:30
-msgid "Field of application or country"
-msgstr "Campo de aplicación o país"
 
 #: templates/tour.html:19
 msgid "Welcome to ECOLEX"
