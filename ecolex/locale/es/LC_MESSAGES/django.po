@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-24 14:03+0000\n"
+"POT-Creation-Date: 2016-05-25 07:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,7 +88,7 @@ msgstr "Decisiones de la COP"
 
 #: templates/bits/type_facet.html:59 templates/details/legislation.html:30
 #: templates/details/literature.html:206 templates/layout.html:119
-#: templates/results_main.html:36
+#: templates/results_main.html:36 templates/short_display/legislation.html:5
 msgid "Legislation"
 msgstr "Legislación"
 
@@ -99,12 +99,12 @@ msgstr "Decisiones judiciales"
 
 #: templates/bits/type_facet.html:97 templates/details/literature.html:25
 #: templates/details/literature.html:232 templates/details/literature.html:248
-#: templates/details/treaty.html:302 templates/layout.html:131
+#: templates/details/treaty.html:304 templates/layout.html:131
 #: templates/results_main.html:38 templates/short_display/literature.html:29
 msgid "Literature"
 msgstr "Doctrina"
 
-#: templates/details/court_decision.html:31 templates/details/treaty.html:314
+#: templates/details/court_decision.html:31 templates/details/treaty.html:316
 #: templates/short_display/court_decision.html:5
 msgid "Court Decision"
 msgstr "Decision judiciale"
@@ -145,28 +145,28 @@ msgstr "Fuente"
 msgid "Court name"
 msgstr "Nombre del Tribunal"
 
-#: templates/details/court_decision.html:58
+#: templates/details/court_decision.html:59
 msgid "Seat of court"
 msgstr "Sede de la corte"
 
-#: templates/details/court_decision.html:59
+#: templates/details/court_decision.html:64
 msgid "Judges"
 msgstr "Juezes"
 
-#: templates/details/court_decision.html:63 templates/details/decision.html:41
+#: templates/details/court_decision.html:68 templates/details/decision.html:41
 msgid "Reference number"
 msgstr "Número de referencia"
 
-#: templates/details/court_decision.html:67
+#: templates/details/court_decision.html:72
 msgid "Language of document"
 msgstr "Idioma del documento"
 
-#: templates/details/court_decision.html:72
+#: templates/details/court_decision.html:77
 #: templates/details/legislation.html:67
 msgid "Subjects"
 msgstr "Materias"
 
-#: templates/details/court_decision.html:77 templates/details/decision.html:57
+#: templates/details/court_decision.html:82 templates/details/decision.html:57
 #: templates/details/legislation.html:72 templates/details/literature.html:136
 #: templates/details/treaty.html:95 templates/results_sidebar.html:24
 #: templates/short_display/court_decision.html:21
@@ -177,38 +177,39 @@ msgstr "Materias"
 msgid "Keywords"
 msgstr "Palabra clave"
 
-#: templates/details/court_decision.html:90
+#: templates/details/court_decision.html:95
 #: templates/details/decision.html:107 templates/details/legislation.html:101
 #: templates/details/literature.html:154 templates/details/treaty.html:118
 msgid "Abstract"
 msgstr "Resumen"
 
-#: templates/details/court_decision.html:94 templates/details/treaty.html:126
+#: templates/details/court_decision.html:99 templates/details/treaty.html:126
 msgid "Link to abstract"
 msgstr "Enlace al resumen"
 
-#: templates/details/court_decision.html:103
+#: templates/details/court_decision.html:108
 #: templates/details/legislation.html:106
 #: templates/details/literature.html:159 templates/details/treaty.html:145
 msgid "Full text"
 msgstr "Texto completo"
 
-#: templates/details/court_decision.html:110
+#: templates/details/court_decision.html:115
 msgid "Available in"
 msgstr "Disponible en"
 
-#: templates/details/court_decision.html:115
+#: templates/details/court_decision.html:120
 #: templates/details/decision.html:85 templates/details/legislation.html:115
 #: templates/details/literature.html:178 templates/details/treaty.html:158
 msgid "Website"
 msgstr "Página web"
 
-#: templates/details/court_decision.html:128
+#: templates/details/court_decision.html:133
+#: templates/details/legislation.html:127
 msgid "References"
 msgstr "Referencias"
 
-#: templates/details/court_decision.html:150
-#: templates/details/court_decision.html:164
+#: templates/details/court_decision.html:155
+#: templates/details/court_decision.html:169
 msgid "Cites"
 msgstr "Cita"
 
@@ -224,7 +225,7 @@ msgid "Document type"
 msgstr "Tipo de documento"
 
 #: templates/details/decision.html:49 templates/results_sidebar.html:100
-#: templates/short_display/decision.html:9
+#: templates/short_display/decision.html:10
 #: templates/short_display/legislation.html:16
 msgid "Status"
 msgstr "Estado"
@@ -236,6 +237,7 @@ msgstr "Área"
 
 #: templates/details/decision.html:66 templates/details/literature.html:193
 #: templates/details/treaty.html:32 templates/results_sidebar.html:122
+#: templates/short_display/treaty.html:5
 msgid "Treaty"
 msgstr "Tratado"
 
@@ -291,7 +293,7 @@ msgstr "Cita tratados"
 msgid "Court Decision references"
 msgstr "Referencias a las decisiones judiciales"
 
-#: templates/details/legislation.html:179 templates/details/treaty.html:270
+#: templates/details/legislation.html:179 templates/details/treaty.html:272
 msgid "Cited by"
 msgstr "Citada por"
 
@@ -385,15 +387,19 @@ msgstr "Comentario"
 msgid "See Expanded View"
 msgstr "Vista ampliada"
 
+#: templates/details/treaty.html:181
+msgid "Reset zoom"
+msgstr "Restablecer zoom"
+
 #: templates/details/treaty.html:182
 msgid "Country/Participant"
 msgstr "País/Participante"
 
-#: templates/details/treaty.html:187
+#: templates/details/treaty.html:187 templates/details_participants.html:32
 msgid "Countries"
 msgstr "Países"
 
-#: templates/details/treaty.html:207
+#: templates/details/treaty.html:207 templates/details_participants.html:51
 msgid "Not available"
 msgstr "No disponible"
 
@@ -401,46 +407,50 @@ msgstr "No disponible"
 msgid "Treaty references"
 msgstr "Referencias a tratados"
 
-#: templates/details/treaty.html:249
+#: templates/details/treaty.html:251
 msgid "Legislation references"
 msgstr "Referencias a la legislación nacional"
 
-#: templates/details/treaty.html:253
+#: templates/details/treaty.html:255
 msgid "Implemented by"
 msgstr "Implementado por"
 
-#: templates/details/treaty.html:289
+#: templates/details/treaty.html:291
 msgid "Other references"
 msgstr "Otras referencias"
 
-#: templates/details/treaty.html:292
+#: templates/details/treaty.html:294
 msgid "COP decisions"
 msgstr "Decisiones de la COP"
 
-#: templates/details/treaty.html:294
+#: templates/details/treaty.html:296
 msgid "decisions"
 msgstr "decisiones"
 
-#: templates/details/treaty.html:294 templates/details/treaty.html:305
-#: templates/details/treaty.html:316
+#: templates/details/treaty.html:296 templates/details/treaty.html:307
+#: templates/details/treaty.html:318
 msgid "related to this treaty."
 msgstr "relacionada con este tratado"
 
-#: templates/details/treaty.html:295
+#: templates/details/treaty.html:297
 msgid "View decisions"
 msgstr "Ver las decisiones"
 
-#: templates/details/treaty.html:307
+#: templates/details/treaty.html:309
 msgid "View literature"
 msgstr "Ver las literaturas"
 
-#: templates/details/treaty.html:316
+#: templates/details/treaty.html:318
 msgid "court decisions"
 msgstr "decisiones judiciales"
 
-#: templates/details/treaty.html:317
+#: templates/details/treaty.html:319
 msgid "View court decisions"
 msgstr "Ver las decisiones judiciales"
+
+#: templates/details_literatures.html:21
+msgid "Related literature"
+msgstr "Literatura relacionada"
 
 #: templates/layout.html:44
 msgid "Home"
@@ -546,11 +556,11 @@ msgstr "Reiniciar"
 
 #: templates/results_sidebar.html:64
 msgid "From"
-msgstr ""
+msgstr "De"
 
 #: templates/results_sidebar.html:74
 msgid "To"
-msgstr ""
+msgstr "A"
 
 #: templates/results_sidebar.html:90
 msgid "Treaty filters"
@@ -601,19 +611,19 @@ msgstr "Lugar de publicación"
 msgid "Publication date"
 msgstr "Fecha del texto"
 
-#: templates/tour.html:18
+#: templates/tour.html:19
 msgid "Welcome to ECOLEX"
 msgstr "Bienvenido a ECOLEX"
 
-#: templates/tour.html:19
+#: templates/tour.html:20
 msgid "<p>Please follow the tour to the end. It only takes 5 minutes.</p>"
 msgstr ""
 
-#: templates/tour.html:26
+#: templates/tour.html:27
 msgid "Permanent search bar"
 msgstr ""
 
-#: templates/tour.html:27
+#: templates/tour.html:28
 msgid ""
 "<p>Always visible from any page. Provides <strong>quick access</strong> to "
 "the website's main function.</p><p>We'll start by searching for <em>Fishery "
@@ -623,156 +633,156 @@ msgstr ""
 "rápido </strong> para la función principal del sitio web.</p><p> Vamos a "
 "empezar por la búsqueda de <em> conservación de pesquerías</em>.</p>"
 
-#: templates/tour.html:37
+#: templates/tour.html:38
 msgid "Oops, a typo!"
 msgstr ""
 
-#: templates/tour.html:38
+#: templates/tour.html:39
 msgid ""
 "<p><strong>Spelling corrections</strong> lead to more relevant results and a "
 "better user experience.</p><div class='popover-hint'>Click on the suggested "
 "text!</div>"
 msgstr ""
 
-#: templates/tour.html:51
+#: templates/tour.html:52
 msgid "Highlighted results"
 msgstr ""
 
-#: templates/tour.html:52
+#: templates/tour.html:53
 msgid "<p>Every matched word is in bold, like <em>Conservation</em>.</p>"
 msgstr ""
 
-#: templates/tour.html:68
+#: templates/tour.html:69
 msgid "Using double quotes"
 msgstr ""
 
-#: templates/tour.html:69
+#: templates/tour.html:70
 msgid ""
 "<p>Double quotes may be used to find more specific results.</p><p>All "
 "results must contain <strong>Fishery conservation</strong> (together) now.</"
 "p>"
 msgstr ""
 
-#: templates/tour.html:92
+#: templates/tour.html:93
 msgid "Multiple datasets"
 msgstr ""
 
-#: templates/tour.html:93
+#: templates/tour.html:94
 msgid ""
 "<p>You may search within any combination of datasets.</p><p>We have just "
 "selected treaties and legislation.</p>"
 msgstr ""
 
-#: templates/tour.html:99
+#: templates/tour.html:100
 msgid "Sorting results"
 msgstr ""
 
-#: templates/tour.html:100
+#: templates/tour.html:101
 msgid ""
 "<p>When searching for a phrase, results are sorted by relevance.</p><p>You "
 "can also sort them by date.</p>"
 msgstr ""
 
-#: templates/tour.html:106
+#: templates/tour.html:107
 msgid "Filtering"
 msgstr ""
 
-#: templates/tour.html:107
+#: templates/tour.html:108
 msgid ""
 "<p>You can obtain more specific results by applying filters.</p><p>Click on "
 "Geographical Area and select South America.</p><p>Try using the keyboard to "
 "search for values and ENTER to select them.</p>"
 msgstr ""
 
-#: templates/tour.html:113
+#: templates/tour.html:114
 msgid "More filters"
 msgstr ""
 
-#: templates/tour.html:114
+#: templates/tour.html:115
 msgid ""
 "<p>Each dataset has its own specific fields for filtering. They are shown or "
 "hidden when more datasets are selected.</p>"
 msgstr ""
 
-#: templates/tour.html:125
+#: templates/tour.html:126
 msgid "The details page"
 msgstr ""
 
-#: templates/tour.html:126
+#: templates/tour.html:127
 msgid ""
 "<p>The full display pages are designed to emphasize structure and "
 "readability.</p>"
 msgstr ""
 
-#: templates/tour.html:132
+#: templates/tour.html:133
 msgid "ECOLEX is multilingual"
 msgstr ""
 
-#: templates/tour.html:133
+#: templates/tour.html:134
 msgid ""
 "<p>You can switch the language and translated content will be presented, "
 "where available.</p><p>Let's change to Spanish.</p>"
 msgstr ""
 
-#: templates/tour.html:141
+#: templates/tour.html:142
 msgid "<p>The treaty title is now translated where applicable.</p>"
 msgstr ""
 
-#: templates/tour.html:147
+#: templates/tour.html:149
 msgid "Treaty participants map"
 msgstr ""
 
-#: templates/tour.html:148
+#: templates/tour.html:150
 msgid ""
 "<div class='popover-hint'>Click on the Show Map to view the treaty "
 "participants!</div>"
 msgstr ""
 
-#: templates/tour.html:154
+#: templates/tour.html:156
 msgid "Simple navigation"
 msgstr ""
 
-#: templates/tour.html:155
+#: templates/tour.html:157
 msgid ""
 "<p>You can return to the search results without losing the search criteria "
 "by clicking on the breadcrumb links.</p>"
 msgstr ""
 
-#: templates/tour.html:162
+#: templates/tour.html:164
 msgid "Complex filter options"
 msgstr ""
 
-#: templates/tour.html:163
+#: templates/tour.html:165
 msgid ""
 "<p>You can combine the filters in various ways. For instance, treaties "
 "tagged with both <em>Biodiversity</em> and <em>Aquaculture</em>, by using "
 "the AND/OR switch when more values are present.</p>"
 msgstr ""
 
-#: templates/tour.html:169
+#: templates/tour.html:171
 msgid "Reset filters"
 msgstr ""
 
-#: templates/tour.html:170
+#: templates/tour.html:172
 msgid ""
 "<p>Filters can be easily removed using their individual <em>Reset</em> link, "
 "or the global <em>Reset all filters</em> button.</p>"
 msgstr ""
 
-#: templates/tour.html:176
+#: templates/tour.html:178
 msgid "Change filters"
 msgstr ""
 
-#: templates/tour.html:177
+#: templates/tour.html:179
 msgid ""
 "<p>To remove just one value, use the small red [x] button on the right.</p>"
 msgstr ""
 
-#: templates/tour.html:182
+#: templates/tour.html:184
 msgid "Mobile and tablet support"
 msgstr ""
 
-#: templates/tour.html:183
+#: templates/tour.html:185
 msgid ""
 "<p>You can use ECOLEX on your smartphone or tablet, as well. The layout will "
 "automatically adjust to the size of your device.</p><p>Thank you for taking "
@@ -858,22 +868,22 @@ msgid "Enables"
 msgstr "Habilita"
 
 msgid "Repeals"
-msgstr ""
+msgstr "Revoca"
 
 msgid "Repealed by"
-msgstr ""
+msgstr "Revocado por"
 
-#~ msgid "Found"
-#~ msgstr "Encontró"
+msgid "Found"
+msgstr "Encontró"
 
-#~ msgid "result"
-#~ msgstr "resultado"
+msgid "result"
+msgstr "resultado"
 
-#~ msgid "COP decision"
-#~ msgstr "Decision de COP"
+msgid "COP decision"
+msgstr "Decision de COP"
 
-#~ msgid "literature item"
-#~ msgstr "elemento de la literatura"
+msgid "literature item"
+msgstr "elemento de la literatura"
 
-#~ msgid "court decision"
-#~ msgstr "Decision judicial"
+msgid "court decision"
+msgstr "Decision judicial"

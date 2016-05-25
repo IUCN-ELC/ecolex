@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load tags %}
+{% load i18n %}
 
 {% block meta %}
   <title>{{ document.title }}</title>
@@ -17,7 +18,7 @@
   <header>
     <div class="record-title">
       <h1>{{ document.title|safe }}</h1>
-      <h2>Related literature</h2>
+      <h2>{% trans 'Related literature' %}</h2>
     </div>
   </header>
 

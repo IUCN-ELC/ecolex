@@ -29,7 +29,7 @@
     <table class="table table-bordered participants-table" style="box-sizing: border-box;" id="country-party">
       <thead>
         <tr>
-          <th class="col-country">Countries</th>
+          <th class="col-country">{% trans 'Countries' %}</th>
           {% for event in treaty.parties_events %}
           <th>{{ treaty.EVENTS_NAMES|lookup:event }}</th>
           {% endfor %}
@@ -48,7 +48,7 @@
                     {% if event.index %}[{{ event.index }}]{% endif %}
                   </td>
                 {% else %}
-                  <td title="Not available">-</td>
+                  <td title="{% trans 'Not available' %}">-</td>
                 {% endif %}
               {% endwith %}
             {% endfor %}

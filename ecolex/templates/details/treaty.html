@@ -178,7 +178,7 @@
          class="pull-right btn btn-link" rel="nofollow"
          data-toggle="collapse"
          data-target="#regions_div">{% trans 'Show Map' %}</a>
-      <a id="zoom-reset" class="pull-right btn btn-link" rel="nofollow">Reset zoom</a>
+      <a id="zoom-reset" class="pull-right btn btn-link" rel="nofollow">{% trans 'Reset zoom' %}</a>
       <h2 class="section-title">{% trans 'Country/Participant' %}</h2>
     </div>
     <table class="participants">
@@ -227,7 +227,9 @@
 
     {% for name, value in document.references.items %}
       <dl class="dl-horizontal references">
-        <dt>{{ name|labelify }}</dt>
+        {% with name=name|labelify %}
+          <dt>{% trans name %}</dt>
+        {% endwith %}
         {% for treaty in value %}
           <dd>
             <div class="treaty-link-container">
