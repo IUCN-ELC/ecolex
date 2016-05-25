@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.urlresolvers import resolve, reverse, Resolver404
 from django.utils import translation
 from django.utils.html import format_html
+from django.utils.translation import ugettext as _
 from django.template.defaultfilters import capfirst
 from django.contrib.staticfiles.finders import get_finders
 import datetime
@@ -100,12 +101,12 @@ def translate_absolute_url(url, language=''):
 @register.simple_tag
 def breadcrumb(label, viewname='', query='', *args, **kwargs):
     if not viewname:
-        return label
+        return _(label)
     url = reverse(viewname, args=args, kwargs=kwargs)
     if query:
         url = '{url}?{query}'.format(url=url, query=query)
     return format_html('<a href="{url}">{label}</a> &raquo;',
-                       url=url, label=label)
+                       url=url, label=_(label))
 
 
 @register.simple_tag(takes_context=True)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-25 07:26+0000\n"
+"POT-Creation-Date: 2016-05-25 08:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,128 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: definitions.py:130
+msgid "International court"
+msgstr "Corte internacional"
+
+#: definitions.py:131
+msgid "National - higher court"
+msgstr "Nacional - corte superior"
+
+#: definitions.py:132
+msgid "National - lower court"
+msgstr "Nacional - corte inferior"
+
+#: definitions.py:133
+msgid "Preliminary decision"
+msgstr "Decisión preliminar"
+
+#: definitions.py:134
+msgid "Regulation"
+msgstr "Regulación"
+
+#: definitions.py:135
+msgid "Others"
+msgstr "Otros"
+
+#: definitions.py:136
+msgid "In force"
+msgstr "En vigor"
+
+#: definitions.py:137
+msgid "Not in force"
+msgstr "No vigente"
+
+#: definitions.py:138
+#, fuzzy
+#| msgid "Superseded"
+msgid "Superseded\""
+msgstr "Sustituida"
+
+#: definitions.py:139
+msgid "Bilateral"
+msgstr "Bilateral"
+
+#: definitions.py:140
+msgid "Multilateral"
+msgstr "Multilateral"
+
+#: definitions.py:141
+msgid "Active"
+msgstr "Activo"
+
+#: definitions.py:142
+msgid "Adopted"
+msgstr "Adoptado"
+
+#: definitions.py:143
+msgid "Amended"
+msgstr "Modificada"
+
+#: definitions.py:144
+msgid "Draft"
+msgstr "Borrador"
+
+#: definitions.py:145
+msgid "Implements"
+msgstr "Implementa"
+
+#: definitions.py:146
+msgid "Amended by"
+msgstr "Enmendado porr"
+
+#: definitions.py:147
+msgid "Amends"
+msgstr "Enmienda"
+
+#: definitions.py:148
+msgid "Superseded by"
+msgstr "Remplazado por"
+
+#: definitions.py:149
+msgid "Supersedes"
+msgstr "Remplaza"
+
+#: definitions.py:150
+msgid "Enabled by"
+msgstr "Habilitado por"
+
+#: definitions.py:151
+msgid "Enables"
+msgstr "Habilita"
+
+#: definitions.py:152
+msgid "Repeals"
+msgstr "Revoca"
+
+#: definitions.py:153
+msgid "Repealed by"
+msgstr "Revocado por"
+
+#: definitions.py:154
+msgid "Found"
+msgstr "Encontró"
+
+#: definitions.py:155
+msgid "result"
+msgstr "resultado"
+
+#: definitions.py:156
+msgid "COP decision"
+msgstr "Decision de COP"
+
+#: definitions.py:157
+msgid "literature item"
+msgstr "elemento de la literatura"
+
+#: definitions.py:158
+msgid "court decision"
+msgstr "Decision judicial"
+
+#: definitions.py:159
+msgid "Search results"
+msgstr "Resultados de la búsqueda"
 
 #: settings.py:150
 msgid "English"
@@ -800,90 +922,3 @@ msgstr "menos reciente"
 #: xforms.py:87
 msgid "relevance"
 msgstr "pertinencia"
-
-msgid "International court"
-msgstr "Corte internacional"
-
-msgid "National - higher court"
-msgstr "Nacional - corte superior"
-
-msgid "National - lower court"
-msgstr "Nacional - corte inferior"
-
-msgid "Preliminary decision"
-msgstr "Decisión preliminar"
-
-msgid "Regulation"
-msgstr "Regulación"
-
-msgid "Others"
-msgstr "Otros"
-
-msgid "In force"
-msgstr "En vigor"
-
-msgid "Not in force"
-msgstr "No vigente"
-
-msgid "Superseded"
-msgstr "Sustituida"
-
-msgid "Bilateral"
-msgstr "Bilateral"
-
-msgid "Multilateral"
-msgstr "Multilateral"
-
-msgid "Active"
-msgstr "Activo"
-
-msgid "Adopted"
-msgstr "Adoptado"
-
-msgid "Amended"
-msgstr "Modificada"
-
-msgid "Draft"
-msgstr "Borrador"
-
-msgid "Implements"
-msgstr "Implementa"
-
-msgid "Amended by"
-msgstr "Enmendado porr"
-
-msgid "Amends"
-msgstr "Enmienda"
-
-msgid "Superseded by"
-msgstr "Remplazado por"
-
-msgid "Supersedes"
-msgstr "Remplaza"
-
-msgid "Enabled by"
-msgstr "Habilitado por"
-
-msgid "Enables"
-msgstr "Habilita"
-
-msgid "Repeals"
-msgstr "Revoca"
-
-msgid "Repealed by"
-msgstr "Revocado por"
-
-msgid "Found"
-msgstr "Encontró"
-
-msgid "result"
-msgstr "resultado"
-
-msgid "COP decision"
-msgstr "Decision de COP"
-
-msgid "literature item"
-msgstr "elemento de la literatura"
-
-msgid "court decision"
-msgstr "Decision judicial"

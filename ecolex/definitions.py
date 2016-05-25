@@ -1,4 +1,5 @@
 from .schema import FIELD_MAP, FILTER_FIELDS, FETCH_FIELDS, BOOST_FIELDS
+from django.utils.translation import ugettext as _
 
 
 STATIC_PAGES = ('about', 'privacy', 'agreement', 'acknowledgements',
@@ -123,3 +124,37 @@ _AND_OP_FACETS = set(_SELECT_FACETS).difference([
 ])
 
 _AND_OP_FIELD_PATTERN = "%s_and_"
+
+
+TRANSLATIONS = [
+    _('International court'),
+    _('National - higher court'),
+    _('National - lower court'),
+    _('Preliminary decision'),
+    _('Regulation'),
+    _('Others'),
+    _('In force'),
+    _('Not in force'),
+    _('Superseded"'),
+    _('Bilateral'),
+    _('Multilateral'),
+    _('Active'),
+    _('Adopted'),
+    _('Amended'),
+    _('Draft'),
+    _('Implements'),
+    _('Amended by'),
+    _('Amends'),
+    _('Superseded by'),
+    _('Supersedes'),
+    _('Enabled by'),
+    _('Enables'),
+    _('Repeals'),
+    _('Repealed by'),
+    _('Found'),
+    _('result'),
+    _('COP decision'),
+    _('literature item'),
+    _('court decision'),
+    _('Search results'),
+]
