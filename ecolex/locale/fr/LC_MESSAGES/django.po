@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-25 09:09+0000\n"
+"POT-Creation-Date: 2016-05-25 09:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -472,7 +472,6 @@ msgstr "Langue"
 
 #: templates/details/literature.html:121 templates/details/treaty.html:39
 #: templates/results_sidebar.html:97
-#: templates/short_display/literature.html:30
 msgid "Field of application"
 msgstr "Champ d'application"
 
@@ -740,6 +739,10 @@ msgstr "Lieu de publication"
 #: templates/short_display/literature.html:25
 msgid "Publication date"
 msgstr "Date de publication"
+
+#: templates/short_display/literature.html:30
+msgid "Field of application or country"
+msgstr "Champ d'application ou pays"
 
 #: templates/tour.html:19
 msgid "Welcome to ECOLEX"
