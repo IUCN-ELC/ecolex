@@ -5,9 +5,9 @@
         "fr": "Agriculture et D\u00e9veloppement Rural"
     },
     "agriculture": {
-        "en": "Agriculture",
-        "es": "Agricultura",
-        "fr": "Agriculture"
+        "en": "Agricultural and Rural Development",
+        "es": "Agricultura y Desarrollo Rural",
+        "fr": "Agriculture et D\u00e9veloppement Rural"
     },
     "air & atmosphere": {
         "en": "Air & atmosphere",
@@ -40,9 +40,9 @@
         "fr": "Alimentation et nutrition"
     },
     "food": {
-        "en": "Food",
-        "es": "Alimentaci\u00f3n",
-        "fr": "Alimentation"
+        "en": "Food and nutrition",
+        "es": "Alimentaci\u00f3n y nutrici\u00f3n",
+        "fr": "Alimentation et nutrition"
     },
     "forestry": {
         "en": "Forestry",
