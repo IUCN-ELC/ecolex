@@ -85,6 +85,8 @@ MULTIVALUED_FIELDS = [
     'legSubject_code', 'legSubject_en', 'legSubject_fr', 'legSubject_es',
 ]
 
+LANGUAGE_FIELDS = ['legLanguage_en', 'legLanguage_fr', 'legLanguage_es']
+
 
 def get_content(values):
     values = [v.get(CONTENT, None) for v in values]
@@ -120,8 +122,8 @@ def harvest_file(upfile):
     for document in documents:
         legislation = {
             'type': LEGISLATION,
-            'legLanguage_es': [],
-            'legLanguage_fr': [],
+            'legLanguage_es': set(),
+            'legLanguage_fr': set(),
         }
 
         for k, v in FIELD_MAP.items():
@@ -144,18 +146,19 @@ def harvest_file(upfile):
                     OrderedDict.fromkeys(field_values).keys())
 
         langs = legislation.get('legLanguage_en', [])
-        legislation['legLanguage_en'] = []
+        legislation['legLanguage_en'] = set()
         for lang in langs:
             key = lang.lower()
             if key in all_languages:
-                legislation['legLanguage_en'].append(all_languages[key]['en'])
-                legislation['legLanguage_es'].append(all_languages[key]['es'])
-                legislation['legLanguage_fr'].append(all_languages[key]['fr'])
+                for lang_field in LANGUAGE_FIELDS:
+                    legislation[lang_field].add(all_languages[key][lang_field[-2:]])
             else:
-                legislation['legLanguage_en'].append(lang)
-                legislation['legLanguage_es'].append(lang)
-                legislation['legLanguage_fr'].append(lang)
+                for lang_field in LANGUAGE_FIELDS:
+                    legislation[lang_field].add(lang)
                 logger.error('Language not found %s' % (lang))
+
+        for lang_field in LANGUAGE_FIELDS:
+            legislation[lang_field] = list(legislation[lang_field])
 
         if ('legTypeCode' in legislation):
             if legislation['legTypeCode'] == 'A':
