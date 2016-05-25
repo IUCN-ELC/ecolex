@@ -2850,9 +2850,14 @@
     "fr": "caprins/ovins"
   },
   "international cooperation/nternational relations": {
-    "es": "cooperaci\u00f3n internacional/relaciones internacionales",
-    "en": "international cooperation/nternational relations",
-    "fr": "coop\u00e9ration internationale/relations internationales"
+    "es": "relaciones internacionales/cooperaci\u00f3n",
+    "en": "international relations/cooperation",
+    "fr": "relations internationales/coop\u00e9ration"
+  },
+  "international cooperation/international relations": {
+    "es": "relaciones internacionales/cooperaci\u00f3n",
+    "en": "international relations/cooperation",
+    "fr": "relations internationales/coop\u00e9ration"
   },
   "ranching/captive breeding": {
     "es": "cr\u00eda en ranchos/cr\u00eda en cautividad",
