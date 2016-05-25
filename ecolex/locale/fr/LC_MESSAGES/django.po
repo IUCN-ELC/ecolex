@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-25 11:57+0000\n"
+"POT-Creation-Date: 2016-05-25 14:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,9 +51,7 @@ msgid "Not in force"
 msgstr "Non en vigueur"
 
 #: definitions.py:138
-#, fuzzy
-#| msgid "Superseded"
-msgid "Superseded\""
+msgid "Superseded"
 msgstr "Remplacé"
 
 #: definitions.py:139
@@ -583,6 +581,10 @@ msgstr "Jurisprudences"
 msgid "View court decisions"
 msgstr "Voir les jurisprudences"
 
+#: templates/details_decisions.html:21
+msgid "Related COP decisions"
+msgstr "Décisions de la CdP relacionados"
+
 #: templates/details_literatures.html:21
 msgid "Related literature"
 msgstr "Littérature liée"
@@ -928,4 +930,3 @@ msgstr "moins récente"
 #: xforms.py:87
 msgid "relevance"
 msgstr "pertinence"
-
