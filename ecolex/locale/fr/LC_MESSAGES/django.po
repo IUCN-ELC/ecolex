@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-25 08:59+0000\n"
+"POT-Creation-Date: 2016-05-25 09:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -164,6 +164,14 @@ msgid ""
 "the originating data source. In case of discrepancy  the information as "
 "displayed on the respective MEA website prevails."
 msgstr ""
+
+#: templates/bits/facet_operation.html:11
+msgid "or"
+msgstr "ou"
+
+#: templates/bits/facet_operation.html:13
+msgid "and"
+msgstr "et"
 
 #: templates/bits/knowledge_tools.html:11
 msgid "Wildlex"
