@@ -109,6 +109,12 @@ def harvest_file(upfile):
     with open(settings.SOLR_IMPORT['common']['regions_json']) as f:
         json_regions = json.load(f)
 
+    with open(settings.SOLR_IMPORT['common']['keywords_json']) as f:
+        json_keywords = json.load(f)
+
+    with open(settings.SOLR_IMPORT['common']['subjects_json']) as f:
+        json_subjects = json.load(f)
+
     with open(settings.SOLR_IMPORT['common']['languages_json']) as f:
         languages_codes = json.load(f)
     all_languages = {}
@@ -166,41 +172,9 @@ def harvest_file(upfile):
                 count_ignored += 1
                 continue
 
-        if ('legGeoArea_en' in legislation and
-                'legGeoArea_es' in legislation and
-                'legGeoArea_fr' in legislation):
-            regions_en = legislation.get('legGeoArea_en')
-            regions_es = legislation.get('legGeoArea_es')
-            regions_fr = legislation.get('legGeoArea_fr')
-            regions = zip(regions_en, regions_es, regions_fr)
-            new_regions = {'en': [], 'es': [], 'fr': []}
-            for reg_en, reg_es, reg_fr in regions:
-                values = json_regions.get(reg_en.lower())
-                if values:
-                    new_regions['en'].append(values['en'])
-                    value_es = values['es']
-                    value_fr = values['fr']
-                    new_regions['es'].append(value_es)
-                    new_regions['fr'].append(value_fr)
-                    if value_es.lower() != reg_es.lower():
-                        logger.debug('Region name different: %s %s %s' %
-                                     (legislation['legId'], value_es,
-                                      reg_es))
-
-                    if value_fr.lower() != reg_fr.lower():
-                        logger.debug('Region name different: %s %s %s' %
-                                     (legislation['legId'], value_fr,
-                                      reg_fr))
-                else:
-                    logger.warn('New region name: %s %s %s %s' %
-                                (legislation['legId'], reg_en, reg_es,
-                                 reg_fr))
-                    new_regions['en'].append(reg_en)
-                    new_regions['es'].append(reg_es)
-                    new_regions['fr'].append(reg_fr)
-            legislation['legGeoArea_en'] = new_regions['en']
-            legislation['legGeoArea_es'] = new_regions['es']
-            legislation['legGeoArea_fr'] = new_regions['fr']
+        _set_values_from_dict(legislation, 'legGeoArea', json_regions)
+        _set_values_from_dict(legislation, 'legSubject', json_subjects)
+        _set_values_from_dict(legislation, 'legKeyword', json_keywords)
 
         legYear = legislation.get('legYear')
         if legYear:
@@ -289,6 +263,51 @@ def add_legislations(legislations, count_ignored):
         count_ignored
     )
     return response
+
+
+def _set_values_from_dict(data, field, local_dict):
+    id_field = 'legId'
+    langs = ['en', 'fr', 'es']
+    fields = ['{}_{}'.format(field, lang_code) for lang_code in langs]
+    new_values = {x: [] for x in langs}
+    if all(map((lambda x: x in data), fields)):
+        values = zip(*[data[x] for x in fields])
+        for val_en, val_fr, val_es in values:
+            dict_values = local_dict.get(val_en.lower())
+            if dict_values:
+                new_values['en'].append(dict_values['en'])
+                dict_value_fr = dict_values['fr']
+                dict_value_es = dict_values['es']
+                if val_fr != dict_value_fr:
+                    logger.debug('{}_fr name different: {} {} {}'.format(
+                                 field, data[id_field], val_fr,
+                                 dict_value_fr))
+                new_values['fr'].append(dict_value_fr)
+                if val_es != dict_value_es:
+                    logger.debug('{}_es name different: {} {} {}'.format(
+                                 field, data[id_field], val_es,
+                                 dict_value_es))
+                new_values['es'].append(dict_value_es)
+            else:
+                logger.warning('New {} name: {} {} {} {}'.format(
+                               field, data[id_field], val_en,
+                               val_fr, val_es))
+                new_values['en'].append(val_en)
+                new_values['fr'].append(val_fr)
+                new_values['es'].append(val_es)
+    elif fields[0] in data:
+        values_en = data.get(fields[0], []) or []
+        for val_en in values_en:
+            dict_values = local_dict.get(val_en.lower())
+            if dict_values:
+                for lang in langs:
+                    new_values[lang].append(dict_values[lang])
+            else:
+                logger.warning('New {}_en name: {} {}'.format(
+                               field, data[id_field], val_en))
+                new_values['en'].append(val_en)
+    for field in fields:
+        data[field] = new_values[field[-2:]]
 
 
 def index_and_log(solr, legislations, docs):
