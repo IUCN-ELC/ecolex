@@ -5,6 +5,7 @@ DEBUG=True
 # Use generate_fao_api_key method from contrib/utils.py to generate a key
 FAOLEX_API_KEY = ''
 
+EXPORT_TYPES = ['treaty', 'decision', 'court_decision', 'literature']
 
 # Use SOLR_UPDATE for the `update` management command.
 # The management command will replace values in SOLR_UPDATE['replace']['field']

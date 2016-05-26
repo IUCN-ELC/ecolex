@@ -272,20 +272,29 @@ class RelatedDecisions(RelatedObjectsView):
 class ExportView(View):
     def get(self, request, **kwargs):
         doctype = request.GET.get('type')
+        slug = request.GET.get('slug')
         format = request.GET.get('format')
         download = request.GET.get('download')
 
+        if doctype and doctype not in settings.EXPORT_TYPES:
+            raise Http404()  # TODO Custom 404 template depending on format
+
         solr = RawSolr(settings.SOLR_URI)
-        q = 'type:{}'.format(doctype)
-        export_fields = [
-            'slug',
-            'cdTitleOfText_en',
-            'decShortTitle_en',
-            'trTitleOfText_en',
-            'litPaperTitleOfText_en',
-        ]
-        fl = ','.join(export_fields)
-        resp = solr.query(q, fl, format)
+
+        if doctype:
+            q = 'type:{}'.format(doctype)
+            export_fields = [
+                'slug',
+                'cdTitleOfText_en',
+                'decShortTitle_en',
+                'trTitleOfText_en',
+                'litPaperTitleOfText_en',
+            ]
+            fl = ','.join(export_fields)
+            resp = solr.query(q, fl, format)
+        elif slug:
+            q = 'slug:{}'.format(slug)
+            resp = solr.query(q, '', format)
 
         exporter = get_exporter(format)(resp)
         return exporter.get_response(download)
