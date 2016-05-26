@@ -7,6 +7,7 @@ import logging.config
 from django.conf import settings
 from django.template.defaultfilters import slugify
 
+from ecolex.management.commands.base import BaseImporter
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.definitions import COURT_DECISION
 from ecolex.management.utils import EcolexSolr, get_json_from_url
@@ -341,27 +342,22 @@ class CourtDecision(object):
         return solr_decision
 
 
-class CourtDecisionImporter(object):
+class CourtDecisionImporter(BaseImporter):
+
+    id_field = 'cdOriginalId'
+
     def __init__(self, config):
-        self.solr_timeout = config.get('solr_timeout')
+        super().__init__(config, logger)
         self.days_ago = config.get('days_ago')
         self.update = config.get('update')
         self.countries_json = config.get('countries_json')
-        self.languages_json = config.get('languages_json')
-        self.regions_json = config.get('regions_json')
         self.subdivisions_json = config.get('subdivisions_json')
-        self.keywords_json = config.get('keywords_json')
-        self.subjects_json = config.get('subjects_json')
         self.court_decisions_url = config.get('court_decisions_url')
         self.test_input_file = config.get('test_input_file')
         self.test_output_file = config.get('test_output_file')
         self.countries = self._get_countries()
-        self.languages = self._get_languages()
-        self.regions = self._get_regions()
         self.subdivisions = self._get_subdivisions()
-        self.keywords = self._get_keywords()
-        self.subjects = self._get_subjects()
-        self.solr = EcolexSolr(self.solr_timeout)
+
         # When we need to import only one decision
         self.uuid = config.get('uuid')
         self.data_url = config.get('data_url')
@@ -443,27 +439,7 @@ class CourtDecisionImporter(object):
         reverse_codes = {v: k for k, v in codes.items()}
         return {reverse_codes.get(k, k): v for k, v in countries.items()}
 
-    def _get_languages(self):
-        with open(self.languages_json) as f:
-            languages_codes = json.load(f)
-        return languages_codes
-
-    def _get_regions(self):
-        with open(self.regions_json) as f:
-            regions = json.load(f)
-        return regions
-
     def _get_subdivisions(self):
         with open(self.subdivisions_json) as f:
             subdivisions = json.load(f)
         return subdivisions
-
-    def _get_keywords(self):
-        with open(self.keywords_json) as f:
-            keywords = json.load(f)
-        return keywords
-
-    def _get_subjects(self):
-        with open(self.subjects_json) as f:
-            subjects = json.load(f)
-        return subjects

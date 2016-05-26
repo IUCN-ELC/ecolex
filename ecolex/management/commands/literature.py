@@ -8,8 +8,8 @@ import logging.config
 import re
 
 from django.template.defaultfilters import slugify
-from django.conf import settings
 
+from ecolex.management.commands.base import BaseImporter
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.definitions import LITERATURE
 from ecolex.management.utils import EcolexSolr, format_date, valid_date
@@ -235,12 +235,13 @@ class Literature(object):
         return self.data
 
 
-class LiteratureImporter(object):
+class LiteratureImporter(BaseImporter):
+
+    id_field = 'litId'
 
     def __init__(self, config):
-        self.solr_timeout = config.get('solr_timeout')
-        self.regions_json = config.get('regions_json')
-        self.languages_json = config.get('languages_json')
+        super().__init__(config, logger)
+
         self.literature_url = config.get('literature_url')
         self.import_field = config.get('import_field')
         self.query_format = config.get('query_format')
@@ -254,9 +255,7 @@ class LiteratureImporter(object):
         self.end_year = config.get('end_year', now.year)
         self.start_month = config.get('start_month', now.month)
         self.end_month = config.get('end_month', now.month)
-        self.solr = EcolexSolr(self.solr_timeout)
-        self.regions = self._get_regions()
-        self.languages = self._get_languages()
+
         self.force_import_all = config.get('force_import_all', False)
         logger.info('Started literature importer')
 
@@ -325,7 +324,8 @@ class LiteratureImporter(object):
                         data[v] = format_date(
                             self._clean_text(field_values[0].text))
                     elif field_values:
-                        clean_values = [self._clean_text(field.text) for field in field_values]
+                        clean_values = [self._clean_text(field.text)
+                                        for field in field_values]
                         if v in data:
                             data[v].extend(clean_values)
                         else:
@@ -359,41 +359,10 @@ class LiteratureImporter(object):
                     logger.error('Invalid date format (dateoftext) %s: %s' %
                                  (data['litId'], data['litDateOfText']))
 
-                # Region regularization
-                if 'litRegion_en' in data:
-                    regions_en = data.get('litRegion_en')
-                    regions_es = data.get('litRegion_es')
-                    regions_fr = data.get('litRegion_fr')
-                    regions = zip(regions_en, regions_es, regions_fr)
-                    new_regions = {'en': [], 'es': [], 'fr': []}
-                    for reg_en, reg_es, reg_fr in regions:
-                        values = self.regions.get(reg_en.lower())
-                        if values:
-                            new_regions['en'].append(reg_en)
-                            value_es = values['es']
-                            value_fr = values['fr']
-                            new_regions['es'].append(value_es)
-                            new_regions['fr'].append(value_fr)
-
-                            if value_es != reg_es:
-                                logger.debug('Region name different: %s %s %s' %
-                                             (data['litId'], value_es,
-                                              reg_es))
-
-                            if value_fr != reg_fr:
-                                logger.debug('Region name different: %s %s %s' %
-                                             (data['litId'], value_fr,
-                                              reg_fr))
-                        else:
-                            logger.error('New region name: %s %s %s %s' %
-                                         (data['litId'], reg_en, reg_es,
-                                          reg_fr))
-                            new_regions['en'].append(reg_en)
-                            new_regions['es'].append(reg_es)
-                            new_regions['fr'].append(reg_fr)
-                    data['litRegion_en'] = new_regions['en']
-                    data['litRegion_es'] = new_regions['es']
-                    data['litRegion_fr'] = new_regions['fr']
+                # Region, keyword, subject regularization from local dict
+                self._set_values_from_dict(data, 'litRegion', self.regions)
+                self._set_values_from_dict(data, 'litKeyword', self.keywords)
+                self._set_values_from_dict(data, 'litSubject', self.subjects)
 
                 # compute litDisplayType
                 id = data.get('litId')
@@ -509,11 +478,6 @@ class LiteratureImporter(object):
         url = '%s%s%s%s%s' % (self.literature_url, self.query_export, query,
                               self.query_type, page)
         return url
-
-    def _get_regions(self):
-        with open(self.regions_json) as f:
-            regions = json.load(f)
-        return regions
 
     def _get_languages(self):
         with open(self.languages_json) as f:

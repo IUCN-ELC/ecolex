@@ -9,6 +9,7 @@ import requests
 
 from django.template.defaultfilters import slugify
 
+from ecolex.management.commands.base import BaseImporter
 from ecolex.management.definitions import COP_DECISION, DEC_TREATY_FIELDS
 from ecolex.management.utils import EcolexSolr, get_date, get_file_from_url
 from ecolex.management.commands.logging import LOG_DICT
@@ -88,11 +89,13 @@ class CopDecision(object):
         return self.data
 
 
-class CopDecisionImporter(object):
+class CopDecisionImporter(BaseImporter):
+
+    id_field = 'decId'
 
     def __init__(self, config):
-        self.solr_timeout = config.get('solr_timeout')
-        self.languages_json = config.get('languages_json')
+        super().__init__(config, logger)
+
         self.decision_url = config.get('cop_decision_url')
         self.query_skip = config.get('query_skip')
         self.query_filter = config.get('query_filter')
@@ -101,8 +104,7 @@ class CopDecisionImporter(object):
         self.query_order = config.get('query_order')
         self.days_ago = config.get('days_ago')
         self.per_page = config.get('per_page')
-        self.solr = EcolexSolr(self.solr_timeout)
-        self.languages = self._get_languages()
+
         logger.info('Started COP Decision importer')
 
     def harvest(self, batch_size=500):
@@ -120,7 +122,8 @@ class CopDecisionImporter(object):
             try:
                 response = requests.get(url)
                 if response.status_code != 200:
-                    logger.error('Invalid return code HTTP %d, retrying.' % response.status_code)
+                    logger.error('Invalid return code HTTP %d, retrying.'
+                                 % response.status_code)
                     # Retry forever
                     continue
             except requests.exceptions.RequestException as e:
@@ -167,6 +170,9 @@ class CopDecisionImporter(object):
                     data['decPublishDate'] = data['decUpdateDate']
 
             data['decKeyword_en'] = self._parse_keywords(decision['keywords'])
+            if data['decKeyword_en']:
+                self._set_values_from_dict(data, 'decKeyword', self.keywords)
+
             languages = set()
             for multi_field in MULTILINGUAL_FIELDS:
                 multi_values = self._parse_multilingual(decision[multi_field])
@@ -290,11 +296,6 @@ class CopDecisionImporter(object):
                         doc.save()
 
             decision['decText'] = dec_text
-
-    def _get_languages(self):
-        with open(self.languages_json) as f:
-            languages_codes = json.load(f)
-        return languages_codes
 
     def _clean(self, text):
         try:
