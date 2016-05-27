@@ -294,7 +294,8 @@ class ExportView(View):
             resp = solr.query(q, fl, format)
         elif slug:
             q = 'slug:{}'.format(slug)
-            resp = solr.query(q, '', format)
+            export_fields = request.GET.get('fields', '')
+            resp = solr.query(q, export_fields, format)
 
         exporter = get_exporter(format)(resp)
         return exporter.get_response(download)
