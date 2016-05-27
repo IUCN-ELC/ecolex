@@ -1,11 +1,16 @@
 {
     "agricultural and rural development": {
-        "en": "Agricultural and Rural Development",
+        "en": "Agricultural & Rural Development",
+        "es": "Agricultura y Desarrollo Rural",
+        "fr": "Agriculture et D\u00e9veloppement Rural"
+    },
+    "agricultural & rural development": {
+        "en": "Agricultural & Rural Development",
         "es": "Agricultura y Desarrollo Rural",
         "fr": "Agriculture et D\u00e9veloppement Rural"
     },
     "agriculture": {
-        "en": "Agricultural and Rural Development",
+        "en": "Agricultural & Rural Development",
         "es": "Agricultura y Desarrollo Rural",
         "fr": "Agriculture et D\u00e9veloppement Rural"
     },
@@ -35,12 +40,17 @@
         "fr": "P\u00eache"
     },
     "food and nutrition": {
-        "en": "Food and nutrition",
+        "en": "Food & nutrition",
+        "es": "Alimentaci\u00f3n y nutrici\u00f3n",
+        "fr": "Alimentation et nutrition"
+    },
+    "food & nutrition": {
+        "en": "Food & nutrition",
         "es": "Alimentaci\u00f3n y nutrici\u00f3n",
         "fr": "Alimentation et nutrition"
     },
     "food": {
-        "en": "Food and nutrition",
+        "en": "Food & nutrition",
         "es": "Alimentaci\u00f3n y nutrici\u00f3n",
         "fr": "Alimentation et nutrition"
     },
