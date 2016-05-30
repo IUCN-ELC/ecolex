@@ -1835,9 +1835,9 @@
     "fr": "cour/tribunaux"
   },
   "catchment/watershed": {
-    "es": "\u00e1rea de captaci\u00f3n/cuenca colectora",
-    "en": "catchment/watershed",
-    "fr": "captage/bassin versant"
+    "es": "cuenca/\u00e1rea de captaci\u00f3n/cuenca colectora",
+    "en": "basin/catchment/watershed",
+    "fr": "bassin/captage/bassin versant"
   },
   "right to property": {
     "es": "derecho a la propiedad",
@@ -2075,9 +2075,9 @@
     "fr": "aires d\u00e9favoris\u00e9es"
   },
   "basin": {
-    "es": "cuenca",
+    "es": "cuenca/\u00e1rea de captaci\u00f3n/cuenca colectora",
     "en": "basin/catchment/watershed",
-    "fr": "bassin"
+    "fr": "bassin/captage/bassin versant"
   },
   "smallholders/peasants": {
     "es": "peque\u00f1os agricultores/campesinos",
@@ -2913,5 +2913,10 @@
     "es": "biodiversidad",
     "en": "biodiversity",
     "fr": "biodiversit\u00e9"
+  },
+  "basin/watershed/catchment": {
+    "es": "cuenca/\u00e1rea de captaci\u00f3n/cuenca colectora",
+    "en": "basin/catchment/watershed",
+    "fr": "bassin/captage/bassin versant"
   }
 }
