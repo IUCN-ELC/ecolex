@@ -1,11 +1,17 @@
 import os
+import json
 
-DEBUG=True
 # API KEY FOR FAOLEX HARVESTER
-# Use generate_fao_api_key method from contrib/utils.py to generate a key
-FAOLEX_API_KEY = ''
+FAOLEX_API_KEY = '80c749e44b420a9902171dc2dbf4e1423a96b489b3ee926d83bde60a75ac8fac'
 
-EXPORT_TYPES = ['treaty', 'decision', 'court_decision', 'literature']
+# Use SOLR_UPDATE for the `update` management command.
+# The management command will replace values in SOLR_UPDATE['replace']['field']
+# that are equal to SOLR_UPDATE['replace']['from'] with the value in
+# SOLR_UPDATE['replace']['to']
+# Additional filters in SOLR_UPDATE['filters'] are applied.
+# If you don't need any additional filters, leave this list empty.
+
+DEBUG = True
 
 # Use SOLR_UPDATE for the `update` management command.
 # The management command will replace values in SOLR_UPDATE['replace']['field']
@@ -34,8 +40,8 @@ SOLR_UPDATE = {
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 MANAGEMENT_DIR = os.path.join(BASE_DIR, 'ecolex', 'management')
 CONFIG_DIR = os.path.join(MANAGEMENT_DIR, 'config')
-TESTING_DIR = os.path.join(MANAGEMENT_DIR, 'testing')
 PARTY_COUNTRIES = os.path.join(CONFIG_DIR, 'party_countries.json')
+TESTING_DIR = os.path.join(MANAGEMENT_DIR, 'testing')
 
 SOLR_IMPORT = {
     'common': {
@@ -51,19 +57,14 @@ SOLR_IMPORT = {
         'test_input_file': os.path.join(TESTING_DIR, 'court_decision_in.json'),
         'test_output_file': os.path.join(TESTING_DIR, 'court_decision_out.json'),
         'court_decisions_url': 'http://informea.org/ws/court-decisions',
-        'days_ago': 7,
-        #'uuid': '9f4e6967-46a8-4299-b1e2-8fe3a4ddb3bf',
+        'days_ago': 30,
         'data_url': 'http://informea.org/node/%s/json',
-        'update': False,
+        'update': True,
     },
     'treaty': {
         'treaties_url': 'http://www.ecolex.org/elis_isis3w.php',
-        'start_year': 1980,
-        'start_month': 1,
-        'end_month': 12,
-        'query_export': '?database=libcat&search_type=page_search&table=all',
+        'query_export': '?database=tre&search_type=page_search&table=all',
         'query_format': 'ES:I AND STAT:C AND DM:%d%02d',
-        'import_field': 'dateofmodification',
         'query_filter': '&spage_query=%s',
         'query_skip': '&spage_first=%d',
         'query_type': '&format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD',
@@ -71,12 +72,8 @@ SOLR_IMPORT = {
     },
     'literature': {
         'literature_url': 'http://www.ecolex.org/elis_isis3w.php',
-        'start_year': 1980,
-        'start_month': 1,
-        'end_month': 12,
         'query_export': '?database=libcat&search_type=page_search&table=all',
-        'query_format': 'ES:I AND STAT:C AND DE:%d%02d',
-        'import_field': 'dateofentry',
+        'query_format': 'ES:I AND STAT:C AND DM:%d%02d',
         'query_filter': '&spage_query=%s',
         'query_skip': '&spage_first=%d',
         'query_type': '&format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD',
@@ -89,8 +86,9 @@ SOLR_IMPORT = {
         'query_format': '$format=json',
         'query_expand': '$expand=title,longTitle,keywords,content,files,summary',
         'query_order': '$orderby=updated asc',
-        'per_page': 100,
-        'days_ago': 7,
+        'per_page': 20,
+        'days_ago': 1,
     },
     'legislation': {},
 }
+
