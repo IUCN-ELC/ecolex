@@ -20,22 +20,22 @@ class BaseImporter(object):
         self.logger = logger
 
     def _get_regions(self):
-        with open(self.regions_json) as f:
+        with open(self.regions_json, encoding='utf-8') as f:
             regions = json.load(f)
         return regions
 
     def _get_languages(self):
-        with open(self.languages_json) as f:
+        with open(self.languages_json, encoding='utf-8') as f:
             languages_codes = json.load(f)
         return languages_codes
 
     def _get_keywords(self):
-        with open(self.keywords_json) as f:
+        with open(self.keywords_json, encoding='utf-8') as f:
             keywords = json.load(f)
         return keywords
 
     def _get_subjects(self):
-        with open(self.subjects_json) as f:
+        with open(self.subjects_json, encoding='utf-8') as f:
             subjects = json.load(f)
         return subjects
 

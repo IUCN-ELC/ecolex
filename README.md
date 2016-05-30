@@ -26,7 +26,7 @@ If the following entry is present in /etc/hosts:
 	 127.0.0.1	node1
 
 replace localhost with $LAN_IP:
-	
+
 	 10.0.0.98	node1
 
 Download the latest stable versions:
@@ -50,9 +50,9 @@ Use the `zoo.cfg` available in `ecolex-prototype/configs` for starting ZK:
 	$ cp ecolex-protoype/configs/zoo.cfg zookeeper-3.4.6/conf/
 	$ cd zookeeper-3.4.6/
 	$ bin/zkServer.sh start
-		
+
 Test ZK is up and running:
-	
+
 	$ bin/zkCli.sh -server 127.0.0.1:2181
 	 [zk: 127.0.0.1:2181(CONNECTED) 0]
 
@@ -60,7 +60,7 @@ Test ZK is up and running:
 #### SOLR
 
 Download and install (as superuser) solr inside `/var/local/solr-x.y.z`:
-	
+
 	$ cd /var/local
 	$ wget http://mirrors.hostingromania.ro/apache.org/lucene/solr/4.10.3/solr-4.10.3.tgz
 	$ cd solr-4.10.3/example
@@ -71,7 +71,7 @@ There should be a `solr.war` file inside the webapps folder.
 Configure a new collection starting from collection1:
 
 	$ cp -r solr/collection1 solr/ecolex_conf
-	
+
 Replace the collection's schema with the one from the repo:
 
 	$ cp /var/local/ecolex-prototype/configs/schema.xml solr/ecolex_conf/conf/
@@ -83,7 +83,7 @@ Upload the configuration to ZK:
 	$ scripts/cloud-scripts/zkcli.sh -cmd bootstrap -zkhost 127.0.0.1:2181 -solrhome solr
 
 If you modfied the schema and just want to update it:
-	
+
 	$ scripts/cloud-scripts/zkcli.sh -cmd upconfig -zkhost 127.0.0.1:2181 -collection ecolex_collection -confname ecolex_conf -solrhome solr -confdir solr/ecolex_conf/conf
 
 Start SOLR (by default it uses the port 8983):
@@ -119,7 +119,7 @@ Create a file `local_settings.py` in the same path as `manage.py`.
 To enable spelling suggestions, set:
 
     TEXT_SUGGESTION = True
-    
+
 
 ## Informea and Elis data
 
@@ -136,6 +136,11 @@ Informea data ingestion uses the DIH utility in Solr. The configs/data-config.xm
 The Elis data is ingested using a xml dump. You should first add to the index the Informea documents, as the import script (contrib/import_elis.py) deduplicates the treaties:
 
 	./contrib/import_elis.py treaties_directory localhost collection1
-	
+
 If you wish to attach the rich text content when adding the treaties, start a tika server locally and set TEXT_UPLOAD_ENABLED in import_elis.py (you can configure the tika connection details in contrib/utils.py).
+
+## Cron job for document updates:
+	The Dockerfile has rules for installing cron in container, and it imports the crontab.example
+	into it. If the cron is not running check with `crontab -l` that there is a newline at the end
+	of the file. If still not working try to restart the cron service with `/etc/init.d/cron restart` command runned inside the container.
 

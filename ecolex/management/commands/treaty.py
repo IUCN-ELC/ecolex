@@ -31,9 +31,6 @@ URL_CHANGE_FROM = 'http://www.ecolex.org/server2.php/server2neu.php/'
 URL_CHANGE_TO = 'http://www.ecolex.org/server2neu.php/'
 replace_url = lambda text: (URL_CHANGE_TO + text.split(URL_CHANGE_FROM)[-1]) if text.startswith(URL_CHANGE_FROM) else text
 
-# TODO Harvest French and Spanish translations for the following fields:
-#   - partyCountry
-
 FIELD_MAP = {
     'recid': 'trElisId',
     'informeauid': 'trInformeaId',
@@ -238,18 +235,21 @@ class TreatyImporter(BaseImporter):
         super().__init__(config, logger)
 
         self.treaties_url = config.get('treaties_url')
-        self.import_field = config.get('import_field')
         self.query_format = config.get('query_format')
         self.query_filter = config.get('query_filter')
         self.query_export = config.get('query_export')
         self.query_skip = config.get('query_skip')
         self.query_type = config.get('query_type')
         self.per_page = config.get('per_page')
-        self.start_year = config.get('start_year')
         now = datetime.now()
+        self.start_year = config.get('start_year', now.year)
         self.end_year = config.get('end_year', now.year)
         self.start_month = config.get('start_month', now.month)
         self.end_month = config.get('end_month', now.month)
+        if self.start_month == self.end_month and now.day == 1:
+            self.start_month -= 1
+            #TODO: When year changes (self.start_month == now.day == 1)
+
         logger.info('Started treaty importer')
 
     def harvest(self, batch_size):

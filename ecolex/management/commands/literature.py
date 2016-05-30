@@ -243,7 +243,6 @@ class LiteratureImporter(BaseImporter):
         super().__init__(config, logger)
 
         self.literature_url = config.get('literature_url')
-        self.import_field = config.get('import_field')
         self.query_format = config.get('query_format')
         self.query_filter = config.get('query_filter')
         self.query_export = config.get('query_export')
@@ -255,7 +254,8 @@ class LiteratureImporter(BaseImporter):
         self.end_year = config.get('end_year', now.year)
         self.start_month = config.get('start_month', now.month)
         self.end_month = config.get('end_month', now.month)
-
+        if self.start_month == self.end_month and now.day == 1:
+            self.start_month -= 1
         self.force_import_all = config.get('force_import_all', False)
         logger.info('Started literature importer')
 

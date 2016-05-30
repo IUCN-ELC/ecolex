@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from html import unescape
 import json
 import logging
@@ -348,7 +348,7 @@ class CourtDecisionImporter(BaseImporter):
 
     def __init__(self, config):
         super().__init__(config, logger)
-        self.days_ago = config.get('days_ago')
+        self.days_ago = config.get('days_ago', None)
         self.update = config.get('update')
         self.countries_json = config.get('countries_json')
         self.subdivisions_json = config.get('subdivisions_json')
@@ -384,6 +384,10 @@ class CourtDecisionImporter(BaseImporter):
             return
 
         decisions = self._get_decisions()
+        if self.days_ago:
+            time_point = datetime.now() - timedelta(self.days_ago)
+            decisions = filter(lambda x: datetime.fromtimestamp(int(x['last_update'])) > time_point, decisions)
+            decisions = [x for x in decisions]
         start = 0
         while start < len(decisions):
             end = min(start + batch_size, len(decisions))
@@ -432,7 +436,7 @@ class CourtDecisionImporter(BaseImporter):
         return get_json_from_url(self.court_decisions_url)
 
     def _get_countries(self):
-        with open(self.countries_json) as f:
+        with open(self.countries_json, encoding='utf-8') as f:
             codes_countries = json.load(f)
         codes = codes_countries['code_corresp']
         countries = codes_countries['official_names']
@@ -440,6 +444,6 @@ class CourtDecisionImporter(BaseImporter):
         return {reverse_codes.get(k, k): v for k, v in countries.items()}
 
     def _get_subdivisions(self):
-        with open(self.subdivisions_json) as f:
+        with open(self.subdivisions_json, encoding='utf-8') as f:
             subdivisions = json.load(f)
         return subdivisions
