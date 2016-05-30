@@ -485,9 +485,9 @@
     "fr": "gestion des ressources marines"
   },
   "watershed/catchment": {
-    "es": "cuenca colectora/\u00e1rea de captaci\u00f3n",
-    "en": "watershed/catchment",
-    "fr": "bassin versant/captage"
+    "es": "cuenca/\u00e1rea de captaci\u00f3n/cuenca colectora",
+    "en": "basin/catchment/watershed",
+    "fr": "bassin/captage/bassin versant"
   },
   "eia": {
     "es": "EIA",
@@ -2076,7 +2076,7 @@
   },
   "basin": {
     "es": "cuenca",
-    "en": "basin",
+    "en": "basin/catchment/watershed",
     "fr": "bassin"
   },
   "smallholders/peasants": {
@@ -2895,9 +2895,9 @@
     "fr": "production animale"
   },
   "health": {
-    "es": "sanidad",
-    "en": "health",
-    "fr": "sant\u00e9"
+    "es": "salud p\u00fablica",
+    "en": "public health",
+    "fr": "sant\u00e9 publique"
   },
   "planning": {
     "es": "planificaci\u00f3n",
@@ -2905,9 +2905,9 @@
     "fr": "planification"
   },
   "food security/food shortage/food aid": {
-    "es": "seguridad alimentaria/",
+    "es": "seguridad alimentaria",
     "en": "food security",
-    "fr": "s\u00e9curit\u00e9 alimentaire/"
+    "fr": "s\u00e9curit\u00e9 alimentaire"
   },
   "biological diversity": {
     "es": "biodiversidad",
