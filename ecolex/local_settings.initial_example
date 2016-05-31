@@ -5,6 +5,12 @@ DEBUG=True
 # Use generate_fao_api_key method from contrib/utils.py to generate a key
 FAOLEX_API_KEY = ''
 
+# Google Analytics keys
+ECOLEX_CODE = 'UA-75793139-1'
+INFORMEA_CODE = 'UA-75793139-3'
+FAOLEX_CODE = 'UA-75793139-2'
+FAOLEX_CODE_2 = 'UA-75793139-4'
+
 EXPORT_TYPES = ['treaty', 'decision', 'court_decision', 'literature']
 
 # Use SOLR_UPDATE for the `update` management command.

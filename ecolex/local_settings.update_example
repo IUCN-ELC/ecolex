@@ -4,6 +4,12 @@ import json
 # API KEY FOR FAOLEX HARVESTER
 FAOLEX_API_KEY = '80c749e44b420a9902171dc2dbf4e1423a96b489b3ee926d83bde60a75ac8fac'
 
+# Google Analytics keys
+ECOLEX_CODE = 'UA-75793139-1'
+INFORMEA_CODE = 'UA-75793139-3'
+FAOLEX_CODE = 'UA-75793139-2'
+FAOLEX_CODE_2 = 'UA-75793139-4'
+
 # Use SOLR_UPDATE for the `update` management command.
 # The management command will replace values in SOLR_UPDATE['replace']['field']
 # that are equal to SOLR_UPDATE['replace']['from'] with the value in
