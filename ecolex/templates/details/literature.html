@@ -4,9 +4,9 @@
 {% load i18n %}
 
 {% block meta %}
-  <title>{{ document.title|striptags }}</title>
+  <title>{{ document.title|striptags|html_unescape }}</title>
   {% if document.abstract %}
-  <meta name="description" content="{{ document.abstract }}" />
+  <meta name="description" content="{{ document.abstract|html_unescape }}" />
   {% endif %}
 {% endblock %}
 

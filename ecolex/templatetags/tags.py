@@ -11,6 +11,7 @@ import datetime
 import json
 import re
 import os
+from html import unescape
 from os.path import basename
 from urllib import parse as urlparse
 
@@ -133,6 +134,11 @@ def get_facet_counts(fdata):
         f['id']: f['count']
         for f in fdata
     }
+
+
+@register.filter
+def html_unescape(value):
+    return unescape(value)
 
 
 @register.filter
