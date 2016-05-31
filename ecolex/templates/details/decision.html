@@ -12,7 +12,7 @@
 {% block scripts %}
   {% if document.treaty_id and document.treaty_slug %}
   <script>
-    document.informea_url = "http://www.informea.org/treaties/{{ document.treaty_slug }}/decision/{{ document.decision_id }}";
+    document.informea_url = "http://www.informea.org/uuid/node/{{ document.decision_id }}";
     document.hostname = "informea.org";
   </script>
   {% endif %}
