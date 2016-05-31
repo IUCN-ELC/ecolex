@@ -387,6 +387,8 @@ class LiteratureImporter(BaseImporter):
                         title = data.get('litId')
                     slug = title + ' ' + data.get('litId')
                     data['slug'] = slugify(slug)
+                    data['updatedDate'] = (datetime.now()
+                                           .strftime('%Y-%m-%dT%H:%M:%SZ'))
 
                 literatures.append(data)
         return literatures

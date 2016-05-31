@@ -385,6 +385,8 @@ class TreatyImporter(BaseImporter):
                          '')
                 slug = title + ' ' + elis_id
                 data['slug'] = slugify(slug)
+                data['updatedDate'] = (datetime.now()
+                                       .strftime('%Y-%m-%dT%H:%M:%SZ'))
 
         return treaties
 

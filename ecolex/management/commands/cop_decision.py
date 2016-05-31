@@ -217,6 +217,8 @@ class CopDecisionImporter(BaseImporter):
                      data.get('decShortTitle_zh'))
             slug = title + ' ' + data.get('decId')
             data['slug'] = slugify(slug)
+            data['updatedDate'] = (datetime.now()
+                                   .strftime('%Y-%m-%dT%H:%M:%SZ'))
             decisions.append(data)
         return decisions
 

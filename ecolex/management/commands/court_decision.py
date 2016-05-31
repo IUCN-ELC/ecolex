@@ -338,6 +338,8 @@ class CourtDecision(object):
             logger.warning('Title missing for {}'.format(leo_id))
         slug = '{} {}'.format(title, leo_id)
         solr_decision['slug'] = slugify(slug)
+        solr_decision['updatedDate'] = (datetime.now()
+                                        .strftime('%Y-%m-%dT%H:%M:%SZ'))
 
         return solr_decision
 
