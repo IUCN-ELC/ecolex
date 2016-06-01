@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-25 14:40+0000\n"
+"POT-Creation-Date: 2016-06-01 11:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -190,6 +190,53 @@ msgstr "Siguiente"
 #: templates/bits/pagination.html:45
 msgid "No more results"
 msgstr "No hay más resultados"
+
+#: templates/bits/participants_legend.html:5
+#: templates/bits/participants_map.html:7
+#: templates/bits/participants_map.html:15 templatetags/tags.py:149
+msgid "Ratification"
+msgstr "Fecha de ratificación"
+
+#: templates/bits/participants_legend.html:6
+msgid "Accession/approbation"
+msgstr "Fecha de ascención aprobación "
+
+#: templates/bits/participants_legend.html:7
+msgid "Acceptance/approval"
+msgstr "Fecha de aceptación"
+
+#: templates/bits/participants_legend.html:8
+msgid "Succession"
+msgstr "Fecha de sucesión"
+
+#: templates/bits/participants_legend.html:9
+msgid "Consent to be bound"
+msgstr "Consentimiento en obligarse"
+
+#: templates/bits/participants_legend.html:10
+msgid "Definite signature"
+msgstr "Fecha de firma definitiva"
+
+#: templates/bits/participants_map.html:6
+#: templates/bits/participants_map.html:14 templates/details/treaty.html:85
+#: templatetags/tags.py:148
+msgid "Entry into force"
+msgstr "Entrada en vigor"
+
+#: templates/bits/participants_map.html:8
+#: templates/bits/participants_map.html:16 templatetags/tags.py:150
+msgid "Simple signature"
+msgstr "Fecha de firma simple"
+
+#: templates/bits/participants_map.html:9
+#: templates/bits/participants_map.html:17 templatetags/tags.py:151
+msgid "Provisional application"
+msgstr "Aplicación provisional"
+
+#: templates/bits/participants_map.html:10
+#: templates/bits/participants_map.html:18 templatetags/tags.py:147
+msgid "Withdrawal"
+msgstr "Retiro"
 
 #: templates/bits/participants_map.html:82
 #: templates/bits/participants_map.html:88 templates/details/treaty.html:180
@@ -508,10 +555,6 @@ msgstr "Lugar de adopción"
 msgid "Depository"
 msgstr "Depositario"
 
-#: templates/details/treaty.html:85
-msgid "Entry into force"
-msgstr "Entrada en vigor"
-
 #: templates/details/treaty.html:136
 msgid "Comment"
 msgstr "Comentario"
@@ -528,11 +571,11 @@ msgstr "Restablecer zoom"
 msgid "Country/Participant"
 msgstr "País/Participante"
 
-#: templates/details/treaty.html:187 templates/details_participants.html:32
+#: templates/details/treaty.html:187 templates/details_participants.html:33
 msgid "Countries"
 msgstr "Países"
 
-#: templates/details/treaty.html:207 templates/details_participants.html:51
+#: templates/details/treaty.html:207 templates/details_participants.html:52
 msgid "Not available"
 msgstr "No disponible"
 
@@ -596,10 +639,6 @@ msgstr "Inicio"
 #: templates/layout.html:45
 msgid "About ECOLEX"
 msgstr "Sobre"
-
-#: templates/layout.html:47
-msgid "Other tools"
-msgstr "Otras herramientas"
 
 #: templates/layout.html:50
 msgid "Take a tour"
@@ -933,3 +972,6 @@ msgstr "menos reciente"
 #: xforms.py:87
 msgid "relevance"
 msgstr "pertinencia"
+
+#~ msgid "Other tools"
+#~ msgstr "Otras herramientas"

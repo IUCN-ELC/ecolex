@@ -1,10 +1,12 @@
+{% load i18n %}
+
 <p>
 {% if 'ratification_group' in events %}
-* [1] Ratification
-  [2] Accession/approbation
-  [3] Acceptance/approval
-  [4] Succession
-  [5] Consent to be bound
-  [6] Definite signature
+* [1] {% trans 'Ratification' %}
+  [2] {% trans 'Accession/approbation' %}
+  [3] {% trans 'Acceptance/approval' %}
+  [4] {% trans 'Succession' %}
+  [5] {% trans 'Consent to be bound' %}
+  [6] {% trans 'Definite signature' %}
 {% endif %}
 </p>

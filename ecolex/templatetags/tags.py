@@ -144,11 +144,11 @@ def html_unescape(value):
 @register.filter
 def format_countries(parties):
     event_priority = OrderedDict([
-        ('withdrawal', 'Withdrawal'),
-        ('entry_into_force', 'Entry into force'),
-        ('ratification_group', 'Ratification'),
-        ('simple_signature', 'Simple signature'),
-        ('provisional_application', 'Provisional application'),
+        ('withdrawal', _('Withdrawal')),
+        ('entry_into_force', _('Entry into force')),
+        ('ratification_group', _('Ratification')),
+        ('simple_signature', _('Simple signature')),
+        ('provisional_application', _('Provisional application')),
     ])
     with open(settings.PARTY_COUNTRIES) as f:
         codes = json.load(f)
