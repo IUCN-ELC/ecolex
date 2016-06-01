@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-01 11:45+0000\n"
+"POT-Creation-Date: 2016-06-01 12:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -255,30 +255,30 @@ msgstr "Ordenado por"
 msgid "Sort by"
 msgstr "Ordenar por"
 
-#: templates/bits/type_facet.html:21 templates/layout.html:107
+#: templates/bits/type_facet.html:21 templates/layout.html:114
 #: templates/results_main.html:34
 msgid "Treaties"
 msgstr "Tratados"
 
-#: templates/bits/type_facet.html:40 templates/layout.html:113
+#: templates/bits/type_facet.html:40 templates/layout.html:120
 #: templates/results_main.html:35
 msgid "COP Decisions"
 msgstr "Decisiones de la COP"
 
 #: templates/bits/type_facet.html:59 templates/details/legislation.html:30
-#: templates/details/literature.html:206 templates/layout.html:119
+#: templates/details/literature.html:206 templates/layout.html:126
 #: templates/results_main.html:36 templates/short_display/legislation.html:5
 msgid "Legislation"
 msgstr "Legislación"
 
-#: templates/bits/type_facet.html:78 templates/layout.html:125
+#: templates/bits/type_facet.html:78 templates/layout.html:132
 #: templates/results_main.html:37
 msgid "Court Decisions"
 msgstr "Decisiones judiciales"
 
 #: templates/bits/type_facet.html:97 templates/details/literature.html:25
 #: templates/details/literature.html:232 templates/details/literature.html:248
-#: templates/details/treaty.html:304 templates/layout.html:131
+#: templates/details/treaty.html:304 templates/layout.html:138
 #: templates/results_main.html:38 templates/short_display/literature.html:29
 msgid "Literature"
 msgstr "Doctrina"
@@ -632,52 +632,67 @@ msgstr "Decisiones de la COP relacionados"
 msgid "Related literature"
 msgstr "Literatura relacionada"
 
-#: templates/layout.html:44
+#: templates/layout.html:51
 msgid "Home"
 msgstr "Inicio"
 
-#: templates/layout.html:45
+#: templates/layout.html:52
 msgid "About ECOLEX"
 msgstr "Sobre"
 
-#: templates/layout.html:50
+#: templates/layout.html:57
 msgid "Take a tour"
 msgstr "Hacer un recorrido"
 
-#: templates/layout.html:55
+#: templates/layout.html:62
 msgid "Language:"
 msgstr "Idioma:"
 
-#: templates/layout.html:89 templates/layout.html:149
+#: templates/layout.html:96 templates/layout.html:156
 msgid "The gateway to "
 msgstr "El portal del"
 
-#: templates/layout.html:89 templates/layout.html:149
+#: templates/layout.html:96 templates/layout.html:156
 msgid "environmental law"
 msgstr "derecho ambiental"
 
-#: templates/layout.html:98 templates/layout.html:158
+#: templates/layout.html:105 templates/layout.html:165
 msgid "Search in record and full text"
 msgstr "Buscar en el registro y el texto completo"
 
-#: templates/layout.html:100 templates/layout.html:154
-#: templates/layout.html:163
+#: templates/layout.html:107 templates/layout.html:161
+#: templates/layout.html:170
 msgid "Search"
 msgstr "Buscar"
 
-#: templates/layout.html:189
+#: templates/layout.html:191
+msgid ""
+"In order to understand how people use our site generally, and to create more "
+"valuable experiences for you, we may collect data about your use of this "
+"site (both directly and through our partners). By using this Website you "
+"agree to the use of cookies."
+msgstr "Con el fin de entender cómo las personas utilizan nuestro sitio en "
+"general, y para crear experiencias más valiosas para ti, podemos recopilar "
+"datos sobre el uso de este sitio (ya sea directamente oa través de nuestros "
+"socios). Mediante el uso de este sitio web usted acepta el uso de cookies."
+
+#: templates/layout.html:191
+msgid "Close"
+msgstr "Cerca"
+
+#: templates/layout.html:199
 msgid "User Agreement"
 msgstr "Acuerdo del Usuario"
 
-#: templates/layout.html:191
+#: templates/layout.html:201
 msgid "Privacy"
 msgstr "Privacidad"
 
-#: templates/layout.html:193
+#: templates/layout.html:203
 msgid "Acknowledgments"
 msgstr "Econocimientos"
 
-#: templates/layout.html:198
+#: templates/layout.html:208
 msgid "Joint initiative of "
 msgstr "Iniciativa conjunta de"
 

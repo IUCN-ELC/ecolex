@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/bootstrap-tour.min.css' %}">
   <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/select2.css' %}">
   <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/main.css' %}">
+  <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/cookieBar.min.css' %}">
   {% block style %}{% endblock %}
   <script src="https://code.jquery.com/jquery-1.12.1.min.js"
           integrity="sha256-I1nTg78tSrZev3kjvfdM5A5Ak/blglGzlaZANLPDl3I="
@@ -23,6 +24,12 @@
   <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.blockUI.js' %}"></script>{% endcomment %}
   <script src="{{ settings.STATIC_URL }}{% version 'js/select2.js' %}"></script>
   <script src="{{ settings.STATIC_URL }}{% version 'js/main.js' %}"></script>
+  <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.cookieBar.min.js' %}"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.cookie-message').cookieBar({ closeButton : '.btn-blue' });
+    });
+  </script>
   {% block scripts %}{% endblock %}
   {% include 'bits/favicon.html' %}
 </head>
@@ -179,6 +186,9 @@
     {% endif %}
 
     </form>
+    <div class="cookie-message">
+     {% trans 'In order to understand how people use our site generally, and to create more valuable experiences for you, we may collect data about your use of this site (both directly and through our partners). By using this Website you agree to the use of cookies.' %} <a class="btn btn-blue" href>{% trans 'Close' %}</a>
+    </div>
   </div>
 
   <footer id="site-footer">
