@@ -5,10 +5,10 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  var ecolex_code = settings.ECOLEX_CODE,
-      informea_code = settings.INFORMEA_CODE,
-      faolex_code = settings.FAOLEX_CODE,
-      faolex_code_2 = settings.FAOLEX_CODE_2;
+  var ecolex_code = '{{ settings.ECOLEX_CODE }}',
+      informea_code = '{{ settings.INFORMEA_CODE }}',
+      faolex_code =  '{{ settings.FAOLEX_CODE }}',
+      faolex_code_2 = '{{ settings.FAOLEX_CODE_2 }}';
 
   ga('create', ecolex_code, 'auto');
   ga('send', 'pageview');

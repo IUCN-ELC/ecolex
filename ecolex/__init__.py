@@ -6,6 +6,10 @@ def global_config(request):
         'GA_CODE',
         'GA_ENABLED',
         'FACETS_PAGE_SIZE',
+        'ECOLEX_CODE',
+        'INFORMEA_CODE',
+        'FAOLEX_CODE',
+        'FAOLEX_CODE_2',
         'DEBUG',
     ]
 
