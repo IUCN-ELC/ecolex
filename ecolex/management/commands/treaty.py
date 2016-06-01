@@ -219,12 +219,6 @@ class TreatyImporter(BaseImporter):
     CUSTOM_RULES = [
         {
             'condition_field': 'trElisId',
-            'condition_value': 'TRE-146817',
-            'action_field': 'trFieldOfApplication_en',
-            'action_value': ['Global', 'Regional/restricted'],
-        },
-        {
-            'condition_field': 'trElisId',
             'condition_value': 'TRE-149349',
             'action_field': 'trDateOfText',
             'action_value': format_date('2009-10-02'),
