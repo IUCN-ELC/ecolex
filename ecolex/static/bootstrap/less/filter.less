@@ -236,7 +236,6 @@ fieldset {
 }
 .filter-header {
   .clearfix();
-  margin-left: @aside-indent;
   margin-right: @aside-indent;
   margin-bottom: @padding-base-vertical;
 }
@@ -245,6 +244,7 @@ fieldset {
 }
 
 .filter-label {
+  margin-left: @padding-large-vertical;
   float: left;
   display: block;
   font-weight: bold;
@@ -281,6 +281,7 @@ label[for] {
 
 .facet-checkbox {
   padding: @padding-small-vertical @aside-indent;
+  margin-left: @aside-indent;
   border-radius: @border-radius-base;
   border: 1px solid transparent;
   &:hover,
@@ -381,11 +382,11 @@ ul.select2-selection__rendered {
   .select2-search--inline {
     .visuallyhidden;
     float: none;
-  } 
+  }
   .select2-search__field {
     padding-left: @aside-indent;
     // border-bottom: solid @input-border-focus;
-  } 
+  }
 
   &.select2-container--open {
     .select2-search--inline {
@@ -397,6 +398,6 @@ ul.select2-selection__rendered {
       margin: 0;
     }
   }
-  
+
 }
 

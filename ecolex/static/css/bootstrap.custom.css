@@ -6321,7 +6321,6 @@ fieldset h5[data-toggle="collapse"]:hover {
   margin: 10px 0;
 }
 .filter-header {
-  margin-left: 22px;
   margin-right: 22px;
   margin-bottom: 6px;
 }
@@ -6345,6 +6344,7 @@ fieldset h5[data-toggle="collapse"]:hover {
   margin: 6px 0 10px;
 }
 .filter-label {
+  margin-left: 10px;
   float: left;
   display: block;
   font-weight: bold;
@@ -6373,6 +6373,7 @@ label[for] {
 }
 .facet-checkbox {
   padding: 5px 22px;
+  margin-left: 22px;
   border-radius: 3px;
   border: 1px solid transparent;
 }
