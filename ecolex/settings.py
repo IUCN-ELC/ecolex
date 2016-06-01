@@ -213,6 +213,13 @@ TEXT_SUGGESTION = True
 
 SITE_ID = 1
 
+# CKEDITOR SETTINGS
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+    },
+}
+
 
 # Local settings
 try:
