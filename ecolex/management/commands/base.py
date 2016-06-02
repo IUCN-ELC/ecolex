@@ -81,5 +81,8 @@ class BaseImporter(object):
                                         field, data[self.id_field], val_en))
                     new_values['en'].append(val_en)
 
+        for k, v in new_values.items():
+            new_values[k] = list(set(v))
+
         for field in fields:
             data[field] = new_values[field[-2:]]

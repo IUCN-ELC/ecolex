@@ -287,11 +287,13 @@ class CourtDecision(object):
                 kw_dict = get_json_values(json_field, json_value, self.keywords,
                                           'keywords', leo_id)
                 for lang, keywords in kw_dict.items():
+                    keywords = list(set(keywords))
                     solr_decision['{}_{}'.format(solr_field, lang)] = keywords
             elif json_field in SUBJECT_FIELDS:
                 sbj_dict = get_json_values(json_field, json_value,
                                            self.subjects, 'subjects', leo_id)
                 for lang, subjects in sbj_dict.items():
+                    subjects = list(set(subjects))
                     solr_decision['{}_{}'.format(solr_field, lang)] = subjects
             else:
                 solr_decision[solr_field] = get_value(json_field, json_value)
