@@ -274,10 +274,13 @@ class CourtDecision(object):
             elif json_field in SUBDIVISION_FIELDS:
                 subdivision_en = get_value(json_field, json_value)
                 solr_decision[solr_field + '_en'] = subdivision_en
-                values = self.subdivisions.get(subdivision_en, None)
+                values = self.subdivisions.get(subdivision_en.lower(), None)
                 if values:
-                    solr_decision[solr_field + '_es'] = values['Spanish']
-                    solr_decision[solr_field + '_fr'] = values['French']
+                    solr_decision[solr_field + '_es'] = values['es']
+                    solr_decision[solr_field + '_fr'] = values['fr']
+                else:
+                    logger.warning('Subdivision missing from json: '
+                                   '{} ({})'.format(subdivision_en, leo_id))
             elif json_field in REGION_FIELDS:
                 reg_dict = get_json_values(json_field, json_value, self.regions,
                                            'regions', leo_id)
