@@ -80,7 +80,7 @@
     <field name="id" type="string" indexed="true" stored="true" required="true"/>
     <field name="type" type="string" indexed="true" stored="true" required="true"/>
     <field name="indexedDate" type="tdate" indexed="false" stored="true" default="NOW"/>
-    <field name="updatedDate" type="tdate" indexed="false" stored="true"/>
+    <field name="updatedDate" type="tdate" indexed="true" stored="true"/>
     <field name="slug" type="string" indexed="true" stored="true" multiValued="false"/>
 
     <field name="trElisId" type="string" indexed="true" stored="true" multiValued="false"/>
