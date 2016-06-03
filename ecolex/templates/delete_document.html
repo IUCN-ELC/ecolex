@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% load i18n %}
+
+{% block extra_content %}
+<div class="container">
+  <div class="well text-center">
+    {% if message %}
+        <div class="alert alert-{{ message_level }} alert-dismissible small" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span>{{ message }}</span>
+        </div>
+    {% endif %}
+    <h1>Document delete</h1>
+    <form action="{% url 'delete_document' %}" method="get">
+        <div class="search-form">
+            <input type="text" autofocus {# autosave #} class="form-control" name="url" placeholder="{% trans 'Enter url record to delete' %}" >
+            <button class="btn btn-danger" type="submit">{% trans 'Search' %}</button>
+        </div>
+        {% if slug %}
+        <p>Extracted slug from url: {{ slug }}</p>
+        {% endif %}
+    </form>
+
+    {% if record %}
+        <h3>Found record:</h3>
+        <h5><a href="{{ record.details_url }}">{{ record.title }}</a></h5>
+        <form action="{% url 'delete_document' %}" method="post">
+            <label for="confirm_delete">Confirm delete</label>
+            <input type="checkbox" name="confirm_delete" value="{{ record.slug }}">
+            <button class="btn btn-danger" type="submit">{% trans 'Delete' %}</button>
+        </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

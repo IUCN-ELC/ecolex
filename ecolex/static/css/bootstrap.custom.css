@@ -2732,6 +2732,63 @@ fieldset[disabled] .btn-blue.active {
   color: #000000 !important;
   text-decoration: none;
 }
+.btn-red {
+  color: #ffffff;
+  background-color: #d9534f;
+  border-color: #d9534f;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+  color: #fff !important;
+}
+.btn-red:hover,
+.btn-red:focus,
+.btn-red.focus,
+.btn-red:active,
+.btn-red.active,
+.open > .dropdown-toggle.btn-red {
+  color: #ffffff;
+  background-color: #d33834;
+  border-color: #d2322d;
+}
+.btn-red:active,
+.btn-red.active,
+.open > .dropdown-toggle.btn-red {
+  background-image: none;
+}
+.btn-red.disabled,
+.btn-red[disabled],
+fieldset[disabled] .btn-red,
+.btn-red.disabled:hover,
+.btn-red[disabled]:hover,
+fieldset[disabled] .btn-red:hover,
+.btn-red.disabled:focus,
+.btn-red[disabled]:focus,
+fieldset[disabled] .btn-red:focus,
+.btn-red.disabled.focus,
+.btn-red[disabled].focus,
+fieldset[disabled] .btn-red.focus,
+.btn-red.disabled:active,
+.btn-red[disabled]:active,
+fieldset[disabled] .btn-red:active,
+.btn-red.disabled.active,
+.btn-red[disabled].active,
+fieldset[disabled] .btn-red.active {
+  color: #808080;
+  background-color: #eeeeee;
+  border-color: transparent;
+}
+.btn-red .badge {
+  color: #d9534f;
+  background-color: #ffffff;
+}
+.btn-red:hover,
+.btn-red:focus,
+.btn-red.focus {
+  color: #000000 !important;
+  text-decoration: none;
+}
 .btn-link {
   color: #0066cc;
   font-weight: normal;

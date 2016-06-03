@@ -1,6 +1,8 @@
 import math
 from collections import OrderedDict
 from urllib.parse import urlencode
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.conf import settings
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.http import Http404
@@ -9,7 +11,7 @@ from django.utils.functional import cached_property
 from django.utils.translation import get_language
 
 from .xforms import SearchForm
-from .xsearch import Queryer, Searcher, SearchResponse
+from .xsearch import Queryer, Searcher, SearchResponse, DEFAULT_INTERFACE as si
 from ecolex.export import get_exporter
 from ecolex.utils import RawSolr
 
@@ -141,7 +143,6 @@ class DetailsView(SearchViewMixin, TemplateView):
             raise Http404()
 
         data = form.cleaned_data.copy()
-
         queryer = Queryer(data, language=get_language())
 
         try:
@@ -289,6 +290,7 @@ class ExportView(View):
                 'decShortTitle_en',
                 'trTitleOfText_en',
                 'litPaperTitleOfText_en',
+                'updatedDate'
             ]
             fl = ','.join(export_fields)
             resp = solr.query(q, fl, format)
@@ -299,6 +301,43 @@ class ExportView(View):
 
         exporter = get_exporter(format)(resp)
         return exporter.get_response(download)
+
+
+@method_decorator(login_required, name='dispatch')
+class DocumentDeleteView(SearchViewMixin, TemplateView):
+
+    template_name = 'delete_document.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        url = self.request.GET.get('url', None)
+        if url:
+            elements = url.split('/')
+            slug = elements[5] if len(elements) > 5 else None
+            if slug:
+                data = {'type': ''}
+                queryer = Queryer(data, language=get_language())
+                try:
+                    record = queryer.get(slug=slug)
+                except ObjectDoesNotExist:
+                    record = None
+
+            ctx['slug'] = slug
+            ctx['record'] = record
+        return ctx
+
+    def post(self, request, *args, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        slug = request.POST.get('confirm_delete', None)
+        if slug:
+            si.delete_by_query(query=si.Q(slug=slug))
+            si.commit()
+            ctx['message_level'] = 'success'
+            ctx['message'] = 'Successfully deleted record!'
+        else:
+            ctx['message_level'] = 'warning'
+            ctx['message'] = 'Slug not found!'
+        return self.render_to_response(ctx)
 
 
 class PageNotFound(SearchViewMixin, TemplateView):

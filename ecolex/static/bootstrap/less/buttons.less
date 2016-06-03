@@ -100,6 +100,21 @@
   }
 }
 
+.btn-red {
+  .button-variant(@btn-danger-color; @btn-danger-bg; @btn-danger-border);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+  color: #fff !important;
+    &:hover,
+  &:focus,
+  &.focus {
+    color: #000000 !important;
+    text-decoration: none;
+  }
+}
+
 
 // Link buttons
 // -------------------------
