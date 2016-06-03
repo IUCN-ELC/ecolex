@@ -25,9 +25,14 @@
   <script src="{{ settings.STATIC_URL }}{% version 'js/select2.js' %}"></script>
   <script src="{{ settings.STATIC_URL }}{% version 'js/main.js' %}"></script>
   <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.cookieBar.min.js' %}"></script>
+  <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.collapser.min.js' %}"></script>
   <script type="text/javascript">
     $(document).ready(function() {
       $('.cookie-message').cookieBar({ closeButton : '.btn-blue' });
+      $('.collapse-keywords').collapser({
+        mode: 'words',
+        truncate: 20,
+      });
     });
   </script>
   {% block scripts %}{% endblock %}

@@ -22,7 +22,7 @@
 {% if result.keywords %}
   <p class="search-result-details">
     <strong>{% trans 'Keywords' %}:</strong>
-    {{ result.keywords|capfirstseq|join:", "|safe }}
+    <span class="collapse-keywords">{{ result.keywords|capfirstseq|join:", "|safe }}</span>
   </p>
 {% endif %}
 

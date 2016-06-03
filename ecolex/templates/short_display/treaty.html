@@ -15,7 +15,7 @@
 </div>
 {% if result.keywords %}
   <p class="search-result-details">
-    <strong>{% trans 'Keywords' %}:</strong> {{ result.keywords|capfirstseq|join:", "|safe }}
+    <strong>{% trans 'Keywords' %}:</strong><span class="collapse-keywords">{{ result.keywords|capfirstseq|join:", "|safe }}</span>
   </p>
 {% endif %}
 <p class="search-result-source"><strong>{% trans 'Source' %}:</strong>
