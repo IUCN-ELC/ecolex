@@ -226,8 +226,8 @@ class TreatySchema(CommonSchema):
                                        load_from='trOfficialPublication')
     order = fields.String(load_from='trOrder')
     title_of_text = fields.String(load_from='trTitleOfText',
-                                        multilingual=True,
-                                        missing='')
+                                  multilingual=True,
+                                  missing='')
     parent_id = fields.Integer(load_from='trParentId')
     place_of_adoption = fields.String(load_from='trPlaceOfAdoption')
     primary = fields.List(fields.String(), load_from='trPrimary')
@@ -240,7 +240,8 @@ class TreatySchema(CommonSchema):
     status = fields.String(load_from='trStatus')
     theme_secondary = fields.List(fields.String(), load_from='trThemeSecondary')
     title_abbreviation = fields.List(fields.String(),
-                                     load_from='trTitleAbbreviation')
+                                     load_from='trTitleAbbreviation',
+                                     missing=[])
     title_of_text_short = fields.String(load_from='trTitleOfTextShort',
                                         missing='')
     related_web_site = fields.List(fields.String(), load_from='trRelatedWebSite')

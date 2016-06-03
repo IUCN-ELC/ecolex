@@ -32,7 +32,7 @@ URL_CHANGE_TO = 'http://www.ecolex.org/server2neu.php/'
 replace_url = lambda text: (URL_CHANGE_TO + text.split(URL_CHANGE_FROM)[-1]) if text.startswith(URL_CHANGE_FROM) else text
 
 FIELD_MAP = {
-    'recid': 'trElisId',
+    'id': 'trElisId',
     'informeauid': 'trInformeaId',
     'dateofentry': 'trDateOfEntry',
     'dateofmodification': 'trDateOfModification',
