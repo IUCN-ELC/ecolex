@@ -11,12 +11,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
 from django.views.generic.base import RedirectView
 
-from ecolex.legislation import harvest_file
 from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS, STATIC_PAGES
+from ecolex.export import get_exporter
+from ecolex.legislation import harvest_file
 from ecolex.models import StaticContent
-from ecolex.search import (
-    SearchMixin, get_documents_by_field,
-)
+from ecolex.search import SearchMixin, get_documents_by_field, search
+from ecolex.management.utils import EcolexSolr
 
 
 logger = logging.getLogger(__name__)
@@ -250,3 +250,34 @@ class LegislationRedirectView(RedirectView):
             return HttpResponseRedirect(url)
         else:
             return HttpResponse('Arguments missing or document is not indexed')
+
+
+class ExportView(View):
+    def get(self, request, **kwargs):
+        doctype = request.GET.get('type')
+        slug = request.GET.get('slug')
+        format = request.GET.get('format')
+        download = request.GET.get('download')
+
+        if doctype and doctype not in settings.EXPORT_TYPES:
+            raise Http404()  # TODO Custom 404 template depending on format
+
+        if doctype:
+            key, value = 'type', doctype
+            fields = [
+                'slug',
+                'cdTitleOfText_en',
+                'decShortTitle_en',
+                'trTitleOfText_en',
+                'litPaperTitleOfText_en',
+            ]
+            fl = ','.join(fields)
+        elif slug:
+            key, value = 'slug', slug
+            fl = '*'
+
+        solr = EcolexSolr()
+        resp = solr.search_all(key, value, fl=fl)
+
+        exporter = get_exporter(format)(resp)
+        return exporter.get_response(download)

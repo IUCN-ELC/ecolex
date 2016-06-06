@@ -13,8 +13,6 @@ from django.utils.translation import get_language
 
 from .xforms import SearchForm
 from .xsearch import Queryer, Searcher, SearchResponse, DEFAULT_INTERFACE as si
-from ecolex.export import get_exporter
-from ecolex.utils import RawSolr
 
 
 class HomepageView(TemplateView):
@@ -269,39 +267,6 @@ class RelatedDecisions(RelatedObjectsView):
                                    options=options, **lookups)
 
         return response
-
-
-class ExportView(View):
-    def get(self, request, **kwargs):
-        doctype = request.GET.get('type')
-        slug = request.GET.get('slug')
-        format = request.GET.get('format')
-        download = request.GET.get('download')
-
-        if doctype and doctype not in settings.EXPORT_TYPES:
-            raise Http404()  # TODO Custom 404 template depending on format
-
-        solr = RawSolr(settings.SOLR_URI)
-
-        if doctype:
-            q = 'type:{}'.format(doctype)
-            export_fields = [
-                'slug',
-                'cdTitleOfText_en',
-                'decShortTitle_en',
-                'trTitleOfText_en',
-                'litPaperTitleOfText_en',
-                'updatedDate'
-            ]
-            fl = ','.join(export_fields)
-            resp = solr.query(q, fl, format)
-        elif slug:
-            q = 'slug:{}'.format(slug)
-            export_fields = request.GET.get('fields', '')
-            resp = solr.query(q, export_fields, format)
-
-        exporter = get_exporter(format)(resp)
-        return exporter.get_response(download)
 
 
 @method_decorator(login_required, name='dispatch')

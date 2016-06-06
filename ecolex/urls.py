@@ -9,7 +9,7 @@ from solid_i18n.urls import solid_i18n_patterns as i18n_patterns
 from ecolex.sitemaps import DocumentSitemap, StaticViewSitemap
 from .views import (
     DesignPlayground, FaoFeedView, Homepage, LegislationRedirectView,
-    PageView, debug,
+    PageView, debug, ExportView
 )
 from . import xviews as views
 from .api import urls as api_urls
@@ -29,7 +29,7 @@ urlpatterns = [
         'sitemaps': sitemaps,
         'template_name': 'sitemaps/translated_sitemap.xml',
     }),
-    url(r'^export/$', views.ExportView.as_view(), name='export'),
+    url(r'^export/$', ExportView.as_view(), name='export'),
 ]
 
 urlpatterns += i18n_patterns(

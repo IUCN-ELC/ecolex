@@ -1,3 +1,5 @@
+import dicttoxml
+import json
 from datetime import date
 from django.http import HttpResponse
 
@@ -14,11 +16,8 @@ def get_exporter(format):
 class Exporter(object):
     DATE_FORMAT = '%Y%m%d'
 
-    def __init__(self, text):
-        self.text = text
-
-    def get_data(self):
-        return self.text
+    def __init__(self, docs):
+        self.docs = docs
 
     def get_filename(self):
         current_date = date.today().strftime(self.DATE_FORMAT)
@@ -43,6 +42,12 @@ class CSVExporter(Exporter):
 class JsonExporter(Exporter):
     CONTENT_TYPE = 'application/json'
 
+    def get_data(self):
+        return json.dumps(self.docs)
+
 
 class XMLExporter(Exporter):
     CONTENT_TYPE = 'text/xml'
+
+    def get_data(self):
+        return dicttoxml.dicttoxml(self.docs)
