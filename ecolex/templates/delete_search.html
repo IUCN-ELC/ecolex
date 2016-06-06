@@ -11,7 +11,7 @@
         </div>
     {% endif %}
     <h1>Document delete</h1>
-    <form action="{% url 'delete_document' %}" method="get">
+    <form action="{% url 'delete_search' %}" method="get">
         <div class="search-form">
             <input type="text" autofocus {# autosave #} class="form-control" name="url" placeholder="{% trans 'Enter url record to delete' %}" >
             <button class="btn btn-danger" type="submit">{% trans 'Search' %}</button>
@@ -24,7 +24,7 @@
     {% if record %}
         <h3>Found record:</h3>
         <h5><a href="{{ record.details_url }}">{{ record.title }}</a></h5>
-        <form action="{% url 'delete_document' %}" method="post">
+        <form action="{% url 'delete_search' %}" method="post">
             <label for="confirm_delete">Confirm delete</label>
             <input type="checkbox" name="confirm_delete" value="{{ record.slug }}">
             <button class="btn btn-danger" type="submit">{% trans 'Delete' %}</button>

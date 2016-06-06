@@ -67,8 +67,10 @@ urlpatterns += i18n_patterns(
         views.LegislationDetails.as_view(),
         name="legislation_details"),
 
-    url(r'^delete/$', views.DocumentDeleteView.as_view(),
-        name='delete_document'),
+    url(r'^delete/$', views.DocumentDeleteSearch.as_view(),
+        name='delete_search'),
+    url(r'^delete/(?P<slug>[^/]+)/$', views.DocumentDelete.as_view(),
+        name='delete_record'),
 
     url(r'^p/(?P<slug>\w+)/', PageView.as_view(),
         name="page"),

@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
-from django.http import Http404
+from django.core.urlresolvers import reverse
+from django.http import Http404, HttpResponseRedirect
 from django.views.generic import TemplateView, View
 from django.utils.functional import cached_property
 from django.utils.translation import get_language
@@ -304,9 +305,9 @@ class ExportView(View):
 
 
 @method_decorator(login_required, name='dispatch')
-class DocumentDeleteView(SearchViewMixin, TemplateView):
+class DocumentDeleteSearch(SearchViewMixin, TemplateView):
 
-    template_name = 'delete_document.html'
+    template_name = 'delete_search.html'
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -338,6 +339,25 @@ class DocumentDeleteView(SearchViewMixin, TemplateView):
             ctx['message_level'] = 'warning'
             ctx['message'] = 'Slug not found!'
         return self.render_to_response(ctx)
+
+
+@method_decorator(login_required, name='dispatch')
+class DocumentDelete(View):
+
+    def get_redirect_url(self):
+        query = urlencode(self.request.GET)
+        return '{}?{}'.format(reverse('results'), query)
+
+    def post(self, request, *args, **kwargs):
+        slug = kwargs.get('slug')
+        if slug:
+            si.delete_by_query(query=si.Q(slug=slug))
+            si.commit()
+        else:
+            # TODO: messages
+            pass
+        url = self.get_redirect_url()
+        return HttpResponseRedirect(url)
 
 
 class PageNotFound(SearchViewMixin, TemplateView):
