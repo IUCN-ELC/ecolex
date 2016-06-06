@@ -86,10 +86,10 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 
 {% if form.has_treaty %}
 <fieldset class="special-filter">
-    <h5 data-toggle="collapse" {% if not form.has_treaty %}class="collapsed"{% endif %}
+    <h5 data-toggle="collapse" {% if not type_count.treaty %}class="collapsed"{% endif %}
         data-target="#filter-treaties">{% trans 'Treaty filters' %}</h5>
 
-    <div id="filter-treaties" class="collapse {% if form.has_treaty %}in{% endif %}">
+    <div id="filter-treaties" class="collapse {% if type_count.treaty > 0 %}in{% endif %}">
 
 {% trans "Document type" as title %}
 {% include 'bits/checkbox_facet.html' with title=title field=form.tr_type_of_document show_empty=True %}
@@ -114,10 +114,10 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 
 {% if form.has_decision %}
   <fieldset class="special-filter">
-    <h5 data-toggle="collapse" {% if not form.has_decision %}class="collapsed"{% endif %}
+    <h5 data-toggle="collapse" {% if not type_count.decision %}class="collapsed"{% endif %}
         data-target="#filter-cop-decisions">{% trans 'COP Decision filters' %}</h5>
 
-    <div id="filter-cop-decisions" class="collapse {% if form.has_decision %}in{% endif %}">
+    <div id="filter-cop-decisions" class="collapse {% if type_count.decision > 0 %}in{% endif %}">
 
 {% trans "Treaty" as title %}
 {% include "bits/selection_facet.html" with title=title placeholder="Add treaties…" viewname="api:dec-treaty-name-list" field=form.dec_treaty_name %}
@@ -137,8 +137,8 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 
 {% if form.has_legislation %}
   <fieldset class="special-filter">
-    <h5 data-toggle="collapse" {% if not form.has_legislation %}class="collapsed"{% endif %}data-target="#filter-legislation">{% trans 'Legislation filters' %}</h5>
-    <div id="filter-legislation" class="collapse {% if form.has_legislation %}in{% endif %}">
+    <h5 data-toggle="collapse" {% if not type_count.legislation %}class="collapsed"{% endif %}data-target="#filter-legislation">{% trans 'Legislation filters' %}</h5>
+    <div id="filter-legislation" class="collapse {% if type_count.legislation > 0 %}in{% endif %}">
 
 {% trans "Document type" as title %}
 {% include 'bits/checkbox_facet.html' with title=title field=form.leg_type_of_document show_empty=True %}
@@ -153,9 +153,9 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 
 {% if form.has_court_decision %}
   <fieldset class="special-filter">
-    <h5 data-toggle="collapse" {% if not form.has_court_decision %}class="collapsed"{% endif %}
+    <h5 data-toggle="collapse" {% if not type_count.court_decision %}class="collapsed"{% endif %}
         data-target="#filter-court-decisions">{% trans 'Court decision filters' %}</h5>
-    <div id="filter-court-decisions" class="collapse {% if form.has_court_decision %}in{% endif %}">
+    <div id="filter-court-decisions" class="collapse {% if type_count.court_decision > 0 %}in{% endif %}">
 
 {% trans "Type of court" as title %}
 {% include 'bits/checkbox_facet.html' with title=title field=form.cd_type_of_document show_empty=True %}
@@ -170,8 +170,8 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 
 {% if form.has_literature %}
   <fieldset class="special-filter">
-    <h5 data-toggle="collapse" {% if not form.has_literature %}class="collapsed"{% endif %} data-target="#filter-literatures">{% trans 'Literature filters' %}</h5>
-    <div id="filter-literatures" class="collapse {% if form.has_literature %}in{% endif %}">
+    <h5 data-toggle="collapse" {% if not type_count.literature %}class="collapsed"{% endif %} data-target="#filter-literatures">{% trans 'Literature filters' %}</h5>
+    <div id="filter-literatures" class="collapse {% if type_count.literature > 0 %}in{% endif %}">
 
 {% trans "Author" as title %}
 {% include "bits/selection_facet.html" with title=title placeholder="Add author…" viewname="api:lit-author-list" field=form.lit_author %}
