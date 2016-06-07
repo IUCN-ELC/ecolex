@@ -277,7 +277,7 @@ class ExportView(View):
             fl = '*'
 
         solr = EcolexSolr()
-        resp = solr.search_all(key, value, fl=fl)
+        resp = solr.search_all(key, value, fl=fl, rows=99999)
 
         exporter = get_exporter(format)(resp)
         if doctype:
