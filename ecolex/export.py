@@ -1,4 +1,6 @@
+import csv
 import dicttoxml
+import io
 import json
 from datetime import date
 from django.http import HttpResponse
@@ -37,6 +39,21 @@ class Exporter(object):
 
 class CSVExporter(Exporter):
     CONTENT_TYPE = 'text/csv'
+
+    def get_data(self):
+        if not self.docs:
+            return ''
+
+        output = io.StringIO()
+
+        fieldnames = self.docs[0].keys()
+        writer = csv.DictWriter(output, fieldnames)
+
+        writer.writeheader()
+        for doc in self.docs:
+            writer.writerow(doc)
+
+        return output.getvalue()
 
 
 class JsonExporter(Exporter):
