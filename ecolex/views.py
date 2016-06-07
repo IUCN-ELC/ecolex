@@ -15,7 +15,7 @@ from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS, STATIC_PAG
 from ecolex.export import get_exporter
 from ecolex.legislation import harvest_file
 from ecolex.models import StaticContent
-from ecolex.search import SearchMixin, get_documents_by_field, search
+from ecolex.search import SearchMixin, get_documents_by_field
 from ecolex.management.utils import EcolexSolr
 
 
@@ -280,4 +280,6 @@ class ExportView(View):
         resp = solr.search_all(key, value, fl=fl)
 
         exporter = get_exporter(format)(resp)
+        if doctype:
+            exporter.attach_urls(request)
         return exporter.get_response(download)

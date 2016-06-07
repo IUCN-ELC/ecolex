@@ -2,7 +2,9 @@ import csv
 import dicttoxml
 import io
 import json
+import urllib.parse
 from datetime import date
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 
 
@@ -20,6 +22,14 @@ class Exporter(object):
 
     def __init__(self, docs):
         self.docs = docs
+
+    def attach_urls(self, request):
+        export_url = request.build_absolute_uri(reverse('export'))
+        qs = {'format': self.FORMAT}
+        for doc in self.docs:
+            qs['slug'] = doc['slug']
+            query = urllib.parse.urlencode(qs)
+            doc['export_url'] = '?'.join((export_url, query))
 
     def get_filename(self):
         current_date = date.today().strftime(self.DATE_FORMAT)
@@ -39,6 +49,7 @@ class Exporter(object):
 
 class CSVExporter(Exporter):
     CONTENT_TYPE = 'text/csv'
+    FORMAT = 'csv'
 
     def get_data(self):
         if not self.docs:
@@ -58,6 +69,7 @@ class CSVExporter(Exporter):
 
 class JsonExporter(Exporter):
     CONTENT_TYPE = 'application/json'
+    FORMAT = 'json'
 
     def get_data(self):
         return json.dumps(self.docs)
@@ -65,6 +77,7 @@ class JsonExporter(Exporter):
 
 class XMLExporter(Exporter):
     CONTENT_TYPE = 'text/xml'
+    FORMAT = 'xml'
 
     def get_data(self):
         return dicttoxml.dicttoxml(self.docs)
