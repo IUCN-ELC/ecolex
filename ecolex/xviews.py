@@ -1,6 +1,7 @@
 import math
 from collections import OrderedDict
 from urllib.parse import urlencode
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
@@ -318,9 +319,9 @@ class DocumentDelete(View):
         if slug:
             si.delete_by_query(query=si.Q(slug=slug))
             si.commit()
+            messages.success(request, 'Record deleted successfully!')
         else:
-            # TODO: messages
-            pass
+            messages.error(request, "Record slug couldn't be found!")
         url = self.get_redirect_url()
         return HttpResponseRedirect(url)
 
