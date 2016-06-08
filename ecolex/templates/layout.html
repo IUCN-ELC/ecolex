@@ -31,7 +31,9 @@
       $('.cookie-message').cookieBar({ closeButton : '.btn-blue' });
       $('.collapse-keywords').collapser({
         mode: 'words',
-        truncate: 20,
+        truncate: 10,
+        showText: '{% trans 'Show all' %}',
+        hideText: '{% trans 'Show less' %}'
       });
     });
   </script>

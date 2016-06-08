@@ -7245,4 +7245,11 @@ ul.select2-selection__rendered {
   margin-bottom: .5em;
   font-size: 18px;
 }
+.collapse-keywords a {
+  color: #212121;
+}
+.collapse-keywords a:hover,
+.collapse-keywords a:focus {
+  color: #0066cc;
+}
 /*# sourceMappingURL=bootstrap.custom.css.map */
