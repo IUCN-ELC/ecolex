@@ -29,7 +29,7 @@ class Exporter(object):
         for doc in self.docs:
             qs['slug'] = doc['slug']
             query = urllib.parse.urlencode(qs)
-            doc['export_url'] = '?'.join((export_url, query))
+            doc['url'] = '?'.join((export_url, query))
 
     def get_filename(self):
         current_date = date.today().strftime(self.DATE_FORMAT)

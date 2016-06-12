@@ -256,7 +256,7 @@ class ExportView(View):
     def get(self, request, **kwargs):
         doctype = request.GET.get('type')
         slug = request.GET.get('slug')
-        format = request.GET.get('format')
+        format = request.GET.get('format', 'json')
         download = request.GET.get('download')
 
         if doctype and doctype not in settings.EXPORT_TYPES:
@@ -266,10 +266,7 @@ class ExportView(View):
             key, value = 'type', doctype
             fields = [
                 'slug',
-                'cdTitleOfText_en',
-                'decShortTitle_en',
-                'trTitleOfText_en',
-                'litPaperTitleOfText_en',
+                'updatedDate',
             ]
             fl = ','.join(fields)
         elif slug:
