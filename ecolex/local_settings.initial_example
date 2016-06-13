@@ -3,6 +3,7 @@ import os
 DEBUG=True
 # API KEY FOR FAOLEX HARVESTER
 # Use generate_fao_api_key method from contrib/utils.py to generate a key
+FAOLEX_ENABLED = True
 FAOLEX_API_KEY = ''
 
 # Google Analytics keys

@@ -172,6 +172,9 @@ class FaoFeedView(View):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
+        faolex_enabled = getattr(settings, 'FAOLEX_ENABLED', False)
+        if not faolex_enabled:
+            raise Http404()
         logger = logging.getLogger('legislation_import')
         # for key,val in request.META.items():
         #    logger.debug('Header %s = %s' % (key,val))
