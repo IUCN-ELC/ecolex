@@ -147,8 +147,8 @@ def format_countries(parties):
         ('withdrawal', _('Withdrawal')),
         ('entry_into_force', _('Entry into force')),
         ('ratification_group', _('Ratification')),
-        ('simple_signature', _('Simple signature')),
         ('provisional_application', _('Provisional application')),
+        ('simple_signature', _('Simple signature')),
     ])
     with open(settings.PARTY_COUNTRIES) as f:
         codes = json.load(f)

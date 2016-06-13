@@ -289,8 +289,8 @@ class Treaty(DocumentModel):
     EVENTS_ORDER = [
         'entry_into_force',
         'ratification_group',
-        'simple_signature',
         'provisional_application',
+        'simple_signature',
         'participation',
         'reservation',
         'withdrawal',
