@@ -19,19 +19,19 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
   <div id="filter-global" class="collapse in">
 
 {% trans "Subject" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add subjects…" viewname="api:xsubjects-list" field=form.xsubjects %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add subject…" viewname="api:xsubjects-list" field=form.xsubjects %}
 
 {% trans "Keyword" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add keywords…" viewname="api:xkeywords-list" field=form.xkeywords %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add keyword…" viewname="api:xkeywords-list" field=form.xkeywords %}
 
 {% trans "Country" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add countries…" viewname="api:xcountry-list" field=form.xcountry %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add country…" viewname="api:xcountry-list" field=form.xcountry %}
 
 {% trans "Geographical Area" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add geographical areas…" viewname="api:xregion-list" field=form.xregion %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add geographical area…" viewname="api:xregion-list" field=form.xregion %}
 
 {% trans "Language" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add languages…" viewname="api:xlanguage-list" field=form.xlanguage %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add language…" viewname="api:xlanguage-list" field=form.xlanguage %}
 
 {% with dmin=stats.xdate.min dmax=stats.xdate.max %}
 
@@ -105,7 +105,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% include "bits/selection_facet.html" with title=title placeholder="Add depository…" viewname="api:tr-depository-list" field=form.tr_depository %}
 
 {% trans "Place of adoption" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add place…" viewname="api:tr-place-of-adoption-list" field=form.tr_place_of_adoption %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add place of adoption…" viewname="api:tr-place-of-adoption-list" field=form.tr_place_of_adoption %}
 
     </div>
 </fieldset>
@@ -120,7 +120,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
     <div id="filter-cop-decisions" class="collapse {% if type_count.decision > 0 %}in{% endif %}">
 
 {% trans "Treaty" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add treaties…" viewname="api:dec-treaty-name-list" field=form.dec_treaty_name %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add treaty…" viewname="api:dec-treaty-name-list" field=form.dec_treaty_name %}
 
 {% if facets.dec_type_of_document.results %}
 {% trans "Type of document" as title %}
@@ -144,7 +144,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% include 'bits/checkbox_facet.html' with title=title field=form.leg_type_of_document show_empty=True %}
 
 {% trans "Sub-national/state level" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add territory…" viewname="api:leg-territorial-subdivision-list" field=form.leg_territorial_subdivision %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add sub-national/state level…" viewname="api:leg-territorial-subdivision-list" field=form.leg_territorial_subdivision %}
 
     </div>
   </fieldset>
@@ -161,7 +161,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% include 'bits/checkbox_facet.html' with title=title field=form.cd_type_of_document show_empty=True %}
 
 {% trans "Sub-national/state level" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add territory…" viewname="api:cd-territorial-subdivision-list" field=form.cd_territorial_subdivision %}
+{% include "bits/selection_facet.html" with title=title placeholder="Add sub-national/state level…" viewname="api:cd-territorial-subdivision-list" field=form.cd_territorial_subdivision %}
 
     </div>
   </fieldset>
