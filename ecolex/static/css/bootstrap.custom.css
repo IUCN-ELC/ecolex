@@ -777,6 +777,7 @@ dd {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    white-space: normal;
   }
   .dl-horizontal dd,
   .record-details dl dd {
