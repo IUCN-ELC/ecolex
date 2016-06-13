@@ -28,15 +28,15 @@
     </div>
     <dl>
       {% if document.people_authors %}
-        <dt>{% trans 'Author' %}{{ document.people_authors|length|pluralize:",s" }}</dt>
+        <dt>{% trans 'Author' %}</dt>
         <dd>{{ document.people_authors|join:", "|safe }}</dd>
       {% elif document.corp_authors %}
-        <dt>{% trans 'Corporate author' %}{{ document.corp_authors|length|pluralize:",s" }}</dt>
+        <dt>{% trans 'Corporate author; Abbreviation' %}</dt>
         <dd>{{ document.corp_authors|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.is_article and document.serial_title %}
-        <dt>{% trans 'Journal/Series' %}</dt>
+        <dt>{% trans 'Journal/Series' %} | {% trans 'Collation Vol./p.' %}</dt>
         <dd>
           {{ document.serial_title|safe }}
           {% if document.volume_no %} | {{ document.volume_no|safe }} {% endif %}
@@ -76,7 +76,7 @@
       {% endfor %}
 
       {% if document.publisher %}
-        <dt>{% trans 'Publisher' %}</dt>
+        <dt>{% trans 'Publisher' %} | {% trans 'Place of publication' %}</dt>
         <dd>
           {{ document.publisher }}
           {% if document.publication_place %} | {{ document.publication_place }} {% endif %}
@@ -104,7 +104,7 @@
       {% endif %}
 
       {% if document.conference %}
-        <dt>{% trans 'Conference' %}</dt>
+        <dt>{% trans 'Conference name' %} | {% trans 'place' %} | {% trans 'date' %}</dt>
         <dd>{{ document.conference }}</dd>
       {% endif %}
 
@@ -128,12 +128,12 @@
       {% endif %}
 
       {% if document.subjects %}
-        <dt>{% trans 'Subject' %}{{ document.subjects|length|pluralize:",s" }}</dt>
+        <dt>{% trans 'Subject' %}</dt>
         <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.keywords %}
-      <dt>{% trans 'Keywords' %}</dt>
+      <dt>{% trans 'Keyword' %}</dt>
       <dd>{% for keyword in document.keywords %}
             <span class="tag">{{ keyword|capfirst|safe }}</span>
           {% endfor %}
@@ -167,7 +167,7 @@
       {% endif %}
 
       {% if document.link_doi %}
-      <dt>{% trans 'Available DOI' %}</dt>
+      <dt>{% trans 'DOI' %}</dt>
       <dd>
         <a href="{{ document.link_doi|url_normalize }}" rel="nofollow"
            target="_blank">{{ document.link_doi }}</a>
@@ -185,9 +185,26 @@
     </dl>
   </section>
 
+  {% if document.literatures %}
+  <section id="literature-references">
+    {% for literature in document.literatures %}
+      <dl>
+        <dt>{% trans 'Literature' %}</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ literature.details_url }}?{{ query }}"
+               title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
+          </h3>
+          {% include 'short_display/literature.html' with result=literature %}
+        </dd>
+      </dl>
+    {% endfor %}
+  </section>
+  {% endif %}
+
   <section id="other-references">
-  {% if document.treaties or document.legislations or document.court_decisions or document.literatures %}
-    <h2 class="section-title">{% trans 'References to' %}</h2>
+  {% if document.treaties or document.legislations or document.court_decisions %}
+    <h2 class="section-title">{% trans 'Other references' %}</h2>
     {% for treaty in document.treaties %}
       <dl>
         <dt>{% trans 'Treaty' %}</dt>
@@ -223,19 +240,6 @@
                title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
           </h3>
           {% include 'short_display/court_decision.html' with result=court_decision %}
-        </dd>
-      </dl>
-    {% endfor %}
-
-    {% for literature in document.literatures %}
-      <dl>
-        <dt>{% trans 'Literature' %}</dt>
-        <dd>
-          <h3 class="search-result-title">
-            <a href="{{ literature.details_url }}?{{ query }}"
-               title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
-          </h3>
-          {% include 'short_display/literature.html' with result=literature %}
         </dd>
       </dl>
     {% endfor %}

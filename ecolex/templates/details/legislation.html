@@ -65,12 +65,12 @@
   <section id="details">
     <dl>
       {% if document.subjects %}
-        <dt>{% trans 'Subjects' %}</dt>
+        <dt>{% trans 'Subject' %}</dt>
         <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.keywords %}
-        <dt>{% trans 'Keywords' %}</dt>
+        <dt>{% trans 'Keyword' %}</dt>
         <dd>
           {% for keyword in document.keywords %}
             <span class="tag">{{ keyword|capfirst|safe }}</span>
@@ -125,7 +125,7 @@
 
   {% if document.references %}
   <section id="other-references">
-    <h2 class="section-title">{% trans 'References' %}</h2>
+    <h2 class="section-title">{% trans 'References' %} - {% trans 'Legislation' %}</h2>
     {% for field, legislations in document.references.items %}
       <dl class="dl-horizontal">
         <dt>{% with relation=field|labelify %}{% trans relation %}{% endwith %}</dt>
@@ -145,6 +145,7 @@
 
   {% if document.treaties_implemented or document.treaties_cited %}
   <section id="other-references">
+    <h2 class="section-title">{% trans 'Other references' %}</h2>
     {% for treaty in document.treaties_implemented %}
       <dl>
         <dt>{% trans 'Implements treaty' %}</dt>

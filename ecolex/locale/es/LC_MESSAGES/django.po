@@ -323,15 +323,15 @@ msgstr "Fuente"
 
 #: templates/details/court_decision.html:54
 msgid "Court name"
-msgstr "Nombre del Tribunal"
+msgstr "Nombre del tribunal"
 
 #: templates/details/court_decision.html:59
 msgid "Seat of court"
 msgstr "Sede de la corte"
 
 #: templates/details/court_decision.html:64
-msgid "Judges"
-msgstr "Juezes"
+msgid "Judge"
+msgstr "Juez"
 
 #: templates/details/court_decision.html:68 templates/details/decision.html:41
 msgid "Reference number"
@@ -355,6 +355,9 @@ msgstr "Materias"
 #: templates/short_display/literature.html:34
 #: templates/short_display/treaty.html:18
 msgid "Keywords"
+msgstr "Palabras clave"
+
+msgid "Keyword"
 msgstr "Palabra clave"
 
 #: templates/details/court_decision.html:95
@@ -413,7 +416,7 @@ msgstr "Estado"
 #: templates/details/decision.html:52 templates/details/literature.html:131
 #: templates/details/treaty.html:90 templates/results_sidebar.html:21
 msgid "Subject"
-msgstr "Área"
+msgstr "Materia"
 
 #: templates/details/decision.html:66 templates/details/literature.html:193
 #: templates/details/treaty.html:32 templates/results_sidebar.html:122
@@ -445,7 +448,7 @@ msgstr "Fecha de consolidación"
 
 #: templates/details/legislation.html:59
 msgid "Long title"
-msgstr "Título completo de texto"
+msgstr "Título completo"
 
 #: templates/details/legislation.html:81 templates/details/literature.html:144
 #: templates/details/treaty.html:104
@@ -483,12 +486,15 @@ msgid "Author"
 msgstr "Autor"
 
 #: templates/details/literature.html:34
-msgid "Corporate author"
+msgid "Corporate author; Abbreviation"
 msgstr "Autor corporativo"
 
 #: templates/details/literature.html:39 templates/results_sidebar.html:179
 msgid "Journal/Series"
 msgstr "Título de serie"
+
+msgid "Collation Vol./p."
+msgstr "Collation"
 
 #: templates/details/literature.html:48
 msgid "Monograph"
@@ -507,13 +513,22 @@ msgstr "Título"
 msgid "Publisher"
 msgstr "Editor"
 
+msgid "Place of publication"
+msgstr "Lugar de publicación"
+
 #: templates/details/literature.html:97
 msgid "Pages"
-msgstr "Número de páginas"
+msgstr "Páginas"
 
 #: templates/details/literature.html:107
-msgid "Conference"
+msgid "Conference name"
 msgstr "Conferencia"
+
+msgid "place"
+msgstr "lugar"
+
+msgid "date"
+msgstr "fecha"
 
 #: templates/details/literature.html:112 templates/details/treaty.html:80
 #: templates/results_sidebar.html:33
@@ -527,7 +542,7 @@ msgid "Field of application"
 msgstr "Campo de aplicación"
 
 #: templates/details/literature.html:170
-msgid "Available DOI"
+msgid "DOI"
 msgstr "DOI"
 
 #: templates/details/literature.html:190

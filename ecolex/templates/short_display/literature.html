@@ -3,7 +3,7 @@
 
 {% if result.authors %}
 <p class="search-result-details">
-  <strong>{% trans 'Author' %}{{ result.authors|length|pluralize:",s" }}: </strong>
+  <strong>{% trans 'Author' %}: </strong>
   <span>{{ result.authors|join:", "|safe }}</span>
 </p>
 {% endif %}
@@ -31,7 +31,7 @@
   {% if result.countries %} | <span class="sr-country sr-help" title="{% trans 'Country' %}">{{ result.countries|join:", "|safe }}</span> {% endif %}
 </p>
 
-<p class="search-result-details"><strong>{% trans 'Keywords' %}:</strong>
+<p class="search-result-details"><strong>{% trans 'Keyword' %}:</strong>
   <span class="collapse-keywords">{{ result.keywords|capfirstseq|join:", "|safe }}</span>
 </p>
 <p class="search-result-source"><strong>{% trans 'Source' %}: </strong>

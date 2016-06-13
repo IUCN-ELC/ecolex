@@ -62,7 +62,7 @@
       {% endif %}
 
       {% if document.justices %}
-        <dt>{% trans 'Judges' %}</dt> <dd>{{ document.justices|join:"<br>" }}</dd>
+        <dt>{% trans 'Judge' %}</dt> <dd>{{ document.justices|join:"<br>" }}</dd>
       {% endif %}
 
       {% if document.reference_number %}
@@ -70,17 +70,17 @@
       {% endif %}
 
       {% if document.language_of_document %}
-        <dt>{% trans 'Language of document' %}</dt>
+        <dt>{% trans 'Language' %}</dt>
         <dd>{{ document.language_of_document|join:", " }}</dd>
       {% endif %}
 
       {% if document.subjects %}
-        <dt>{% trans 'Subjects' %}</dt>
+        <dt>{% trans 'Subject' %}</dt>
         <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.keywords %}
-        <dt>{% trans 'Keywords' %}</dt>
+        <dt>{% trans 'Keyword' %}</dt>
         <dd>
         {% for keyword in document.keywords %}
           <span class="tag">{{ keyword|capfirst|safe }}</span>

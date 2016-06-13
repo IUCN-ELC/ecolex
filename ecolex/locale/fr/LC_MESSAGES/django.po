@@ -330,8 +330,8 @@ msgid "Seat of court"
 msgstr "Siège de la cour"
 
 #: templates/details/court_decision.html:64
-msgid "Judges"
-msgstr "Juges"
+msgid "Judge"
+msgstr "Juge"
 
 #: templates/details/court_decision.html:68 templates/details/decision.html:41
 msgid "Reference number"
@@ -357,6 +357,9 @@ msgstr "Sujets"
 msgid "Keywords"
 msgstr "Mots clés"
 
+msgid "Keyword"
+msgstr "Mot clé"
+
 #: templates/details/court_decision.html:95
 #: templates/details/decision.html:107 templates/details/legislation.html:101
 #: templates/details/literature.html:154 templates/details/treaty.html:118
@@ -381,7 +384,7 @@ msgstr "Disponible en"
 #: templates/details/decision.html:85 templates/details/legislation.html:115
 #: templates/details/literature.html:178 templates/details/treaty.html:158
 msgid "Website"
-msgstr "Site internet"
+msgstr "Site web"
 
 #: templates/details/court_decision.html:133
 #: templates/details/legislation.html:127
@@ -445,12 +448,12 @@ msgstr "Date de la consolidation"
 
 #: templates/details/legislation.html:59
 msgid "Long title"
-msgstr "Titre du texte complet"
+msgstr "Titre complet"
 
 #: templates/details/legislation.html:81 templates/details/literature.html:144
 #: templates/details/treaty.html:104
 msgid "Geographical area"
-msgstr "Région géographique"
+msgstr "Aire géographique"
 
 #: templates/details/legislation.html:86 templates/details/literature.html:149
 #: templates/details/treaty.html:109
@@ -483,12 +486,15 @@ msgid "Author"
 msgstr "Auteur"
 
 #: templates/details/literature.html:34
-msgid "Corporate author"
+msgid "Corporate author; Abbreviation"
 msgstr "Auteur institution"
 
 #: templates/details/literature.html:39 templates/results_sidebar.html:179
 msgid "Journal/Series"
 msgstr "Périodique/Collection"
+
+msgid "Collation Vol./p."
+msgstr "Collation"
 
 #: templates/details/literature.html:48
 msgid "Monograph"
@@ -507,13 +513,19 @@ msgstr "Titre"
 msgid "Publisher"
 msgstr "Éditeur"
 
+msgid "Place of publication"
+msgstr "Lieu de publication"
+
 #: templates/details/literature.html:97
 msgid "Pages"
 msgstr "Pages"
 
 #: templates/details/literature.html:107
-msgid "Conference"
-msgstr "Conférence"
+msgid "Conference name"
+msgstr "Conférence nom"
+
+msgid "place"
+msgstr "lieu"
 
 #: templates/details/literature.html:112 templates/details/treaty.html:80
 #: templates/results_sidebar.html:33
@@ -527,7 +539,7 @@ msgid "Field of application"
 msgstr "Champ d'application"
 
 #: templates/details/literature.html:170
-msgid "Available DOI"
+msgid "DOI"
 msgstr "DOI"
 
 #: templates/details/literature.html:190

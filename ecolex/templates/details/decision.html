@@ -50,12 +50,12 @@
       <dt>{% trans 'Status' %}</dt> <dd>{% with status=document.status|capfirst %} {% trans status %}{% endwith %}</dd>
 
       {% if document.subjects %}
-        <dt>{% trans 'Subject' %}{{ document.subjects|length|pluralize:",s" }}</dt>
+        <dt>{% trans 'Subject' %}</dt>
         <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.keywords %}
-        <dt>{% trans 'Keywords' %}</dt>
+        <dt>{% trans 'Keyword' %}</dt>
         <dd>
         {% for keyword in document.keywords %}
             <span class="tag">{{ keyword|capfirst|safe }}</span>

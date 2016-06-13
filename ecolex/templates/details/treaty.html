@@ -87,12 +87,12 @@
       {% endif %}
 
       {% if document.subjects %}
-        <dt>{% trans 'Subject' %}{{ document.subjects|length|pluralize:",s" }}</dt>
+        <dt>{% trans 'Subject' %}</dt>
         <dd>{{ document.subjects|join:", "|safe }}</dd>
       {% endif %}
 
       {% if document.keywords %}
-        <dt>{% trans 'Keywords' %}</dt>
+        <dt>{% trans 'Keyword' %}</dt>
         <dd>
         {% for keyword in document.keywords %}
           <span class="tag">{{ keyword|capfirst|safe }}</span>
@@ -223,7 +223,7 @@
 
   {% if document.references %}
   <section id="treaty-references">
-    <h2 class="section-title">{% trans 'Treaty references' %}</h2>
+    <h2 class="section-title">{% trans 'References' %} - {% trans 'Treaties' %}</h2>
 
     {% for name, value in document.references.items %}
       <dl class="dl-horizontal references">
@@ -246,9 +246,9 @@
   </section>
   {% endif %}
 
-  {% if document.legislations_implemented_by or document.legislation_cited_by %}
-  <section id="treaty-references">
-    <h2 class="section-title">{% trans 'Legislation references' %}</h2>
+  {% if document.other_references or document.legislations_implemented_by or document.legislation_cited_by %}
+  <section id="other-references">
+    <h2 class="section-title">{% trans 'Other references' %}</h2>
 
     {% if document.legislations_implemented_by %}
       <dl class="dl-horizontal references">
@@ -283,24 +283,19 @@
         {% endfor %}
       </dl>
     {% endif %}
-  </section>
-  {% endif %}
 
-  {% if document.other_references %}
-  <section id="other-references">
-    <h2 class="section-title">{% trans 'Other references' %}</h2>
-    <dl>
-      {% if document.decision_count %}
+    {% if document.decision_count %}
+      <dl>
         <dt>{% trans 'COP decisions' %}</dt>
         <dd>
           <strong>{{ document.decision_count }} {% trans 'decisions' %}</strong> {% trans 'related to this treaty.' %}
           <a href="{% url 'related_decisions' document.slug %}?{{ query }}">{% trans 'View decisions' %}</a>
         </dd>
-      {% endif %}
-    </dl>
+      </dl>
+    {% endif %}
 
-    <dl>
-      {% if document.literature_count %}
+    {% if document.literature_count %}
+      <dl>
         <dt>{% trans 'Literature' %}</dt>
         <dd>
         {% with document.literature_count as lit_count %}
@@ -308,18 +303,18 @@
         {% endwith %}
           <a href="{% url 'related_literatures' document.slug %}?{{ query }}">{% trans 'View literature' %}</a>
         </dd>
-      {% endif %}
-    </dl>
+      </dl>
+    {% endif %}
 
-    <dl>
-      {% if document.court_decision_count %}
+    {% if document.court_decision_count %}
+      <dl>
         <dt>{% trans 'Court Decision' %}</dt>
         <dd>
           <strong>{{ document.court_decision_count }} {% trans 'court decisions' %}</strong> {% trans 'related to this treaty.' %}
           <a href="{% url 'related_court_decisions' document.slug %}?{{ query }}">{% trans 'View court decisions' %}</a>
         </dd>
-      {% endif %}
-    </dl>
+      </dl>
+    {% endif %}
 
   </section>
   {% endif %}

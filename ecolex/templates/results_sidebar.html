@@ -21,7 +21,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% trans "Subject" as title %}
 {% include "bits/selection_facet.html" with title=title placeholder="Add subjects…" viewname="api:xsubjects-list" field=form.xsubjects %}
 
-{% trans "Keywords" as title %}
+{% trans "Keyword" as title %}
 {% include "bits/selection_facet.html" with title=title placeholder="Add keywords…" viewname="api:xkeywords-list" field=form.xkeywords %}
 
 {% trans "Country" as title %}
