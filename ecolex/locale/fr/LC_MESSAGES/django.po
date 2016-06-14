@@ -763,11 +763,11 @@ msgstr "À"
 
 #: templates/results_sidebar.html:90
 msgid "Treaty filters"
-msgstr "Les filtres du traité"
+msgstr "Filtres du traité"
 
 #: templates/results_sidebar.html:118
 msgid "COP Decision filters"
-msgstr "Les filtres du décision de la CdP"
+msgstr "Filtres du décision de la CdP"
 
 #: templates/results_sidebar.html:126
 msgid "Type of document"
@@ -779,7 +779,7 @@ msgstr "Décision statut"
 
 #: templates/results_sidebar.html:140
 msgid "Legislation filters"
-msgstr "Les filtres du législation"
+msgstr "Filtres du législation"
 
 #: templates/results_sidebar.html:146 templates/results_sidebar.html:163
 msgid "Sub-national/state level"
@@ -787,11 +787,11 @@ msgstr "Niveau sous-national / etat"
 
 #: templates/results_sidebar.html:157
 msgid "Court decision filters"
-msgstr "Les filtres du jurisprudence"
+msgstr "Filtres du jurisprudence"
 
 #: templates/results_sidebar.html:173
 msgid "Literature filters"
-msgstr "Les filtres du littérature"
+msgstr "Filtres du littérature"
 
 #: templates/short_display/decision.html:5
 msgid "Decision"
