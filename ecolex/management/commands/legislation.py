@@ -1,6 +1,7 @@
 import json
 import logging
 import logging.config
+from datetime import datetime
 
 from django.conf import settings
 from pysolr import SolrError
@@ -95,12 +96,15 @@ class LegislationImporter(object):
         if objs.count() > 0:
             for obj in objs:
                 legislation = json.loads(obj.parsed_data)
+                legislation['updatedDate'] = (datetime.now()
+                                              .strftime('%Y-%m-%dT%H:%M:%SZ'))
                 # Check if already present in Solr
                 if 'id' not in legislation:
                     try:
                         old_legislation = self.solr.search(LEGISLATION, obj.doc_id)
-                        legislation['id'] = old_legislation['id']
-                        legislation = cleanup_copyfields(legislation)
+                        if old_legislation:
+                            legislation['id'] = old_legislation['id']
+                            legislation = cleanup_copyfields(legislation)
                     except SolrError as e:
                         logger.error('Error reading legislation %s' % (obj.doc_id,))
                         if settings.DEBUG:

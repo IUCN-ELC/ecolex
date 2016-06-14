@@ -221,7 +221,7 @@ def add_legislations(legislations, count_ignored):
     failed_docs = []
 
     for legislation in legislations:
-        leg_id = legislation['legId']
+        leg_id = legislation.get('legId')
         doc, _ = DocumentText.objects.get_or_create(doc_id=leg_id)
         doc.doc_type = LEGISLATION
         doc.status = DocumentText.INDEX_FAIL
@@ -259,7 +259,7 @@ def add_legislations(legislations, count_ignored):
         len(legislations) + count_ignored,
         count_new,
         count_updated,
-        len(legislations)-count_new-count_updated,
+        len(legislations) - count_new - count_updated,
         count_ignored
     )
     return response
@@ -312,10 +312,12 @@ def _set_values_from_dict(data, field, local_dict):
 
 def index_and_log(solr, legislations, docs):
     # solr.add_bulk returns False on fail
-    if not solr.add_bulk(legislations):
-        return 0
-    for doc in docs:
-        doc.status = DocumentText.INDEXED
-        # no need to store what is already indexed in Solr
-        doc.parsed_data = ''
+    faolex_enabled = getattr(settings, 'FAOLEX_ENABLED', False)
+    if faolex_enabled:
+        if not solr.add_bulk(legislations):
+            return 0
+        for doc in docs:
+            doc.status = DocumentText.INDEXED
+            # no need to store what is already indexed in Solr
+            doc.parsed_data = ''
     return len(legislations)
