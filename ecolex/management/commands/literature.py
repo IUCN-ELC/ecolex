@@ -7,13 +7,16 @@ import logging
 import logging.config
 import re
 
+from django.conf import settings
 from django.template.defaultfilters import slugify
+from pysolr import SolrError
 
 from ecolex.management.commands.base import BaseImporter
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.definitions import LITERATURE
-from ecolex.management.utils import EcolexSolr, format_date, valid_date
+from ecolex.management.utils import format_date, valid_date, cleanup_copyfields
 from ecolex.management.utils import get_content_from_url, get_file_from_url
+from ecolex.management.utils import get_content_length_from_url
 from ecolex.models import DocumentText
 
 logging.config.dictConfig(LOG_DICT)
@@ -240,7 +243,7 @@ class LiteratureImporter(BaseImporter):
     id_field = 'litId'
 
     def __init__(self, config):
-        super().__init__(config, logger)
+        super().__init__(config, logger, LITERATURE)
 
         self.literature_url = config.get('literature_url')
         self.query_format = config.get('query_format')
@@ -429,6 +432,71 @@ class LiteratureImporter(BaseImporter):
                         doc.save()
 
             literature['litText'] = lit_text
+
+    def update_full_text(self):
+        old_objs = []
+        while True:
+            count = (DocumentText.objects.filter(
+                     status=DocumentText.INDEXED, doc_type=LITERATURE)
+                     .exclude(url__isnull=True)).count()
+            objs = (DocumentText.objects.filter(
+                    status=DocumentText.INDEXED, doc_type=LITERATURE)
+                    .exclude(url__isnull=True))[:100]
+            if count == 0 or list(old_objs) == list(objs):
+                break
+            logger.info('%s records remaining' % (count,))
+            for obj in objs:
+                # Check if already parsed
+                text = None
+                if obj.doc_size and obj.text:
+                    logger.info('Checking content length of %s (%s)' %
+                                (obj.doc_id, obj.url,))
+                    doc_size = get_content_length_from_url(obj.url)
+                    if doc_size == obj.doc_size:
+                        # File not changed, reuse obj.text
+                        logger.debug('Not changed: %s' % (obj.url,))
+                        text = obj.text
+                # Download file
+                if not text:
+                    logger.info('Downloading: %s (%s)' % (obj.doc_id, obj.url,))
+                    file_obj = get_file_from_url(obj.url)
+                    if not file_obj:
+                        logger.error('Failed downloading: %s' % (obj.url,))
+                        continue
+                    doc_size = file_obj.getbuffer().nbytes
+
+                    # Extract text
+                    logger.debug('Indexing: %s' % (obj.url,))
+                    text = self.solr.extract(file_obj)
+                    if not text:
+                        logger.warn('Nothing to index for %s' % (obj.url,))
+                # Load record and store text
+                try:
+                    literature = self.solr.search(LITERATURE, obj.doc_id)
+                    if literature:
+                        literature = cleanup_copyfields(literature)
+                except SolrError as e:
+                    logger.error('Error reading literature %s' % (obj.doc_id,))
+                    if settings.DEBUG:
+                        logging.getLogger('solr').exception(e)
+                    continue
+
+                if not literature:
+                    logger.error('Failed to find literature %s' % (obj.doc_id))
+                    continue
+
+                literature['legText'] = text
+                result = self.solr.add(literature)
+                if result:
+                    logger.info('Success download & indexed: %s' % (obj.doc_id,))
+                    obj.status = DocumentText.FULL_INDEXED
+                    obj.doc_size = doc_size
+                    obj.text = text
+                    obj.save()
+                else:
+                    logger.error('Failed doc extract %s %s' % (obj.url,
+                                                               literature['id']))
+            old_objs = objs
 
     def _clean_text_date(self, value):
         date_formats = ['%Y', '%Y-00-00', '%Y-%m', '%Y-%m-00', '%Y-%m-%d',

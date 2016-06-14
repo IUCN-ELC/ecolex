@@ -354,7 +354,7 @@ class CourtDecisionImporter(BaseImporter):
     id_field = 'cdOriginalId'
 
     def __init__(self, config):
-        super().__init__(config, logger)
+        super().__init__(config, logger, COURT_DECISION)
         self.days_ago = config.get('days_ago', None)
         self.update = config.get('update')
         self.countries_json = config.get('countries_json')

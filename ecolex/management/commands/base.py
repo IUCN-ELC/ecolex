@@ -1,11 +1,18 @@
 import json
+import logging
+from datetime import datetime
 
-from ecolex.management.utils import EcolexSolr
+from django.conf import settings
+from pysolr import SolrError
+
+from ecolex.management.utils import EcolexSolr, cleanup_copyfields
+from ecolex.models import DocumentText
 
 
 class BaseImporter(object):
 
-    def __init__(self, config, logger):
+    def __init__(self, config, logger, doc_type):
+        self.doc_type = doc_type
         self.solr_timeout = config.get('solr_timeout')
         self.regions_json = config.get('regions_json')
         self.languages_json = config.get('languages_json')
@@ -86,3 +93,34 @@ class BaseImporter(object):
 
         for field in fields:
             data[field] = new_values[field[-2:]]
+
+    def reindex_failed(self):
+        objs = DocumentText.objects.filter(
+            status=DocumentText.INDEX_FAIL, doc_type=self.doc_type)
+        if objs.count() > 0:
+            for obj in objs:
+                if not obj.parsed_data:
+                    continue
+                record = json.loads(obj.parsed_data)
+                record['updatedDate'] = (datetime.now()
+                                         .strftime('%Y-%m-%dT%H:%M:%SZ'))
+                # Check if already present in Solr
+                if 'id' not in record:
+                    try:
+                        old_record = self.solr.search(self.doc_type, obj.doc_id)
+                        if old_record:
+                            record['id'] = old_record['id']
+                            record = cleanup_copyfields(record)
+                    except SolrError as e:
+                        self.logger.error('Error reading %s %s' % (self.doc_type, obj.doc_id,))
+                        if settings.DEBUG:
+                            logging.getLogger('solr').exception(e)
+                        continue
+                result = self.solr.add(record)
+                if result:
+                    obj.status = DocumentText.INDEXED
+                    obj.parsed_data = ''
+                    obj.save()
+                    self.logger.info('Success indexing: %s' % (obj.doc_id,))
+                else:
+                    self.logger.error('Failed to index: %s' % (obj.doc_id,))

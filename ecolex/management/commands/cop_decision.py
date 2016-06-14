@@ -3,7 +3,6 @@ from django.conf import settings
 import logging
 import logging.config
 import html
-import json
 import re
 import requests
 
@@ -11,7 +10,7 @@ from django.template.defaultfilters import slugify
 
 from ecolex.management.commands.base import BaseImporter
 from ecolex.management.definitions import COP_DECISION, DEC_TREATY_FIELDS
-from ecolex.management.utils import EcolexSolr, get_date, get_file_from_url
+from ecolex.management.utils import get_date, get_file_from_url
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.models import DocumentText
 
@@ -94,7 +93,7 @@ class CopDecisionImporter(BaseImporter):
     id_field = 'decId'
 
     def __init__(self, config):
-        super().__init__(config, logger)
+        super().__init__(config, logger, COP_DECISION)
 
         self.decision_url = config.get('cop_decision_url')
         self.query_skip = config.get('query_skip')

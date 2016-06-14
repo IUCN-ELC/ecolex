@@ -226,7 +226,7 @@ class TreatyImporter(BaseImporter):
     ]
 
     def __init__(self, config):
-        super().__init__(config, logger)
+        super().__init__(config, logger, TREATY)
 
         self.treaties_url = config.get('treaties_url')
         self.query_format = config.get('query_format')
@@ -547,7 +547,7 @@ class TreatyImporter(BaseImporter):
             index += rows
         self.solr.add_bulk(treaties)
 
-    def reindex_failed(self):
+    def update_full_text(self):
         objs = DocumentText.objects.filter(status=DocumentText.INDEXED,
                                            doc_type=TREATY)
         for obj in objs:
@@ -578,7 +578,8 @@ class TreatyImporter(BaseImporter):
                                      obj.doc_id)
             try:
                 treaty = self.solr.search(TREATY, obj.doc_id)
-                treaty_data['id'] = treaty['id']
+                if treaty:
+                    treaty_data['id'] = treaty['id']
             except SolrError as e:
                 logger.error('Error reading treaty %s' % obj.doc_id)
                 if settings.DEBUG:
@@ -587,6 +588,7 @@ class TreatyImporter(BaseImporter):
 
             if full_index:
                 resp = self.solr.add(treaty_data)
+                logger.info('Insert on %s' % (treaty_data['trElisId']))
                 if resp:
                     obj.status = DocumentText.FULL_INDEXED
                     obj.parsed_data = ''
