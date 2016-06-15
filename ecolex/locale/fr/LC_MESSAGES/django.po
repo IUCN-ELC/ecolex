@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-01 12:41+0000\n"
+"POT-Creation-Date: 2016-06-15 08:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -171,7 +171,7 @@ msgstr "ou"
 msgid "and"
 msgstr "et"
 
-#: templates/bits/facet_reset.html:4 templates/results_sidebar.html:44
+#: templates/bits/facet_reset.html:4 templates/results_sidebar.html:54
 msgid "Reset"
 msgstr "Réinitialiser"
 
@@ -224,12 +224,12 @@ msgid "Entry into force"
 msgstr "Entrée en vigueur"
 
 #: templates/bits/participants_map.html:8
-#: templates/bits/participants_map.html:16 templatetags/tags.py:150
+#: templates/bits/participants_map.html:16 templatetags/tags.py:151
 msgid "Simple signature"
 msgstr "Signature simple"
 
 #: templates/bits/participants_map.html:9
-#: templates/bits/participants_map.html:17 templatetags/tags.py:151
+#: templates/bits/participants_map.html:17 templatetags/tags.py:150
 msgid "Provisional application"
 msgstr "Application provisoire"
 
@@ -255,232 +255,246 @@ msgstr "Trié par"
 msgid "Sort by"
 msgstr "Trier par"
 
-#: templates/bits/type_facet.html:21 templates/layout.html:114
-#: templates/results_main.html:34
+#: templates/bits/type_facet.html:21 templates/details/treaty.html:226
+#: templates/layout.html:123 templates/results_main.html:34
 msgid "Treaties"
 msgstr "Traités"
 
-#: templates/bits/type_facet.html:40 templates/layout.html:120
+#: templates/bits/type_facet.html:40 templates/layout.html:129
 #: templates/results_main.html:35
 msgid "COP Decisions"
 msgstr "Décisions de la CdP"
 
-#: templates/bits/type_facet.html:59 templates/details/legislation.html:30
-#: templates/details/literature.html:206 templates/layout.html:126
+#: templates/bits/type_facet.html:59 templates/details/legislation.html:31
+#: templates/details/legislation.html:128
+#: templates/details/literature.html:223 templates/layout.html:135
 #: templates/results_main.html:36 templates/short_display/legislation.html:5
 msgid "Legislation"
 msgstr "Législation"
 
-#: templates/bits/type_facet.html:78 templates/layout.html:132
+#: templates/bits/type_facet.html:78 templates/layout.html:141
 #: templates/results_main.html:37
 msgid "Court Decisions"
 msgstr "Jurisprudence"
 
 #: templates/bits/type_facet.html:97 templates/details/literature.html:25
-#: templates/details/literature.html:232 templates/details/literature.html:248
-#: templates/details/treaty.html:304 templates/layout.html:138
+#: templates/details/literature.html:192 templates/details/literature.html:252
+#: templates/details/treaty.html:299 templates/layout.html:147
 #: templates/results_main.html:38 templates/short_display/literature.html:29
 msgid "Literature"
 msgstr "Littérature"
 
-#: templates/details/court_decision.html:31 templates/details/treaty.html:316
+#: templates/delete_search.html:16
+msgid "Enter url record to delete"
+msgstr ""
+
+#: templates/delete_search.html:17 templates/layout.html:116
+#: templates/layout.html:170 templates/layout.html:179
+msgid "Search"
+msgstr "Chercher"
+
+#: templates/delete_search.html:30
+msgid "Delete"
+msgstr ""
+
+#: templates/details/court_decision.html:32 templates/details/treaty.html:311
 #: templates/short_display/court_decision.html:5
 msgid "Court Decision"
 msgstr "Jurisprudence"
 
-#: templates/details/court_decision.html:38
-#: templates/details/legislation.html:36 templates/details/literature.html:126
-#: templates/results_sidebar.html:27
+#: templates/details/court_decision.html:39
+#: templates/details/legislation.html:37 templates/details/literature.html:126
+#: templates/results_sidebar.html:31
 #: templates/short_display/court_decision.html:9
 #: templates/short_display/legislation.html:6
 #: templates/short_display/literature.html:31
 msgid "Country"
 msgstr "Pays"
 
-#: templates/details/court_decision.html:42 templates/results_sidebar.html:160
+#: templates/details/court_decision.html:43 templates/results_sidebar.html:178
 #: templates/short_display/court_decision.html:6
 msgid "Type of court"
 msgstr "Type de cour"
 
-#: templates/details/court_decision.html:45 templates/details/decision.html:42
-#: templates/details/legislation.html:44 templates/details/treaty.html:40
+#: templates/details/court_decision.html:46 templates/details/decision.html:43
+#: templates/details/legislation.html:45 templates/details/treaty.html:40
 #: templates/short_display/court_decision.html:13
 #: templates/short_display/decision.html:13
 #: templates/short_display/treaty.html:11
 msgid "Date"
 msgstr "Date"
 
-#: templates/details/court_decision.html:46 templates/details/decision.html:43
-#: templates/details/legislation.html:51 templates/details/literature.html:59
+#: templates/details/court_decision.html:47 templates/details/decision.html:44
+#: templates/details/legislation.html:52 templates/details/literature.html:59
 #: templates/details/treaty.html:42
-#: templates/short_display/court_decision.html:26
-#: templates/short_display/decision.html:24
+#: templates/short_display/court_decision.html:27
+#: templates/short_display/decision.html:25
 #: templates/short_display/legislation.html:30
 #: templates/short_display/literature.html:37
 #: templates/short_display/treaty.html:21
 msgid "Source"
 msgstr "Source"
 
-#: templates/details/court_decision.html:54
+#: templates/details/court_decision.html:55
 msgid "Court name"
 msgstr "Nom du tribunal"
 
-#: templates/details/court_decision.html:59
+#: templates/details/court_decision.html:60
 msgid "Seat of court"
 msgstr "Siège de la cour"
 
-#: templates/details/court_decision.html:64
+#: templates/details/court_decision.html:65
 msgid "Judge"
 msgstr "Juge"
 
-#: templates/details/court_decision.html:68 templates/details/decision.html:41
+#: templates/details/court_decision.html:69 templates/details/decision.html:42
 msgid "Reference number"
 msgstr "Numéro de référence"
 
-#: templates/details/court_decision.html:72
-msgid "Language of document"
-msgstr "Langue du document"
+#: templates/details/court_decision.html:73
+#: templates/details/literature.html:112 templates/details/treaty.html:80
+#: templates/results_sidebar.html:41
+msgid "Language"
+msgstr "Langue"
 
-#: templates/details/court_decision.html:77
-#: templates/details/legislation.html:67
-msgid "Subjects"
-msgstr "Sujets"
+#: templates/details/court_decision.html:78 templates/details/decision.html:53
+#: templates/details/legislation.html:68 templates/details/literature.html:131
+#: templates/details/treaty.html:90 templates/results_sidebar.html:21
+msgid "Subject"
+msgstr "Sujet"
 
-#: templates/details/court_decision.html:82 templates/details/decision.html:57
-#: templates/details/legislation.html:72 templates/details/literature.html:136
-#: templates/details/treaty.html:95 templates/results_sidebar.html:24
+#: templates/details/court_decision.html:83 templates/details/decision.html:58
+#: templates/details/legislation.html:73 templates/details/literature.html:136
+#: templates/details/treaty.html:95 templates/results_sidebar.html:26
 #: templates/short_display/court_decision.html:21
 #: templates/short_display/decision.html:20
 #: templates/short_display/legislation.html:24
 #: templates/short_display/literature.html:34
 #: templates/short_display/treaty.html:18
-msgid "Keywords"
-msgstr "Mots clés"
-
 msgid "Keyword"
 msgstr "Mot clé"
 
-#: templates/details/court_decision.html:95
-#: templates/details/decision.html:107 templates/details/legislation.html:101
+#: templates/details/court_decision.html:96
+#: templates/details/decision.html:108 templates/details/legislation.html:102
 #: templates/details/literature.html:154 templates/details/treaty.html:118
 msgid "Abstract"
 msgstr "Résumé"
 
-#: templates/details/court_decision.html:99 templates/details/treaty.html:126
+#: templates/details/court_decision.html:100 templates/details/treaty.html:126
 msgid "Link to abstract"
 msgstr "Accès au résumé"
 
-#: templates/details/court_decision.html:108
-#: templates/details/legislation.html:106
+#: templates/details/court_decision.html:109
+#: templates/details/legislation.html:107
 #: templates/details/literature.html:159 templates/details/treaty.html:145
 msgid "Full text"
 msgstr "Texte intégral"
 
-#: templates/details/court_decision.html:115
+#: templates/details/court_decision.html:116
 msgid "Available in"
 msgstr "Disponible en"
 
-#: templates/details/court_decision.html:120
-#: templates/details/decision.html:85 templates/details/legislation.html:115
+#: templates/details/court_decision.html:121
+#: templates/details/decision.html:86 templates/details/legislation.html:116
 #: templates/details/literature.html:178 templates/details/treaty.html:158
 msgid "Website"
 msgstr "Site web"
 
-#: templates/details/court_decision.html:133
-#: templates/details/legislation.html:127
+#: templates/details/court_decision.html:134
+#: templates/details/legislation.html:128 templates/details/treaty.html:226
 msgid "References"
 msgstr "Références"
 
-#: templates/details/court_decision.html:155
-#: templates/details/court_decision.html:169
+#: templates/details/court_decision.html:156
+#: templates/details/court_decision.html:170
 msgid "Cites"
 msgstr "Cite"
 
-#: templates/details/decision.html:34
+#: templates/details/decision.html:35
 msgid "COP Decision"
 msgstr "Décision de la CdP"
 
-#: templates/details/decision.html:40 templates/details/legislation.html:43
+#: templates/details/decision.html:41 templates/details/legislation.html:44
 #: templates/details/literature.html:102 templates/details/treaty.html:38
-#: templates/results_sidebar.html:94 templates/results_sidebar.html:143
-#: templates/results_sidebar.html:185 templates/short_display/treaty.html:6
+#: templates/results_sidebar.html:104 templates/results_sidebar.html:159
+#: templates/results_sidebar.html:211 templates/short_display/treaty.html:6
 msgid "Document type"
 msgstr "Type du document"
 
-#: templates/details/decision.html:49 templates/results_sidebar.html:100
+#: templates/details/decision.html:50 templates/results_sidebar.html:110
 #: templates/short_display/decision.html:10
 #: templates/short_display/legislation.html:16
 msgid "Status"
 msgstr "Statut"
 
-#: templates/details/decision.html:52 templates/details/literature.html:131
-#: templates/details/treaty.html:90 templates/results_sidebar.html:21
-msgid "Subject"
-msgstr "Sujet"
-
-#: templates/details/decision.html:66 templates/details/literature.html:193
-#: templates/details/treaty.html:32 templates/results_sidebar.html:122
+#: templates/details/decision.html:67 templates/details/literature.html:210
+#: templates/details/treaty.html:32 templates/results_sidebar.html:136
 #: templates/short_display/treaty.html:5
 msgid "Treaty"
 msgstr "Traité"
 
-#: templates/details/decision.html:74
+#: templates/details/decision.html:75
 msgid "Meeting"
 msgstr "Réunion"
 
-#: templates/details/decision.html:93
+#: templates/details/decision.html:94
 msgid "Files"
 msgstr "Fichiers"
 
-#: templates/details/legislation.html:40
+#: templates/details/legislation.html:41
 msgid "Territorial subdivision"
 msgstr "Sous-division territoriale"
 
-#: templates/details/legislation.html:46
+#: templates/details/legislation.html:47
 #: templates/short_display/legislation.html:8
 msgid "Original date"
 msgstr "Date d'origine"
 
-#: templates/details/legislation.html:48
+#: templates/details/legislation.html:49
 #: templates/short_display/legislation.html:10
 msgid "Consolidation date"
 msgstr "Date de la consolidation"
 
-#: templates/details/legislation.html:59
+#: templates/details/legislation.html:60
 msgid "Long title"
 msgstr "Titre complet"
 
-#: templates/details/legislation.html:81 templates/details/literature.html:144
+#: templates/details/legislation.html:82 templates/details/literature.html:144
 #: templates/details/treaty.html:104
 msgid "Geographical area"
 msgstr "Aire géographique"
 
-#: templates/details/legislation.html:86 templates/details/literature.html:149
+#: templates/details/legislation.html:87 templates/details/literature.html:149
 #: templates/details/treaty.html:109
 msgid "Basin"
 msgstr "Bassin"
 
-#: templates/details/legislation.html:91
+#: templates/details/legislation.html:92
 msgid "Entry into force notes"
 msgstr ""
 
-#: templates/details/legislation.html:149
+#: templates/details/legislation.html:148
+#: templates/details/literature.html:207 templates/details/treaty.html:251
+msgid "Other references"
+msgstr "D'autres références"
+
+#: templates/details/legislation.html:151
 msgid "Implements treaty"
 msgstr "Met en oeuvre les traités"
 
-#: templates/details/legislation.html:162
+#: templates/details/legislation.html:164
 msgid "Cites treaty"
 msgstr "Cites traités"
 
-#: templates/details/legislation.html:177
+#: templates/details/legislation.html:179
 msgid "Court Decision references"
 msgstr "Références à la jurispridence"
 
-#: templates/details/legislation.html:179 templates/details/treaty.html:272
+#: templates/details/legislation.html:181 templates/details/treaty.html:272
 msgid "Cited by"
 msgstr "Cité par"
 
-#: templates/details/literature.html:31 templates/results_sidebar.html:176
+#: templates/details/literature.html:31 templates/results_sidebar.html:196
 #: templates/short_display/literature.html:6
 msgid "Author"
 msgstr "Auteur"
@@ -489,10 +503,11 @@ msgstr "Auteur"
 msgid "Corporate author; Abbreviation"
 msgstr "Auteur institution"
 
-#: templates/details/literature.html:39 templates/results_sidebar.html:179
+#: templates/details/literature.html:39 templates/results_sidebar.html:201
 msgid "Journal/Series"
 msgstr "Périodique/Collection"
 
+#: templates/details/literature.html:39
 msgid "Collation Vol./p."
 msgstr "Collation"
 
@@ -508,11 +523,12 @@ msgstr "Année de publication"
 msgid "Title"
 msgstr "Titre"
 
-#: templates/details/literature.html:79 templates/results_sidebar.html:182
+#: templates/details/literature.html:79 templates/results_sidebar.html:206
 #: templates/short_display/literature.html:23
 msgid "Publisher"
 msgstr "Éditeur"
 
+#: templates/details/literature.html:79
 msgid "Place of publication"
 msgstr "Lieu de publication"
 
@@ -524,16 +540,16 @@ msgstr "Pages"
 msgid "Conference name"
 msgstr "Conférence nom"
 
+#: templates/details/literature.html:107
 msgid "place"
 msgstr "lieu"
 
-#: templates/details/literature.html:112 templates/details/treaty.html:80
-#: templates/results_sidebar.html:33
-msgid "Language"
-msgstr "Langue"
+#: templates/details/literature.html:107
+msgid "date"
+msgstr ""
 
 #: templates/details/literature.html:121 templates/details/treaty.html:39
-#: templates/results_sidebar.html:97
+#: templates/results_sidebar.html:107
 #: templates/short_display/literature.html:30
 msgid "Field of application"
 msgstr "Champ d'application"
@@ -542,15 +558,11 @@ msgstr "Champ d'application"
 msgid "DOI"
 msgstr "DOI"
 
-#: templates/details/literature.html:190
-msgid "References to"
-msgstr "Reférences d'autres documents"
-
-#: templates/details/literature.html:219
+#: templates/details/literature.html:236
 msgid "Court decision"
 msgstr "Jurisprudence"
 
-#: templates/details/literature.html:245
+#: templates/details/literature.html:249
 msgid "References from"
 msgstr "Références de"
 
@@ -558,12 +570,12 @@ msgstr "Références de"
 msgid "Title abbreviation"
 msgstr "Titre abgrégé"
 
-#: templates/details/treaty.html:70 templates/results_sidebar.html:107
+#: templates/details/treaty.html:70 templates/results_sidebar.html:119
 #: templates/short_display/treaty.html:8
 msgid "Place of adoption"
 msgstr "Lieu d'adoption"
 
-#: templates/details/treaty.html:75 templates/results_sidebar.html:104
+#: templates/details/treaty.html:75 templates/results_sidebar.html:114
 msgid "Depository"
 msgstr "Dépositaire"
 
@@ -591,48 +603,36 @@ msgstr "Des pays"
 msgid "Not available"
 msgstr "Indisponible"
 
-#: templates/details/treaty.html:226
-msgid "Treaty references"
-msgstr "Référence à des traités"
-
-#: templates/details/treaty.html:251
-msgid "Legislation references"
-msgstr "Références dans la législation nationale"
-
 #: templates/details/treaty.html:255
 msgid "Implemented by"
 msgstr "Implementé par"
 
-#: templates/details/treaty.html:291
-msgid "Other references"
-msgstr "D'autres références"
-
-#: templates/details/treaty.html:294
+#: templates/details/treaty.html:289
 msgid "COP decisions"
 msgstr "Décisions de la CdP"
 
-#: templates/details/treaty.html:296
+#: templates/details/treaty.html:291
 msgid "decisions"
 msgstr "les décisions"
 
-#: templates/details/treaty.html:296 templates/details/treaty.html:307
-#: templates/details/treaty.html:318
+#: templates/details/treaty.html:291 templates/details/treaty.html:302
+#: templates/details/treaty.html:313
 msgid "related to this treaty."
 msgstr "liés à ce traité"
 
-#: templates/details/treaty.html:297
+#: templates/details/treaty.html:292
 msgid "View decisions"
 msgstr "Voir les décisions"
 
-#: templates/details/treaty.html:309
+#: templates/details/treaty.html:304
 msgid "View literature"
 msgstr "Voir les littératures"
 
-#: templates/details/treaty.html:318
+#: templates/details/treaty.html:313
 msgid "court decisions"
 msgstr "Jurisprudences"
 
-#: templates/details/treaty.html:319
+#: templates/details/treaty.html:314
 msgid "View court decisions"
 msgstr "Voir les jurisprudences"
 
@@ -644,67 +644,70 @@ msgstr "Décisions de la CdP relacionados"
 msgid "Related literature"
 msgstr "Littérature liée"
 
-#: templates/layout.html:51
-msgid "Home"
-msgstr "Accueil"
-
-#: templates/layout.html:52
-msgid "About ECOLEX"
-msgstr "Sur ECOLEX"
-
-#: templates/layout.html:57
-msgid "Take a tour"
-msgstr "Faire un tour"
-
-#: templates/layout.html:62
-msgid "Language:"
-msgstr "Langue"
-
-#: templates/layout.html:96 templates/layout.html:156
+#: templates/homepage.html:5 templates/layout.html:105
+#: templates/layout.html:165
 msgid "The gateway to "
 msgstr "Le portail au"
 
-#: templates/layout.html:96 templates/layout.html:156
+#: templates/homepage.html:5 templates/layout.html:105
+#: templates/layout.html:165
 msgid "environmental law"
 msgstr "droit de l'environnement"
 
-#: templates/layout.html:105 templates/layout.html:165
+#: templates/layout.html:37
+msgid "Show all"
+msgstr "Montre tout"
+
+#: templates/layout.html:59
+msgid "Home"
+msgstr "Accueil"
+
+#: templates/layout.html:60 templates/pages/about.html:5
+msgid "About ECOLEX"
+msgstr "Sur ECOLEX"
+
+#: templates/layout.html:65
+msgid "Take a tour"
+msgstr "Faire un tour"
+
+#: templates/layout.html:71
+msgid "Language:"
+msgstr "Langue"
+
+#: templates/layout.html:114 templates/layout.html:174
 msgid "Search in record and full text"
 msgstr "Rechercher dans l'enregistrement et le texte intégral"
 
-#: templates/layout.html:107 templates/layout.html:161
-#: templates/layout.html:170
-msgid "Search"
-msgstr "Chercher"
-
-#: templates/layout.html:191
+#: templates/layout.html:201
 msgid ""
 "In order to understand how people use our site generally, and to create more "
 "valuable experiences for you, we may collect data about your use of this "
 "site (both directly and through our partners). By using this Website you "
 "agree to the use of cookies."
-msgstr "Afin de comprendre comment les gens utilisent notre site en général, "
-"et de créer des expériences plus intéressantes pour vous, nous pouvons "
-"recueillir des données sur votre utilisation de ce site (à la fois directement "
-"et par nos partenaires). En utilisant ce site, vous acceptez l'utilisation de cookies."
+msgstr ""
+"Afin de comprendre comment les gens utilisent notre site en général, et de "
+"créer des expériences plus intéressantes pour vous, nous pouvons recueillir "
+"des données sur votre utilisation de ce site (à la fois directement et par "
+"nos partenaires). En utilisant ce site, vous acceptez l'utilisation de "
+"cookies."
 
-#: templates/layout.html:191
+#: templates/layout.html:201
 msgid "Close"
 msgstr "Ferme"
 
-#: templates/layout.html:199
+#: templates/layout.html:209 templates/pages/agreement.html:5
 msgid "User Agreement"
 msgstr "Accord de l'utilisateur"
 
-#: templates/layout.html:201
+#: templates/layout.html:211 templates/pages/privacy.html:5
 msgid "Privacy"
 msgstr "Confidentialité"
 
-#: templates/layout.html:203
+#: templates/layout.html:213 templates/pages/acknowledgements.html:5
 msgid "Acknowledgments"
 msgstr "Crédits et remerciements"
 
-#: templates/layout.html:208
+#: templates/layout.html:218
 msgid "Joint initiative of "
 msgstr "Initiative conjointe de "
 
@@ -737,7 +740,7 @@ msgstr "Aucun resultat trouvé."
 msgid "Show only"
 msgstr "Montrer seulement"
 
-#: templates/results_sidebar.html:5 templates/results_sidebar.html:196
+#: templates/results_sidebar.html:5 templates/results_sidebar.html:224
 msgid "Reset all filters"
 msgstr "Réinitialiser tous les filtres"
 
@@ -745,53 +748,157 @@ msgstr "Réinitialiser tous les filtres"
 msgid "Common filters"
 msgstr "Filtres communs"
 
-#: templates/results_sidebar.html:30
+#: templates/results_sidebar.html:22
+msgid "Add subject…"
+msgstr "Ajouter sujet…"
+
+#: templates/results_sidebar.html:23
+msgid "Add subject filter"
+msgstr "Ajouter sujet filtre"
+
+#: templates/results_sidebar.html:27
+msgid "Add keyword…"
+msgstr "Ajouter mots clés…"
+
+#: templates/results_sidebar.html:28
+msgid "Add keyword filter"
+msgstr "Ajouter mots clés filtre"
+
+#: templates/results_sidebar.html:32
+msgid "Add country…"
+msgstr "Ajouter pays…"
+
+#: templates/results_sidebar.html:33
+msgid "Add country filter"
+msgstr "Ajouter pays filtre"
+
+#: templates/results_sidebar.html:36
 msgid "Geographical Area"
 msgstr "Zone géographique"
 
-#: templates/results_sidebar.html:40
+#: templates/results_sidebar.html:37
+msgid "Add geographical area…"
+msgstr "Ajouter aire géographique…"
+
+#: templates/results_sidebar.html:38
+msgid "Add geographical area filter"
+msgstr "Ajouter aire géographique filtre"
+
+#: templates/results_sidebar.html:42
+msgid "Add language…"
+msgstr "Ajouter langue…"
+
+#: templates/results_sidebar.html:43
+msgid "Add language filter"
+msgstr "Ajouter langue filtre"
+
+#: templates/results_sidebar.html:50
 msgid "Year / Period"
 msgstr "Année / Période"
 
-#: templates/results_sidebar.html:64
+#: templates/results_sidebar.html:74
 msgid "From"
 msgstr "De"
 
-#: templates/results_sidebar.html:74
+#: templates/results_sidebar.html:84
 msgid "To"
 msgstr "À"
 
-#: templates/results_sidebar.html:90
+#: templates/results_sidebar.html:100
 msgid "Treaty filters"
 msgstr "Filtres du traité"
 
-#: templates/results_sidebar.html:118
+#: templates/results_sidebar.html:115
+msgid "Add depository…"
+msgstr "Ajouter dépositaire…"
+
+#: templates/results_sidebar.html:116
+msgid "Add depository filter"
+msgstr "Ajouter dépositaire filtre"
+
+#: templates/results_sidebar.html:120
+msgid "Add place of adoption…"
+msgstr "Ajouter lieu d'adoption…"
+
+#: templates/results_sidebar.html:121
+msgid "Add place of adoption… filter"
+msgstr "Ajouter lieu d'adoption filtre"
+
+#: templates/results_sidebar.html:132
 msgid "COP Decision filters"
 msgstr "Filtres du décision de la CdP"
 
-#: templates/results_sidebar.html:126
+#: templates/results_sidebar.html:137
+msgid "Add treaty…"
+msgstr "Ajouter traité…"
+
+#: templates/results_sidebar.html:138
+msgid "Add treaty filter"
+msgstr "Ajouter traité filtre"
+
+#: templates/results_sidebar.html:142
 msgid "Type of document"
 msgstr "Type du document"
 
-#: templates/results_sidebar.html:130
+#: templates/results_sidebar.html:146
 msgid "Decision status"
 msgstr "Décision statut"
 
-#: templates/results_sidebar.html:140
+#: templates/results_sidebar.html:156
 msgid "Legislation filters"
 msgstr "Filtres du législation"
 
-#: templates/results_sidebar.html:146 templates/results_sidebar.html:163
+#: templates/results_sidebar.html:162 templates/results_sidebar.html:181
 msgid "Sub-national/state level"
 msgstr "Niveau sous-national / etat"
 
-#: templates/results_sidebar.html:157
+#: templates/results_sidebar.html:163 templates/results_sidebar.html:182
+msgid "Add sub-national/state level…"
+msgstr "Ajouter niveau sous-national / etat…"
+
+#: templates/results_sidebar.html:164 templates/results_sidebar.html:183
+msgid "Add sub-national/state level filter"
+msgstr "Ajouter niveau sous-national / etat filtre"
+
+#: templates/results_sidebar.html:175
 msgid "Court decision filters"
 msgstr "Filtres du jurisprudence"
 
-#: templates/results_sidebar.html:173
+#: templates/results_sidebar.html:193
 msgid "Literature filters"
 msgstr "Filtres du littérature"
+
+#: templates/results_sidebar.html:197
+msgid "Add author…"
+msgstr "Ajouter auteur…"
+
+#: templates/results_sidebar.html:198
+msgid "Add author filter"
+msgstr "Ajouter auteur filtre"
+
+#: templates/results_sidebar.html:202
+msgid "Add journal/series…"
+msgstr "Ajouter périodique/Collection…"
+
+#: templates/results_sidebar.html:203
+msgid "Add journal/series filter"
+msgstr "Ajouter périodique/Collection filtre"
+
+#: templates/results_sidebar.html:207
+msgid "Add publisher…"
+msgstr "Ajouter éditeur…"
+
+#: templates/results_sidebar.html:208
+msgid "Add publisher filter"
+msgstr "Ajouter éditeur filtre"
+
+#: templates/results_sidebar.html:212
+msgid "Add document type…"
+msgstr "Ajouter type du document…"
+
+#: templates/results_sidebar.html:213
+msgid "Add document type filter"
+msgstr "Ajouter type du document filtre"
 
 #: templates/short_display/decision.html:5
 msgid "Decision"
@@ -997,5 +1104,23 @@ msgstr "moins récente"
 msgid "relevance"
 msgstr "pertinence"
 
-#~ msgid "Other tools"
-#~ msgstr "D'autres outils"
+msgid "Language of document"
+msgstr "Langue du document"
+
+msgid "Subjects"
+msgstr "Sujets"
+
+msgid "Keywords"
+msgstr "Mots clés"
+
+msgid "References to"
+msgstr "Reférences d'autres documents"
+
+msgid "Treaty references"
+msgstr "Référence à des traités"
+
+msgid "Legislation references"
+msgstr "Références dans la législation nationale"
+
+msgid "Other tools"
+msgstr "D'autres outils"

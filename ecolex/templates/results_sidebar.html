@@ -19,19 +19,29 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
   <div id="filter-global" class="collapse in">
 
 {% trans "Subject" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add subject…" viewname="api:xsubjects-list" field=form.xsubjects %}
+{% trans "Add subject…" as placeholder %}
+{% trans "Add subject filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:xsubjects-list" field=form.xsubjects %}
 
 {% trans "Keyword" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add keyword…" viewname="api:xkeywords-list" field=form.xkeywords %}
+{% trans "Add keyword…" as placeholder %}
+{% trans "Add keyword filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:xkeywords-list" field=form.xkeywords %}
 
 {% trans "Country" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add country…" viewname="api:xcountry-list" field=form.xcountry %}
+{% trans "Add country…" as placeholder %}
+{% trans "Add country filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:xcountry-list" field=form.xcountry %}
 
 {% trans "Geographical Area" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add geographical area…" viewname="api:xregion-list" field=form.xregion %}
+{% trans "Add geographical area…" as placeholder %}
+{% trans "Add geographical area filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:xregion-list" field=form.xregion %}
 
 {% trans "Language" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add language…" viewname="api:xlanguage-list" field=form.xlanguage %}
+{% trans "Add language…" as placeholder %}
+{% trans "Add language filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:xlanguage-list" field=form.xlanguage %}
 
 {% with dmin=stats.xdate.min dmax=stats.xdate.max %}
 
@@ -102,10 +112,14 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 
 {# TODO: this is badly named deposit*o*ry in code #}
 {% trans "Depository" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add depository…" viewname="api:tr-depository-list" field=form.tr_depository %}
+{% trans "Add depository…" as placeholder %}
+{% trans "Add depository filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:tr-depository-list" field=form.tr_depository %}
 
 {% trans "Place of adoption" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add place of adoption…" viewname="api:tr-place-of-adoption-list" field=form.tr_place_of_adoption %}
+{% trans "Add place of adoption…" as placeholder %}
+{% trans "Add place of adoption filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:tr-place-of-adoption-list" field=form.tr_place_of_adoption %}
 
     </div>
 </fieldset>
@@ -120,7 +134,9 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
     <div id="filter-cop-decisions" class="collapse {% if type_count.decision > 0 %}in{% endif %}">
 
 {% trans "Treaty" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add treaty…" viewname="api:dec-treaty-name-list" field=form.dec_treaty_name %}
+{% trans "Add treaty…" as placeholder %}
+{% trans "Add treaty filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:dec-treaty-name-list" field=form.dec_treaty_name %}
 
 {% if facets.dec_type_of_document.results %}
 {% trans "Type of document" as title %}
@@ -144,7 +160,9 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% include 'bits/checkbox_facet.html' with title=title field=form.leg_type_of_document show_empty=True %}
 
 {% trans "Sub-national/state level" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add sub-national/state level…" viewname="api:leg-territorial-subdivision-list" field=form.leg_territorial_subdivision %}
+{% trans "Add sub-national/state level…" as placeholder %}
+{% trans "Add sub-national/state level filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:leg-territorial-subdivision-list" field=form.leg_territorial_subdivision %}
 
     </div>
   </fieldset>
@@ -161,7 +179,9 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% include 'bits/checkbox_facet.html' with title=title field=form.cd_type_of_document show_empty=True %}
 
 {% trans "Sub-national/state level" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add sub-national/state level…" viewname="api:cd-territorial-subdivision-list" field=form.cd_territorial_subdivision %}
+{% trans "Add sub-national/state level…" as placeholder %}
+{% trans "Add sub-national/state level filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:cd-territorial-subdivision-list" field=form.cd_territorial_subdivision %}
 
     </div>
   </fieldset>
@@ -174,16 +194,24 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
     <div id="filter-literatures" class="collapse {% if type_count.literature > 0 %}in{% endif %}">
 
 {% trans "Author" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add author…" viewname="api:lit-author-list" field=form.lit_author %}
+{% trans "Add author…" as placeholder %}
+{% trans "Add author filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:lit-author-list" field=form.lit_author %}
 
 {% trans "Journal/Series" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add journal/series…" viewname="api:lit-orig-serial-title-list" field=form.lit_orig_serial_title %}
+{% trans "Add journal/series…" as placeholder %}
+{% trans "Add journal/series filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:lit-orig-serial-title-list" field=form.lit_orig_serial_title %}
 
 {% trans "Publisher" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add publisher…" viewname="api:lit-publisher-list" field=form.lit_publisher %}
+{% trans "Add publisher…" as placeholder %}
+{% trans "Add publisher filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:lit-publisher-list" field=form.lit_publisher %}
 
 {% trans "Document type" as title %}
-{% include "bits/selection_facet.html" with title=title placeholder="Add document type…" viewname="api:lit-type-of-text-list" field=form.lit_type_of_text %}
+{% trans "Add document type…" as placeholder %}
+{% trans "Add document type filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:lit-type-of-text-list" field=form.lit_type_of_text %}
 
     </div>
   </fieldset>
