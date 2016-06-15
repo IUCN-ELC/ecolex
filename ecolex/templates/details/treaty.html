@@ -186,7 +186,9 @@
         <tr>
           <th>{% trans 'Countries' %}</th>
           {% for event in document.parties_events %}
-          <th nowrap="nowrap">{{ document.EVENTS_NAMES|lookup:event }}</th>
+            {% with document.EVENTS_NAMES|lookup:event as event_type %}
+              <th nowrap="nowrap">{% trans event_type %}</th>
+            {% endwith %}
           {% endfor %}
         </tr>
       </thead>

@@ -32,7 +32,9 @@
         <tr>
           <th class="col-country">{% trans 'Countries' %}</th>
           {% for event in treaty.parties_events %}
-          <th>{{ treaty.EVENTS_NAMES|lookup:event }}</th>
+            {% with treaty.EVENTS_NAMES|lookup:event as event_type %}
+              <th>{% trans event_type %}</th>
+            {% endwith %}
           {% endfor %}
         </tr>
       </thead>
