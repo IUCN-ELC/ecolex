@@ -17,9 +17,16 @@
   ga('create', faolex_code, 'auto', {'name': 'faolex'});
   ga('create', faolex_code_2, 'auto', {'name': 'allSites'});
 
+  document.hostname = "ecolex.org";
   if (document.informea_url) {
+    document.referrer = document.location.href;
+    //document.hostname = "informea.org";
     send_hit('informea', document.informea_url)
   } else if (document.faolex_url) {
+    if (!document.referrer && document.referrer.indexOf('informea.org/') == -1) {
+        document.referrer = document.location.href;
+    }
+    //document.hostname = "faolex.fao.org";
     send_hit('faolex', document.faolex_url);
     send_hit('allSites', document.faolex_url);
   }
