@@ -26,13 +26,14 @@ PARTY = 'party'
 COUNTRY = 'country'
 TOTAL_DOCS = 'numberresultsfound'
 NULL_DATE = format_date('0000-00-00')
+REMOTE_ID_FIELD = 'recid'
 B7 = 'International Environmental Law – Multilateral Agreements'
 URL_CHANGE_FROM = 'http://www.ecolex.org/server2.php/server2neu.php/'
 URL_CHANGE_TO = 'http://www.ecolex.org/server2neu.php/'
 replace_url = lambda text: (URL_CHANGE_TO + text.split(URL_CHANGE_FROM)[-1]) if text.startswith(URL_CHANGE_FROM) else text
 
 FIELD_MAP = {
-    'recid': 'trElisId',
+    REMOTE_ID_FIELD: 'trElisId',
     'informeauid': 'trInformeaId',
     'dateofentry': 'trDateOfEntry',
     'dateofmodification': 'trDateOfModification',
@@ -308,7 +309,7 @@ class TreatyImporter(BaseImporter):
                     'trLanguageOfDocument_es': [],
                     'trLanguageOfDocument_fr': [],
                 }
-
+                elis_id = document.find(REMOTE_ID_FIELD).text
                 for k, v in FIELD_MAP.items():
                     field_values = document.findAll(k)
                     if field_values:
@@ -335,10 +336,11 @@ class TreatyImporter(BaseImporter):
                         elif v in FALSE_LIST_FIELDS:
                             data[v] = self._clean_text(field_values[0].text)
                             if len(field_values) > 1:
-                                logger.error('Field {} has a value with more '
+                                logger.error('Treaty:{} Field {} has a value'
+                                             'with more '
                                              'than 1 elements: {}. Should '
                                              'convert its type back to list.'
-                                             .format(v, field_values))
+                                             .format(elis_id, v, field_values))
 
                 self._set_values_from_dict(data, 'trRegion', self.regions)
                 self._set_values_from_dict(data, 'trKeyword', self.keywords)
