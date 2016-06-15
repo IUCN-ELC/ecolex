@@ -31,7 +31,7 @@
         <dt>{% trans 'Author' %}</dt>
         <dd>{{ document.people_authors|join:", "|safe }}</dd>
       {% elif document.corp_authors %}
-        <dt>{% trans 'Corporate author; Abbreviation' %}</dt>
+        <dt>{% trans 'Corporate author' %}</dt>
         <dd>{{ document.corp_authors|join:", "|safe }}</dd>
       {% endif %}
 

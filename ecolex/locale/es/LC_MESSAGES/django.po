@@ -500,7 +500,7 @@ msgid "Author"
 msgstr "Autor"
 
 #: templates/details/literature.html:34
-msgid "Corporate author; Abbreviation"
+msgid "Corporate author"
 msgstr "Autor corporativo"
 
 #: templates/details/literature.html:39 templates/results_sidebar.html:201

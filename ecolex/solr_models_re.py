@@ -581,7 +581,7 @@ class Literature(DocumentModel):
     def conference(self):
         return join_available_values(' | ',
                                      self.conf_name, self.conf_no,
-                                     self.conf_date, self.conf_place)
+                                     self.conf_place, self.conf_date)
 
     @property
     def treaties(self):
