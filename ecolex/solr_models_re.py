@@ -296,8 +296,8 @@ class Treaty(DocumentModel):
         'withdrawal',
     ]
     REFERENCES = [
-        'enables', 'supersedes', 'cites', 'amends',
-        'enabled_by', 'superseded_by', 'cited_by', 'amended_by',
+        'enables', 'amends', 'supersedes', 'cites',
+        'enabled_by', 'amended_by', 'superseded_by', 'cited_by',
     ]
     BACKREFERENCES = {
         'amended_by': 'amends',
