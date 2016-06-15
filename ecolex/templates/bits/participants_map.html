@@ -74,19 +74,20 @@
     function resetZoom(datamap) { datamap.svg.selectAll("g").attr("transform", "translate(0,0)scale(1.0)"); }
 
 
-    var map = new Datamap(map_options);
-    map.legend();
+    var map;
 
     $('#regions_div').addClass("collapse");
-    $('#participants-map').click(function(e) {
-        if ($(this).text() == "{% trans 'Show Map' %}")
-        {
-            $('#zoom-reset').show();
-            $(this).text("{% trans 'Hide Map' %}");
-        } else {
-            $('#zoom-reset').hide();
-            $(this).text("{% trans 'Show Map' %}");
+    $('#regions_div').on('hidden.bs.collapse', function () {
+        $('#zoom-reset').hide();
+        $('#participants-map').text("{% trans 'Show Map' %}");
+    });
+    $('#regions_div').on('shown.bs.collapse', function () {
+        if (!map) {
+            map = new Datamap(map_options);
+            map.legend();
         }
+        $('#participants-map').text("{% trans 'Hide Map' %}");
+        $('#zoom-reset').show();
     });
     $('#zoom-reset').click(function(e) {
         e.preventDefault();
