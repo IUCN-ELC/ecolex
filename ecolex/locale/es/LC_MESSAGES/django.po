@@ -314,7 +314,7 @@ msgstr "País"
 #: templates/details/court_decision.html:43 templates/results_sidebar.html:178
 #: templates/short_display/court_decision.html:6
 msgid "Type of court"
-msgstr "Tipo de corte"
+msgstr "Tipo de la corte"
 
 #: templates/details/court_decision.html:46 templates/details/decision.html:43
 #: templates/details/legislation.html:45 templates/details/treaty.html:40
