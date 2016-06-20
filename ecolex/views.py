@@ -17,7 +17,7 @@ from ecolex.legislation import harvest_file
 from ecolex.models import StaticContent
 from ecolex.search import SearchMixin, get_documents_by_field
 from ecolex.management.utils import EcolexSolr
-
+from ecolex.management.definitions import UNLIMITED_ROWS_COUNT
 
 logger = logging.getLogger(__name__)
 
@@ -274,7 +274,7 @@ class ExportView(View):
             fl = '*'
 
         solr = EcolexSolr()
-        resp = solr.search_all(key, value, fl=fl, rows=99999)
+        resp = solr.search_all(key, value, fl=fl, rows=UNLIMITED_ROWS_COUNT)
 
         exporter = get_exporter(format)(resp)
         if doctype:
