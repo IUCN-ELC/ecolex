@@ -54,6 +54,8 @@ class LegislationImporter(object):
                     file_obj = get_file_from_url(obj.url)
                     if not file_obj:
                         logger.error('Failed downloading: %s' % (obj.url,))
+                        obj.status = DocumentText.FULL_INDEX_FAIL
+                        obj.save()
                         continue
                     doc_size = file_obj.getbuffer().nbytes
 
@@ -76,6 +78,8 @@ class LegislationImporter(object):
 
                 if not legislation:
                     logger.error('Failed to find legislation %s' % (obj.doc_id))
+                    obj.status = DocumentText.FULL_INDEX_FAIL
+                    obj.save()
                     continue
 
                 legislation['legText'] = text

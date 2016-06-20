@@ -6,11 +6,13 @@ class DocumentText(models.Model):
     INDEXED = 'indexed'  # Indexed, but pdf not indexed
     FULL_INDEXED = 'full_index'  # Indexed and pdf indexed
     INDEX_FAIL = 'index_fail'  # Failed to index during FAO service call (solr related)
+    FULL_INDEX_FAIL = 'full_index_fail'  # Failed to download/parse the attachment
 
     STATUS_TYPES = (
         (INDEXED, INDEXED),
         (FULL_INDEXED, FULL_INDEXED),
         (INDEX_FAIL, INDEX_FAIL),
+        (FULL_INDEX_FAIL, FULL_INDEX_FAIL),
     )
 
     doc_id = models.CharField(db_index=True, max_length=128, null=False, blank=False)
