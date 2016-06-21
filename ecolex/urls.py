@@ -8,7 +8,8 @@ from solid_i18n.urls import solid_i18n_patterns as i18n_patterns
 
 from ecolex.sitemaps import DocumentSitemap, StaticViewSitemap
 from .views import (
-    DesignPlayground, FaoFeedView, Homepage, LegislationRedirectView,
+    DesignPlayground, FaoFeedView, Homepage,
+    LegislationRedirectView, OldEcolexRedirectView,
     PageView, debug, ExportView
 )
 from . import xviews as views
@@ -75,6 +76,8 @@ urlpatterns += i18n_patterns(
     url(r'^p/(?P<slug>\w+)/', PageView.as_view(),
         name="page"),
 
+    url(r'^ecolex/ledge/view/RecordDetails/$',
+        OldEcolexRedirectView.as_view(), name="oldecolex_redirect"),
     url(r'^(?P<doc_type>\w+)/details/(?P<doc_id>[^/]+)/$',
         LegislationRedirectView.as_view(), name="legislation_redirect"),
 )

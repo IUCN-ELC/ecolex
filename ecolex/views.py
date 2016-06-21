@@ -251,6 +251,42 @@ class LegislationRedirectView(RedirectView):
         else:
             return HttpResponse('Arguments missing or document is not indexed')
 
+class OldEcolexRedirectView(RedirectView):
+
+    doc_type_map = {
+        'documents': 'legislation',
+        'treaties': 'treaty',
+        'literature': 'literature',
+        'courtdecisions': 'court_decision',
+    }
+    doc_id_map = {
+        'legislation': 'legId',
+        'treaty': 'trElisId',
+        'literature': 'litId',
+        'court_decision': 'cdOriginalId',
+    }
+
+    def get_redirect_url(self, doc_type, doc_id):
+        doc_type = self.doc_type_map.get(doc_type)
+        search_field = self.doc_id_map.get(doc_type)
+        if not doc_type or not search_field:
+            return None
+        results = get_documents_by_field(search_field, [doc_id], rows=1)
+        if not results:
+            return None
+        doc = [x for x in results][0]
+        doc_details = doc_type + '_details'
+        return reverse(doc_details, kwargs={'slug': doc.result})
+
+    def get(self, request, *args, **kwargs):
+        doc_id = request.GET.get('id')
+        doc_type = request.GET.get('index')
+        if doc_id and doc_type:
+            url = self.get_redirect_url(doc_type, doc_id)
+            if url:
+                return HttpResponseRedirect(url)
+        else:
+            return HttpResponse('Arguments missing or document is not indexed')
 
 class ExportView(View):
     def get(self, request, **kwargs):
