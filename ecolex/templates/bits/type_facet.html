@@ -1,76 +1,104 @@
+{% load tags %}
+{% load i18n %}
+
+{% with facets.type|get_facet_counts as type_count %}
 {# The type filter has different behaviour between the home page and the results page. #}
-<div class="btn-group btn-group-sm filter-type {{ page_type|default:"results-page" }}">
+
+<div class="hidden">{{ form.type }}{# TODO: de-jsify (and de-uglify) #}</div>
+<div class="btn-group btn-group-justified filter-type {{ page_type|default:"results-page" }}">
   <!-- Treaty filter -->
-  <button type="button"
-          class="btn btn-default {% if 'treaty' in form.type.data %}active{% endif %}"
-          data-filter="#treaty-fieldset"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          data-value="treaty"
-          title="{% if not form.type.data %}Show only Treaties{% elif 'treaty' in form.type.data %}{% if form.type.data|length == 1 %}Show all{% else %}Hide Treaties{% endif %}{% else %}Show Treaties{% endif %}">
-    <span class="icon icon-treaty"></span>
-    {% if facets.type.treaty > 0 %}
-      <span class="badge">{{ facets.type.treaty }}</span>
-    {% endif %}
-    <span class="btn-label">Treaties</span>
-  </button>
+  <div class="btn-group">
+    <button type="button"
+            class="btn btn-default {% if 'treaty' in form.type.data %}active{% endif %}"
+            data-filter="#treaty-fieldset"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            data-container="body"
+            data-value="treaty"
+            title="{% if 'treaty' in form.type.data %}Show all{% else %}Show only Treaties{% endif %}"
+            {% if not type_count.treaty %}disabled="disabled"{% endif %}>
+      <span class="icon icon-treaty"></span>
+      <span class="btn-label">{% trans 'Treaties' %}</span>
+      {% if type_count.treaty > 0 %}
+        <span class="badge">{{ type_count.treaty }}</span>
+      {% endif %}
+    </button>
+  </div>
 
   <!-- COP decision filter -->
-  <button type="button"
-          class="btn btn-default {% if 'decision' in form.type.data %}active{% endif %}"
-          data-filter="#copdecision-fieldset"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          data-value="decision"
-          title="{% if not form.type.data %}Show only COP Decisions{% elif 'decision' in form.type.data %}{% if form.type.data|length == 1 %}Show all{% else %}Hide COP Decisions{% endif %}{% else %}Show COP Decisions{% endif %}">
-    <span class="icon icon-cop-decision"></span>
-    {% if facets.type.decision > 0 %}
-      <span class="badge">{{ facets.type.decision }}</span>
-    {% endif %}
-    <span class="btn-label">COP Decisions</span>
-  </button>
+  <div class="btn-group">
+    <button type="button"
+            class="btn btn-default {% if 'decision' in form.type.data %}active{% endif %}"
+            data-filter="#copdecision-fieldset"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            data-container="body"
+            data-value="decision"
+            title="{% if 'decision' in form.type.data %}Show all{% else %}Show only COP Decisions{% endif %}"
+            {% if not type_count.decision %}disabled="disabled"{% endif %}>
+      <span class="icon icon-cop-decision"></span>
+      <span class="btn-label">{% trans 'COP Decisions' %}</span>
+      {% if type_count.decision > 0 %}
+        <span class="badge">{{ type_count.decision }}</span>
+      {% endif %}
+    </button>
+  </div>
 
   <!-- Legislation filter -->
-  <button type="button"
-          class="btn btn-default"
-          data-filter
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          title="Hide Legislation"
-          disabled>
-    <span class="icon icon-legislation"></span>
-    <span class="badge"></span>
-    <span class="btn-label">Legislation</span>
-  </button>
+  <div class="btn-group">
+    <button type="button"
+            class="btn btn-default {% if 'legislation' in form.type.data %}active{% endif %}"
+            data-filter="#legislation-fieldset"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            data-container="body"
+            data-value="legislation"
+            title="{% if 'legislation' in form.type.data %}Show all{% else %}Show only Legislation{% endif %}"
+            {% if not type_count.legislation %}disabled="disabled"{% endif %}>
+      <span class="icon icon-legislation"></span>
+      <span class="btn-label">{% trans 'Legislation' %}</span>
+      {% if type_count.legislation > 0 %}
+        <span class="badge">{{ type_count.legislation }}</span>
+      {% endif %}
+    </button>
+  </div>
 
   <!-- Court decision filter -->
-  <button type="button"
-          class="btn btn-default"
-          data-filter
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          title="Hide Court Decisions"
-          disabled>
-    <span class="icon icon-court-decision"></span>
-    <span class="badge"></span>
-    <span class="btn-label">Court Decisions</span>
-  </button>
+  <div class="btn-group">
+    <button type="button"
+            class="btn btn-default {% if 'court_decision' in form.type.data %}active{% endif %}"
+            data-filter="#courtdecision-fieldset"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            data-container="body"
+            data-value="court_decision"
+            title="{% if 'court_decision' in form.type.data %}Show all{% else %}Show only Court Decision{% endif %}"
+            {% if not type_count.court_decision %}disabled="disabled"{% endif %}>
+      <span class="icon icon-court-decision"></span>
+      <span class="btn-label">{% trans 'Court Decisions' %}</span>
+      {% if type_count.court_decision > 0 %}
+        <span class="badge">{{ type_count.court_decision }}</span>
+      {% endif %}
+    </button>
+  </div>
 
   <!-- Literature filter -->
-  <button type="button"
-          class="btn btn-default"
-          data-filter
-          data-toggle="tooltip"
-          data-placement="bottom"
-          data-container="body"
-          title="Hide Literature"
-          disabled>
-    <span class="icon icon-literature"></span>
-    <span class="badge"></span>
-    <span class="btn-label">Literature</span>
-  </button>
+  <div class="btn-group">
+    <button type="button"
+            class="btn btn-default {% if 'literature' in form.type.data %}active{% endif %}"
+            data-filter="#literature-fieldset"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            data-container="body"
+            data-value="literature"
+            title="{% if 'literature' in form.type.data %}Show all{% else %}Show only Literature{% endif %}"
+            {% if not type_count.literature %}disabled="disabled"{% endif %}>
+      <span class="icon icon-literature"></span>
+      <span class="btn-label">{% trans 'Literature' %}</span>
+      {% if type_count.literature > 0 %}
+        <span class="badge">{{ type_count.literature }}</span>
+      {% endif %}
+    </button>
+  </div>
 </div>
+{% endwith %}

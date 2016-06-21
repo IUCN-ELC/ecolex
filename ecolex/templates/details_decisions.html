@@ -1,51 +1,56 @@
 {% extends 'layout.html' %}
 {% load tags %}
+{% load i18n %}
+
+{% block meta %}
+  <title>{{ document.title }}</title>
+{% endblock %}
+
+{% block breadcrumbs %}
+  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "Treaty" 'treaty_details' query slug=document.slug %}
+  {% breadcrumb "COP decisions" %}
+{% endblock %}
 
 {% block content %}
-<p>
-  <span class="treaty-name">{{ treaty.full_title }}</span>
-  <br>
-  <a href="{% url 'treaty_details' treaty.id %}">Back to treaty details</a>
-</p>
 
-<hr>
-
-<article class="record-details-decisions">
+<article class="record-details">
   <header>
-    <h1>Treaty decisions</h1>
+    <div class="record-title">
+      <h1>{{ document.title|safe }}</h1>
+      <h2>{% trans 'Related COP decisions' %}</h2>
+    </div>
   </header>
 
   <table class="table decisions-expanded">
-    <thead>
-      <th>#</th>
-      <th>Title</th>
-      <th class="text-right" style="min-width: 120px;">Doc. date</th>
-    </thead>
-    {% for meetingId in meetings.keys %}
-      <tbody>
+    <tbody>
+    {% for item in related_objects %}
+      {% ifchanged item.meeting_id %}
         <tr>
-          <th colspan="3">{{ meetingNames|lookup:meetingId }}</th>
+          <th colspan="3">{{ item.meeting_title }}</th>
         </tr>
-        {% for decision in meetings|lookup:meetingId %}
+      {% endifchanged %}
         <tr>
           <td>
-            <span title="Decision number">{{ decision.document_id }}</span>
+            <span title="Decision number">{{ item.dec_number }}</span>
           </td>
           <td>
-            <a href="{% url 'result' decision.id %}" title="See decision details">{{ decision }}</a>
-          </td>
-          <td class="text-right">
-            <time class="small text-muted">{{ decision.date }}</time>
+            <div class="treaty-link-container">
+              <h3 class="search-result-title">
+                <a href="{{ item.details_url }}?{{ query }}"
+                   title="{{ item.title|safe|striptags }}">{{ item.title|safe }}</a>
+              </h3>
+              {% include 'short_display/decision.html' with result=item %}
+            </div>
           </td>
         </tr>
-        {% endfor %}
-      </tbody>
     {% endfor %}
+    </tbody>
   </table>
 
-  <hr>
+<hr>
 
-  <p><a class="btn btn-sm btn-default" href="{% url 'treaty_details' treaty.id %}">Back to treaty details</a></p>
+{% include "bits/pagination.html" with pages=pages %}
 
 </article>
 {% endblock %}

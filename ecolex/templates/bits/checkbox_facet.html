@@ -1,16 +1,31 @@
-{% for type,count in facet.items %}
-  {% if show_empty or count > 0 %}
-  <li>
-    <label class="facet-checkbox {% if not count %}disabled{% endif %}" for="{{ form_field.name }}_{{ type }}">
-      <input type="checkbox"
-             id="{{ form_field.name }}_{{ type }}"
-             name="{{ form_field.name }}"
-             value="{{ type }}"
-             {% if type in form_field.data %}checked{% endif %}
-             {% if not count %}disabled{% endif %}>
-      <span class="facet-text">{{ type|capfirst }}</span>
-      <span class="facet-counter">{{ count }}</span>
-    </label>
-  </li>
-  {% endif %}
-{% endfor %}
+{% load i18n %}
+
+<div class="filter">
+
+  <div class="filter-header">
+    <strong class="filter-label">{{ title }}</strong>
+  </div>
+  <div class="filter-body">
+    <ul>
+    {% for item in field.facet.data %}
+      {% if show_empty or item.count > 0 %}
+      <li>
+        <label class="facet-checkbox {% if not item.count %}disabled{% endif %}" for="{{ field.name }}_{{ item.id }}">
+          <input type="checkbox"
+                 id="{{ field.name }}_{{ item.id }}"
+                 name="{{ field.name }}"
+                 value="{{ item.text }}"{% if item.selected %}
+                 checked{% endif %}{% if not item.count %}
+                 disabled{% endif %}>
+          {% with text=item.text|capfirst %}
+            <span class="facet-text">{% trans text %}</span>
+          {% endwith %}
+          &nbsp;
+          <span class="facet-count">{{ item.count }}</span>
+        </label>
+      </li>
+      {% endif %}
+    {% endfor %}
+    </ul>
+  </div>
+</div>

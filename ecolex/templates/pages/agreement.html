@@ -1,31 +1,12 @@
 {% extends "layout.html" %}
+{% load i18n %}
+
+{% block meta %}
+  <title>ECOLEX | {% trans 'User Agreement' %}</title>
+{% endblock %}
 
 {% block content %}
-<h1>USER AGREEMENT</h1>
 
-<p style="font-style: italic">Please read these terms and conditions before accessing or using ECOLEX</p>
+{{ content|safe }}
 
-<p><b>1. General.</b> This User Agreement sets forth the terms and conditions of a license for you to use ECOLEX. By accessing and/or using ECOLEX, you consent and agree to comply with all of the terms and conditions of this User Agreement. The rights and obligations concerning use of ECOLEX in accordance with this User Agreement are personal to you or to members of your household and are not transferable to any other person or entity. From time to time, these terms and conditions of use of ECOLEX may be modified. Accordingly, please continue to review the terms and conditions whenever accessing or using ECOLEX, since any use by you after any such changes, modifications, or additions shall be governed by this User Agreement.</p>
-
-<p><b>2. Usage.</b> ECOLEX contains copyrighted material and/or other proprietary information and thus, are protected by intellectual property agreements and copyright laws and regulations worldwide. You are hereby granted a license to use, download and print the materials contained in ECOLEX solely for non-commercial purposes and in accordance with this User Agreement, provided that you do not alter or remove any copyright symbol or other identification concerning authorship of any of the materials contained on or otherwise made available to you in ECOLEX. FAO, IUCN and UNEP and their licensors are the sole and exclusive owners of all right, title and interest, including trademarks, copyrights, trade names, trade secrets and other intellectual property rights, contained in the data and software of ECOLEX. Except as may otherwise be expressly permitted any copying, browsing, redistribution, publication, or commercial exploitation of any material contained on or otherwise made available to you on ECOLEX is strictly prohibited. You may make one back-up copy of the data from ECOLEX for your own personal use; however, you may not otherwise copy, modify, adapt, reproduce, translate, reverse engineer, or decompile any aspects or parts of the ECOLEX.</p>
-
-<p><b>3. Sub-license.</b> All forms of sub-licensing, reselling, republication or other forms of redistribution of any of the data or software used in ECOLEX, including Internet posting, electronic mailing, faxing, archiving in a public data, redistributing via a computer network or in printed form, to any third party, are strictly prohibited.</p>
-
-<p>FAO, IUCN or UNEP may deny you access to all or part of ECOLEX without notice if you engage in any conduct or activities that FAO, IUCN or UNEP believe violates any term of this Agreement.</p>
-
-<p><b>4. Disclaimer of Warranty; Limitations on Liability.</b> NEITHER FAO, IUCN OR UNEP OR THEIR AFFILIATES, OR ANY OF THEIR RESPECTIVE EMPLOYEES, AGENTS, THIRD-PARTY CONTENT PROVIDERS, OR LICENSORS WARRANT THAT ACCESS TO AND USE OF ECOLEX WILL BE FREE FROM INTERRUPTIONS OR FREE FROM ERRORS, NOR THAT ANY INFORMATION ACCESSIBLE FROM OR RELATED TO THE DATA IS FREE OF VIRUSES, WORMS, OR OTHER HARMFUL COMPONENTS; NO WARRANTY IS MADE AS TO THE RESULTS THAT MAY BE OBTAINED FROM USE OF ECOLEX, OR AS TO THE ACCURACY, RELIABILITY, OR CONTENT OF ANY INFORMATION OR SERVICE PROVIDED THROUGH ECOLEX.</p>
-
-<p style="font-weight: bold">ECOLEX IS PROVIDED "AS IS" WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF TITLE OR IMPLIED WARRANTIES OF MARCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL FAO, IUCN OR UNEP BE LIABLE TO YOU OR ANY OTHER PERSON FOR ANY LOSS OF BUSINESS OR PROFITS, OR FOR ANY INDIRECT, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF ANY USE OF, OR INABILITY TO USE, ECOLEX EVEN IF FAO, IUCN OR UNEP WERE PREVIOUSLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY OTHER CLAIM BY YOU OR ANY OTHER PERSON.</p>
-
-<p>You further expressly acknowledge and agree that information, text, graphics, and hyperlinks provided to you through ECOLEX and located on other sites throughout the combined global electronic networks known as the Internet and the World-Wide-Web are provided solely as a resource and a convenience to you. Such hyperlinks to other sites are not an endorsement by FAO, IUCN or UNEP of those sites. Neither FAO, IUCN nor UNEP makes any warranty, either express or implied, as to the accuracy, reliability, or content of such information, text, graphics, and hyperlinks. Neither FAO, IUCN nor UNEP has tested any software located on other sites and they make no representation as to the quality, safety, reliability or suitability of such software.</p>
-
-<p>Under no circumstances shall FAO, IUCN or UNEP, or their affiliates or licensors be liable for any direct, indirect, incidental, special, punitive, or consequential damages that result in any way from your use, non-use or reliance upon the Data, or that result from mistakes, omissions, interruptions, deletions, errors, or defects in the Data, or delays in their operation, transmission or failure of performance.</p>
-
-<p><b>5. Indemnification.</b> You agree to defend, indemnify and hold FAO, IUCN and UNEP, and their affiliates harmless from any and all damages, liabilities, costs and expenses, including attorneys' fees, related to any violation of this Agreement by you or any authorized users of your account.</p>
-
-<p><b>6. Termination.</b> Either you or FAO, IUCN or UNEP may terminate this User Agreement at any time, effective immediately, with or without prior notice to the other party. Termination of this Agreement automatically terminates your license to use ECOLEX and any content or other material contained therein. The provisions of Section 4, 5, 7 and 8 shall survive any termination of this User Agreement.</p>
-
-<p><b>7. Governing Law; Disputes.</b> This User Agreement shall be governed by general principles of law, to the exclusion of any single national system of law. Any dispute, controversy or claim arising under or pursuant to this User Agreement shall be settled by mutual agreement. If the Parties are unable to reach agreement on any question in dispute, either party shall have the right to request arbitration in accordance with the Arbitration Rules of the United Nations Commission on International Trade Law. The Parties agree to be bound by any arbitration ruling rendered in accordance with the above, as the final adjudication of any such dispute. Nothing contained in or related to this User Agreement shall be deemed a waiver, express or implied, of the privileges and immunities of FAO, IUCN or UNEP.</p>
-
-<p><b>8 Miscellaneous.</b> This User Agreement and any FAO, IUCN and UNEP policies relating to your operation and use of ECOLEX constitute the entire agreement and understanding between FAO, IUCN, UNEP and you with respect to the subject matter hereof. The provisions of this User Agreement shall inure to the benefit of FAO, IUCN, UNEP and its third-party content providers and licensors. No waiver by any party hereto of any of the provisions hereof or of any breach or other default hereunder shall be deemed to be a waiver of any preceding or subsequent breach or default.</p>
 {% endblock content %}

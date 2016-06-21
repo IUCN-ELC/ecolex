@@ -1,0 +1,218 @@
+{% load i18n %}
+{% load tags %}
+
+<script type="text/javascript">
+// Bootstrap tour
+var _templateHelp = "<div class='popover-help'><button class='no-btn pull-right' data-role='end'>End tour</button><strong><span data-role='current'></span>/<span data-role='steps'></span></strong></div>",
+    _templateNav = "<div class='popover-navigation'><button class='btn btn-sm btn-default' data-role='next'>Next</button></div>",
+    _templateStart = "<div class='popover-navigation clearfix'><button class='btn btn-success btn-sm col-xs-6' data-role='next'>Start tour</button><button class='btn btn-sm btn-link col-xs-6' style='color: #aaa' data-role='end'>No, thanks!</button></div>",
+    _templateEnd = "<div class='popover-navigation text-center'><button class='btn btn-success' data-role='end'>End tour</button></div>";
+var templateNoNav = "<div class='popover tour'><div class='arrow'></div>" + _templateHelp + "<h3 class='popover-title'></h3><div class='popover-content'></div></div>",
+    templateStart = "<div class='popover tour'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>" + _templateStart + "</div>",
+    templateEnd = "<div class='popover tour'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>" + _templateEnd + "</div>",
+    templateDefault = "<div class='popover tour'><div class='arrow'></div>" + _templateHelp + "<h3 class='popover-title'></h3><div class='popover-content'></div>" + _templateNav + "</div>";
+
+var tourSteps = [
+  // Step 1: Welcome
+  {
+    orphan: true,
+    title: "{% blocktrans %}Welcome to ECOLEX{% endblocktrans %}",
+    content: "{% blocktrans %}<p>Please follow the tour to the end. It only takes 5 minutes.</p>{% endblocktrans %}"
+  },
+  // Step 2: The search bar
+  {
+    path: "{% url 'homepage' %}",
+    element: "#search",
+    placement: "bottom",
+    title: "{% blocktrans %}Permanent search bar{% endblocktrans %}",
+    content: "{% blocktrans %}<p>Always visible from any page. Provides <strong>quick access</strong> to the website's main function.</p><p>We'll start by searching for <em>Fishery conservation</em>.</p>{% endblocktrans %}",
+    onShow: function() {
+      $("#search").val("Fishery consrvation");
+    }
+  },
+  // Step 3: Search suggestions
+  {
+    path: "{% url 'results' %}?q=Fishery+consrvation",
+    element: "#suggestion em",
+    placement: "right",
+    title: "{% blocktrans %}Oops, a typo!{% endblocktrans %}",
+    content: "{% blocktrans %}<p><strong>Spelling corrections</strong> lead to more relevant results and a better user experience.</p><div class='popover-hint'>Click on the suggested text!</div>{% endblocktrans %}",
+    onNext: function() {
+      // In case user presses Next and not the link
+      if (document.location.href.indexOf('conservation') == -1) {
+        document.location.href = '{% url "results" %}?q=Fishery+conservation';
+        return (new jQuery.Deferred()).promise();
+      }
+    }
+  },
+  // Step 4: Highlighted results
+  {
+    element: ".search-result:first-child .search-result-title a em:first-child",
+    placement: "right",
+    title: "{% blocktrans %}Highlighted results{% endblocktrans %}",
+    content: "{% blocktrans %}<p>Every matched word is in bold, like <em>Conservation</em>.</p>{% endblocktrans %}",
+    onShow: function(tour) {
+      if (document.location.href.indexOf('%22Fishery+conservation%22') != -1) {
+        tour.next();
+        return (new jQuery.Deferred()).promise();
+      }
+      if ($("button[data-filter='#treaty-fieldset']").hasClass('active')) {
+        tour.next();
+        return (new jQuery.Deferred()).promise();
+      }
+    }
+  },
+  // Step 5: Use of double quotes
+  {
+    element: "#search",
+    placement: "left",
+    title: "{% blocktrans %}Using double quotes{% endblocktrans %}",
+    content: '{% blocktrans %}<p>Double quotes may be used to find more specific results.</p><p>All results must contain <strong>Fishery conservation</strong> (together) now.</p>{% endblocktrans %}',
+    onShow: function(tour) {
+      if ($("button[data-filter='#treaty-fieldset']").hasClass('active')) {
+        tour.next();
+        return (new jQuery.Deferred()).promise();
+      }
+      if (document.location.href.indexOf('Fishery+conservation') == -1) {
+        document.location.href = "{% url 'results' %}?q=Fishery+conservation";
+        return (new jQuery.Deferred()).promise();
+      }
+    },
+    onNext: function(tour) {
+      // In case user presses Next and not the link
+      if (!$("button[data-filter='#treaty-fieldset']").hasClass('active')) {
+        document.location.href = '{% url "results" %}?q="Fishery+conservation"&type=treaty&type=legislation';
+        return (new jQuery.Deferred()).promise();
+      }
+    }
+  },
+  // Step 6: Dataset links
+  {
+    element: ".btn-group.filter-type",
+    placement: "left",
+    title: "{% blocktrans %}Multiple datasets{% endblocktrans %}",
+    content: "{% blocktrans %}<p>You may search within any combination of datasets.</p><p>We have just selected treaties and legislation.</p>{% endblocktrans %}"
+  },
+  // Step 7: Sorting
+  {
+    element: "a.sortby:first-child",
+    placement: "bottom",
+    title: "{% blocktrans %}Sorting results{% endblocktrans %}",
+    content: "{% blocktrans %}<p>When searching for a phrase, results are sorted by relevance.</p><p>You can also sort them by date.</p>{% endblocktrans %}"
+  },
+  // Step 8: Common filters
+  {
+    element: ".global-filter",
+    placement: "left",
+    title: "{% blocktrans %}Filtering{% endblocktrans %}",
+    content: "{% blocktrans %}<p>You can obtain more specific results by applying filters.</p><p>Click on Geographical Area and select South America.</p><p>Try using the keyboard to search for values and ENTER to select them.</p>{% endblocktrans %}",
+  },
+  // Step 9: More filters
+  {
+    element: "#filter-treaties",
+    placement: "left",
+    title: "{% blocktrans %}More filters{% endblocktrans %}",
+    content: "{% blocktrans %}<p>Each dataset has its own specific fields for filtering. They are shown or hidden when more datasets are selected.</p>{% endblocktrans %}",
+    onNext: function(tour) {
+      var nextUrl = $('.result-links').eq(0).attr('href')
+      var nextStep = tour.getCurrentStep() + 1;
+      tour._options['steps'][nextStep]['path'] = nextUrl;
+    }
+  },
+  // Step 10: The details page
+  {
+    element: ".record-title",
+    placement: "top",
+    title: "{% blocktrans %}The details page{% endblocktrans %}",
+    content: "{% blocktrans %}<p>The full display pages are designed to emphasize structure and readability.</p>{% endblocktrans %}",
+  },
+  // Step 11: Language picker
+  {
+    element: "#language-picker",
+    placement: "left",
+    title: "{% blocktrans %}ECOLEX is multilingual{% endblocktrans %}",
+    content: "{% blocktrans %}<p>You can switch the language and translated content will be presented, where available.</p><p>Let's change to Spanish.</p>{% endblocktrans %}",
+  },
+  // Step 12: Spanish treaty
+  {
+    path: "/es/details/treaty/convention-on-the-conservation-and-management-of-fishery-resources-in-the-south-east-atlantic-ocean-seafo-tre-001384/",
+    element: ".record-title",
+    placement: "bottom",
+    title: "",
+    content: "{% blocktrans %}<p>The treaty title is now translated where applicable.</p>{% endblocktrans %}",
+  },
+  // Step 13: Treaty participants map
+  {
+    path: "{% translate_url 'en' %}",
+    element: "#participants-map",
+    placement: "top",
+    title: "{% blocktrans %}Treaty participants map{% endblocktrans %}",
+    content: "{% blocktrans %}<div class='popover-hint'>Click on the Show Map to view the treaty participants!</div>{% endblocktrans %}",
+  },
+  // Step 14: Breadcrumbs
+  {
+    element: "main div.container a:first",
+    placement: "bottom",
+    title: "{% blocktrans %}Simple navigation{% endblocktrans %}",
+    content: "{% blocktrans %}<p>You can return to the search results without losing the search criteria by clicking on the breadcrumb links.</p>{% endblocktrans %}",
+  },
+  // Step 15: And/Or
+  {
+    path: "{% url 'results' %}?q=&xkeywords_and_=on&xkeywords=biodiversity&xkeywords=aquaculture&xdate_min=&xdate_max=",
+    element: "#facet-xkeywords-container .onoffswitch-label",
+    placement: "top",
+    title: "{% blocktrans %}Complex filter options{% endblocktrans %}",
+    content: "{% blocktrans %}<p>You can combine the filters in various ways. For instance, treaties tagged with both <em>Biodiversity</em> and <em>Aquaculture</em>, by using the AND/OR switch when more values are present.</p>{% endblocktrans %}",
+  },
+  // Step 16: Reset
+  {
+    element: "#facet-xkeywords-container .reset-multiple",
+    placement: "top",
+    title: "{% blocktrans %}Reset filters{% endblocktrans %}",
+    content: "{% blocktrans %}<p>Filters can be easily removed using their individual <em>Reset</em> link, or the global <em>Reset all filters</em> button.</p>{% endblocktrans %}",
+  },
+  // Step 17: Remove
+  {
+    element: ".select2-selection__choice__remove:first",
+    placement: "bottom",
+    title: "{% blocktrans %}Change filters{% endblocktrans %}",
+    content: "{% blocktrans %}<p>To remove just one value, use the small red [x] button on the right.</p>{% endblocktrans %}",
+  },
+  // Step 18: Cross-device
+  {
+    orphan: true,
+    title: "{% blocktrans %}Mobile and tablet support{% endblocktrans %}",
+    content: "{% blocktrans %}<p>You can use ECOLEX on your smartphone or tablet, as well. The layout will automatically adjust to the size of your device.</p><p>Thank you for taking the time and we hope you enjoy using ECOLEX.</p>{% endblocktrans %}",
+    template: templateNoNav
+  }
+];
+
+var tour = new Tour({
+  name: "tour",
+  animation: true,
+  keyboard: false,
+  template: templateDefault,
+  onShown: function(tour) {
+    $('.popover-help [data-role="current"]').text(tour.getCurrentStep() + 1);
+    $('.popover-help [data-role="steps"]').text(tourSteps.length);
+  },
+  steps: tourSteps,
+});
+
+$(document).ready(function() {
+
+
+  if (!tour.ended()) {
+    tour.init();
+  }
+
+  $('#suggestion a').on('click', function() {
+    $('.popover.tour-tour').hide();
+  });
+
+  $('[data-toggle="tour"]').on('click', function() {
+    tour.restart();
+  });
+
+});
+</script>

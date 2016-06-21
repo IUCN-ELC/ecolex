@@ -1,0 +1,29 @@
+.slick-arrow {
+  .btn;
+  .btn-default;
+  position: absolute;
+  top: 50%;
+  margin-top: -1.5em;
+  z-index: 2;
+  opacity: 1;
+  transition: opacity .1s;
+  overflow: hidden;
+  padding: 1em .5em;
+  svg {
+    display: block;
+    height: 1em;
+    width: auto;
+  }
+  line-height: 1;
+  &.slick-disabled {
+    opacity: 0;
+  }
+}
+
+.slick-prev {
+  left: 0;
+}
+
+.slick-next {
+  right: 0;
+}

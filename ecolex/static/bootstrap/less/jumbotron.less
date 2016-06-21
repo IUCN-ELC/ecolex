@@ -1,0 +1,121 @@
+//
+// Jumbotron
+// --------------------------------------------------
+
+
+.jumbotron {
+  padding: @jumbotron-padding (@jumbotron-padding / 2);
+  color: @jumbotron-color;
+  background-color: @jumbotron-bg;
+
+  h1,
+  .h1 {
+    color: @jumbotron-heading-color;
+  }
+
+  p {
+    margin-bottom: (@jumbotron-padding / 2);
+    font-size: @jumbotron-font-size;
+    font-weight: 200;
+  }
+
+  strong {
+    font-weight: normal;
+    color: #1CB54B;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  > hr {
+    border-top-color: darken(@jumbotron-bg, 10%);
+  }
+
+  .container &,
+  .container-fluid & {
+    border-radius: @border-radius-large; // Only round corners at higher resolutions if contained in a container
+  }
+
+  .container {
+    max-width: 100%;
+  }
+
+  @media screen and (min-width: @screen-sm-min) {
+    padding: (@jumbotron-padding * 1.6) 0;
+
+    .container &,
+    .container-fluid & {
+      padding-left:  (@jumbotron-padding * 2);
+      padding-right: (@jumbotron-padding * 2);
+    }
+
+    h1,
+    .h1 {
+      font-size: (@font-size-base * 4.5);
+    }
+  }
+}
+
+// custom
+.jumbotron {
+
+
+  .logo-ecolex,
+  .slogan {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+  }
+
+  .logo-ecolex {
+    img {
+      height: 3em;
+      width: auto;
+      margin: -1em;
+    }
+  }
+
+  @media (max-width: @grid-float-breakpoint-max) {
+    .jumbotron-brand {
+      margin: (@line-height-computed / 2) (-@grid-gutter-width / 2) 0;
+      font-size: @font-size-small;
+      display: block;
+      text-align: left;
+    }
+    .logo-ecolex {
+      padding: 0;
+      img {
+        margin: 0;
+        height: 75px;
+      }
+    }
+    .slogan,
+    .credits {
+      padding: 0;
+      border: 0;
+    }
+    br {
+      display: none;
+    }
+  }
+  @media (min-width: @screen-sm) {
+    .jumbotron-brand {
+      position: relative;
+      display: block;
+      margin: 0;
+    }
+    .logo-ecolex {
+      margin-right: 1em;
+      img {
+        margin: 0;
+        margin-top: 15px;
+        height: 80px;
+      }
+    }
+    .slogan {
+      margin-right: 1em;
+      padding-left: 0;
+    }
+  }
+}

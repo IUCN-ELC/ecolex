@@ -1,8 +1,21 @@
 {% extends "layout.html" %}
 
+{% block meta %}
+  <meta name="robots" content="noindex">
+  <meta name="googlebot" content="noindex">
+{% endblock %}
+
 {% block content %}
   <div class="row">
-    <div class="col-md-9" id="layout-main">
+    <div id="layout-main" class="col-md-9">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible small" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span>{{ message }}</span>
+          </div>
+        {% endfor %}
+      {% endif %}
       {% block main %} {% endblock %}
     </div>
     <aside id="filters" class="col-md-3">

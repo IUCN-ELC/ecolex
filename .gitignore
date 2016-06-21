@@ -1,10 +1,23 @@
 instance/
-*.pyc
-.idea
 sandbox
 env
 db.sqlite3
 supervisord.conf
 env27/
 local_settings.py
+local_urls.py
 contrib/treaties.json
+
+# OS generated files
+._*
+.DS_Store
+Thumbs.db
+
+# Editor generated files
+.idea
+
+# Files to ignore
+*.log
+*.pyc
+*.vi
+*~

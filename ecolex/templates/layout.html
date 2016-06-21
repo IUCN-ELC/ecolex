@@ -1,116 +1,243 @@
-<!doctype html>
-<html lang="en">
+{% load tags %}
+{% load i18n %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="{{ LANGUAGE_CODE }}">
 
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta charset="utf-8">
-  <title>Ecolex</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/static/css/bootstrap.custom.css">
-  <link rel="stylesheet" href="/static/css/bootstrap-tour.min.css">
-  <link rel="stylesheet" href="/static/css/main.css">
+  {% block meta %}{% endblock %}
+  <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/bootstrap.custom.css' %}">
+  <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/bootstrap-tour.min.css' %}">
+  <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/select2.css' %}">
+  <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/main.css' %}">
+  <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/cookieBar.min.css' %}">
+  {% block style %}{% endblock %}
+  <script src="https://code.jquery.com/jquery-1.12.1.min.js"
+          integrity="sha256-I1nTg78tSrZev3kjvfdM5A5Ak/blglGzlaZANLPDl3I="
+          crossorigin="anonymous"></script>
+  <script src="{{ settings.STATIC_URL }}{% version 'js/bootstrap.min.js' %}"></script>{% comment %}
+  <script src="{{ settings.STATIC_URL }}{% version 'js/modernizr-custom.js' %}"></script>
+  <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.deserialize.js' %}"></script>
+  <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.blockUI.js' %}"></script>{% endcomment %}
+  <script src="{{ settings.STATIC_URL }}{% version 'js/select2.js' %}"></script>
+  <script src="{{ settings.STATIC_URL }}{% version 'js/main.js' %}"></script>
+  <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.cookieBar.min.js' %}"></script>
+  <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.collapser.min.js' %}"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.cookie-message').cookieBar({ closeButton : '.btn-blue' });
+      $('.collapse-keywords').collapser({
+        mode: 'words',
+        truncate: 15,
+        speed: 0,
+        showText: '{% trans 'Show all' %}',
+        lockHide: true
+      });
+    });
+  </script>
+  {% block scripts %}{% endblock %}
   {% include 'bits/favicon.html' %}
 </head>
 
-<body>
+<body {% if page_type == "homepage" %}class="body-colored"{% endif %}>
 
-<div class="navbar navbar-default">
-  <div class="container">
-    <div class="navbar-header">
-      <a href="{% url 'homepage' %}" class="navbar-brand">Ecolex</a>
-      <button class="navbar-toggle" type="button" data-toggle="collapse"
-              data-target="#navbar-main">
-        <span class="icon icon-menu"></span>
-      </button>
-    </div>
-    <div class="navbar-collapse collapse" id="navbar-main">
-      <ul class="nav navbar-nav">
-        <li {% if page_slug == 'about' %}class="active"{% endif %}><a href="{% url 'page' slug='about' %}">About</a></li>
-        <li {% if page_slug == 'agreement' %}class="active"{% endif %}><a href="{% url 'page' slug='agreement' %}">User Agreement</a></li>
-        <li {% if page_slug == 'privacy' %}class="active"{% endif %}><a href="{% url 'page' slug='privacy' %}">Privacy</a></li>
-        <li {% if page_slug == 'acknowledgements' %}class="active"{% endif %}><a href="{% url 'page' slug='acknowledgements' %}">Acknowledgments</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown">
-            <span class="text-muted">Language:</span>
-            <strong>English</strong>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a href="#">English</a></li>
-            <li><a href="#">Francais</a></li>
-            <li><a href="#">Espanol</a></li>
+
+  <header id="site-header">
+    <div class="navbar navbar-default">
+      <div class="container">
+
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
+          Menu <span class="icon icon-menu"></span>
+        </button>
+
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            <li {% if page_type == "homepage" %}class="active"{% endif %}><a href="{% url 'homepage' %}">{% trans 'Home' %}</a></li>
+            <li {% if page_slug == 'about' %}class="active"{% endif %}><a href="{% url 'page' slug='about' %}">{% trans 'About ECOLEX' %}</a></li>
+            {#<li>#}
+              {#<a data-toggle="dropdown">{% trans 'Other tools' %}<span class="caret"></span></a>#}
+              {#% include 'bits/knowledge_tools.html' %#}
+            {#</li>#}
+            <li><a data-toggle="tour" class="btn btn-blue">{% trans 'Take a tour' %}</a></li>
+            {% block commands %}{% endblock %}
           </ul>
-        </li>
-      </ul>
+          <ul id="language-picker" class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown">
+                <span class="text-muted">{% trans 'Language:' %}</span>
+                <strong>{{ LANGUAGE_CODE|language_name_local|capfirst }}</strong>
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">{% with form.get_base_qs as query %}
+                {% get_language_info_list for LANGUAGES as langs %}
+                {% for lang in langs %}
+                  <li>
+                    <a href="{% translate_url lang.code %}{% if query %}?{{ query }}{% endif %}">{{ lang.name_local|capfirst }}</a>
+                  </li>
+                {% endfor %}
+              {% endwith %}</ul>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <div id="site-body">
+    {# form is now page-wide, until someone decides to have fun with the template #}
+    <form id="search-form" action="{% url 'results' %}" method="get">
+
+    {% if page_type == "homepage" %}
+    <!-- #TODO: Clean better -->
+    <main>
+        <div id="masthead" class="jumbotron text-center">
+            <div class="container">
+                <div class="jumbotron-brand">
+                    <div class="logo-ecolex">
+                        <a href="{% url 'homepage' %}"><img src="/static/img/logo-ecolex-inverted.svg" alt="Ecolex Logo" title="Homepage"></a>
+                    </div>
+                    <div class="slogan">
+                        <strong>{% trans 'The gateway to ' %} <br>{% trans 'environmental law' %}</strong>
+                    </div>
+
+                </div>
+                <div class="search-form {{ page_type|default:" results-page " }}">
+                    <label for="search">
+                        <span class="sr-only">Search</span>
+                        <span class="icon icon-search"></span>
+                    </label>
+                    <input id="search" type="search" autofocus {# autosave #} class="form-control" name="q" placeholder="{% trans 'Search in record and full text' %}" value="{{ form.q.value|default:"" }}"> {# TODO: form.q.errors maybe? #} {% if form.q.value %}
+                    <span id="query-remove" class="icon icon-close"></span> {% endif %}
+                    <button class="btn btn-search" type="submit">{% trans 'Search' %}</button>
+                </div>
+
+                <ul class="homepage-categories">
+                  <li>
+                    <a href="{% url 'results' %}?type=treaty">
+                      <span class="icon icon-treaty"></span>
+                      {% trans 'Treaties' %}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'results' %}?type=decision">
+                      <span class="icon icon-cop-decision"></span>
+                      {% trans 'COP Decisions' %}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'results' %}?type=legislation">
+                      <span class="icon icon-legislation"></span>
+                      {% trans 'Legislation' %}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'results' %}?type=court_decision">
+                      <span class="icon icon-court-decision"></span>
+                      {% trans 'Court Decisions' %}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'results' %}?type=literature">
+                      <span class="icon icon-literature"></span>
+                      {% trans 'Literature' %}
+                    </a>
+                  </li>
+                </ul>
+            </div>
+            <div class="alert small" role="alert">
+              <span>The new interface is still under development and requires quality control.</span><br>
+              <span>Please feel free to contact us at <a href="mailto:ECOLEX@iucn.org">ECOLEX@iucn.org</a> if you have any suggestions or experience any difficulties.</span>
+            </div>
+        </div>
+    </main>
+
+
+    {% else %}
+
+    <div id="masthead" class="jumbotron text-center">
+      <div class="container">
+        <div class="jumbotron-brand">
+          <div class="logo-ecolex">
+            <a href="{% url 'homepage' %}"><img src="/static/img/logo-ecolex-inverted.svg" alt="Ecolex Logo" title="Homepage"></a>
+          </div>
+          <div class="slogan">
+            <strong>{% trans 'The gateway to ' %}<br>{% trans 'environmental law' %}</strong>
+          </div>
+
+        <div class="search-form {{ page_type|default:"results-page" }}">
+          <label for="search">
+            <span class="sr-only">{% trans 'Search' %}</span>
+            <span class="icon icon-search"></span>
+          </label>
+
+          <input id="search" type="search" autofocus {# autosave #} class="form-control" name="q" placeholder="{% trans 'Search in record and full text' %}" value="{{ form.q.value|default:"" }}">
+          {# TODO: form.q.errors maybe? #}
+          {% if form.q.value %}
+              <span id="query-remove" class="icon icon-close"></span>
+          {% endif %}
+          <button class="btn btn-search" type="submit">{% trans 'Search' %}</button>
+        </div>
+
+        </div>
+
+
+      </div>
     </div>
 
-  </div>
-</div>
+    <main>
+      <div class="container">
+        {% block breadcrumbs %}
+        {% endblock %}
+        {% block content %}
+        {% endblock %}
+      </div>
+    </main>
+    {% endif %}
 
-<div id="masthead" class="jumbotron text-center">
-  <div class="container">
-    <div class="logo-ecolex">
-      <img src="/static/img/logo-ecolex-inverted.svg" alt="">
-    </div>
-    <div class="slogan">
-      <strong>The gateway to<br>environmental law</strong>
-    </div>
-    <hr>
-    <div class="credits">
-      Joint operation by<br><a href="http://www.fao.org/">FAO</a>, <a href="http://www.iucn.org/">IUCN</a>, <a
-        href="http://www.unep.org/">UNEP</a>
-    </div>
-    <div class="logo-credits">
-      <img src="/static/img/logo-credits.svg" alt="">
-    </div>
-
-    <!-- search -->
-    <form action="{% url 'results' %}" method="get" class="search-form {{ page_type|default:"results-page" }}">
-      <label for="search">
-        <span class="sr-only">Search</span>
-        <span class="icon icon-search"></span>
-      </label>
-
-      {{ form.q }}
-
-      <button class="btn btn-success" type="submit">Search</button>
-
-      {% include 'bits/hidden_form.html' %}
     </form>
-  </div>
-</div>
-
-<main>
-  <div class="container">
-    {% block content %} 
-    {% endblock %}
-  </div>
-</main>
-
-<div class="footer">
-  <div class="container">
-    <div class="img">
-      <img src="/static/img/logo-ecolex-mono.svg" alt="">
+    {% block extra_content %}{% endblock %}
+    <div class="cookie-message">
+     {% trans 'In order to understand how people use our site generally, and to create more valuable experiences for you, we may collect data about your use of this site (both directly and through our partners). By using this Website you agree to the use of cookies.' %} <a class="btn btn-blue" href>{% trans 'Close' %}</a>
     </div>
-    <ul class="list-inline">
-      <li><a href="{% url 'page' slug='about' %}">About</a></li>
-      <li><a href="{% url 'page' slug='agreement' %}">User Agreement</a></li>
-      <li><a href="{% url 'page' slug='privacy' %}">Privacy</a></li>
-      <li><a href="{% url 'page' slug='acknowledgements' %}">Acknowledgments</a></li>
-    </ul>
   </div>
-</div>
 
-<!-- scripts -->
-<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
-<script src="/static/js/bootstrap-tour.min.js"></script>
-<script src="/static/js/jquery.deserialize.js"></script>
-<script src="/static/js/jquery.blockUI.js"></script>
-<script src="/static/js/main.js"></script>
-<script src="/static/js/tour.js"></script>
-{% if GA_CODE %}{% include 'bits/ga.html' %}{% endif %}
+  <footer id="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <nav class="footer-nav">
+          <a href="{% url 'page' slug='agreement' %}">{% trans 'User Agreement' %}</a>
+          &ensp; | &ensp;
+          <a href="{% url 'page' slug='privacy' %}">{% trans 'Privacy' %}</a>
+          &ensp; | &ensp;
+          <a href="{% url 'page' slug='acknowledgements' %}">{% trans 'Acknowledgments' %}</a>
+        </nav>
+
+        <span class="footer-credits">
+          <span>
+            {% trans 'Joint initiative of ' %}<br>
+            <a href="http://www.iucn.org/">IUCN</a>,
+            <a href="http://www.unep.org/">UNEP</a>,
+            <a href="http://www.fao.org/">FAO</a>
+          </span>
+          &ensp;
+          <span class="sprite-credits sprite-iucn"></span>
+          <span class="sprite-credits sprite-unep"></span>
+          <span class="sprite-credits sprite-fao"></span>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- end scripts -->
+  <script src="{{ STATIC_URL }}{% version 'js/bootstrap-tour.min.js' %}"></script>
+  {% include 'bits/ga.html' %}
+  {% include 'tour.html' %}
+  {% block endscripts %}
+  {% endblock %}
 </body>
 
 </html>

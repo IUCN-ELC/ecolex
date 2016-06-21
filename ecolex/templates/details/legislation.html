@@ -1,0 +1,196 @@
+{% extends 'details/base.html' %}
+
+{% load tags %}
+{% load i18n %}
+
+{% block meta %}
+  <title>{{ document.title|striptags|html_unescape }}</title>
+  {% if document.abstract %}
+  <meta name="description" content="{{ document.abstract|html_unescape }}" />
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    document.faolex_url = "http://faolex.fao.org/cgi-bin/faolex.exe?database=faolex&search_type=query&table=result&query=ID:{{ document.document_id }}&format_name=ERALL&lang=eng";
+  </script>
+{% endblock %}
+
+{% block breadcrumbs %}
+  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "Legislation" %}
+{% endblock %}
+
+{% block content %}
+
+<article class="record-details">
+  <header>
+    <div class="record-title">
+      <div class="record-icon">
+        <span class="icon icon-legislation" title="{% trans 'Legislation' %}"></span>
+      </div>
+      <h1>{{ document.title|safe }}</h1>
+    </div>
+
+    <dl>
+      <dt>{% trans 'Country' %}</dt>
+      <dd>{{ document.country }}</dd>
+
+      {% if document.territorial_subdivision %}
+        <dt>{% trans 'Territorial subdivision' %}</dt>
+        <dd>{{ document.territorial_subdivision }}</dd>
+      {% endif %}
+      <dt>{% trans 'Document type' %}</dt><dd>{% with type=document.type_of_document|capfirst %} {% trans type %}{% endwith %}</dd>
+      <dt>{% trans 'Date' %}</dt>
+      <dd>
+        <span class="sr-date sr-help" title="{% trans 'Original date' %}">{{ document.year }}
+        {% if document.consolidation_date %}
+          <span class="sr-date sr-help" title="{% trans 'Consolidation date' %}">({{ document.consolidation_date }})</span>
+        {% endif %}
+
+      <dt>{% trans 'Source' %}</dt>
+      <dd>
+        FAO,
+        <a target="_blank" href="http://faolex.fao.org/cgi-bin/faolex.exe?query=ID:%22{{ document.document_id }}%22&database=faolex&search_type=query&table=result&lang=eng&format_name=@ERALL">FAOLEX</a>
+      </dd>
+
+      </dd>
+      {% if document.long_title %}
+        <dt>{% trans 'Long title' %}</dt><dd>{{ document.long_title|safe }}</dd>
+      {% endif %}
+    </dl>
+  </header>
+
+  <section id="details">
+    <dl>
+      {% if document.subjects %}
+        <dt>{% trans 'Subject' %}</dt>
+        <dd>{{ document.subjects|join:", "|safe }}</dd>
+      {% endif %}
+
+      {% if document.keywords %}
+        <dt>{% trans 'Keyword' %}</dt>
+        <dd>
+          {% for keyword in document.keywords %}
+            <span class="tag">{{ keyword|capfirst|safe }}</span>
+          {% endfor %}
+        </dd>
+      {% endif %}
+
+      {% if document.region %}
+        <dt>{% trans 'Geographical area' %}</dt>
+        <dd>{{ document.region|join:", "|safe }}</dd>
+      {% endif %}
+
+      {% if document.basin %}
+        <dt>{% trans 'Basin' %}</dt>
+        <dd>{{ document.basin|join:", "|safe }}</dd>
+      {% endif %}
+
+      {% if document.entry_into_force %}
+        <dt>{% trans 'Entry into force notes' %}</dt>
+        <dd>{{ document.entry_into_force }}</dd>
+      {% endif %}
+
+    </dl>
+  </section>
+
+  <section id="text">
+    <dl>
+      {% if document.abstract %}
+      <dt>{% trans 'Abstract' %}</dt>
+      <dd><p class="abstract">{{ document.abstract|safe }}</p></dd>
+      {% endif %}
+
+      {% if document.link_to_full_text %}
+      <dt>{% trans 'Full text' %}</dt>
+      {# TODO Check if language is the right thing to display here #}
+      <dd>
+        <a href="{{ document.link_to_full_text }}" class="file-link" rel="nofollow"
+           target="_blank">{{ document.language|join:"/" }}</a>
+      </dd>
+      {% endif %}
+
+      {% if document.related_web_site %}
+        <dt>{% trans 'Website' %}</dt>
+        <dd>
+          <a href="{{ document.related_web_site|url_normalize}}" rel="nofollow"
+             target="_blank">{{ document.related_web_site|url_normalize|extract_hostname }}</a>
+        </dd>
+      {% endif %}
+
+    </dl>
+  </section>
+
+  {% if document.references %}
+  <section id="other-references">
+    <h2 class="section-title">{% trans 'References' %} - {% trans 'Legislation' %}</h2>
+    {% for field, legislations in document.references.items %}
+      <dl class="dl-horizontal">
+        <dt>{% with relation=field|labelify %}{% trans relation %}{% endwith %}</dt>
+        {% for legislation in legislations %}
+          <dd>
+            <h3 class="search-result-title">
+              <a href="{{ legislation.details_url }}?{{ query }}"
+                 title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
+            </h3>
+            {% include 'short_display/legislation.html' with result=legislation %}
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if document.treaties_implemented or document.treaties_cited %}
+  <section id="other-references">
+    <h2 class="section-title">{% trans 'Other references' %}</h2>
+    {% for treaty in document.treaties_implemented %}
+      <dl>
+        <dt>{% trans 'Implements treaty' %}</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ treaty.details_url }}?{{ query }}"
+               title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
+          </h3>
+          {% include 'short_display/treaty.html' with result=treaty %}
+        </dd>
+      </dl>
+    {% endfor %}
+
+    {% for treaty in document.treaties_cited %}
+      <dl>
+        <dt>{% trans 'Cites treaty' %}</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ treaty.details_url }}?{{ query }}"
+               title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
+          </h3>
+          {% include 'short_display/treaty.html' with result=treaty %}
+        </dd>
+      </dl>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if document.court_decisions %}
+  <section id="other-references">
+    <h2 class="section-title">{% trans 'Court Decision references' %}</h2>
+      <dl class="dl-horizontal">
+        <dt>{% trans 'Cited by' %}</dt>
+        {% for court_decision in document.court_decisions %}
+          <dd>
+            <h3 class="search-result-title">
+              <a href="{{ court_decision.details_url }}?{{ query }}"
+                 title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
+            </h3>
+            {% include 'short_display/court_decision.html' with result=court_decision %}
+          </dd>
+        {% endfor %}
+      </dl>
+  </section>
+  {% endif %}
+
+</article>
+
+{% endblock %}

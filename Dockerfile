@@ -1,11 +1,15 @@
-FROM python:3
-RUN apt-get -y update
+FROM python:3.4
+RUN apt-get -y update \
+ && apt-get -y install cron \
+ && rm -rf /var/lib/apt/lists/* \
+ && mkdir /ecolex
 
-RUN mkdir /ecolex
 WORKDIR /ecolex
 ADD . /ecolex
 
-RUN pip install -r requirements.txt
+RUN crontab crontab.example \
+ && /etc/init.d/cron start \
+ && pip install -r requirements.txt
 
 ENV APP_PORT 8000
 EXPOSE ${APP_PORT}

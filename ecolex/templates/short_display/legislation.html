@@ -1,0 +1,32 @@
+{% load tags %}
+{% load i18n %}
+
+<div class="search-result-details">
+    <strong class="sr-type">{% trans 'Legislation' %}</strong> {% if result.country %} |
+    <span class="sr-jurisdiction sr-help" title="{% trans 'Country' %}">{{ result.country }}</span> {% endif %}
+    {% if result.year %} |
+      <span class="sr-date sr-help" title="{% trans 'Original date' %}">{{ result.year }}
+        {% if result.consolidation_date %}
+          <span class="sr-date sr-help" title="{% trans 'Consolidation date' %}">({{ result.consolidation_date }})</span>
+        {% endif %}
+      </span>
+    {% endif %}
+
+    {% if result.status and result.status != "in force" %} |
+      <span class="sr-status" title="{% trans 'Status' %}: {{ result.status|capfirst }}">
+        {{ result.status|capfirst }}
+      </span>
+    {% endif %}
+</div>
+
+{% if result.keywords %}
+  <p class="search-result-details">
+    <strong>{% trans 'Keyword' %}:</strong>
+    <span class="collapse-keywords">{{ result.keywords|capfirstseq|join:", "|safe }}</span>
+  </p>
+{% endif %}
+
+<p class="search-result-source">
+  <strong>{% trans 'Source' %}:</strong>&nbsp;FAO,
+  <a target="_blank" href="http://faolex.fao.org/cgi-bin/faolex.exe?query=ID:%22{{ result.document_id }}%22&database=faolex&search_type=query&table=result&lang=eng&format_name=@ERALL">FAOLEX</a>
+</p>

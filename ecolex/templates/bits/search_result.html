@@ -1,50 +1,30 @@
+{% load tags %}
 <li class="search-result">
 
   <h3 class="search-result-title">
-    <a href="{{ result.details_url }}"
+    <a href="{{ result.details_url }}?{{ query }}" class="result-links"
        title="{{ result.title|safe|striptags }}">{{ result.title|safe }}</a>
   </h3>
 
   {% if result.type == "decision" %}
-    <div class="search-result-details">
-      <strong class="sr-type">{{ result.type|capfirst }}</strong>
-      {% if result.document_id %}
-        <span class="sr-id"> {{ result.document_id }} </span>{% endif %}
-      &ndash;
-      <span class="sr-status" title="Status: {{ result.status|capfirst }}">
-        {{ result.status|capfirst }}
-      </span>
-      {% if result.date %}
-        |
-        <time class="sr-date" title="Date of document: {{ result.date }}">
-          {{ result.date }}
-        </time>
-      {% endif %}
-    </div>
-    <p class="search-result-description">{# result.summary|safe #}</p>
-    <p class="search-result-source">Source: {{ result.source }}</p>
 
-  {% else %}
+    {% include 'short_display/decision.html' %}
 
-    <div class="search-result-details">
-      <strong class="sr-type">{{ result.type|capfirst }}</strong>
-      {% if result.document_id %}
-        <span class="sr-id"> {{ result.document_id }} </span>
-      {% endif %}
-        |
-      <span class="sr-jurisdiction">{{ result.jurisdiction }}</span>
-      {% if result.place_of_adoption %}
-        |
-        <span class="sr-jurisdiction"> {{ result.place_of_adoption }}</span>
-      {% endif %}
-      {% if result.date %}
-        |
-        <time class="sr-date" title="Date of document: {{ result.date }}">
-          {{ result.date }}
-        </time>
-      {% endif %}
-    </div>
-    <p class="search-result-description">{{ result.summary|safe }}</p>
-    <p class="search-result-source">Source: {{ result.source }}</p>
+  {% elif result.type == "literature" %}
+
+    {% include 'short_display/literature.html' %}
+
+  {% elif result.type == 'treaty' %}
+
+    {% include 'short_display/treaty.html' %}
+
+  {% elif result.type == "court_decision" %}
+
+    {% include 'short_display/court_decision.html' %}
+
+  {% elif result.type == "legislation" %}
+
+    {% include 'short_display/legislation.html' %}
+
   {% endif %}
 </li>

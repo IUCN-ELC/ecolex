@@ -1,0 +1,102 @@
+import os
+
+DEBUG=True
+# API KEY FOR FAOLEX HARVESTER
+# Use generate_fao_api_key method from contrib/utils.py to generate a key
+FAOLEX_ENABLED = True
+FAOLEX_API_KEY = ''
+
+# Google Analytics keys
+ECOLEX_CODE = 'UA-75793139-1'
+INFORMEA_CODE = 'UA-75793139-3'
+FAOLEX_CODE = 'UA-75793139-2'
+FAOLEX_CODE_2 = 'UA-75793139-4'
+
+EXPORT_TYPES = ['treaty', 'decision', 'court_decision', 'literature']
+
+# Use SOLR_UPDATE for the `update` management command.
+# The management command will replace values in SOLR_UPDATE['replace']['field']
+# that are equal to SOLR_UPDATE['replace']['from'] with the value in
+# SOLR_UPDATE['replace']['to']
+# Additional filters in SOLR_UPDATE['filters'] are applied.
+# If you don't need any additional filters, leave this list empty.
+SOLR_UPDATE = {
+    'replace': {
+        'field': 'solrFieldName',
+        'from': 'value to be replaced',
+        'to': 'new value',
+    },
+    'filters': [
+        {
+            'field': 'solrFieldName1',
+            'value': 'value for filtering',
+        },
+        {
+            'field': 'solrFieldName2',
+            'value': 'value for filtering',
+        }
+    ]
+}
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+MANAGEMENT_DIR = os.path.join(BASE_DIR, 'ecolex', 'management')
+CONFIG_DIR = os.path.join(MANAGEMENT_DIR, 'config')
+TESTING_DIR = os.path.join(MANAGEMENT_DIR, 'testing')
+PARTY_COUNTRIES = os.path.join(CONFIG_DIR, 'party_countries.json')
+
+SOLR_IMPORT = {
+    'common': {
+        'solr_timeout': 100,
+        'countries_json': os.path.join(CONFIG_DIR, 'countries.json'),
+        'languages_json': os.path.join(CONFIG_DIR, 'languages.json'),
+        'regions_json': os.path.join(CONFIG_DIR, 'regions.json'),
+        'subdivisions_json': os.path.join(CONFIG_DIR, 'subdivisions.json'),
+        'keywords_json': os.path.join(CONFIG_DIR, 'keywords.json'),
+        'subjects_json': os.path.join(CONFIG_DIR, 'subjects.json'),
+    },
+    'court_decision': {
+        'test_input_file': os.path.join(TESTING_DIR, 'court_decision_in.json'),
+        'test_output_file': os.path.join(TESTING_DIR, 'court_decision_out.json'),
+        'court_decisions_url': 'http://informea.org/ws/court-decisions',
+        #'uuid': '9f4e6967-46a8-4299-b1e2-8fe3a4ddb3bf',
+        'data_url': 'http://informea.org/node/%s/json',
+        'update': False,
+    },
+    'treaty': {
+        'treaties_url': 'http://www.ecolex.org/elis_isis3w.php',
+        'start_year': 1980,
+        'start_month': 1,
+        'end_month': 12,
+        'query_export': '?database=tre&search_type=page_search&table=all',
+        'query_format': 'ES:I AND STAT:C AND DM:%d%02d',
+        'import_field': 'dateofmodification',
+        'query_filter': '&spage_query=%s',
+        'query_skip': '&spage_first=%d',
+        'query_type': '&format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD',
+        'per_page': 20,
+    },
+    'literature': {
+        'literature_url': 'http://www.ecolex.org/elis_isis3w.php',
+        'start_year': 1980,
+        'start_month': 1,
+        'end_month': 12,
+        'query_export': '?database=libcat&search_type=page_search&table=all',
+        'query_format': 'ES:I AND STAT:C AND DE:%d%02d',
+        'import_field': 'dateofentry',
+        'query_filter': '&spage_query=%s',
+        'query_skip': '&spage_first=%d',
+        'query_type': '&format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD',
+        'per_page': 20,
+    },
+    'decision': {
+        'cop_decision_url': 'http://odata.informea.org/informea.svc/Decisions',
+        'query_skip': '$top=%d&$skip=%d',
+        'query_filter': "$filter=updated gt datetime'%s'",
+        'query_format': '$format=json',
+        'query_expand': '$expand=title,longTitle,keywords,content,files,summary',
+        'query_order': '$orderby=updated asc',
+        'per_page': 100,
+        'days_ago': 7,
+    },
+    'legislation': {},
+}

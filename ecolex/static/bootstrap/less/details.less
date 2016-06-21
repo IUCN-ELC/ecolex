@@ -1,0 +1,360 @@
+.html-disclaimer {
+  font-size: @font-size-smaller;
+  font-style: italic;
+  color: @text-muted;
+  padding: @padding-base-vertical @padding-large-horizontal;
+  border: 1px solid @hr-border;
+  border-radius: @border-radius-base @border-radius-base 0 0;
+  border-bottom: 0;
+  background-color: @gray-lightest;
+}
+.html {
+  padding: @padding-large-vertical @padding-large-horizontal;
+  border: 1px solid @hr-border;
+  border-radius: 0 0 @border-radius-base @border-radius-base;
+}
+
+.summary,
+.abstract,
+.comment {
+  margin-bottom: 0;
+  & + & {
+    margin-top: @leading;
+  }
+}
+
+.na {
+  color: @text-muted; 
+  font-style: italic;
+  font-size: @font-size-smaller;
+  vertical-align: baseline;
+  // #D06666; 
+  // #D04949;
+  // text-transform: uppercase;
+}
+
+.record-details {
+  header {
+    .page-header();
+    margin-bottom: -1px;
+    padding-top: ((@line-height-computed / 2) - 1);
+    .record-title {
+      margin-bottom: @leading;
+    }
+    h1 {
+    }
+    .record-icon {
+      display: none;
+    }
+    @media (min-width: @grid-float-breakpoint) {
+      vertical-align: middle;
+      display: table;
+      h1 {
+        display: table-cell;
+        vertical-align: middle;
+        margin-bottom: 0;
+      }
+      .record-icon {
+        float: none;
+        display: table-cell;
+        width: @dl-horizontal-offset;
+        padding-right: @dl-gutter;
+        font-size: 200%;
+        text-align: right;
+        vertical-align: middle;
+      }
+    }
+    .icon {
+      color: @text-muted;
+      font-size: 100%;
+      line-height: 1;
+    }
+  }
+  section {
+    padding-top: @leading;
+    border-top: 1px solid @hr-border;
+  }
+  .section-title {
+    .h5();
+    margin-top: 0;
+  }
+  dl:extend(.dl-horizontal all) {
+    dt {
+      .key();
+    }
+    dd {
+      margin-bottom: (@leading / 2);
+      .tag {
+        margin-bottom: 4px;
+      }
+    }
+  }
+  .indent {
+    @media (max-width: @grid-float-breakpoint-max) {
+      clear: both;
+    }
+    @media (min-width: @grid-float-breakpoint) {
+      margin-left: @dl-horizontal-offset;
+    }
+  }
+}
+
+.participants {
+  @cell-padding-vertical: @padding-base-vertical;
+  @cell-padding-horizontal: @padding-base-horizontal;
+
+  &,
+  thead,
+  tbody, 
+  tr, 
+  td, th {
+    display: block;
+  }
+
+  margin-bottom: @leading;
+  border-top: 1px solid @hr-border;
+  border-bottom: 1px solid @hr-border;
+  box-shadow: 0 1px 5px -2px @darker;
+
+  letter-spacing: @letter-spacing-narrow;
+
+  th {
+    .key();
+  }
+
+  thead {
+    float: left;
+    padding: @cell-padding-vertical @cell-padding-horizontal;
+    padding-right: (@cell-padding-horizontal - 3);
+    border-right: 3px solid @hr-border;
+    // box-shadow: 4px 0 5px -3px @darker;
+    position: relative;
+    z-index: 2;
+  }
+
+  tbody {
+    overflow: auto;
+    overflow-y: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+
+    // country
+
+    tr {
+      display: inline-block;
+      border-left: 1px solid @hr-border; // @gray-light;
+      white-space: nowrap;
+      padding: @cell-padding-vertical @cell-padding-horizontal;
+    }
+  }
+
+  @media (max-width: @grid-float-breakpoint-max) {
+    margin-left: (-@grid-gutter-width / 2);
+    margin-right: (-@grid-gutter-width / 2);
+    padding-left: @cell-padding-horizontal;
+    padding-right: @cell-padding-horizontal;
+    thead {
+      padding-left: 0;
+    }
+  }
+
+  @media (min-width: @grid-float-breakpoint) {
+    border-left: 1px solid @hr-border;
+    border-right: 1px solid @hr-border;
+    border-radius: @border-radius-base;
+    thead {
+      width: (@dl-horizontal-offset - @cell-padding-horizontal);
+      th {
+        text-align: right;
+      }
+    }
+  }
+  time:hover {
+    cursor: help;
+  }
+}
+
+.references {
+  time {
+    .text-muted();
+    font-size: @font-size-smaller;
+    display: block;
+  }
+
+  @media (min-width: @grid-float-breakpoint) {
+    dd {
+      &:after {
+        display: block;
+        clear: both;
+        content: '';
+      }
+      position: relative;
+    }    
+    time {
+      position: absolute;
+      top: 2px;
+      right: 0;
+      // float: right;
+      text-align: right;
+      width: 140px;
+    }
+    .treaty-link-container {
+      margin-right: 150px;
+    }
+    // a {
+    //   float: left;
+    // }
+  }
+}
+
+.participants-expanded {
+  td {
+    text-align: right;
+  }
+}
+
+.record-details-expanded {
+  header {
+    .icon {
+      // float: left;
+      // font-size: 48px;
+      // line-height: (@font-size-h5 * 2 * @line-height-large);
+      // width: (@font-size-h5 * 2 * @line-height-large);
+      // text-align: center;
+      // margin-right: @padding-base-horizontal;
+      
+    }
+    // .treaty-title {
+    //   margin: 0;
+    //   margin-left:  (48px + @padding-base-horizontal);
+    //   margin-bottom: @leading;
+    //   font-size: @font-size-h5;
+    //   line-height: @line-height-large;
+    //   letter-spacing: @letter-spacing-narrow;
+    //   @media (max-width: @screen-sm-max) {
+    //     margin-left: 0;
+    //   }
+    // }
+  }
+  .table {
+    tbody th {
+      border-bottom: 0;
+    }
+    tbody td {
+      border-top: 0;
+    }
+    &.decisions-expanded {
+      
+    @media (max-width: @screen-sm-max) {
+      table,
+      tbody,
+      tr {
+        display: block;
+        margin-bottom: @leading;
+      }
+      thead {
+        display: none;
+      }
+      th {
+        padding: 0;
+        padding-top: @leading;
+      }
+      td {
+        padding: 0;
+        display: inline;
+      }
+      span {
+        display: block;
+        font-size: @font-size-small;
+        &:before {
+          content: 'Decision no.: '
+        }
+      }
+    }
+    }
+  }
+}
+
+.large {
+  font-size: @font-size-large;
+}
+
+
+.meeting {
+  border-top: 1px solid @hr-border;
+  padding-top: @padding-large-vertical;
+  padding-bottom: @padding-large-vertical;
+  h5 {
+    // font-weight: bold;
+    margin-bottom: @leading;
+  }
+}
+
+.meeting-decisions {
+  .list-unstyled();
+  li {
+    display: table;
+    width: 100%;
+    margin-bottom: @leading;
+    .decision-number,
+    a,
+    time {
+      display: table-cell;
+    }
+
+    a {
+      padding: 0 @padding-base-horizontal;
+    }
+
+    .decision-number {
+      width: 80px;
+    }
+
+    time {
+      width: 120px;
+      font-size: @font-size-small;
+      color: @text-muted;
+      text-align: right;
+    }
+  }
+}
+
+.treaty-name {
+  font-size: @font-size-large;
+  color: @emphasis-color;
+}
+
+.participants-table {
+   thead th {
+     text-align: right;
+   }
+   .col-country {
+     max-width: 180px;
+     text-align: left;
+   }
+   tbody {
+     font-size: @font-size-small;
+   }
+   tbody th {
+   }
+   tbody td {
+     text-align: right;
+   }
+   time {
+     white-space: nowrap;
+   }
+}
+
+
+.table-wrapper {
+  overflow: auto;
+  box-shadow: 0 1px 3px -1px @darker;
+  .table {
+    min-width: 100%;
+    margin-bottom: 0;
+  }
+  @media (max-width: @screen-sm-max) {
+    margin-left: (-@grid-gutter-width / 2);
+    margin-right: (-@grid-gutter-width / 2);
+  }
+}

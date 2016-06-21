@@ -1,0 +1,29 @@
+{% load tags %}
+{% load i18n %}
+
+<div class="search-result-details">
+  <strong class="sr-type">{% trans 'Court Decision' %}</strong> |
+  <span class="sr-doctype sr-help" title="{% trans 'Type of court' %}">{% trans result.type_of_document %}</span>
+
+  {% if result.country %} |
+    <span class="sr-country sr-help" title="{% trans 'Country' %}">{{ result.country|join:", " }}</span>
+  {% endif %}
+
+  {% if result.date %} |
+   <time class="sr-date sr-help" title="{% trans 'Date' %}: {{ result.date }}">
+      {{ result.date|date:"b j, Y"|capfirst }}
+   </time>
+  {% endif %}
+</div>
+
+{% if result.keywords %}
+  <p class="search-result-details">
+    <strong>{% trans 'Keyword' %}:</strong>
+    <span class="collapse-keywords">{{ result.keywords|capfirstseq|join:", "|safe }}</span>
+  </p>
+{% endif %}
+
+<p class="search-result-source">
+  <strong>{% trans 'Source' %}:</strong>&nbsp;UNEP,
+  <a target="_blank" href="{{ result.leo_english_url }}">InforMEA</a>
+</p>

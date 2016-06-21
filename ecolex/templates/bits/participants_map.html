@@ -1,0 +1,98 @@
+{% load i18n %}
+{% spaceless %}
+
+<script type="text/javascript">
+    var colors = {
+        '{% trans "Entry into force" %}': '#225ea8',
+        '{% trans "Ratification" %}': '#41b6c4',
+        '{% trans "Simple signature" %}': '#a1dab4',
+        '{% trans "Provisional application" %}': '#ffffcc',
+        '{% trans "Withdrawal" %}': '#636363',
+        'defaultFill': '#dbdbdb'
+    };
+    var highlight_fills = {
+       '{% trans "Entry into force" %}': '#679de0',
+       '{% trans "Ratification" %}': '#37a6b3',
+       '{% trans "Simple signature" %}': '#44ac66',
+       '{% trans "Provisional application" %}': '#ffff77 ',
+       '{% trans "Withdrawal" %}': '#3c3c3c',
+   };
+    var map_data = {
+        {% for party_code, data in parties.items %}
+          '{{ party_code }}': {
+            'fillKey': '{{ data.fillKey }}',
+            'stats': '{{ data.stats|safe }}',
+            'highlightFillColor': highlight_fills['{{ data.fillKey }}'],
+          },
+        {% endfor %}
+    };
+    var map_options = {
+        element: document.getElementById('regions_div'),
+        responsive: true,
+        fills: colors,
+        geographyConfig: {
+            dataUrl: '/static/json/world.topo.json',
+            hideAntarctica: true,
+            highlightOnHover: true,
+            highlightFillColor: '#c3c3c3',
+            highlightBorderColor: 'rgba(30, 30, 30, 0.2)',
+            highlightBorderWidth: 0,
+            highlightBorderOpacity: 0,
+            borderWidth: 0,
+            borderColor: '#FDFDFD',
+            popupTemplate: function(geo, data) {
+                if (data == null) {
+                    var stats = 'Status: N/A';
+                } else {
+                    var stats = data.stats;
+                }
+                return ['<div class="hoverinfo">',
+                    '<h4>', geo.properties.name, '</h4>',
+                    stats,
+                    '</div>'].join('');
+            }
+        },
+        data: map_data,
+        scope: 'ESRI_country08',
+        setProjection: function(element) {
+          var projection = d3.geo.mercator()
+            //.center([0, 30])
+            //.scale(180)
+            .translate([element.offsetWidth / 2, element.offsetHeight / 2 + 100]);
+
+           var path = d3.geo.path().projection(projection);
+           return {path: path, projection: projection};
+        },
+        done: function(datamap){
+                datamap.svg.call(d3.behavior.zoom().on("zoom", redraw));
+                function redraw() {
+                    datamap.svg.selectAll("g").attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+                }
+            }
+        };
+
+    function resetZoom(datamap) { datamap.svg.selectAll("g").attr("transform", "translate(0,0)scale(1.0)"); }
+
+
+    var map;
+
+    $('#regions_div').addClass("collapse");
+    $('#regions_div').on('hidden.bs.collapse', function () {
+        $('#zoom-reset').hide();
+        $('#participants-map').text("{% trans 'Show Map' %}");
+    });
+    $('#regions_div').on('shown.bs.collapse', function () {
+        if (!map) {
+            map = new Datamap(map_options);
+            map.legend();
+        }
+        $('#participants-map').text("{% trans 'Hide Map' %}");
+        $('#zoom-reset').show();
+    });
+    $('#zoom-reset').click(function(e) {
+        e.preventDefault();
+        resetZoom(map);
+    });
+    $('#zoom-reset').hide();
+</script>
+{% endspaceless %}

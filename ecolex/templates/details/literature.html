@@ -1,0 +1,266 @@
+{% extends 'details/base.html' %}
+
+{% load tags %}
+{% load i18n %}
+
+{% block meta %}
+  <title>{{ document.title|striptags|html_unescape }}</title>
+  {% if document.abstract %}
+  <meta name="description" content="{{ document.abstract|html_unescape }}" />
+  {% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "Literature" %}
+{% endblock %}
+
+{% block content %}
+
+<article class="record-details">
+
+  <header>
+    <div class="record-title">
+      <div class="record-icon">
+        <span class="icon icon-literature" title="{% trans 'Literature' %}"></span>
+      </div>
+      <h1>{{ document.title|safe }}</h1>
+    </div>
+    <dl>
+      {% if document.people_authors %}
+        <dt>{% trans 'Author' %}</dt>
+        <dd>{{ document.people_authors|join:", "|safe }}</dd>
+      {% elif document.corp_authors %}
+        <dt>{% trans 'Corporate author' %}</dt>
+        <dd>{{ document.corp_authors|join:", "|safe }}</dd>
+      {% endif %}
+
+      {% if document.is_article and document.serial_title %}
+        <dt>{% trans 'Journal/Series' %} | {% trans 'Collation Vol./p.' %}</dt>
+        <dd>
+          {{ document.serial_title|safe }}
+          {% if document.volume_no %} | {{ document.volume_no|safe }} {% endif %}
+          {% if document.collation %} | {{ document.collation|safe }} {% endif %}
+        </dd>
+      {% endif %}
+
+      {% if document.is_chapter and document.parent_title %}
+        <dt>{% trans 'Monograph' %}</dt>
+        <dd>{% if document.parent_url %}
+          <a href="{{ document.parent_url }}?{{ query }}">{{ document.parent_title|safe }}</a>{% else %}
+          {{ document.parent_title|safe }}
+        {% endif %}</dd>
+      {% endif %}
+
+      {% if document.date %}
+        <dt>{% trans 'Date' %}</dt>
+        <dd>{{ document.date|safe }}</dd>
+      {% endif %}
+      <dt>{% trans 'Source' %}</dt>
+      <dd>
+        <a target="_blank" href="http://iucn.org">IUCN</a>
+        (ID: {{ document.document_id }})
+      </dd>
+    </dl>
+  </header>
+
+  <section id="details">
+    <dl>
+      {% for title in document.title_translations %}
+        {% if title.language != LANGUAGE_CODE and title.value != document.title %}
+          <dt>{% trans 'Title' %} ({{ title.language|language_name_translated|capfirst }})</dt>
+          <dd>
+            <p class="alttitle">{{ title.value|safe }}</p>
+          </dd>
+        {% endif %}
+      {% endfor %}
+
+      {% if document.publisher %}
+        <dt>{% trans 'Publisher' %} | {% trans 'Place of publication' %}</dt>
+        <dd>
+          {{ document.publisher }}
+          {% if document.publication_place %} | {{ document.publication_place }} {% endif %}
+        </dd>
+      {% endif %}
+
+      {% if document.isbn %}
+        <dt>ISBN</dt>
+        <dd>{{ document.isbn|join:", " }}</dd>
+      {% endif %}
+
+      {% if document.issn %}
+        <dt>ISBN</dt>
+        <dd>{{ document.issn }}</dd>
+      {% endif %}
+
+      {% if document.collation %}
+        <dt>{% trans 'Pages' %}</dt>
+        <dd>{{ document.collation }}</dd>
+      {% endif %}
+
+      {% if document.type_of_text %}
+        <dt>{% trans 'Document type' %}</dt>
+        <dd>{{ document.type_of_text|join:", " }}</dd>
+      {% endif %}
+
+      {% if document.conference %}
+        <dt>{% trans 'Conference name' %} | {% trans 'place' %} | {% trans 'date' %}</dt>
+        <dd>{{ document.conference }}</dd>
+      {% endif %}
+
+      {% if document.language_of_document %}
+        <dt>{% trans 'Language' %}</dt>
+        <dd>{{ document.language_of_document|join:", " }}</dd>
+      {% endif %}
+    </dl>
+  </section>
+
+  <section id="text">
+    <dl>
+      {% if document.jurisdiction %}
+        <dt>{% trans 'Field of application' %}</dt>
+        <dd>{{ document.jurisdiction }}</dd>
+      {% endif %}
+
+      {% if document.countries %}
+        <dt>{%trans 'Country' %}</dt>
+        <dd>{{ document.countries|join:", "|safe }}</dd>
+      {% endif %}
+
+      {% if document.subjects %}
+        <dt>{% trans 'Subject' %}</dt>
+        <dd>{{ document.subjects|join:", "|safe }}</dd>
+      {% endif %}
+
+      {% if document.keywords %}
+      <dt>{% trans 'Keyword' %}</dt>
+      <dd>{% for keyword in document.keywords %}
+            <span class="tag">{{ keyword|capfirst|safe }}</span>
+          {% endfor %}
+      </dd>
+      {% endif %}
+
+      {% if document.region %}
+        <dt>{% trans 'Geographical area' %}</dt>
+        <dd>{{ document.region|join:", "|safe }}</dd>
+      {% endif %}
+
+      {% if document.basin %}
+        <dt>{% trans 'Basin' %}</dt>
+        <dd>{{ document.basin|join:", "|safe }}</dd>
+      {% endif %}
+
+      {% if document.abstract %}
+        <dt>{% trans 'Abstract' %}</dt>
+        <dd><p class="abstract">{{ document.abstract|safe }}</p></dd>
+      {% endif %}
+
+      {% if document.link_to_full_text %}
+      <dt>{% trans 'Full text' %}</dt>
+      <dd>
+          {% for link in document.link_to_full_text %}
+            <a href="{{ link }}" class="decision-link file-link" rel="nofollow"
+               target="_blank">{{ link|extract_filename }}</a>
+            &nbsp;
+          {% endfor %}
+      </dd>
+      {% endif %}
+
+      {% if document.link_doi %}
+      <dt>{% trans 'DOI' %}</dt>
+      <dd>
+        <a href="{{ document.link_doi|url_normalize }}" rel="nofollow"
+           target="_blank">{{ document.link_doi }}</a>
+      </dd>
+      {% endif %}
+
+      {% if document.related_web_site %}
+      <dt>{% trans 'Website' %}</dt>
+      <dd>
+        <a href="{{ document.related_web_site|url_normalize }}" rel="nofollow"
+           target="_blank">{{ document.related_web_site|url_normalize|extract_hostname }}</a>
+      </dd>
+      {% endif %}
+
+    </dl>
+  </section>
+
+  {% if document.literatures %}
+  <section id="literature-references">
+    {% for literature in document.literatures %}
+      <dl>
+        <dt>{% trans 'Literature' %}</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ literature.details_url }}?{{ query }}"
+               title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
+          </h3>
+          {% include 'short_display/literature.html' with result=literature %}
+        </dd>
+      </dl>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  <section id="other-references">
+  {% if document.treaties or document.legislations or document.court_decisions %}
+    <h2 class="section-title">{% trans 'Other references' %}</h2>
+    {% for treaty in document.treaties %}
+      <dl>
+        <dt>{% trans 'Treaty' %}</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ treaty.details_url }}?{{ query }}"
+               title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
+          </h3>
+          {% include 'short_display/treaty.html' with result=treaty %}
+        </dd>
+      </dl>
+    {% endfor %}
+
+    {% for legislation in document.legislations %}
+      <dl>
+        <dt>{% trans 'Legislation' %}</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ legislation.details_url }}?{{ query }}"
+               title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
+          </h3>
+          {% include 'short_display/legislation.html' with result=legislation %}
+        </dd>
+      </dl>
+    {% endfor %}
+
+    {% for court_decision in document.court_decisions %}
+      <dl>
+        <dt>{% trans 'Court decision' %}</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ court_decision.details_url }}?{{ query }}"
+               title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
+          </h3>
+          {% include 'short_display/court_decision.html' with result=court_decision %}
+        </dd>
+      </dl>
+    {% endfor %}
+  {% endif %}
+
+  {% if document.references %}
+    <h2 class="section-title">{% trans 'References from' %}</h2>
+    {% for literature in document.references %}
+      <dl>
+        <dt>{% trans 'Literature' %}</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ literature.details_url }}?{{ query }}"
+               title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
+          </h3>
+          {% include 'short_display/literature.html' with result=literature %}
+        </dd>
+      </dl>
+    {% endfor %}
+  {% endif %}
+  </section>
+
+</article>
+{% endblock content %}

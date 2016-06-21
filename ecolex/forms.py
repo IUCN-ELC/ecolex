@@ -1,47 +1,80 @@
-from django.forms import Form, CharField, MultipleChoiceField, TextInput
+from django.forms import (
+    Form,
+    BooleanField, CharField, MultipleChoiceField,
+    TextInput,
+)
 
-from ecolex.definitions import DOC_TYPE
+from ecolex import definitions as defs
 
 
 class SearchForm(Form):
     q = CharField(initial='', widget=TextInput(
         attrs={'id': 'search', 'class': 'form-control', 'autofocus': True,
-               'placeholder': "Search for Treaties, Legislation, Court decisions, Literature, COP decisions"}))
-    type = MultipleChoiceField(choices=DOC_TYPE)
+               'placeholder': "Search in record and full text"}))
+    type = MultipleChoiceField(choices=defs.DOC_TYPE)
 
-    tr_type = MultipleChoiceField()
-    tr_field = MultipleChoiceField()
-    tr_party = MultipleChoiceField()
-    tr_region = MultipleChoiceField()
-    tr_basin = MultipleChoiceField()
-    tr_subject = MultipleChoiceField()
-    tr_language = MultipleChoiceField()
+    tr_type_of_document = MultipleChoiceField()
+    tr_field_of_application = MultipleChoiceField()
+    tr_status = MultipleChoiceField()
+    tr_place_of_adoption = MultipleChoiceField()
+    tr_depository = MultipleChoiceField()
 
-    keyword = MultipleChoiceField()
+    dec_type_of_document = MultipleChoiceField()
+    dec_status = MultipleChoiceField()
+    dec_treaty_name = MultipleChoiceField()
+
+    cd_type_of_document = MultipleChoiceField()
+    cd_territorial_subdivision = MultipleChoiceField()
+
+    lit_type_of_text = MultipleChoiceField()
+    lit_author = MultipleChoiceField()
+    lit_orig_serial_title = MultipleChoiceField()
+    lit_publisher = MultipleChoiceField()
+
+    leg_type_of_document = MultipleChoiceField()
+    leg_territorial_subdivision = MultipleChoiceField()
+    leg_status = MultipleChoiceField()
+
+    xsubjects = MultipleChoiceField()
+    xkeywords = MultipleChoiceField()
+    xcountry = MultipleChoiceField()
+    xregion = MultipleChoiceField()
+    xlanguage = MultipleChoiceField()
     yearmin = CharField()
     yearmax = CharField()
 
-    dec_type = MultipleChoiceField()
-    dec_status = MultipleChoiceField()
-    dec_treaty = MultipleChoiceField()
-
     sortby = CharField(initial='')
 
-    def has_treaty(self):
-        TREATY_FACETS = (
-            'tr_type', 'tr_field', 'tr_party', 'tr_subject',
-            'tr_basin', 'tr_region', 'tr_language'
-        )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-        return (not self.data.get('type') and any(
-            self.data.get(f) for f in TREATY_FACETS
-        )) or ('treaty' in self.data.get('type', []))
+        # add AND-able fields
+        for f in defs._AND_OP_FACETS:
+            fname = self.get_and_field_name_for(f)
+            self.fields[fname] = BooleanField()
+
+        # no field is required
+        for field in self.fields.values():
+            field.required = False
+
+    @staticmethod
+    def get_and_field_name_for(field):
+        return defs._AND_OP_FIELD_PATTERN % field
+
+    def _has_document_type(self, doctype):
+        return doctype in self.data.get('type', [])
+
+    def has_treaty(self):
+        return self._has_document_type('treaty')
 
     def has_decision(self):
-        DECISION_FACETS = (
-            'dec_type', 'dec_status', 'dec_treaty'
-        )
+        return self._has_document_type('decision')
 
-        return (not self.data.get('type') and any(
-            self.data.get(f) for f in DECISION_FACETS
-        )) or ('decision' in self.data.get('type', []))
+    def has_literature(self):
+        return self._has_document_type('literature')
+
+    def has_legislation(self):
+        return self._has_document_type('legislation')
+
+    def has_court_decision(self):
+        return self._has_document_type('court_decision')

@@ -1,0 +1,96 @@
+/*!
+ * Slider for Bootstrap
+ *
+ * Copyright 2012 Stefan Petre
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ */
+
+@xxx: (@line-height-base * @font-size-base);
+
+@handle-width: 10px;
+@handle-height: 15px;
+@handle-radius: 2px;
+@track-width: 8px;
+
+
+.slider {
+	display: block;
+	vertical-align: middle;
+	position: relative;
+	-webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+
+	&.slider-horizontal {
+		height: @track-width;
+		padding: 0 @handle-width;
+
+		.slider-track {
+			height: @track-width;
+			width: 100%;
+			margin-top: (-@track-width / 2);
+			top: 50%;
+			left: 0;
+		}
+
+		.slider-selection {
+			height: 100%;
+			top: 0;
+			bottom: 0;
+            background-color: @brand-green-darker;
+		}
+
+		.slider-handle {
+			margin-left: (-@handle-width / 2);
+			margin-top: (-@handle-height / 4);
+		}
+	}
+
+	input {
+		display: none;
+	}
+
+	.tooltip-inner {
+		white-space: nowrap;
+	}
+}
+.slider-track {
+	cursor: pointer;
+	position: absolute;
+	border: 1px solid @hr-border;
+	border-radius: @border-radius-base;
+	background-color: @gray-lighter;
+}
+.slider-selection {
+	position: absolute;
+	border-radius: @border-radius-base;
+	background-color: #fff;
+	// box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+}
+.slider-handle {
+	position: absolute;
+	width: @handle-width;
+	height: @handle-height;
+	// box-shadow: inset 0 1px 0 rgba(255,255,255,.2)
+	//           , 0 1px 2px rgba(0,0,0,.05);
+	border: 1px solid @btn-default-border;
+	border-radius: @handle-radius;
+	background-color: #fff;
+	box-shadow: 0 1px 3px -1px @darker;
+	
+	&:hover,
+	&:focus,
+	&:active {
+		cursor: w-resize;
+	}
+	&:hover {
+		border-color: @link-color;
+	}
+	&:active {
+		background-color: @link-color;
+		border-color: @link-color;
+	}
+}

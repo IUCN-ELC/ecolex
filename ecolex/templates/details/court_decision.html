@@ -1,0 +1,184 @@
+{% extends 'details/base.html' %}
+
+{% load tags %}
+{% load i18n %}
+
+{% block meta %}
+  <title>{{ document.title|striptags|html_unescape }}</title>
+  {% if document.abstract %}
+  <meta name="description" content="{{ document.abstract|html_unescape }}" />
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    document.informea_url = "{{ document.leo_english_url }}";
+  </script>
+{% endblock %}
+
+{% block breadcrumbs %}
+  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "Court decision" %}
+{% endblock %}
+
+{% block content %}
+
+<article class="record-details">
+
+  <header>
+    <div class="record-title">
+      <div class="record-icon">
+        <span class="icon icon-court-decision" title="{% trans 'Court Decision' %}"></span>
+      </div>
+      <h1>{{ document.title|safe }}</h1>
+    </div>
+
+    <dl>
+      {% if document.country %}
+        <dt>{% trans 'Country' %}</dt>
+        <dd>{{ document.country|join:", " }}</dd>
+      {% endif %}
+      {% if document.type_of_document %}
+        <dt>{% trans 'Type of court' %}</dt>
+        <dd>{% trans document.type_of_document %}</dd>
+      {% endif %}
+      <dt>{% trans 'Date' %}</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
+      <dt>{% trans 'Source' %}</dt>
+      <dd>UNEP, <a target="_blank" href="{{ document.leo_english_url }}">InforMEA</a></dd>
+    </dl>
+  </header>
+
+  <section id="details">
+    <dl>
+      {% if document.court_name %}
+        <dt>{% trans 'Court name' %}</dt>
+        <dd>{{ document.court_name }}</dd>
+      {% endif %}
+
+      {% if document.seat_of_court %}
+        <dt>{% trans 'Seat of court' %}</dt>
+        <dd>{{ document.seat_of_court }}</dd>
+      {% endif %}
+
+      {% if document.justices %}
+        <dt>{% trans 'Judge' %}</dt> <dd>{{ document.justices|join:"<br>" }}</dd>
+      {% endif %}
+
+      {% if document.reference_number %}
+        <dt>{% trans 'Reference number' %}</dt> <dd>{{ document.reference_number }}</dd>
+      {% endif %}
+
+      {% if document.language_of_document %}
+        <dt>{% trans 'Language' %}</dt>
+        <dd>{{ document.language_of_document|join:", " }}</dd>
+      {% endif %}
+
+      {% if document.subjects %}
+        <dt>{% trans 'Subject' %}</dt>
+        <dd>{{ document.subjects|join:", "|safe }}</dd>
+      {% endif %}
+
+      {% if document.keywords %}
+        <dt>{% trans 'Keyword' %}</dt>
+        <dd>
+        {% for keyword in document.keywords %}
+          <span class="tag">{{ keyword|capfirst|safe }}</span>
+        {% endfor %}
+        </dd>
+      {% endif %}
+    </dl>
+  </header>
+
+<section id="text">
+    <dl>
+      {% if document.abstract %}
+        <dt>{% trans 'Abstract' %}</dt>
+        <dd>{{ document.abstract|safe }}</dd>
+      {% endif %}
+      {% if document.link_to_abstract %}
+        <dt>{% trans 'Link to abstract' %}</dt>
+        <dd>
+          <a href="{{ document.link_to_abstract|url_normalize }}"
+             class="decision-link file-link" rel="nofollow"
+             target="_blank">{{ document.link_to_abstract|extract_filename }}</a>
+        </dd>
+      {% endif %}
+
+      {% if document.link_to_full_text %}
+        <dt>{% trans 'Full text' %}</dt>
+        {% for link in document.link_to_full_text %}
+          <dd><a href="{{ link }}" class="file-link" rel="nofollow">{{ link|extract_filename|safe }}</a></dd>
+        {% endfor %}
+      {% endif %}
+
+      {% if document.available_in %}
+        <dt>{% trans 'Available in' %}</dt>
+        <dd>{{ document.available_in|safe }}</dd>
+      {% endif %}
+
+      {% if document.related_web_site %}
+        <dt>{% trans 'Website' %}</dt>
+         <dd>
+          <a href="{{ document.related_web_site|url_normalize }}"
+             class="file-link" target="_blank">
+               {{ document.related_web_site|url_normalize|extract_hostname }}</a>
+        </dd>
+      {% endif %}
+
+    </dl>
+  </section>
+
+{% if document.references or document.treaties or document.legislation %}
+  <section id="court-decision-references">
+    <h2 class="section-title">{% trans 'References' %}</h2>
+    {% if document.references %}
+      {% for name, value in document.references.items %}
+        <dl class="dl-horizontal references">
+          <dt>{% trans name|labelify %}</dt>
+          {% for court_decision in value %}
+            <dd>
+              <div class="treaty-link-container">
+                <h3 class="search-result-title">
+                  <a href="{{ court_decision.details_url }}?{{ query }}"
+                     title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
+                </h3>
+                {% include 'short_display/court_decision.html' with result=court_decision %}
+              </div>
+            </dd>
+          {% endfor %}
+        </dl>
+      {% endfor %}
+    {% endif %}
+
+    {% if document.treaties %}
+      <dl>
+        <dt>{% trans 'Cites' %}</dt>
+        {% for treaty in document.treaties %}
+          <dd>
+            <h3 class="search-result-title">
+              <a href="{{ treaty.details_url }}?{{ query }}"
+                 title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
+            </h3>
+            {% include 'short_display/treaty.html' with result=treaty %}
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endif %}
+    {% if document.legislation %}
+      <dl>
+        <dt>{% trans 'Cites' %}</dt>
+        {% for leg in document.legislation %}
+          <dd>
+            <h3 class="search-result-title">
+              <a href="{{ leg.details_url }}?{{ query }}"
+                 title="{{ leg.title|safe|striptags }}">{{ leg.title|safe }}</a>
+            </h3>
+            {% include 'short_display/legislation.html' with result=leg %}
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endif %}
+  </section>
+{% endif %}
+</article>
+{% endblock content %}

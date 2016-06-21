@@ -1,190 +1,325 @@
-{% extends 'layout.html' %}
+{% extends 'details/base.html' %}
+
 {% load tags %}
+{% load i18n %}
+
+{% block meta %}
+  <title>{{ document.title|striptags|html_unescape }}</title>
+  {% if document.abstract %}
+  <meta name="description" content="{{ document.abstract.0|html_unescape }}" />
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+  <script type="text/javascript" src="/static/js/datamaps.none.min.js"></script>
+{% endblock %}
+
+{% block breadcrumbs %}
+  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "Treaty" %}
+{% endblock %}
 
 {% block content %}
-{% informea_url_id document %}
 
 <article class="record-details">
 
   <header>
     <div class="record-title">
       <div class="record-icon">
-        <span class="icon icon-treaty" title="Treaty"></span>
+        <span class="icon icon-treaty" title="{% trans 'Treaty' %}"></span>
       </div>
-      <h1>{{ document.title }}</h1>
+      <h1>{{ document.title|safe }}</h1>
     </div>
 
     <dl>
-      <dt>Document type</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
-      <dt>Field of application</dt> <dd>{{ document.field_of_application }}</dd>
-      <dt>Date of document</dt> <dd>{{ document.date }}</dd>
-      <dt>Source</dt>
-      <dd>{{ document.source }}</dd>
+      <dt>{% trans 'Document type' %}</dt> <dd>{{ document.type_of_document|capfirst }}</dd>
+      <dt>{% trans 'Field of application' %}</dt> <dd>{{ document.field_of_application|join:"," }}</dd>
+      <dt>{% trans 'Date' %}</dt> <dd>{{ document.date|date:"b j, Y"|capfirst  }}</dd>
+
+      <dt>{% trans 'Source' %}</dt>
+      <dd>
+        {# Ugly #}
+        {% if document.type_of_document|slice:":2" == 'Bi' %}
+          <a target="_blank" href="http://faolex.fao.org/">FAO, FAOLEX;</a>&nbsp;
+        {% endif %}
+        <a target="_blank" href="http://iucn.org">IUCN</a> (ID: {{ document.document_id }})
+      </dd>
     </dl>
   </header>
 
-  {% if document.also or true %} {# check for alternative titles #}
-  <section id="aka">
-    <dl>
-      <dt>Also known as</dt>
-      <dd>
-        <ul>
-          <li>Convention sur la diversité biologique <sup>French</sup></li>
-          <li>other_language_title <sup>language</sup></li>
-        </ul>
-      </dd>
-    </dl>
-  </section>
-  {% endif %}
-
   <section id="details">
-    <h2 class="section-title">Details</h2>
     <dl>
-      {% for entry in document.optional_fields %}
-        <dt> {{ entry.label }} </dt>
-        {% if "url" in entry.type %}
-          {% for url in entry.value %}
-            <dd><a target="_blank" {% if "tracked" in entry.type %} class="decision-link" {% endif %} href="{{ url }}">{{ url }}</a></dd>
-          {% endfor %}
-        {% else %}
-          <dd>{{ entry.value | join_by:", " }}</dd>
+      {% if document.title_abbreviation %}
+        <dt>{% trans 'Title abbreviation' %}</dt>
+        <dd><p class="alttitle">{{ document.title_abbreviation|join:", " |safe }}</p></dd>
+      {% endif %}
+
+      {% for title in document.title_translations %}
+        {% if title.language != LANGUAGE_CODE and title.value != document.title %}
+          <dt>{% trans 'Title' %} ({{ title.language|language_name_translated|capfirst }})</dt>
+          <dd>
+            <p class="alttitle">{{ title.value|safe }}</p>
+          </dd>
         {% endif %}
       {% endfor %}
 
-      <dt>Subject</dt>
-      <dd>
-        {% if document.solr.trSubject %}
-          {{ document.solr.trSubject | join_by:", " | safe }}
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
-      <dt>Entry into force</dt>
-      <dd>
-        {% if document.solr.trEntryIntoForceDate %}
-          {{ document.entry_into_force}}
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
+      {% if document.place_of_adoption %}
+        <dt>{% trans 'Place of adoption' %}</dt>
+        <dd>{{ document.place_of_adoption }}</dd>
+      {% endif %}
 
-      <dt>Keywords</dt>
-      <dd>
-        {% for keyword in document.solr.trKeyword %}
-          <span class="tag">{{ keyword }}</span>
-        {% empty %}
-          <span class="na">Not available</span>
+      {% if document.depository %}
+        <dt>{% trans 'Depository' %}</dt>
+        <dd>{{ document.depository|join:", " }}</dd>
+      {% endif %}
+
+      {% if document.language_of_document %}
+        <dt>{% trans 'Language' %}</dt>
+        <dd>{{ document.language_of_document|capfirstseq|join:", " }}</dd>
+      {% endif %}
+
+      {% if document.entry_into_force_date %}
+        <dt>{% trans 'Entry into force' %}</dt>
+        <dd>{{ document.entry_into_force_date|date:"b j, Y"|capfirst  }}</dd>
+      {% endif %}
+
+      {% if document.subjects %}
+        <dt>{% trans 'Subject' %}</dt>
+        <dd>{{ document.subjects|join:", "|safe }}</dd>
+      {% endif %}
+
+      {% if document.keywords %}
+        <dt>{% trans 'Keyword' %}</dt>
+        <dd>
+        {% for keyword in document.keywords %}
+          <span class="tag">{{ keyword|capfirst|safe }}</span>
         {% endfor %}
-      </dd>
+        </dd>
+      {% endif %}
+
+      {% if document.region %}
+        <dt>{% trans 'Geographical area' %}</dt>
+        <dd>{{ document.region|join:", "|safe }}</dd>
+      {% endif %}
+
+      {% if document.basin %}
+        <dt>{% trans 'Basin' %}</dt>
+        <dd>{{ document.basin|join:", "|safe }}</dd>
+      {% endif %}
     </dl>
   </section>
 
   <section id="text">
-    <h2 class="section-title">Text</h2>
-
     <dl>
-      <dt>Abstract</dt>
-      <dd>
-        {% for abs in document.solr.trAbstract %}
-          <p class="abstract">{{ abs|safe }}</p>
-        {% empty %}
-          <span class="na">Not available</span>
+      {% if document.abstract %}
+        <dt>{% trans 'Abstract' %}</dt>
+        <dd>
+          {% for abstract in document.abstract %}
+            <p class="abstract">{{ abstract|safe }}</p>
+          {% endfor %}
+        </dd>
+      {% endif %}
+      {% if document.link_to_abstract %}
+        <dt>{% trans 'Link to abstract' %}</dt>
+        {% for url in document.link_to_abstract %}
+        <dd>
+          <a href="{{ url|url_normalize }}" class="file-link" rel="nofollow"
+             target="_blank">{{ url|url_normalize|extract_filename }}</a>
+        </dd>
         {% endfor %}
-      </dd>
-      {% if document.solr.trComment %}
-        <dt>Comment</dt>
-        {% for comment in document.solr.trComment %}
+      {% endif %}
+
+      {% if document.comment %}
+        <dt>{% trans 'Comment' %}</dt>
+        {% for comment in document.comment %}
         <dd>
           <p class="comment">{{ comment|safe }}</p>
         </dd>
         {% endfor %}
       {% endif %}
-      {% if document.solr.trLinkToFullText %}
-        <dt>Link to full text</dt>
+
+      {% if document.link_translations %}
+        <dt>{% trans 'Full text' %}</dt>
         <dd>
-            <a href="{{ document.solr.trLinkToFullText.0 }}" class="treaty-link"
-             target="_blank">{{ document.solr.trLinkToFullText.0 }}</a>
+          {% for link in document.link_translations %}
+            {% for value in link.value %}
+              <a href="{{ value }}" class="file-link" rel="nofollow"
+                 target="_blank" >{{ link.language|language_name_translated|capfirst }}</a>
+              &nbsp;
+            {% endfor %}
+          {% endfor %}
         </dd>
       {% endif %}
+
+      {% if document.related_web_site %}
+        <dt>{% trans 'Website' %}</dt>
+        <dd>
+          {% for url in document.related_web_site %}
+            {% if not forloop.first %}<br>{% endif %}
+            <a href="{{ url|url_normalize }}" rel="nofollow"
+               target="_blank">{{ url|url_normalize|extract_hostname }}</a>
+          {% endfor %}
+        </dd>
+      {% endif %}
+
     </dl>
   </section>
 
-  {% if document.participants %}
+  {% if document.parties %}
   <section id="participants">
     <div class="clearfix">
       <a id="participants-extras"
-         href="{% url 'resultParticipants' document.id %}"
-         class="pull-right btn btn-link">See Expanded View</a>
-      <h2 class="section-title">Participants</h2>
+        href="{% url 'treaty-participants' document.slug %}?{{ query }}"
+         class="pull-right btn btn-link">{% trans 'See Expanded View' %}</a>
+      <a id="participants-map"
+         class="pull-right btn btn-link" rel="nofollow"
+         data-toggle="collapse"
+         data-target="#regions_div">{% trans 'Show Map' %}</a>
+      <a id="zoom-reset" class="pull-right btn btn-link" rel="nofollow">{% trans 'Reset zoom' %}</a>
+      <h2 class="section-title">{% trans 'Country/Participant' %}</h2>
     </div>
-
     <table class="participants">
       <thead>
         <tr>
-          <th>Countries</th>
-          {% for event in document.participants.events %}
-          <th nowrap="nowrap">{{ event|capfirst }}</th>
+          <th>{% trans 'Countries' %}</th>
+          {% for event in document.parties_events %}
+            {% with document.EVENTS_NAMES|lookup:event as event_type %}
+              <th nowrap="nowrap">{% trans event_type %}</th>
+            {% endwith %}
           {% endfor %}
         </tr>
       </thead>
-
-      <tbody class="body">
-        {% for country in document.participants.countries %}
+    <tbody class="body">
+        {% for party in document.parties|dictsort:'country' %}
         <tr class="country">
-          <th>{{ country.country }}</th>
-          {% for event in document.participants.events %}
+          <th>{{ party.country }}</th>
+
+          {% for event_field in document.parties_events %}
           <td>
-            {% if country|lookup:event %}
-              <time title="{{ event|capfirst }} date">{{ country|lookup:event|default:"-"|parse_date }}</time>
-            {% else %}
-              <span class="text-muted" title="Not available">-</span>
-            {% endif %}
+            {% with party|getattr:event_field as event %}
+              {% if event.date %}
+                <time title="{{ document.EVENTS_NAMES|lookup:event.details }} date">
+                {{ event.date|parse_date|date:"b j, Y"|capfirst }}
+                {% if event.index %}[{{ event.index }}]{% endif %}
+                </time>
+              {% else %}
+                <span class="text-muted" title="{% trans 'Not available' %}">-</span>
+              {% endif %}
+            {% endwith %}
           </td>
           {% endfor %}
         </tr>
         {% endfor %}
       </tbody>
     </table>
+    {% include 'bits/participants_legend.html' with events=document.parties_events %}
+
+    <div id="regions_div"></div>
+    {% include 'bits/participants_map.html' with events=document.parties_events parties=document.parties|format_countries %}
 
   </section>
   {% endif %}
 
-  {% if references %}
+  {% if document.references %}
   <section id="treaty-references">
-    <h2 class="section-title">Treaty references</h2>
-      {% for label, treaties in references.items %}
-        <dl class="dl-horizontal references">
-          <dt>{{ label }}</dt>
-            {% for treaty in treaties %}
-            <dd>
-              <div class="treaty-link-container">
-                <a href="{% url 'treaty_details' treaty.id %}"
-                   title="See treaty details">{{ treaty.title }}</a>
-               </div>
-              <time>{{ treaty.date }}</time>
-            </dd>
-            {% endfor %}
-        </dl>
-      {% endfor %}
+    <h2 class="section-title">{% trans 'References' %} - {% trans 'Treaties' %}</h2>
+
+    {% for name, value in document.references.items %}
+      <dl class="dl-horizontal references">
+        {% with name=name|labelify %}
+          <dt>{% trans name %}</dt>
+        {% endwith %}
+        {% for treaty in value %}
+          <dd>
+            <div class="treaty-link-container">
+              <h3 class="search-result-title">
+                <a href="{{ treaty.details_url }}?{{ query }}"
+                   title="{{ treaty.title|safe|striptags }}">{{ treaty.title|safe }}</a>
+              </h3>
+              {% include 'short_display/treaty.html' with result=treaty %}
+            </div>
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endfor %}
   </section>
   {% endif %}
 
+  {% if document.other_references or document.legislations_implemented_by or document.legislation_cited_by %}
   <section id="other-references">
-    <h2 class="section-title">Other references</h2>
+    <h2 class="section-title">{% trans 'Other references' %}</h2>
 
-    <dl>
-      <dt>COP decisions</dt>
-      <dd>
-        {% if decisions|length %}
-          <strong>{{ decisions|length }} decisions</strong> related to this treaty.
-          <a href="{% url 'resultDecisions' document.id %}">View decisions</a>
-        {% else %}
-          <span class="na">Not available</span>
-        {% endif %}
-      </dd>
-    </dl>
+    {% if document.legislations_implemented_by %}
+      <dl class="dl-horizontal references">
+        <dt>{% trans 'Implemented by' %}:</dt>
+        {% for legislation in document.legislations_implemented_by %}
+          <dd>
+            <div class="treaty-link-container">
+              <h3 class="search-result-title">
+                <a href="{{ legislation.details_url }}?{{ query }}"
+                   title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
+              </h3>
+              {% include 'short_display/legislation.html' with result=legislation %}
+            </div>
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endif %}
+
+    {% if document.legislations_cited_by %}
+      <dl class="dl-horizontal references">
+        <dt>{% trans 'Cited by' %}:</dt>
+        {% for legislation in document.legislations_cited_by %}
+          <dd>
+            <div class="treaty-link-container">
+              <h3 class="search-result-title">
+                <a href="{{ legislation.details_url }}?{{ query }}"
+                   title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
+              </h3>
+              {% include 'short_display/legislation.html' with result=legislation %}
+            </div>
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endif %}
+
+    {% if document.decision_count %}
+      <dl>
+        <dt>{% trans 'COP decisions' %}</dt>
+        <dd>
+          <strong>{{ document.decision_count }} {% trans 'decisions' %}</strong> {% trans 'related to this treaty.' %}
+          <a href="{% url 'related_decisions' document.slug %}?{{ query }}">{% trans 'View decisions' %}</a>
+        </dd>
+      </dl>
+    {% endif %}
+
+    {% if document.literature_count %}
+      <dl>
+        <dt>{% trans 'Literature' %}</dt>
+        <dd>
+        {% with document.literature_count as lit_count %}
+          <strong>{{ lit_count }} record{{ lit_count|pluralize:"s" }} </strong> {% trans 'related to this treaty.' %}
+        {% endwith %}
+          <a href="{% url 'related_literatures' document.slug %}?{{ query }}">{% trans 'View literature' %}</a>
+        </dd>
+      </dl>
+    {% endif %}
+
+    {% if document.court_decision_count %}
+      <dl>
+        <dt>{% trans 'Court Decision' %}</dt>
+        <dd>
+          <strong>{{ document.court_decision_count }} {% trans 'court decisions' %}</strong> {% trans 'related to this treaty.' %}
+          <a href="{% url 'related_court_decisions' document.slug %}?{{ query }}">{% trans 'View court decisions' %}</a>
+        </dd>
+      </dl>
+    {% endif %}
 
   </section>
+  {% endif %}
 
 </article>
 {% endblock content %}

@@ -1,140 +1,224 @@
 {% load tags %}
-<!-- <h4>Refine search</h4> -->
+{% load i18n %}
 
-{% if not form.type.data or form.has_treaty %}
-  <fieldset class="special-filter">
-    <h5 data-toggle="collapse" {% if not form.has_treaty %}class="collapsed"{% endif %}
-        data-target="#filter-treaties">Treaty filters</h5>
+<div class="leading">
+  <input class="btn btn-default btn-sm btn-block" type="reset" value="{% trans 'Reset all filters' %}">
+</div>
 
-    <div id="filter-treaties" class="collapse {% if form.has_treaty %}in{% endif %}">
-      {% if facets.trTypeOfText %}
-        <h6>Type of document</h6>
-        <ul class="filter-treaty" data-formid="#id_tr_type">
-          {% include 'bits/checkbox_facet.html' with facet=facets.trTypeOfText form_field=form.tr_type show_empty=True %}
-        </ul>
-      {% endif %}
+{% comment %}
+<script>
+//{# not using this momentarily #}
+var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
+</script>
+{% endcomment %}
 
-      <h6>Field of application</h6>
-      <ul class="filter-treaty" data-formid="#id_tr_field">
-        {% include 'bits/checkbox_facet.html' with facet=facets.trFieldOfApplication form_field=form.tr_field show_empty=True %}
-      </ul>
-
-      <h6>Participants</h6>
-      <div id="tr_party" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.partyCountry form_field=form.tr_party %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add participants" data-formid="#id_tr_party"/>
-      </div>
-
-      <h6>Geographical area</h6>
-      <div id="tr_region" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.trRegion form_field=form.tr_region %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add geographical areas" data-formid="#id_tr_region"/>
-      </div>
-
-      <h6>Basin</h6>
-      <div id="tr_basin" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.trBasin form_field=form.tr_basin %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add basin" data-formid="#id_tr_basin"/>
-      </div>
-
-      <h6>Subject</h6>
-      <div id="tr_subject" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.trSubject form_field=form.tr_subject %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add subjects" data-formid="#id_tr_subject"/>
-      </div>
-
-      <h6>Document language</h6>
-      <div id="tr_language" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.trLanguageOfDocument form_field=form.tr_language %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add languages" data-formid="#id_tr_language"/>
-      </div>
-    </div>
-  </fieldset>
-{% endif %}
-
-{% if not form.type.data or form.has_decision %}
-  <fieldset class="special-filter">
-    <h5 data-toggle="collapse" {% if not form.has_decision %}class="collapsed"{% endif %}
-        data-target="#filter-cop-decisions">COP Decision filters</h5>
-
-    <div id="filter-cop-decisions" class="collapse {% if form.has_decision %}in{% endif %}">
-      {% if facets.decType %}
-        <h6>Type of document</h6>
-        <ul class="filter-decision" data-formid="#id_dec_type">
-          {% include 'bits/checkbox_facet.html' with facet=facets.decType form_field=form.dec_type %}
-        </ul>
-      {% endif %}
-
-      <h6>Decision status</h6>
-      <ul class="filter-decision" data-formid="#id_dec_status">
-        {% include 'bits/checkbox_facet.html' with facet=facets.decStatus form_field=form.dec_status show_empty=True %}
-      </ul>
-
-      <h6>Treaty</h6>
-      <div id="dec_treaty" class="tag-select">
-        <select class="tag-options" hidden>
-          {% include 'bits/fancy_select.html' with facet=facets.decTreatyId type_map=dec_treaty_names form_field=form.dec_treaty %}
-        </select>
-        <input type="text" class="tm-input" placeholder="Add treaties" data-formid="#id_dec_treaty"/>
-      </div>
-    </div>
-  </fieldset>
-{% endif %}
 
 <fieldset class="global-filter">
   <h5 data-toggle="collapse"
-      data-target="#filter-global">Global filters</h5>
-
+      data-target="#filter-global">{% trans 'Common filters' %}</h5>
   <div id="filter-global" class="collapse in">
-    <h6>Keywords</h6>
-    <div id="keyword-filter" class="tag-select">
-      <select class="tag-options" hidden>
-        {% include 'bits/fancy_select.html' with facet=facets.docKeyword form_field=form.keyword %}
-      </select>
-      <input type="text" class="tm-input full-match" placeholder="Add keywords" data-formid="#id_keyword"/>
-    </div>
 
-    <!--<select id="keyword" multiple="multiple" data-formid="#id_keyword" hidden>
-      {% include 'bits/select_facet.html' with facet=facets.docKeyword form_field=form.keyword %}
-    </select>-->
+{% trans "Subject" as title %}
+{% trans "Add subject…" as placeholder %}
+{% trans "Add subject filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:xsubjects-list" field=form.xsubjects %}
 
-    {% if form.yearmin.data or form.yearmax.data or stats_fields.docDate %}
-      <h6>Years</h6>
+{% trans "Keyword" as title %}
+{% trans "Add keyword…" as placeholder %}
+{% trans "Add keyword filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:xkeywords-list" field=form.xkeywords %}
+
+{% trans "Country" as title %}
+{% trans "Add country…" as placeholder %}
+{% trans "Add country filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:xcountry-list" field=form.xcountry %}
+
+{% trans "Geographical Area" as title %}
+{% trans "Add geographical area…" as placeholder %}
+{% trans "Add geographical area filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:xregion-list" field=form.xregion %}
+
+{% trans "Language" as title %}
+{% trans "Add language…" as placeholder %}
+{% trans "Add language filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:xlanguage-list" field=form.xlanguage %}
+
+{% with dmin=stats.xdate.min dmax=stats.xdate.max %}
+
+  <div class="filter">
+    <header class="filter-header">
+      <strong class="filter-label">{% trans 'Year / Period' %}</strong>
+      {% if form.xdate_min.data or form.xdate_max.data %}
+        <span class="filter-options">
+          <button class="no-btn small reset-year">
+            {% trans 'Reset' %}
+          </button>
+        </span>
+      {% endif %}
+    </header>
+    <div class="filter-body">
       <input id="slider-years" type="text"
-             data-slider-min="1860"
-             data-slider-max="2015"
-             data-slider-value="[{{ form.yearmin.data|default:1860 }},{{ form.yearmax.data|default:2015 }}]"
+             data-slider-min="{{ dmin }}"
+             data-slider-max="{{ dmax }}"
+             data-slider-value="[{{ form.xdate_min.data|default:dmin }},{{ form.xdate_max.data|default:dmax }}]"
              data-slider-tooltip="hide"/>
       <div class="slider-years">
         <div class="slider-min">
           <!-- <label for="year-min">From</label> -->
           <input id="year-min" type="number"
-                 data-formid="#id_yearmin" 
-                 value="{{ form.yearmin.data }}"
-                 min="1860" 
-                 placeholder="First ({{ stats_fields.docDate.min|just_year }})">
+                 name="{{ form.xdate_min.name }}"
+                 value="{{ form.xdate_min.data }}"
+                 min="{{ dmin }}"
+                 max="{{ dmax }}"
+                 novalidate
+                 placeholder="{% trans 'From' %} {{ dmin }}">
         </div>
         <div class="slider-max">
           <!-- <label for="year-max">To</label> -->
-          <input id="year-max" type="number" 
-                 data-formid="#id_yearmax"
-                 value="{{ form.yearmax.data }}"
-                 max="2015" 
-                 placeholder="Last ({{ stats_fields.docDate.max|just_year }})">
+          <input id="year-max" type="number"
+                 name="{{ form.xdate_max.name }}"
+                 value="{{ form.xdate_max.data }}"
+                 min="{{ dmin }}"
+                 max="{{ dmax }}"
+                 novalidate
+                 placeholder="{% trans 'To' %} {{ dmax }}">
         </div>
       </div>
-    {% endif %}
+    </div>
+  </div>
+
+{% endwith %}
+
   </div>
 </fieldset>
 
-<input class="btn btn-default btn-sm btn-block" type="reset" value="Reset all filters">
+{% with facets.type|get_facet_counts as type_count %}
+
+{% if form.has_treaty %}
+<fieldset class="special-filter">
+    <h5 data-toggle="collapse" {% if not type_count.treaty %}class="collapsed"{% endif %}
+        data-target="#filter-treaties">{% trans 'Treaty filters' %}</h5>
+
+    <div id="filter-treaties" class="collapse {% if type_count.treaty > 0 %}in{% endif %}">
+
+{% trans "Document type" as title %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.tr_type_of_document show_empty=True %}
+
+{% trans "Field of application" as title %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.tr_field_of_application show_empty=True %}
+
+{% trans "Status" as title %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.tr_status show_empty=True %}
+
+{# TODO: this is badly named deposit*o*ry in code #}
+{% trans "Depository" as title %}
+{% trans "Add depository…" as placeholder %}
+{% trans "Add depository filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:tr-depository-list" field=form.tr_depository %}
+
+{% trans "Place of adoption" as title %}
+{% trans "Add place of adoption…" as placeholder %}
+{% trans "Add place of adoption filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:tr-place-of-adoption-list" field=form.tr_place_of_adoption %}
+
+    </div>
+</fieldset>
+{% endif %}
+
+
+{% if form.has_decision %}
+  <fieldset class="special-filter">
+    <h5 data-toggle="collapse" {% if not type_count.decision %}class="collapsed"{% endif %}
+        data-target="#filter-cop-decisions">{% trans 'COP Decision filters' %}</h5>
+
+    <div id="filter-cop-decisions" class="collapse {% if type_count.decision > 0 %}in{% endif %}">
+
+{% trans "Treaty" as title %}
+{% trans "Add treaty…" as placeholder %}
+{% trans "Add treaty filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:dec-treaty-name-list" field=form.dec_treaty_name %}
+
+{% if facets.dec_type_of_document.results %}
+{% trans "Type of document" as title %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.dec_type_of_document %}
+{% endif %}
+
+{% trans "Decision status" as title %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.dec_status show_empty=True %}
+
+    </div>
+</fieldset>
+{% endif %}
+
+
+{% if form.has_legislation %}
+  <fieldset class="special-filter">
+    <h5 data-toggle="collapse" {% if not type_count.legislation %}class="collapsed"{% endif %}data-target="#filter-legislation">{% trans 'Legislation filters' %}</h5>
+    <div id="filter-legislation" class="collapse {% if type_count.legislation > 0 %}in{% endif %}">
+
+{% trans "Document type" as title %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.leg_type_of_document show_empty=True %}
+
+{% trans "Sub-national/state level" as title %}
+{% trans "Add sub-national/state level…" as placeholder %}
+{% trans "Add sub-national/state level filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:leg-territorial-subdivision-list" field=form.leg_territorial_subdivision %}
+
+    </div>
+  </fieldset>
+{% endif %}
+
+
+{% if form.has_court_decision %}
+  <fieldset class="special-filter">
+    <h5 data-toggle="collapse" {% if not type_count.court_decision %}class="collapsed"{% endif %}
+        data-target="#filter-court-decisions">{% trans 'Court decision filters' %}</h5>
+    <div id="filter-court-decisions" class="collapse {% if type_count.court_decision > 0 %}in{% endif %}">
+
+{% trans "Type of court" as title %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.cd_type_of_document show_empty=True %}
+
+{% trans "Sub-national/state level" as title %}
+{% trans "Add sub-national/state level…" as placeholder %}
+{% trans "Add sub-national/state level filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:cd-territorial-subdivision-list" field=form.cd_territorial_subdivision %}
+
+    </div>
+  </fieldset>
+{% endif %}
+
+
+{% if form.has_literature %}
+  <fieldset class="special-filter">
+    <h5 data-toggle="collapse" {% if not type_count.literature %}class="collapsed"{% endif %} data-target="#filter-literatures">{% trans 'Literature filters' %}</h5>
+    <div id="filter-literatures" class="collapse {% if type_count.literature > 0 %}in{% endif %}">
+
+{% trans "Author" as title %}
+{% trans "Add author…" as placeholder %}
+{% trans "Add author filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:lit-author-list" field=form.lit_author %}
+
+{% trans "Journal/Series" as title %}
+{% trans "Add journal/series…" as placeholder %}
+{% trans "Add journal/series filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:lit-orig-serial-title-list" field=form.lit_orig_serial_title %}
+
+{% trans "Publisher" as title %}
+{% trans "Add publisher…" as placeholder %}
+{% trans "Add publisher filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:lit-publisher-list" field=form.lit_publisher %}
+
+{% trans "Document type" as title %}
+{% trans "Add document type…" as placeholder %}
+{% trans "Add document type filter" as tooltip %}
+{% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:lit-type-of-text-list" field=form.lit_type_of_text %}
+
+    </div>
+  </fieldset>
+{% endif %}
+
+{% endwith %}
+
+
+
+<input class="btn btn-default btn-sm btn-block" type="reset" value="{% trans 'Reset all filters' %}">

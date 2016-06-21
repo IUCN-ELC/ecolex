@@ -1,63 +1,12 @@
 {% extends "layout.html" %}
+{% load i18n %}
+
+{% block meta %}
+  <title>ECOLEX | {% trans 'Acknowledgments' %}</title>
+{% endblock %}
 
 {% block content %}
-<h1>Acknowledgements</h1>
-<p>ECOLEX is operated jointly by FAO, IUCN and UNEP.</p>
 
-<p>FAO is the custodian of the information on national legislation.<br>
-IUCN is the custodian of the information on treaties and literature.<br>
-UNEP is the custodian of the information on court decisions.</p>
-
-<p><b>ECOLEX Management Unit:</b> IUCN Environmental Law Centre<br></p>
-
-<h3>ECOLEX partners:</h3>
-
-<p>Food and Agriculture Organization (FAO) of the United Nations<br>
-Viale delle Terme di Caracalla<br>
-00153 Rome, Italy<br>
-Telephone: (+39) 06 57051<br>
-Fax: (+39) 06 570 53152<br>
-Email: <a href="mailto:FAO-HQ@fao.org">FAO-HQ@fao.org</a><br>
-Coordinator: Mr Andres VatterRubio</p>
-
-<p>IUCN - Environmental Law Centre<br>
-Godesberger Allee 108-112<br>
-53175 Bonn<br>
-Germany<br>
-Phone: ++49 - 228 - 2692 - 231<br>
-Fax: ++49 - 228 - 2692 - 250<br>
-Email: <a href="mailto:elcsecretariat@iucn.org">elcsecretariat@iucn.org</a><br>
-Coordinator: Ms Anni Lukács</p>
-
-<p>United Nations Environment Programme (UNEP)<br>
-United Nations Avenue, Gigiri<br>
-PO Box 30552, 00100<br>
-Nairobi, Kenya<br>
-Tel: ++ 254 - 20 7621234<br>
-Fax: ++ 254 - 20) 7624489/90<br>
-Email: <a href="mailto:unepinfo@unep.org">unepinfo@unep.org</a><br>
-Coordinator: Ms Eva Duer</p>
-
-
-
-<h3>Prototype design and implementation</h3>
-<p>
-<a href="http://www.eaudeweb.ro/">Eau De Web</a><br>
-Maior Gheorghe Șonțu, No. 8, et. 1, 011448 <br>
-Bucharest, Romania <br>
-Contact: <a href="mailto:office@eaudeweb.ro">office@eaudeweb.ro</a><br>
-<p style="text-decoration: underline">Team: </p>
-Alex Eftimie<br>
-Ana Ion<br>
-Catalin Badea<br>
-Valentin Popescu<br>
-Sonia Andriu<br>
-Dafina Jeaca <br> 
-</p>
-<p style="text-decoration: underline">Software resources used:</p>
-<a href="http://lucene.apache.org/solr/">Apache Solr</a><br>
-<a href="https://www.djangoproject.com/">Django Framework</a><br>
-<a href="https://github.com/">GitHub Repository and Version Control</a><br>
-
+{{ content|safe }}
 
 {% endblock content %}

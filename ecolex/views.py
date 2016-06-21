@@ -1,60 +1,41 @@
-from django.http import Http404, JsonResponse
-from django.shortcuts import render
-from django.template.loader import render_to_string
-from django.views.generic import TemplateView
+import logging
+from urllib.parse import urlencode
 from django.conf import settings
-from ecolex.search import (
-    search, get_document, get_all_treaties, get_documents_by_field,
-)
-from ecolex.forms import SearchForm
-from ecolex.definitions import (
-    DOC_TYPE, DOC_TYPE_FILTER_MAPPING, FIELD_TO_FACET_MAPPING, SOLR_FIELDS
-)
+from django.core.urlresolvers import reverse
+from django.http import Http404, HttpResponseForbidden, HttpResponseServerError
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from django.utils.decorators import method_decorator
+from django.utils.translation import get_language
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import TemplateView, View
+from django.views.generic.base import RedirectView
+
+from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS, STATIC_PAGES
+from ecolex.export import get_exporter
+from ecolex.legislation import harvest_file
+from ecolex.models import StaticContent
+from ecolex.search import SearchMixin, get_documents_by_field
+from ecolex.management.utils import EcolexSolr
+from ecolex.management.definitions import UNLIMITED_ROWS_COUNT
+
+logger = logging.getLogger(__name__)
 
 
-class SearchView(TemplateView):
+class SearchView(TemplateView, SearchMixin):
     template_name = 'homepage.html'
-
-    def _set_form_defaults(self, data):
-        exclude_fields = ['q', 'sortby', 'yearmin', 'yearmax']
-        fields = [x for x in SearchForm.base_fields if x not in exclude_fields]
-        for field in fields:
-            data.setdefault(field, [])
-        if 'q' in data:
-            data['q'] = data['q'][0]
-
-        data.setdefault('sortby', [''])
-        for y in ('yearmin', 'yearmax', 'sortby'):
-            data[y] = data[y][0] if y in data else None
-        return data
-
-    def _set_filters(self, data):
-        filters = {
-            'type': data['type'] or dict(DOC_TYPE).keys(),
-            'docKeyword': data['keyword'],
-            'docDate': (data['yearmin'], data['yearmax']),
-        }
-
-        for doc_type in filters['type']:
-            mapping = DOC_TYPE_FILTER_MAPPING[doc_type]
-            for k, v in mapping.items():
-                filters[k] = data[v]
-
-        return filters
 
     def get_context_data(self, **kwargs):
         ctx = super(SearchView, self).get_context_data(**kwargs)
-        # Prepare query
-        data = self._set_form_defaults(dict(self.request.GET))
 
-        ctx['form'] = self.form = SearchForm(data=data)
+        # Prepare query
+        self._prepare(self.request.GET)
+
+        ctx['form'] = self.form  # set by _prepare above
         ctx['debug'] = settings.DEBUG
         ctx['text_suggestion'] = settings.TEXT_SUGGESTION
-        self.query = self.form.data.get('q', '').strip() or '*'
-        # Compute filters
-        self.filters = self._set_filters(data)
+        ctx['query'] = urlencode(self.request.GET)
 
-        self.sortby = data['sortby']
         return ctx
 
     def update_form_choices(self, facets):
@@ -66,6 +47,8 @@ class SearchView(TemplateView):
             return zip(values, values)
 
         for k, v in FIELD_TO_FACET_MAPPING.items():
+            if k == 'xdate':
+                continue
             self.form.fields[k].choices = _extract(v)
 
 
@@ -74,6 +57,22 @@ class Homepage(SearchView):
         ctx = super(Homepage, self).get_context_data(**kwargs)
         ctx['page_type'] = 'homepage'
         return ctx
+
+
+class PageNotFoundView(SearchView):
+    template_name = '404.html'
+
+    def get(self, request, *args, **kwargs):
+        ctx = super(PageNotFoundView, self).get_context_data(**kwargs)
+        return self.render_to_response(ctx, status=404)
+
+
+class InternalErrorView(SearchView):
+    template_name = '500.html'
+
+    def get(self, request, *args, **kwargs):
+        ctx = super(InternalErrorView, self).get_context_data(**kwargs)
+        return self.render_to_response(ctx, status=500)
 
 
 class SearchResults(SearchView):
@@ -105,22 +104,45 @@ class SearchResults(SearchView):
     def get_context_data(self, **kwargs):
         ctx = super(SearchResults, self).get_context_data(**kwargs)
         page = int(self.request.GET.get('page', 1))
-        fields = SOLR_FIELDS
-        results = search(self.query, filters=self.filters,
-                         sortby=self.sortby, fields=fields)
+
+        # fetch one extra facet result, to let the frontend know
+        # if it should use ajax for the next pages
+        results = self.search(facets_page_size=settings.FACETS_PAGE_SIZE + 1)
+
         results.set_page(page)
         results.fetch()
         ctx['results'] = results
-        ctx['facets'] = results.get_facets()
+
+        facets = results.get_facets()
+
+        # hack the (select) facets to have "pretty" keys.
+        # TODO: move this logic into Queryset.get_facets().
+        #       multilinguality could live there too!
+        #       (or even better, make the names pretty in schema...)
+        for old_key, new_key in SELECT_FACETS.items():
+            if old_key not in facets:
+                continue
+            # also convert them to the api serializer format
+            # (or not, handle it client-side for now)
+            # facets[new_key] = SearchFacetSerializer.convert_results(
+            #    facets.pop(old_key))
+
+            # also hack them into a {results: [], more: bool} dict,
+            # accounting for that odd extra-result
+            f_data = facets.pop(old_key)
+            more = False
+
+            if len(f_data) > settings.FACETS_PAGE_SIZE:
+                more = True
+                f_data.popitem()
+
+            facets[new_key] = {
+                'results': f_data,
+                'more': more,
+            }
+
+        ctx['facets'] = facets
         ctx['stats_fields'] = results.get_field_stats()
-
-        # a map of (treatyId -> treatyNames) for treaties which are referenced
-        # by decisions in the current result set
-        all_treaties = get_all_treaties()
-        ctx['dec_treaty_names'] = {
-            t.informea_id(): t for t in all_treaties
-        }
-
         ctx['page'] = self.page_details(page, results)
         self.update_form_choices(ctx['facets'])
         return ctx
@@ -130,145 +152,54 @@ class SearchResults(SearchView):
         return render(request, 'list_results.html', ctx)
 
 
-class SearchResultsAjax(SearchResults):
-
-    def get(self, request, **kwargs):
-        ctx = self.get_context_data(**kwargs)
-        main = render_to_string('results_main.html', ctx)
-        sidebar = render_to_string('results_sidebar.html', ctx)
-        search_form_inputs = render_to_string('bits/hidden_form.html', ctx)
-        return JsonResponse(dict(main=main, sidebar=sidebar,
-                                 form_inputs=search_form_inputs))
-
-
-class DecMeetingView(SearchView):
-    template_name = 'decision_meeting_details.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super(DecMeetingView, self).get_context_data(**kwargs)
-        ctx['results'] = get_documents_by_field('decMeetingId',
-                                                [kwargs['id']],
-                                                1000000)  # get all results
-        return ctx
-
-
-class TreatyParticipantView(SearchView):
-    template_name = 'treaty_participant_details.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super(TreatyParticipantView, self).get_context_data(**kwargs)
-        ctx['results'] = get_documents_by_field('partyCountry',
-                                                [kwargs['id']],
-                                                1000000)  # get all results
-        return ctx
-
-
 class PageView(SearchView):
 
     def get(self, request, **kwargs):
         slug = kwargs.pop('slug', '')
-        PAGES = ('about', 'privacy', 'agreement', 'acknowledgements')
-        if slug not in PAGES:
+        if slug not in STATIC_PAGES:
             raise Http404()
         ctx = self.get_context_data()
+        obj = get_object_or_404(StaticContent, name=slug)
+        lang_code = get_language()
+        content = getattr(obj, 'body_' + lang_code, 'No translation for ' +
+                          lang_code)
+        ctx['content'] = content
         ctx['page_slug'] = slug
         return render(request, 'pages/' + slug + '.html', ctx)
 
 
-class DetailsView(SearchView):
+class FaoFeedView(View):
 
-    def get_context_data(self, **kwargs):
-        context = super(DetailsView, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'])
-        if not results:
-            raise Http404()
-        context['document'] = results.first()
-        context['results'] = results
-        context['debug'] = settings.DEBUG
-        context['page_type'] = 'homepage'
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        logger = logging.getLogger('legislation_import')
+        # for key,val in request.META.items():
+        #    logger.debug('Header %s = %s' % (key,val))
+        key = request.META.get('HTTP_API_KEY', None)
+        api_key = getattr(settings, 'FAOLEX_API_KEY')
+        if not key or key != api_key:
+            logger.error('Bad API KEY!')
+            return HttpResponseForbidden('Bad API key')
+        return super(FaoFeedView, self).dispatch(request, *args, **kwargs)
 
-        return context
-
-
-class DecisionDetails(DetailsView):
-
-    template_name = 'details/decision.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(DecisionDetails, self).get_context_data(**kwargs)
-
-        treaties = context['document'].solr.get('decTreatyId', [])
-        all_treaties = get_all_treaties()
-        context['all_treaties'] = [t for t in all_treaties
-                                   if t.solr['trInformeaId'] in treaties]
-
-        return context
-
-
-class TreatyDetails(DetailsView):
-
-    template_name = 'details/treaty.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(TreatyDetails, self).get_context_data(**kwargs)
-
-        ids = context['document'].get_references_ids_set()
-        treaties_info = context['results'].get_referred_treaties('trElisId',
-                                                                 ids)
-        references_mapping = context['document'].references()
-        if references_mapping:
-            context['references'] = {}
-            for label, treaties_list in references_mapping.items():
-                if treaties_list and any(treaties_list):
-                    context['references'].setdefault(label, [])
-                    context['references'][label].\
-                        extend([t for t in treaties_info
-                                if t.solr.get('trElisId', -1) in treaties_list])
-                    context['references'][label].\
-                        sort(key=lambda x: x.date(), reverse=True)
-        if context['document'].informea_id():
-            context['decisions'] = context['document'].get_decisions()
-
-        return context
-
-
-class ResultDetailsDecisions(SearchView):
-    template_name = 'details_decisions.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ResultDetailsDecisions, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'])
-        if not results.count():
-            raise Http404()
-
-        meetings = {}
-        meetingNames = {}
-        context['treaty'] = results.first()
-        context['page_type'] = 'homepage'
-
-        for decision in context['treaty'].get_decisions():
-            decId = decision.solr['decMeetingId'][0]
-            x = meetings.get(decId, [])
-            x.append(decision)
-            meetings[decId] = x
-            meetingNames[decId] = decision.solr['decMeetingTitle'][0]
-        context['meetings'] = meetings
-        context['meetingNames'] = meetingNames
-        return context
-
-
-class ResultDetailsParticipants(SearchView):
-    template_name = 'details_participants.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ResultDetailsParticipants, self).get_context_data(**kwargs)
-        results = get_document(kwargs['id'])
-        if not results:
-            raise Http404()
-
-        context['treaty'] = results.first()
-
-        return context
+    def post(self, request):
+        logger = logging.getLogger('legislation_import')
+        # logger.debug(request.body)
+        legislation_file = request.FILES.get('file', None)
+        if not legislation_file:
+            logger.error('No attached file!')
+            response = 'You have to attach an XML file!'
+        else:
+            try:
+                response = harvest_file(legislation_file)
+                logger.info(response)
+                data = {
+                    'message': response
+                }
+                return JsonResponse(data)
+            except:
+                logger.exception('Error harvesting file')
+        return HttpResponseServerError('Internal server error during harvesting')
 
 
 def debug(request):
@@ -283,6 +214,105 @@ def debug(request):
         'debug': settings.DEBUG,
         'endpoint': settings.SOLR_URI,
         'last_update': last_update,
-
     }
     return JsonResponse(data)
+
+
+class DesignPlayground(TemplateView):
+    template_name = 'playground.html'
+
+
+class LegislationRedirectView(RedirectView):
+
+    doc_type_map = {
+        'legislation': 'legId',
+        'treaty': 'trElisId',
+        'literature': 'litId',
+        'court_decision': 'cdOriginalId',
+    }
+
+    def get_redirect_url(self, *args, **kwargs):
+        doc_id = kwargs.pop('doc_id', None)
+        doc_type = kwargs.pop('doc_type', None)
+        if not doc_id or not doc_type:
+            return None
+        search_field = self.doc_type_map.get(doc_type)
+        results = get_documents_by_field(search_field, [doc_id], rows=1)
+        if not results:
+            return None
+        leg = [x for x in results][0]
+        doc_details = doc_type + '_details'
+        return reverse(doc_details, kwargs={'slug': leg.slug})
+
+    def get(self, request, *args, **kwargs):
+        url = self.get_redirect_url(*args, **kwargs)
+        if url:
+            return HttpResponseRedirect(url)
+        else:
+            return HttpResponse('Arguments missing or document is not indexed')
+
+class OldEcolexRedirectView(RedirectView):
+
+    doc_type_map = {
+        'documents': 'legislation',
+        'treaties': 'treaty',
+        'literature': 'literature',
+        'courtdecisions': 'court_decision',
+    }
+    doc_id_map = {
+        'legislation': 'legId',
+        'treaty': 'trElisId',
+        'literature': 'litId',
+        'court_decision': 'cdOriginalId',
+    }
+
+    def get_redirect_url(self, doc_type, doc_id):
+        doc_type = self.doc_type_map.get(doc_type)
+        search_field = self.doc_id_map.get(doc_type)
+        if not doc_type or not search_field:
+            return None
+        results = get_documents_by_field(search_field, [doc_id], rows=1)
+        if not results:
+            return None
+        doc = [x for x in results][0]
+        doc_details = doc_type + '_details'
+        return reverse(doc_details, kwargs={'slug': doc.slug})
+
+    def get(self, request, *args, **kwargs):
+        doc_id = request.GET.get('id')
+        doc_type = request.GET.get('index')
+        if doc_id and doc_type:
+            url = self.get_redirect_url(doc_type, doc_id)
+            if url:
+                return HttpResponseRedirect(url)
+        else:
+            return HttpResponse('Arguments missing or document is not indexed')
+
+class ExportView(View):
+    def get(self, request, **kwargs):
+        doctype = request.GET.get('type')
+        slug = request.GET.get('slug')
+        format = request.GET.get('format', 'json')
+        download = request.GET.get('download')
+
+        if doctype and doctype not in settings.EXPORT_TYPES:
+            raise Http404()  # TODO Custom 404 template depending on format
+
+        if doctype:
+            key, value = 'type', doctype
+            fields = [
+                'slug',
+                'updatedDate',
+            ]
+            fl = ','.join(fields)
+        elif slug:
+            key, value = 'slug', slug
+            fl = '*'
+
+        solr = EcolexSolr()
+        resp = solr.search_all(key, value, fl=fl, rows=UNLIMITED_ROWS_COUNT)
+
+        exporter = get_exporter(format)(resp)
+        if doctype:
+            exporter.attach_urls(request)
+        return exporter.get_response(download)

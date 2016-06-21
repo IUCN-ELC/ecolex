@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<!-- FlipSwitch from https://proto.io/freebies/onoff/-->
+<div class="onoffswitch small">
+  <input type="checkbox"
+         id="facet-{{ field.name }}"
+         name="{{ field.name }}"
+         class="onoffswitch-checkbox"
+         {% if field.data %}checked{% endif %}>
+  <label class="onoffswitch-label" for="facet-{{ field.name }}">
+    <span class="onoffswitch-or">{% trans 'or' %}</span><!--{# removes whitespace #}
+ --><span class="onoffswitch-switch"></span><!--{# removes whitespace #}
+ --><span class="onoffswitch-and">{% trans 'and' %}</span>
+  </label>
+</div>

@@ -1,35 +1,61 @@
 {% load tags %}
+{% load i18n %}
 
 {% include 'bits/type_facet.html' %}
 
-{% if text_suggestion and results.get_suggested_text %}
+{% if suggestions %}
 <p id="suggestion">
-  <em>Did you mean: <a href="?q={{ results.get_suggested_text }}" id="suggestion-link">{{ results.get_suggested_text }}</a>?</em>
+  <em>{% trans 'Did you mean:' %} {% for suggestion in suggestions %}{% if not forloop.first  %} / {% endif %}
+    <a href="{% url "results" %}?{{ form.q|field_urlencoded:suggestion }}">{{ suggestion }}</a>
+  {% endfor %}?</em>
 </p>
 {% endif %}
 
 <p class="small clearfix">
-  <!-- Ugly -->
-  <span class="pull-left">
-    Found
-    {% if form.type.data|length != 1 %}
-      <span id="number-of-results">{{ results.count }}</span> results
-    {% elif 'treaty' in form.type.data %}
-      <span id="number-of-results">{{ facets.type.treaty }}</span> treaties
-    {% elif 'decision' in form.type.data %}
-      <span id="number-of-results">{{ facets.type.decision }}</span> COP decisions
-    {% endif %}
-  </span>
+  {% if results.count %}
+    {% blocktrans count counter=results.count %}
+      One result found.
+    {% plural %}
+      {{ counter }} results found.
+    {% endblocktrans %}
+  {% else %}
+    {%trans 'No matches found.' %}
+  {% endif %}
 
-  <span class="pull-right">
+{% if results %}
+  {% with facets.type|get_facet_counts as type_count %}
+    {% trans 'Show only' %}
+    {% for id, txt in form.fields.type.choices %}{% if not forloop.first %} | {% endif %}
+      {% with type_count|lookup:id as count %}
+        {% if count %}
+          <a href="{% url "results" %}?{{ form.type|field_urlencoded:id }}">
+        {% endif %}
+
+        {% if id == "treaty" %}{% trans 'Treaties' %}
+        {% elif id == "decision" %}{% trans 'COP Decisions' %}
+        {% elif id == "legislation" %}{% trans 'Legislation' %}
+        {% elif id == "court_decision" %}{% trans 'Court Decisions' %}
+        {% elif id == "literature" %}{% trans 'Literature' %}
+        {% endif %}
+
+        {% if count %}
+          </a>
+        {% endif %}
+      {% endwith %}
+    {% endfor %}
+  {% endwith %}
+</p>
+<p class="small clearfix">
     {% include 'bits/sortby.html' %}
-  </span>
+</p>
+{% endif %}
 </p>
 
+{% if results  %}
 <hr>
-
-<!-- To do -->
-<!-- <button data-toggle="offcanvas" data-target="#filters" data-canvas="body"></button> -->
+{% if form.type.data|length == 1 and 'decision' in form.type.data %}
+  {% include 'bits/disclaimer.html' with class='InforMEA-disclaimer' %}
+{% endif %}
 
 <ul class="search-results">
   {% for result in results %}
@@ -39,51 +65,6 @@
 
 <hr>
 
-<div class="clearfix">
+{% include "bits/pagination.html" with pages=pages %}
 
-  {% if page.no_pages %}
-
-    <div class="pull-right">
-
-      <a class="btn btn-sm btn-default"
-         href="?{{ page.prev_url }}"
-         {% if page.number == 1 %}disabled{% endif %}>Previous</a>
-
-        {% if 1 not in page.pages_list%}
-            <a class="btn btn-sm btn-default"
-               href="?{{ page.first_url }}">1</a>
-             ...
-        {% endif %}
-        {% for page_no in page.pages_list %}
-            {% if page_no != page.number %}
-                <a class="btn btn-sm btn-default"
-                   href="?{{ page.pages_urls|lookup:page_no }}">{{ page_no }}</a>
-            {% else %}
-                <a class="btn btn-sm btn-default"
-                   href="?{{ page.pages_urls|lookup:page_no }}" disabled>
-                    <b>{{ page_no }}</b>
-                </a>
-            {% endif %}
-        {% endfor %}
-        {% if page.no_pages not in page.pages_list%}
-            {% if page.no_pages|add:"-1" not in page.pages_list %}
-             ...
-            {% endif %}
-            <a class="btn btn-sm btn-default"
-               href="?{{ page.last_url }}">{{ page.no_pages }}</a>
-        {% endif %}
-
-      <a class="btn btn-sm btn-default"
-         href="?{{ page.next_url }}"
-         {% if page.number == page.no_pages %}disabled{% endif %}>Next</a>
-
-    </div>
-
-  {% else %}
-
-  <div class="form-control-static">No more results</div>
-
-  {% endif %}
-
-
-</div>
+{% endif %}{# /if results  #}

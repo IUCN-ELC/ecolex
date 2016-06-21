@@ -1,43 +1,59 @@
 {% extends 'layout.html' %}
 {% load tags %}
+{% load i18n %}
+{% spaceless %}
 
-{% block content %}
+{% block meta %}
+  <title>{{ document.title }}</title>
+{% endblock %}
 
-<p>
-  <span class="treaty-name">{{ treaty.full_title }}</span>
-  <br>
-  <a href="{% url 'treaty_details' treaty.id %}">Back to treaty details</a>
-</p>
+{% block style %}
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
+{% endblock %}
 
-<hr>
+{% block breadcrumbs %}
+  {% breadcrumb "Search results" 'results' query %}
+  {% breadcrumb "Treaty" 'treaty_details' query slug=document.slug %}
+  {% breadcrumb "Country/Participant" %}
+{% endblock %}
 
-<article class="record-details-participants">
+{% block content %}{% with document as treaty %}
+
+<article class="record-details">
   <header>
-    <h1>Treaty participants</h1>
+    <div class="record-title">
+      <h1>{{ treaty.title|safe }} ({{ treaty.date }})</h1>
+    </div>
   </header>
 
   <div class="table-wrapper">
-    <table class="table table-bordered">
+    <table class="table table-bordered participants-table" style="box-sizing: border-box;" id="country-party">
       <thead>
         <tr>
-          <th class="col-country">Countries</th>
-          {% for event in treaty.participants.events %}
-          <th>{{ event|capfirst }}</th>
+          <th class="col-country">{% trans 'Countries' %}</th>
+          {% for event in treaty.parties_events %}
+            {% with treaty.EVENTS_NAMES|lookup:event as event_type %}
+              <th>{% trans event_type %}</th>
+            {% endwith %}
           {% endfor %}
         </tr>
       </thead>
       <tbody>
-        {% for country in treaty.participants.countries %}
+        {% for participant in treaty.parties %}
           <tr>
-            <th>{{ country.country }}</th>
-            {% for event in treaty.participants.events %}
-              <td>
-                {% if country|lookup:event %}
-                  <time title="{{ event|capfirst }} date">{{ country|lookup:event|parse_date }}</time>
+            <th>{{ participant.country }}</th>
+            {% for event_field in treaty.parties_events %}
+              {% with participant|getattr:event_field as event %}
+                {% if event.date %}
+                  <td data-order="{{ event.date|parse_date|total_seconds }}"
+                      title="{{ treaty.EVENTS_NAMES|lookup:event.details }} date">
+                    {{ event.date|parse_date|date:"b j, Y"|capfirst }}
+                    {% if event.index %}[{{ event.index }}]{% endif %}
+                  </td>
                 {% else %}
-                  <span class="na" title="Not available">-</span>
+                  <td title="{% trans 'Not available' %}">-</td>
                 {% endif %}
-              </td>
+              {% endwith %}
             {% endfor %}
           </tr>
         {% endfor %}
@@ -45,9 +61,22 @@
     </table>
   </div>
 
-  <hr>
-
-  <p><a class="btn btn-sm btn-default" href="{% url 'treaty_details' treaty.id %}">Back to treaty details</a></p>
+  <br>
+  {% include 'bits/participants_legend.html' with events=treaty.parties_events %}
 
 </article>
+{% endwith %}{% endblock %}
+
+{% block endscripts %}
+  <script src="/static/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('#country-party').DataTable( {
+        "paging":  false,
+        "info":    false,
+        "bFilter": false,
+      });
+    });
+  </script>
 {% endblock %}
+{% endspaceless %}
