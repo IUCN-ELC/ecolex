@@ -14,7 +14,7 @@
   {{ block.super }}
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
-  <script type="text/javascript" src="/static/js/datamaps.none.min.js"></script>
+  <script src="https://datamaps.github.io/scripts/datamaps.world.js"></script>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -217,7 +217,10 @@
     </table>
     {% include 'bits/participants_legend.html' with events=document.parties_events %}
 
-    <div id="regions_div"></div>
+    <div id="container" style="position: relative; width: 500px; height: 340px;"></div>
+    <button type="button" class="zoom-button" data-zoom="reset">0</button>
+    <button type="button" class="zoom-button" data-zoom="out">-</button>
+    <button type="button" class="zoom-button" data-zoom="in">+</button>
     {% include 'bits/participants_map.html' with events=document.parties_events parties=document.parties|format_countries %}
 
   </section>
