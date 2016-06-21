@@ -276,7 +276,7 @@ class OldEcolexRedirectView(RedirectView):
             return None
         doc = [x for x in results][0]
         doc_details = doc_type + '_details'
-        return reverse(doc_details, kwargs={'slug': doc.result})
+        return reverse(doc_details, kwargs={'slug': doc.slug})
 
     def get(self, request, *args, **kwargs):
         doc_id = request.GET.get('id')
