@@ -271,10 +271,10 @@ class OldEcolexRedirectView(RedirectView):
         doc_type = self.doc_type_map.get(doc_type)
         search_field = self.doc_id_map.get(doc_type)
         if not doc_type or not search_field:
-            return HttpResponseRedirect(reverse('results'))
+            return reverse('results')
         results = get_documents_by_field(search_field, [doc_id], rows=1)
         if not results:
-            return HttpResponseRedirect(reverse('results'))
+            return reverse('results')
         doc = [x for x in results][0]
         doc_details = doc_type + '_details'
         return reverse(doc_details, kwargs={'slug': doc.slug})
