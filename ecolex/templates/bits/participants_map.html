@@ -223,12 +223,11 @@ function Datamap() {
     this.instance = new Datamaps({
         data: map_data,
         responsive: false,
-        // scope: 'ESRI_country08',
-        scope: 'world',
+        scope: 'ESRI_country08',
         element: this.$container.get(0),
         fills: colors,
         geographyConfig: {
-            // dataUrl: '/static/json/world.topo.json',
+            dataUrl: '/static/json/world.topo.json',
             hideAntarctica: true,
             highlightOnHover: true,
             highlightFillColor: '#c3c3c3',
@@ -250,6 +249,12 @@ function Datamap() {
             }
         },
         projection: 'mercator',
+        setProjection: function(element) {
+          var projection = d3.geo.mercator()
+            .translate([element.offsetWidth / 2, element.offsetHeight / 2 + 100]);
+           var path = d3.geo.path().projection(projection);
+           return {path: path, projection: projection};
+        },
         done: this._handleMapReady.bind(this)
     });
 }
