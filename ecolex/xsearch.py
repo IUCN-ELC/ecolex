@@ -607,9 +607,12 @@ class SearchResponse(QueryResponse):
     def __init__(self, response=None, language=None):
         super().__init__(response=response, language=language)
 
-        self.facets = response.facet_counts.facet_fields
-        self.stats = response.stats.stats_fields
-        self.suggestions = response.spellcheck.get('collations')
+        self.facets = (response.facet_counts.facet_fields
+                       if response is not None else {})
+        self.stats = (response.stats.stats_fields
+                      if response is not None else {})
+        self.suggestions = (response.spellcheck.get('collations')
+                            if response is not None else [])
 
     def __len__(self):
         return self.count
