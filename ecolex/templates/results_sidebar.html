@@ -67,7 +67,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
           <!-- <label for="year-min">From</label> -->
           <input id="year-min" type="number"
                  name="{{ form.xdate_min.name }}"
-                 value="{{ form.xdate_min.data }}"
+                 value="{{ form.xdate_min.data|default_if_none:'' }}"
                  min="{{ dmin }}"
                  max="{{ dmax }}"
                  novalidate
@@ -77,7 +77,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
           <!-- <label for="year-max">To</label> -->
           <input id="year-max" type="number"
                  name="{{ form.xdate_max.name }}"
-                 value="{{ form.xdate_max.data }}"
+                 value="{{ form.xdate_max.data|default_if_none:'' }}"
                  min="{{ dmin }}"
                  max="{{ dmax }}"
                  novalidate

@@ -12,6 +12,10 @@ from .schema import FIELD_MAP, FILTER_FIELDS, STATS_FIELDS, SCHEMA_MAP
 
 
 class FacetBoundField(BoundField):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._facet_data = []
+
     def set_facet_data(self, data):
         self._facet_data = data
 
