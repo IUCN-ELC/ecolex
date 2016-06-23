@@ -123,7 +123,7 @@
   </section>
 
   {% if document.references %}
-  <section id="other-references">
+  <section id="legislation-references">
     <h2 class="section-title">{% trans 'References' %} - {% trans 'Legislation' %}</h2>
     {% for field, legislations in document.references.items %}
       <dl class="dl-horizontal">
@@ -142,7 +142,7 @@
   </section>
   {% endif %}
 
-  {% if document.treaties_implemented or document.treaties_cited %}
+  {% if document.treaties_implemented or document.treaties_cited or document.court_decisions %}
   <section id="other-references">
     <h2 class="section-title">{% trans 'Other references' %}</h2>
     {% for treaty in document.treaties_implemented %}
@@ -170,24 +170,18 @@
         </dd>
       </dl>
     {% endfor %}
-  </section>
-  {% endif %}
-
-  {% if document.court_decisions %}
-  <section id="other-references">
-    <h2 class="section-title">{% trans 'Court Decision references' %}</h2>
-      <dl class="dl-horizontal">
+    {% for court_decision in document.court_decisions %}
+      <dl>
         <dt>{% trans 'Cited by' %}</dt>
-        {% for court_decision in document.court_decisions %}
-          <dd>
-            <h3 class="search-result-title">
-              <a href="{{ court_decision.details_url }}?{{ query }}"
-                 title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
-            </h3>
-            {% include 'short_display/court_decision.html' with result=court_decision %}
-          </dd>
-        {% endfor %}
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ court_decision.details_url }}?{{ query }}"
+               title="{{ court_decision.title|safe|striptags }}">{{ court_decision.title|safe }}</a>
+          </h3>
+          {% include 'short_display/court_decision.html' with result=court_decision %}
+        </dd>
       </dl>
+    {% endfor %}
   </section>
   {% endif %}
 
