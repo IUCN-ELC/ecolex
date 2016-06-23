@@ -7,61 +7,25 @@
   <url>
     <loc>{{ url.location }}</loc>
     {% include 'sitemaps/bits/url_properties.xml' %}
-    <xhtml:link
-                 rel="alternate"
-                 hreflang="fr"
-                 href="{{ url.location|translate_absolute_url:'fr' }}"
-                 />
-    <xhtml:link
-                 rel="alternate"
-                 hreflang="es"
-                 href="{{ url.location|translate_absolute_url:'es' }}"
-                 />
-    <xhtml:link
-                 rel="alternate"
-                 hreflang="en"
-                 href="{{ url.location }}"
-                 />
+    <xhtml:link rel="alternate" hreflang="fr" href="{{ url.location|translate_absolute_url:'fr' }}" />
+    <xhtml:link rel="alternate" hreflang="es" href="{{ url.location|translate_absolute_url:'es' }}" />
+    <xhtml:link rel="alternate" hreflang="en" href="{{ url.location }}" />
   </url>
 
   <url>
     <loc>{{ url.location|translate_absolute_url:'fr' }}</loc>
     {% include 'sitemaps/bits/url_properties.xml' %}
-    <xhtml:link
-                 rel="alternate"
-                 hreflang="en"
-                 href="{{ url.location }}"
-                 />
-    <xhtml:link
-                 rel="alternate"
-                 hreflang="es"
-                 href="{{ url.location|translate_absolute_url:'es' }}"
-                 />
-    <xhtml:link
-                 rel="alternate"
-                 hreflang="fr"
-                 href="{{ url.location|translate_absolute_url:'fr' }}"
-                 />
+    <xhtml:link rel="alternate" hreflang="en" href="{{ url.location }}" />
+    <xhtml:link rel="alternate" hreflang="es" href="{{ url.location|translate_absolute_url:'es' }}" />
+    <xhtml:link rel="alternate" hreflang="fr" href="{{ url.location|translate_absolute_url:'fr' }}" />
   </url>
 
   <url>
     <loc>{{ url.location|translate_absolute_url:'es' }}</loc>
     {% include 'sitemaps/bits/url_properties.xml' %}
-    <xhtml:link
-                 rel="alternate"
-                 hreflang="en"
-                 href="{{ url.location }}"
-                 />
-    <xhtml:link
-                 rel="alternate"
-                 hreflang="fr"
-                 href="{{ url.location|translate_absolute_url:'fr' }}"
-                 />
-    <xhtml:link
-                 rel="alternate"
-                 hreflang="es"
-                 href="{{ url.location|translate_absolute_url:'es' }}"
-                 />
+    <xhtml:link rel="alternate" hreflang="en" href="{{ url.location }}" />
+    <xhtml:link rel="alternate" hreflang="fr" href="{{ url.location|translate_absolute_url:'fr' }}" />
+    <xhtml:link rel="alternate" hreflang="es" href="{{ url.location|translate_absolute_url:'es' }}" />
   </url>
   {% endfor %}
 {% endspaceless %}
