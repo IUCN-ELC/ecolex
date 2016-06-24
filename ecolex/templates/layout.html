@@ -112,7 +112,7 @@
                     </label>
                     <input id="search" type="search" autofocus {# autosave #} class="form-control" name="q" placeholder="{% trans 'Search in record and full text' %}" value="{{ form.q.value|default:"" }}"> {# TODO: form.q.errors maybe? #} {% if form.q.value %}
                     <span id="query-remove" class="icon icon-close"></span> {% endif %}
-                    <button class="btn btn-search" type="submit">{% trans 'Search' %}</button>
+                   <span class="button-control"> <button class="btn btn-search" type="submit">{% trans 'Search' %}</button></span>
                 </div>
 
                 <ul class="homepage-categories">
@@ -179,7 +179,7 @@
           {% if form.q.value %}
               <span id="query-remove" class="icon icon-close"></span>
           {% endif %}
-          <button class="btn btn-search" type="submit">{% trans 'Search' %}</button>
+          <span class="button-control"><button class="btn btn-search" type="submit">{% trans 'Search' %}</button></span>
         </div>
 
         </div>
@@ -189,6 +189,7 @@
     </div>
 
     <main>
+     <button type="button" id="filter-trigger">Filters</button><br>
       <div class="container">
         {% block breadcrumbs %}
         {% endblock %}
@@ -209,11 +210,19 @@
     <div class="container">
       <div class="footer-inner">
         <nav class="footer-nav">
-          <a href="{% url 'page' slug='agreement' %}">{% trans 'User Agreement' %}</a>
-          &ensp; | &ensp;
-          <a href="{% url 'page' slug='privacy' %}">{% trans 'Privacy' %}</a>
-          &ensp; | &ensp;
-          <a href="{% url 'page' slug='acknowledgements' %}">{% trans 'Acknowledgments' %}</a>
+          <ul>
+                        <li>
+                            <a href="{% url 'page' slug='agreement' %}">{% trans 'User Agreement' %}</a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'page' slug='privacy' %}">{% trans 'Privacy' %}</a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'page' slug='acknowledgements' %}">{% trans 'Acknowledgments' %}</a>
+                        </li>
+                    </ul>
         </nav>
 
         <span class="footer-credits">
@@ -224,13 +233,15 @@
             <a href="http://www.fao.org/">FAO</a>
           </span>
           &ensp;
-          <span class="sprite-credits sprite-iucn"></span>
-          <span class="sprite-credits sprite-unep"></span>
-          <span class="sprite-credits sprite-fao"></span>
+          <a href="http://www.iucn.org/"><span class="sprite-credits sprite-iucn"></span></a>
+           <a href="http://www.unep.org/"><span class="sprite-credits sprite-unep"></span></a>
+         <a href="http://www.fao.org/"> <span class="sprite-credits sprite-fao"></span></a>
         </span>
       </div>
     </div>
   </footer>
+
+  <div id="backdrop"></div>
 
   <!-- end scripts -->
   <script src="{{ STATIC_URL }}{% version 'js/bootstrap-tour.min.js' %}"></script>

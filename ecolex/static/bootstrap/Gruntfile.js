@@ -115,6 +115,7 @@ module.exports = function(grunt) {
                     'js/tooltip.js',
                     'js/popover.js',
                     'js/scrollspy.js',
+                    'js/sidebar.js',
                     'js/tab.js',
                     'js/affix.js',
                     // Third-party components
