@@ -882,6 +882,8 @@
         litLongTitle_es^100 litLongTitle_other^100
         litPaperTitleOfText_en^100 litPaperTitleOfText_fr^100
         litPaperTitleOfText_es^100 litPaperTitleOfText_other^100
+        litAuthor^90 litAuthorM^90 litAuthorA^90
+        litCorpAuthorM^90 litCorpAuthorA^90
         litAbstract_en^50 litAbstract_fr^50 litAbstract_es^50 litAbstract_other^50
         litBasin_en^25 litBasin_fr^25 litBasin_es^25
         litRegion_en^25 litRegion_fr^25 litRegion_es^25
