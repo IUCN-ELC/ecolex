@@ -14,6 +14,7 @@ from django.utils.translation import get_language
 
 from .xforms import SearchForm
 from .xsearch import Queryer, Searcher, SearchResponse, DEFAULT_INTERFACE as si
+from ecolex.management import definitions
 
 
 class HomepageView(TemplateView):
@@ -154,28 +155,41 @@ class DetailsView(SearchViewMixin, TemplateView):
             raise
 
         ctx['document'] = result
-
         return ctx
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        document = context['document']
+        if document.type != self.doc_type:
+            url = reverse('{}_details'.format(document.type),
+                          kwargs={'slug': document.slug})
+            return HttpResponseRedirect(url)
+        return super().get(request, *args, **kwargs)
 
 
 class DecisionDetails(DetailsView):
     template_name = 'details/decision.html'
+    doc_type = definitions.COP_DECISION
 
 
 class TreatyDetails(DetailsView):
     template_name = 'details/treaty.html'
+    doc_type = definitions.TREATY
 
 
 class LiteratureDetails(DetailsView):
     template_name = 'details/literature.html'
+    doc_type = definitions.LITERATURE
 
 
 class CourtDecisionDetails(DetailsView):
     template_name = 'details/court_decision.html'
+    doc_type = definitions.COURT_DECISION
 
 
 class LegislationDetails(DetailsView):
     template_name = 'details/legislation.html'
+    doc_type = definitions.LEGISLATION
 
 
 # TODO: it's wasteful to fetch all treaty details for this view
