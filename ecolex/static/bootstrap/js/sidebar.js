@@ -24,11 +24,18 @@
         });
 
 
+$templink = $(location).attr('href'); 
 
 
 
         if (window.location.href.indexOf("?q=") > -1) {
             $results.addClass('shown')
+        }
+
+
+        if(($templink.slice(-23))==("=&xdate_min=&xdate_max=")) {
+            $results.removeClass('shown')
+         
         }
 
 
