@@ -2,7 +2,6 @@
 {% load i18n %}
 
 {% include 'bits/type_facet.html' %}
-
 {% if suggestions %}
 <p id="suggestion">
   <em>{% trans 'Did you mean:' %} {% for suggestion in suggestions %}{% if not forloop.first  %} / {% endif %}
@@ -45,6 +44,7 @@
     {% endfor %}
   {% endwith %}
 </p>
+<div id="results">Results are filtered</div>
 <p class="small clearfix">
     {% include 'bits/sortby.html' %}
 </p>
@@ -56,12 +56,15 @@
 {% if form.type.data|length == 1 and 'decision' in form.type.data %}
   {% include 'bits/disclaimer.html' with class='InforMEA-disclaimer' %}
 {% endif %}
-
+  
+ <button type="button" id="filter-trigger">Filters</button>
 <ul class="search-results">
   {% for result in results %}
     {% include "bits/search_result.html" with result=result results=results %}
   {% endfor %}
 </ul>
+
+           
 
 <hr>
 

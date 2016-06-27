@@ -22,14 +22,18 @@
 text-align: left !important;
     }
 
-    a[href]:after {
-        content: " (" attr(href) ")";
+    // a[href]:after {
+    //     content: " (" attr(href) ")";
        
-    }
-    a:after{
+    // }
+    a{
          word-break:break-all;
          border-bottom:1px dotted;
          color:blue !important;
+    }
+
+    main a.sortby{
+        display:none;
     }
 
     abbr[title]:after {
@@ -162,4 +166,18 @@ position: relative!important; top: -15px!important;
     // position:absolute!important;
 }
     // Bootstrap specific changes end
+
+
+#layout-main p.small.clearfix{
+    display:none!important;
 }
+
+    p {page-break-inside: avoid;}
+
+
+@page {
+  size: A4!important;
+  margin:0!important;
+}
+}
+

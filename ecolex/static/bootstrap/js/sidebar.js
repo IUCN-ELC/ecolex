@@ -8,6 +8,7 @@
     $filters = $('#filters');
     $backdrop = $('#backdrop');
     $filterTrigger = $('#filter-trigger');
+    $results=$('#results');
     // $last=$filters.lastChild;
     $filterTrigger.click(function() {
         console.log('opening sidebar');
@@ -23,6 +24,59 @@
     });
 
     
+ 
+
+
+if(window.location.href.indexOf("?q=") > -1){
+ $results.addClass('shown')
+}
+
+
+
+/*
+
+ $body = $("body");
+$body.click(function() {
+console.log("sdsd");
+
+});
+
+
+     function showValues() {
+    var fields = $( ":input" ).serializeArray();
+    // $( "#results" ).empty();
+    jQuery.each( fields, function( i, field ) {
+     
+     if((field.value!=" ")&&(field.value != null)){
+      $("#results").append( "<li>" + field.value + " " + "</li>") ;
+}
+
+
+// $('results').find('<li>').each(function(){
+//     if($(this)==" ")
+//         $(this).remove();
+// });
+
+
+
+
+    });
+  }
+ 
+  $( ":checkbox, :radio" ).click( showValues );
+  $( "select" ).change( showValues );
+  showValues();
+*/
+
+
+
+
+
+
+
+
+
+
 
    
 
