@@ -3,7 +3,8 @@
 (function ($) {
 
     $(document).ready(function () {
-
+        $notfiltered=$("#not-filtered");
+        $filtered=$("#filtered");
         $body = $("body");
         $filters = $('#filters');
         $backdrop = $('#backdrop');
@@ -32,13 +33,17 @@ $templink = $(location).attr('href');
 
 
         if (window.location.href.indexOf("?q=") > -1) {
-            $results.addClass('shown')
+            // $results.addClass('shown')
+            $notfiltered.addClass('hidden-filters');
+            // $filtered.addClass('hidden-filters');
         }
 
 
         if(($templink.slice(-23))==("=&xdate_min=&xdate_max=")) {
-            $results.removeClass('shown')
-         
+            // $results.removeClass('shown')
+            $notfiltered.removeClass('hidden-filters');
+            $filtered.addClass('hidden-filters');
+            $notfiltered.addClass('shown');
         }
 
 
