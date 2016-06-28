@@ -44,12 +44,12 @@
     {% endfor %}
   {% endwith %}
 </p>
-<div id="results">Results are filtered</div>
 <p class="small clearfix">
     {% include 'bits/sortby.html' %}
 </p>
 {% endif %}
 </p>
+<button type="button" id="filter-trigger"><span id="not-filtered">Filter results</span><span id="filtered">Results are filtered</span></button>
 
 {% if results  %}
 <hr>
@@ -57,7 +57,6 @@
   {% include 'bits/disclaimer.html' with class='InforMEA-disclaimer' %}
 {% endif %}
   
- <button type="button" id="filter-trigger">Filters</button>
 <ul class="search-results">
   {% for result in results %}
     {% include "bits/search_result.html" with result=result results=results %}
