@@ -184,6 +184,15 @@ max-width:100%!important;}
   }
 }
 
+
+@media only screen and (min-width:@screen-sm){
+
+    button {
+      border-bottom-left-radius: 3px!important;
+      border-top-left-radius: 3px!important;
+    }
+}
+
 @media only screen and (max-width:@screen-sm) {
   .shown {
     display: inline!important;
@@ -226,8 +235,8 @@ max-width:100%!important;}
       }
     }
     button {
-      border-bottom-left-radius: 0px!important;
-      border-top-left-radius: 0px!important;
+      border-bottom-left-radius: 0px;
+      border-top-left-radius: 0px;
     }
     .button-control {
       width: 1%;
