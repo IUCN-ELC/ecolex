@@ -24,6 +24,9 @@
         });
 
 
+
+
+
 $templink = $(location).attr('href'); 
 
 
