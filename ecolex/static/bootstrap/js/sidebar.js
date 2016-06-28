@@ -26,7 +26,7 @@
 
 
 
-
+        //TODO find another way what doesn't depend on the link structure 
 $templink = $(location).attr('href'); 
 
 
