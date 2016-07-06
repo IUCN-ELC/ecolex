@@ -48,8 +48,10 @@
     {% include 'bits/sortby.html' %}
 </p>
 {% endif %}
-</p>
-<button type="button" id="filter-trigger"><span id="not-filtered">Filter results</span><span id="filtered">Results are filtered</span></button>
+<button type="button" id="filter-trigger" class="btn btn-default">
+  <span id="not-filtered">Filter results</span>
+  <span id="filtered" class="hidden">Results are filtered</span>
+</button>
 
 {% if results  %}
 <hr>
