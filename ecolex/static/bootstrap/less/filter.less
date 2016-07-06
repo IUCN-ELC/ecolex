@@ -136,9 +136,6 @@ label {
   }
   font-weight: normal;
 }
-.special-filter {
-  margin-bottom: (@line-height-computed / 2);
-}
 .global-filter {
   border: 1px solid @gray-lighter;
   background-color: transparent;
@@ -244,7 +241,7 @@ fieldset {
 }
 
 .filter-label {
-  margin-left: @padding-large-vertical;
+  margin-left: @aside-indent;
   float: left;
   display: block;
   font-weight: bold;
@@ -281,7 +278,7 @@ label[for] {
 
 .facet-checkbox {
   padding: @padding-small-vertical @aside-indent;
-  margin-left: @aside-indent;
+  // margin-left: @aside-indent;
   border-radius: @border-radius-base;
   border: 1px solid transparent;
   &:hover,

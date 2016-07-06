@@ -1,3 +1,8 @@
+
+
+
+
+
 .html-disclaimer {
   font-size: @font-size-smaller;
   font-style: italic;
@@ -99,7 +104,21 @@
   }
 }
 
+/*tabel rezolvat pentru print */
+
+
 .participants {
+  @media print {
+    .table;
+    .table-bordered;
+
+
+
+    // margin: auto!important;
+    // width: auto!important;
+  }
+  @media not print {
+
   @cell-padding-vertical: @padding-base-vertical;
   @cell-padding-horizontal: @padding-base-horizontal;
 
@@ -149,10 +168,10 @@
   }
 
   @media (max-width: @grid-float-breakpoint-max) {
-    margin-left: (-@grid-gutter-width / 2);
-    margin-right: (-@grid-gutter-width / 2);
-    padding-left: @cell-padding-horizontal;
-    padding-right: @cell-padding-horizontal;
+    // margin-left: (-@grid-gutter-width / 2);
+    // margin-right: (-@grid-gutter-width / 2);
+    // padding-left: @cell-padding-horizontal;
+    // padding-right: @cell-padding-horizontal;
     thead {
       padding-left: 0;
     }
@@ -358,3 +377,9 @@
     margin-right: (-@grid-gutter-width / 2);
   }
 }
+
+
+  }
+
+
+

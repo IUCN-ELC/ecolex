@@ -5,8 +5,10 @@
 {# The type filter has different behaviour between the home page and the results page. #}
 
 <div class="hidden">{{ form.type }}{# TODO: de-jsify (and de-uglify) #}</div>
+<div class="btn-group-wrapper-mobile">
 <div class="btn-group btn-group-justified filter-type {{ page_type|default:"results-page" }}">
   <!-- Treaty filter -->
+  
   <div class="btn-group">
     <button type="button"
             class="btn btn-default {% if 'treaty' in form.type.data %}active{% endif %}"
@@ -100,5 +102,5 @@
       {% endif %}
     </button>
   </div>
-</div>
+</div></div>
 {% endwith %}

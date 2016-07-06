@@ -18,10 +18,22 @@
     a,
     a:visited {
         text-decoration: underline;
+        white-space: normal !important;
+text-align: left !important;
     }
 
-    a[href]:after {
-        content: " (" attr(href) ")";
+    // a[href]:after {
+    //     content: " (" attr(href) ")";
+       
+    // }
+    a{
+         word-break:break-all;
+         border-bottom:1px dotted;
+         color:blue !important;
+    }
+
+    main a.sortby{
+        display:none;
     }
 
     abbr[title]:after {
@@ -102,6 +114,73 @@
             border: 1px solid #ddd !important;
         }
     }
+     .tag{
 
-    // Bootstrap specific changes end
+border: 1px dotted;
+
+  }
+
+.search-form {
+  display:none;
 }
+
+#mahead{
+  display:none!important;
+}
+
+#site-footer{
+
+  display: none!important;
+}
+
+#participants-extras{
+
+    display:none!important;
+}
+
+#participants-map{
+    display:none!important;
+
+}
+
+.logo-ecolex{
+    display:none!important;
+}
+
+.search-form{
+    display:none!important;
+
+}
+
+.slogan{
+position: relative!important; top: -15px!important;
+}
+
+.jumbotron-brand:before{
+    content: url(http://i.imgur.com/UJVo1Ae.png);
+    // background-size: 10px;
+}
+
+#filters{
+    display:none!important;
+    // position:absolute!important;
+}
+    // Bootstrap specific changes end
+
+
+#layout-main p.small.clearfix{
+    display:none!important;
+}
+
+    p {page-break-inside: avoid;}
+    li{page-break-inside:avoid;
+    padding-top: 10px;}
+
+
+
+@page {
+  size: A4!important;
+  margin:0!important;
+}
+}
+
