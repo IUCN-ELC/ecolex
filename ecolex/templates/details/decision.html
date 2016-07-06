@@ -84,13 +84,8 @@
       {% if document.url %}
         <dt>{% trans 'Website' %}</dt>
         <dd>
-<<<<<<< 9fdd78ddb735de8af00347ac848c9ed069f03c3f
-          <a href="{{ document.url|url_normalize }}" rel="nofollow"
-             target="_blank">{{ document.url|url_normalize|extract_hostname|default:"No link" }}</a>
-=======
           <a href="{{ document.url }}"
              target="_blank">View on InforMEA</a>
->>>>>>> Fix for Available website text
         </dd>
       {% endif %}
 
