@@ -3,30 +3,29 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 {% spaceless %}
-  {% for url in urlset %}
-  <url>
-    <loc>{{ url.location }}</loc>
-    {% include 'sitemaps/bits/url_properties.xml' %}
-    <xhtml:link rel="alternate" hreflang="fr" href="{{ url.location|translate_absolute_url:'fr' }}" />
-    <xhtml:link rel="alternate" hreflang="es" href="{{ url.location|translate_absolute_url:'es' }}" />
-    <xhtml:link rel="alternate" hreflang="en" href="{{ url.location }}" />
-  </url>
+  {% for doc in docs %}
+    {% with doc|details_url as url %}
+    <url>
+      <loc>{{ url.en }}</loc>
+      <xhtml:link rel="alternate" hreflang="fr" href="{{ url.fr }}" />
+      <xhtml:link rel="alternate" hreflang="es" href="{{ url.es }}" />
+      <xhtml:link rel="alternate" hreflang="en" href="{{ url.en }}" />
+    </url>
 
-  <url>
-    <loc>{{ url.location|translate_absolute_url:'fr' }}</loc>
-    {% include 'sitemaps/bits/url_properties.xml' %}
-    <xhtml:link rel="alternate" hreflang="en" href="{{ url.location }}" />
-    <xhtml:link rel="alternate" hreflang="es" href="{{ url.location|translate_absolute_url:'es' }}" />
-    <xhtml:link rel="alternate" hreflang="fr" href="{{ url.location|translate_absolute_url:'fr' }}" />
-  </url>
+    <url>
+      <loc>{{ url.fr }}</loc>
+      <xhtml:link rel="alternate" hreflang="en" href="{{ url.en }}" />
+      <xhtml:link rel="alternate" hreflang="es" href="{{ url.es }}" />
+      <xhtml:link rel="alternate" hreflang="fr" href="{{ url.fr }}" />
+    </url>
 
-  <url>
-    <loc>{{ url.location|translate_absolute_url:'es' }}</loc>
-    {% include 'sitemaps/bits/url_properties.xml' %}
-    <xhtml:link rel="alternate" hreflang="en" href="{{ url.location }}" />
-    <xhtml:link rel="alternate" hreflang="fr" href="{{ url.location|translate_absolute_url:'fr' }}" />
-    <xhtml:link rel="alternate" hreflang="es" href="{{ url.location|translate_absolute_url:'es' }}" />
-  </url>
+    <url>
+      <loc>{{ url.es }}</loc>
+      <xhtml:link rel="alternate" hreflang="en" href="{{ url.en }}" />
+      <xhtml:link rel="alternate" hreflang="fr" href="{{ url.fr }}" />
+      <xhtml:link rel="alternate" hreflang="es" href="{{ url.es }}" />
+    </url>
+    {% endwith %}
   {% endfor %}
 {% endspaceless %}
 </urlset>

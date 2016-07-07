@@ -6,10 +6,11 @@ from django.utils import translation
 from django.utils.html import format_html
 from django.utils.translation import ugettext as _
 from django.template.defaultfilters import capfirst
+from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.staticfiles.finders import get_finders
+
 import datetime
 import json
-import re
 import os
 from html import unescape
 from os.path import basename
@@ -93,12 +94,6 @@ def url_normalize(value):
     return value if value.startswith('http') else 'http://' + value
 
 
-@register.filter
-def translate_absolute_url(url, language=''):
-    repl = '/{}/'.format(language) if language else '/'
-    return re.sub(r'(?=\b)\/', repl, url, count=1)
-
-
 @register.simple_tag
 def breadcrumb(label, viewname='', query='', *args, **kwargs):
     if not viewname:
@@ -121,6 +116,17 @@ def translate_url(context, language):
     url = reverse(view.url_name, args=view.args, kwargs=view.kwargs)
     translation.activate(request_language)
     return url
+
+
+@register.filter
+def details_url(doc):
+    urls = {}
+    for language, langname in settings.LANGUAGES:
+        translation.activate(language)
+        url_name = '{}_details'.format(doc['type'])
+        url = reverse(url_name, kwargs={'slug': doc['slug']})
+        urls[language] = 'https://{}{}'.format(get_current_site(None), url)
+    return urls
 
 
 @register.filter
