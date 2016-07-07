@@ -663,6 +663,7 @@
     <field name="litNationalLegislationReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litFaolexReference" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litText" type="text" indexed="true" stored="true"/>
+    <field name="litExtraSearch" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <uniqueKey>id</uniqueKey>
 
@@ -774,5 +775,8 @@
     <copyField source="litAuthorM" dest="litAuthor"/>
     <copyField source="litCorpAuthorA" dest="litAuthor"/>
     <copyField source="litCorpAuthorM" dest="litAuthor"/>
+
+    <copyField source="litSerialTitle" dest="litExtraSearch"/>
+    <copyField source="litPublisher" dest="litExtraSearch"/>
 
 </schema>
