@@ -20,6 +20,8 @@ COPY_FIELDS = [
     "docLanguage_fr",
     "docLanguage_es",
     "litAuthor",
+    "litExtraSearch",
+    "docCountrySearch",
 ]
 
 TREATY = 'treaty'
