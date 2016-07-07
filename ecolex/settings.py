@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'static_sitemaps',
     'ckeditor',
     'ecolex',
 )
@@ -212,6 +213,9 @@ GA_ENABLED = True
 TEXT_SUGGESTION = True
 
 SITE_ID = 1
+
+STATICSITEMAPS_ROOT_SITEMAP = 'ecolex.sitemaps.sitemaps'
+STATICSITEMAPS_PING_GOOGLE = False
 
 # CKEDITOR SETTINGS
 CKEDITOR_CONFIGS = {

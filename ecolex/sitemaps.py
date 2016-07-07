@@ -26,6 +26,7 @@ class CustomSitemap(Sitemap):
 
 
 class StaticViewSitemap(Sitemap):
+    sitemap_template = 'sitemaps/translated_sitemap.xml'
     priority = 0.5
     changefreq = 'yearly'
 
@@ -37,6 +38,7 @@ class StaticViewSitemap(Sitemap):
 
 
 class DocumentSitemap(CustomSitemap):
+    sitemap_template = 'sitemaps/translated_sitemap.xml'
     pritiority = 1
     changefreq = 'weekly'
     limit = 1000
@@ -49,3 +51,9 @@ class DocumentSitemap(CustomSitemap):
 
     def lastmod(self, item):
         return item.updated_at or item.indexed_at
+
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'documents': DocumentSitemap,
+}
