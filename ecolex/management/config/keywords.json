@@ -989,6 +989,11 @@
     "en": "data collection/reporting",
     "fr": "collecte de donn\u00e9es/d\u00e9clarations"
   },
+  "collecte de donn\u00e9es/d\u00e9clarations": {
+    "es": "recopilaci\u00f3n de datos/informes",
+    "en": "data collection/reporting",
+    "fr": "collecte de donn\u00e9es/d\u00e9clarations"
+  },
   "cadastre/land registration": {
     "es": "catastro/registraci\u00f3n de tierras",
     "en": "cadastre/land registration",
@@ -1349,6 +1354,11 @@
     "en": "freshwater resources management",
     "fr": "gestion des resources en eau douce"
   },
+  "gestion des resources en eau douce": {
+    "es": "manejo de recursos h\u00eddricos",
+    "en": "freshwater resources management",
+    "fr": "gestion des resources en eau douce"
+  },
   "oil pollution": {
     "es": "contaminaci\u00f3n oleosa",
     "en": "oil pollution",
@@ -1580,6 +1590,11 @@
     "fr": "normes relatives aux  rejets d'effluents"
   },
   "access-to-information": {
+    "es": "acceso-a-la-informaci\u00f3n",
+    "en": "access-to-information",
+    "fr": "acc\u00e8s-\u00e0-l'information"
+  },
+  "acc\u00e8s-\u00e0-l'information": {
     "es": "acceso-a-la-informaci\u00f3n",
     "en": "access-to-information",
     "fr": "acc\u00e8s-\u00e0-l'information"
@@ -1839,6 +1854,11 @@
     "en": "basin/catchment/watershed",
     "fr": "bassin/captage/bassin versant"
   },
+  "captage/bassin versant": {
+    "es": "cuenca/\u00e1rea de captaci\u00f3n/cuenca colectora",
+    "en": "basin/catchment/watershed",
+    "fr": "bassin/captage/bassin versant"
+  },
   "right to property": {
     "es": "derecho a la propiedad",
     "en": "right to property",
@@ -2075,6 +2095,11 @@
     "fr": "aires d\u00e9favoris\u00e9es"
   },
   "basin": {
+    "es": "cuenca/\u00e1rea de captaci\u00f3n/cuenca colectora",
+    "en": "basin/catchment/watershed",
+    "fr": "bassin/captage/bassin versant"
+  },
+  "bassin": {
     "es": "cuenca/\u00e1rea de captaci\u00f3n/cuenca colectora",
     "en": "basin/catchment/watershed",
     "fr": "bassin/captage/bassin versant"

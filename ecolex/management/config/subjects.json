@@ -34,6 +34,11 @@
         "es": "Medio ambiente gen.",
         "fr": "Environnement g\u00e9n."
     },
+    "environnement g\u00e9n.": {
+        "en": "Environment gen.",
+        "es": "Medio ambiente gen.",
+        "fr": "Environnement g\u00e9n."
+    },
     "fisheries": {
         "en": "Fisheries",
         "es": "Pesca",
@@ -69,6 +74,11 @@
         "es": "Cuestiones jur\u00eddicas",
         "fr": "Questions juridiques"
     },
+    "questions juridiques": {
+        "en": "Legal questions",
+        "es": "Cuestiones jur\u00eddicas",
+        "fr": "Questions juridiques"
+    },
     "livestock": {
         "en": "Livestock",
         "es": "Ganado",
@@ -90,6 +100,11 @@
         "fr": "D\u00e9chets et substances dangereuses"
     },
     "water": {
+        "en": "Water",
+        "es": "Agua",
+        "fr": "Eau"
+    },
+    "eau": {
         "en": "Water",
         "es": "Agua",
         "fr": "Eau"
