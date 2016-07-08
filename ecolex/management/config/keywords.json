@@ -2978,5 +2978,10 @@
     "es": "relaciones internacionales/cooperaci\u00f3n",
     "en": "international relations/cooperation",
     "fr": "relations internationales/coop\u00e9ration"
+  },
+  "basin/catchment/watershed": {
+    "es": "cuenca/\u00e1rea de captaci\u00f3n/cuenca colectora",
+    "en": "basin/catchment/watershed",
+    "fr": "bassin/captage/bassin versant"
   }
 }
