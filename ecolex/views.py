@@ -12,7 +12,6 @@ from django.views.generic import TemplateView, View
 from django.views.generic.base import RedirectView
 
 from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS, STATIC_PAGES
-from ecolex import xviews as views
 from ecolex.export import get_exporter
 from ecolex.legislation import harvest_file
 from ecolex.models import StaticContent
@@ -36,6 +35,12 @@ class SearchView(TemplateView, SearchMixin):
         ctx['debug'] = settings.DEBUG
         ctx['text_suggestion'] = settings.TEXT_SUGGESTION
         ctx['query'] = urlencode(self.request.GET)
+
+        # A snippet of the about page should be included in Google search results
+        about_content = get_object_or_404(StaticContent, name='about')
+        lang_code = get_language()
+        about = getattr(about_content, 'body_{}'.format(lang_code))
+        ctx['about'] = about
 
         return ctx
 
@@ -252,6 +257,7 @@ class LegislationRedirectView(RedirectView):
         else:
             return HttpResponse('Arguments missing or document is not indexed')
 
+
 class OldEcolexRedirectView(RedirectView):
 
     doc_type_map = {
@@ -288,6 +294,7 @@ class OldEcolexRedirectView(RedirectView):
                 return HttpResponseRedirect(url)
         else:
             return HttpResponseRedirect(reverse('results'))
+
 
 class ExportView(View):
     def get(self, request, **kwargs):
