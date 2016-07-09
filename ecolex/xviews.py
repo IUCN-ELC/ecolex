@@ -160,7 +160,7 @@ class DetailsView(SearchViewMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         document = context['document']
-        if document.type != self.doc_type:
+        if hasattr(self, 'doc_type') and document.type != self.doc_type:
             url = reverse('{}_details'.format(document.type),
                           kwargs={'slug': document.slug})
             return HttpResponseRedirect(url)
