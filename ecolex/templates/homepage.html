@@ -1,9 +1,10 @@
 {% extends "layout.html" %}
 {% load i18n %}
+{% load tags %}
 
 {% block meta %}
   <title>ECOLEX | {% trans 'The gateway to ' %}{% trans 'environmental law' %}</title>
-  <meta name="description" content="{{ about }}"/>
+  <meta name="description" content="{{ about|striptags|html_unescape }}"/>
 {% endblock %}
 
 {% block content %}

@@ -4,7 +4,7 @@
 {% spaceless %}
 
 {% block meta %}
-  <title>{{ document.title }}</title>
+  <title>{{ document.title|striptags|html_unescape }}</title>
 {% endblock %}
 
 {% block style %}
