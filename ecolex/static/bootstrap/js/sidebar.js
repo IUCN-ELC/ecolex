@@ -1,5 +1,7 @@
 (function ($) {
   $(document).ready(function () {
+
+    $languagetest= $(".dropdown");
     $notFiltered = $("#not-filtered");
     $filtered= $("#filtered");
     $body = $("body");
@@ -8,10 +10,13 @@
     $filterTrigger = $('#filter-trigger');
     $results = $('#results');
 
+  $languagetest.click(function(){
+    console.log("lol");
+    return true;
+  });
 
     $filterTrigger.click(function () {
       console.log('opening sidebar');
-      // event.stopPropagation();
       $filters.addClass('open');
       $body.addClass("sidebaropen");
     });
