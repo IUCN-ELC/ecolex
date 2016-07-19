@@ -11,12 +11,12 @@
     $results = $('#results');
 
   $languagetest.click(function(){
-    console.log("lol");
+    colsole.log("lol");
     return true;
   });
 
     $filterTrigger.click(function () {
-      console.log('opening sidebar');
+      // console.log('opening sidebar');
       $filters.addClass('open');
       $body.addClass("sidebaropen");
     });
