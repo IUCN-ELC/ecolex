@@ -497,7 +497,7 @@ class TreatyImporter(BaseImporter):
                                       if not isinstance(v, list) or any(v))
 
     def _create_url(self, year, month, skip):
-        query_year = self.query_format % (year, month)
+        query_year = self.query_format % (year, month, year, month)
         query_hex = hexlify(str.encode(query_year)).decode()
         query = self.query_filter % (query_hex)
         page = self.query_skip % (skip)

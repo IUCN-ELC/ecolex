@@ -540,13 +540,14 @@ class LiteratureImporter(BaseImporter):
         return html.unescape(text.strip())
 
     def _create_url(self, year, month, skip):
-        query_year = self.query_format % (year, month)
+        query_year = self.query_format % (year, month, year, month)
         query_hex = hexlify(str.encode(query_year)).decode()
         query = self.query_filter % (query_hex)
         page = self.query_skip % (skip)
 
         url = '%s%s%s%s%s' % (self.literature_url, self.query_export, query,
                               self.query_type, page)
+        logger.info(url)
         return url
 
     def _get_languages(self):
