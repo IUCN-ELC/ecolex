@@ -284,15 +284,11 @@
   }
 }())
 
-        alert(parseInt(ua.substring(msie + 5, ua.indexOf(".", msie))));
 
     }
 
 
-    else  // If another browser, return 0
-    {
-        alert('otherbrowser');
-    }
+  
 })
 
 } (jQuery));
@@ -301,20 +297,6 @@
 
 
     <script type="text/javascript">
-
-//     function Cookies()
-// {
-//     var allowed = (navigator.cookieEnabled) ? true : false;
-
-//     if (typeof navigator.cookieEnabled == "undefined" && !cookieEnabled)
-//     { 
-//         document.cookie="testcookie";
-//         cookieEnabled = (document.cookie.indexOf("testcookie") != -1) ? true : false;
-//     }
-//     return (allowed);
-// }
-
-
   
         (function() {
           console.log(navigator.cookieEnabled);
