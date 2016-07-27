@@ -28,18 +28,6 @@
   <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.collapser.min.js' %}"></script>
  
  
-  <!--<script type="text/javascript">
-    $(document).ready(function() {
-      $('.cookie-message').cookieBar({ closeButton : '.btn-blue' });
-      $('.collapse-keywords').collapser({
-        mode: 'words',
-        truncate: 15,
-        speed: 0,
-        showText: '{% trans 'Show all' %}',
-        lockHide: true
-      });
-    });
-  </script>-->
 
 
 
@@ -54,9 +42,7 @@
 
 
   <header id="site-header">
-        <!--<div class="cookie-message" style="display: none;">
-     {% trans 'In order to understand how people use our site generally, and to create more valuable experiences for you, we may collect data about your use of this site (both directly and through our partners). By using this Website you agree to the use of cookies.' %} <a class="btn btn-blue" href>{% trans 'Close' %}</a>
-    </div>-->
+
     <div class="navbar navbar-default">
       <div class="container">
 
@@ -273,8 +259,7 @@
     function resize() {
       minHeight = window.innerHeight - getHeight(header) - getHeight(footer);
       body.style.minHeight = minHeight + 'px';
-      console.log(minHeight);
-      console.log(body);
+     
     }
     window.addEventListener('resize', function() {
       window.clearTimeout(resize);
@@ -299,7 +284,6 @@
     <script type="text/javascript">
   
         (function() {
-          console.log(navigator.cookieEnabled);
 
           if ($.cookie('ivisited') != "true") {
             var setCookie = function () {
