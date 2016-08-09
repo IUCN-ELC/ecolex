@@ -217,10 +217,10 @@
     {% include 'bits/participants_legend.html' with events=document.parties_events %}
 
     <div id="regions_div" style="position: relative; width: 100%; height: 750px;">
-      <button type="button" class="btn zoom-button" data-zoom="reset">0</button>
-      <button type="button" class="btn zoom-button" data-zoom="out">-</button>
-      <button type="button" class="btn zoom-button" data-zoom="in">+</button>
-      <div id="zoom-info"></div>
+      <button type="button" class="btn zoom-button" data-zoom="reset">reset</button>
+      <button type="button" class="btn zoom-button" data-zoom="out">zoom out</button>
+      <button type="button" class="btn zoom-button" data-zoom="in">zoom in</button>
+      <!--<div id="zoom-info"></div>-->
     </div>
     {% include 'bits/participants_map.html' with events=document.parties_events parties=document.parties|format_countries %}
 
