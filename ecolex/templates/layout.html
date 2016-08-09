@@ -26,18 +26,14 @@
   <script src="{{ settings.STATIC_URL }}{% version 'js/main.js' %}"></script>
   <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.cookieBar.min.js' %}"></script>
   <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.collapser.min.js' %}"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('.cookie-message').cookieBar({ closeButton : '.btn-blue' });
-      $('.collapse-keywords').collapser({
-        mode: 'words',
-        truncate: 15,
-        speed: 0,
-        showText: '{% trans 'Show all' %}',
-        lockHide: true
-      });
-    });
-  </script>
+ 
+ 
+
+
+
+
+
+
   {% block scripts %}{% endblock %}
   {% include 'bits/favicon.html' %}
 </head>
@@ -46,6 +42,7 @@
 
 
   <header id="site-header">
+
     <div class="navbar navbar-default">
       <div class="container">
 
@@ -200,9 +197,6 @@
 
     </form>
     {% block extra_content %}{% endblock %}
-    <div class="cookie-message" style="display: none;">
-     {% trans 'In order to understand how people use our site generally, and to create more valuable experiences for you, we may collect data about your use of this site (both directly and through our partners). By using this Website you agree to the use of cookies.' %} <a class="btn btn-blue" href>{% trans 'Close' %}</a>
-    </div>
   </div>
 
   <footer id="site-footer">
@@ -243,6 +237,76 @@
   <div id="backdrop"></div>
 
   <!-- end scripts -->
+<script type="text/javascript"> 
+(function ($) {
+  $(document).ready(function () {
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
+    {
+
+(function() {
+  window.onload = function() {
+    var header = document.getElementById('site-header'),
+        body = document.getElementById('site-body'),
+        footer = document.getElementById('site-footer');
+
+    function getHeight(elem) {
+      elemBox = elem.getBoundingClientRect();
+      return elemBox.bottom - elemBox.top;
+    }
+    function resize() {
+      minHeight = window.innerHeight - getHeight(header) - getHeight(footer);
+      body.style.minHeight = minHeight + 'px';
+     
+    }
+    window.addEventListener('resize', function() {
+      window.clearTimeout(resize);
+      window.setTimeout(resize, 200);
+    });
+    resize();
+  }
+}())
+
+
+    }
+
+
+  
+})
+
+} (jQuery));
+
+</script>
+
+
+    <script type="text/javascript">
+  
+        (function() {
+
+          if ($.cookie('ivisited') != "true") {
+            var setCookie = function () {
+           $.cookie('ivisited', 'true');
+              cookieDisclaimer.parentNode.removeChild(cookieDisclaimer);
+              window.removeEventListener('scroll', setCookie, false);
+            };
+            var cookieDisclaimer = document.createElement('DIV');
+            cookieDisclaimer.classList.add ('cookie-message');
+            cookieDisclaimer.innerHTML =
+              'In order to understand how people use our site generally, and to create more valuable experiences for you, we may collect data about your use of this site (both directly and through our partners). By using this Website you agree to the use of cookies.' +
+              '<a class="btn btn-blue" href>ok </a>'
+            ;
+            cookieDisclaimer.addEventListener('click', setCookie, false);
+            window.addEventListener('scroll', setCookie, false);
+            document.body.appendChild(cookieDisclaimer);
+          }
+           $.cookie('ivisited', 'true');
+        }())
+      
+  </script>
+
+
   <script src="{{ STATIC_URL }}{% version 'js/bootstrap-tour.min.js' %}"></script>
   {% include 'bits/ga.html' %}
   {% include 'tour.html' %}
