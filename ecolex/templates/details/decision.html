@@ -84,8 +84,8 @@
       {% if document.url %}
         <dt>{% trans 'Website' %}</dt>
         <dd>
-          <a href="{{ document.url }}"
-             target="_blank">{{ document.url|extract_hostname }}</a>
+          <a href="{{ document.url|url_normalize }}"
+             target="_blank">{{ document.url|url_normalize|extract_hostname }}</a>
         </dd>
       {% endif %}
 
