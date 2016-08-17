@@ -5783,7 +5783,6 @@ select.selection-facet {
 .slick-slider {
   position: relative;
   display: block;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -6480,6 +6479,15 @@ padding:10px 10px 10px 10px;
   top: auto!important;
   bottom: 0;
   min-height: 100px;
+}
+@media (min-width: 1400px) {
+  .cookie-message {
+    padding-left: 250px!important;
+    padding-right: 250px!important;
+  }
+  .cookie-message a {
+    right: 200px!important;
+  }
 }
 .filter-type {
   border-radius: 3px;
