@@ -6482,11 +6482,11 @@ padding:10px 10px 10px 10px;
 }
 @media (min-width: 1400px) {
   .cookie-message {
-    padding-left: 250px;
-    padding-right: 250px;
+    padding-left: 250px!important;
+    padding-right: 250px!important;
   }
   .cookie-message a {
-    right: 200px;
+    right: 200px!important;
   }
 }
 .filter-type {
