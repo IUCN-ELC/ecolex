@@ -899,6 +899,9 @@
         cdAbstract_en^50 cdAbstract_es^50 cdAbstract_fr^50
         cdAbstract_ru^50 cdAbstract_other^50
         cdRegion_en^25 cdRegion_fr^25 cdRegion_es^25
+        cdCourtName^25
+        cdSeatOfCourt_en^25 cdSeatOfCourt_es^25 cdSeatOfCourt_fr^25 cdSeatOfCourt_ru^25
+        cdJustices^25
 
         <!-- Legislation -->
         legLongTitle^100 legTitle^100

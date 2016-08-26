@@ -348,10 +348,10 @@
 
     <field name="cdAlternativeRecordId" type="string" indexed="false" stored="true" multiValued="false"/>
 
-    <field name="cdSeatOfCourt_en" type="string" indexed="true" stored="true" multiValued="false"/>
-    <field name="cdSeatOfCourt_es" type="string" indexed="true" stored="true" multiValued="false"/>
-    <field name="cdSeatOfCourt_fr" type="string" indexed="true" stored="true" multiValued="false"/>
-    <field name="cdSeatOfCourt_ru" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdSeatOfCourt_en" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdSeatOfCourt_es" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdSeatOfCourt_fr" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdSeatOfCourt_ru" type="text" indexed="true" stored="true" multiValued="false"/>
 
     <field name="cdCountry_en" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="cdCountry_es" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -359,7 +359,7 @@
 
     <field name="cdCourtDecisionIdNumber" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdCourtDecisionSubdivision" type="string" indexed="false" stored="true" multiValued="false"/>
-    <field name="cdCourtName" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="cdCourtName" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="cdDateOfEntry" type="tdate" indexed="true" stored="true" multiValued="false"/>
     <field name="cdDateOfModification" type="tdate" indexed="true" stored="true" multiValued="false"/>
     <field name="cdDateOfText" type="tdate" indexed="true" stored="true" multiValued="false"/>
@@ -390,7 +390,7 @@
 
     <field name="cdIsisNumber" type="string" indexed="false" stored="true" multiValued="false"/>
     <field name="cdJurisdiction" type="string" indexed="true" stored="true" multiValued="false"/>
-    <field name="cdJustices" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="cdJustices" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <field name="cdKeyword_en" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="cdKeyword_fr" type="text" indexed="true" stored="true" multiValued="true"/>
