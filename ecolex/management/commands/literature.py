@@ -23,6 +23,7 @@ logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('literature_import')
 
 TOTAL_DOCS = 'numberresultsfound'
+PRESENTED_DOCS = 'numberresultspresented'
 DOCUMENT = 'document'
 AUTHOR_START = '^a'
 AUTHOR_SPACE = '^b'
@@ -278,6 +279,11 @@ class LiteratureImporter(BaseImporter):
                     continue
 
                 total_docs = int(bs.find('result').attrs[TOTAL_DOCS])
+                presented_docs = int(bs.find('result').attrs[PRESENTED_DOCS])
+                if ( presented_docs < total_docs):
+                    logger.error('Incomplete results for %d/%d (%d out of %d)'
+                        % (month, year, presented_docs, total_docs))
+                    total_docs = presented_docs
                 total += total_docs
                 found_docs = len(bs.findAll(DOCUMENT))
                 raw_literatures.append(content)
