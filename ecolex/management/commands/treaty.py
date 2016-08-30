@@ -25,6 +25,7 @@ DOCUMENT = 'document'
 PARTY = 'party'
 COUNTRY = 'country'
 TOTAL_DOCS = 'numberresultsfound'
+PRESENTED_DOCS = 'numberresultspresented'
 NULL_DATE = format_date('0000-00-00')
 REMOTE_ID_FIELD = 'recid'
 B7 = 'International Environmental Law – Multilateral Agreements'
@@ -266,6 +267,11 @@ class TreatyImporter(BaseImporter):
                     total_docs = 0
                 else:
                     total_docs = int(result.attrs[TOTAL_DOCS])
+                    presented_docs = int(result.attrs[PRESENTED_DOCS])
+                    if ( presented_docs < total_docs):
+                        logger.error('Incomplete results for %d/%d (%d out of %d)'
+                            % (month, year, presented_docs, total_docs))
+                        total_docs = presented_docs
                 found_docs = len(bs.findAll(DOCUMENT))
                 raw_treaties.append(content)
                 logger.info(url)
