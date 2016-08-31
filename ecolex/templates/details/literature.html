@@ -36,7 +36,7 @@
       {% endif %}
 
       {% if document.is_article and document.serial_title %}
-        <dt>{% trans 'Journal/Series' %} | {% trans 'Collation Vol./p.' %}</dt>
+        <dt>{% trans 'Journal/Series' %}</dt>
         <dd>
           {{ document.serial_title|safe }}
           {% if document.volume_no %} | {{ document.volume_no|safe }} {% endif %}
