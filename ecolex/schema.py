@@ -56,6 +56,7 @@ class BaseSchema(Schema):
                             multilingual=True)
 
     xdate = fields.Date(load_from='docDate')
+    xentrydate = fields.Date(load_from='docEntryDate')
 
     class Meta:
         solr_filters = [
@@ -704,6 +705,7 @@ HIGHLIGHT_FIELDS = OrderedDict(
 
 # hardcode the sort field. 'cause practicality...
 SORT_FIELD = FIELD_PROPERTIES['_']['xdate']
+SORT_FIELD_FALLBACK = FIELD_PROPERTIES['_']['xentrydate']
 
 def extract_translations(data, field_name):
     translations = [{'language': k.split('_')[-1], 'value': v}

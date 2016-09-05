@@ -18,7 +18,7 @@ from .schema import (
     SCHEMA_MAP, FIELD_MAP,
     FILTER_FIELDS, FACET_FIELDS, STATS_FIELDS,
     FETCH_FIELDS, BOOST_FIELDS, HIGHLIGHT_FIELDS,
-    SORT_FIELD,
+    SORT_FIELD, SORT_FIELD_FALLBACK,
     to_object,
 )
 
@@ -166,6 +166,7 @@ class Queryer(object):
 
         sort_dir = "" if date_sort else "-"
         sort_field = SORT_FIELD.get_source_field(self.language)
+        #sort_field_fb = SORT_FIELD_FALLBACK.get_source_field(self.language)
         return search.sort_by("%s%s" % (sort_dir, sort_field))
 
     def get_fetch_fields(self, extra_fields=None):
