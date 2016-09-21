@@ -268,24 +268,33 @@ padding:10px 10px 10px 10px;
 
 
 .cookie-message {
-        top: auto!important;
-    bottom: 0;
+  top: auto;
+  position: fixed;
+  left:0;
+  right:0;
+  bottom: 0;
+  padding: 0 85px 0 20px;
+  z-index: 99;
+  background: #fff;
   min-height: 100px;
-      
+  display : flex;
+  align-items : center;
+  font-size: @font-size-small;
+  > p {
+    padding-right: 1em;
+  }
 }
 
 
 @media (min-width: 1400px) {
 
   .cookie-message {
-  padding-left: 250px!important;
-  padding-right: 250px!important;
+    padding-left: 250px!important;
+    padding-right: 250px!important;
   }
 
   .cookie-message a {
-  right: 200px!important;
+    right: 200px!important;
   }
-
-
 
 }

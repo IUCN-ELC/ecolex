@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/bootstrap-tour.min.css' %}">
   <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/select2.css' %}">
   <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/main.css' %}">
-  <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/cookieBar.min.css' %}">
   {% block style %}{% endblock %}
   <script src="https://code.jquery.com/jquery-1.12.1.min.js"
           integrity="sha256-I1nTg78tSrZev3kjvfdM5A5Ak/blglGzlaZANLPDl3I="
@@ -294,8 +293,8 @@
             var cookieDisclaimer = document.createElement('DIV');
             cookieDisclaimer.classList.add ('cookie-message');
             cookieDisclaimer.innerHTML =
-              'In order to understand how people use our site generally, and to create more valuable experiences for you, we may collect data about your use of this site (both directly and through our partners). By using this Website you agree to the use of cookies.' +
-              '<a class="btn btn-blue" href>ok </a>'
+              '<p>In order to understand how people use our site generally, and to create more valuable experiences for you, we may collect data about your use of this site (both directly and through our partners).<br>By using this Website you agree to the use of cookies.</p>' +
+              '<a class="btn btn-blue" href> OK </a>'
             ;
             cookieDisclaimer.addEventListener('click', setCookie, false);
             window.addEventListener('scroll', setCookie, false);
