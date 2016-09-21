@@ -517,6 +517,7 @@
     <field name="docRegion_es" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="docDate" type="tdate" indexed="true" stored="true" multiValued="false"/>
+    <field name="docEntryDate" type="tdate" indexed="true" stored="true" multiValued="false"/>
 
     <field name="docLanguage_en" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="docLanguage_fr" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -743,6 +744,12 @@
     <copyField source="cdDateOfText" dest="docDate"/>
     <copyField source="legDate" dest="docDate"/>
     <copyField source="litDate" dest="docDate"/>
+
+    <copyField source="trDateOfEntry" dest="docEntryDate"/>
+    <copyField source="decPublishDate" dest="docEntryDate"/>
+    <copyField source="cdDateOfEntry" dest="docEntryDate"/>
+    <copyField source="legDate" dest="docEntryDate"/>
+    <copyField source="litDateOfEntry" dest="docEntryDate"/>
 
     <copyField source="trLanguageOfDocument_en" dest="docLanguage_en"/>
     <copyField source="decLanguage_en" dest="docLanguage_en"/>
