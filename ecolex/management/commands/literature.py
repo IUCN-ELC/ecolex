@@ -214,19 +214,17 @@ class Literature(object):
         self.elis_id = 'litId'
 
     def is_modified(self, old_record):
-        if 'litDateOfModification' in old_record:
-            update_field = 'litDateOfModification'
-        elif 'litDateOfEntry' in old_record:
-            update_field = 'litDateOfEntry'
-        else:
+        fields = ['litDateOfModification', 'litDateOfEntry']
+        try:
+            old_date = datetime.strptime(next(
+                old_record[f] for f in fields if old_record.get(f) is not None),
+                self.date_format)
+            new_date = datetime.strptime(next(
+                self.data[f] for f in fields if self.data.get(f) is not None),
+                self.date_format)
+        except (StopIteration, ValueError):
+            logger.info('Update on %s' % (self.data[self.elis_id]))
             return True
-        if not self.data.get(update_field):
-            logger.error('No modification date for %s' %
-                         (self.data[self.elis_id]))
-            return False
-        old_date = datetime.strptime(old_record[update_field], self.date_format)
-        new_date = datetime.strptime(self.data[update_field], self.date_format)
-
         if old_date < new_date:
             logger.info('Update on %s' % (self.data[self.elis_id]))
             return True
