@@ -1664,6 +1664,11 @@
     "en": "agro-forestry/silvo-pastoralism",
     "fr": "agro-foresterie/sylvopastoralisme"
   },
+  "agro-forestry": {
+    "es": "agroforestal",
+    "en": "agro-forestry",
+    "fr": "agro-foresterie"
+  },
   "right to reasonable standard of living": {
     "es": "derecho a un nivel de vida digno",
     "en": "right to reasonable standard of living",
