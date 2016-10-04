@@ -945,9 +945,14 @@
     "fr": "produits de volaille"
   },
   "silvo-pastoralism": {
-    "es": "silvopastoral",
+    "es": "pastoreo",
     "en": "silvo-pastoralism",
-    "fr": "sylvopastoralisme"
+    "fr": "pastoralisme"
+  },
+  "pastoralism": {
+    "es": "pastoreo",
+    "en": "pastoralism",
+    "fr": "pastoralisme"
   },
   "exploration": {
     "es": "exploraci\u00f3n",
