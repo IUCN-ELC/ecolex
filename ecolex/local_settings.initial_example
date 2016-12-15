@@ -48,6 +48,7 @@ SOLR_IMPORT = {
     'common': {
         'solr_timeout': 100,
         'countries_json': os.path.join(CONFIG_DIR, 'countries.json'),
+        'fao_countries_json': os.path.join(CONFIG_DIR, 'fao_countries.json'),
         'languages_json': os.path.join(CONFIG_DIR, 'languages.json'),
         'regions_json': os.path.join(CONFIG_DIR, 'regions.json'),
         'subdivisions_json': os.path.join(CONFIG_DIR, 'subdivisions.json'),

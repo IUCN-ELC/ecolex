@@ -115,8 +115,12 @@ def harvest_file(upfile):
     with open(settings.SOLR_IMPORT['common']['subjects_json']) as f:
         json_subjects = json.load(f)
 
+    with open(settings.SOLR_IMPORT['common']['fao_countries_json'], encoding='utf-8') as f:
+        json_countries = json.load(f)
+
     with open(settings.SOLR_IMPORT['common']['languages_json']) as f:
         languages_codes = json.load(f)
+
     all_languages = {}
     for k, v in languages_codes.items():
         key = v['en'].lower()
@@ -175,6 +179,15 @@ def harvest_file(upfile):
         _set_values_from_dict(legislation, 'legGeoArea', json_regions)
         _set_values_from_dict(legislation, 'legSubject', json_subjects)
         _set_values_from_dict(legislation, 'legKeyword', json_keywords)
+
+        # overwrite countries with names from the dictionary
+        iso_country = legislation.get('legCountry_iso')
+        if iso_country:
+            fao_country = json_countries.get(iso_country)
+            if fao_country:
+                legislation['legCountry_en'] = fao_country.get('en')
+                legislation['legCountry_es'] = fao_country.get('es')
+                legislation['legCountry_fr'] = fao_country.get('fr')
 
         legYear = legislation.get('legYear')
         if legYear:
