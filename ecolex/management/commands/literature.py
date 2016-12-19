@@ -315,6 +315,7 @@ class LiteratureImporter(BaseImporter):
 
     def _parse(self, raw_literatures):
         literatures = []
+        unique_ids = set([])
         for raw_lit in raw_literatures:
             bs = BeautifulSoup(raw_lit)
             for doc in bs.findAll(DOCUMENT):
@@ -339,6 +340,12 @@ class LiteratureImporter(BaseImporter):
                             data[v] = clean_values
                         if v in data and v not in MULTIVALUED_FIELDS:
                             data[v] = data[v][0]
+
+                id = data.get('litId')
+                if id in unique_ids:
+                    logger.warn('Skipping duplicate record id %s' % (id,))
+                    continue
+                unique_ids.add(id)
 
                 if LANGUAGE_FIELD in data:
                     langs = data[LANGUAGE_FIELD]
@@ -372,7 +379,6 @@ class LiteratureImporter(BaseImporter):
                 self._set_values_from_dict(data, 'litSubject', self.subjects)
 
                 # compute litDisplayType
-                id = data.get('litId')
                 if id and 'V;' in id:
                     # Ignore unfinished records in ELIS, e.g. V;K1MON-079640
                     continue
