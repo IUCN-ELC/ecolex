@@ -217,10 +217,10 @@ class Literature(object):
         fields = ['litDateOfModification', 'litDateOfEntry']
         try:
             old_date = datetime.strptime(next(
-                old_record[f] for f in fields if old_record.get(f) is not None),
+                old_record[f] for f in fields if old_record.get(f)),
                 self.date_format)
             new_date = datetime.strptime(next(
-                self.data[f] for f in fields if self.data.get(f) is not None),
+                self.data[f] for f in fields if self.data.get(f)),
                 self.date_format)
         except (StopIteration, ValueError):
             logger.info('Update on %s' % (self.data[self.elis_id]))
