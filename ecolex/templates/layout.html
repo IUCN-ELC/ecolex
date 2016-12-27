@@ -111,7 +111,7 @@
                         <span class="icon icon-search"></span>
                     </label>
                     <input id="search" type="search" autofocus {# autosave #} class="form-control" name="q" placeholder="{% trans 'Search in record and full text' %}" value="{{ form.q.value|default:"" }}"> {# TODO: form.q.errors maybe? #} {% if form.q.value %}
-                    <span id="query-remove" class="icon icon-close"></span> {% endif %}
+                    <span id="query-remove" class="icon icon-close btn btn-default"></span> {% endif %}
                    <span class="button-control"> <button class="btn btn-search" type="submit">{% trans 'Search' %}</button></span>
                 </div>
 
@@ -177,7 +177,7 @@
           <input id="search" type="search" autofocus {# autosave #} class="form-control" name="q" placeholder="{% trans 'Search in record and full text' %}" value="{{ form.q.value|default:"" }}">
           {# TODO: form.q.errors maybe? #}
           {% if form.q.value %}
-              <span id="query-remove" class="icon icon-close"></span>
+              <span id="query-remove" class="icon icon-close btn btn-default"></span>
           {% endif %}
           <span class="button-control"><button class="btn btn-search" type="submit">{% trans 'Search' %}</button></span>
         </div>
