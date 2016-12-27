@@ -33,14 +33,23 @@
 
 
         if (window.matchMedia("(max-width: 480px)").matches) {
-  $('#participants a').removeClass('btn-link').removeClass('pull-right').addClass('btn-default').css('display', 'block');
-$('.search-form input').attr('placeholder','Search');
-} 
+            $('#participants a').removeClass('btn-link').removeClass('pull-right').addClass('btn-default').css('display', 'block');
+              
+              if($('html').attr('lang') == 'fr'){
+                $('.search-form input').attr('placeholder', 'Rechercher');
+              }
+              else if ($('html').attr('lang') == 'es'){
+                 $('.search-form input').attr('placeholder', 'Buscar');
+              }
+              else {
+                $('.search-form input').attr('placeholder', 'Search');
+              }
+        }
 
 
-$('.navbar button').on('click', function(){
-  $(this).toggleClass('button-triggered')
-})
+        $('.navbar button').on('click', function() {
+            $(this).toggleClass('button-triggered')
+        })
 
 
         //TODO find a way that doesn't depend on the link structure
