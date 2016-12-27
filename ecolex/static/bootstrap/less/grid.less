@@ -8,6 +8,9 @@
 // Set the container width, and override it for fixed navbars in media queries.
 
 .container {
+  @media (max-width: @screen-xs) {
+    overflow: auto!important;
+  }
   .container-fixed();
 
   // @media (min-width: @screen-sm-min) {

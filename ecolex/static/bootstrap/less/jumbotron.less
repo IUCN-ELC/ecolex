@@ -4,7 +4,7 @@
 
 
 .jumbotron {
-  padding: @jumbotron-padding (@jumbotron-padding / 2);
+  padding: (@jumbotron-padding / 2) (@jumbotron-padding / 2);
   color: @jumbotron-color;
   background-color: @jumbotron-bg;
 
@@ -116,6 +116,14 @@
     .slogan {
       margin-right: 1em;
       padding-left: 0;
+    }
+  }
+}
+
+@media(max-width: @screen-xs) {
+  .jumbotron {
+    br {
+      display: block!important;
     }
   }
 }
