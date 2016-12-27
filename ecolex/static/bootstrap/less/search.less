@@ -25,8 +25,8 @@ input[type="search"]::-webkit-search-results-decoration {
     border: transparent;
     background: transparent;
     box-shadow: none;
-    @media (min-width:@screen-sm){
-      right: 115px!important;
+    @media (min-width: @screen-sm) {
+        right: 115px!important;
     }
 }
 
@@ -291,5 +291,8 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .search-form {
-  position: relative;
+    position: relative;
+    input::-ms-clear {
+        display: none;
+    }
 }

@@ -6276,6 +6276,9 @@ input[type="search"]::-webkit-search-results-decoration {
 .search-form {
   position: relative;
 }
+.search-form input::-ms-clear {
+  display: none;
+}
 html {
   height: 100%;
 }
