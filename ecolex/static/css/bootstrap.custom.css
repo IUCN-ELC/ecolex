@@ -6042,6 +6042,17 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 #site-body span#query-remove {
   position: absolute;
+  top: 0;
+  right: 77px;
+  margin: 0;
+  border: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+@media (min-width: 768px) {
+  #site-body span#query-remove {
+    right: 115px!important;
+  }
 }
 @media (min-width: 768px) and (min-width: 768px) {
   .search-form.homepage {
@@ -6261,6 +6272,9 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .navbar .button-triggered:focus {
   background: #173663!important;
+}
+.search-form {
+  position: relative;
 }
 html {
   height: 100%;
