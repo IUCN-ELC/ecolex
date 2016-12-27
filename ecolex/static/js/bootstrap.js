@@ -1761,56 +1761,67 @@ if (typeof jQuery === 'undefined') {
 
 }(jQuery);
 
-(function ($) {
-  $(document).ready(function () {
+(function($) {
+    $(document).ready(function() {
 
-    $languagetest= $(".dropdown");
-    $notFiltered = $("#not-filtered");
-    $filtered= $("#filtered");
-    $body = $("body");
-    $filters = $('#filters');
-    $backdrop = $('#backdrop');
-    $filterTrigger = $('#filter-trigger');
-    $results = $('#results');
+        $languagetest = $(".dropdown");
+        $notFiltered = $("#not-filtered");
+        $filtered = $("#filtered");
+        $body = $("body");
+        $filters = $('#filters');
+        $backdrop = $('#backdrop');
+        $filterTrigger = $('#filter-trigger');
+        $results = $('#results');
 
-  $languagetest.click(function(){
-    return true;
-  });
+        $languagetest.click(function() {
+            return true;
+        });
 
-    $filterTrigger.click(function () {
-      $filters.addClass('open');
-      $body.addClass("sidebaropen");
-    });
+        $filterTrigger.click(function() {
+            $filters.addClass('open');
+            $body.addClass("sidebaropen");
+        });
 
-    $backdrop.on('click', function () {
-        
-        $filters.removeClass('open');
-        $body.removeClass('sidebaropen');
-    });
+        $backdrop.on('click', function() {
 
-          $('.dropdown-toggle').on('click', function() {
+            $filters.removeClass('open');
+            $body.removeClass('sidebaropen');
+        });
+
+        $('.dropdown-toggle').on('click', function() {
             $('.dropdown-menu').animate({
                 height: 'toggle'
             }, 200);
         })
 
 
-    //TODO find a way that doesn't depend on the link structure
-    templink = $(location).attr('href');
-    query = window.location.href.split('/').pop();
+        if (window.matchMedia("(max-width: 480px)").matches) {
+  $('#participants a').removeClass('btn-link').removeClass('pull-right').addClass('btn-default').css('display', 'block');
+$('.search-form input').attr('placeholder','Search');
+} 
 
-    if (query && query !== '?q=' && query !== '?q=&xdate_min=&xdate_max=') {
-      // filtered
-      $notFiltered.addClass('hidden');
-      $filtered.removeClass('hidden');
-    } else {
-      // not filtered
-      $notFiltered.removeClass('hidden');
-      $filtered.addClass('hidden');
-    }
-  });
 
-} (jQuery));
+$('.navbar button').on('click', function(){
+  $(this).toggleClass('button-triggered')
+})
+
+
+        //TODO find a way that doesn't depend on the link structure
+        templink = $(location).attr('href');
+        query = window.location.href.split('/').pop();
+
+        if (query && query !== '?q=' && query !== '?q=&xdate_min=&xdate_max=') {
+            // filtered
+            $notFiltered.addClass('hidden');
+            $filtered.removeClass('hidden');
+        } else {
+            // not filtered
+            $notFiltered.removeClass('hidden');
+            $filtered.addClass('hidden');
+        }
+    });
+
+}(jQuery));
 
 /* ========================================================================
  * Bootstrap: tab.js v3.3.2

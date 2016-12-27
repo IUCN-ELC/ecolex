@@ -108,6 +108,9 @@
 
 
 .participants {
+  @media (max-width: @screen-xs) {
+    display: none!important;
+  }
   @media print {
     .table;
     .table-bordered;
@@ -379,6 +382,13 @@
 }
 
 
+  }
+
+
+  #participants {
+  .section-title {
+    display: inline-block;
+  }
   }
 
 
