@@ -57,24 +57,28 @@
               {#<a data-toggle="dropdown">{% trans 'Other tools' %}<span class="caret"></span></a>#}
               {#% include 'bits/knowledge_tools.html' %#}
             {#</li>#}
-            <li><a data-toggle="tour" class="btn btn-blue">{% trans 'Take a tour' %}</a></li>
+            <li {% if page_slug == "agreement" %}class="mobile-menu-item active" {% else %} class=mobile-menu-item {% endif %} ><a href="{% url 'page' slug='agreement' %}">{% trans 'User Agreement' %}</a></li>
+            <li {% if page_slug == "privacy" %}class="mobile-menu-item active" {% else %} class=mobile-menu-item {% endif %} ><a href="{% url 'page' slug='privacy' %}">{% trans 'Privacy' %}</a></li>
+            <li {% if page_slug == "acknowledgements" %}class="mobile-menu-item active" {% else %} class=mobile-menu-item {% endif %} ><a href="{% url 'page' slug='acknowledgements' %}">{% trans 'Acknowledgments' %}</a></li>
+            <li class="tour-button-wrapper"><a data-toggle="tour" class="btn btn-blue btn-tour">{% trans 'Take a tour' %}</a></li>
             {% block commands %}{% endblock %}
           </ul>
           <ul id="language-picker" class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown">
+              <a class="dropdown-toggle">
                 <span class="text-muted">{% trans 'Language:' %}</span>
                 <strong>{{ LANGUAGE_CODE|language_name_local|capfirst }}</strong>
                 <span class="caret"></span>
               </a>
-              <ul class="dropdown-menu">{% with form.get_base_qs as query %}
+              <ul class="dropdown-menu lang-menu">{% with form.get_base_qs as query %}
                 {% get_language_info_list for LANGUAGES as langs %}
                 {% for lang in langs %}
                   <li>
                     <a href="{% translate_url lang.code %}{% if query %}?{{ query }}{% endif %}">{{ lang.name_local|capfirst }}</a>
                   </li>
                 {% endfor %}
-              {% endwith %}</ul>
+              {% endwith %}
+              </ul>
             </li>
           </ul>
         </div>
@@ -201,22 +205,13 @@
   <footer id="site-footer">
     <div class="container">
       <div class="footer-inner">
-        <nav class="footer-nav">
-          <ul>
-                        <li>
-                            <a href="{% url 'page' slug='agreement' %}">{% trans 'User Agreement' %}</a>
-                        </li>
-
-                        <li>
-                            <a href="{% url 'page' slug='privacy' %}">{% trans 'Privacy' %}</a>
-                        </li>
-
-                        <li>
-                            <a href="{% url 'page' slug='acknowledgements' %}">{% trans 'Acknowledgments' %}</a>
-                        </li>
-                    </ul>
-        </nav>
-
+      <nav class="footer-nav">
+        <ul>
+            <li><a href="{% url 'page' slug='agreement' %}">{% trans 'User Agreement' %}</a></li>
+            <li><a href="{% url 'page' slug='privacy' %}">{% trans 'Privacy' %}</a></li>
+            <li><a href="{% url 'page' slug='acknowledgements' %}">{% trans 'Acknowledgments' %}</a></li>
+        </ul>
+      </nav>
         <span class="footer-credits">
           <span>
             {% trans 'Joint initiative of ' %}<br>

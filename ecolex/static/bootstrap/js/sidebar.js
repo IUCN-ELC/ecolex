@@ -25,6 +25,13 @@
         $body.removeClass('sidebaropen');
     });
 
+          $('.dropdown-toggle').on('click', function() {
+            $('.dropdown-menu').animate({
+                height: 'toggle'
+            }, 200);
+        })
+
+
     //TODO find a way that doesn't depend on the link structure
     templink = $(location).attr('href');
     query = window.location.href.split('/').pop();
