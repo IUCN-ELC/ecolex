@@ -32,6 +32,8 @@
         })
 
 
+
+
         if (window.matchMedia("(max-width: 480px)").matches) {
             $('#participants a').removeClass('btn-link').removeClass('pull-right').addClass('btn-default').css('display', 'block');
               
@@ -45,6 +47,11 @@
                 $('.search-form input').attr('placeholder', 'Search');
               }
         }
+
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        var search_form_width = $('.search-form .button-control').width();
+        $('#query-remove').css('right',search_form_width+'px');
+      }
 
 
         $('.navbar button').on('click', function() {
