@@ -22,6 +22,7 @@ COPY_FIELDS = [
     "litAuthor",
     "litExtraSearch",
     "docCountrySearch",
+    "docEntryDate",
 ]
 
 TREATY = 'treaty'
