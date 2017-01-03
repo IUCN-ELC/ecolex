@@ -173,6 +173,7 @@ def harvest_file(upfile):
         if ('legTypeCode' in legislation):
             if legislation['legTypeCode'] == 'A':
                 # Ignore International agreements
+                logger.debug('Ignoring {}'.format(legislation.get('legId')))
                 count_ignored += 1
                 continue
 
