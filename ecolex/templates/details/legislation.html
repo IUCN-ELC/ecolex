@@ -12,7 +12,7 @@
 
 {% block scripts %}
   <script>
-    document.faolex_url = "http://faolex.fao.org/cgi-bin/faolex.exe?database=faolex&search_type=query&table=result&query=ID:{{ document.document_id }}&format_name=ERALL&lang=eng";
+    document.faolex_url = "http://www.fao.org/faolex/results/details/en/?details={{ document.document_id }}";
   </script>
 {% endblock %}
 
@@ -51,7 +51,7 @@
       <dt>{% trans 'Source' %}</dt>
       <dd>
         FAO,
-        <a target="_blank" href="http://faolex.fao.org/cgi-bin/faolex.exe?query=ID:%22{{ document.document_id }}%22&database=faolex&search_type=query&table=result&lang=eng&format_name=@ERALL">FAOLEX</a>
+        <a target="_blank" href="http://www.fao.org/faolex/results/details/en/?details={{ document.document_id }}">FAOLEX</a>
       </dd>
 
       </dd>
