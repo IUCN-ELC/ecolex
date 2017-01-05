@@ -526,6 +526,8 @@
     <!-- ELIS Literature -->
     <field name="litId" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="litId2" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="litOtherDocId" type="string" indexed="true" stored="true"/>
+
     <field name="litDate" type="tdate" indexed="true" stored="true"/>
     <field name="litAuthor" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="litAuthorM" type="text" indexed="true" stored="true" multiValued="true"/>

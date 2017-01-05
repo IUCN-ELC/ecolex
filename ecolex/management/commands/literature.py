@@ -31,6 +31,7 @@ AUTHOR_SPACE = '^b'
 FIELD_MAP = {
     'id': 'litId',
     'id2': 'litId2',
+    'otherDocId': 'litOtherDocId',
     'authora': 'litAuthorA',
     'authorm': 'litAuthorM',
     'corpauthora': 'litCorpAuthorA',
