@@ -425,6 +425,7 @@ class LiteratureSchema(CommonSchema):
     isbn = fields.List(fields.String(), load_from='litISBN')
     issn = fields.String(load_from='litISSN')
     id2 = fields.List(fields.String(), load_from='litId2')
+    reference_number = fields.String(load_from='litOtherDocId')
     int_org = fields.String(load_from='litIntOrg', multilingual=True)
     internet_reference = fields.String(load_from='litInternetReference')
     language_of_document = fields.List(fields.String(),

@@ -75,6 +75,11 @@
         {% endif %}
       {% endfor %}
 
+      {% if document.reference_number %}
+        <dt>{% trans 'Reference number' %}</dt>
+        <dd>{{ document.reference_number }}</dd>
+      {% endif %}
+
       {% if document.publisher %}
         <dt>{% trans 'Publisher' %} | {% trans 'Place of publication' %}</dt>
         <dd>
