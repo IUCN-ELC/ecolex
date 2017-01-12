@@ -61,7 +61,7 @@
             <li {% if page_slug == "privacy" %}class="mobile-menu-item active" {% else %} class=mobile-menu-item {% endif %} ><a href="{% url 'page' slug='privacy' %}">{% trans 'Privacy' %}</a></li>
             <li {% if page_slug == "acknowledgements" %}class="mobile-menu-item active" {% else %} class=mobile-menu-item {% endif %} ><a href="{% url 'page' slug='acknowledgements' %}">{% trans 'Acknowledgments' %}</a></li>
             <li><a data-toggle="tour">{% trans 'Take a tour' %}</a></li>
-            <li><a href="mailto:feedback@ecolex.org?subject=ECOLEX">{% trans 'Contact' %}</a></li>
+            <li><a href="#" onclick="javascript:window.location='mailto:feedback@ecolex.org?subject=ECOLEX&body=Page URL: '+ window.location;return false">{% trans 'Contact' %}</a></li>
             {% block commands %}{% endblock %}
           </ul>
           <ul id="language-picker" class="nav navbar-nav navbar-right">
