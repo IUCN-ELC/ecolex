@@ -1,0 +1,275 @@
+--- a/solrconfig.xml	2017-01-10 13:29:14.487726132 +0200
++++ b/solrconfig.xml	2017-01-10 18:33:31.331140936 +0200
+@@ -130,10 +130,11 @@
+        between the existing compression modes in the default codec: "BEST_SPEED" (default)
+        or "BEST_COMPRESSION".
+   -->
+   <codecFactory class="solr.SchemaCodecFactory"/>
+ 
++  <schemaFactory class="ClassicIndexSchemaFactory"/>
+   <!-- To disable dynamic schema REST APIs, use the following for <schemaFactory>:
+   
+        <schemaFactory class="ClassicIndexSchemaFactory"/>
+ 
+        When ManagedIndexSchemaFactory is specified instead, Solr will load the schema from
+@@ -147,14 +148,16 @@
+ 
+        When ManagedIndexSchemaFactory is specified with mutable = true, schema
+        modification REST API calls will be allowed; otherwise, error responses will be
+        sent back for these requests. 
+   -->
++<!--
+   <schemaFactory class="ManagedIndexSchemaFactory">
+     <bool name="mutable">true</bool>
+     <str name="managedSchemaResourceName">managed-schema</str>
+   </schemaFactory>
++ -->
+ 
+   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Index Config - These settings control low-level behavior of indexing
+        Most example settings here show the default value, but are commented
+        out, to more easily see where customizations have been made.
+@@ -599,15 +602,13 @@
+           -->
+       </arr>
+     </listener>
+     <listener event="firstSearcher" class="solr.QuerySenderListener">
+       <arr name="queries">
+-        <!--
+         <lst>
+           <str name="q">static firstSearcher warming in solrconfig.xml</str>
+         </lst>
+-        -->
+       </arr>
+     </listener>
+ 
+     <!-- Use Cold Searcher
+ 
+@@ -775,12 +776,97 @@
+          will be overridden by parameters in the request
+       -->
+     <lst name="defaults">
+       <str name="echoParams">explicit</str>
+       <int name="rows">10</int>
+-      <!-- <str name="df">text</str> -->
++      <str name="df">text</str>
++      <str name="defType">edismax</str>
++      <str name="q.op">AND</str>
++      <str name="qf">
++        <!-- General fields -->
++        text^20
++        <!-- Document id -->
++        docId^100
++        <!-- Keywords -->
++        legKeyword_en^30 cdKeyword_en^30 litKeyword_en^30 decKeyword_en^30 trKeyword_en^30
++        legKeyword_fr^30 cdKeyword_fr^30 litKeyword_fr^30 decKeyword_fr^30 trKeyword_fr^30
++        legKeyword_es^30 cdKeyword_es^30 litKeyword_es^30 decKeyword_es^30 trKeyword_es^30
++
++        <!-- Subjects -->
++        legSubject_en^30 cdSubject_en^30 litSubject_en^30 trSubject_en^30
++        legSubject_fr^30 cdSubject_fr^30 litSubject_fr^30 trSubject_fr^30
++        legSubject_es^30 cdSubject_es^30 litSubject_es^30 trSubject_es^30
++
++        <!-- Country -->
++        docCountrySearch^30
++
++        <!-- Treaty -->
++        trTitleOfText_en^110 trTitleOfText_es^110
++        trTitleOfText_fr^110 trTitleOfText_other^110
++        trTitleAbbreviation^75 trTitleOfTextShort^75
++        trAbstract_en^50 trAbstract_fr^50 trAbstract_es^50
++        trBasin_en^25 trBasin_fr^25 trBasin_es^25
++        trRegion_en^25 trRegion_fr^25 trRegion_es^25
++
++        <!-- COP Decision -->
++        decShortTitle_en^100 decShortTitle_es^100 decShortTitle_fr^100
++        decShortTitle_ar^100 decShortTitle_ru^100 decShortTitle_zh^100
++        decLongTitle_en^100 decLongTitle_es^100 decLongTitle_fr^100
++        decLongTitle_ar^100 decLongTitle_ru^100 decLongTitle_zh^100
++        decSummary_en^50 decSummary_es^50 decSummary_fr^50
++        decBody_en^20 decBody_es^20 decBody_fr^20
++        decBody_ru^20 decBody_ar^20 decBody_zh^20
++
++        <!-- Literature -->
++        litLongTitle_en^100 litLongTitle_fr^100
++        litLongTitle_es^100 litLongTitle_other^100
++        litPaperTitleOfText_en^100 litPaperTitleOfText_fr^100
++        litPaperTitleOfText_es^100 litPaperTitleOfText_other^100
++        litAuthorM^90 litAuthorA^90
++        litCorpAuthorM^90 litCorpAuthorA^90
++        litExtraSearch^75
++        litAbstract_en^50 litAbstract_fr^50 litAbstract_es^50 litAbstract_other^50
++        litBasin_en^25 litBasin_fr^25 litBasin_es^25
++        litRegion_en^25 litRegion_fr^25 litRegion_es^25
++
++        <!-- Court Decision -->
++        cdTitleOfText_en^100 cdTitleOfText_es^100 cdTitleOfText_fr^100
++        cdTitleOfText_ru^100 cdTitleOfText_other^100
++        cdAbstract_en^50 cdAbstract_es^50 cdAbstract_fr^50
++        cdAbstract_ru^50 cdAbstract_other^50
++        cdRegion_en^25 cdRegion_fr^25 cdRegion_es^25
++        cdCourtName^25
++        cdSeatOfCourt_en^25 cdSeatOfCourt_es^25 cdSeatOfCourt_fr^25 cdSeatOfCourt_ru^25
++        cdJustices^25
++
++        <!-- Legislation -->
++        legLongTitle^100 legTitle^100
++        legAbstract^50
++        legBasin_en^25 legBasin_fr^25 legBasin_es^25
++        legGeoArea_en^25 legGeoArea_fr^25 legGeoArea_es^25
++      </str>
++      <!-- Solr will use suggestions from both the 'default' spellchecker
++                      and from the 'wordbreak' spellchecker and combine them.
++           collations (re-written queries) can include a combination of
++           corrections from both spellcheckers -->
++      <str name="spellcheck.dictionary">default</str>
++      <!--
++                 <str name="spellcheck.dictionary">wordbreak</str>
++      <str name="spellcheck">on</str>
++      <str name="spellcheck.extendedResults">true</str>
++      <str name="spellcheck.count">10</str>
++      <str name="spellcheck.alternativeTermCount">5</str>
++      <str name="spellcheck.maxResultsForSuggest">5</str>
++      <str name="spellcheck.collate">true</str>
++      <str name="spellcheck.collateExtendedResults">true</str>
++      <str name="spellcheck.maxCollationTries">10</str>
++      <str name="spellcheck.maxCollations">5</str>
++      -->
+     </lst>
++    <arr name="last-components">
++      <str>spellcheck</str>
++    </arr>
+     <!-- In addition to defaults, "appends" params can be specified
+          to identify values which should be appended to the list of
+          multi-val params from the query (or the existing "defaults").
+       -->
+     <!-- In this example, the param "fq=instock:true" would be appended to
+@@ -851,18 +937,21 @@
+ 
+ 
+   <initParams path="/update/**,/query,/select,/tvrh,/elevate,/spell,/browse">
+     <lst name="defaults">
+       <str name="df">_text_</str>
++      <str name="update.chain">ecolex</str>
+     </lst>
+   </initParams>
+ 
++<!--
+   <initParams path="/update/**">
+     <lst name="defaults">
+       <str name="update.chain">add-unknown-fields-to-the-schema</str>
+     </lst>
+   </initParams>
++ -->
+ 
+   <!-- Solr Cell Update Request Handler
+ 
+        http://wiki.apache.org/solr/ExtractingRequestHandler 
+ 
+@@ -975,10 +1064,26 @@
+   -->
+   <requestHandler name="/analysis/document"
+                   class="solr.DocumentAnalysisRequestHandler"
+                   startup="lazy" />
+ 
++  <!-- ping/healthcheck -->
++  <requestHandler name="/admin/ping" class="solr.PingRequestHandler">
++    <lst name="invariants">
++      <str name="q">solrpingquery</str>
++    </lst>
++    <lst name="defaults">
++      <str name="echoParams">all</str>
++    </lst>
++    <!-- An optional feature of the PingRequestHandler is to configure the
++         handler with a "healthcheckFile" which can be used to enable/disable
++         the PingRequestHandler.
++         relative paths are resolved against the data dir
++      -->
++    <!-- <str name="healthcheckFile">server-enabled.txt</str> -->
++  </requestHandler>
++
+   <!-- Echo the request contents back to the client -->
+   <requestHandler name="/debug/dump" class="solr.DumpRequestHandler" >
+     <lst name="defaults">
+       <str name="echoParams">explicit</str>
+       <str name="echoHandler">true</str>
+@@ -1166,25 +1271,31 @@
+ 
+        a search component that enables you to configure the top
+        results for a given query regardless of the normal lucene
+        scoring.
+     -->
++<!--
+   <searchComponent name="elevator" class="solr.QueryElevationComponent" >
++-->
+     <!-- pick a fieldType to analyze queries -->
++<!--
+     <str name="queryFieldType">string</str>
+     <str name="config-file">elevate.xml</str>
+   </searchComponent>
++-->
+ 
+   <!-- A request handler for demonstrating the elevator component -->
++<!--
+   <requestHandler name="/elevate" class="solr.SearchHandler" startup="lazy">
+     <lst name="defaults">
+       <str name="echoParams">explicit</str>
+     </lst>
+     <arr name="last-components">
+       <str>elevator</str>
+     </arr>
+   </requestHandler>
++-->
+ 
+   <!-- Highlighting Component
+ 
+        http://wiki.apache.org/solr/HighlightingParameters
+     -->
+@@ -1311,12 +1422,15 @@
+        declaring schemaFactory as ManagedIndexSchemaFactory, with
+        mutable specified as true. 
+        
+        See http://wiki.apache.org/solr/GuessingFieldTypes
+     -->
++<!--
+   <updateRequestProcessorChain name="add-unknown-fields-to-the-schema">
++-->
+     <!-- UUIDUpdateProcessorFactory will generate an id if none is present in the incoming document -->
++<!--
+     <processor class="solr.UUIDUpdateProcessorFactory" />
+ 
+     <processor class="solr.LogUpdateProcessorFactory"/>
+     <processor class="solr.DistributedUpdateProcessorFactory"/>
+     <processor class="solr.RemoveBlankFieldUpdateProcessorFactory"/>
+@@ -1368,10 +1482,11 @@
+         <str name="fieldType">tdoubles</str>
+       </lst>
+     </processor>
+     <processor class="solr.RunUpdateProcessorFactory"/>
+   </updateRequestProcessorChain>
++-->
+ 
+   <!-- Deduplication
+ 
+        An example dedup update processor that creates the "id" field
+        on the fly based on the hash code of some other fields.  This
+@@ -1432,10 +1547,19 @@
+       </processor>
+       <processor class="solr.RunUpdateProcessorFactory" />
+     </updateRequestProcessorChain>
+   -->
+ 
++  <updateRequestProcessorChain name="ecolex">
++    <processor class="solr.UUIDUpdateProcessorFactory">
++      <str name="fieldName">id</str>
++    </processor>
++    <processor class="TrimFieldUpdateProcessorFactory" /> <!--  Get rid of leading/trailing spaces. Also empties all-spaces fields for next filter-->
++    <processor class="RemoveBlankFieldUpdateProcessorFactory" /> <!--  Delete fields with no content. More efficient and allows to query for presence/absence of field -->
++    <processor class="solr.LogUpdateProcessorFactory" />
++    <processor class="solr.RunUpdateProcessorFactory" />
++  </updateRequestProcessorChain>
+   <!-- Response Writers
+ 
+        http://wiki.apache.org/solr/QueryResponseWriter
+ 
+        Request responses will be written using the writer specified by

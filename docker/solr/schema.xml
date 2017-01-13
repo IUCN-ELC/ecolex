@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Solr managed schema - automatically generated - DO NOT EDIT -->
+<schema name="ecolex" version="1.1">
+  <uniqueKey>id</uniqueKey>
+  <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
+  <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
+  <fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
+  <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+  <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+  <fieldType name="tdate" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0"/>
+
+  <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
+    <analyzer type="index">
+      <filter class="solr.ASCIIFoldingFilterFactory"/>
+      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <filter class="solr.StandardFilterFactory"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.ASCIIFoldingFilterFactory"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_en.txt,lang/stopwords_es.txt,lang/stopwords_fr.txt" ignoreCase="true"/>
+    </analyzer>
+  </fieldType>
+  <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+    <analyzer type="index">
+      <filter class="solr.ASCIIFoldingFilterFactory"/>
+      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_en.txt,lang/stopwords_es.txt,lang/stopwords_fr.txt" ignoreCase="true"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <filter class="solr.ASCIIFoldingFilterFactory"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_en.txt,lang/stopwords_es.txt,lang/stopwords_fr.txt" ignoreCase="true"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
+  <fieldType name="text_numeric_sortable" class="solr.TextField" omitNorms="true">
+    <analyzer>
+      <tokenizer class="solr.KeywordTokenizerFactory"/>
+      <filter class="solr.PatternReplaceFilterFactory" replace="all" replacement="00$1" pattern="([0-9]+)"/>
+      <filter class="solr.PatternReplaceFilterFactory" replace="all" replacement="$1" pattern="0*([0-9]{3,})"/>
+    </analyzer>
+  </fieldType>
+  <fieldType name="text_stripped" class="solr.TextField" positionIncrementGap="100">
+    <analyzer type="index">
+      <charFilter class="solr.HTMLStripCharFilterFactory"/>
+      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <filter class="solr.StandardFilterFactory"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.ASCIIFoldingFilterFactory"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_en.txt,lang/stopwords_es.txt,lang/stopwords_fr.txt" ignoreCase="true"/>
+    </analyzer>
+  </fieldType>
+  <field name="_version_" type="long" indexed="true" stored="true"/>
+  <field name="cdAbstract_en" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdAbstract_es" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdAbstract_fr" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdAbstract_other" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdAbstract_ru" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdAlternativeRecordId" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdAvailableIn" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdCountry_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdCountry_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdCountry_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdCourtDecisionIdNumber" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdCourtDecisionReference" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdCourtDecisionSubdivision" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdCourtName" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdDateOfEntry" type="tdate" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdDateOfModification" type="tdate" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdDateOfText" type="tdate" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdEcolexUrl_en" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdEcolexUrl_es" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdEcolexUrl_fr" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdEcolexUrl_ru" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdFaolexReference" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdFaolexUrl_en" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdFaolexUrl_es" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdFaolexUrl_fr" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdFaolexUrl_ru" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdInformeaTags" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdInstance" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdInternetReference" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdInternetReference_en" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdInternetReference_es" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdInternetReference_fr" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdInternetReference_ru" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdIsisNumber" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdJurisdiction" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdJustices" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdKeyword_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdKeyword_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdKeyword_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdLanguageOfDocument_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdLanguageOfDocument_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdLanguageOfDocument_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdLeoDefaultUrl" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdLeoEnglishUrl" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdLeoId" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdLinkToAbstract" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdLinkToFullText" type="string" multiValued="true" indexed="false" stored="true"/>
+  <field name="cdLinkToFullText_other" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdNotes" type="string" multiValued="true" indexed="false" stored="true"/>
+  <field name="cdNumberOfPages" type="int" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdOfficialPublication" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdOriginalId" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdReferenceNumber" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdRegion_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdRegion_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdRegion_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdRelatedUrl_en" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdRelatedUrl_es" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdRelatedUrl_fr" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdRelatedUrl_ru" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdSeatOfCourt_en" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdSeatOfCourt_es" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdSeatOfCourt_fr" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdSeatOfCourt_ru" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdStatusOfDecision" type="string" multiValued="false" indexed="false" stored="true"/>
+  <field name="cdSubject_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdSubject_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdSubject_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdTerritorialSubdivision_en" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdTerritorialSubdivision_es" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdTerritorialSubdivision_fr" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdText" type="text" indexed="true" stored="true"/>
+  <field name="cdTitleOfTextShort" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdTitleOfText_en" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdTitleOfText_es" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdTitleOfText_fr" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdTitleOfText_other" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdTitleOfText_ru" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="cdTreatyReference" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="cdTypeOfText" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="decBody_ar" type="text_stripped" indexed="true" stored="true"/>
+  <field name="decBody_en" type="text_stripped" indexed="true" stored="true"/>
+  <field name="decBody_es" type="text_stripped" indexed="true" stored="true"/>
+  <field name="decBody_fr" type="text_stripped" indexed="true" stored="true"/>
+  <field name="decBody_ru" type="text_stripped" indexed="true" stored="true"/>
+  <field name="decBody_zh" type="text_stripped" indexed="true" stored="true"/>
+  <field name="decFileNames" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="decFileUrls" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="decId" type="string" indexed="true" stored="true"/>
+  <field name="decKeyword_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="decKeyword_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="decKeyword_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="decLanguage_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="decLanguage_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="decLanguage_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="decLink" type="string" indexed="false" stored="true"/>
+  <field name="decLongTitle_ar" type="text" indexed="true" stored="true"/>
+  <field name="decLongTitle_en" type="text" indexed="true" stored="true"/>
+  <field name="decLongTitle_es" type="text" indexed="true" stored="true"/>
+  <field name="decLongTitle_fr" type="text" indexed="true" stored="true"/>
+  <field name="decLongTitle_ru" type="text" indexed="true" stored="true"/>
+  <field name="decLongTitle_zh" type="text" indexed="true" stored="true"/>
+  <field name="decMeetingId" type="string" indexed="false" stored="true" docValues="true"/>
+  <field name="decMeetingId_group" type="string" indexed="false" stored="false" docValues="true"/>
+  <field name="decMeetingTitle" type="string" indexed="false" stored="true"/>
+  <field name="decMeetingUrl" type="string" indexed="false" stored="true"/>
+  <field name="decNumber" type="string" indexed="false" stored="true"/>
+  <field name="decNumber_sort" type="text_numeric_sortable" indexed="true" stored="false"/>
+  <field name="decPublishDate" type="tdate" indexed="false" stored="true"/>
+  <field name="decShortTitle_ar" type="text" indexed="true" stored="true"/>
+  <field name="decShortTitle_en" type="text" indexed="true" stored="true"/>
+  <field name="decShortTitle_es" type="text" indexed="true" stored="true"/>
+  <field name="decShortTitle_fr" type="text" indexed="true" stored="true"/>
+  <field name="decShortTitle_ru" type="text" indexed="true" stored="true"/>
+  <field name="decShortTitle_zh" type="text" indexed="true" stored="true"/>
+  <field name="decStatus" type="string" indexed="true" stored="true"/>
+  <field name="decSummary_en" type="text" indexed="true" stored="true"/>
+  <field name="decSummary_es" type="text" indexed="true" stored="true"/>
+  <field name="decSummary_fr" type="text" indexed="true" stored="true"/>
+  <field name="decText" type="text" indexed="true" stored="true"/>
+  <field name="decTitleOfText" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="decTreaty" type="string" indexed="true" stored="true"/>
+  <field name="decTreatyId" type="string" indexed="true" stored="true"/>
+  <field name="decTreatyName_en" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="decTreatyName_es" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="decTreatyName_fr" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="decType" type="string" indexed="true" stored="true"/>
+  <field name="decUpdateDate" type="tdate" indexed="false" stored="true"/>
+  <field name="docCountrySearch" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="docCountry_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="docCountry_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="docCountry_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="docDate" type="tdate" multiValued="false" indexed="true" stored="true"/>
+  <field name="docEntryDate" type="tdate" multiValued="false" indexed="true" stored="true"/>
+  <field name="docId" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="docKeyword_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="docKeyword_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="docKeyword_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="docLanguage_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="docLanguage_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="docLanguage_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="docRegion_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="docRegion_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="docRegion_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="docSubject_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="docSubject_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="docSubject_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="evAbbreviation" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="evAccess" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="evCity" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="evCountryId" type="int" multiValued="true" indexed="true" stored="true"/>
+  <field name="evDescription" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="evEnd" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="evEventUrl" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="evId" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="evIdEventPrevious" type="int" multiValued="true" indexed="true" stored="true"/>
+  <field name="evImage" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="evImageCopyRight" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="evIsIndexed" type="boolean" multiValued="true" indexed="true" stored="true"/>
+  <field name="evKind" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="evLatitude" type="double" multiValued="true" indexed="true" stored="true"/>
+  <field name="evLocation" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="evLongitude" type="double" multiValued="true" indexed="true" stored="true"/>
+  <field name="evOrganizationId" type="int" multiValued="true" indexed="true" stored="true"/>
+  <field name="evOriginalId" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="evPersonId" type="int" multiValued="true" indexed="true" stored="true"/>
+  <field name="evRecAuthor" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="evRecCreated" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="evRecUpdated" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="evRecUpdatedAuthor" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="evRepetition" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="evStart" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="evStatus" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="evTitle" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="evTreatyId" type="int" multiValued="true" indexed="true" stored="true"/>
+  <field name="evType" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="evUseInformea" type="boolean" multiValued="true" indexed="true" stored="true"/>
+  <field name="globalText" type="text_general" multiValued="true" indexed="true" stored="false"/>
+  <field name="id" type="string" indexed="true" required="true" stored="true"/>
+  <field name="indexedDate" type="tdate" default="NOW" indexed="false" stored="true"/>
+  <field name="legAbstract" type="text" indexed="true" stored="true"/>
+  <field name="legAmends" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="legBasin_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="legBasin_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="legBasin_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="legCitesTreaty" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="legCountry_en" type="string" indexed="true" stored="true"/>
+  <field name="legCountry_es" type="string" indexed="true" stored="true"/>
+  <field name="legCountry_fr" type="string" indexed="true" stored="true"/>
+  <field name="legCountry_iso" type="string" indexed="true" stored="true"/>
+  <field name="legDate" type="tdate" indexed="true" stored="true"/>
+  <field name="legEntryIntoForce" type="string" indexed="true" stored="true"/>
+  <field name="legGeoArea_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="legGeoArea_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="legGeoArea_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="legId" type="string" indexed="true" stored="true"/>
+  <field name="legImplement" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="legImplementTreaty" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="legKeyword_code" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="legKeyword_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="legKeyword_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="legKeyword_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="legLanguage_code" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="legLanguage_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="legLanguage_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="legLanguage_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="legLinkToFullText" type="string" indexed="true" stored="true"/>
+  <field name="legLongTitle" type="text" indexed="true" stored="true"/>
+  <field name="legOriginalYear" type="string" indexed="true" stored="true"/>
+  <field name="legRelatedWebSite" type="string" indexed="true" stored="true"/>
+  <field name="legRepeals" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="legSource" type="string" indexed="true" stored="true"/>
+  <field name="legStatus" type="string" indexed="true" stored="true"/>
+  <field name="legSubject_code" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="legSubject_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="legSubject_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="legSubject_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="legTerritorialSubdivision" type="string" indexed="true" stored="true"/>
+  <field name="legText" type="text" indexed="true" stored="false"/>
+  <field name="legTitle" type="text" indexed="true" stored="true"/>
+  <field name="legTypeCode" type="string" indexed="true" stored="true"/>
+  <field name="legType_en" type="string" indexed="true" stored="true"/>
+  <field name="legType_es" type="string" indexed="true" stored="true"/>
+  <field name="legType_fr" type="string" indexed="true" stored="true"/>
+  <field name="legYear" type="string" indexed="true" stored="true"/>
+  <field name="litAbstract_en" type="text" indexed="true" stored="true"/>
+  <field name="litAbstract_es" type="text" indexed="true" stored="true"/>
+  <field name="litAbstract_fr" type="text" indexed="true" stored="true"/>
+  <field name="litAbstract_other" type="text" indexed="true" stored="true"/>
+  <field name="litAuthor" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litAuthorA" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litAuthorM" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litAvailableIn" type="string" indexed="false" stored="true"/>
+  <field name="litBasin_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litBasin_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litBasin_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litCallNo" type="string" indexed="false" stored="true"/>
+  <field name="litCollation" type="string" indexed="false" stored="true"/>
+  <field name="litConfDate" type="string" indexed="false" stored="true"/>
+  <field name="litConfName_en" type="text" indexed="true" stored="true"/>
+  <field name="litConfName_es" type="text" indexed="true" stored="true"/>
+  <field name="litConfName_fr" type="text" indexed="true" stored="true"/>
+  <field name="litConfName_other" type="text" indexed="true" stored="true"/>
+  <field name="litConfNo" type="string" indexed="false" stored="true"/>
+  <field name="litConfPlace" type="string" indexed="false" stored="true"/>
+  <field name="litContributor" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litCorpAuthorA" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litCorpAuthorM" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litCountry_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litCountry_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litCountry_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litCourtDecisionReference" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litDate" type="tdate" indexed="true" stored="true"/>
+  <field name="litDateOfEntry" type="tdate" indexed="true" stored="true"/>
+  <field name="litDateOfModification" type="tdate" indexed="true" stored="true"/>
+  <field name="litDateOfText" type="string" indexed="false" stored="true"/>
+  <field name="litDateOfTextSer" type="string" indexed="false" stored="true"/>
+  <field name="litDisplayDetails" type="text" indexed="true" stored="true"/>
+  <field name="litDisplayRegion_en" type="text" indexed="true" stored="true"/>
+  <field name="litDisplayRegion_es" type="text" indexed="true" stored="true"/>
+  <field name="litDisplayRegion_fr" type="text" indexed="true" stored="true"/>
+  <field name="litDisplayTitle" type="text" indexed="true" stored="true"/>
+  <field name="litDisplayType_en" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="litDisplayType_es" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="litDisplayType_fr" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="litEULegislationReference" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litEdition" type="string" indexed="false" stored="true"/>
+  <field name="litExtraSearch" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litFaolexReference" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litFormerTitle" type="string" indexed="false" stored="true"/>
+  <field name="litFrequency" type="string" indexed="false" stored="true"/>
+  <field name="litHoldings" type="string" indexed="false" stored="true"/>
+  <field name="litISBN" type="string" multiValued="true" indexed="false" stored="true"/>
+  <field name="litISSN" type="string" indexed="false" stored="true"/>
+  <field name="litId" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="litId2" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litIntOrg_en" type="string" indexed="true" stored="true"/>
+  <field name="litIntOrg_es" type="string" indexed="true" stored="true"/>
+  <field name="litIntOrg_fr" type="string" indexed="true" stored="true"/>
+  <field name="litInternetReference" type="string" indexed="false" stored="true"/>
+  <field name="litKeyword_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litKeyword_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litKeyword_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litLanguageOfDocument_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litLanguageOfDocument_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litLanguageOfDocument_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litLanguageOfTranslation_en" type="string" indexed="false" stored="true"/>
+  <field name="litLanguageOfTranslation_es" type="string" indexed="false" stored="true"/>
+  <field name="litLanguageOfTranslation_fr" type="string" indexed="false" stored="true"/>
+  <field name="litLinkDOI" type="string" indexed="false" stored="true"/>
+  <field name="litLinkToAbstract" type="string" indexed="false" stored="true"/>
+  <field name="litLinkToFullText" type="string" multiValued="true" indexed="false" stored="true"/>
+  <field name="litLiteratureReference" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litLocation" type="string" indexed="true" stored="true"/>
+  <field name="litLongTitle_en" type="text" indexed="true" stored="true"/>
+  <field name="litLongTitle_es" type="text" indexed="true" stored="true"/>
+  <field name="litLongTitle_fr" type="text" indexed="true" stored="true"/>
+  <field name="litLongTitle_other" type="text" indexed="true" stored="true"/>
+  <field name="litModeOfAcquisition" type="string" indexed="false" stored="true"/>
+  <field name="litNationalLegislationReference" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litOtherDocId" type="string" indexed="true" stored="true"/>
+  <field name="litPaperTitleOfText_en" type="text" indexed="true" stored="true"/>
+  <field name="litPaperTitleOfText_es" type="text" indexed="true" stored="true"/>
+  <field name="litPaperTitleOfText_fr" type="text" indexed="true" stored="true"/>
+  <field name="litPaperTitleOfText_other" type="text" indexed="true" stored="true"/>
+  <field name="litPublPlace" type="string" indexed="false" stored="true"/>
+  <field name="litPublisher" type="string" indexed="true" stored="true"/>
+  <field name="litRegion_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litRegion_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litRegion_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litRelatedMonograph" type="string" indexed="true" stored="true"/>
+  <field name="litRelatedWebSite" type="string" indexed="false" stored="true"/>
+  <field name="litScope_en" type="text" indexed="true" stored="true"/>
+  <field name="litScope_es" type="text" indexed="true" stored="true"/>
+  <field name="litScope_fr" type="text" indexed="true" stored="true"/>
+  <field name="litSearchDate" type="string" indexed="false" stored="true"/>
+  <field name="litSerialStatus" type="string" indexed="false" stored="true"/>
+  <field name="litSerialTitle" type="string" indexed="true" stored="true"/>
+  <field name="litSeriesFlag" type="string" indexed="false" stored="true"/>
+  <field name="litSubject_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litSubject_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litSubject_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="litTerritorialSubdivision_en" type="string" indexed="false" stored="true"/>
+  <field name="litTerritorialSubdivision_es" type="string" indexed="false" stored="true"/>
+  <field name="litTerritorialSubdivision_fr" type="string" indexed="false" stored="true"/>
+  <field name="litText" type="text" indexed="true" stored="true"/>
+  <field name="litTitleAbbreviation" type="string" indexed="true" stored="true"/>
+  <field name="litTitleOfTextShort_en" type="text" indexed="true" stored="true"/>
+  <field name="litTitleOfTextShort_es" type="text" indexed="true" stored="true"/>
+  <field name="litTitleOfTextShort_fr" type="text" indexed="true" stored="true"/>
+  <field name="litTitleOfTextShort_other" type="text" indexed="true" stored="true"/>
+  <field name="litTitleOfTextTransl_en" type="text" indexed="true" stored="true"/>
+  <field name="litTitleOfTextTransl_es" type="text" indexed="true" stored="true"/>
+  <field name="litTitleOfTextTransl_fr" type="text" indexed="true" stored="true"/>
+  <field name="litTreatyReference" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litTypeOfText_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litTypeOfText_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litTypeOfText_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litVolumeNo" type="string" indexed="false" stored="true"/>
+  <field name="litYearOfText" type="string" indexed="false" stored="true"/>
+  <field name="partyCountry_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="partyCountry_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="partyCountry_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="partyDateOfAcceptanceApproval" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="partyDateOfAccessionApprobation" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="partyDateOfConsentToBeBound" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="partyDateOfDefiniteSignature" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="partyDateOfParticipation" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="partyDateOfProvisionalApplication" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="partyDateOfRatification" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="partyDateOfReservation" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="partyDateOfSimpleSignature" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="partyDateOfSuccession" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="partyDateOfWithdrawal" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="partyEntryIntoForce" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="relatedwebsite" type="string" indexed="false" stored="true"/>
+  <field name="slug" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="text" type="text_general" multiValued="true" indexed="true" stored="false"/>
+  <field name="trAbstract_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trAbstract_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trAbstract_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trAmendsTreaty" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trAvailableIn" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="trBasin_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trBasin_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trBasin_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trCitesTreaty" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trComment" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trConfName" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trConfPlace" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trCourtName" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trDateOfConsolidation" type="tdate" multiValued="true" indexed="true" stored="true"/>
+  <field name="trDateOfEntry" type="tdate" indexed="true" stored="true"/>
+  <field name="trDateOfLastLegalAction" type="tdate" indexed="true" stored="true"/>
+  <field name="trDateOfModification" type="tdate" indexed="true" stored="true"/>
+  <field name="trDateOfText" type="tdate" indexed="true" stored="true"/>
+  <field name="trDepository_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trDepository_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trDepository_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trElisId" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="trEnabled" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="trEnabledByTreaty" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trEntryIntoForceDate" type="tdate" indexed="true" stored="true"/>
+  <field name="trFieldOfApplication_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trFieldOfApplication_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trFieldOfApplication_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trInformeaId" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="trInternetReference_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trInternetReference_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trInternetReference_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trInternetReference_other" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trIntoForceTreaty" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trIsProtocol" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="trJurisdiction_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trJurisdiction_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trJurisdiction_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trKeyword_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trKeyword_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trKeyword_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trLanguageOfDocument_en" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trLanguageOfDocument_es" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trLanguageOfDocument_fr" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trLanguageOfTranslation" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trLinkToAbstract" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trLinkToFullText_en" type="string" multiValued="true" indexed="false" stored="true"/>
+  <field name="trLinkToFullText_es" type="string" multiValued="true" indexed="false" stored="true"/>
+  <field name="trLinkToFullText_fr" type="string" multiValued="true" indexed="false" stored="true"/>
+  <field name="trLinkToFullText_other" type="string" multiValued="true" indexed="false" stored="true"/>
+  <field name="trLogoMedium" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="trNumberOfPages" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trNumberOfParties" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trObsolete" type="string" indexed="true" stored="true"/>
+  <field name="trOfficialPublication" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trOrder" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="trParentId" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="trPlaceOfAdoption" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="trPrimary" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trRegion_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trRegion_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trRegion_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trRelatedWebSite" type="string" multiValued="true" indexed="false" stored="true"/>
+  <field name="trRelevantTextTreaty" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trSearchDate" type="tdate" indexed="true" stored="true"/>
+  <field name="trSeatOfCourt" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trStatus" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="trSubject_en" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trSubject_es" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trSubject_fr" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trSupersedesTreaty" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="trText" type="text" indexed="true" stored="true"/>
+  <field name="trThemeSecondary" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trTitleAbbreviation" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trTitleOfTextShort" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="trTitleOfText_en" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="trTitleOfText_es" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="trTitleOfText_fr" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="trTitleOfText_other" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="trTypeOfText_en" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="trTypeOfText_es" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="trTypeOfText_fr" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="trUrl" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trUrlElearning" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trUrlParties" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trUrlTreatyText" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="trUrlWikipedia" type="text" multiValued="true" indexed="true" stored="true"/>
+  <field name="type" type="string" indexed="true" required="true" stored="true"/>
+  <field name="updatedDate" type="tdate" indexed="true" stored="true"/>
+  <copyField source="cdCountry_en" dest="docCountrySearch"/>
+  <copyField source="cdCountry_en" dest="docCountry_en"/>
+  <copyField source="cdCountry_es" dest="docCountrySearch"/>
+  <copyField source="cdCountry_es" dest="docCountry_es"/>
+  <copyField source="cdCountry_fr" dest="docCountrySearch"/>
+  <copyField source="cdCountry_fr" dest="docCountry_fr"/>
+  <copyField source="cdDateOfEntry" dest="docEntryDate"/>
+  <copyField source="cdDateOfText" dest="docDate"/>
+  <copyField source="cdKeyword_en" dest="docKeyword_en"/>
+  <copyField source="cdKeyword_es" dest="docKeyword_es"/>
+  <copyField source="cdKeyword_fr" dest="docKeyword_fr"/>
+  <copyField source="cdLanguageOfDocument_en" dest="docLanguage_en"/>
+  <copyField source="cdLanguageOfDocument_es" dest="docLanguage_es"/>
+  <copyField source="cdLanguageOfDocument_fr" dest="docLanguage_fr"/>
+  <copyField source="cdLeoId" dest="docId"/>
+  <copyField source="cdRegion_en" dest="docRegion_en"/>
+  <copyField source="cdRegion_es" dest="docRegion_es"/>
+  <copyField source="cdRegion_fr" dest="docRegion_fr"/>
+  <copyField source="cdSubject_en" dest="docSubject_en"/>
+  <copyField source="cdSubject_es" dest="docSubject_es"/>
+  <copyField source="cdSubject_fr" dest="docSubject_fr"/>
+  <copyField source="cdText" dest="text"/>
+  <copyField source="decKeyword_en" dest="docKeyword_en"/>
+  <copyField source="decKeyword_es" dest="docKeyword_es"/>
+  <copyField source="decKeyword_fr" dest="docKeyword_fr"/>
+  <copyField source="decLanguage_en" dest="docLanguage_en"/>
+  <copyField source="decLanguage_es" dest="docLanguage_es"/>
+  <copyField source="decLanguage_fr" dest="docLanguage_fr"/>
+  <copyField source="decMeetingId" dest="decMeetingId_group"/>
+  <copyField source="decNumber" dest="decNumber_sort"/>
+  <copyField source="decNumber" dest="docId"/>
+  <copyField source="decPublishDate" dest="docDate"/>
+  <copyField source="decPublishDate" dest="docEntryDate"/>
+  <copyField source="decText" dest="text"/>
+  <copyField source="legCountry_en" dest="docCountrySearch"/>
+  <copyField source="legCountry_en" dest="docCountry_en"/>
+  <copyField source="legCountry_es" dest="docCountrySearch"/>
+  <copyField source="legCountry_es" dest="docCountry_es"/>
+  <copyField source="legCountry_fr" dest="docCountrySearch"/>
+  <copyField source="legCountry_fr" dest="docCountry_fr"/>
+  <copyField source="legDate" dest="docDate"/>
+  <copyField source="legDate" dest="docEntryDate"/>
+  <copyField source="legGeoArea_en" dest="docRegion_en"/>
+  <copyField source="legGeoArea_es" dest="docRegion_es"/>
+  <copyField source="legGeoArea_fr" dest="docRegion_fr"/>
+  <copyField source="legId" dest="docId"/>
+  <copyField source="legKeyword_en" dest="docKeyword_en"/>
+  <copyField source="legKeyword_es" dest="docKeyword_es"/>
+  <copyField source="legKeyword_fr" dest="docKeyword_fr"/>
+  <copyField source="legLanguage_en" dest="docLanguage_en"/>
+  <copyField source="legLanguage_es" dest="docLanguage_es"/>
+  <copyField source="legLanguage_fr" dest="docLanguage_fr"/>
+  <copyField source="legSubject_en" dest="docSubject_en"/>
+  <copyField source="legSubject_es" dest="docSubject_es"/>
+  <copyField source="legSubject_fr" dest="docSubject_fr"/>
+  <copyField source="legText" dest="text"/>
+  <copyField source="litAuthorA" dest="litAuthor"/>
+  <copyField source="litAuthorM" dest="litAuthor"/>
+  <copyField source="litCorpAuthorA" dest="litAuthor"/>
+  <copyField source="litCorpAuthorM" dest="litAuthor"/>
+  <copyField source="litCountry_en" dest="docCountrySearch"/>
+  <copyField source="litCountry_en" dest="docCountry_en"/>
+  <copyField source="litCountry_es" dest="docCountrySearch"/>
+  <copyField source="litCountry_es" dest="docCountry_es"/>
+  <copyField source="litCountry_fr" dest="docCountrySearch"/>
+  <copyField source="litCountry_fr" dest="docCountry_fr"/>
+  <copyField source="litDate" dest="docDate"/>
+  <copyField source="litDateOfEntry" dest="docEntryDate"/>
+  <copyField source="litId" dest="docId"/>
+  <copyField source="litKeyword_en" dest="docKeyword_en"/>
+  <copyField source="litKeyword_es" dest="docKeyword_es"/>
+  <copyField source="litKeyword_fr" dest="docKeyword_fr"/>
+  <copyField source="litLanguageOfDocument_en" dest="docLanguage_en"/>
+  <copyField source="litLanguageOfDocument_es" dest="docLanguage_es"/>
+  <copyField source="litLanguageOfDocument_fr" dest="docLanguage_fr"/>
+  <copyField source="litPublisher" dest="litExtraSearch"/>
+  <copyField source="litRegion_en" dest="docRegion_en"/>
+  <copyField source="litRegion_es" dest="docRegion_es"/>
+  <copyField source="litRegion_fr" dest="docRegion_fr"/>
+  <copyField source="litSerialTitle" dest="litExtraSearch"/>
+  <copyField source="litSubject_en" dest="docSubject_en"/>
+  <copyField source="litSubject_es" dest="docSubject_es"/>
+  <copyField source="litSubject_fr" dest="docSubject_fr"/>
+  <copyField source="litText" dest="text"/>
+  <copyField source="partyCountry_en" dest="docCountrySearch"/>
+  <copyField source="partyCountry_en" dest="docCountry_en"/>
+  <copyField source="partyCountry_es" dest="docCountrySearch"/>
+  <copyField source="partyCountry_es" dest="docCountry_es"/>
+  <copyField source="partyCountry_fr" dest="docCountrySearch"/>
+  <copyField source="partyCountry_fr" dest="docCountry_fr"/>
+  <copyField source="trComment" dest="text"/>
+  <copyField source="trDateOfEntry" dest="docEntryDate"/>
+  <copyField source="trDateOfText" dest="docDate"/>
+  <copyField source="trElisId" dest="docId"/>
+  <copyField source="trKeyword_en" dest="docKeyword_en"/>
+  <copyField source="trKeyword_es" dest="docKeyword_es"/>
+  <copyField source="trKeyword_fr" dest="docKeyword_fr"/>
+  <copyField source="trLanguageOfDocument_en" dest="docLanguage_en"/>
+  <copyField source="trLanguageOfDocument_es" dest="docLanguage_es"/>
+  <copyField source="trLanguageOfDocument_fr" dest="docLanguage_fr"/>
+  <copyField source="trRegion_en" dest="docRegion_en"/>
+  <copyField source="trRegion_es" dest="docRegion_es"/>
+  <copyField source="trRegion_fr" dest="docRegion_fr"/>
+  <copyField source="trSubject_en" dest="docSubject_en"/>
+  <copyField source="trSubject_es" dest="docSubject_es"/>
+  <copyField source="trSubject_fr" dest="docSubject_fr"/>
+  <copyField source="trText" dest="text"/>
+</schema>
