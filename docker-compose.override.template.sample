@@ -1,0 +1,21 @@
+# This file is meant to override docker-compose.yml and olso have environment variables substituted
+# copy this under a name w/o .sample, modify to your needs, then run it through envsubst and produce the override file
+# env `xargs < .env.my` envsubst <docker-compose.override.template >docker-compose.override.yml
+version: "2"
+services:
+  solr:
+    build:
+      dockerfile: docker/solr/Dockerfile.solr
+      context: .
+
+  web:
+    build:
+      dockerfile: docker/web/Dockerfile
+      context: .
+      args:
+        - APP_PORT=$ECOLEX_APP_PORT
+    command: debug
+    tty: true
+    stdin_open: true
+    environment:
+      - SOLR_URI=http://solr:${ECOLEX_SOLR_PORT}/solr/ecolex

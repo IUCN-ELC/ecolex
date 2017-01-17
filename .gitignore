@@ -7,6 +7,8 @@ env27/
 local_settings.py
 local_urls.py
 contrib/treaties.json
+docker-compose.override.yml
+docker-compose.override.template
 
 # OS generated files
 ._*

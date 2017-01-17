@@ -1,20 +1,16 @@
 version: "2"
 services:
   solr:
-    build:
-        dockerfile: docker/solr/Dockerfile.solr
-        context: .
+    image: ecolexprototype_solr
     ports:
       - "8983:8983"
     volumes:
       - ecolex_solr:/opt/solr/server/solr
 
   web:
-    build:
-      dockerfile: Dockerfile
-      context: .
+    image: ecolexprototype_web
     volumes:
-      - ./:/ecolex
+      - ./:/home/web/ecolex
     environment:
         - SOLR_URI=http://solr:8983/solr/ecolex
     ports:
@@ -22,13 +18,13 @@ services:
     depends_on:
       - solr
 
-  web_updater:
-    image: ecolexdocker_web
-    command: bash
-    volumes_from:
-      - web
-    depends_on:
-      - web
+#  web_updater:
+#    image: ecolexprototype_web
+#    command: bash
+#    volumes_from:
+#      - web
+#    depends_on:
+#      - web
 
 volumes:
   ecolex_solr:
