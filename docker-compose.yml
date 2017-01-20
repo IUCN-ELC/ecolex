@@ -1,20 +1,15 @@
 version: "2"
 services:
-  solr:
-    image: ecolexprototype_solr
-    ports:
-      - "8983:8983"
-    volumes:
-      - ecolex_solr:/opt/solr/server/solr
-
   web:
     image: ecolexprototype_web
-    volumes:
-      - ./:/home/web/ecolex
-    environment:
-        - SOLR_URI=http://solr:8983/solr/ecolex
     ports:
-        - 8000:8000
+      - 8000:8000
+    env_file:
+      - deploy/envs/common.env
+      - deploy/envs/web.env
+      - deploy/envs/secret.env
+    # adding environment: will override any of the above.
+    # letting VAR with no '=VAL' will use value from the env docker-compose is being run
     depends_on:
       - solr
 
@@ -25,6 +20,18 @@ services:
 #      - web
 #    depends_on:
 #      - web
+
+  solr:
+    image: ecolexprototype_solr
+    ports:
+      - "8983:8983"
+    volumes:
+      - ecolex_solr:/opt/solr/server/solr
+    env_file:
+      - deploy/envs/common.env
+      - deploy/envs/solr.env
+      - deploy/envs/secret.env
+
 
 volumes:
   ecolex_solr:

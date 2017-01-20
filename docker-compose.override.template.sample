@@ -3,19 +3,22 @@
 # env `xargs < .env.my` envsubst <docker-compose.override.template >docker-compose.override.yml
 version: "2"
 services:
-  solr:
-    build:
-      dockerfile: docker/solr/Dockerfile.solr
-      context: .
-
   web:
     build:
       dockerfile: docker/web/Dockerfile
       context: .
+      # always take ecolex version from running environment
       args:
-        - APP_PORT=$ECOLEX_APP_PORT
+        - EDW_ECOLEX_VER
     command: debug
     tty: true
     stdin_open: true
+    volumes:
+      - ./:/home/web/ecolex
     environment:
-      - SOLR_URI=http://solr:${ECOLEX_SOLR_PORT}/solr/ecolex
+      - EDW_WEB_DEBUG=$EDW_WEB_DEBUG
+
+  solr:
+    build:
+      dockerfile: docker/solr/Dockerfile
+      context: .

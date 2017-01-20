@@ -1,6 +1,8 @@
 instance/
+static/
 sandbox
 .env
+secret.env
 db.sqlite3
 supervisord.conf
 env27/
