@@ -1,0 +1,4 @@
+docker-compose.yml
+deploy/envs/common.env
+deploy/envs/web.env
+deploy/envs/secret.env
