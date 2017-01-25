@@ -337,8 +337,10 @@ class ExportView(View):
         solr = EcolexSolr()
         resp = solr.search_all(key, value, fq=fq, fl=fl, start=start, rows=rows, 
                                sort='updatedDate desc')
+        if not resp:
+            resp = []
         if count == 'yes':
-            resp = {'count': len(resp) if resp else 0}
+            resp = {'count': len(resp)}
 
         exporter = get_exporter(format)(resp)
         if doctype and not count:
