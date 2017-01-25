@@ -11,6 +11,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
 from django.views.generic.base import RedirectView
 
+from datetime import datetime
+
 from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS, STATIC_PAGES
 from ecolex.export import get_exporter
 from ecolex.legislation import harvest_file
@@ -302,25 +304,43 @@ class ExportView(View):
         slug = request.GET.get('slug')
         format = request.GET.get('format', 'json')
         download = request.GET.get('download')
+        count = request.GET.get('count')
+        rows = request.GET.get('rows', UNLIMITED_ROWS_COUNT)
+        start = request.GET.get('start', 0)
+        updated_after = request.GET.get('updated_after')
+        if updated_after:
+            try:
+                updated_after = (datetime
+                                .strptime(updated_after, '%Y%m%d')
+                                .strftime('%Y-%m-%dT%H:%M:%SZ'))
+            except:
+                updated_after = None
 
         if doctype and doctype not in settings.EXPORT_TYPES:
             raise Http404()  # TODO Custom 404 template depending on format
 
+        fq = ''
         if doctype:
             key, value = 'type', doctype
             fields = [
                 'slug',
                 'updatedDate',
+                'docId',
             ]
             fl = ','.join(fields)
+            if updated_after:
+                fq = 'updatedDate: [{} TO *]'.format(updated_after)
         elif slug:
             key, value = 'slug', slug
             fl = '*'
 
         solr = EcolexSolr()
-        resp = solr.search_all(key, value, fl=fl, rows=UNLIMITED_ROWS_COUNT)
+        resp = solr.search_all(key, value, fq=fq, fl=fl, start=start, rows=rows, 
+                               sort='updatedDate desc')
+        if count == 'yes':
+            resp = {'count': len(resp) if resp else 0}
 
         exporter = get_exporter(format)(resp)
-        if doctype:
+        if doctype and not count:
             exporter.attach_urls(request)
         return exporter.get_response(download)

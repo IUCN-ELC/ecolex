@@ -33,7 +33,7 @@ class Exporter(object):
 
     def get_filename(self):
         current_date = date.today().strftime(self.DATE_FORMAT)
-        return 'ecolex_{}'.format(current_date)
+        return 'ecolex_{}.{}'.format(current_date, self.FORMAT)
 
     def get_response(self, download=False):
         data = self.get_data()
