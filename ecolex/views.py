@@ -311,8 +311,8 @@ class ExportView(View):
         if updated_after:
             try:
                 updated_after = (datetime
-                                .strptime(updated_after, '%Y%m%d')
-                                .strftime('%Y-%m-%dT%H:%M:%SZ'))
+                                 .strptime(updated_after, '%Y%m%d')
+                                 .strftime('%Y-%m-%dT%H:%M:%SZ'))
             except:
                 updated_after = None
 
@@ -335,7 +335,7 @@ class ExportView(View):
             fl = '*'
 
         solr = EcolexSolr()
-        resp = solr.search_all(key, value, fq=fq, fl=fl, start=start, rows=rows, 
+        resp = solr.search_all(key, value, fq=fq, fl=fl, start=start, rows=rows,
                                sort='updatedDate desc')
         if not resp:
             resp = []
