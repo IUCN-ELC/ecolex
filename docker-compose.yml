@@ -1,7 +1,7 @@
 version: "2"
 services:
   web:
-    image: ecolexprototype_web
+    image: danbaragan/ecolex_web:$EDW_BUILD_VER
     ports:
       - 8000:8000
     env_file:
@@ -12,6 +12,8 @@ services:
     # letting VAR with no '=VAL' will use value from the env docker-compose is being run
     depends_on:
       - solr
+      - maria
+
 
 #  web_updater:
 #    image: ecolexprototype_web
@@ -21,8 +23,16 @@ services:
 #    depends_on:
 #      - web
 
+
+  maria:
+    image: mariadb:10.1
+    env_file:
+      - deploy/envs/common.env
+      - deploy/envs/secret.env
+
+
   solr:
-    image: ecolexprototype_solr
+    image: danbaragan/ecolex_solr:$EDW_BUILD_VER
     ports:
       - "8983:8983"
     volumes:
@@ -33,7 +43,10 @@ services:
       - deploy/envs/secret.env
 
 
+
 volumes:
   ecolex_solr:
+    driver: local
+  ecolex_db_maria:
     driver: local
 
