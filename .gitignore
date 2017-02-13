@@ -1,8 +1,6 @@
 instance/
 static/
 sandbox
-.env
-secret.env
 db.sqlite3
 supervisord.conf
 env27/
@@ -17,6 +15,7 @@ Thumbs.db
 
 # Editor generated files
 .idea
+.*.sw[po]
 
 # Files to ignore
 *.log
