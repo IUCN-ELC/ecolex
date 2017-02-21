@@ -203,8 +203,7 @@ SEARCH_PAGE_SIZE = 20
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-# FIXME This was different on prod
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, os.environ.get('EDW_WEB_STATIC_ROOT', 'static'))
 
 # Solr
 SOLR_URI = os.environ.get('EDW_SOLR_URI', '')
