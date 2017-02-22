@@ -102,9 +102,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': 'maria',
-        'NAME': os.environ.get('EDW_RUN_MYSQL_DATABASE'),
-        'USER': os.environ.get('EDW_RUN_MYSQL_USER'),
-        'PASSWORD': os.environ.get('EDW_RUN_MYSQL_PASSWORD'),
+        'NAME': os.environ.get('MYSQL_DATABASE'),
+        'USER': os.environ.get('MYSQL_USER'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
     }
 }
 
