@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'cm32+t-u1nb=x7_gc3(rcs)6@#e=hn$ww0@l$^1^^6x6jv)u@t'
 FAOLEX_API_KEY = ''
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('EDW_WEB_DEBUG'))
+DEBUG = bool(os.environ.get('EDW_RUN_WEB_DEBUG'))
 
 ALLOWED_HOSTS = ['*']
 
@@ -102,9 +102,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': 'maria',
-        'NAME': os.environ.get('EDW_MYSQL_DATABASE'),
-        'USER': os.environ.get('EDW_MYSQL_USER'),
-        'PASSWORD': os.environ.get('EDW_MYSQL_PASSWORD'),
+        'NAME': os.environ.get('EDW_RUN_MYSQL_DATABASE'),
+        'USER': os.environ.get('EDW_RUN_MYSQL_USER'),
+        'PASSWORD': os.environ.get('EDW_RUN_MYSQL_PASSWORD'),
     }
 }
 
@@ -203,10 +203,10 @@ SEARCH_PAGE_SIZE = 20
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, os.environ.get('EDW_WEB_STATIC_ROOT', 'static'))
+STATIC_ROOT = os.path.join(BASE_DIR, os.environ.get('EDW_RUN_WEB_STATIC_ROOT', 'static'))
 
 # Solr
-SOLR_URI = os.environ.get('EDW_SOLR_URI', '')
+SOLR_URI = os.environ.get('EDW_RUN_SOLR_URI', '')
 
 # For default sorting, set SOLR_SORTING to ''
 SOLR_SORTING = ''
@@ -229,11 +229,11 @@ CKEDITOR_CONFIGS = {
 }
 
 # API KEY FOR FAOLEX HARVESTER
-FAOLEX_ENABLED = bool(os.environ.get('FAOLEX_ENABLED', 'True'))
-FAOLEX_API_KEY = os.environ.get('FAOLEX_API_KEY')
+FAOLEX_ENABLED = bool(os.environ.get('EDW_RUN_WEB_FAOLEX_ENABLED', 'True'))
+FAOLEX_API_KEY = os.environ.get('EDW_RUN_WEB_FAOLEX_API_KEY')
 # FIXME '' for this should determine a new key generation... handle that too; one way or another
 if FAOLEX_ENABLED and not FAOLEX_API_KEY:
-    raise RuntimeError('FAOLEX_API_KEY not set although Faolex is enabled')
+    raise RuntimeError('EDW_RUN_WEB_FAOLEX_API_KEY not set although Faolex is enabled')
 
 # Google Analytics keys
 ECOLEX_CODE = 'UA-75793139-1'
