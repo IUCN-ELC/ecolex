@@ -101,7 +101,16 @@ class MutableLookupDict(dict):
             return d
 
 
-class OrderedDefaultDict(OrderedDict, defaultdict):
+# since python 3.6 both OrderedDict and defaultdict come with their own __slots__
+# this makes inheriting from both impossible "TypeError: multiple bases have instance lay-out conflict"
+# at the same time, since python 3.6 all dicts are ordered.
+# But that is an implementation detail and should not be relied on. see:
+# http://stackoverflow.com/questions/39980323/dictionaries-are-ordered-in-cpython-3-6
+# TODO since this is a bad™ idea, fix this workaround by implementing our own defaultdict
+# TODO as this seems the easiest safe path. (python3.6 dep)
+# on the other hand, I really think they will not drop the ordered aspect any time soon
+# and I also don't see an python upgrade on the horizon
+class OrderedDefaultDict(defaultdict):
     def __init__(self, *args, **kwargs):
         default_factory = None
         try:
