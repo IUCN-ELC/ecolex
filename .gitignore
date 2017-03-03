@@ -1,7 +1,7 @@
 instance/
 static/
 sandbox
-db.sqlite3
+db.sqlite3*
 supervisord.conf
 env27/
 local_settings.py
@@ -22,3 +22,4 @@ Thumbs.db
 *.pyc
 *.vi
 *~
+sqlite_dump*.json
