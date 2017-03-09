@@ -203,7 +203,7 @@ SEARCH_PAGE_SIZE = 20
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, os.environ.get('EDW_RUN_WEB_STATIC_ROOT', 'static'))
+STATIC_ROOT = os.environ.get('EDW_RUN_WEB_STATIC_ROOT') or os.path.join(BASE_DIR, 'static')
 
 # Solr
 SOLR_URI = os.environ.get('EDW_RUN_SOLR_URI', '')
