@@ -124,12 +124,12 @@ class EcolexSolr(object):
     }
 
     def __init__(self, timeout=60):
-        solr_uri = os.environ.get('SOLR_URI')
+        solr_uri = os.environ.get('EDW_RUN_SOLR_URI')
         if not solr_uri:
             try:
                 solr_uri = settings.SOLR_URI
             except AttributeError:
-                raise RuntimeError('SOLR_URI environment variable not set.')
+                raise RuntimeError('EDW_RUN_SOLR_URI environment variable not set.')
 
         self.solr = pysolr.Solr(solr_uri, timeout=timeout)
 

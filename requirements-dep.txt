@@ -2,4 +2,6 @@
 meld3==1.0.0
 raven==5.1.1
 gunicorn==19.2.0
--e git://github.com/Supervisor/supervisor@681f00e74cce66e80d381788b86ed27a57e49984#egg=supervisor-master
+cffi==1.9.1
+ijson==2.3
+ipdb

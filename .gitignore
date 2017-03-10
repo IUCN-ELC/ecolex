@@ -1,7 +1,7 @@
 instance/
+static/
 sandbox
-env
-db.sqlite3
+db.sqlite3*
 supervisord.conf
 env27/
 local_settings.py
@@ -15,9 +15,11 @@ Thumbs.db
 
 # Editor generated files
 .idea
+.*.sw[po]
 
 # Files to ignore
 *.log
 *.pyc
 *.vi
 *~
+sqlite_dump*.json

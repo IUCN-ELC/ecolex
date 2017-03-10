@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'cm32+t-u1nb=x7_gc3(rcs)6@#e=hn$ww0@l$^1^^6x6jv)u@t'
 FAOLEX_API_KEY = ''
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('EDW_RUN_WEB_DEBUG'))
 
 ALLOWED_HOSTS = ['*']
 
@@ -100,8 +100,11 @@ WSGI_APPLICATION = 'ecolex.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'maria',
+        'NAME': os.environ.get('MYSQL_DATABASE'),
+        'USER': os.environ.get('MYSQL_USER'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
     }
 }
 
@@ -127,6 +130,7 @@ LOGGING = {
         },
     },
     'handlers': {
+        # TODO dockerize this. use console.
         'logfile': {
             'class': 'logging.handlers.WatchedFileHandler',
             'filename': os.path.join(BASE_DIR, 'django_errors.log'),
@@ -136,7 +140,7 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['logfile'],
-            'level': 'ERROR',
+            'level': 'DEBUG' if DEBUG else 'ERROR',
             'propagate': False,
         }
     }
@@ -199,10 +203,10 @@ SEARCH_PAGE_SIZE = 20
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.environ.get('EDW_RUN_WEB_STATIC_ROOT') or os.path.join(BASE_DIR, 'static')
 
 # Solr
-SOLR_URI = os.environ.get('SOLR_URI', '')
+SOLR_URI = os.environ.get('EDW_RUN_SOLR_URI', '')
 
 # For default sorting, set SOLR_SORTING to ''
 SOLR_SORTING = ''
@@ -222,6 +226,97 @@ CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
     },
+}
+
+# API KEY FOR FAOLEX HARVESTER
+FAOLEX_ENABLED = bool(os.environ.get('EDW_RUN_WEB_FAOLEX_ENABLED', 'True'))
+FAOLEX_API_KEY = os.environ.get('EDW_RUN_WEB_FAOLEX_API_KEY')
+# FIXME '' for this should determine a new key generation... handle that too; one way or another
+if FAOLEX_ENABLED and not FAOLEX_API_KEY:
+    raise RuntimeError('EDW_RUN_WEB_FAOLEX_API_KEY not set although Faolex is enabled')
+
+# Google Analytics keys
+ECOLEX_CODE = 'UA-75793139-1'
+INFORMEA_CODE = 'UA-75793139-3'
+FAOLEX_CODE = 'UA-75793139-2'
+FAOLEX_CODE_2 = 'UA-75793139-4'
+
+EXPORT_TYPES = ['treaty', 'decision', 'court_decision', 'literature']
+
+# Use SOLR_UPDATE for the `update` management command.
+# The management command will replace values in SOLR_UPDATE['replace']['field']
+# that are equal to SOLR_UPDATE['replace']['from'] with the value in
+# SOLR_UPDATE['replace']['to']
+# Additional filters in SOLR_UPDATE['filters'] are applied.
+# If you don't need any additional filters, leave this list empty.
+SOLR_UPDATE = {
+    'replace': {
+        'field': 'legCountry_en',
+        'from': 'Moldova - Republic of',
+        'to': 'Moldova, Republic of'
+    },
+    'filters': [
+        # {
+        #     'field': 'legCountry_en',
+        #     'value': 'Moldova - Republic of',
+        # }
+    ]
+}
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+MANAGEMENT_DIR = os.path.join(BASE_DIR, 'ecolex', 'management')
+CONFIG_DIR = os.path.join(MANAGEMENT_DIR, 'config')
+PARTY_COUNTRIES = os.path.join(CONFIG_DIR, 'party_countries.json')
+TESTING_DIR = os.path.join(MANAGEMENT_DIR, 'testing')
+
+SOLR_IMPORT = {
+    'common': {
+        'solr_timeout': 100,
+        'countries_json': os.path.join(CONFIG_DIR, 'countries.json'),
+        'fao_countries_json': os.path.join(CONFIG_DIR, 'fao_countries.json'),
+        'languages_json': os.path.join(CONFIG_DIR, 'languages.json'),
+        'regions_json': os.path.join(CONFIG_DIR, 'regions.json'),
+        'subdivisions_json': os.path.join(CONFIG_DIR, 'subdivisions.json'),
+        'keywords_json': os.path.join(CONFIG_DIR, 'keywords.json'),
+        'subjects_json': os.path.join(CONFIG_DIR, 'subjects.json'),
+    },
+    'court_decision': {
+        'test_input_file': os.path.join(TESTING_DIR, 'court_decision_in.json'),
+        'test_output_file': os.path.join(TESTING_DIR, 'court_decision_out.json'),
+        'court_decisions_url': 'http://informea.org/ws/court-decisions',
+        'days_ago': 30,
+        'data_url': 'http://informea.org/node/%s/json',
+        'update': True,
+    },
+    'treaty': {
+        'treaties_url': 'http://www2.ecolex.org/elis_isis3w.php',
+        'query_export': '?database=tre&search_type=page_search&table=all',
+        'query_format': 'ES:I AND STAT:C AND (DE:%d%02d OR DM:%d%02d)',
+        'query_filter': '&spage_query=%s',
+        'query_skip': '&spage_first=%d',
+        'query_type': '&format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD',
+        'per_page': 20,
+    },
+    'literature': {
+        'literature_url': 'http://www2.ecolex.org/elis_isis3w.php',
+        'query_export': '?database=libcat&search_type=page_search&table=all',
+        'query_format': 'ES:I AND STAT:C AND (DE:%d%02d OR DM:%d%02d)',
+        'query_filter': '&spage_query=%s',
+        'query_skip': '&spage_first=%d',
+        'query_type': '&format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD',
+        'per_page': 20,
+    },
+    'decision': {
+        'cop_decision_url': 'http://odata.informea.org/informea.svc/Decisions',
+        'query_skip': '$top=%d&$skip=%d',
+        'query_filter': "$filter=updated gt datetime'%s'",
+        'query_format': '$format=json',
+        'query_expand': '$expand=title,longTitle,keywords,content,files,summary',
+        'query_order': '$orderby=updated asc',
+        'per_page': 20,
+        'days_ago': 30,
+    },
+    'legislation': {},
 }
 
 
