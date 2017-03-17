@@ -10,7 +10,7 @@ from django.utils.functional import cached_property
 from django.utils.translation import get_language
 
 from ecolex.lib.utils import (
-    OrderedDefaultDict, any_match, camel_case_to__, is_iterable
+    DefaultOrderedDict, any_match, camel_case_to__, is_iterable
 )
 
 
@@ -118,7 +118,7 @@ class DocumentModel(BaseModel):
         response = queryer.findany(page_size=1000, fetch_fields=extra_fields,
                                    date_sort=False, **lookups)
         # we need to re-group according to the lookups
-        out = OrderedDefaultDict(list)
+        out = DefaultOrderedDict(list)
         for item in response.results:
             for k, v in groupers.items():
                 field, lookup = v

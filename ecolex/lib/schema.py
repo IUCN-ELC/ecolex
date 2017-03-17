@@ -1,6 +1,6 @@
 import warnings
 from collections import OrderedDict
-from ecolex.lib.utils import MutableLookupDict, OrderedDefaultDict
+from ecolex.lib.utils import MutableLookupDict, DefaultOrderedDict
 from django.conf import settings
 from django.utils.functional import cached_property
 from marshmallow import Schema as _Schema, SchemaOpts, fields, pre_load
@@ -207,7 +207,7 @@ class __FieldProperties(object):
 
 
 def get_field_properties(base_schema, schemas):
-    props = OrderedDefaultDict(OrderedDict)
+    props = DefaultOrderedDict(OrderedDict)
 
     for schema in (base_schema, ) + schemas:
         if schema is base_schema:
