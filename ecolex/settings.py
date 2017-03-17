@@ -236,10 +236,10 @@ if FAOLEX_ENABLED and not FAOLEX_API_KEY:
     raise RuntimeError('EDW_RUN_WEB_FAOLEX_API_KEY not set although Faolex is enabled')
 
 # Google Analytics keys
-ECOLEX_CODE = 'UA-75793139-1'
-INFORMEA_CODE = 'UA-75793139-3'
-FAOLEX_CODE = 'UA-75793139-2'
-FAOLEX_CODE_2 = 'UA-75793139-4'
+ECOLEX_CODE = os.environ.get('EDW_RUN_WEB_ECOLEX_CODE')
+INFORMEA_CODE = os.environ.get('EDW_RUN_WEB_INFORMEA_CODE')
+FAOLEX_CODE = os.environ.get('EDW_RUN_WEB_FAOLEX_CODE')
+FAOLEX_CODE_2 = os.environ.get('EDW_RUN_WEB_FAOLEX_CODE_2')
 
 EXPORT_TYPES = ['treaty', 'decision', 'court_decision', 'literature']
 
