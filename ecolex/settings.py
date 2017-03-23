@@ -133,7 +133,7 @@ LOGGING = {
         # TODO dockerize this. use console.
         'logfile': {
             'class': 'logging.handlers.WatchedFileHandler',
-            'filename': os.path.join(BASE_DIR, 'django_errors.log'),
+            'filename': os.path.join(BASE_DIR, 'logs', 'django_errors.log'),
             'formatter': 'verbose',
         }
     },
