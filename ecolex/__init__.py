@@ -11,6 +11,7 @@ def global_config(request):
         'FAOLEX_CODE',
         'FAOLEX_CODE_2',
         'DEBUG',
+        'SENTRY_PUBLIC_DSN',
     ]
 
     exposed_settings = {

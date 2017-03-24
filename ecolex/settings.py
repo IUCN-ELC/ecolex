@@ -20,8 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'cm32+t-u1nb=x7_gc3(rcs)6@#e=hn$ww0@l$^1^^6x6jv)u@t'
+SECRET_KEY = os.environ.get("EDW_RUN_WEB_SECRET_KEY")
 FAOLEX_API_KEY = ''
+
+# sentry dsn
+SENTRY_DSN = os.environ.get('EDW_RUN_WEB_SENTRY_DSN')
+SENTRY_PUBLIC_DSN = os.environ.get('EDW_RUN_WEB_SENTRY_PUBLIC_DSN')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('EDW_RUN_WEB_DEBUG'))
 
@@ -42,6 +47,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'raven.contrib.django.raven_compat',
     'rest_framework',
     'static_sitemaps',
     'ckeditor',
@@ -319,6 +325,9 @@ SOLR_IMPORT = {
     'legislation': {},
 }
 
+RAVEN_CONFIG = {
+    'dsn': SENTRY_DSN,
+}
 
 # Local settings
 try:

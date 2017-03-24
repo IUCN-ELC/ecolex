@@ -1,5 +1,6 @@
 {% load tags %}
 {% load i18n %}
+{% load raven %}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="{{ LANGUAGE_CODE }}">
@@ -24,7 +25,9 @@
   <script src="{{ settings.STATIC_URL }}{% version 'js/main.js' %}"></script>
   <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.cookieBar.min.js' %}"></script>
   <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.collapser.min.js' %}"></script>
- 
+  <script src="{{ settings.STATIC_URL }}{% version 'js/raven.min.js' %}"></script>
+  <script>Raven.config("{{ settings.SENTRY_PUBLIC_DSN }}").install()</script>
+
  
 
 
