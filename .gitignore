@@ -1,5 +1,6 @@
 instance/
 static/
+!ecolex/static/
 sandbox
 db.sqlite3*
 supervisord.conf
