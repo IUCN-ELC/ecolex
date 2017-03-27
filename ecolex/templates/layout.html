@@ -14,9 +14,7 @@
   <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/bootstrap-tour.min.css' %}">
   <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/select2.css' %}">
   {% block style %}{% endblock %}
-  <script src="https://code.jquery.com/jquery-1.12.1.min.js"
-          integrity="sha256-I1nTg78tSrZev3kjvfdM5A5Ak/blglGzlaZANLPDl3I="
-          crossorigin="anonymous"></script>
+  <script src="{{ settings.STATIC_URL }}{% version 'js/jquery-3.2.0.min.js' %}"></script>
   <script src="{{ settings.STATIC_URL }}{% version 'js/bootstrap.js' %}"></script>{% comment %}
   <script src="{{ settings.STATIC_URL }}{% version 'js/modernizr-custom.js' %}"></script>
   <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.deserialize.js' %}"></script>
