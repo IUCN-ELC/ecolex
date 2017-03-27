@@ -1,4 +1,5 @@
 -r requirements.txt
+django-extensions>=1.7.7,<1.8
 meld3==1.0.0
 raven==5.1.1
 gunicorn==19.2.0
