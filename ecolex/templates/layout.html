@@ -14,7 +14,12 @@
   <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/bootstrap-tour.min.css' %}">
   <link rel="stylesheet" href="{{ settings.STATIC_URL }}{% version 'css/select2.css' %}">
   {% block style %}{% endblock %}
-  <script src="{{ settings.STATIC_URL }}{% version 'js/jquery-3.2.0.min.js' %}"></script>
+  <!--[if (!IE)|(gt IE 8)]><!-->
+    <script src="{{ settings.STATIC_URL }}{% version 'js/jquery-3.2.0.min.js' %}"></script>
+  <!--<![endif]-->
+  <!--[if lte IE 8]>
+    <script src="{{ settings.STATIC_URL }}{% version 'js/jquery-1.12.4.min.js' %}"></script>
+  <![endif]-->
   <script src="{{ settings.STATIC_URL }}{% version 'js/bootstrap.js' %}"></script>{% comment %}
   <script src="{{ settings.STATIC_URL }}{% version 'js/modernizr-custom.js' %}"></script>
   <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.deserialize.js' %}"></script>
