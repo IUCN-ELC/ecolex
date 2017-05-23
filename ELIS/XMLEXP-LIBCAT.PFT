@@ -1,0 +1,296 @@
+'<document>'/,
+'<db>libcat</db>'/,
+'<isisMfn>',mfn(6),'</isisMfn>'/,
+'<id>'v3'</id>'/,
+"<id2><![CDATA["v1"]]></id2>"/
+(|<informeaCOP>|v101|</informeaCOP>|/)
+'<dateOfEntry>'v120^d.4,"-"v120^d*4.2,"-"v120^d*6.2,'</dateOfEntry>'/,
+'<dateOfModification>'v130[nocc(v130)]^d.4,"-"v130[nocc(v130)]^d*4.2,"-"v130[nocc(v130)]^d*6.2,'</dateOfModification>'/,
+
+(|<location><![CDATA[|v14|]]></location>|/)
+"<availableIn><![CDATA["v560"]]></availableIn>"/
+
+(|<authorA><![CDATA[|v28|]]></authorA>|/)
+(|<authorM><![CDATA[|v29|]]></authorM>|/)
+(|<contributor><![CDATA[|v39|]]></contributor>|/)
+(|<corpAuthorA><![CDATA[|v30^a|]]></corpAuthorA>|/)
+(|<corpAuthorM><![CDATA[|v31^a|]]></corpAuthorM>|/)
+
+"<paperTitleOfText><![CDATA["v330"]]></paperTitleOfText>"/
+"<paperTitleOfTextFr><![CDATA["v331"]]></paperTitleOfTextFr>"/
+"<paperTitleOfTextSp><![CDATA["v332"]]></paperTitleOfTextSp>"/
+"<paperTitleOfTextOther><![CDATA["v333"]]></paperTitleOfTextOther>"/
+"<paperTitleOfTextTransl><![CDATA["v334"]]></paperTitleOfTextTransl>"/
+"<paperTitleOfTextStatement><![CDATA["v336"]]></paperTitleOfTextStatement>"/
+
+(|<relatedMonograph>|v61|</relatedMonograph>|)/
+
+"<titleOfText><![CDATA["v340"]]></titleOfText>"/
+"<titleOfTextFr><![CDATA["v341"]]></titleOfTextFr>"/
+"<titleOfTextSp><![CDATA["v342"]]></titleOfTextSp>"/
+"<titleOfTextOther><![CDATA["v343"]]></titleOfTextOther>"/
+"<titleAbbreviation><![CDATA["v345"]]></titleAbbreviation>"/
+"<titleOfTextShort><![CDATA["v370"]]></titleOfTextShort>"/
+"<titleOfTextShortFr><![CDATA["v371"]]></titleOfTextShortFr>"/
+"<titleOfTextShortSp><![CDATA["v372"]]></titleOfTextShortSp>"/
+"<titleOfTextShortOther><![CDATA["v373"]]></titleOfTextShortOther>"/
+"<titleOfTextTransl><![CDATA["v380"]]></titleOfTextTransl>"/
+"<titleOfTextTranslFr><![CDATA["v381"]]></titleOfTextTranslFr>"/
+"<titleOfTextTranslSp><![CDATA["v382"]]></titleOfTextTranslSp>"/
+
+(|<languageOfDocument>|v440|</languageOfDocument>|)/
+(|<languageOfDocument_fr_FR>|v441|</languageOfDocument_fr_FR>|)/
+(|<languageOfDocument_es_ES>|v442|</languageOfDocument_es_ES>|)/
+
+(|<languageOfDocument>|v430|</languageOfDocument>|)/
+
+(|<languageOfTranslation>|v450|</languageOfTranslation>|)/
+(|<languageOfTranslation_fr_FR>|v451|</languageOfTranslation_fr_FR>|)/
+(|<languageOfTranslation_es_ES>|v452|</languageOfTranslation_es_ES>|)/
+
+(|<callNo><![CDATA[|v22|]]></callNo>|/)
+(|<edition><![CDATA[|v51|]]></edition>|/)
+(|<isbn><![CDATA[|v26|]]></isbn>|/)
+(|<otherDocId><![CDATA[|v18|]]></otherDocId>|/)
+(|<publisher><![CDATA[|v53|]]></publisher>|/)
+(|<publPlace><![CDATA[|v52|]]></publPlace>|/)
+
+if p(v54) then
+  '<dateOfText>'v54.4,"-"v54*4.2,"-"v54*6.2,'</dateOfText>',
+else if p(v64) then
+  "<dateOfText>"v64"</dateOfText>",
+     else "<dateOfText>"v416"</dateOfText>",
+fi, fi/
+"<yearOfText>"v64"</yearOfText>"/
+
+"<serialTitle><![CDATA["v410"]]></serialTitle>"/
+(|<issn>|v27|</issn>|/)
+(|<issn>|v417|</issn>|/)
+(|<volumeNo><![CDATA[|v415|]]></volumeNo>|/)
+mhl,(|<collation><![CDATA[|v56|]]></collation>|/),mpl,
+if p(v416) then
+  '<dateOfTextSer>'v416.4,"-"v416*4.2,"-"v416*6.2,'</dateOfTextSer>',
+fi/
+
+"<confName><![CDATA["v460"]]></confName>"/
+"<confName_fr_FR><![CDATA["v461"]]></confName_fr_FR>"/
+"<confName_es_ES><![CDATA["v462"]]></confName_es_ES>"/
+"<confNameOther><![CDATA["v463"]]></confNameOther>"/
+"<confNo>"v465"</confNo>"/
+"<confPlace>"v466"</confPlace>"/
+"<confDate>"v467"</confDate>"/
+
+(if p(v280) then 
+  '<typeOfText>',
+  if v280='LIann' then 'Annual/biennal report'
+  else if v280='LIart' then 'Article in periodical'
+  else if v280='LIcha' then 'Chapter in monography'
+  else if v280='LIcom' then 'CD-ROM'
+  else if v280='LIcon' then 'Conference, symposium etc. document/report'
+  else if v280='LIdir' then 'Directory/Glossary'
+  else if v280='LIdra' then 'Draft document'
+  else if v280='LIgov' then 'Governmental document'
+  else if v280='LIior' then 'Document of international organization'
+  else if v280='LImon' then 'Monography/book'
+  else if v280='LIoth' then 'Miscellaneous'
+  else if v280='LIser' then 'Serial/multi-volume work'
+  else if v280='LIstr' then 'National strategies'
+  else if v280='LIthe' then 'Thesis, dissertation'
+  else if v280='LItrn' then 'Training/educational material'
+  else if v280='SLdec' then 'Soft law - Decision/resolution'
+  else if v280='SLdel' then 'Soft law - Declaration/recommendation'
+  else if v280='SLgui' then 'Soft law - Guidelines'
+  else if v280='SLoth' then 'Soft law - Miscellaneous'
+  fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi,
+  '</typeOfText>'/
+
+  '<typeOfText_fr_FR>',
+  if v280='LIann' then 'Rapport annuel/biannuel'
+  else if v280='LIart' then 'Article en publication périodique'
+  else if v280='LIcha' then "Châpitre d'une monographie"d280
+  else if v280='LIcom' then 'CD-ROM'
+  else if v280='LIcon' then 'Rapport/document de conférence, colloque etc'
+  else if v280='LIdir' then 'Annuaire/Glossaire'
+  else if v280='LIdra' then 'Brouillon'
+  else if v280='LIgov' then 'Document gouvernemental'
+  else if v280='LIior' then "Document d'organisation international"d280
+  else if v280='LImon' then 'Monographie/livre'
+  else if v280='LIoth' then 'Divers'
+  else if v280='LIser' then 'Série'
+  else if v280='LIstr' then 'Stratégie nationale'
+  else if v280='LIthe' then 'Thésis, dissertation'
+  else if v280='LItrn' then "Matériel d'instruction/d'éducation"d280
+  else if v280='SLdec' then 'Soft law - Décision/résolution'
+  else if v280='SLdel' then 'Soft law - Déclaration/recommendation'
+  else if v280='SLgui' then 'Soft law - Lignes directrices'
+  else if v280='SLoth' then 'Soft law - Divers'
+  fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi,
+  '</typeOfText_fr_FR>'/
+
+  '<typeOfText_es_ES>',
+  if v280='LIann' then 'Informe anual, semi-anual'
+  else if v280='LIart' then 'Artículo en publicación'
+  else if v280='LIcha' then 'Capítulo de monografía'
+  else if v280='LIcom' then 'CD-ROM'
+  else if v280='LIcon' then 'Conferencia, simposio etc. documento/informe'
+  else if v280='LIdir' then 'Directorio/Glosario'
+  else if v280='LIdra' then 'Proyecto de documento'
+  else if v280='LIgov' then 'Documento gubernamental'
+  else if v280='LIior' then 'Documento de una organización internacional'
+  else if v280='LImon' then 'Monografía/libro'
+  else if v280='LIoth' then 'Misceláneo'
+  else if v280='LIser' then 'Trabajo en serie/trabajo en varios tomos'
+  else if v280='LIstr' then 'Estrategia nacional'
+  else if v280='LIthe' then 'Tesis, disertación'
+  else if v280='LItrn' then 'Enseñanza/material de aprendizaje'
+  else if v280='SLdec' then 'Soft law - Decisión/resolución'
+  else if v280='SLdel' then 'Soft law - Declaración/recomendación'
+  else if v280='SLgui' then 'Soft law - Principio/guía'
+  else if v280='SLoth' then 'Soft law - Misceláneo'
+  fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi,
+  '</typeOfText_es_ES>'/
+fi/)
+
+if p(v212) then
+  ( if p(v212) and ('ACDEGJKLQTUVWXYZ':v212) then '<subject><![CDATA[',
+    if v212='A' then 'Land & soil'
+    else if v212='C' then 'Water'
+    else if v212='D' then 'Sea'
+    else if v212='E' then 'Air & atmosphere'
+    else if v212='G' then 'Forestry'
+    else if v212='J' then 'Fisheries'
+    else if v212='K' then 'Waste & hazardous substances'
+    else if v212='L' then 'Mineral resources'
+    else if v212='Q' then 'Energy'
+    else if v212='T' then 'Legal questions'
+    else if v212='U' then 'Wild species & ecosystems'
+    else if v212='V' then 'Environment gen.'
+    else if v212='W' then 'Agricultural & rural development'
+    else if v212='X' then 'Cultivated plants'
+    else if v212='Y' then 'Livestock'
+    else if v212='Z' then 'Food & nutrition' fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi,
+    ']]></subject>' fi/)
+
+  ( if p(v212) and ('ACDEGJKLQTUVWXYZ':v212) then '<subject_fr_FR><![CDATA[',
+    if v212='A' then 'Terre et sols'
+    else if v212='C' then 'Eau'
+    else if v212='D' then 'Mer'
+    else if v212='E' then 'Air et atmosphère'
+    else if v212='G' then 'Forêts'
+    else if v212='J' then 'Pêche'
+    else if v212='K' then 'Déchets et substances dangereuses'
+    else if v212='L' then 'Ressources minérales'
+    else if v212='Q' then 'Énergie'
+    else if v212='T' then 'Questions juridiques'
+    else if v212='U' then 'Espèces sauvages et écosystèmes'
+    else if v212='V' then 'Environnement gén.'
+    else if v212='W' then 'Agriculture et développement rural'
+    else if v212='X' then 'Plantes cultivées'
+    else if v212='Y' then 'Bétail'
+    else if v212='Z' then 'Alimentation et nutrition' fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi,
+    ']]></subject_fr_FR>' fi/)
+
+  ( if p(v212) and ('ACDEGJKLQTUVWXYZ':v212) then '<subject_es_ES><![CDATA[',
+    if v212='A' then 'Tierra y suelos'
+    else if v212='C' then 'Agua'
+    else if v212='D' then 'Mar'
+    else if v212='E' then 'Aire y atmósfera'
+    else if v212='G' then 'Montes'
+    else if v212='J' then 'Pesca'
+    else if v212='K' then 'Desechos y sustancias peligrosas'
+    else if v212='L' then 'Recursos minerales'
+    else if v212='Q' then 'Energía'
+    else if v212='T' then 'Cuestiones jurídicas'
+    else if v212='U' then 'Especies silvestres y ecosistemas'
+    else if v212='V' then 'Medio ambiente gen.'
+    else if v212='W' then 'Agricultura y desarrollo rural'
+    else if v212='X' then 'Cultivos'
+    else if v212='Y' then 'Ganado'
+    else if v212='Z' then 'Alimentación y nutrición' fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi,
+    ']]></subject_es_ES>' fi/)
+fi/
+
+(lref('valide';xtrim(v852^c);'AC';|<intOrg><![CDATA[|v94|]]></intOrg>|/|<intOrg_fr_FR><![CDATA[|v194|]]></intOrg_fr_FR>|/|<intOrg_es_ES><![CDATA[|v294|]]></intOrg_es_ES>|/)/)
+
+(lref('valide';xtrim(v853^c);'AC';
+ if v100='T' then |<country><![CDATA[|v93|]]></country>|/
+  |<country_fr_FR><![CDATA[|v193|]]></country_fr_FR>|/|<country_es_ES><![CDATA[|v293|]]></country_es_ES>|/
+  |<territorialSubdivision><![CDATA[|v94|]]></territorialSubdivision>|/|<territorialSubdivision_fr_FR><![CDATA[|v194|]]></territorialSubdivision_fr_FR>|/|<territorialSubdivision_es_ES><![CDATA[|v294|]]></territorialSubdivision_es_ES>|/
+ else 
+  |<country><![CDATA[|v94|]]></country>|/|<country_fr_FR><![CDATA[|v194|]]></country_fr_FR>|/|<country_es_ES><![CDATA[|v294|]]></country_es_ES>|/
+ fi
+)/)
+
+if v281='I' then
+  '<scope><![CDATA[International]]></scope>'/
+  '<scope_fr_FR><![CDATA[International]]></scope_fr_FR>'/
+  '<scope_es_ES><![CDATA[Internacional]]></scope_es_ES>'/
+fi
+
+(lref('valide';xtrim(v854^c);'AC';|<region><![CDATA[|v94|]]></region>|/|<region_fr_FR><![CDATA[|v194|]]></region_fr_FR>|/|<region_es_ES><![CDATA[|v294|]]></region_es_ES>|/)/)
+(lref('valide';xtrim(v854^c);'AC';|<displayRegion><![CDATA[|v94|]]></displayRegion>|/|<displayRegion_fr_FR><![CDATA[|v194|]]></displayRegion_fr_FR>|/|<displayRegion_es_ES><![CDATA[|v294|]]></displayRegion_es_ES>|/)/)
+(lref('valide';xtrim(v856^c);'AC';|<basin><![CDATA[|v94|]]></basin>|/|<basin_fr_FR><![CDATA[|v194|]]></basin_fr_FR>|/|<basin_es_ES><![CDATA[|v294|]]></basin_es_ES>|/)/)
+
+if p(v425) then
+  '<seriesFlag>'
+  if v425='S' then 'Series collection'
+  else if v425='P' then 'Periodical'
+  else if v425='N' then 'Newsletter'
+  else 'Loose Leaf Collection' fi fi fi,
+  '</seriesFlag>'
+fi/
+(|<holdings><![CDATA[|v96|]]></holdings>|/),
+(|<formerTitle>|v93|</formerTitle>|/),
+if p(v90) then
+  '<serialStatus>'
+  if v90='N' then 'Non-current'
+  else if v90='C' then 'Current'
+  else if v90='S' then 'Stopped'
+  else 'Listed' fi fi fi,
+  '</serialStatus>'
+fi/
+if p(v94) then
+  '<modeOfAcquisition>'
+  if v94='P' then 'Paid'
+  else if v94='C' then 'Complimentary'
+  else 'Exchange' fi fi,
+  '</modeOfAcquisition>'
+fi/
+(|<frequency>|v97|</frequency>|/),
+
+if p(v179) then
+(|<linkToFullText><![CDATA[http://www.ecolex.org/server2.php/libcat/docs/LI/|v171|]]></linkToFullText>| )/
+fi/
+
+(|<doi>|v21|</doi>|)/
+
+(|<internetReference><![CDATA[|v63|]]></internetReference>|)/
+
+(|<relatedWebSite><![CDATA[|v63|]]></relatedWebSite>|)/
+
+(|<notes><![CDATA[|v59|]]></notes>|)/
+
+(lref('valid';xtrim(v74);'EK';
+  |<keyword><![CDATA[|v94|]]></keyword>|/
+  |<keyword_fr_FR><![CDATA[|v194|]]></keyword_fr_FR>|/
+  |<keyword_es_ES><![CDATA[|v294|]]></keyword_es_ES>|/
+))
+
+MPL,
+(|<abstract><![CDATA[|v79|]]></abstract>|/),
+(|<abstractFr><![CDATA[|v792|]]></abstractFr>|/),
+(|<abstractSp><![CDATA[|v793|]]></abstractSp>|/),
+(|<abstractOther><![CDATA[|v794|]]></abstractOther>|/),
+(|<linkToAbstract><![CDATA[|v790|]]></linkToAbstract>|)/
+
+(|<referenceToTreaties><![CDATA[|v907^r|]]></referenceToTreaties>|/)
+(|<referenceToLiterature><![CDATA[|v905^r|]]></referenceToLiterature>|/)
+(|<referenceToEULegislation><![CDATA[|v901^r|]]></referenceToEULegislation>|/)
+(|<referenceToNationalLegislation><![CDATA[|v903^r|]]></referenceToNationalLegislation>|/)
+(if p(v909) then |<referenceToCourtDecision><![CDATA[|v909^r|]]></referenceToCourtDecision>|/
+  if p(v909^r) then '<referenceToCourtDecisionTitle><![CDATA['ref('cou';|ID:"|v909^r|"|;@EATIT)']]></referenceToCourtDecisionTitle>'fi/
+  |<referenceToCourtDecisionNotes><![CDATA[|v909^n|]]></referenceToCourtDecisionNotes>|/ fi)
+(|<referenceToFaolex><![CDATA[|v902^o|]]></referenceToFaolex>|/)
+(|<projectInformation>|v165^c|</projectInformation>|/)
+
+'</document>'/

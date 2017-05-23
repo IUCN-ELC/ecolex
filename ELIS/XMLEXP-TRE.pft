@@ -1,0 +1,232 @@
+'<document>'/,
+'<db>tre</db>'/,
+'<Recid>'v3'</Recid>'/,
+(|<informeaUID>|v101|</informeaUID>|/)
+'<dateOfEntry>'v120^d.4,"-"v120^d*4.2,"-"v120^d*6.2,'</dateOfEntry>'/,
+'<dateOfModification>'v130[nocc(v130)]^d.4,"-"v130[nocc(v130)]^d*4.2,"-"v130[nocc(v130)]^d*6.2,'</dateOfModification>'/,
+
+"<titleOfText><![CDATA["v340"]]></titleOfText>"/
+"<titleOfTextFr><![CDATA["v341"]]></titleOfTextFr>"/
+"<titleOfTextSp><![CDATA["v342"]]></titleOfTextSp>"/
+"<titleOfTextOther><![CDATA["v343"]]></titleOfTextOther>"/
+"<titleAbbreviation><![CDATA["v345"]]></titleAbbreviation>"/
+"<titleOfTextShort><![CDATA["v370"]]></titleOfTextShort>"/
+"<titleOfTextShortFr><![CDATA["v371"]]></titleOfTextShortFr>"/
+"<titleOfTextShortSp><![CDATA["v372"]]></titleOfTextShortSp>"/
+"<titleOfTextShortOther><![CDATA["v373"]]></titleOfTextShortOther>"/
+"<titleOfTextTransl><![CDATA["v380"]]></titleOfTextTransl>"/
+"<titleOfTextTranslFr><![CDATA["v381"]]></titleOfTextTranslFr>"/
+"<titleOfTextTranslSp><![CDATA["v382"]]></titleOfTextTranslSp>"/
+
+if p(v280) then
+ '<typeOfText>',
+    if v280:'trbil' then 'Bilateral'
+        else if v280:'trmul' then 'Multilateral' fi fi,
+ '</typeOfText>'/,
+ '<typeOfText_fr_FR>',
+    if v280:'trbil' then 'Bilatéral'
+        else if v280:'trmul' then 'Multilatéral' fi fi,
+ '</typeOfText_fr_FR>'/
+ '<typeOfText_es_ES>',
+    if v280:'trbil' then 'Bilateral'
+        else if v280:'trmul' then 'Multilateral' fi fi,
+ '</typeOfText_es_ES>'/
+
+ (lref('valide';xtrim(v4^c);'AC';
+  |<jurisdiction>|v94|</jurisdiction>|/|<jurisdiction_fr_FR>|v194|</jurisdiction_fr_FR>|/|<jurisdiction_es_ES>|v294|</jurisdiction_es_ES>|/
+)/)
+
+if p(v281) then
+'<fieldOfApplication>'
+  (if v281='TRglo' then 'Global'
+   else if v281='TRreg' then 'Regional/restricted'
+ else if v281='TRnat' then 'National'
+   fi fi fi ),
+'</fieldOfApplication>'/
+
+'<fieldOfApplication_fr_FR>'
+  (if v281='TRglo' then 'Mondial'
+   else if v281='TRreg' then 'Régional/restreint'
+   else if v281='TRnat' then 'National'
+   fi fi fi )
+'</fieldOfApplication_fr_FR>'/
+
+'<fieldOfApplication_es_ES>'
+  (if v281='TRglo' then 'Mundial'
+   else if v281='TRreg' then 'Regional/restringido'
+ else if v281='TRnat' then 'Nacional'
+   fi fi fi )
+'</fieldOfApplication_es_ES>'/
+
+'<sortFieldOfApplication>'
+  (if v281='TRglo' then '1'
+   else if v281='TRreg' then '2'
+ else if v281='TRnat' then '3'
+   fi fi fi ),
+'</sortFieldOfApplication>'/
+
+else
+'<sortFieldOfApplication>4</sortFieldOfApplication>'/
+fi/
+
+(|<region><![CDATA[|v854^e|]]></region>|/),
+(|<region_fr_FR><![CDATA[|v854^f|]]></region_fr_FR>|/),
+(|<region_es_ES><![CDATA[|v854^s|]]></region_es_ES>|/),
+
+(|<basin><![CDATA[|v856^e|]]></basin>|/),
+(|<basin_fr_FR><![CDATA[|v856^f|]]></basin_fr_FR>|/),
+(|<basin_es_ES><![CDATA[|v856^s|]]></basin_es_ES>|/),
+
+if p(v212) then
+  ( if p(v212) and ('ACDEGJKLQTUVWXYZ':v212) then '<subject><![CDATA[',
+    if v212='A' then 'Land & soil'
+    else if v212='C' then 'Water'
+    else if v212='D' then 'Sea'
+    else if v212='E' then 'Air & atmosphere'
+    else if v212='G' then 'Forestry'
+    else if v212='J' then 'Fisheries'
+    else if v212='K' then 'Waste & hazardous substances'
+    else if v212='L' then 'Mineral resources'
+    else if v212='Q' then 'Energy'
+    else if v212='T' then 'Legal questions'
+    else if v212='U' then 'Wild species & ecosystems'
+    else if v212='V' then 'Environment gen.'
+    else if v212='W' then 'Agricultural & rural development'
+    else if v212='X' then 'Cultivated plants'
+    else if v212='Y' then 'Livestock'
+    else if v212='Z' then 'Food & nutrition' fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi,
+    ']]></subject>' fi/)
+
+  ( if p(v212) and ('ACDEGJKLQTUVWXYZ':v212) then '<subject_fr_FR><![CDATA[',
+    if v212='A' then 'Terre et sols'
+    else if v212='C' then 'Eau'
+    else if v212='D' then 'Mer'
+    else if v212='E' then 'Air et atmosphère'
+    else if v212='G' then 'Forêts'
+    else if v212='J' then 'Pêche'
+    else if v212='K' then 'Déchets et substances dangereuses'
+    else if v212='L' then 'Ressources minérales'
+    else if v212='Q' then 'Énergie'
+    else if v212='T' then 'Questions juridiques'
+    else if v212='U' then 'Espèces sauvages et écosystèmes'
+    else if v212='V' then 'Environnement gén.'
+    else if v212='W' then 'Agriculture et développement rural'
+    else if v212='X' then 'Plantes cultivées'
+    else if v212='Y' then 'Bétail'
+    else if v212='Z' then 'Alimentation et nutrition' fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi,
+    ']]></subject_fr_FR>' fi/)
+
+  ( if p(v212) and ('ACDEGJKLQTUVWXYZ':v212) then '<subject_es_ES><![CDATA[',
+    if v212='A' then 'Tierra y suelos'
+    else if v212='C' then 'Agua'
+    else if v212='D' then 'Mar'
+    else if v212='E' then 'Aire y atmósfera'
+    else if v212='G' then 'Montes'
+    else if v212='J' then 'Pesca'
+    else if v212='K' then 'Desechos y sustancias peligrosas'
+    else if v212='L' then 'Recursos minerales'
+    else if v212='Q' then 'Energía'
+    else if v212='T' then 'Cuestiones jurídicas'
+    else if v212='U' then 'Especies silvestres y ecosistemas'
+    else if v212='V' then 'Medio ambiente gen.'
+    else if v212='W' then 'Agricultura y desarrollo rural'
+    else if v212='X' then 'Cultivos'
+    else if v212='Y' then 'Ganado'
+    else if v212='Z' then 'Alimentación y nutrición' fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi,
+    ']]></subject_es_ES>' fi/)
+fi/
+
+(|<languageOfDocument>|v440|</languageOfDocument>|)/
+(|<languageOfDocument_fr_FR>|v441|</languageOfDocument_fr_FR>|)/
+(|<languageOfDocument_es_ES>|v442|</languageOfDocument_es_ES>|)/
+
+(|<languageOfTranslation>|v450|</languageOfTranslation>|)/
+(|<languageOfTranslation_fr_FR>|v451|</languageOfTranslation_fr_FR>|)/
+(|<languageOfTranslation_es_ES>|v452|</languageOfTranslation_es_ES>|)/
+
+(|<placeOfAdoption>|v310|</placeOfAdoption>|/)
+
+(lref('valide';xtrim(v610);'AI';|<depository><![CDATA[|v94|]]></depository>|/)) 
+(lref('valide';xtrim(v610);'AI';|<depository_fr_FR><![CDATA[|v194|]]></depository_fr_FR>|/)) 
+(lref('valide';xtrim(v610);'AI';|<depository_es_ES><![CDATA[|v294|]]></depository_es_ES>|/)) 
+
+'<dateOfText>'v55.4,"-"v55*4.2,"-"v55*6.2,'</dateOfText>'/,
+'<searchDate>'v55.4,"-"v55*4.2,"-"v55*6.2,'</searchDate>'/,
+
+(if p(v565^d) and v565^d.4 >'0000' then |<amendments>|v565^d|</amendments>|/ fi)/,,
+
+(|<dateOfConsolidation>|v570^d.4,|-|v570^d*4.2,|-|v570^d*6.2, d570^d|</dateOfConsolidation>|)/
+
+if p(v580^d) and v580^d.4 >'0000' then
+ '<entryIntoForceDate>'v580^d.4,"-"v580^d*4.2,"-"v580^d*6.2'</entryIntoForceDate>'/,
+fi
+
+if p(v590^d) and v590^d.4 >'0000' then
+'<expirationDate>'v590^d.4,"-"v590^d*4.2,"-"v590^d*6.2'</expirationDate>'/,
+fi 
+
+'<obsolete>' if p(v590) then 'true' else 'false' fi '</obsolete>'/
+if p(v591) then '<validUntilDate>'v591.4,"-"v591*4.2,"-"v591*6.2'</validUntilDate>' fi/
+"<validUntilNotes>"v593"</validUntilNotes>"/
+"<numberOfPages>"v520"</numberOfPages>"/
+"<appendices><![CDATA["v530"]]></appendices>"/
+(|<officialPublication><![CDATA[|v510|]]></officialPublication>|)/
+if p(v560) then '<availableIn><![CDATA[', v560+|; |, ']]></availableIn>' fi/
+
+(if p(v171) then '<linkToFullText><![CDATA[http://www.ecolex.org/server2.php/libcat/docs/TRE/Full/En/'v171']]></linkToFullText>' fi)/
+(if p(v172) then '<linkToFullTextFr><![CDATA[http://www.ecolex.org/server2.php/libcat/docs/TRE/Full/Fr/'v172']]></linkToFullTextFr>' fi)/
+(if p(v173) then '<linkToFullTextSp><![CDATA[http://www.ecolex.org/server2.php/libcat/docs/TRE/Full/Sp/'v173']]></linkToFullTextSp>' fi)/
+(if p(v174) then '<linkToFullTextOther><![CDATA[http://www.ecolex.org/server2.php/libcat/docs/TRE/Full/Other/'v174']]></linkToFullTextOther>' fi)/
+
+(|<internetReference><![CDATA[|v62|]]></internetReference>|)/
+(|<internetReferenceFr><![CDATA[|v722|]]></internetReferenceFr>|)/
+(|<internetReferenceSp><![CDATA[|v723|]]></internetReferenceSp>|)/
+(|<internetReferenceOther><![CDATA[|v724|]]></internetReferenceOther>|)/
+
+(if v63:'http://' then |<relatedWebSite><![CDATA[|v63*7|]]></relatedWebSite>|   else  |<relatedWebSite><![CDATA[|v63|]]></relatedWebSite>|  fi    )/
+(|<dependencies>|v621|</dependencies>|)/
+(|<dependenciesFr>|v622|</dependenciesFr>|)/
+(|<dependenciesSp>|v623|</dependenciesSp>|)/
+
+(lref('valid';xtrim(v74);'EK';
+  |<keyword><![CDATA[|v94|]]></keyword>|/
+  |<keyword_fr_FR><![CDATA[|v194|]]></keyword_fr_FR>|/
+  |<keyword_es_ES><![CDATA[|v294|]]></keyword_es_ES>|/
+))
+
+(|<abstract><![CDATA[|v79|]]></abstract>|/),
+(|<abstractFr><![CDATA[|v792|]]></abstractFr>|/),
+(|<abstractSp><![CDATA[|v793|]]></abstractSp>|/),
+(|<linkToAbstract>http://www.ecolex.org/server2.php/libcat/docs/TRE/Abstracts/|v790|</linkToAbstract>|)/
+
+(|<comment><![CDATA[|v711|]]></comment>|/),
+(|<commentFr><![CDATA[|v712|]]></commentFr>|/),
+(|<commentSp><![CDATA[|v713|]]></commentSp>|/),
+(|<commentOther><![CDATA[|v714|]]></commentOther>|/),
+(|<linkToComment>http://www.ecolex.org/server2.php/libcat/docs/TRE/Comments/|v720|</linkToComment>|)/
+
+(|<projectInformation>|v165^c|</projectInformation>|/)
+
+(if v907^s='01' then
+|<enabledByTreaty>|v907^r|</enabledByTreaty>|/ fi)
+
+(if v907^s='03' then
+|<amendsTreaty>|v907^r|</amendsTreaty>|/ fi)
+
+(if v907^s='04' then
+|<intoForceTreaty>|v907^r|</intoForceTreaty>|/ fi)
+
+(if v907^s='05' then
+|<supersedesTreaty>|v907^r|</supersedesTreaty>|/ fi)
+
+(if v907^s='06' then
+|<citesTreaty>|v907^r|</citesTreaty>|/ fi)
+
+(if v907^s='07' then
+|<relevantTextTreaty>|v907^r|</relevantTextTreaty>|/ fi)
+
+if p(v960) then
+@XMLPAR/
+fi,
+
+'</document>'/

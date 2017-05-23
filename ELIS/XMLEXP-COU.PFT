@@ -1,0 +1,216 @@
+'<document>'/,
+'<db>cou</db>'/,
+'<isisMfn>',mfn(6),'</isisMfn>'/,
+'<id>'v3'</id>'/,
+"<id2><![CDATA["v1"]]></id2>"/
+'<dateOfEntry>'v120^d.4,"-"v120^d*4.2,"-"v120^d*6.2,'</dateOfEntry>'/,
+'<dateOfModification>'v130[nocc(v130)]^d.4,"-"v130[nocc(v130)]^d*4.2,"-"v130[nocc(v130)]^d*6.2,'</dateOfModification>'/,
+
+"<titleOfText><![CDATA["v340"]]></titleOfText>"/
+"<titleOfTextFr><![CDATA["v341"]]></titleOfTextFr>"/
+"<titleOfTextSp><![CDATA["v342"]]></titleOfTextSp>"/
+"<titleOfTextOther><![CDATA["v343"]]></titleOfTextOther>"/
+"<titleOfTextShort><![CDATA["v370"]]></titleOfTextShort>"/
+"<titleOfTextShortFr><![CDATA["v371"]]></titleOfTextShortFr>"/
+"<titleOfTextShortSp><![CDATA["v372"]]></titleOfTextShortSp>"/
+"<titleOfTextShortOther><![CDATA["v373"]]></titleOfTextShortOther>"/
+
+if p(v280) then '<typeOfText>',@EITYP,'</typeOfText>' fi/
+(|<typeOfCourtNote><![CDATA[|v729|]]></typeOfCourtNote>|/)
+
+(if p(v4^c) then
+  '<country><![CDATA[',lref('valide';xtrim(v4^c);'AC';if v100='T' then V93 else V94 fi),']]></country>'/
+  '<country_fr_FR><![CDATA[',lref('valide';xtrim(v4^c);'AC';if v100='T' then V193 else V194 fi),']]></country_fr_FR>'/
+  '<country_es_ES><![CDATA[',lref('valide';xtrim(v4^c);'AC';if v100='T' then V293 else V294 fi),']]></country_es_ES>'/
+  lref('valide';xtrim(v4^c);'AC';if v100='T' then
+   |<territorialSubdivision><![CDATA[|V94|]]></territorialSubdivision>|/
+   |<territorialSubdivision_fr_FR><![CDATA[|V194|]]></territorialSubdivision_fr_FR>|/
+   |<territorialSubdivision_es_ES><![CDATA[|V294|]]></territorialSubdivision_es_ES>|/
+  fi)
+fi)
+
+(lref('valide';xtrim(v854^c);'AC';|<region><![CDATA[|v94|]]></region>|/|<region_fr_FR><![CDATA[|v194|]]></region_fr_FR>|/|<region_es_ES><![CDATA[|v294|]]></region_es_ES>|/)/)
+(lref('valide';xtrim(v856^c);'AC';|<basin><![CDATA[|v94|]]></basin>|/|<basin_fr_FR><![CDATA[|v194|]]></basin_fr_FR>|/|<basin_es_ES><![CDATA[|v294|]]></basin_es_ES>|/)/)
+
+if p(v212) then
+  ( if p(v212) and ('ACDEGJKLQTUVWXYZ':v212) then '<subject><![CDATA[',
+    if v212='A' then 'Land & soil'
+    else if v212='C' then 'Water'
+    else if v212='D' then 'Sea'
+    else if v212='E' then 'Air & atmosphere'
+    else if v212='G' then 'Forestry'
+    else if v212='J' then 'Fisheries'
+    else if v212='K' then 'Waste & hazardous substances'
+    else if v212='L' then 'Mineral resources'
+    else if v212='Q' then 'Energy'
+    else if v212='T' then 'Legal questions'
+    else if v212='U' then 'Wild species & ecosystems'
+    else if v212='V' then 'Environment gen.'
+    else if v212='W' then 'Agricultural & rural development'
+    else if v212='X' then 'Cultivated plants'
+    else if v212='Y' then 'Livestock'
+    else if v212='Z' then 'Food & nutrition' fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi,
+    ']]></subject>' fi/)
+
+  ( if p(v212) and ('ACDEGJKLQTUVWXYZ':v212) then '<subject_fr_FR><![CDATA[',
+    if v212='A' then 'Terre et sols'
+    else if v212='C' then 'Eau'
+    else if v212='D' then 'Mer'
+    else if v212='E' then 'Air et atmosphère'
+    else if v212='G' then 'Forêts'
+    else if v212='J' then 'Pêche'
+    else if v212='K' then 'Déchets et substances dangereuses'
+    else if v212='L' then 'Ressources minérales'
+    else if v212='Q' then 'Énergie'
+    else if v212='T' then 'Questions juridiques'
+    else if v212='U' then 'Espèces sauvages et écosystèmes'
+    else if v212='V' then 'Environnement gén.'
+    else if v212='W' then 'Agriculture et développement rural'
+    else if v212='X' then 'Plantes cultivées'
+    else if v212='Y' then 'Bétail'
+    else if v212='Z' then 'Alimentation et nutrition' fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi,
+    ']]></subject_fr_FR>' fi/)
+
+  ( if p(v212) and ('ACDEGJKLQTUVWXYZ':v212) then '<subject_es_ES><![CDATA[',
+    if v212='A' then 'Tierra y suelos'
+    else if v212='C' then 'Agua'
+    else if v212='D' then 'Mar'
+    else if v212='E' then 'Aire y atmósfera'
+    else if v212='G' then 'Montes'
+    else if v212='J' then 'Pesca'
+    else if v212='K' then 'Desechos y sustancias peligrosas'
+    else if v212='L' then 'Recursos minerales'
+    else if v212='Q' then 'Energía'
+    else if v212='T' then 'Cuestiones jurídicas'
+    else if v212='U' then 'Especies silvestres y ecosistemas'
+    else if v212='V' then 'Medio ambiente gen.'
+    else if v212='W' then 'Agricultura y desarrollo rural'
+    else if v212='X' then 'Cultivos'
+    else if v212='Y' then 'Ganado'
+    else if v212='Z' then 'Alimentación y nutrición' fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi fi,
+    ']]></subject_es_ES>' fi/)
+fi/
+(lref('valide';xtrim(v440);'LE';
+|<languageOfDocument>|v94|</languageOfDocument>|/
+|<languageOfDocument_fr_FR>|v194|</languageOfDocument_fr_FR>|/
+|<languageOfDocument_es_ES>|v294|</languageOfDocument_es_ES>|/)/)
+
+(lref('valide';xtrim(v450);'LE';
+|<languageOfTranslation>|v94|</languageOfTranslation>|/
+|<languageOfTranslation_fr_FR>|v194|</languageOfTranslation_fr_FR>|/
+|<languageOfTranslation_es_ES>|v294|</languageOfTranslation_es_ES>|/)/)
+
+(|<courtName><![CDATA[|v840^a|]]></courtName>|)/
+
+if p(v842) then
+  '<courtJurisdiction>'
+    if v842='adm' then 'Administrative'
+    else if v842='civ' then 'Civil'
+    else if v842='con' then 'Constitutional'
+    else if v842='cri' then 'Criminal'
+    else if v842='env' then 'Environmental'
+    else if v842='gen' then 'General'
+    else 'Other or unknown' fi fi fi fi fi fi,
+  '</courtJurisdiction>'
+fi/
+
+if p(v843) then
+  '<courtCase>'
+    if v843='adm' then 'Administrative'
+    else if v843='civ' then 'Civil'
+    else if v843='cri' then 'Criminal'
+    else 'Other' fi fi fi,
+  '</courtCase>'
+fi/
+
+(|<seatOfCourt><![CDATA[|v310|]]></seatOfCourt>|/)
+
+(|<subdivision><![CDATA[|v844|]]></subdivision>|)/
+(|<instance><![CDATA[|v846|]]></instance>|)/
+mhl,(|<justices><![CDATA[|v29|]]></justices>|),mpl/
+
+'<dateOfText>'v55.4,"-"v55*4.2,"-"v55*6.2,'</dateOfText>'/,
+
+if p(v848) then
+  '<statusOfDecision>'
+    if v848='NN' then 'Final'
+    else if v848='YY' then 'Not yet final'
+    else 'Unknown' fi fi,
+  '</statusOfDecision>'
+fi/,
+
+(|<referenceNumber><![CDATA[|v430|]]></referenceNumber>|)/
+
+"<numberOfPages>"v520"</numberOfPages>"/
+"<appendices>"v530"</appendices>"/
+"<officialPublication>"v510"</officialPublication>"/
+"<availableIn>"v560"</availableIn>"/
+
+(|<linkToFullText><![CDATA[http://www.ecolex.org/server2.php/libcat/docs/COU/Full/En/|v171|]]></linkToFullText>|)/
+(|<linkToFullTextFr><![CDATA[http://www.ecolex.org/server2.php/libcat/docs/COU/Full/Fr/|v172|]]></linkToFullTextFr>|)/
+(|<linkToFullTextSp><![CDATA[http://www.ecolex.org/server2.php/libcat/docs/COU/Full/Sp/|v173|]]></linkToFullTextSp>|)/
+(|<linkToFullTextOther><![CDATA[http://www.ecolex.org/server2.php/libcat/docs/COU/Full/Other/|v174|]]></linkToFullTextOther>|)/
+
+(|<internetReference><![CDATA[|v62|]]></internetReference>|)/
+(|<internetReferenceFr><![CDATA[|v722|]]></internetReferenceFr>|)/
+(|<internetReferenceSp><![CDATA[|v723|]]></internetReferenceSp>|)/
+(|<internetReferenceOther><![CDATA[|v724|]]></internetReferenceOther>|)/
+
+(|<relatedWebSite><![CDATA[|v62|]]></relatedWebSite>|)/
+
+(lref('valid';xtrim(v74);'EK';
+  |<keyword><![CDATA[|v94|]]></keyword>|/
+  |<keyword_fr_FR><![CDATA[|v194|]]></keyword_fr_FR>|/
+  |<keyword_es_ES><![CDATA[|v294|]]></keyword_es_ES>|/
+))
+
+(|<abstract><![CDATA[|v79|]]></abstract>|/),
+(|<abstractFr><![CDATA[|v792|]]></abstractFr>|/),
+(|<abstractSp><![CDATA[|v793|]]></abstractSp>|/),
+(|<abstractOther><![CDATA[|v794|]]></abstractOther>|/),
+(|<linkToAbstract><![CDATA[http://www.ecolex.org/server2.php/libcat/docs/COU/Abstracts/|v790|]]></linkToAbstract>|)/
+
+(if p(v907^r) then |<referenceToTreaties><![CDATA[|v907^r|]]></referenceToTreaties>|/
+  '<referenceToTreatiesTitle><![CDATA['ref('tre';|ID:"|v907^r|"|;@EATIT)']]></referenceToTreatiesTitle>'/fi)
+(if p(v901^r) then |<referenceToEULegislation><![CDATA[|v901^r|]]></referenceToEULegislation>|/
+  '<referenceToEULegislationTitle><![CDATA['ref('legal';|ID:"|v901^r|"|;@EATIT)']]></referenceToEULegislationTitle>'/fi)
+(if p(v903) then |<referenceToNationalLegislation><![CDATA[|v903^r|]]></referenceToNationalLegislation>|/
+  |<referenceToNationalLegislationNotes><![CDATA[|v903^n|]]></referenceToNationalLegislationNotes>|/
+  if p(v903^r) then '<referenceToNationalLegislationTitle><![CDATA['ref('legal';|ID:"|v903^r|"|;@EATIT)']]></referenceToNationalLegislationTitle>'/ fi fi)
+(if p(v909) then |<referenceToCourtDecision><![CDATA[|v909^r|]]></referenceToCourtDecision>|/
+  if p(v909^r) then '<referenceToCourtDecisionTitle><![CDATA['ref(;|ID:"|v909^r|"|;@EATIT)']]></referenceToCourtDecisionTitle>'fi/
+  |<referenceToCourtDecisionNotes><![CDATA[|v909^n|]]></referenceToCourtDecisionNotes>|/ fi)
+
+{(|<referenceToFaolex><![CDATA[|v902^o|]]></referenceToFaolex>|/)}
+if p(v902^o) then
+  (if p(v902^o) then
+    s1:=v902^o,
+    rpft('rfaolex';'faolex';ref(;'ID:"'s1'"';
+      "<referenceToFaolex><![CDATA["v1"]]></referenceToFaolex>"/
+      "<referenceToFaolexTitle><![CDATA["v17"]]></referenceToFaolexTitle>"/
+      (|<referenceToFaolexCountry>|v4|</referenceToFaolexCountry>|/
+        (ref('valid';|CC:"|v4|"|;|<referenceToFaolexCountry_en><![CDATA[|v94|]]></referenceToFaolexCountry_en>|/
+          |<referenceToFaolexCountry_fr><![CDATA[|v194|]]></referenceToFaolexCountry_fr>|/
+          |<referenceToFaolexCountry_es><![CDATA[|v294|]]></referenceToFaolexCountry_es>|/))
+      )
+      '<referenceToFaolexDate>'if p(v31) then v31.4,"-"v31*4.2,"-"v31*6.2 else v322.4,"-"v322*4.2,"-"v322*6.2 fi'</referenceToFaolexDate>'/
+    )),
+    |; |v902^n,
+  fi/)
+fi/
+
+(|<wildlifeCharges><![CDATA[|v731|]]></wildlifeCharges>|/)
+(|<wildlifeSpecies><![CDATA[|v732|]]></wildlifeSpecies>|/)
+(lref('valide';xtrim(v732);'SE';
+  |<wildlifeSpecies_fr_FR><![CDATA[|v194|]]></wildlifeSpecies_fr_FR>|/
+  |<wildlifeSpecies_es_ES><![CDATA[|v294|]]></wildlifeSpecies_es_ES>|/
+))
+(|<wildlifeValue><![CDATA[|v734|]]></wildlifeValue>|/)
+(|<wildlifeTransnational>|v733|</wildlifeTransnational>|/)
+(|<wildlifeDecision><![CDATA[|v737|]]></wildlifeDecision>|/)
+(|<wildlifePenalty><![CDATA[|v735|]]></wildlifePenalty>|/)
+(|<wildlifePenaltyNote><![CDATA[|v736|]]></wildlifePenaltyNote>|/)
+
+(|<projectInformation>|v165^c|</projectInformation>|/)
+
+'</document>'/
