@@ -1,0 +1,6 @@
+MAILTO="andrei.melis@eaudeweb.ro"
+0 23 * * * import_updater.sh
+0 3 * * 0 $ECOLEX_HOME/ecolex/manage.py refresh_sitemap
+0 1 * * * reprocess_from_db.sh
+#30 * * * * /var/local/logmon.sh
+
