@@ -80,8 +80,6 @@ RUN chown -R web:web $ECOLEX_HOME
 # no changes to volume are persistent after declaring it
 VOLUME ["/www_static", "${ECOLEX_HOME}/logs"]
 
-EXPOSE $EDW_RUN_WEB_PORT
-
 # USER web # use gosu in the entrypoint
 ENTRYPOINT ["root-entrypoint.sh"]
 CMD ["run"]
