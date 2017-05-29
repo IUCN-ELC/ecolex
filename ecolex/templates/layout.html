@@ -20,15 +20,6 @@
   <script src="{{ settings.STATIC_URL }}{% version 'js/main.js' %}"></script>
   <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.cookieBar.min.js' %}"></script>
   <script src="{{ settings.STATIC_URL }}{% version 'js/jquery.collapser.min.js' %}"></script>
-  <script src="{{ settings.STATIC_URL }}{% version 'js/raven.min.js' %}"></script>
-  <script>Raven.config("{{ settings.SENTRY_PUBLIC_DSN }}").install()</script>
-
- 
-
-
-
-
-
 
   {% block scripts %}{% endblock %}
   {% include 'bits/favicon.html' %}
