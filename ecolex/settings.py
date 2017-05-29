@@ -248,7 +248,7 @@ INFORMEA_CODE = os.environ.get('EDW_RUN_WEB_INFORMEA_CODE')
 FAOLEX_CODE = os.environ.get('EDW_RUN_WEB_FAOLEX_CODE')
 FAOLEX_CODE_2 = os.environ.get('EDW_RUN_WEB_FAOLEX_CODE_2')
 
-EXPORT_TYPES = ['treaty', 'decision', 'court_decision', 'literature']
+EXPORT_TYPES = ['legislation', 'treaty', 'decision', 'court_decision', 'literature']
 
 # Use SOLR_UPDATE for the `update` management command.
 # The management command will replace values in SOLR_UPDATE['replace']['field']
