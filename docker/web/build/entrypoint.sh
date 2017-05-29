@@ -1,18 +1,8 @@
 #!/usr/bin/env bash
 
 init() {
-    ../manage.py migrate
-    ../manage.py collectstatic --noinput
-}
-
-init_bare() {
-    init
-    ../manage.py loaddata ecolex/fixtures/initial_data.json
-    if [ "$1" = "solr" ]; then
-        cp ecolex/local_settings.initial_example ecolex/local_settings.py
-        import_updater.sh
-        rm ecolex/local_settings.py
-    fi
+    ./manage.py migrate
+    ./manage.py collectstatic --noinput
 }
 
 wait_sql() {
@@ -22,26 +12,29 @@ wait_sql() {
     done
 }
 
+wait_solr() {
+    while ! nc -z solr 8983; do
+        echo "Waiting for Solr server solr:8983 ..."
+        sleep 1
+    done
+
+}
+
 install_crontab() {
-    # with this method we can keep any kind of env var in crontab and it will work
-    # we exclude some for the horror they are
-    env | grep -v 'LS_COLORS\|no_proxy' > $ECOLEX_HOME/ecolex_crontab_with_env
-    cat $ECOLEX_HOME/ecolex.crontab >> $ECOLEX_HOME/ecolex_crontab_with_env
-    crontab -u $USER $ECOLEX_HOME/ecolex_crontab_with_env
+    echo "Installing crontab"
+    crontab -u $USER $ECOLEX_HOME/ecolex.crontab
 }
 
 if [ "$1" == "run" ]; then
     wait_sql
+    wait_solr
     install_crontab
     init
     exec gunicorn -w1 --bind=0.0.0.0:$EDW_RUN_WEB_PORT --access-logfile=- --error-logfile=- ecolex.wsgi:application
 elif [ "$1" == "debug" ]; then
     wait_sql
+    wait_solr
     exec ./manage.py runserver 0.0.0.0:$EDW_RUN_WEB_PORT
-elif [ "$1" == "init" ]; then
-    shift
-    wait_sql
-    init_bare "$@"
 else
     exec "$@"
 fi
