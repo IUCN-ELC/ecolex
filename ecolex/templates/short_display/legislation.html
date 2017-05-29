@@ -3,7 +3,7 @@
 
 <div class="search-result-details">
     <strong class="sr-type">{% trans 'Legislation' %}</strong> {% if result.country %} |
-    <span class="sr-jurisdiction sr-help" title="{% trans 'Country' %}">{{ result.country }}</span> {% endif %}
+    <span class="sr-jurisdiction sr-help" title="{% trans 'Country/Territory' %}">{{ result.country }}</span> {% endif %}
     {% if result.year %} |
       <span class="sr-date sr-help" title="{% trans 'Original date' %}">{{ result.year }}
         {% if result.consolidation_date %}

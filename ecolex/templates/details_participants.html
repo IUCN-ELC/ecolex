@@ -14,7 +14,7 @@
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
   {% breadcrumb "Treaty" 'treaty_details' query slug=document.slug %}
-  {% breadcrumb "Country/Participant" %}
+  {% breadcrumb "Country/Territory/Participant" %}
 {% endblock %}
 
 {% block content %}{% with document as treaty %}
@@ -30,7 +30,7 @@
     <table class="table table-bordered participants-table" style="box-sizing: border-box;" id="country-party">
       <thead>
         <tr>
-          <th class="col-country">{% trans 'Countries' %}</th>
+          <th class="col-country">{% trans 'Countries/Territories' %}</th>
           {% for event in treaty.parties_events %}
             {% with treaty.EVENTS_NAMES|lookup:event as event_type %}
               <th>{% trans event_type %}</th>

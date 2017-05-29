@@ -237,7 +237,7 @@ CKEDITOR_CONFIGS = {
 
 # API KEY FOR FAOLEX HARVESTER
 FAOLEX_ENABLED = bool(os.environ.get('EDW_RUN_WEB_FAOLEX_ENABLED', 'True'))
-FAOLEX_API_KEY = os.environ.get('EDW_RUN_WEB_FAOLEX_API_KEY')
+FAOLEX_API_KEY = os.environ.get('EDW_RUN_WEB_FAOLEX_API_KEY', 'secret')
 # FIXME '' for this should determine a new key generation... handle that too; one way or another
 if FAOLEX_ENABLED and not FAOLEX_API_KEY:
     raise RuntimeError('EDW_RUN_WEB_FAOLEX_API_KEY not set although Faolex is enabled')

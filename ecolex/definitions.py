@@ -135,7 +135,7 @@ TRANSLATIONS = [
     _('Others'),
     _('In force'),
     _('Not in force'),
-    _('Superseded"'),
+    _('Superseded'),
     _('Bilateral'),
     _('Multilateral'),
     _('Active'),

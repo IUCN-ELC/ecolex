@@ -28,7 +28,7 @@
 <p class="search-result-details">
   <strong class="sr-type">{% trans 'Literature' %}</strong>
   {% if result.jurisdiction %} | <span class="sr-jurisdiction sr-help" title="{% trans 'Field of application' %}">{{ result.jurisdiction }}</span> {% endif %}
-  {% if result.countries %} | <span class="sr-country sr-help" title="{% trans 'Country' %}">{{ result.countries|join:", "|safe }}</span> {% endif %}
+  {% if result.countries %} | <span class="sr-country sr-help" title="{% trans 'Country/Territory' %}">{{ result.countries|join:", "|safe }}</span> {% endif %}
 </p>
 
 <p class="search-result-details">

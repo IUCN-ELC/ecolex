@@ -28,7 +28,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% trans "Add keyword filter" as tooltip %}
 {% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:xkeywords-list" field=form.xkeywords %}
 
-{% trans "Country" as title %}
+{% trans "Country/Territory" as title %}
 {% trans "Add country…" as placeholder %}
 {% trans "Add country filter" as tooltip %}
 {% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:xcountry-list" field=form.xcountry %}
