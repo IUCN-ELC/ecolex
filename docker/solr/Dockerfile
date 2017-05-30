@@ -14,6 +14,7 @@ RUN cp -r ./server/solr/configsets/data_driven_schema_configs/conf ecolex_initia
 ADD ./schema.xml \
     ./solrconfig.xml.patch \
     ecolex_initial_conf/
+RUN mkdir -p ecolex_initial_conf/data/index
 
 ADD ./container-scripts/config-diff.sh \
     ./container-scripts/entrypoint.sh \

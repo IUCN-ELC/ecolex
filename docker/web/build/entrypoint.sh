@@ -31,6 +31,12 @@ if [ "$1" == "run" ]; then
     install_crontab
     init
     exec gunicorn -w1 --bind=0.0.0.0:$EDW_RUN_WEB_PORT --access-logfile=- --error-logfile=- ecolex.wsgi:application
+elif [ "$1" == "init_dev" ]; then
+    wait_sql
+    wait_solr
+    ./manage.py migrate
+    ./manage.py loaddata ecolex/fixtures/initial_data.json
+    exec ./manage.py runserver 0.0.0.0:$EDW_RUN_WEB_PORT
 elif [ "$1" == "debug" ]; then
     wait_sql
     wait_solr
