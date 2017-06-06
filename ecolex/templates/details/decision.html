@@ -20,7 +20,7 @@
 
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
-  {% breadcrumb "COP decision" %}
+  {% breadcrumb "Treaty decision" %}
 {% endblock %}
 
 {% block content %}
@@ -31,7 +31,7 @@
     {% include 'bits/disclaimer.html' with class='InforMEA-disclaimer' %}
     <div class="record-title">
       <div class="record-icon">
-        <span class="icon icon-cop-decision" title="{% trans 'COP Decision' %}"></span>
+        <span class="icon icon-cop-decision" title="{% trans 'Treaty decision' %}"></span>
       </div>
       <h1>{{ document.title|safe }}</h1>
     </div>

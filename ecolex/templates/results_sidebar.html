@@ -129,7 +129,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% if form.has_decision %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not type_count.decision %}class="collapsed"{% endif %}
-        data-target="#filter-cop-decisions">{% trans 'COP Decision filters' %}</h5>
+        data-target="#filter-cop-decisions">{% trans 'Treaty decision filters' %}</h5>
 
     <div id="filter-cop-decisions" class="collapse {% if type_count.decision > 0 %}in{% endif %}">
 
@@ -172,7 +172,7 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% if form.has_court_decision %}
   <fieldset class="special-filter">
     <h5 data-toggle="collapse" {% if not type_count.court_decision %}class="collapsed"{% endif %}
-        data-target="#filter-court-decisions">{% trans 'Court decision filters' %}</h5>
+        data-target="#filter-court-decisions">{% trans 'Jurisprudence filters' %}</h5>
     <div id="filter-court-decisions" class="collapse {% if type_count.court_decision > 0 %}in{% endif %}">
 
 {% trans "Type of court" as title %}

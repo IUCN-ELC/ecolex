@@ -292,7 +292,7 @@
 
     {% if document.decision_count %}
       <dl>
-        <dt>{% trans 'COP decisions' %}</dt>
+        <dt>{% trans 'Treaty decisions' %}</dt>
         <dd>
           <strong>{{ document.decision_count }} {% trans 'decisions' %}</strong> {% trans 'related to this treaty.' %}
           <a href="{% url 'related_decisions' document.slug %}?{{ query }}">{% trans 'View decisions' %}</a>
@@ -314,10 +314,10 @@
 
     {% if document.court_decision_count %}
       <dl>
-        <dt>{% trans 'Court Decision' %}</dt>
+        <dt>{% trans 'Jurisprudence' %}</dt>
         <dd>
-          <strong>{{ document.court_decision_count }} {% trans 'court decisions' %}</strong> {% trans 'related to this treaty.' %}
-          <a href="{% url 'related_court_decisions' document.slug %}?{{ query }}">{% trans 'View court decisions' %}</a>
+          <strong>{{ document.court_decision_count }} {% trans 'jurisprudence' %}</strong> {% trans 'related to this treaty.' %}
+          <a href="{% url 'related_court_decisions' document.slug %}?{{ query }}">{% trans 'View jurisprudence' %}</a>
         </dd>
       </dl>
     {% endif %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-29 21:13+0300\n"
+"POT-Creation-Date: 2017-06-06 08:09+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -255,15 +255,39 @@ msgstr "Trié par"
 msgid "Sort by"
 msgstr "Trier par"
 
+#: .\templates\bits\type_facet.html:20 .\templates\bits\type_facet.html:39
+#: .\templates\bits\type_facet.html:58 .\templates\bits\type_facet.html:77
+#: .\templates\bits\type_facet.html:96
+msgid "Show all"
+msgstr "Montre tout"
+
+#: .\templates\bits\type_facet.html:20 .\templates\bits\type_facet.html:39
+#: .\templates\bits\type_facet.html:58 .\templates\bits\type_facet.html:77
+#: .\templates\bits\type_facet.html:96 .\templates\results_main.html:26
+msgid "Show only"
+msgstr "Montrer seulement"
+
+#: .\templates\bits\type_facet.html:20
+msgid "treaties"
+msgstr "traités"
+
 #: .\templates\bits\type_facet.html:23 .\templates\details\treaty.html:232
 #: .\templates\layout.html:111 .\templates\results_main.html:33
 msgid "Treaties"
 msgstr "Traités"
 
-#: .\templates\bits\type_facet.html:42 .\templates\layout.html:117
-#: .\templates\results_main.html:34
-msgid "COP Decisions"
-msgstr "Décisions de la CdP"
+#: .\templates\bits\type_facet.html:39
+msgid "treaty decisions"
+msgstr "décisions de traités"
+
+#: .\templates\bits\type_facet.html:42 .\templates\details\treaty.html:295
+#: .\templates\layout.html:117 .\templates\results_main.html:34
+msgid "Treaty decisions"
+msgstr "Décisions de traités"
+
+#: .\templates\bits\type_facet.html:58
+msgid "legislation"
+msgstr "législation"
 
 #: .\templates\bits\type_facet.html:61 .\templates\details\legislation.html:30
 #: .\templates\details\legislation.html:127
@@ -273,10 +297,21 @@ msgstr "Décisions de la CdP"
 msgid "Legislation"
 msgstr "Législation"
 
-#: .\templates\bits\type_facet.html:80 .\templates\layout.html:129
-#: .\templates\results_main.html:36
-msgid "Court Decisions"
+#: .\templates\bits\type_facet.html:77 .\templates\details\treaty.html:319
+msgid "jurisprudence"
+msgstr "jurisprudence"
+
+#: .\templates\bits\type_facet.html:80
+#: .\templates\details\court_decision.html:31
+#: .\templates\details\literature.html:241 .\templates\details\treaty.html:317
+#: .\templates\layout.html:129 .\templates\results_main.html:36
+#: .\templates\short_display\court_decision.html:5
+msgid "Jurisprudence"
 msgstr "Jurisprudence"
+
+#: .\templates\bits\type_facet.html:96
+msgid "literature"
+msgstr "littérature"
 
 #: .\templates\bits\type_facet.html:99 .\templates\details\literature.html:25
 #: .\templates\details\literature.html:197
@@ -298,12 +333,6 @@ msgstr "Chercher"
 #: .\templates\delete_search.html:30
 msgid "Delete"
 msgstr ""
-
-#: .\templates\details\court_decision.html:31
-#: .\templates\details\treaty.html:317
-#: .\templates\short_display\court_decision.html:5
-msgid "Court Decision"
-msgstr "Jurisprudence"
 
 #: .\templates\details\court_decision.html:38
 #: .\templates\details\legislation.html:36
@@ -428,8 +457,8 @@ msgid "Cites"
 msgstr "Cite"
 
 #: .\templates\details\decision.html:34
-msgid "COP Decision"
-msgstr "Décision de la CdP"
+msgid "Treaty decision"
+msgstr "Décision de traités"
 
 #: .\templates\details\decision.html:40
 #: .\templates\details\legislation.html:43
@@ -563,10 +592,6 @@ msgstr "Champ d'application"
 msgid "DOI"
 msgstr "DOI"
 
-#: .\templates\details\literature.html:241
-msgid "Court decision"
-msgstr "Jurisprudence"
-
 #: .\templates\details\literature.html:254
 msgid "References from"
 msgstr "Références de"
@@ -609,10 +634,6 @@ msgstr "Indisponible"
 msgid "Implemented by"
 msgstr "Implementé par"
 
-#: .\templates\details\treaty.html:295
-msgid "COP decisions"
-msgstr "Décisions de la CdP"
-
 #: .\templates\details\treaty.html:297
 msgid "decisions"
 msgstr "les décisions"
@@ -630,17 +651,17 @@ msgstr "Voir les décisions"
 msgid "View literature"
 msgstr "Voir les littératures"
 
-#: .\templates\details\treaty.html:319
-msgid "court decisions"
-msgstr "Jurisprudences"
-
 #: .\templates\details\treaty.html:320
-msgid "View court decisions"
-msgstr "Voir les jurisprudences"
+msgid "View jurisprudence"
+msgstr "Voir la jurisprudence"
+
+#: .\templates\details_court_decisions.html:20
+msgid "Related jurisprudence"
+msgstr "Jurisprudence liée"
 
 #: .\templates\details_decisions.html:21
-msgid "Related COP decisions"
-msgstr "Décisions de la CdP relacionados"
+msgid "Related decisions"
+msgstr "Décisions liés"
 
 #: .\templates\details_literatures.html:21
 msgid "Related literature"
@@ -728,10 +749,6 @@ msgstr[1] ""
 msgid "No matches found."
 msgstr "Aucun resultat trouvé."
 
-#: .\templates\results_main.html:26
-msgid "Show only"
-msgstr "Montrer seulement"
-
 #: .\templates\results_sidebar.html:5 .\templates\results_sidebar.html:224
 msgid "Reset all filters"
 msgstr "Réinitialiser tous les filtres"
@@ -817,8 +834,8 @@ msgid "Add place of adoption filter"
 msgstr "Ajouter lieu d'adoption filtre"
 
 #: .\templates\results_sidebar.html:132
-msgid "COP Decision filters"
-msgstr "Filtres du décision de la CdP"
+msgid "Treaty decision filters"
+msgstr "Filtres de la jurisprudence"
 
 #: .\templates\results_sidebar.html:137
 msgid "Add treaty…"
@@ -838,7 +855,7 @@ msgstr "Décision statut"
 
 #: .\templates\results_sidebar.html:156
 msgid "Legislation filters"
-msgstr "Filtres du législation"
+msgstr "Filtres de la législation"
 
 #: .\templates\results_sidebar.html:162 .\templates\results_sidebar.html:181
 msgid "Sub-national/state level"
@@ -853,12 +870,12 @@ msgid "Add sub-national/state level filter"
 msgstr "Ajouter niveau sous-national / etat filtre"
 
 #: .\templates\results_sidebar.html:175
-msgid "Court decision filters"
-msgstr "Filtres du jurisprudence"
+msgid "Jurisprudence filters"
+msgstr "Filtres de la jurisprudence"
 
 #: .\templates\results_sidebar.html:193
 msgid "Literature filters"
-msgstr "Filtres du littérature"
+msgstr "Filtres de la littérature"
 
 #: .\templates\results_sidebar.html:197
 msgid "Add author…"
@@ -1096,6 +1113,30 @@ msgstr "moins récente"
 msgid "relevance"
 msgstr "pertinence"
 
+#~ msgid "COP Decision"
+#~ msgstr "Décision de la CdP"
+
+#~ msgid "COP Decision filters"
+#~ msgstr "Filtres du décision de la CdP"
+
+#~ msgid "Court Decision"
+#~ msgstr "Jurisprudence"
+
+#~ msgid "Court decision"
+#~ msgstr "Jurisprudence"
+
+#~ msgid "COP Decisions"
+#~ msgstr "Décisions de la CdP"
+
+#~ msgid "Court Decisions"
+#~ msgstr "Jurisprudence"
+
+#~ msgid "COP decisions"
+#~ msgstr "Décisions de la CdP"
+
+#~ msgid "View court decisions"
+#~ msgstr "Voir les jurisprudences"
+
 #~ msgid "Country"
 #~ msgstr "Pays"
 
@@ -1113,9 +1154,6 @@ msgstr "pertinence"
 
 #~ msgid "Reset zoom"
 #~ msgstr "Réinitialiser zoom"
-
-#~ msgid "Show all"
-#~ msgstr "Montre tout"
 
 #~ msgid ""
 #~ "In order to understand how people use our site generally, and to create "

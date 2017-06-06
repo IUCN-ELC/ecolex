@@ -18,7 +18,7 @@
 
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
-  {% breadcrumb "Court decision" %}
+  {% breadcrumb "Jurisprudence" %}
 {% endblock %}
 
 {% block content %}
@@ -28,7 +28,7 @@
   <header>
     <div class="record-title">
       <div class="record-icon">
-        <span class="icon icon-court-decision" title="{% trans 'Court Decision' %}"></span>
+        <span class="icon icon-court-decision" title="{% trans 'Jurisprudence' %}"></span>
       </div>
       <h1>{{ document.title|safe }}</h1>
     </div>
