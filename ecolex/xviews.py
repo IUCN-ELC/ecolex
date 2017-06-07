@@ -20,6 +20,7 @@ from ecolex.management import definitions
 class HomepageView(TemplateView):
     template_name = 'homepage.html'
 
+
 homepage_view = HomepageView.as_view()
 
 
@@ -181,12 +182,13 @@ class TreatyDetails(DetailsView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         leg_implemented = len(getattr(ctx['document'],
-                                  'legislations_implemented_by', []))
+                                      'legislations_implemented_by', []))
         leg_cited = len(getattr(ctx['document'], 'legislations_cited_by', []))
         if leg_implemented or leg_cited:
             ctx['document'].legislation_count = leg_implemented + leg_cited
 
         return ctx
+
 
 class LiteratureDetails(DetailsView):
     template_name = 'details/literature.html'
@@ -262,7 +264,8 @@ class RelatedObjectsView(PagedViewMixin, DetailsView):
 
         return ctx
 
-class RelatedLegislations(RelatedObjectsView):
+
+class RelatedLegislation(RelatedObjectsView):
     related_type = 'legislation'
     template_name = 'details_legislations.html'
 
@@ -274,19 +277,20 @@ class RelatedLegislations(RelatedObjectsView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         doc = ctx['document']
-        for remote_field, local_field  in doc.LEGISLATION_REFERENCES.items():
+        for remote_field, local_field in doc.LEGISLATION_REFERENCES.items():
             try:
                 value = getattr(doc, local_field)
             except AttributeError:
                 raise Http404()
             lookups = {
-                doc._resolve_field(remote_field, definitions.LEGISLATION):value,
+                doc._resolve_field(remote_field, definitions.LEGISLATION): value,
             }
             response = self.fetch_results(lookups)
             ctx[remote_field] = response.results
         return ctx
 
-class RelatedLiteratures(RelatedObjectsView):
+
+class RelatedLiterature(RelatedObjectsView):
     related_type = 'literature'
     template_name = 'details_literatures.html'
 
@@ -310,8 +314,8 @@ class RelatedDecisions(RelatedObjectsView):
             'group.sort': 'decNumber_sort asc',
             'group.limit': 1000,
             'group.main': True,
-            #'group.ngroups': True, # we could use this in template
-            #'group.format': 'simple', # this is implied by group.main
+            # 'group.ngroups': True, # we could use this in template
+            # 'group.format': 'simple', # this is implied by group.main
         }
 
         # TODO: make the sorting variable?

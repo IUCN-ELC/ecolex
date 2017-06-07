@@ -9,55 +9,55 @@
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
   {% breadcrumb "Treaty" 'treaty_details' query slug=document.slug %}
-  {% breadcrumb "Legislation" %}
+  {% breadcrumb "Related legislation" %}
 {% endblock %}
 
 {% block content %}
 
 <article class="record-details">
-
   <header>
     <div class="record-title">
       <h1>{{ document.title|safe }}</h1>
-      <h2>{% trans 'Related legislation' %}</h2>
     </div>
   </header>
 
   {% if treaty_implements %}
-    <h4> Implemented by </h4>
     <table class="table decisions-expanded">
       <tbody>
+      <tr>
+          <th colspan="3">{% trans 'Implemented by' %}</th>
+      </tr>
       {% for legislation in treaty_implements %}
       <tr>
-        <div class="treaty-link-container">
+        <td>
           <h3 class="search-result-title">
             <a href="{{ legislation.details_url }}?{{ query }}"
                title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
           </h3>
           {% include 'short_display/legislation.html' with result=legislation %}
-        </div>
+        </td>
       </tr>
-      <hr>
       {% endfor %}
       </tbody>
     </table>
   {%endif %}
 
   {% if treaty_cites %}
-    <h4> Cited by </h4>
     <table class="table decisions-expanded">
       <tbody>
+      <tr>
+          <th colspan="3">{% trans 'Cited by' %}</th>
+      </tr>
       {% for legislation in treaty_cites %}
       <tr>
-        <div class="treaty-link-container">
+        <td>
           <h3 class="search-result-title">
             <a href="{{ legislation.details_url }}?{{ query }}"
                title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
           </h3>
           {% include 'short_display/legislation.html' with result=legislation %}
-        </div>
+        </td>
       </tr>
-      <hr>
       {% endfor %}
       </tbody>
     </table>

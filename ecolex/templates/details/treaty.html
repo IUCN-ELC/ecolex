@@ -263,7 +263,7 @@
         {% with document.legislation_count as leg_count %}
           <strong>{{ leg_count }} record{{ leg_count|pluralize:"s" }}</strong> {% trans 'related to this treaty.' %}
         {% endwith %}
-          <a href="{% url 'related_legislations' document.slug %}?{{ query }}">{% trans 'View legislation' %}</a>
+          <a href="{% url 'related_legislation' document.slug %}?{{ query }}">{% trans 'View legislation' %}</a>
         </dd>
       </dl>
     {% endif %}
@@ -285,7 +285,7 @@
         {% with document.literature_count as lit_count %}
           <strong>{{ lit_count }} record{{ lit_count|pluralize:"s" }} </strong> {% trans 'related to this treaty.' %}
         {% endwith %}
-          <a href="{% url 'related_literatures' document.slug %}?{{ query }}">{% trans 'View literature' %}</a>
+          <a href="{% url 'related_literature' document.slug %}?{{ query }}">{% trans 'View literature' %}</a>
         </dd>
       </dl>
     {% endif %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-06 08:09+0300\n"
+"POT-Creation-Date: 2017-06-07 19:11+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,6 +137,14 @@ msgstr "jurisprudence"
 #: .\definitions.py:159
 msgid "Search results"
 msgstr "Résultats de la recherche"
+
+#: .\definitions.py:160
+msgid "Related legislation"
+msgstr "Législation liée"
+
+#: .\definitions.py:161
+msgid "Related literature"
+msgstr "Littérature liée"
 
 #: .\settings.py:162
 msgid "English"
@@ -280,7 +288,7 @@ msgstr "Traités"
 msgid "treaty decisions"
 msgstr "décisions de traités"
 
-#: .\templates\bits\type_facet.html:42 .\templates\details\treaty.html:295
+#: .\templates\bits\type_facet.html:42 .\templates\details\treaty.html:273
 #: .\templates\layout.html:117 .\templates\results_main.html:34
 msgid "Treaty decisions"
 msgstr "Décisions de traités"
@@ -291,19 +299,19 @@ msgstr "législation"
 
 #: .\templates\bits\type_facet.html:61 .\templates\details\legislation.html:30
 #: .\templates\details\legislation.html:127
-#: .\templates\details\literature.html:228 .\templates\layout.html:123
-#: .\templates\results_main.html:35
+#: .\templates\details\literature.html:228 .\templates\details\treaty.html:261
+#: .\templates\layout.html:123 .\templates\results_main.html:35
 #: .\templates\short_display\legislation.html:5
 msgid "Legislation"
 msgstr "Législation"
 
-#: .\templates\bits\type_facet.html:77 .\templates\details\treaty.html:319
+#: .\templates\bits\type_facet.html:77 .\templates\details\treaty.html:297
 msgid "jurisprudence"
 msgstr "jurisprudence"
 
 #: .\templates\bits\type_facet.html:80
 #: .\templates\details\court_decision.html:31
-#: .\templates\details\literature.html:241 .\templates\details\treaty.html:317
+#: .\templates\details\literature.html:241 .\templates\details\treaty.html:295
 #: .\templates\layout.html:129 .\templates\results_main.html:36
 #: .\templates\short_display\court_decision.html:5
 msgid "Jurisprudence"
@@ -315,7 +323,7 @@ msgstr "littérature"
 
 #: .\templates\bits\type_facet.html:99 .\templates\details\literature.html:25
 #: .\templates\details\literature.html:197
-#: .\templates\details\literature.html:257 .\templates\details\treaty.html:305
+#: .\templates\details\literature.html:257 .\templates\details\treaty.html:283
 #: .\templates\layout.html:135 .\templates\results_main.html:37
 #: .\templates\short_display\literature.html:29
 msgid "Literature"
@@ -532,7 +540,7 @@ msgid "Cites treaty"
 msgstr "Cites traités"
 
 #: .\templates\details\legislation.html:175
-#: .\templates\details\treaty.html:278
+#: .\templates\details_legislations.html:49
 msgid "Cited by"
 msgstr "Cité par"
 
@@ -630,42 +638,38 @@ msgstr "Des pays"
 msgid "Not available"
 msgstr "Indisponible"
 
-#: .\templates\details\treaty.html:261
-msgid "Implemented by"
-msgstr "Implementé par"
-
-#: .\templates\details\treaty.html:297
-msgid "decisions"
-msgstr "les décisions"
-
-#: .\templates\details\treaty.html:297 .\templates\details\treaty.html:308
-#: .\templates\details\treaty.html:319
+#: .\templates\details\treaty.html:264 .\templates\details\treaty.html:275
+#: .\templates\details\treaty.html:286 .\templates\details\treaty.html:297
 msgid "related to this treaty."
 msgstr "liés à ce traité"
 
-#: .\templates\details\treaty.html:298
+#: .\templates\details\treaty.html:266
+msgid "View legislation"
+msgstr "Voir la législation"
+
+#: .\templates\details\treaty.html:275
+msgid "decisions"
+msgstr "les décisions"
+
+#: .\templates\details\treaty.html:276
 msgid "View decisions"
 msgstr "Voir les décisions"
 
-#: .\templates\details\treaty.html:310
+#: .\templates\details\treaty.html:288
 msgid "View literature"
-msgstr "Voir les littératures"
+msgstr "Voir la littérature"
 
-#: .\templates\details\treaty.html:320
+#: .\templates\details\treaty.html:298
 msgid "View jurisprudence"
 msgstr "Voir la jurisprudence"
 
-#: .\templates\details_court_decisions.html:20
+#: .\templates\details_court_decisions.html:21
 msgid "Related jurisprudence"
 msgstr "Jurisprudence liée"
 
-#: .\templates\details_decisions.html:21
-msgid "Related decisions"
-msgstr "Décisions liés"
-
-#: .\templates\details_literatures.html:21
-msgid "Related literature"
-msgstr "Littérature liée"
+#: .\templates\details_legislations.html:28
+msgid "Implemented by"
+msgstr "Implementé par"
 
 #: .\templates\details_participants.html:33
 msgid "Countries/Territories"
@@ -1112,6 +1116,9 @@ msgstr "moins récente"
 #: .\xforms.py:91
 msgid "relevance"
 msgstr "pertinence"
+
+#~ msgid "Related decisions"
+#~ msgstr "Décisions liés"
 
 #~ msgid "COP Decision"
 #~ msgstr "Décision de la CdP"
