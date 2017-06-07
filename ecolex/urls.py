@@ -29,6 +29,9 @@ urlpatterns += i18n_patterns(
     url(r'^result/$', views.SearchResults.as_view(),
         name="results"),
 
+    url(r'^details/(?P<slug>[^/]+)/legislations/$',
+        views.RelatedLegislations.as_view(),
+        name="related_legislations"),
     url(r'^details/(?P<slug>[^/]+)/decisions/$',
         views.RelatedDecisions.as_view(),
         name="related_decisions"),

@@ -178,6 +178,15 @@ class TreatyDetails(DetailsView):
     template_name = 'details/treaty.html'
     doc_type = definitions.TREATY
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        leg_implemented = len(getattr(ctx['document'],
+                                  'legislations_implemented_by', []))
+        leg_cited = len(getattr(ctx['document'], 'legislations_cited_by', []))
+        if leg_implemented or leg_cited:
+            ctx['document'].legislation_count = leg_implemented + leg_cited
+
+        return ctx
 
 class LiteratureDetails(DetailsView):
     template_name = 'details/literature.html'
@@ -232,6 +241,9 @@ class RelatedObjectsView(PagedViewMixin, DetailsView):
         ctx = super().get_context_data(**kwargs)
         doc = ctx['document']
 
+        if self.related_type == 'legislation':
+            return ctx
+
         remote_field, local_field = doc.OTHER_REFERENCES[self.related_type]
         try:
             value = getattr(doc, local_field)
@@ -250,6 +262,29 @@ class RelatedObjectsView(PagedViewMixin, DetailsView):
 
         return ctx
 
+class RelatedLegislations(RelatedObjectsView):
+    related_type = 'legislation'
+    template_name = 'details_legislations.html'
+
+    def fetch_results(self, lookups):
+        queryer = Queryer({}, language=get_language())
+        response = queryer.findany(date_sort=False, page_size=10000, **lookups)
+        return response
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        doc = ctx['document']
+        for remote_field, local_field  in doc.LEGISLATION_REFERENCES.items():
+            try:
+                value = getattr(doc, local_field)
+            except AttributeError:
+                raise Http404()
+            lookups = {
+                doc._resolve_field(remote_field, definitions.LEGISLATION):value,
+            }
+            response = self.fetch_results(lookups)
+            ctx[remote_field] = response.results
+        return ctx
 
 class RelatedLiteratures(RelatedObjectsView):
     related_type = 'literature'

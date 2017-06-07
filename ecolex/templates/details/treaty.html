@@ -252,41 +252,19 @@
   </section>
   {% endif %}
 
-  {% if document.other_references or document.legislations_implemented_by or document.legislation_cited_by %}
+  {% if document.other_references or document.legislation_count %}
   <section id="other-references">
     <h2 class="section-title">{% trans 'Other references' %}</h2>
 
-    {% if document.legislations_implemented_by %}
-      <dl class="dl-horizontal references">
-        <dt>{% trans 'Implemented by' %}:</dt>
-        {% for legislation in document.legislations_implemented_by %}
-          <dd>
-            <div class="treaty-link-container">
-              <h3 class="search-result-title">
-                <a href="{{ legislation.details_url }}?{{ query }}"
-                   title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
-              </h3>
-              {% include 'short_display/legislation.html' with result=legislation %}
-            </div>
-          </dd>
-        {% endfor %}
-      </dl>
-    {% endif %}
-
-    {% if document.legislations_cited_by %}
-      <dl class="dl-horizontal references">
-        <dt>{% trans 'Cited by' %}:</dt>
-        {% for legislation in document.legislations_cited_by %}
-          <dd>
-            <div class="treaty-link-container">
-              <h3 class="search-result-title">
-                <a href="{{ legislation.details_url }}?{{ query }}"
-                   title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
-              </h3>
-              {% include 'short_display/legislation.html' with result=legislation %}
-            </div>
-          </dd>
-        {% endfor %}
+    {% if document.legislation_count %}
+      <dl>
+        <dt>{% trans 'Legislation' %}</dt>
+        <dd>
+        {% with document.legislation_count as leg_count %}
+          <strong>{{ leg_count }} record{{ leg_count|pluralize:"s" }}</strong> {% trans 'related to this treaty.' %}
+        {% endwith %}
+          <a href="{% url 'related_legislations' document.slug %}?{{ query }}">{% trans 'View legislation' %}</a>
+        </dd>
       </dl>
     {% endif %}
 
