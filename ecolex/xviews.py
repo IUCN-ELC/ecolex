@@ -265,7 +265,7 @@ class RelatedObjectsView(PagedViewMixin, DetailsView):
         return ctx
 
 
-class RelatedLegislation(RelatedObjectsView):
+class RelatedLegislation(DetailsView):
     related_type = 'legislation'
     template_name = 'details_legislations.html'
 
@@ -275,7 +275,7 @@ class RelatedLegislation(RelatedObjectsView):
         return response
 
     def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
+        ctx = super(RelatedLegislation, self).get_context_data(**kwargs)
         doc = ctx['document']
         for remote_field, local_field in doc.LEGISLATION_REFERENCES.items():
             try:
