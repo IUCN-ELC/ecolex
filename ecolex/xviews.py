@@ -239,7 +239,11 @@ class RelatedObjectsView(PagedViewMixin, DetailsView):
             raise Http404()
 
         page = self.request.GET.get('xpage', 1)
-        page = int(page) if page != 'None' else 1
+
+        try:
+            page = int(page) if page != 'None' else 1
+        except ValueError:
+            page = 1
 
         lookups = {doc._resolve_field(remote_field, self.related_type): value}
 
