@@ -123,6 +123,8 @@ class SearchResults(SearchViewMixin, PagedViewMixin, TemplateView):
         ctx['suggestions'] = (response.suggestions if settings.TEXT_SUGGESTION
                               else [])
         ctx['pages'] = self.get_page_details(page, response.count)
+        ctx['page_type'] = 'search'
+        ctx['page_slug'] = None
 
         return ctx
 

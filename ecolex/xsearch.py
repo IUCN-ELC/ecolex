@@ -489,6 +489,7 @@ class Searcher(Queryer):
             'id': cls._normalize_facet(item),
             'text': item,
             'count': count,
+            'selected': False,
         }
 
     def _handle_facets(self, response):
