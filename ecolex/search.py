@@ -448,9 +448,10 @@ class SearchMixin(object):
             'docDate': (data['yearmin'], data['yearmax']),
         }
         for doc_type in filters['type']:
-            mapping = defs.DOC_TYPE_FILTER_MAPPING[doc_type]
-            for k, v in mapping.items():
-                filters[k] = data[v]
+            if doc_type in defs.DOC_TYPE_FILTER_MAPPING:
+                mapping = defs.DOC_TYPE_FILTER_MAPPING[doc_type]
+                for k, v in mapping.items():
+                    filters[k] = data[v]
 
         # add exclusion local param for OR-able fields
         for field in defs._OR_OP_FACETS:
