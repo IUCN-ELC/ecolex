@@ -11,7 +11,7 @@
            data-target="#facet-{{ field.name }}">
       {{ title }}
     </label>
-    <span class="filter-options" data-formid="#id_{{ name }}_op">
+    <span class="filter-options" data-formid="#id_{{ field.name }}_op">
       {% if field.and_field and field.value|length > 1 %}
         {% include 'bits/facet_operation.html' with field=field.and_field %}
       {% endif %}
