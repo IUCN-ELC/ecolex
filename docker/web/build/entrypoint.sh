@@ -22,6 +22,7 @@ wait_solr() {
 
 install_crontab() {
     echo "Installing crontab"
+    printenv | sed 's/^\(.*\)$/export \1/g' | grep -E "(EDW|MYSQL|ECOLEX)" &> $ECOLEX_HOME/.bashrc
     crontab -u $USER $ECOLEX_HOME/ecolex.crontab
 }
 

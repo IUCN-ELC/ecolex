@@ -22,6 +22,7 @@ RUN apt-get -y update &&\
     cron \
     curl \
     libyajl2 \
+    sendmail \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENV GNUPGHOME=/tmp/gnupghome \
@@ -77,6 +78,9 @@ RUN pip install -r requirements-dep.txt
 ADD . $ECOLEX_HOME/ecolex
 RUN chown -R web:web $ECOLEX_HOME
 
+RUN touch $ECOLEX_HOME/.bashrc
+RUN crontab $ECOLEX_HOME/ecolex.crontab
+RUN chmod 777 $ECOLEX_HOME/.bashrc
 # no changes to volume are persistent after declaring it
 VOLUME ["/www_static", "${ECOLEX_HOME}/logs"]
 

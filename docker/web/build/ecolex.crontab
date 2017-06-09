@@ -1,6 +1,7 @@
-MAILTO="andrei.melis@eaudeweb.ro"
-0 23 * * * import_updater.sh
-0 3 * * 0 $ECOLEX_HOME/ecolex/manage.py refresh_sitemap
-0 1 * * * reprocess_from_db.sh
-#30 * * * * /var/local/logmon.sh
+MAILTO=andrei.melis@eaudeweb.ro
+PYTHONPATH=/usr/local/bin
+SHELL=/bin/bash
 
+0 23 * * *  . /home/web/.bashrc; /home/web/ecolex/docker/web/build/import_updater.sh
+0 3 * * 0   . /home/web/.bashrc; $PYTHONPATH/python $ECOLEX_HOME/ecolex/manage.py refresh_sitemap
+0 1 * * * . /home/web/.bashrc; /home/web/ecolex/docker/web/build/reprocess_from_db.sh
