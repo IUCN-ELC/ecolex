@@ -21,8 +21,9 @@ class Command(BaseCommand):
 
         fq = ' AND '.join(['{field}:"{value}"'.format(**f) for f in filters])
         solr = EcolexSolr()
-        docs = solr.search_all(replace_field, '"%s"' % replace_from, fq=fq,
-                               rows=UNLIMITED_ROWS_COUNT)
+        q_field = replace_field if replace_from else 'type'
+        q_val = '"%s"' % replace_from if replace_from else '*'
+        docs = solr.search_all(q_field, q_val, fq=fq, rows=UNLIMITED_ROWS_COUNT)
 
         if not docs:
             print('No docs found matching the query.')
@@ -30,7 +31,7 @@ class Command(BaseCommand):
 
         count = 0
         for doc in docs:
-            replaced_value = doc[replace_field]
+            replaced_value = doc[replace_field] if replace_from else None
             update_doc = {'id': doc['id']}
             if isinstance(replaced_value, list):
                 if replace_from not in replaced_value:
@@ -45,7 +46,7 @@ class Command(BaseCommand):
                 solr.add(update_doc, fieldUpdates={replace_field: 'add'})
                 count += 1
             else:
-                if doc[replace_field] != replace_from:
+                if replace_from and doc[replace_field] != replace_from:
                     continue
                 # Just set the new value (non-list)
                 update_doc[replace_field] = replace_to
