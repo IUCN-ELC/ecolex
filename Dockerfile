@@ -79,7 +79,6 @@ ADD . $ECOLEX_HOME/ecolex
 RUN chown -R web:web $ECOLEX_HOME
 
 RUN touch $ECOLEX_HOME/.bashrc
-RUN crontab $ECOLEX_HOME/ecolex.crontab
 RUN chmod 777 $ECOLEX_HOME/.bashrc
 # no changes to volume are persistent after declaring it
 VOLUME ["/www_static", "${ECOLEX_HOME}/logs"]
