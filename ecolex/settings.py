@@ -258,15 +258,19 @@ EXPORT_TYPES = ['legislation', 'treaty', 'decision', 'court_decision', 'literatu
 # If you don't need any additional filters, leave this list empty.
 SOLR_UPDATE = {
     'replace': {
-        'field': 'legCountry_en',
-        'from': 'Moldova - Republic of',
-        'to': 'Moldova, Republic of'
+        'field': 'decTreatyId',
+        'from': None,
+        'to': '545b2f90-10c6-402e-929b-635677f254b1'
     },
     'filters': [
-        # {
-        #     'field': 'legCountry_en',
-        #     'value': 'Moldova - Republic of',
-        # }
+        {
+            'field': 'type',
+            'value': 'decision',
+        },
+        {
+            'field': 'decTreaty',
+            'value': 'land-based',
+        }
     ]
 }
 
@@ -286,6 +290,7 @@ SOLR_IMPORT = {
         'subdivisions_json': os.path.join(CONFIG_DIR, 'subdivisions.json'),
         'keywords_json': os.path.join(CONFIG_DIR, 'keywords.json'),
         'subjects_json': os.path.join(CONFIG_DIR, 'subjects.json'),
+        'treaties_json': os.path.join(CONFIG_DIR, 'treaties.json'),
     },
     'court_decision': {
         'test_input_file': os.path.join(TESTING_DIR, 'court_decision_in.json'),
