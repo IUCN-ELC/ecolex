@@ -405,7 +405,7 @@ class Decision(DocumentModel):
     @cached_property
     def treaty(self):
         from ecolex.search import get_treaty_by_informea_id
-        return get_treaty_by_informea_id(self.treaty_id)
+        return get_treaty_by_informea_id(self.treaty_id) if self.treaty_id else None
 
     @property
     def files(self):

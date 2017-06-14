@@ -327,7 +327,7 @@ class DecisionSchema(CommonSchema):
     summary = fields.String(load_from='decSummary', multilingual=True)
     title_of_text = fields.List(fields.String(), load_from='decTitleOfText')
     treaty_slug = fields.String(load_from='decTreaty')
-    treaty_id = fields.String(load_from='decTreatyId')
+    treaty_id = fields.String(load_from='decTreatyId', missing=None)
     treaty_name = fields.String(load_from='decTreatyName',
                                 multilingual=True)
     update_date = fields.Date(load_from='decUpdateDate', missing=None)
