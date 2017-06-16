@@ -6,6 +6,7 @@ from django.conf import settings
 from pysolr import SolrError
 
 from ecolex.management.utils import EcolexSolr, cleanup_copyfields
+from ecolex.management.utils import get_dict_from_json
 from ecolex.models import DocumentText
 
 
@@ -23,14 +24,10 @@ class BaseImporter(object):
         self.languages = self._get_languages()
         self.keywords = self._get_keywords()
         self.subjects = self._get_subjects()
-        self.treaties = self._get_dict_from_json(config.get('treaties_json'))
+        self.treaties = get_dict_from_json(config.get('treaties_json'))
         self.solr = EcolexSolr(self.solr_timeout)
         self.logger = logger
 
-    def _get_dict_from_json(self, json_file):
-        with open(json_file, encoding='utf-8') as f:
-            data = json.load(f)
-        return data
 
     def _get_regions(self):
         with open(self.regions_json, encoding='utf-8') as f:

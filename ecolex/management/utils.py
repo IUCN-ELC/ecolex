@@ -112,6 +112,12 @@ def cleanup_copyfields(doc):
     return doc
 
 
+def get_dict_from_json(json_file):
+    with open(json_file, encoding='utf-8') as f:
+        data = json.load(f)
+    return data
+
+
 class EcolexSolr(object):
 
     # This is just an idea, might not be accurate

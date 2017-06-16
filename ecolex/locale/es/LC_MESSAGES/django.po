@@ -445,6 +445,10 @@ msgstr "Disponible en"
 msgid "Website"
 msgstr "Página web"
 
+#: .\templates\details\treaty.html:169
+msgid "Online course"
+msgstr "Curso por Internet"
+
 #: .\templates\details\court_decision.html:133
 #: .\templates\details\legislation.html:127
 #: .\templates\details\treaty.html:232

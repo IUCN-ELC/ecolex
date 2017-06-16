@@ -15,6 +15,7 @@ from django.utils.translation import get_language
 from .xforms import SearchForm
 from .xsearch import Queryer, Searcher, SearchResponse, DEFAULT_INTERFACE as si
 from ecolex.management import definitions
+from ecolex.management.utils import get_dict_from_json
 
 
 class HomepageView(TemplateView):
@@ -177,6 +178,28 @@ class DecisionDetails(DetailsView):
 class TreatyDetails(DetailsView):
     template_name = 'details/treaty.html'
     doc_type = definitions.TREATY
+
+    def set_language_for_course_url(self, url, language):
+        index = url.find('#')
+        if index != -1:
+            url = url[:index] + '&lang=' + language + url[index:]
+        else:
+            url = url + '&lang=' + language
+        return url
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        if ctx['document'].informea_id:
+            informea_id = ctx['document'].informea_id
+            data = get_dict_from_json(settings.INFORMEA_COURSES)
+            if informea_id in data.keys():
+                language = get_language()
+                lang_title = 'title_' + language
+                ctx['document'].course_title = data[informea_id][lang_title]
+                ctx['document'].course_url = self.set_language_for_course_url(
+                    data[informea_id]['url'], language
+                )
+        return ctx
 
 
 class LiteratureDetails(DetailsView):

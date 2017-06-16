@@ -278,6 +278,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 MANAGEMENT_DIR = os.path.join(BASE_DIR, 'ecolex', 'management')
 CONFIG_DIR = os.path.join(MANAGEMENT_DIR, 'config')
 PARTY_COUNTRIES = os.path.join(CONFIG_DIR, 'party_countries.json')
+INFORMEA_COURSES = os.path.join(CONFIG_DIR, 'informea_courses.json')
 TESTING_DIR = os.path.join(MANAGEMENT_DIR, 'testing')
 
 SOLR_IMPORT = {
