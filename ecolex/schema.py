@@ -200,7 +200,8 @@ class TreatySchema(CommonSchema):
                                        load_from='trFieldOfApplication',
                                        multilingual=True)
 
-    informea_id = fields.String(load_from='trInformeaId')
+    informea_id = fields.String(load_from='trInformeaId',
+                                missing=None)
     internet_reference = fields.List(fields.String(),
                                      load_from='trInternetReference',
                                      multilingual=True)

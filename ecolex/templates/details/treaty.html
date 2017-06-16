@@ -165,6 +165,14 @@
         </dd>
       {% endif %}
 
+      {% if document.course_title %}
+        <dt>{% trans 'Online course' %}</dt>
+        <dd>
+          <a href="{{ document.course_url }}" rel="nofollow"
+             target="_blank">{{ document.course_title }}</a>
+        </dd>
+      {% endif %}
+
     </dl>
   </section>
 

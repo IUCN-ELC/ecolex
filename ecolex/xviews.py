@@ -20,6 +20,7 @@ from ecolex.management import definitions
 class HomepageView(TemplateView):
     template_name = 'homepage.html'
 
+
 homepage_view = HomepageView.as_view()
 
 
