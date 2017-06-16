@@ -4,11 +4,14 @@ schema. They will eventually replace actual solr_models.
 """
 from collections import defaultdict
 from datetime import date
+from urllib import parse
+
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import get_language
 
+from ecolex.management.utils import get_dict_from_json
 from ecolex.lib.utils import (
     DefaultOrderedDict, any_match, camel_case_to__, is_iterable
 )
@@ -354,6 +357,23 @@ class Treaty(DocumentModel):
     @property
     def legislations_cited_by(self):
         return self._all_references['legislations_cited_by']
+
+    @property
+    def course_title(self):
+        courses_dict = get_dict_from_json(settings.INFORMEA_COURSES)
+        if self.informea_id in courses_dict.keys():
+            return courses_dict[self.informea_id]['title_' + get_language()]
+        return None
+
+    @property
+    def course_url(self):
+        courses_dict = get_dict_from_json(settings.INFORMEA_COURSES)
+        if self.informea_id in courses_dict.keys():
+            course_url = courses_dict[self.informea_id]['url']
+            parsed = list(parse.urlparse(course_url))
+            parsed[4] += '&lang=' + get_language()
+            return parse.urlunparse(parsed)
+        return None
 
 
 class TreatyParty(BaseModel):
