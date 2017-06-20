@@ -394,6 +394,7 @@
   <field name="litTitleOfTextTransl_es" type="text" indexed="true" stored="true"/>
   <field name="litTitleOfTextTransl_fr" type="text" indexed="true" stored="true"/>
   <field name="litTreatyReference" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="litCopDecisionReference" type="string" multiValued="true" indexed="true" stored="true"/>
   <field name="litTypeOfText_en" type="string" multiValued="true" indexed="true" stored="true"/>
   <field name="litTypeOfText_es" type="string" multiValued="true" indexed="true" stored="true"/>
   <field name="litTypeOfText_fr" type="string" multiValued="true" indexed="true" stored="true"/>
