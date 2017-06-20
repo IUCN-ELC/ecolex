@@ -279,6 +279,7 @@ MANAGEMENT_DIR = os.path.join(BASE_DIR, 'ecolex', 'management')
 CONFIG_DIR = os.path.join(MANAGEMENT_DIR, 'config')
 PARTY_COUNTRIES = os.path.join(CONFIG_DIR, 'party_countries.json')
 INFORMEA_COURSES = os.path.join(CONFIG_DIR, 'informea_courses.json')
+TREATIES = os.path.join(CONFIG_DIR, 'treaties.json')
 TESTING_DIR = os.path.join(MANAGEMENT_DIR, 'testing')
 
 SOLR_IMPORT = {
@@ -291,7 +292,7 @@ SOLR_IMPORT = {
         'subdivisions_json': os.path.join(CONFIG_DIR, 'subdivisions.json'),
         'keywords_json': os.path.join(CONFIG_DIR, 'keywords.json'),
         'subjects_json': os.path.join(CONFIG_DIR, 'subjects.json'),
-        'treaties_json': os.path.join(CONFIG_DIR, 'treaties.json'),
+        'treaties_json': TREATIES,
     },
     'court_decision': {
         'test_input_file': os.path.join(TESTING_DIR, 'court_decision_in.json'),

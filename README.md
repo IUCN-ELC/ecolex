@@ -1,11 +1,12 @@
-Ecolex Prototype
+Ecolex.org
 ================
+
+https://img.shields.io/docker/automated/iucn/ecolex_web.svg
+[![Docker Automated build](https://img.shields.io/docker/automated/iucn/ecolex_web.svg)](https://hub.docker.com/u/iucn/)
 
 ## Project Name
 
-The Project Name is Ecolex Prototype.
-
-## SOLRCloud
+The Project Name is ECOLEX.
 
 ### Requirements
 

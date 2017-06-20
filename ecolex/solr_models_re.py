@@ -432,6 +432,15 @@ class Decision(DocumentModel):
         return list(zip(self.file_urls, self.file_names))
 
     @property
+    def treaty_short_name(self):
+        if self.treaty_id:
+            treaties_dict = get_dict_from_json(settings.TREATIES)
+            for key, item in treaties_dict.items():
+                if item['uuid'] == self.treaty_id:
+                    return item['short_name']
+        return None
+
+    @property
     def language_names(self):
         return [settings.LANGUAGE_MAP.get(code, 'Undefined')
                 for code in self.language]

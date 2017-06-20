@@ -9,6 +9,9 @@
   {% with status=result.status|capfirst %}
     <span class="sr-status sr-help" title="{% trans 'Status' %}: {% trans status %}">{% trans status %}</span>
   {% endwith %}
+  {% if result.treaty_short_name %} |
+    <span class="sr-help" title="{% trans 'Treaty' %}">{{ result.treaty_short_name }}</span>
+  {% endif %}
   {% if result.date %} |
     <time class="sr-date sr-help" title="{% trans 'Date' %}: {{ result.date }}">
       {{ result.date|date:"b j, Y"|capfirst }}

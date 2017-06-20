@@ -195,9 +195,9 @@ class CopDecisionImporter(BaseImporter):
                 data['decFileUrls'] = urls
                 data['decFileNames'] = file_names
 
-            if not data['decTreatyId'] and data['decTreaty']:
+            if not data['decTreatyId'] and data['decTreaty'] and data['decTreaty'] in self.treaties:
                 # Try to get the UUID from our local json file
-                data['decTreatyId'] = self.treaties.get(data['decTreaty'])
+                data['decTreatyId'] = self.treaties[data['decTreaty']].short_name
 
             if data['decTreatyId']:
                 treaties = self.solr.search_all('trInformeaId',
