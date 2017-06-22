@@ -186,7 +186,7 @@ EXTRA_LANG_INFO = {
 import django.conf.locale
 django.conf.locale.LANG_INFO.update(EXTRA_LANG_INFO)
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Copenhagen'
 
 USE_I18N = True
 
