@@ -239,11 +239,11 @@ def add_legislations(legislations, count_ignored):
         doc, _ = DocumentText.objects.get_or_create(doc_id=leg_id)
         doc.doc_type = LEGISLATION
         doc.status = DocumentText.INDEX_FAIL
+        legislation['updatedDate'] = (datetime.now()
+                                      .strftime('%Y-%m-%dT%H:%M:%SZ'))
         try:
             leg_result = solr.search(LEGISLATION, leg_id)
             if leg_result:
-                legislation['updatedDate'] = (datetime.now()
-                                              .strftime('%Y-%m-%dT%H:%M:%SZ'))
                 legislation['id'] = leg_result['id']
                 updated_legislations.append(legislation)
                 updated_docs.append(doc)
