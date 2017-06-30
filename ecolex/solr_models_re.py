@@ -542,6 +542,8 @@ class Literature(DocumentModel):
             'legislation.document_id', (
                 'faolex_reference', 'eu_legislation_reference',
                 'national_legislation_reference')),
+        'cop_decisions': (
+            'decision.decision_id', 'cop_decision_reference'),
         'court_decisions': (
             'court_decision.original_id', 'court_decision_reference'),
         'literatures': (
@@ -628,6 +630,10 @@ class Literature(DocumentModel):
     @property
     def court_decisions(self):
         return self._all_references['court_decisions']
+
+    @property
+    def cop_decisions(self):
+        return self._all_references['cop_decisions']
 
     @property
     def literatures(self):

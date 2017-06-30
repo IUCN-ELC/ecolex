@@ -155,7 +155,8 @@ FIELD_MAP = {
     'referencetofaolex': 'litFaolexReference',
     'referencetoeulegislation': 'litEULegislationReference',
     'referencetonationallegislation': 'litNationalLegislationReference',
-
+    'informeacop': 'litCopDecisionReference',
+    # Remember: all keys should be lowercase
 }
 
 URL_FIELD = 'litLinkToFullText'
@@ -182,6 +183,7 @@ MULTIVALUED_FIELDS = [
     'litTreatyReference', 'litCourtDecisionReference',
     'litLiteratureReference', 'litFaolexReference',
     'litNationalLegislationReference', 'litEULegislationReference',
+    'litCopDecisionReference',
 ]
 
 DOCUMENT_TYPE_MAP = {

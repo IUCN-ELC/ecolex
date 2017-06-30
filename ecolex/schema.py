@@ -475,6 +475,9 @@ class LiteratureSchema(CommonSchema):
     treaty_reference = fields.List(fields.String(),
                                    load_from='litTreatyReference',
                                    missing=[])
+    cop_decision_reference = fields.List(fields.String(),
+                                         load_from='litCopDecisionReference',
+                                         missing=[])
     volume_no = fields.String(load_from='litVolumeNo', missing='')
 
     # Authors

@@ -208,7 +208,7 @@
   {% endif %}
 
   <section id="other-references">
-  {% if document.treaties or document.legislations or document.court_decisions %}
+  {% if document.treaties or document.legislations or document.court_decisions or document.cop_decisions %}
     <h2 class="section-title">{% trans 'Other references' %}</h2>
     {% for treaty in document.treaties %}
       <dl>
@@ -232,6 +232,19 @@
                title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
           </h3>
           {% include 'short_display/legislation.html' with result=legislation %}
+        </dd>
+      </dl>
+    {% endfor %}
+
+    {% for decision in document.cop_decisions %}
+      <dl>
+        <dt>{% trans 'Treaty decisions' %}</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ decision.details_url }}?{{ query }}"
+               title="{{ decision.title|safe|striptags }}">{{ decision.title|safe }}</a>
+          </h3>
+          {% include 'short_display/decision.html' with result=decision %}
         </dd>
       </dl>
     {% endfor %}
