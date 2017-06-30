@@ -78,7 +78,6 @@ class DocumentModel(BaseModel):
 
         from .xsearch import Queryer
         queryer = Queryer({}, language=get_language())
-
         for ref in self.REFERENCES:
             try:
                 backref = self.BACKREFERENCES[ref]
@@ -88,13 +87,19 @@ class DocumentModel(BaseModel):
                 field = 'document_id'
                 try:
                     lookup = getattr(self, ref)
+                    if lookup is None:
+                        continue
                 except AttributeError:
                     continue
             else:
                 # if it's a backwards reference, we search for documents
                 # whose reverse attribute contains our document_id
                 field = backref
-                lookup = self.document_id
+                try:
+                    lookup = self.document_id
+                except AttributeError:
+                    # some newer court decisions may not have document_id (cdOriginalId)
+                    continue
 
             fields.add(field)
             groupers[ref] = (field, lookup)
