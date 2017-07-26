@@ -7,23 +7,30 @@ import logging
 
 from django.core.management.base import BaseCommand
 
-from ecolex.management.definitions import OBJ_TYPES, COURT_DECISION, TREATY
-from ecolex.management.definitions import LITERATURE, COP_DECISION, LEGISLATION
+from ecolex.management.definitions import OBJ_TYPES
+from ecolex.management.definitions import COURT_DECISION
+from ecolex.management.definitions import TREATY
+from ecolex.management.definitions import LITERATURE
+from ecolex.management.definitions import COP_DECISION
+from ecolex.management.definitions import LEGISLATION
+
 from ecolex.management.commands.court_decision import CourtDecisionImporter
 from ecolex.management.commands.treaty import TreatyImporter
 from ecolex.management.commands.legislation import LegislationImporter
 from ecolex.management.commands.literature import LiteratureImporter
-from ecolex.management.commands.cop_decision import CopDecisionImporter
+from ecolex.management.commands import cop_decision
+from ecolex.management.commands import cop_decision2
 from ecolex.management.commands.logging import LOG_DICT
 
 logging.config.dictConfig(LOG_DICT)
 import_logger = logging.getLogger(__name__)
 
 CLASS_MAPPING = {
+    'decision_odata': cop_decision.CopDecisionImporter, # old implementation
+    COP_DECISION: cop_decision2.CopDecisionImporter,
     COURT_DECISION: CourtDecisionImporter,
     TREATY: TreatyImporter,
     LITERATURE: LiteratureImporter,
-    COP_DECISION: CopDecisionImporter,
     LEGISLATION: LegislationImporter,
 }
 

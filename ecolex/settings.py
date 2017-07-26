@@ -320,7 +320,7 @@ SOLR_IMPORT = {
         'query_type': '&format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD',
         'per_page': 20,
     },
-    'decision': {
+    'decision_odata': {
         'cop_decision_url': 'http://odata.informea.org/informea.svc/Decisions',
         'query_skip': '$top=%d&$skip=%d',
         'query_filter': "$filter=updated gt datetime'%s'",
@@ -329,6 +329,10 @@ SOLR_IMPORT = {
         'query_order': '$orderby=updated asc',
         'per_page': 20,
         'days_ago': 30,
+    },
+    'decision': {
+        'decision_url': 'https://www.informea.org/ws/decisions',
+        'items_per_page': 50,
     },
     'legislation': {},
 }
