@@ -115,24 +115,60 @@ def request_decision(json_node):
     return requests.get(url).json()
 
 
-def request_meeting(base_url, decision_json):
+def request_meeting(base_url, cache, decision_json):
     meeting = decision_json.get('field_meeting')
     uuid = meeting[0]['uuid'] if meeting else None
     if uuid:
-        url = '{}/{}/json'.format(base_url, uuid)
-        logger.info('Requesting meeting: %s', url)
-        return requests.get(url).json()
+        cached = cache.get(uuid)
+        if cached:
+            logger.info('Meeting from cache: %s', uuid)
+            return cached
+        else:
+            url = '{}/{}/json'.format(base_url, uuid)
+            logger.info('Requesting meeting: %s', url)
+            resp = requests.get(url).json()
+            cache[uuid] = resp
+            logger.info('Cached meeting: %s', url)
+            return cache[uuid]
+
+
+def request_treaty(solr, treaties, decision_json):
+    field = decision_json.get('field_treaty')
+    dec_uuid = decision_json['uuid']
+    if field:
+        uuid = field[0].get('uuid')
+        identifer = field[0].get('odata_identifier')
+        treaty_id = uuid or treaties.get(identifer)
+        if treaty_id:
+            logger.info('Requesting treaty from solr: %s', treaty_id)
+            treaty = solr.search('trInformeaId', treaty_id)
+            if treaty:
+                logger.info('Found treaty: %s!', treaty_id)
+                return treaty
+            else:
+                logger.info('Cannot find treaty: %s!', treaty_id)
+        else:
+            logger.info('Cannot find a treaty id for %s!', dec_uuid)
+    else:
+        logger.info('Decision has no "field_treaty": %s', dec_uuid)
 
 
 class Field(property):
     """ Marker decorator for solr fields """
 
 
-__Decision = collections.namedtuple('Decision', ['dec', 'node', 'meeting'])
-class Decision(__Decision):
+class Decision(object):
     """ Immutable object """
 
-    languages = None
+    # set in CopDecisionImporter.__init__
+    languages = None # languages.json
+    treaties = None # treaties.json
+
+    def __init__(self, dec, node, meeting, treaty):
+        self.dec = dec
+        self.node = node
+        self.meeting = meeting
+        self.treaty = treaty
 
     def fields(self):
         is_field = lambda member: isinstance(member, Field)
@@ -292,6 +328,63 @@ class Decision(__Decision):
     @Field
     def decSummary_fr(self): return self._decSummary('fr')
 
+    @Field
+    def decType(self):
+        field = self.dec.get('field_decision_type')
+        return field[0]['label'] if field else None
+
+    @Field
+    def decTreaty(self):
+        field = self.dec.get('field_treaty')
+        return field[0].get('odata_identifier') if field else None
+
+    @Field
+    def decTreatyId(self):
+        field = self.dec.get('field_treaty')
+        if field:
+            uuid = field[0].get('uuid')
+            identifer = field[0].get('odata_identifier')
+            return uuid or self.treaties.get(identifer)
+
+    def _partyCountry(self, lang):
+        if self.treaty:
+            return self.treaty.get('partyCountry_{}'.format(lang))
+
+    @Field
+    def partyCountry_en(self): self._partyCountry('en')
+
+    @Field
+    def partyCountry_es(self): self._partyCountry('es')
+
+    @Field
+    def partyCountry_fr(self): self._partyCountry('fr')
+
+    def _trSubject(self, lang):
+        if self.treaty:
+            return self.treaty.get('trSubject_{}'.format(lang))
+
+    @Field
+    def trSubject_en(self): self._trSubject('en')
+
+    @Field
+    def trSubject_es(self): self._trSubject('es')
+
+    @Field
+    def trSubject_fr(self): self._trSubject('fr')
+
+    def _decTreatyName(self, lang):
+        if self.treaty:
+            return self.treaty.get('trTitleOfText_{}'.format(lang))
+
+    @Field
+    def decTreatyName_en(self): self._decTreatyName('en')
+
+    @Field
+    def decTreatyName_es(self): self._decTreatyName('es')
+
+    @Field
+    def decTreatyName_fr(self): self._decTreatyName('fr')
+
 
 
 class CopDecisionImporter(BaseImporter):
@@ -350,20 +443,37 @@ class CopDecisionImporter(BaseImporter):
     def harvest(self, batch_size=500):
         updateable = tuple(itertools.takewhile(bool, self._get_decisions()))
         len_updateable = len(updateable)
-        logger.info('Found %s decision needing update!', len_updateable)
+        len_existing = len([node for node in updateable if node.get('solr_id')])
+        len_new = len_updateable - len_existing
+        logger.info(
+            'Found %s decisions needing update. %s new, %s existing!',
+            len_updateable,
+            len_new,
+            len_existing,
+        )
 
-        fetch_meeting = functools.partial(request_meeting, self.node_url)
+        fetch_meeting = functools.partial(request_meeting, self.node_url, {})
+        fetch_treaty = functools.partial(
+            request_treaty,
+            self.solr,
+            self.treaties
+        )
 
         json_decisions = tuple(map(request_decision, updateable))
         json_meetings = map(fetch_meeting, json_decisions)
+        json_treaties = map(fetch_treaty, json_decisions)
 
         decisions = (
            Decision(*args) for args
-           in zip(json_decisions, updateable, json_meetings)
+           in zip(json_decisions, updateable, json_meetings, json_treaties)
         )
 
         for idx, decision in enumerate(decisions, start=1):
-            logger.info('[%s/%s] Adding %s.', idx, len_updateable, decision.decId)
+            action = 'Updating' if decision.id else 'Inserting'
+            logger.info(
+                '[%s/%s] %s %s.',
+                idx, len_updateable, action, decision.decId
+            )
             self.solr.add(decision.fields())
 
 
