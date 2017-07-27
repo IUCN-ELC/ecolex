@@ -108,19 +108,31 @@ def request_page(url, per_page, page=1):
     return requests.get(url, params=params)
 
 
-def request_decision(url):
+def request_decision(json_node):
     # TODO: proper error handling and logging
-    logger.info('Requesting %s', url)
-    return requests.get(url)
+    url = json_node['data_url']
+    logger.info('Requesting decision: %s', url)
+    return requests.get(url).json()
+
+
+def request_meeting(base_url, decision_json):
+    meeting = decision_json.get('field_meeting')
+    uuid = meeting[0]['uuid'] if meeting else None
+    if uuid:
+        url = '{}/{}/json'.format(base_url, uuid)
+        logger.info('Requesting meeting: %s', url)
+        return requests.get(url).json()
 
 
 class field(property):
     """ Marker decorator for solr fields """
 
 
-__Decision = collections.namedtuple('Decision', ['dec', 'node'])
+__Decision = collections.namedtuple('Decision', ['dec', 'node', 'meeting'])
 class Decision(__Decision):
     """ Immutable object """
+
+    languages = None
 
     def fields(self):
         is_field = lambda member: isinstance(member, field)
@@ -178,6 +190,53 @@ class Decision(__Decision):
         )
         return node_update.strftime(DATE_FORMAT)
 
+    @field
+    def decKeyword_en(self):
+        tags = self.dec.get('field_informea_tags')
+        return [tag['url'] for tag in tags]
+
+    def _decLanguage(self, lang):
+        fields = ('title_field', 'body', 'field_files')
+        fvalues = filter(bool, map(self.dec.get, fields))
+        langs = set(itertools.chain(*map(methodcaller('keys'), fvalues)))
+        return [self.languages[code][lang] for code in langs]
+
+    @field
+    def decLanguage_en(self): return self._decLanguage('en')
+
+    @field
+    def decLanguage_es(self): return self._decLanguage('es')
+
+    @field
+    def decLanguage_fr(self): return self._decLanguage('fr')
+
+    @field
+    def decLink(self):
+        field_url = self.dec.get('field_url')
+        if field_url:
+            return field_url['en'][0]['url']
+        else:
+            return self.dec.get('url')['en']
+
+    @field
+    def decMeetingId(self):
+        meeting = self.dec.get('field_meeting')
+        return meeting[0]['uuid'] if meeting else None
+
+    @field
+    def decMeetingTitle(self):
+        if self.meeting:
+            return self.meeting['title_field']['en'][0]['value']
+
+    @field
+    def decMeetingUrl(self):
+        if self.meeting:
+            field_url = self.meeting.get('field_url')
+            if field_url:
+                return field_url['en'][0]['url']
+            else:
+                return self.meeting.get('url')['en']
+
 
 class CopDecisionImporter(BaseImporter):
 
@@ -188,16 +247,20 @@ class CopDecisionImporter(BaseImporter):
 
         self.decision_url = config.get('decision_url')
         self.per_page = config.get('items_per_page')
+        self.node_url = config.get('node_url')
+
         self.request_page = functools.partial(
             request_page,
             self.decision_url,
             self.per_page
         )
 
+        Decision.languages = self.languages
+
         logger.info('Started COP Decision importer')
 
     def _get_decisions(self):
-        for page_num in itertools.count(start=229, step=1):
+        for page_num in itertools.count(start=231, step=1):
             nodes = self.request_page(page_num).json()
 
             # signal for takewhile to stop requesting items
@@ -231,15 +294,16 @@ class CopDecisionImporter(BaseImporter):
     def harvest(self, batch_size=500):
         updateable = tuple(itertools.takewhile(bool, self._get_decisions()))
         len_updateable = len(updateable)
-
         logger.info('Found %s decision needing update!', len_updateable)
-        decision_resp = (
-            (request_decision(node['data_url']), node)
-            for node in updateable
-        )
+
+        fetch_meeting = functools.partial(request_meeting, self.node_url)
+
+        json_decisions = tuple(map(request_decision, updateable))
+        json_meetings = map(fetch_meeting, json_decisions)
+
         decisions = (
-            (Decision(resp.json(), node))
-            for resp, node in decision_resp
+           Decision(*args) for args
+           in zip(json_decisions, updateable, json_meetings)
         )
 
         for idx, decision in enumerate(decisions, start=1):
