@@ -8,6 +8,11 @@ from operator import attrgetter
 
 from datetime import date, datetime, timedelta
 from django.conf import settings
+
+from django.db import IntegrityError
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import MultipleObjectsReturned
+
 import logging
 import logging.config
 import html
@@ -152,6 +157,46 @@ def request_treaty(solr, treaties, decision_json):
             logger.info('Cannot find a treaty id for %s!', dec_uuid)
     else:
         logger.info('Decision has no "field_treaty": %s', dec_uuid)
+
+
+def extract_text(solr, dec_id, urls):
+    get_doc = functools.partial(
+        DocumentText.objects.get,
+        doc_id=dec_id,
+        doc_type=COP_DECISION
+    )
+    texts = []
+    for url in urls:
+        try:
+            doc = get_doc(url=url)
+        except ObjectDoesNotExist:
+            logger.info('DocumentText missing for: %s', url)
+            with get_file_from_url(url) as file_obj:
+                if file_obj:
+                    logger.debug('Got file: %s', url)
+                    # TODO: handle extract errors!?
+                    text = solr.extract(file_obj)
+                    size = file_obj.getbuffer().nbytes
+                    texts.append((url, text, size))
+                    logger.info('Extracted file: %s', url)
+        except MultipleObjectsReturned:
+            logger.info('DocumentText multiple values for: %s', url)
+
+    create_doc = functools.partial(
+        DocumentText.objects.create,
+        doc_id=dec_id,
+        doc_type=COP_DECISION,
+        status=DocumentText.FULL_INDEXED,
+    )
+
+    for url, text, size in texts:
+        try:
+            create_doc(url=url, text=text, doc_size=size)
+            logger.info('Created DocumentText for: %s', url)
+        except IntegrityError:
+            logger.exception('Error creating DocumentText for: %s', url)
+
+    return ''.join((text for url, text, size in texts))
 
 
 class Field(property):
@@ -488,7 +533,19 @@ class CopDecisionImporter(BaseImporter):
                 '[%s/%s] %s %s.',
                 idx, len_updateable, action, decision.decId
             )
-            self.solr.add(decision.fields())
+            fields = decision.fields()
+
+            dec_text = extract_text(
+                self.solr,
+                fields['decId'],
+                fields.get('decFileUrls', []),
+            )
+
+            if dec_text:
+                fields['decText'] = dec_text
+
+            # XXX: How does this update missing fields?
+            self.solr.add(fields)
 
 
         # today = date.today()
