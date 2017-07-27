@@ -4,6 +4,7 @@ import functools
 import itertools
 from operator import methodcaller
 from operator import itemgetter
+from operator import attrgetter
 
 from datetime import date, datetime, timedelta
 from django.conf import settings
@@ -209,6 +210,9 @@ class Decision(object):
     def decBody_zh(self): return self._decBody('zh')
 
     def _file_data(self, name):
+        # TODO: reduce to unique values based on url, e.g:
+        # https://www.informea.org/node/a3c4c801-464a-407e-b07b-288fd2a7c1a0/json
+        # which has the same filename and file url for all languages
         files = self.dec.get('field_files')
         extractor = itemgetter(name)
         return [extractor(f[0]) for f in files.values()] if files else None
@@ -385,6 +389,16 @@ class Decision(object):
     @Field
     def decTreatyName_fr(self): self._decTreatyName('fr')
 
+    @Field
+    def slug(self):
+        langs = ('en', 'es', 'fr', 'ru', 'ar', 'zh')
+        fields = map('decShortTitle_{}'.format, langs)
+        titles = (attrgetter(field)(self) for field in fields)
+
+        # grab the first title that hase a truthy value
+        title = next(filter(bool, titles))
+        slug = '{} {}'.format(title, self.decId)
+        return slugify(slug)
 
 
 class CopDecisionImporter(BaseImporter):
