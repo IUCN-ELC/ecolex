@@ -79,11 +79,11 @@ def request_treaty(solr, treaties, decision_json):
                 logger.info('Found treaty: %s!', treaty_id)
                 return treaty
             else:
-                logger.info('Cannot find treaty: %s!', treaty_id)
+                logger.warn('Cannot find treaty: %s!', treaty_id)
         else:
-            logger.info('Cannot find a treaty id for %s!', dec_uuid)
+            logger.warn('Cannot find a treaty id for %s!', dec_uuid)
     else:
-        logger.info('Decision has no "field_treaty": %s', dec_uuid)
+        logger.warn('Decision has no "field_treaty": %s', dec_uuid)
 
 
 def extract_text(solr, dec_id, urls):
@@ -93,7 +93,7 @@ def extract_text(solr, dec_id, urls):
         doc_type=COP_DECISION
     )
     texts = []
-    for url in urls:
+    for url in set(urls):
         try:
             doc = get_doc(url=url)
         except ObjectDoesNotExist:
