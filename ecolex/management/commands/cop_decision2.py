@@ -124,7 +124,7 @@ def request_meeting(base_url, decision_json):
         return requests.get(url).json()
 
 
-class field(property):
+class Field(property):
     """ Marker decorator for solr fields """
 
 
@@ -135,21 +135,21 @@ class Decision(__Decision):
     languages = None
 
     def fields(self):
-        is_field = lambda member: isinstance(member, field)
+        is_field = lambda member: isinstance(member, Field)
         properties = inspect.getmembers(Decision, is_field)
         fvalues = ((name, getattr(self, name)) for name, _ in properties)
         return { name: value for name, value in fvalues if value }
 
-    @field
+    @Field
     def type(self):
         return COP_DECISION
 
-    @field
+    @Field
     def id(self):
         """ set by _get_decisions, if the item exists in solr """
         return self.node.get('solr_id')
 
-    @field
+    @Field
     def decId(self):
         return self.dec['uuid']
 
@@ -157,19 +157,19 @@ class Decision(__Decision):
         body = self.dec.get('body')
         return body.get(lang, None) if body else None
 
-    @field
+    @Field
     def decBody_en(self): return self._decBody('en')
 
-    @field
+    @Field
     def decBody_es(self): return self._decBody('es')
 
-    @field
+    @Field
     def decBody_fr(self): return self._decBody('fr')
 
-    @field
+    @Field
     def decBody_ru(self): return self._decBody('ru')
 
-    @field
+    @Field
     def decBody_zh(self): return self._decBody('zh')
 
     def _file_data(self, name):
@@ -177,20 +177,20 @@ class Decision(__Decision):
         extractor = itemgetter(name)
         return [extractor(f[0]) for f in files.values()] if files else None
 
-    @field
+    @Field
     def decFileNames(self): return self._file_data('filename')
 
-    @field
+    @Field
     def decFileUrls(self): return self._file_data('url')
 
-    @field
+    @Field
     def decUpdateDate(self):
         node_update = datetime.fromtimestamp(
             int(self.node['last_update'])
         )
         return node_update.strftime(DATE_FORMAT)
 
-    @field
+    @Field
     def decKeyword_en(self):
         tags = self.dec.get('field_informea_tags')
         return [tag['url'] for tag in tags]
@@ -201,16 +201,16 @@ class Decision(__Decision):
         langs = set(itertools.chain(*map(methodcaller('keys'), fvalues)))
         return [self.languages[code][lang] for code in langs]
 
-    @field
+    @Field
     def decLanguage_en(self): return self._decLanguage('en')
 
-    @field
+    @Field
     def decLanguage_es(self): return self._decLanguage('es')
 
-    @field
+    @Field
     def decLanguage_fr(self): return self._decLanguage('fr')
 
-    @field
+    @Field
     def decLink(self):
         field_url = self.dec.get('field_url')
         if field_url:
@@ -218,17 +218,17 @@ class Decision(__Decision):
         else:
             return self.dec.get('url')['en']
 
-    @field
+    @Field
     def decMeetingId(self):
         meeting = self.dec.get('field_meeting')
         return meeting[0]['uuid'] if meeting else None
 
-    @field
+    @Field
     def decMeetingTitle(self):
         if self.meeting:
             return self.meeting['title_field']['en'][0]['value']
 
-    @field
+    @Field
     def decMeetingUrl(self):
         if self.meeting:
             field_url = self.meeting.get('field_url')
@@ -236,6 +236,62 @@ class Decision(__Decision):
                 return field_url['en'][0]['url']
             else:
                 return self.meeting.get('url')['en']
+
+    @Field
+    def decNumber(self):
+        field = self.dec.get('field_decision_number')
+        return field['und'][0]['value'] if field else None
+
+    @Field
+    def decPublishDate(self):
+        field = self.dec.get('field_sorting_date')
+        if field:
+            date = field['und'][0]['value']
+            formatted = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            return formatted.strftime(DATE_FORMAT)
+
+    def _decShortTitle(self, lang):
+        title = self.dec.get('title_field')
+        fvalue = title and title.get(lang)
+        return fvalue[0]['value'] if fvalue else None
+
+    @Field
+    def decShortTitle_ar(self): return self._decShortTitle('ar')
+
+    @Field
+    def decShortTitle_en(self): return self._decShortTitle('en')
+
+    @Field
+    def decShortTitle_es(self): return self._decShortTitle('es')
+
+    @Field
+    def decShortTitle_fr(self): return self._decShortTitle('fr')
+
+    @Field
+    def decShortTitle_ru(self): return self._decShortTitle('ru')
+
+    @Field
+    def decShortTitle_zh(self): return self._decShortTitle('zh')
+
+    @Field
+    def decStatus(self):
+        status = self.dec.get('field_decision_status')
+        return status[0]['label'] if status else None
+
+    def _decSummary(self, lang):
+        body = self.dec.get('body')
+        fvalue = body and body.get(lang)
+        return fvalue[0]['summary'] if fvalue else None
+
+    @Field
+    def decSummary_en(self): return self._decSummary('en')
+
+    @Field
+    def decSummary_es(self): return self._decSummary('es')
+
+    @Field
+    def decSummary_fr(self): return self._decSummary('fr')
+
 
 
 class CopDecisionImporter(BaseImporter):
