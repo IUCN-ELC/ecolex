@@ -384,7 +384,7 @@ def get_node(base_url, per_page, start=1):
         yield from nodes if nodes else [None]
 
 
-def needs_update(solr, node):
+def needs_update(solr, node, force):
     uuid = node['uuid']
     solr_decision = solr.search(COP_DECISION, uuid)
     if solr_decision:
@@ -395,9 +395,14 @@ def needs_update(solr, node):
         solr_update = datetime.strptime(solr_date, DATE_FORMAT)
         node_update = datetime.fromtimestamp(node_date)
 
-        if node_update > solr_update:
+        if force:
+            logger.info('Forced update: %s', uuid)
+            return {**node, **dict(solr_id=solr_decision['id'])}
+
+        elif node_update > solr_update:
             logger.info('%s outdated, queuing.', uuid)
             return {**node, **dict(solr_id=solr_decision['id'])}
+
         else:
             logger.info('%s is up to date.', uuid)
 
@@ -435,15 +440,19 @@ class CopDecisionImporter(BaseImporter):
         logger.info('Started COP Decision importer')
 
 
-    def harvest(self, batch_size=500, start=231):
+    def harvest(self, batch_size=500, start=231, force=False):
         # will fetch nodes until the remote server returns no results
         json_nodes = itertools.takewhile(
             bool, get_node(self.decision_url, self.per_page, start=start))
 
+        if force:
+            logger.warning('Forcing update of all decisions!')
+
         updateable = [
             node for node in json_nodes
-            if needs_update(self.solr, node)
+            if needs_update(self.solr, node, force=force)
         ]
+
 
         total, existing, new = functools.reduce(
             count_nodes, updateable, [0, 0, 0])
