@@ -62,20 +62,35 @@ class BaseImporter(object):
                     dict_value_fr = dict_values['fr']
                     dict_value_es = dict_values['es']
                     if val_fr != dict_value_fr:
-                        self.logger.debug('{}_fr name different: {} {} {}'.format(
-                                          field, data[self.id_field], val_fr,
-                                          dict_value_fr))
+                        self.logger.debug(
+                            '{}_fr name different: {} {} {}'.format(
+                                field,
+                                data[self.id_field], val_fr,
+                                dict_value_fr
+                            ).encode('utf-8')
+                        )
                     new_values['fr'].append(dict_value_fr)
 
                     if val_es != dict_value_es:
-                        self.logger.debug('{}_es name different: {} {} {}'.format(
-                                          field, data[self.id_field], val_es,
-                                          dict_value_es))
+                        self.logger.debug(
+                            '{}_es name different: {} {} {}'.format(
+                                field,
+                                data[self.id_field],
+                                val_es,
+                                dict_value_es
+                            ).encode('utf-8')
+                        )
                     new_values['es'].append(dict_value_es)
                 else:
-                    self.logger.warning('New {} name: {} {} {} {}'.format(
-                                        field, data[self.id_field], val_en,
-                                        val_fr, val_es))
+                    self.logger.warning(
+                        'New {} name: {} {} {} {}'.format(
+                            field,
+                            data[self.id_field],
+                            val_en,
+                            val_fr,
+                            val_es
+                        ).encode('utf-8')
+                    )
                     new_values['en'].append(val_en)
                     new_values['fr'].append(val_fr)
                     new_values['es'].append(val_es)
