@@ -32,100 +32,6 @@ logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('cop_decision_import')
 
 
-def request_page(url, per_page, page=1):
-    params = dict(
-        items_per_page=per_page,
-        page=page,
-    )
-    logger.info('Fetching page %s.', page)
-    return requests.get(url, params=params)
-
-
-def request_decision(json_node):
-    # TODO: proper error handling and logging
-    url = json_node['data_url']
-    logger.info('Requesting decision: %s', url)
-    return requests.get(url).json()
-
-
-def request_meeting(base_url, cache, decision_json):
-    meeting = decision_json.get('field_meeting')
-    uuid = meeting[0]['uuid'] if meeting else None
-    if uuid:
-        cached = cache.get(uuid)
-        if cached:
-            logger.info('Meeting from cache: %s', uuid)
-            return cached
-        else:
-            url = '{}/{}/json'.format(base_url, uuid)
-            logger.info('Requesting meeting: %s', url)
-            resp = requests.get(url).json()
-            cache[uuid] = resp
-            logger.info('Cached meeting: %s', url)
-            return cache[uuid]
-
-
-def request_treaty(solr, treaties, decision_json):
-    field = decision_json.get('field_treaty')
-    dec_uuid = decision_json['uuid']
-    if field:
-        uuid = field[0].get('uuid')
-        identifer = field[0].get('odata_identifier')
-        treaty_id = uuid or treaties.get(identifer)
-        if treaty_id:
-            logger.info('Requesting treaty from solr: %s', treaty_id)
-            treaty = solr.search('trInformeaId', treaty_id)
-            if treaty:
-                logger.info('Found treaty: %s!', treaty_id)
-                return treaty
-            else:
-                logger.warn('Cannot find treaty: %s!', treaty_id)
-        else:
-            logger.warn('Cannot find a treaty id for %s!', dec_uuid)
-    else:
-        logger.warn('Decision has no "field_treaty": %s', dec_uuid)
-
-
-def extract_text(solr, dec_id, urls):
-    get_doc = functools.partial(
-        DocumentText.objects.get,
-        doc_id=dec_id,
-        doc_type=COP_DECISION
-    )
-    texts = []
-    for url in set(urls):
-        try:
-            doc = get_doc(url=url)
-        except ObjectDoesNotExist:
-            logger.info('DocumentText missing for: %s', url)
-            with get_file_from_url(url) as file_obj:
-                if file_obj:
-                    logger.debug('Got file: %s', url)
-                    # TODO: handle extract errors!?
-                    text = solr.extract(file_obj)
-                    size = file_obj.getbuffer().nbytes
-                    texts.append((url, text, size))
-                    logger.info('Extracted file: %s', url)
-        except MultipleObjectsReturned:
-            logger.info('DocumentText multiple values for: %s', url)
-
-    create_doc = functools.partial(
-        DocumentText.objects.create,
-        doc_id=dec_id,
-        doc_type=COP_DECISION,
-        status=DocumentText.FULL_INDEXED,
-    )
-
-    for url, text, size in texts:
-        try:
-            create_doc(url=url, text=text, doc_size=size)
-            logger.info('Created DocumentText for: %s', url)
-        except IntegrityError:
-            logger.exception('Error creating DocumentText for: %s', url)
-
-    return ''.join((text for url, text, size in texts))
-
-
 class Field(property):
     """ Marker decorator for solr fields """
 
@@ -137,11 +43,11 @@ class Decision(object):
     languages = None # languages.json
     treaties = None # treaties.json
 
-    def __init__(self, dec, node, meeting, treaty):
+    def __init__(self, dec, meeting, treaty, solr_id):
         self.dec = dec
-        self.node = node
         self.meeting = meeting
         self.treaty = treaty
+        self.solr_id = solr_id
 
     def fields(self):
         is_field = lambda member: isinstance(member, Field)
@@ -155,8 +61,7 @@ class Decision(object):
 
     @Field
     def id(self):
-        """ set by _get_decisions, if the item exists in solr """
-        return self.node.get('solr_id')
+        return self.solr_id
 
     @Field
     def decId(self):
@@ -197,9 +102,7 @@ class Decision(object):
 
     @Field
     def decUpdateDate(self):
-        node_update = datetime.fromtimestamp(
-            int(self.node['last_update'])
-        )
+        node_update = datetime.fromtimestamp(int(self.dec['changed']))
         return node_update.strftime(DATE_FORMAT)
 
     @Field
@@ -373,6 +276,147 @@ class Decision(object):
         return slugify(slug)
 
 
+def request_page(url, per_page, page_num=1):
+    params = dict(
+        items_per_page=per_page,
+        page=page_num,
+    )
+    logger.info('Fetching page %s.', page_num)
+    return requests.get(url, params=params).json()
+
+
+def request_decision(json_node):
+    # TODO: proper error handling and logging
+    url = json_node['data_url']
+    logger.info('Requesting decision: %s', url)
+    return requests.get(url).json()
+
+
+def request_meeting(base_url, cache, json_decision):
+    meeting = json_decision.get('field_meeting')
+    uuid = meeting[0]['uuid'] if meeting else None
+    if uuid:
+        cached = cache.get(uuid)
+        if cached:
+            logger.info('Meeting from cache: %s', uuid)
+            return cached
+        else:
+            url = '{}/{}/json'.format(base_url, uuid)
+            logger.info('Requesting meeting: %s', url)
+            resp = requests.get(url).json()
+            cache[uuid] = resp
+            logger.info('Cached meeting: %s', url)
+            return cache[uuid]
+
+
+def request_treaty(solr, treaties, json_decision):
+    field = json_decision.get('field_treaty')
+    dec_uuid = json_decision['uuid']
+    if field:
+        uuid = field[0].get('uuid')
+        identifer = field[0].get('odata_identifier')
+        treaty_id = uuid or treaties.get(identifer)
+        if treaty_id:
+            logger.info('Requesting treaty from solr: %s', treaty_id)
+            treaty = solr.search('trInformeaId', treaty_id)
+            if treaty:
+                logger.info('Found treaty: %s!', treaty_id)
+                return treaty
+            else:
+                logger.warn('Cannot find treaty: %s!', treaty_id)
+        else:
+            logger.warn('Cannot find a treaty id for %s!', dec_uuid)
+    else:
+        logger.warn('Decision has no "field_treaty": %s', dec_uuid)
+
+
+def create_document(dec_id, url, text, size):
+    create = functools.partial(
+        DocumentText.objects.create,
+        doc_id=dec_id,
+        doc_type=COP_DECISION,
+        status=DocumentText.FULL_INDEXED,
+    )
+    try:
+        create(url=url, text=text, doc_size=size)
+        logger.info('Created DocumentText for: %s', url)
+    except IntegrityError:
+        logger.exception('Error creating DocumentText for: %s', url)
+
+
+def has_document(dec_id, url):
+    try:
+        DocumentText.objects.get(doc_id=dec_id, doc_type=COP_DECISION, url=url)
+        return True
+    except ObjectDoesNotExist:
+        logger.info('DocumentText missing for: %s', url)
+    except MultipleObjectsReturned:
+        logger.info('DocumentText multiple values for: %s', url)
+
+
+def extract_text(solr, dec_id, urls):
+    texts = []
+    for url in set(urls):
+        if has_document:
+            continue
+
+        with get_file_from_url(url) as file_obj:
+            if file_obj:
+                logger.debug('Got file: %s', url)
+                try:
+                    text = solr.extract(file_obj)
+                    size = file_obj.getbuffer().nbytes
+                    texts.append((url, text, size))
+                    logger.info('Extracted file: %s', url)
+                except Exception:
+                    logger.exception(
+                        'Error extracting file: %s', url)
+
+    for url, text, size in texts:
+        create_document(dec_id, url, text, size)
+
+    return ''.join((text for url, text, size in texts))
+
+
+def get_node(base_url, per_page, start=1):
+    for page_num in itertools.count(start=start, step=1):
+        nodes = request_page(base_url, per_page, page_num)
+        yield from nodes if nodes else [None]
+
+
+def needs_update(solr, node):
+    uuid = node['uuid']
+    solr_decision = solr.search(COP_DECISION, uuid)
+    if solr_decision:
+        logger.info('%s found in solr!', uuid)
+        solr_date = solr_decision['decUpdateDate']
+        node_date = int(node['last_update'])
+
+        solr_update = datetime.strptime(solr_date, DATE_FORMAT)
+        node_update = datetime.fromtimestamp(node_date)
+
+        if node_update > solr_update:
+            logger.info('%s outdated, queuing.', uuid)
+            return {**node, **dict(solr_id=solr_decision['id'])}
+        else:
+            logger.info('%s is up to date.', uuid)
+
+    else:
+        logger.info('%s not in solr, queuing.', uuid)
+        return node
+
+
+def count_nodes(acc, node):
+    acc[0] += 1 # increment total
+
+    if node.get('solr_id'):
+        acc[1] += 1 # increment existing
+    else:
+        acc[2] += 1 # increment new
+
+    return acc
+
+
 class CopDecisionImporter(BaseImporter):
 
     id_field = 'decId'
@@ -384,83 +428,46 @@ class CopDecisionImporter(BaseImporter):
         self.per_page = config.get('items_per_page')
         self.node_url = config.get('node_url')
 
-        self.request_page = functools.partial(
-            request_page,
-            self.decision_url,
-            self.per_page
-        )
-
+        # Set these at class level as they don't change
         Decision.languages = self.languages
         Decision.treaties = self.treaties
 
         logger.info('Started COP Decision importer')
 
-    def _get_decisions(self):
-        for page_num in itertools.count(start=231, step=1):
-            nodes = self.request_page(page_num).json()
 
-            # signal for takewhile to stop requesting items
-            if not nodes:
-                yield None
+    def harvest(self, batch_size=500, start=231):
+        # will fetch nodes until the remote server returns no results
+        json_nodes = itertools.takewhile(
+            bool, get_node(self.decision_url, self.per_page, start=start))
 
-            for node in nodes:
-                solr_decision = self.solr.search(COP_DECISION, node['uuid'])
+        updateable = [
+            node for node in json_nodes
+            if needs_update(self.solr, node)
+        ]
 
-                if not solr_decision:
-                    logger.info('%s not in solr, queuing.', node['uuid'])
-                    yield node
+        total, existing, new = functools.reduce(
+            count_nodes, updateable, [0, 0, 0])
 
-                elif solr_decision:
-                    logger.info('%s found in solr!', node['uuid'])
-                    solr_update = datetime.strptime(
-                        solr_decision['decUpdateDate'],
-                        DATE_FORMAT
-                    )
-                    node_update = datetime.fromtimestamp(
-                        int(node['last_update'])
-                    )
-
-                    if node_update > solr_update:
-                        logger.info('%s outdated, queuing.', node['uuid'])
-                        yield {**node, **dict(solr_id=solr_decision['id'])}
-                    else:
-                        logger.info('%s is up to date.', node['uuid'])
-
-
-    def harvest(self, batch_size=500):
-        updateable = tuple(itertools.takewhile(bool, self._get_decisions()))
-        len_updateable = len(updateable)
-        len_existing = len([node for node in updateable if node.get('solr_id')])
-        len_new = len_updateable - len_existing
         logger.info(
             'Found %s decisions needing update. %s new, %s existing!',
-            len_updateable,
-            len_new,
-            len_existing,
-        )
+            total, new, existing)
 
+        # wrap request_meeting in order to provide a caching dict
+        # also pass the base_url, since it's the same at all times
         fetch_meeting = functools.partial(request_meeting, self.node_url, {})
-        fetch_treaty = functools.partial(
-            request_treaty,
-            self.solr,
-            self.treaties
-        )
 
-        json_decisions = tuple(map(request_decision, updateable))
-        json_meetings = map(fetch_meeting, json_decisions)
-        json_treaties = map(fetch_treaty, json_decisions)
+        for idx, json_node in enumerate(updateable, start=1):
+            json_decision = request_decision(json_node)
+            json_meeting = fetch_meeting(json_decision)
+            json_treaty = request_treaty(
+                self.solr, self.treaties, json_decision)
 
-        decisions = (
-           Decision(*args) for args
-           in zip(json_decisions, updateable, json_meetings, json_treaties)
-        )
+            solr_id = json_node.get('solr_id')
+            decision = Decision(
+                json_decision, json_meeting, json_treaty, solr_id)
 
-        for idx, decision in enumerate(decisions, start=1):
             action = 'Updating' if decision.id else 'Inserting'
-            logger.info(
-                '[%s/%s] %s %s.',
-                idx, len_updateable, action, decision.decId
-            )
+            logger.info('[%s/%s] %s %s.', idx, total, action, decision.decId)
             fields = decision.fields()
 
             dec_text = extract_text(
@@ -472,5 +479,4 @@ class CopDecisionImporter(BaseImporter):
             if dec_text:
                 fields['decText'] = dec_text
 
-            # XXX: How does this update missing fields?
             self.solr.add(fields)
