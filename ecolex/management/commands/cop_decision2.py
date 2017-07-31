@@ -32,6 +32,15 @@ logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('cop_decision_import')
 
 
+class Report(object):
+
+    def __init__(self):
+        self.added = []
+        self.updated = []
+        self.failed = []
+        self.missing_treaties = []
+
+
 class Field(property):
     """ Marker decorator for solr fields """
 
@@ -332,13 +341,16 @@ def request_treaty(solr, treaties, json_decision):
             treaty = solr.search('trInformeaId', treaty_id)
             if treaty:
                 logger.info('Found treaty: %s!', treaty_id)
-                return treaty
+                return treaty, treaty_id
             else:
                 logger.warn('Cannot find treaty: %s!', treaty_id)
+                return None, treaty_id
         else:
             logger.warn('Cannot find a treaty id for %s!', dec_uuid)
+            return None, None
     else:
         logger.warn('Decision has no "field_treaty": %s', dec_uuid)
+        return None, None
 
 
 def create_document(dec_id, url, text, size):
@@ -454,6 +466,8 @@ class CopDecisionImporter(BaseImporter):
         self.per_page = config.get('items_per_page')
         self.node_url = config.get('node_url')
 
+        self.report = Report()
+
         # Set these at class level as they don't change
         Decision.languages = self.languages
         Decision.treaties = self.treaties
@@ -475,9 +489,15 @@ class CopDecisionImporter(BaseImporter):
         try:
             json_decision = request_uuid(self.node_url, uuid)
             json_meeting = self.fetch_meeting(json_decision)
-            json_treaty = request_treaty(self.solr, self.treaties, json_decision)
+            json_treaty, treaty_id  = request_treaty(
+                self.solr, self.treaties, json_decision)
+
+            if treaty_id and not json_treaty:
+                self.report.missing_treaties += [treaty_id]
+
         except Exception:
             logger.error('Cannot request URLs for: %s. Skipping!')
+            self.report.failed += [uuid]
             return
 
         decision = Decision(json_decision, json_meeting, json_treaty, solr_id)
@@ -514,7 +534,22 @@ class CopDecisionImporter(BaseImporter):
             action = 'Updating' if solr_id else 'Inserting'
             logger.info('[%s/%s] %s %s.', idx, total, action, uuid)
 
-            self.harvest_one(uuid, solr_id, force=force)
+            try:
+                self.harvest_one(uuid, solr_id, force=force)
+
+                if solr_id:
+                    self.report.updated += [uuid]
+                else:
+                    self.report.added += [uuid]
+
+            except Exception:
+                self.report.failed += [uuid]
+
+        logger.info('Harvest complete!')
+        logger.info('Added: %s', set(self.report.added))
+        logger.info('Updated: %s', set(self.report.updated))
+        logger.info('Failed: %s', set(self.report.failed))
+        logger.info('Missing treaties: %s', set(self.report.missing_treaties))
 
 
     def harvest_treaty(self, name=None, uuid=None, force=False, start=1):
