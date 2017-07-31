@@ -32,6 +32,13 @@ logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('cop_decision_import')
 
 
+def uniq_on_key(key, acc, item):
+    """ Unique items from a list of dicts, based on `key` value. """
+    values = [item[key] for item in acc]
+    if item[key] not in values:
+        acc.append(item)
+    return acc
+
 class Report(object):
 
     def __init__(self):
@@ -96,12 +103,13 @@ class Decision(object):
     def decBody_zh(self): return self._decBody('zh')
 
     def _file_data(self, name):
-        # TODO: reduce to unique values based on url, e.g:
-        # https://www.informea.org/node/a3c4c801-464a-407e-b07b-288fd2a7c1a0/json
-        # which has the same filename and file url for all languages
         files = self.dec.get('field_files')
-        extractor = itemgetter(name)
-        return [extractor(f[0]) for f in files.values()] if files else None
+
+        if files:
+            uniq_on_url = functools.partial(uniq_on_key, 'url')
+            values = [f[0] for f in files.values()]
+            unique_files = functools.reduce(uniq_on_url, values, [])
+            return [f[name] for f in unique_files]
 
     @Field
     def decFileNames(self): return self._file_data('filename')
@@ -370,6 +378,7 @@ def create_document(dec_id, url, text, size):
 def has_document(dec_id, url):
     try:
         DocumentText.objects.get(doc_id=dec_id, doc_type=COP_DECISION, url=url)
+        logger.info('DocumentText exists for: %s', url)
         return True
     except ObjectDoesNotExist:
         logger.info('DocumentText missing for: %s', url)
@@ -380,7 +389,7 @@ def has_document(dec_id, url):
 def extract_text(solr, dec_id, urls):
     texts = []
     for url in set(urls):
-        if has_document:
+        if has_document(dec_id, url):
             continue
 
         with get_file_from_url(url) as file_obj:
