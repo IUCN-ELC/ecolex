@@ -49,6 +49,9 @@ class Command(BaseCommand):
         make_option('--reindex', action='store_true'),
         make_option('--force', action='store_true'),
         make_option('--decId', type=str),
+        make_option('--treaty', type=str),
+        make_option('--treaty_uuid', type=str),
+        make_option('--start_page', type=int, default=1),
     )
 
     def handle(self, *args, **options):
@@ -62,7 +65,10 @@ class Command(BaseCommand):
         parser.add_argument('--reindex', action='store_true')
         parser.add_argument('--force', action='store_true')
         parser.add_argument('--decId', type=str)
-        parser.set_defaults(test=False, batch_size=1)
+        parser.add_argument('--treaty', type=str)
+        parser.add_argument('--treaty_uuid', type=str)
+        parser.add_argument('--start_page', type=int)
+        parser.set_defaults(test=False, batch_size=1, default=1)
         args = parser.parse_args()
 
         config = settings.SOLR_IMPORT
@@ -81,9 +87,16 @@ class Command(BaseCommand):
             importer.update_full_text()
         elif args.reindex:
             importer.reindex_failed()
-        elif args.force:
-            importer.harvest(force=True)
         elif args.decId:
             importer.harvest_one(args.decId)
+        elif args.treaty or args.treaty_uuid:
+            importer.harvest_treaty(
+                name=args.treaty,
+                uuid=args.treaty_uuid,
+                start=args.start_page,
+                force=args.force,
+            )
+        elif args.obj_type == 'decision':
+            importer.harvest(start=args.start_page, force=args.force)
         else:
             importer.harvest(args.batch_size)

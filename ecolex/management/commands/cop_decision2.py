@@ -487,7 +487,48 @@ class CopDecisionImporter(BaseImporter):
         logger.info('Solr succesfully updated!')
 
 
-    def harvest(self, batch_size=500, start=231, force=False):
+    def harvest_list(self, items, force):
+        total, existing, new = functools.reduce(count_nodes, items, [0, 0, 0])
+
+        logger.info(
+            'Found %s decisions needing update. %s new, %s existing!',
+            total, new, existing)
+
+        for idx, json_node in enumerate(items, start=1):
+            uuid = json_node['uuid']
+            solr_id = json_node.get('solr_id')
+
+            action = 'Updating' if solr_id else 'Inserting'
+            logger.info('[%s/%s] %s %s.', idx, total, action, uuid)
+
+            self.harvest_one(uuid, solr_id, force=force)
+
+
+    def harvest_treaty(self, name=None, uuid=None, force=False, start=1):
+        if force:
+            logger.warning('Forcing update of all treaty decisions!')
+
+        logger.info('Harvesting decisions for treaty: %s', name or uuid)
+
+        # will fetch nodes until the remote server returns no results
+        json_nodes = itertools.takewhile(
+            bool, get_node(self.decision_url, self.per_page, start=start))
+
+        matched = [
+            node for node in json_nodes if
+            (name and node['treaty'] == name) or
+            (uuid and node['treaty_uuid'] == uuid)
+        ]
+
+        updateable = [
+            node for node in matched
+            if needs_update(self.solr, node, force=force)
+        ]
+
+        self.harvest_list(updateable, force=force)
+
+
+    def harvest(self, start=1, force=False):
         # will fetch nodes until the remote server returns no results
         json_nodes = itertools.takewhile(
             bool, get_node(self.decision_url, self.per_page, start=start))
@@ -500,18 +541,5 @@ class CopDecisionImporter(BaseImporter):
             if needs_update(self.solr, node, force=force)
         ]
 
-        total, existing, new = functools.reduce(
-            count_nodes, updateable, [0, 0, 0])
+        self.harvest_list(updateable, force=force)
 
-        logger.info(
-            'Found %s decisions needing update. %s new, %s existing!',
-            total, new, existing)
-
-        for idx, json_node in enumerate(updateable, start=1):
-            uuid = json_node['uuid']
-            solr_id = json_node.get('solr_id')
-
-            action = 'Updating' if solr_id else 'Inserting'
-            logger.info('[%s/%s] %s %s.', idx, total, action, uuid)
-
-            self.harvest_one(uuid, solr_id, force=force)
