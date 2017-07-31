@@ -276,26 +276,32 @@ class Decision(object):
         return slugify(slug)
 
 
+def request_json(url, *args, **kwargs):
+    try:
+        return requests.get(url, *args, **kwargs).json()
+    except Exception:
+        logger.exception('Error fetching url: %s.', url)
+        raise
+
 def request_page(url, per_page, page_num=1):
     params = dict(
         items_per_page=per_page,
         page=page_num,
     )
     logger.info('Fetching page %s.', page_num)
-    return requests.get(url, params=params).json()
+    return request_json(url, params=params)
 
 
 def request_uuid(base_url, uuid):
     url = '{}/{}/json'.format(base_url, uuid)
     logger.info('Fetching uuid: %s from %s!', uuid, url)
-    return requests.get(url).json()
+    return request_json(url)
 
 
 def request_decision(json_node):
-    # TODO: proper error handling and logging
     url = json_node['data_url']
     logger.info('Requesting decision: %s', url)
-    return requests.get(url).json()
+    return request_json(url)
 
 
 def request_meeting(base_url, cache, json_decision):
@@ -466,9 +472,13 @@ class CopDecisionImporter(BaseImporter):
             logger.info('Solr id not specified, finding!')
             solr_id = find_solr_id(self.solr, uuid)
 
-        json_decision = request_uuid(self.node_url, uuid)
-        json_meeting = self.fetch_meeting(json_decision)
-        json_treaty = request_treaty(self.solr, self.treaties, json_decision)
+        try:
+            json_decision = request_uuid(self.node_url, uuid)
+            json_meeting = self.fetch_meeting(json_decision)
+            json_treaty = request_treaty(self.solr, self.treaties, json_decision)
+        except Exception:
+            logger.error('Cannot request URLs for: %s. Skipping!')
+            return
 
         decision = Decision(json_decision, json_meeting, json_treaty, solr_id)
 
@@ -483,8 +493,11 @@ class CopDecisionImporter(BaseImporter):
         if dec_text:
             fields['decText'] = dec_text
 
-        self.solr.add(fields)
-        logger.info('Solr succesfully updated!')
+        try:
+            self.solr.add(fields)
+            logger.info('Solr succesfully updated!')
+        except Exception:
+            logger.exception('Error updating solr!')
 
 
     def harvest_list(self, items, force):
