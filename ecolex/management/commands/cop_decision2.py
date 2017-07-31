@@ -285,6 +285,12 @@ def request_page(url, per_page, page_num=1):
     return requests.get(url, params=params).json()
 
 
+def request_uuid(base_url, uuid):
+    url = '{}/{}/json'.format(base_url, uuid)
+    logger.info('Fetching uuid: %s from %s!', uuid, url)
+    return requests.get(url).json()
+
+
 def request_decision(json_node):
     # TODO: proper error handling and logging
     url = json_node['data_url']
@@ -301,11 +307,10 @@ def request_meeting(base_url, cache, json_decision):
             logger.info('Meeting from cache: %s', uuid)
             return cached
         else:
-            url = '{}/{}/json'.format(base_url, uuid)
-            logger.info('Requesting meeting: %s', url)
-            resp = requests.get(url).json()
+            logger.info('Requesting meeting: %s', uuid)
+            resp = request_uuid(base_url, uuid)
             cache[uuid] = resp
-            logger.info('Cached meeting: %s', url)
+            logger.info('Cached meeting: %s', uuid)
             return cache[uuid]
 
 
@@ -422,6 +427,16 @@ def count_nodes(acc, node):
     return acc
 
 
+def find_solr_id(solr, uuid):
+    solr_decision = solr.search(COP_DECISION, uuid)
+    if solr_decision:
+        solr_id = solr_decision.get('id')
+        logger.info('Found solr id: %s for %s', solr_id, uuid)
+        return solr_id
+    else:
+        logger.info('Not found in solr. New entry will be created.')
+
+
 class CopDecisionImporter(BaseImporter):
 
     id_field = 'decId'
@@ -439,6 +454,38 @@ class CopDecisionImporter(BaseImporter):
 
         logger.info('Started COP Decision importer')
 
+        # wrap request_meeting in order to provide a caching dict
+        # also pass the base_url, since it's the same at all times
+        self.fetch_meeting = functools.partial(
+            request_meeting, self.node_url, {})
+
+    def harvest_one(self, uuid, solr_id='check', force=True):
+        logger.info('Harvesting: %s', uuid)
+
+        if solr_id == 'check':
+            logger.info('Solr id not specified, finding!')
+            solr_id = find_solr_id(self.solr, uuid)
+
+        json_decision = request_uuid(self.node_url, uuid)
+        json_meeting = self.fetch_meeting(json_decision)
+        json_treaty = request_treaty(self.solr, self.treaties, json_decision)
+
+        decision = Decision(json_decision, json_meeting, json_treaty, solr_id)
+
+        fields = decision.fields()
+
+        dec_text = extract_text(
+            self.solr,
+            fields['decId'],
+            fields.get('decFileUrls', []),
+        )
+
+        if dec_text:
+            fields['decText'] = dec_text
+
+        self.solr.add(fields)
+        logger.info('Solr succesfully updated!')
+
 
     def harvest(self, batch_size=500, start=231, force=False):
         # will fetch nodes until the remote server returns no results
@@ -453,7 +500,6 @@ class CopDecisionImporter(BaseImporter):
             if needs_update(self.solr, node, force=force)
         ]
 
-
         total, existing, new = functools.reduce(
             count_nodes, updateable, [0, 0, 0])
 
@@ -461,31 +507,11 @@ class CopDecisionImporter(BaseImporter):
             'Found %s decisions needing update. %s new, %s existing!',
             total, new, existing)
 
-        # wrap request_meeting in order to provide a caching dict
-        # also pass the base_url, since it's the same at all times
-        fetch_meeting = functools.partial(request_meeting, self.node_url, {})
-
         for idx, json_node in enumerate(updateable, start=1):
-            json_decision = request_decision(json_node)
-            json_meeting = fetch_meeting(json_decision)
-            json_treaty = request_treaty(
-                self.solr, self.treaties, json_decision)
-
+            uuid = json_node['uuid']
             solr_id = json_node.get('solr_id')
-            decision = Decision(
-                json_decision, json_meeting, json_treaty, solr_id)
 
-            action = 'Updating' if decision.id else 'Inserting'
-            logger.info('[%s/%s] %s %s.', idx, total, action, decision.decId)
-            fields = decision.fields()
+            action = 'Updating' if solr_id else 'Inserting'
+            logger.info('[%s/%s] %s %s.', idx, total, action, uuid)
 
-            dec_text = extract_text(
-                self.solr,
-                fields['decId'],
-                fields.get('decFileUrls', []),
-            )
-
-            if dec_text:
-                fields['decText'] = dec_text
-
-            self.solr.add(fields)
+            self.harvest_one(uuid, solr_id, force=force)
