@@ -546,10 +546,12 @@ class Literature(DocumentModel):
             'decision.decision_id', 'cop_decision_reference'),
         'court_decisions': (
             'court_decision.original_id', 'court_decision_reference'),
-        'literatures': (
-            'literature.document_id', 'literature_reference'),
-        'references': (
-            'literature.literature_reference', 'document_id')
+        #'literatures': (
+        #    'literature.document_id', 'literature_reference'),
+        #'references': (
+        #    'literature.literature_reference', 'document_id'),
+        'chapters_references': (
+            'literature.document_id', 'chapters'),
     }
 
     @property
@@ -636,9 +638,13 @@ class Literature(DocumentModel):
         return self._all_references['cop_decisions']
 
     @property
-    def literatures(self):
-        return self._all_references['literatures']
+    def chapters_references(self):
+        return self._all_references['chapters_references']
 
     @property
-    def references(self):
-        return self._all_references['references']
+    def literatures(self):
+        return self.references['literature_reference']
+
+    @property
+    def referenced_by(self):
+        return self.references['referenced_by']

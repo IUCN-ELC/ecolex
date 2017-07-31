@@ -478,6 +478,9 @@ class LiteratureSchema(CommonSchema):
     cop_decision_reference = fields.List(fields.String(),
                                          load_from='litCopDecisionReference',
                                          missing=[])
+    chapters = fields.List(fields.String(),
+                           load_from='litChapterReference',
+                           missing=[])
     volume_no = fields.String(load_from='litVolumeNo', missing='')
 
     # Authors

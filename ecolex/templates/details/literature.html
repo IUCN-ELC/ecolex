@@ -190,22 +190,41 @@
     </dl>
   </section>
 
-  {% if document.literatures %}
+  {% if document.literatures or document.chapters_references %}
   <section id="literature-references">
-    {% for literature in document.literatures %}
-      <dl>
-        <dt>{% trans 'Literature' %}</dt>
-        <dd>
-          <h3 class="search-result-title">
-            <a href="{{ literature.details_url }}?{{ query }}"
-               title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
-          </h3>
-          {% include 'short_display/literature.html' with result=literature %}
-        </dd>
-      </dl>
-    {% endfor %}
+    <h2 class="section-title">{% trans 'References' %}</h2>
+    {% if document.chapters_references %}
+      {% for chapter in document.chapters_references %}
+        <dl>
+          <dt>{% trans 'Chapter' %}</dt>
+          <dd>
+            <h3 class="search-result-title">
+              <a href="{{ chapter.details_url }}?{{ query }}"
+                 title="{{ chapter.title|safe|striptags }}">{{ chapter.title|safe }}</a>
+            </h3>
+            {% include 'short_display/literature.html' with result=chapter %}
+          </dd>
+        </dl>
+      {% endfor %}
+    {% endif %}
+
+    {% if document.literatures %}
+      {% for literature in document.literatures %}
+        <dl>
+          <dt>{% trans 'Literature' %}</dt>
+          <dd>
+            <h3 class="search-result-title">
+              <a href="{{ literature.details_url }}?{{ query }}"
+                 title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
+            </h3>
+            {% include 'short_display/literature.html' with result=literature %}
+          </dd>
+        </dl>
+      {% endfor %}
+    {% endif %}
   </section>
   {% endif %}
+
 
   <section id="other-references">
   {% if document.treaties or document.legislations or document.court_decisions or document.cop_decisions %}
@@ -262,23 +281,6 @@
       </dl>
     {% endfor %}
   {% endif %}
-
-  {% if document.references %}
-    <h2 class="section-title">{% trans 'References from' %}</h2>
-    {% for literature in document.references %}
-      <dl>
-        <dt>{% trans 'Literature' %}</dt>
-        <dd>
-          <h3 class="search-result-title">
-            <a href="{{ literature.details_url }}?{{ query }}"
-               title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
-          </h3>
-          {% include 'short_display/literature.html' with result=literature %}
-        </dd>
-      </dl>
-    {% endfor %}
-  {% endif %}
-  </section>
 
 </article>
 {% endblock content %}
