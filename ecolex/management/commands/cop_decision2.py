@@ -53,7 +53,6 @@ class Field(property):
 
 
 class Decision(object):
-    """ Immutable object """
 
     # set in CopDecisionImporter.__init__
     languages = None # languages.json
