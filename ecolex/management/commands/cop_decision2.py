@@ -348,7 +348,7 @@ def request_treaty(solr, treaties, json_decision):
             treaty = solr.search_all('trInformeaId', treaty_id)
             if treaty:
                 logger.info('Found treaty: %s!', treaty_id)
-                return treaty, treaty_id
+                return treaty[0], treaty_id
             else:
                 logger.warn('Cannot find treaty: %s!', treaty_id)
                 return None, treaty_id
