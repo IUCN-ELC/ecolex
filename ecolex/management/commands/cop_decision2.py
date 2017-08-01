@@ -387,7 +387,12 @@ def has_document(dec_id, url):
 
 def extract_text(solr, dec_id, urls):
     texts = []
-    for url in set(urls):
+
+    uniq_urls = set(urls)
+    if not uniq_urls:
+        logger.info('Decision %s has no files!', dec_id)
+
+    for url in uniq_urls:
         if has_document(dec_id, url):
             continue
 
@@ -504,7 +509,7 @@ class CopDecisionImporter(BaseImporter):
                 self.report.missing_treaties += [treaty_id]
 
         except Exception:
-            logger.error('Cannot request URLs for: %s. Skipping!')
+            logger.error('Cannot request URLs for: %s. Skipping!', uuid)
             self.report.failed += [uuid]
             return
 
@@ -598,4 +603,3 @@ class CopDecisionImporter(BaseImporter):
         ]
 
         self.harvest_list(updateable, force=force)
-
