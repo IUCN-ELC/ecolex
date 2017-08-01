@@ -376,42 +376,51 @@ def create_document(dec_id, url, text, size):
 
 def has_document(dec_id, url):
     try:
-        DocumentText.objects.get(doc_id=dec_id, doc_type=COP_DECISION, url=url)
-        logger.info('DocumentText exists for: %s', url)
-        return True
+        return DocumentText.objects.get(doc_id=dec_id, doc_type=COP_DECISION, url=url)
+        logger.info('DocumentText exists for: %s.', url)
     except ObjectDoesNotExist:
-        logger.info('DocumentText missing for: %s', url)
+        logger.info('DocumentText missing for: %s.', url)
     except MultipleObjectsReturned:
-        logger.info('DocumentText multiple values for: %s', url)
+        logger.warning('DocumentText multiple values for: %s!', url)
 
 
 def extract_text(solr, dec_id, urls):
+    # Tuples consisting of: url, text, size and an "exists" flag
+    # will be appended to this list. The entries will be used to
+    # create missing entries in the sql database if the flag is False;
+    # and to finally return the full concatenated text of all file content
+    # for solr insertion.
     texts = []
 
     uniq_urls = set(urls)
     if not uniq_urls:
         logger.info('Decision %s has no files!', dec_id)
 
+    # gather information about files
     for url in uniq_urls:
-        if has_document(dec_id, url):
-            continue
+        document = has_document(dec_id, url)
+        if document:
+            # text exists, grab it from sql
+            logger.info('Using existing text.')
+            texts.append((url, document.text, document.doc_size, True))
+        else:
+            # text doesn't exist in sql, extrat with solr
+            with get_file_from_url(url) as file_obj:
+                if file_obj:
+                    logger.debug('Got file: %s', url)
+                    try:
+                        text = solr.extract(file_obj)
+                        size = file_obj.getbuffer().nbytes
+                        texts.append((url, text, size, False))
+                        logger.info('Extracted file: %s', url)
+                    except Exception:
+                        logger.exception('Error extracting file: %s', url)
 
-        with get_file_from_url(url) as file_obj:
-            if file_obj:
-                logger.debug('Got file: %s', url)
-                try:
-                    text = solr.extract(file_obj)
-                    size = file_obj.getbuffer().nbytes
-                    texts.append((url, text, size))
-                    logger.info('Extracted file: %s', url)
-                except Exception:
-                    logger.exception(
-                        'Error extracting file: %s', url)
+    for url, text, size, exists in texts:
+        if not exists:
+            create_document(dec_id, url, text, size)
 
-    for url, text, size in texts:
-        create_document(dec_id, url, text, size)
-
-    return ''.join((text for url, text, size in texts))
+    return ''.join((text for _, text, _, _ in texts))
 
 
 def get_node(base_url, per_page, start=1):
@@ -517,14 +526,20 @@ class CopDecisionImporter(BaseImporter):
 
         fields = decision.fields()
 
-        dec_text = extract_text(
-            self.solr,
-            fields['decId'],
-            fields.get('decFileUrls', []),
-        )
+        try:
+            dec_text = extract_text(
+                self.solr,
+                fields['decId'],
+                fields.get('decFileUrls', []),
+            )
 
-        if dec_text:
-            fields['decText'] = dec_text
+            if dec_text:
+                fields['decText'] = dec_text
+
+        except Exception:
+            self.report.failed += [uuid]
+            logger.exception('Failed text extraction for: %s. Skipping!', uuid)
+            return
 
         try:
             self.solr.add(fields)
@@ -557,12 +572,23 @@ class CopDecisionImporter(BaseImporter):
 
             except Exception:
                 self.report.failed += [uuid]
+                logger.exception('Error occured for: %s', uuid)
 
-        logger.info('Harvest complete!')
-        logger.info('Added: %s', set(self.report.added))
-        logger.info('Updated: %s', set(self.report.updated))
-        logger.info('Failed: %s', set(self.report.failed))
-        logger.info('Missing treaties: %s', set(self.report.missing_treaties))
+        added = set(self.report.added)
+        updated = set(self.report.updated)
+        failed = set(self.report.failed)
+        missing_treaties = set(self.report.missing_treaties)
+
+        logger.info(
+            'Harvest complete! '
+            'Added: %s. Updated: %s. Failed: %s. Missing treaties: %s',
+            len(added), len(updated), len(failed), len(missing_treaties)
+        )
+
+        logger.info('Added: %s', added)
+        logger.info('Updated: %s', updated)
+        logger.info('Failed: %s', failed)
+        logger.info('Missing treaties: %s', missing_treaties)
 
 
     def harvest_treaty(self, name=None, uuid=None, force=False, start=1):
@@ -581,10 +607,10 @@ class CopDecisionImporter(BaseImporter):
             (uuid and node['treaty_uuid'] == uuid)
         ]
 
-        updateable = [
-            node for node in matched
-            if needs_update(self.solr, node, force=force)
-        ]
+        updateable = list(filter(bool, [
+            needs_update(self.solr, node, force=force)
+            for node in matched
+        ]))
 
         self.harvest_list(updateable, force=force)
 
@@ -597,9 +623,9 @@ class CopDecisionImporter(BaseImporter):
         if force:
             logger.warning('Forcing update of all decisions!')
 
-        updateable = [
-            node for node in json_nodes
-            if needs_update(self.solr, node, force=force)
-        ]
+        updateable = list(filter(bool, [
+            needs_update(self.solr, node, force=force)
+            for node in json_nodes
+        ]))
 
         self.harvest_list(updateable, force=force)
