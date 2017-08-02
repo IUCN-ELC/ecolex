@@ -293,6 +293,7 @@ SOLR_IMPORT = {
         'keywords_json': os.path.join(CONFIG_DIR, 'keywords.json'),
         'subjects_json': os.path.join(CONFIG_DIR, 'subjects.json'),
         'treaties_json': TREATIES,
+        'informea_ecolex_json': os.path.join(CONFIG_DIR, 'informea_ecolex.json'),
     },
     'court_decision': {
         'test_input_file': os.path.join(TESTING_DIR, 'court_decision_in.json'),

@@ -2,6 +2,7 @@ import inspect
 import collections
 import functools
 import itertools
+import json
 
 from operator import methodcaller
 from operator import itemgetter
@@ -34,6 +35,11 @@ DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('cop_decision_import')
+
+with open(settings.SOLR_IMPORT['common']['keywords_json'], encoding='utf-8') as f:
+    json_ecolex_keywords = json.load(f)
+with open(settings.SOLR_IMPORT['common']['informea_ecolex_json'], encoding='utf-8') as f:
+    json_informea_keywords = json.load(f)
 
 
 def uniq_on_key(key, acc, item):
@@ -131,10 +137,26 @@ class Decision(object):
         node_update = datetime.fromtimestamp(int(self.dec['changed']))
         return node_update.strftime(DATE_FORMAT)
 
+    def _decEcolexKeywords(self):
+        tags = [tag['label'] for tag in self.dec.get('field_informea_tags')]
+        for tag in tags:
+            for informea_tag in json_informea_keywords.get(tag, []):
+                yield json_ecolex_keywords.get(informea_tag)
+
+    def _decKeyword(self, lang):
+        return [tag[lang] for tag in self._decEcolexKeywords() if tag is not None]
+
     @Field
     def decKeyword_en(self):
-        tags = self.dec.get('field_informea_tags')
-        return [tag['url'] for tag in tags]
+        return self._decKeyword('en')
+
+    @Field
+    def decKeyword_es(self):
+        return self._decKeyword('es')
+
+    @Field
+    def decKeyword_fr(self):
+        return self._decKeyword('fr')
 
     def _decLanguage(self, lang):
         fields = ('title_field', 'body', 'field_files')
