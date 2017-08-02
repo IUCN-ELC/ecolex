@@ -11,12 +11,16 @@ from datetime import date, datetime
 from django.conf import settings
 
 from django.db import IntegrityError
+from django.db import OperationalError
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.exceptions import MultipleObjectsReturned
 
 import logging
 import logging.config
 import requests
+import django.db
+
+from requests.adapters import HTTPAdapter
 
 from django.template.defaultfilters import slugify
 
@@ -38,6 +42,12 @@ def uniq_on_key(key, acc, item):
     if item[key] not in values:
         acc.append(item)
     return acc
+
+
+def reset_db_connection():
+    for conn in django.db.connections.all():
+        conn.close()
+
 
 class Report(object):
 
@@ -293,8 +303,12 @@ class Decision(object):
 
 
 def request_json(url, *args, **kwargs):
+    # needed to for retry
+    s = requests.Session()
+    s.mount(url, HTTPAdapter(max_retries=3))
+
     try:
-        return requests.get(url, *args, **kwargs).json()
+        return s.get(url, *args, **kwargs).json()
     except Exception:
         logger.exception('Error fetching url: %s.', url)
         raise
@@ -355,7 +369,7 @@ def request_treaty(solr, treaties, json_decision):
         return None, None
 
 
-def create_document(dec_id, url, text, size):
+def create_document(dec_id, url, text, size, retry=True):
     create = functools.partial(
         DocumentText.objects.create,
         doc_id=dec_id,
@@ -364,19 +378,37 @@ def create_document(dec_id, url, text, size):
     )
     try:
         create(url=url, text=text, doc_size=size)
-        logger.info('Created DocumentText for: %s', url)
+        logger.info('Created DocumentText for: %s.', url)
     except IntegrityError:
-        logger.exception('Error creating DocumentText for: %s', url)
+        logger.exception('Error creating DocumentText for: %s!', url)
+    except OperationalError:
+        if retry:
+            # retry once, resetting the db connection beforehand
+            logger.warning(
+                'Error creating DocumentText for: %s, retrying!', url)
+            reset_db_connection()
+            create_document(dec_id, url, text, size, retry=False)
+        else:
+            logger.exception(
+                'Error creating DocumentText for: %s! No more retries!', url)
 
 
-def has_document(dec_id, url):
+def has_document(dec_id, url, retry=True):
     try:
-        return DocumentText.objects.get(doc_id=dec_id, doc_type=COP_DECISION, url=url)
+        return DocumentText.objects.get(
+            doc_id=dec_id, doc_type=COP_DECISION, url=url)
         logger.info('DocumentText exists for: %s.', url)
     except ObjectDoesNotExist:
         logger.info('DocumentText missing for: %s.', url)
     except MultipleObjectsReturned:
         logger.warning('DocumentText multiple values for: %s!', url)
+    except OperationalError as err:
+        if retry:
+            logger.warning('Database error: %s! Retrying!', err)
+            reset_db_connection()
+            has_document(dec_id, url, retry=False)
+        else:
+            logger.error('Database error: %s! No more retries!', err)
 
 
 def extract_text(solr, dec_id, urls):
@@ -393,17 +425,19 @@ def extract_text(solr, dec_id, urls):
 
     # gather information about files
     for url in uniq_urls:
+        logger.info('Extracting text from %s', url)
         document = has_document(dec_id, url)
         if document:
             # text exists, grab it from sql
             logger.info('Using existing text.')
             texts.append((url, document.text, document.doc_size, True))
         else:
+            logger.info('Downloading file: %s', url)
             # text doesn't exist in sql, extract with solr
             try:
                 file_obj = get_file_from_url(url)
                 if file_obj:
-                    logger.debug('Got file: %s', url)
+                    logger.debug('Downloaded file: %s', url)
                     text = solr.extract(file_obj)
                     size = file_obj.getbuffer().nbytes
                     texts.append((url, text, size, False))
