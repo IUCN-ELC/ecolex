@@ -256,39 +256,39 @@ class Decision(object):
             return self.treaty.get('partyCountry_{}'.format(lang))
 
     @Field
-    def partyCountry_en(self): self._partyCountry('en')
+    def partyCountry_en(self): return self._partyCountry('en')
 
     @Field
-    def partyCountry_es(self): self._partyCountry('es')
+    def partyCountry_es(self): return self._partyCountry('es')
 
     @Field
-    def partyCountry_fr(self): self._partyCountry('fr')
+    def partyCountry_fr(self): return self._partyCountry('fr')
 
     def _trSubject(self, lang):
         if self.treaty:
             return self.treaty.get('trSubject_{}'.format(lang))
 
     @Field
-    def trSubject_en(self): self._trSubject('en')
+    def trSubject_en(self): return self._trSubject('en')
 
     @Field
-    def trSubject_es(self): self._trSubject('es')
+    def trSubject_es(self): return self._trSubject('es')
 
     @Field
-    def trSubject_fr(self): self._trSubject('fr')
+    def trSubject_fr(self): return self._trSubject('fr')
 
     def _decTreatyName(self, lang):
         if self.treaty:
             return self.treaty.get('trTitleOfText_{}'.format(lang))
 
     @Field
-    def decTreatyName_en(self): self._decTreatyName('en')
+    def decTreatyName_en(self): return self._decTreatyName('en')
 
     @Field
-    def decTreatyName_es(self): self._decTreatyName('es')
+    def decTreatyName_es(self): return self._decTreatyName('es')
 
     @Field
-    def decTreatyName_fr(self): self._decTreatyName('fr')
+    def decTreatyName_fr(self): return self._decTreatyName('fr')
 
     @Field
     def slug(self):
