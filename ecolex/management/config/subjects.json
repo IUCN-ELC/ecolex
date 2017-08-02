@@ -1,117 +1,117 @@
 {
-    "agricultural and rural development": {
-        "en": "Agricultural & rural development",
-        "es": "Agricultura y desarrollo rural",
-        "fr": "Agriculture et d\u00e9veloppement rural"
-    },
-    "agricultural & rural development": {
-        "en": "Agricultural & rural development",
-        "es": "Agricultura y desarrollo rural",
-        "fr": "Agriculture et d\u00e9veloppement rural"
-    },
-    "agriculture": {
-        "en": "Agricultural & rural development",
-        "es": "Agricultura y desarrollo rural",
-        "fr": "Agriculture et d\u00e9veloppement rural"
-    },
-    "air & atmosphere": {
-        "en": "Air & atmosphere",
-        "es": "Aire y atm\u00f3sfera",
-        "fr": "Air et atmosph\u00e8re"
-    },
-    "cultivated plants": {
-        "en": "Cultivated plants",
-        "es": "Cultivos",
-        "fr": "Plantes cultiv\u00e9es"
-    },
-    "energy": {
-        "en": "Energy",
-        "es": "Energ\u00eda",
-        "fr": "\u00c9nergie"
-    },
-    "environment gen.": {
-        "en": "Environment gen.",
-        "es": "Medio ambiente gen.",
-        "fr": "Environnement g\u00e9n."
-    },
-    "environnement g\u00e9n.": {
-        "en": "Environment gen.",
-        "es": "Medio ambiente gen.",
-        "fr": "Environnement g\u00e9n."
-    },
-    "fisheries": {
-        "en": "Fisheries",
-        "es": "Pesca",
-        "fr": "P\u00eache"
-    },
-    "food and nutrition": {
-        "en": "Food & nutrition",
-        "es": "Alimentaci\u00f3n y nutrici\u00f3n",
-        "fr": "Alimentation et nutrition"
-    },
-    "food & nutrition": {
-        "en": "Food & nutrition",
-        "es": "Alimentaci\u00f3n y nutrici\u00f3n",
-        "fr": "Alimentation et nutrition"
-    },
-    "food": {
-        "en": "Food & nutrition",
-        "es": "Alimentaci\u00f3n y nutrici\u00f3n",
-        "fr": "Alimentation et nutrition"
-    },
-    "forestry": {
-        "en": "Forestry",
-        "es": "Bosques",
-        "fr": "For\u00eats"
-    },
-    "land & soil": {
-        "en": "Land & soil",
-        "es": "Tierra y suelos",
-        "fr": "Terre et sols"
-    },
-    "legal questions": {
-        "en": "Legal questions",
-        "es": "Cuestiones jur\u00eddicas",
-        "fr": "Questions juridiques"
-    },
-    "questions juridiques": {
-        "en": "Legal questions",
-        "es": "Cuestiones jur\u00eddicas",
-        "fr": "Questions juridiques"
-    },
-    "livestock": {
-        "en": "Livestock",
-        "es": "Ganado",
-        "fr": "B\u00e9tail"
-    },
-    "mineral resources": {
-        "en": "Mineral resources",
-        "es": "Recursos minerales",
-        "fr": "Ressources min\u00e9rales"
-    },
-    "sea": {
-        "en": "Sea",
-        "es": "Mar",
-        "fr": "Mer"
-    },
-    "waste & hazardous substances": {
-        "en": "Waste & hazardous substances",
-        "es": "Desechos y sustancias peligrosas",
-        "fr": "D\u00e9chets et substances dangereuses"
-    },
-    "water": {
-        "en": "Water",
-        "es": "Agua",
-        "fr": "Eau"
-    },
-    "eau": {
-        "en": "Water",
-        "es": "Agua",
-        "fr": "Eau"
-    },
-    "wild species & ecosystems": {
-        "en": "Wild species & ecosystems",
-        "es": "Especies silvestres y ecosistemas",
-        "fr": "Esp\u00e8ces sauvages et \u00e9cosyst\u00e8mes"
-    }
+  "agricultural & rural development": {
+    "en": "Agricultural & rural development",
+    "es": "Agricultura y desarrollo rural",
+    "fr": "Agriculture et développement rural"
+  },
+  "agricultural and rural development": {
+    "en": "Agricultural & rural development",
+    "es": "Agricultura y desarrollo rural",
+    "fr": "Agriculture et développement rural"
+  },
+  "agriculture": {
+    "en": "Agricultural & rural development",
+    "es": "Agricultura y desarrollo rural",
+    "fr": "Agriculture et développement rural"
+  },
+  "air & atmosphere": {
+    "en": "Air & atmosphere",
+    "es": "Aire y atmósfera",
+    "fr": "Air et atmosphère"
+  },
+  "cultivated plants": {
+    "en": "Cultivated plants",
+    "es": "Cultivos",
+    "fr": "Plantes cultivées"
+  },
+  "eau": {
+    "en": "Water",
+    "es": "Agua",
+    "fr": "Eau"
+  },
+  "energy": {
+    "en": "Energy",
+    "es": "Energía",
+    "fr": "Énergie"
+  },
+  "environment gen.": {
+    "en": "Environment gen.",
+    "es": "Medio ambiente gen.",
+    "fr": "Environnement gén."
+  },
+  "environnement gén.": {
+    "en": "Environment gen.",
+    "es": "Medio ambiente gen.",
+    "fr": "Environnement gén."
+  },
+  "fisheries": {
+    "en": "Fisheries",
+    "es": "Pesca",
+    "fr": "Pêche"
+  },
+  "food": {
+    "en": "Food & nutrition",
+    "es": "Alimentación y nutrición",
+    "fr": "Alimentation et nutrition"
+  },
+  "food & nutrition": {
+    "en": "Food & nutrition",
+    "es": "Alimentación y nutrición",
+    "fr": "Alimentation et nutrition"
+  },
+  "food and nutrition": {
+    "en": "Food & nutrition",
+    "es": "Alimentación y nutrición",
+    "fr": "Alimentation et nutrition"
+  },
+  "forestry": {
+    "en": "Forestry",
+    "es": "Bosques",
+    "fr": "Forêts"
+  },
+  "land & soil": {
+    "en": "Land & soil",
+    "es": "Tierra y suelos",
+    "fr": "Terre et sols"
+  },
+  "legal questions": {
+    "en": "Legal questions",
+    "es": "Cuestiones jurídicas",
+    "fr": "Questions juridiques"
+  },
+  "livestock": {
+    "en": "Livestock",
+    "es": "Ganado",
+    "fr": "Bétail"
+  },
+  "mineral resources": {
+    "en": "Mineral resources",
+    "es": "Recursos minerales",
+    "fr": "Ressources minérales"
+  },
+  "questions juridiques": {
+    "en": "Legal questions",
+    "es": "Cuestiones jurídicas",
+    "fr": "Questions juridiques"
+  },
+  "sea": {
+    "en": "Sea",
+    "es": "Mar",
+    "fr": "Mer"
+  },
+  "waste & hazardous substances": {
+    "en": "Waste & hazardous substances",
+    "es": "Desechos y sustancias peligrosas",
+    "fr": "Déchets et substances dangereuses"
+  },
+  "water": {
+    "en": "Water",
+    "es": "Agua",
+    "fr": "Eau"
+  },
+  "wild species & ecosystems": {
+    "en": "Wild species & ecosystems",
+    "es": "Especies silvestres y ecosistemas",
+    "fr": "Espèces sauvages et écosystèmes"
+  }
 }
