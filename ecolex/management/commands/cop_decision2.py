@@ -130,7 +130,7 @@ class Decision(object):
         fields = ('title_field', 'body', 'field_files')
         fvalues = filter(bool, map(self.dec.get, fields))
         langs = set(itertools.chain(*map(methodcaller('keys'), fvalues)))
-        return [self.languages[code][lang] for code in langs]
+        return [self.languages[code][lang] for code in langs if code in self.languages]
 
     @Field
     def decLanguage_en(self): return self._decLanguage('en')
@@ -299,6 +299,7 @@ def request_json(url, *args, **kwargs):
         logger.exception('Error fetching url: %s.', url)
         raise
 
+
 def request_page(url, per_page, page_num=1):
     params = dict(
         items_per_page=per_page,
@@ -311,12 +312,6 @@ def request_page(url, per_page, page_num=1):
 def request_uuid(base_url, uuid):
     url = '{}/{}/json'.format(base_url, uuid)
     logger.info('Fetching uuid: %s from %s!', uuid, url)
-    return request_json(url)
-
-
-def request_decision(json_node):
-    url = json_node['data_url']
-    logger.info('Requesting decision: %s', url)
     return request_json(url)
 
 
@@ -404,17 +399,17 @@ def extract_text(solr, dec_id, urls):
             logger.info('Using existing text.')
             texts.append((url, document.text, document.doc_size, True))
         else:
-            # text doesn't exist in sql, extrat with solr
-            with get_file_from_url(url) as file_obj:
+            # text doesn't exist in sql, extract with solr
+            try:
+                file_obj = get_file_from_url(url)
                 if file_obj:
                     logger.debug('Got file: %s', url)
-                    try:
-                        text = solr.extract(file_obj)
-                        size = file_obj.getbuffer().nbytes
-                        texts.append((url, text, size, False))
-                        logger.info('Extracted file: %s', url)
-                    except Exception:
-                        logger.exception('Error extracting file: %s', url)
+                    text = solr.extract(file_obj)
+                    size = file_obj.getbuffer().nbytes
+                    texts.append((url, text, size, False))
+                    logger.info('Extracted file: %s', url)
+            except Exception:
+                logger.exception('Error extracting file: %s', url)
 
     for url, text, size, exists in texts:
         if not exists:
@@ -511,7 +506,7 @@ class CopDecisionImporter(BaseImporter):
         try:
             json_decision = request_uuid(self.node_url, uuid)
             json_meeting = self.fetch_meeting(json_decision)
-            json_treaty, treaty_id  = request_treaty(
+            json_treaty, treaty_id = request_treaty(
                 self.solr, self.treaties, json_decision)
 
             if treaty_id and not json_treaty:
@@ -519,8 +514,7 @@ class CopDecisionImporter(BaseImporter):
 
         except Exception:
             logger.error('Cannot request URLs for: %s. Skipping!', uuid)
-            self.report.failed += [uuid]
-            return
+            raise
 
         decision = Decision(json_decision, json_meeting, json_treaty, solr_id)
 
@@ -538,15 +532,14 @@ class CopDecisionImporter(BaseImporter):
 
         except Exception:
             self.report.failed += [uuid]
-            logger.exception('Failed text extraction for: %s. Skipping!', uuid)
-            return
+            logger.exception('Failed text extraction for: %s.', uuid)
 
         try:
             self.solr.add(fields)
             logger.info('Solr succesfully updated!')
         except Exception:
             logger.exception('Error updating solr!')
-
+            raise
 
     def harvest_list(self, items, force):
         total, existing, new = functools.reduce(count_nodes, items, [0, 0, 0])
@@ -590,7 +583,6 @@ class CopDecisionImporter(BaseImporter):
         logger.info('Failed: %s', failed)
         logger.info('Missing treaties: %s', missing_treaties)
 
-
     def harvest_treaty(self, name=None, uuid=None, force=False, start=1):
         if force:
             logger.warning('Forcing update of all treaty decisions!')
@@ -613,7 +605,6 @@ class CopDecisionImporter(BaseImporter):
         ]))
 
         self.harvest_list(updateable, force=force)
-
 
     def harvest(self, start=1, force=False):
         # will fetch nodes until the remote server returns no results
