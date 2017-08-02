@@ -1,681 +1,681 @@
 {
-  "<http://www.informea.org/terms/access-and-benefit-sharing>": [
+  "RAMSAR site": [
+    "wetlands"
+  ],
+  "access and benefit sharing": [
     "access and benefit-sharing"
   ],
-  "<http://www.informea.org/terms/access-right>": [
+  "access right": [
     "access right"
   ],
-  "<http://www.informea.org/terms/access-to-genetic-resources>": [
+  "access to genetic resources": [
     "access and benefit-sharing"
   ],
-  "<http://www.informea.org/terms/access-to-information>": [
+  "access to information": [
     "access-to-information"
   ],
-  "<http://www.informea.org/terms/access-to-justice>": [
+  "access to justice": [
     "access-to-justice"
   ],
-  "<http://www.informea.org/terms/acid-precipitation>": [
+  "acid precipitation": [
     "acid precipitation"
   ],
-  "<http://www.informea.org/terms/afforestation>": [
+  "afforestation": [
     "afforestation/reforestation"
   ],
-  "<http://www.informea.org/terms/agriculture>": [
+  "agricultural practice": [
+    "farming",
+    "family farming",
+    "contract farming",
+    "ecological production/organic production",
+    "smallholders/peasants"
+  ],
+  "agriculture": [
+    "agricultural development",
     "agricultural commodities",
     "agriculture and environment",
-    "agricultural development",
     "agricultural land"
   ],
-  "<http://www.informea.org/terms/agro-ecosystem>": [
+  "agro-ecosystem": [
     "agroecology"
   ],
-  "<http://www.informea.org/terms/agroforestry>": [
+  "agroforestry": [
     "agro-forestry/silvo-pastoralism"
   ],
-  "<http://www.informea.org/terms/air-pollution-non-stationary-sources>": [
+  "air pollution (non-stationary sources)": [
     "air pollution (non-stationary sources)"
   ],
-  "<http://www.informea.org/terms/air-pollution-stationary-sources>": [
+  "air pollution (stationary sources)": [
     "air pollution (stationary sources)"
   ],
-  "<http://www.informea.org/terms/air-quality-standard>": [
-    "air quality standards"
-  ],
-  "<http://www.informea.org/terms/air-quality>": [
+  "air quality": [
     "air quality/air pollution"
   ],
-  "<http://www.informea.org/terms/alien-species>": [
+  "air quality standard": [
+    "air quality standards"
+  ],
+  "alien species": [
     "alien species"
   ],
-  "<http://www.informea.org/terms/aquaculture>": [
+  "aquaculture": [
     "aquaculture"
   ],
-  "<http://www.informea.org/terms/arid-ecosystem>": [
+  "arid ecosystem": [
     "desert/oasis"
   ],
-  "<http://www.informea.org/terms/ballast-water>": [
+  "ballast water": [
     "navigation"
   ],
-  "<http://www.informea.org/terms/bio-diversity>": [
+  "biodiversity": [
     "biological diversity"
   ],
-  "<http://www.informea.org/terms/bio-sphere-reserve>": [
-    "biosphere reserves"
-  ],
-  "<http://www.informea.org/terms/biological-contamination>": [
+  "biological contamination": [
     "pests/diseases"
   ],
-  "<http://www.informea.org/terms/biosafety>": [
+  "biosafety": [
     "biosafety"
   ],
-  "<http://www.informea.org/terms/biosecurity>": [
+  "biosecurity": [
     "biosecurity"
   ],
-  "<http://www.informea.org/terms/biotechnology>": [
+  "biosphere reserve": [
+    "biosphere reserves"
+  ],
+  "biotechnology": [
     "biotechnology"
   ],
-  "<http://www.informea.org/terms/breeder's-right>": [
+  "breeders' right": [
     "breeders' rights/farmers' rights"
   ],
-  "<http://www.informea.org/terms/capacity-building>": [
+  "capacity building": [
     "capacity building"
   ],
-  "<http://www.informea.org/terms/certification>": [
+  "certification": [
     "certification"
   ],
-  "<http://www.informea.org/terms/coastal-ecosystem>": [
+  "coastal ecosystem": [
     "coastal zone management"
   ],
-  "<http://www.informea.org/terms/codex-alimentarius>": [
+  "codex alimentarius": [
     "codex alimentarius"
   ],
-  "<http://www.informea.org/terms/compensation>": [
+  "compensation": [
     "liability/compensation"
   ],
-  "<http://www.informea.org/terms/compliance>": [
+  "compliance": [
     "enforcement/compliance"
   ],
-  "<http://www.informea.org/terms/conservation-of-habitat>": [
-    "protection of habitats"
-  ],
-  "<http://www.informea.org/terms/conservation>": [
+  "conservation": [
     "management/conservation"
   ],
-  "<http://www.informea.org/terms/constitutional-law>": [
+  "conservation of habitat": [
+    "protection of habitats"
+  ],
+  "constitutional law": [
     "constitutional law"
   ],
-  "<http://www.informea.org/terms/cooperative-farming>": [
+  "cooperative farming": [
     "cooperative/producer organization"
   ],
-  "<http://www.informea.org/terms/court>": [
-    "legal proceedings/administrative proceedings"
-  ],
-  "<http://www.informea.org/terms/cultural-heritage>": [
+  "cultural heritage": [
     "cultural heritage"
   ],
-  "<http://www.informea.org/terms/customary-law>": [
+  "customary law": [
     "traditional rights/customary rights"
   ],
-  "<http://www.informea.org/terms/deep-sea>": [
+  "deep sea bed": [
     "deep sea bed"
   ],
-  "<http://www.informea.org/terms/deforestation>": [
+  "deforestation": [
     "land clearing"
   ],
-  "<http://www.informea.org/terms/developing-country>": [
+  "developing country": [
     "developing countries"
   ],
-  "<http://www.informea.org/terms/disaster>": [
+  "disaster": [
     "disasters"
   ],
-  "<http://www.informea.org/terms/domestic-waste>": [
+  "domestic waste": [
     "waste domestic sources"
   ],
-  "<http://www.informea.org/terms/drainage>": [
+  "drainage": [
     "drainage/land reclamation"
   ],
-  "<http://www.informea.org/terms/drinking-water>": [
+  "drinking water": [
     "potable water"
   ],
-  "<http://www.informea.org/terms/ecolabel>": [
+  "ecolabel": [
     "ecolabelling"
   ],
-  "<http://www.informea.org/terms/ecosystem-approach>": [
+  "economic instrument": [
+    "tax/levy",
+    "fiscal and market measures"
+  ],
+  "ecosystem approach": [
     "ecosystem preservation"
   ],
-  "<http://www.informea.org/terms/ecosystem-management>": [
+  "ecosystem management": [
     "ecosystem preservation"
   ],
-  "<http://www.informea.org/terms/ecosystem-preservation>": [
+  "ecosystem preservation": [
     "ecosystem preservation"
   ],
-  "<http://www.informea.org/terms/ecosystem-restoration>": [
+  "ecosystem restoration": [
     "ecosystem preservation"
   ],
-  "<http://www.informea.org/terms/ecosystem-service>": [
+  "ecosystem service": [
     "ecosystem preservation"
   ],
-  "<http://www.informea.org/terms/effluent-waste>": [
+  "effluent waste": [
     "effluent waste water/discharge"
   ],
-  "<http://www.informea.org/terms/endangered-species>": [
+  "endangered species": [
     "endangered species"
   ],
-  "<http://www.informea.org/terms/environmental-degradation>": [
+  "environmental damage": [
     "resource/damage valuation"
   ],
-  "<http://www.informea.org/terms/environmental-impact-assessment>": [
+  "environmental impact assessment": [
     "EIA"
   ],
-  "<http://www.informea.org/terms/environmental-indicator>": [
+  "environmental indicator": [
     "environmental indicators"
   ],
-  "<http://www.informea.org/terms/environmental-security>": [
+  "environmental security": [
     "environmental security"
   ],
-  "<http://www.informea.org/terms/environmental-standard>": [
-    "MRL-maximum residue limit",
-    "environmental standards",
+  "environmental standard": [
     "effluent waste standards",
-    "noise standards",
     "standards",
     "water quality standards",
-    "emission standards"
+    "emission standards",
+    "environmental standards",
+    "MRL-maximum residue limit",
+    "noise standards"
   ],
-  "<http://www.informea.org/terms/estuary>": [
+  "estuary": [
     "estuaries"
   ],
-  "<http://www.informea.org/terms/export>": [
+  "export": [
     "international trade"
   ],
-  "<http://www.informea.org/terms/farming-practices>": [
-    "smallholders/peasants",
-    "farming",
-    "contract farming",
-    "family farming",
-    "ecological production/organic production"
-  ],
-  "<http://www.informea.org/terms/fee>": [
-    "water charges",
-    "environmental fees/charges",
+  "fee": [
+    "royalties/fees",
     "logging fee/charge",
-    "royalties/fees"
+    "water charges",
+    "environmental fees/charges"
   ],
-  "<http://www.informea.org/terms/fertilizer>": [
+  "fertilizer": [
     "fertilizers/nutrients"
   ],
-  "<http://www.informea.org/terms/financial-mechanism>": [
+  "financial mechanism": [
     "financing"
   ],
-  "<http://www.informea.org/terms/fishing-method>": [
-    "fishing gear/fishing method",
+  "fishing method": [
     "fishing vessel marking",
+    "fishing gear/fishing method",
     "fishing vessel"
   ],
-  "<http://www.informea.org/terms/flag-vessel>": [
+  "flag vessel": [
     "vessel ownership"
   ],
-  "<http://www.informea.org/terms/flood-control>": [
+  "flood control": [
     "flood"
   ],
-  "<http://www.informea.org/terms/food-aid>": [
-    "food security/food shortage/food aid"
-  ],
-  "<http://www.informea.org/terms/food-quality-control>": [
-    "food quality control/food safety"
-  ],
-  "<http://www.informea.org/terms/food-safety>": [
-    "food quality control/food safety",
-    "traceability/product tracing"
-  ],
-  "<http://www.informea.org/terms/food-security>": [
-    "food security/food shortage/food aid"
-  ],
-  "<http://www.informea.org/terms/food-shortage>": [
-    "food security/food shortage/food aid"
-  ],
-  "<http://www.informea.org/terms/food>": [
-    "nutrition",
-    "food additives",
+  "food": [
     "food sovereignty",
+    "food additives",
+    "nutrition",
     "food waste"
   ],
-  "<http://www.informea.org/terms/forest-conservation>": [
+  "food aid": [
+    "food security/food shortage/food aid"
+  ],
+  "food quality control": [
+    "food quality control/food safety"
+  ],
+  "food safety": [
+    "traceability/product tracing",
+    "food quality control/food safety"
+  ],
+  "food security": [
+    "food security/food shortage/food aid"
+  ],
+  "food shortage": [
+    "food security/food shortage/food aid"
+  ],
+  "forest conservation": [
+    "forestry protection measures",
     "forest service/forest officers",
+    "forest management/forest conservation"
+  ],
+  "forest management": [
+    "social forestry/community forestry",
     "forestry protection measures",
     "forest management/forest conservation"
   ],
-  "<http://www.informea.org/terms/forestry>": [
-    "forest management/forest conservation",
-    "social forestry/community forestry",
-    "forestry protection measures"
-  ],
-  "<http://www.informea.org/terms/freshwater-fishery>": [
+  "freshwater fishery": [
     "inland fisheries"
   ],
-  "<http://www.informea.org/terms/fund>": [
+  "fund": [
     "special fund"
   ],
-  "<http://www.informea.org/terms/gender>": [
+  "gender": [
     "gender and natural resources"
   ],
-  "<http://www.informea.org/terms/genetic-resource-for-food-and-agriculture>": [
+  "genetic resource": [
     "genetic resources"
   ],
-  "<http://www.informea.org/terms/genetic-resource>": [
+  "genetic resource for food and agriculture": [
     "genetic resources"
   ],
-  "<http://www.informea.org/terms/genetically-modified-organism>": [
+  "genetically modified organism": [
     "gmo"
   ],
-  "<http://www.informea.org/terms/governance>": [
+  "governance": [
     "governance"
   ],
-  "<http://www.informea.org/terms/groundwater>": [
-    "groundwater recharge",
-    "groundwater"
+  "groundwater": [
+    "groundwater",
+    "groundwater recharge"
   ],
-  "<http://www.informea.org/terms/hazardous-substance>": [
+  "hazardous substance": [
     "hazardous substances"
   ],
-  "<http://www.informea.org/terms/hazardous-waste>": [
+  "hazardous waste": [
     "hazardous waste"
   ],
-  "<http://www.informea.org/terms/health>": [
+  "health": [
     "health"
   ],
-  "<http://www.informea.org/terms/human-rights>": [
+  "human rights": [
     "human rights"
   ],
-  "<http://www.informea.org/terms/illegal-trade>": [
+  "illegal trade": [
     "transboundary movement of waste",
     "trade in species"
   ],
-  "<http://www.informea.org/terms/implementation>": [
-    "national implementation/transposal",
-    "international agreement-implementation"
+  "implementation": [
+    "international agreement-implementation",
+    "national implementation/transposal"
   ],
-  "<http://www.informea.org/terms/import>": [
+  "import": [
     "international trade"
   ],
-  "<http://www.informea.org/terms/incentive-measures>": [
-    "fiscal and market measures",
-    "tax/levy"
-  ],
-  "<http://www.informea.org/terms/indigenous-knowledge>": [
+  "indigenous knowledge": [
     "traditional knowledge/indigenous knowledge"
   ],
-  "<http://www.informea.org/terms/indigenous-people>": [
+  "indigenous peoples": [
     "indigenous peoples"
   ],
-  "<http://www.informea.org/terms/industrail-waste>": [
+  "industrial waste": [
     "effluent waste (industrial sources)"
   ],
-  "<http://www.informea.org/terms/institution-building>": [
+  "institution building": [
     "institutional profiles",
     "institution building",
     "institution"
   ],
-  "<http://www.informea.org/terms/intellectual-property-rights>": [
+  "intellectual property right": [
     "intellectual property rights/patents",
     "intellectual property rights"
   ],
-  "<http://www.informea.org/terms/international-organization>": [
+  "international organization": [
     "international organization"
   ],
-  "<http://www.informea.org/terms/international-watercourse>": [
+  "international watercourse": [
     "river basin institution",
     "international basin institution"
   ],
-  "<http://www.informea.org/terms/invasive-species>": [
+  "invasive species": [
     "alien species"
   ],
-  "<http://www.informea.org/terms/joint-implementation>": [
+  "joint implementation": [
     "joint implementation"
   ],
-  "<http://www.informea.org/terms/labelling>": [
-    "marking/identification",
-    "packaging/labelling"
+  "jurisprudence": [
+    "legal proceedings/administrative proceedings"
   ],
-  "<http://www.informea.org/terms/land-reclamation>": [
+  "labelling": [
+    "packaging/labelling",
+    "marking/identification"
+  ],
+  "land reclamation": [
     "land clearing"
   ],
-  "<http://www.informea.org/terms/land-rehabilitation>": [
+  "land rehabilitation": [
     "soil rehabilitation"
   ],
-  "<http://www.informea.org/terms/land-restoration>": [
+  "land restoration": [
     "polluted soil cleanups"
   ],
-  "<http://www.informea.org/terms/land-tenure>": [
-    "land tenure",
-    "foreign land tenure"
+  "land tenure": [
+    "foreign land tenure",
+    "land tenure"
   ],
-  "<http://www.informea.org/terms/law-reform>": [
+  "law reform": [
     "law reform/harmonization/deregulation"
   ],
-  "<http://www.informea.org/terms/light-pollution>": [
+  "light pollution": [
     "light pollution"
   ],
-  "<http://www.informea.org/terms/livestock-farming>": [
+  "livestock farming": [
+    "grazing/transhumance",
     "cattle",
-    "herd book",
-    "grazing/transhumance"
+    "herd book"
   ],
-  "<http://www.informea.org/terms/logging>": [
+  "logging": [
     "logging fee/charge",
     "timber",
     "timber extraction/logging"
   ],
-  "<http://www.informea.org/terms/long-range-air-pollution>": [
+  "long-range air pollution": [
     "long-range air pollution"
   ],
-  "<http://www.informea.org/terms/marine-debris>": [
+  "marine debris": [
     "marine pollution (land-based sources)"
   ],
-  "<http://www.informea.org/terms/marine-fishery>": [
+  "marine fishery": [
     "marine fisheries"
   ],
-  "<http://www.informea.org/terms/marine-protected-areas>": [
+  "marine protected area": [
     "marine protected areas"
   ],
-  "<http://www.informea.org/terms/migratory-species>": [
+  "migratory species": [
     "migratory species"
   ],
-  "<http://www.informea.org/terms/monitoring>": [
+  "monitoring": [
     "monitoring"
   ],
-  "<http://www.informea.org/terms/national-jurisdiction>": [
+  "national jurisdiction": [
     "jurisdictional competence"
   ],
-  "<http://www.informea.org/terms/national-legislation>": [
-    "framework law",
+  "national law": [
+    "basic legislation",
     "sub-national agreement",
-    "basic legislation"
+    "framework law"
   ],
-  "<http://www.informea.org/terms/national-park>": [
+  "national park": [
     "national parks"
   ],
-  "<http://www.informea.org/terms/noise-pollution>": [
+  "noise pollution": [
     "noise pollution",
-    "noise standards",
-    "vehicle noise",
+    "aircraft noise",
     "noise emission",
-    "aircraft noise"
+    "vehicle noise",
+    "noise standards"
   ],
-  "<http://www.informea.org/terms/non-governmental-organization>": [
+  "non-governmental organization": [
     "NGO"
   ],
-  "<http://www.informea.org/terms/non-timber-product>": [
+  "non-timber product": [
     "non-timber products"
   ],
-  "<http://www.informea.org/terms/ocean-acidification>": [
+  "ocean acidification": [
     "air quality/air pollution"
   ],
-  "<http://www.informea.org/terms/oil-pollution>": [
+  "oil pollution": [
     "oil pollution"
   ],
-  "<http://www.informea.org/terms/organic-farming>": [
+  "organic farming": [
     "ecological production/organic production"
   ],
-  "<http://www.informea.org/terms/outer-space>": [
+  "outer space": [
     "outer space"
   ],
-  "<http://www.informea.org/terms/ozone-layer-depletion>": [
+  "ozone layer depletion": [
     "ozone layer"
   ],
-  "<http://www.informea.org/terms/permit>": [
-    "fishing permit",
+  "permit": [
     "hunting authorization/permit",
+    "authorization/permit",
     "hunting authorization/permit fee",
     "fishing permit fee",
-    "authorization/permit"
+    "fishing permit"
   ],
-  "<http://www.informea.org/terms/pesticide>": [
+  "pesticide": [
     "pesticides"
   ],
-  "<http://www.informea.org/terms/plant-production>": [
+  "plant production": [
     "plant production"
   ],
-  "<http://www.informea.org/terms/plant-variety>": [
+  "plant variety": [
     "plant variety"
   ],
-  "<http://www.informea.org/terms/polluter-pays-principle>": [
+  "polluter pays principle": [
     "polluter pays principle"
   ],
-  "<http://www.informea.org/terms/poverty>": [
+  "poverty": [
     "poverty"
   ],
-  "<http://www.informea.org/terms/precautionary-principle>": [
+  "precautionary principle": [
     "precautionary principle"
   ],
-  "<http://www.informea.org/terms/prior-informed-consent>": [
+  "prior informed consent": [
     "PIC-prior informed consent"
   ],
-  "<http://www.informea.org/terms/private-sector>": [
+  "private sector": [
     "business/industry/corporations"
   ],
-  "<http://www.informea.org/terms/property-right>": [
-    "property rights",
+  "property right": [
     "ownership",
     "private forest",
+    "property rights",
     "private land"
   ],
-  "<http://www.informea.org/terms/protected-area>": [
+  "protected area": [
     "protected area"
   ],
-  "<http://www.informea.org/terms/protection-of-habitat>": [
+  "protection of habitat": [
     "protection of habitats"
   ],
-  "<http://www.informea.org/terms/protection-of-species>": [
-    "protected fish species",
+  "protection of species": [
     "protected plant species",
     "protection of species",
-    "protected animal species"
+    "protected animal species",
+    "protected fish species"
   ],
-  "<http://www.informea.org/terms/public-participation>": [
+  "public participation": [
     "public participation"
   ],
-  "<http://www.informea.org/terms/radioactive-contamination>": [
-    "radioactive pollution",
-    "radiation"
+  "radioactive contamination": [
+    "radiation",
+    "radioactive pollution"
   ],
-  "<http://www.informea.org/terms/radioactive-waste>": [
+  "radioactive waste": [
     "radioactive waste"
   ],
-  "<http://www.informea.org/terms/ramsar-site>": [
-    "wetlands"
-  ],
-  "<http://www.informea.org/terms/range-state>": [
+  "range": [
     "range"
   ],
-  "<http://www.informea.org/terms/range>": [
+  "range state": [
     "range"
   ],
-  "<http://www.informea.org/terms/recovery>": [
-    "waste management"
-  ],
-  "<http://www.informea.org/terms/recycling>": [
+  "recycling": [
     "recycling/reuse"
   ],
-  "<http://www.informea.org/terms/reforestation>": [
+  "reforestation": [
     "afforestation/reforestation"
   ],
-  "<http://www.informea.org/terms/reintroduction>": [
+  "reintroduction": [
     "stock enhancement/repopulation"
   ],
-  "<http://www.informea.org/terms/research>": [
+  "research": [
     "research"
   ],
-  "<http://www.informea.org/terms/resource-accounting>": [
+  "resource accounting": [
     "resource accounting"
   ],
-  "<http://www.informea.org/terms/risk-assessment>": [
+  "risk assessment": [
     "risk assessment/management"
   ],
-  "<http://www.informea.org/terms/sanitation>": [
+  "sanitation": [
     "hygiene/sanitary procedures"
   ],
-  "<http://www.informea.org/terms/ship-based-marine-pollution>": [
+  "ship-based marine pollution": [
     "marine pollution (dumping at sea)"
   ],
-  "<http://www.informea.org/terms/soft-law>": [
+  "soft law": [
     "soft law"
   ],
-  "<http://www.informea.org/terms/soil-conservation>": [
+  "soil conservation": [
     "soil conservation/soil improvement"
   ],
-  "<http://www.informea.org/terms/soil-erosion>": [
+  "soil erosion": [
     "erosion"
   ],
-  "<http://www.informea.org/terms/soil-improvement>": [
+  "soil improvement": [
     "soil conservation/soil improvement"
   ],
-  "<http://www.informea.org/terms/soil-pollution>": [
+  "soil pollution": [
     "soil pollution/quality"
   ],
-  "<http://www.informea.org/terms/soil-quality>": [
+  "soil quality": [
     "soil pollution/quality"
   ],
-  "<http://www.informea.org/terms/sound-environmental-management>": [
+  "sound environmental management": [
     "ecofriendly products/ecofriendly processes"
   ],
-  "<http://www.informea.org/terms/sovereignty>": [
+  "sovereignty": [
     "sovereignty"
   ],
-  "<http://www.informea.org/terms/spatial-planning>": [
+  "spatial planning": [
     "land-use planning"
   ],
-  "<http://www.informea.org/terms/staging-to-sue>": [
+  "standing to sue": [
     "standing to sue"
   ],
-  "<http://www.informea.org/terms/storage>": [
+  "storage": [
     "transport/storage"
   ],
-  "<http://www.informea.org/terms/subsidy>": [
+  "subsidy": [
     "subsidy/incentive"
   ],
-  "<http://www.informea.org/terms/surface-water>": [
+  "surface water": [
     "surface water"
   ],
-  "<http://www.informea.org/terms/sustainable-development>": [
+  "sustainable development": [
     "sustainable development"
   ],
-  "<http://www.informea.org/terms/sustainable-tourism>": [
+  "sustainable tourism": [
     "tourism"
   ],
-  "<http://www.informea.org/terms/sustainable-use>": [
+  "sustainable use": [
     "sustainable use"
   ],
-  "<http://www.informea.org/terms/synergy>": [
+  "synergy": [
     "international agreement-text"
   ],
-  "<http://www.informea.org/terms/taking>": [
+  "taking": [
     "hunting/capture"
   ],
-  "<http://www.informea.org/terms/tax>": [
+  "tax": [
     "tax/levy"
   ],
-  "<http://www.informea.org/terms/technology>": [
+  "technology": [
     "environmental technology"
   ],
-  "<http://www.informea.org/terms/tourism>": [
+  "tourism": [
     "tourism"
   ],
-  "<http://www.informea.org/terms/toxicity>": [
+  "toxicity": [
     "toxicity/poisoning"
   ],
-  "<http://www.informea.org/terms/trade-in-species>": [
-    "trade in species"
-  ],
-  "<http://www.informea.org/terms/trade>": [
+  "trade": [
     "international trade"
   ],
-  "<http://www.informea.org/terms/traditional-medicine>": [
+  "trade in species": [
+    "trade in species"
+  ],
+  "traditional medicine": [
     "traditional knowledge/indigenous knowledge"
   ],
-  "<http://www.informea.org/terms/transport>": [
+  "transport": [
     "transport/storage"
   ],
-  "<http://www.informea.org/terms/transshipment>": [
+  "transshipment": [
     "transshipment"
   ],
-  "<http://www.informea.org/terms/urban-agriculture>": [
+  "urban agriculture": [
     "urban and peri-urban agriculture"
   ],
-  "<http://www.informea.org/terms/voluntary-environmental-agreement>": [
+  "voluntary environmental agreement": [
     "self-regulation"
   ],
-  "<http://www.informea.org/terms/waste-collection>": [
-    "waste management"
-  ],
-  "<http://www.informea.org/terms/waste-disposal>": [
-    "waste disposal"
-  ],
-  "<http://www.informea.org/terms/waste-management>": [
-    "waste management"
-  ],
-  "<http://www.informea.org/terms/waste-pollution>": [
-    "freshwater quality/freshwater pollution"
-  ],
-  "<http://www.informea.org/terms/waste-storage>": [
-    "waste management",
-    "transport/storage"
-  ],
-  "<http://www.informea.org/terms/waste-treatment>": [
-    "waste management"
-  ],
-  "<http://www.informea.org/terms/waste>": [
+  "waste": [
+    "waste disposal",
     "solid waste",
-    "waste non-domestic sources",
-    "food waste",
     "organic waste",
+    "food waste",
     "waste domestic sources",
+    "waste non-domestic sources"
+  ],
+  "waste collection": [
+    "waste management"
+  ],
+  "waste disposal": [
     "waste disposal"
   ],
-  "<http://www.informea.org/terms/water-conservation-zone>": [
+  "waste management": [
+    "waste management"
+  ],
+  "waste recovery": [
+    "waste management"
+  ],
+  "waste storage": [
+    "transport/storage",
+    "waste management"
+  ],
+  "waste treatment": [
+    "waste management"
+  ],
+  "water abstraction": [
+    "water abstraction"
+  ],
+  "water conservation zone": [
     "water conservation zone"
   ],
-  "<http://www.informea.org/terms/water-quality-standard>": [
-    "water quality standards"
+  "water pollution": [
+    "freshwater quality/freshwater pollution"
   ],
-  "<http://www.informea.org/terms/water-quality>": [
+  "water quality": [
     "freshwater quality/freshwater pollution",
     "water quality standards"
   ],
-  "<http://www.informea.org/terms/water-resources-management>": [
+  "water quality standard": [
+    "water quality standards"
+  ],
+  "water resource": [
+    "freshwater resources management"
+  ],
+  "water resources management": [
     "water desalination",
     "freshwater resources management"
   ],
-  "<http://www.informea.org/terms/water-right>": [
+  "water right": [
     "water rights"
   ],
-  "<http://www.informea.org/terms/water-shortage>": [
+  "water shortage": [
     "water shortage/drought"
   ],
-  "<http://www.informea.org/terms/water-supply>": [
+  "water supply": [
     "water supply"
   ],
-  "<http://www.informea.org/terms/water-use>": [
+  "water use": [
     "water users' associations",
     "free water use",
     "industrial water use"
   ],
-  "<http://www.informea.org/terms/water>": [
-    "freshwater resources management"
-  ],
-  "<http://www.informea.org/terms/waterabstraction>": [
-    "water abstraction"
-  ],
-  "<http://www.informea.org/terms/wetland>": [
+  "wetland": [
     "wetlands"
   ],
-  "<http://www.informea.org/terms/wild-fauna>": [
+  "wild fauna": [
     "wild fauna"
   ],
-  "<http://www.informea.org/terms/wild-flora>": [
+  "wild flora": [
     "wild flora"
   ],
-  "<http://www.informea.org/terms/wildlife-product>": [
+  "wildlife product": [
     "wildlife products"
   ]
 }
