@@ -12,10 +12,10 @@ git+https://github.com/eaudeweb/scorched.git@stats-support
 solid_i18n>=1.2.0,<1.3
 unidecode>=0.4.19,<0.5
 xmltodict==0.10.1
-mysqlclient==1.3.9
+mysqlclient>=1.3.9
 
 beautifulsoup4>=4.5.3
 # not updating these for now, import will need testing
 #requests>=2.9.1,<2.10
 requests==2.5.1
-
+rdflib==4.2.2
