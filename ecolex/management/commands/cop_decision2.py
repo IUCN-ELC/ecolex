@@ -94,7 +94,7 @@ class Decision(object):
 
     def _decBody(self, lang):
         body = self.dec.get('body')
-        return body.get(lang, None) if body else None
+        return body.get(lang, [dict(value=None)])[0]['value'] if body else None
 
     @Field
     def decBody_en(self): return self._decBody('en')
