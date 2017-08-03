@@ -27,10 +27,26 @@ class Command(BaseCommand):
         mappings = defaultdict(list)
         for s, p, o in informea.triples((None, rdflib.namespace.SKOS.relatedMatch, None)):
             if o.startswith('http://www.ecolex.org/keywords'):
-                prefLabel_informea = informea.value(subject=s, predicate=preflabel_prop)
-                informea_keyword = informea.value(subject=prefLabel_informea, predicate=literal_prop)
-                prefLabel_ecolex = ecolex.value(subject=o, predicate=preflabel_prop)
-                ecolex_keyword = ecolex.value(subject=prefLabel_ecolex, predicate=literal_prop)
+                prefLabel_informea = informea.value(
+                    subject=s,
+                    predicate=preflabel_prop,
+                    any=False
+                )
+                informea_keyword = informea.value(
+                    subject=prefLabel_informea,
+                    predicate=literal_prop,
+                    any=False
+                )
+                prefLabel_ecolex = ecolex.value(
+                    subject=o,
+                    predicate=preflabel_prop,
+                    any=False
+                )
+                ecolex_keyword = ecolex.value(
+                    subject=prefLabel_ecolex,
+                    predicate=literal_prop,
+                    any=False
+                )
                 # xml:lang is ignored
                 mappings[informea_keyword.value].append(ecolex_keyword.value)
 
