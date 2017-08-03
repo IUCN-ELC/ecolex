@@ -9,7 +9,7 @@
 {% block breadcrumbs %}
   {% breadcrumb "Search results" 'results' query %}
   {% breadcrumb "Treaty" 'treaty_details' query slug=document.slug %}
-  {% breadcrumb "Literature" %}
+  {% breadcrumb "Related literature" %}
 {% endblock %}
 
 {% block content %}
@@ -18,7 +18,6 @@
   <header>
     <div class="record-title">
       <h1>{{ document.title|safe }}</h1>
-      <h2>{% trans 'Related literature' %}</h2>
     </div>
   </header>
 

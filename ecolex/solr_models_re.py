@@ -318,6 +318,11 @@ class Treaty(DocumentModel):
         'literature': ('treaty_reference', 'document_id'),
         'court_decision': ('treaty_reference', 'document_id'),
     }
+    LEGISLATION_REFERENCES = {
+        'treaty_implements': 'document_id',
+        'treaty_cites': 'document_id',
+    }
+
     CROSSREFERENCES = {
         'legislations_implemented_by': (
             'legislation.treaty_implements', 'document_id'),
