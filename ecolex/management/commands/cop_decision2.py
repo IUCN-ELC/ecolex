@@ -36,11 +36,6 @@ DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('cop_decision_import')
 
-with open(settings.SOLR_IMPORT['common']['keywords_json'], encoding='utf-8') as f:
-    json_ecolex_keywords = json.load(f)
-with open(settings.SOLR_IMPORT['common']['informea_ecolex_json'], encoding='utf-8') as f:
-    json_informea_keywords = json.load(f)
-
 
 def uniq_on_key(key, acc, item):
     """ Unique items from a list of dicts, based on `key` value. """
@@ -138,13 +133,15 @@ class Decision(object):
         return node_update.strftime(DATE_FORMAT)
 
     def _decEcolexKeywords(self):
-        tags = [tag['label'] for tag in self.dec.get('field_informea_tags')]
-        for tag in tags:
-            for informea_tag in json_informea_keywords.get(tag, []):
-                yield json_ecolex_keywords.get(informea_tag)
+        tags = map(itemgetter('label'), self.dec.get('field_informea_tags', []))
+
+        get_informea_tag = lambda tag: self.informea_keywords.get(tag, [])
+        informea_tags = set(itertools.chain(*map(get_informea_tag, tags)))
+
+        return filter(bool, map(self.keywords.get, informea_tags))
 
     def _decKeyword(self, lang):
-        return [tag[lang] for tag in self._decEcolexKeywords() if tag is not None]
+        return tuple(map(itemgetter(lang), self._decEcolexKeywords()))
 
     @Field
     def decKeyword_en(self):
@@ -544,6 +541,8 @@ class CopDecisionImporter(BaseImporter):
         # Set these at class level as they don't change
         Decision.languages = self.languages
         Decision.treaties = self.treaties
+        Decision.keywords = self.keywords
+        Decision.informea_keywords = self.informea_keywords
 
         logger.info('Started COP Decision importer')
 
