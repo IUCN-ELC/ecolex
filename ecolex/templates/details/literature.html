@@ -242,19 +242,6 @@
       </dl>
     {% endfor %}
 
-    {% for legislation in document.legislations %}
-      <dl>
-        <dt>{% trans 'Legislation' %}</dt>
-        <dd>
-          <h3 class="search-result-title">
-            <a href="{{ legislation.details_url }}?{{ query }}"
-               title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
-          </h3>
-          {% include 'short_display/legislation.html' with result=legislation %}
-        </dd>
-      </dl>
-    {% endfor %}
-
     {% for decision in document.cop_decisions %}
       <dl>
         <dt>{% trans 'Treaty decisions' %}</dt>
@@ -264,6 +251,19 @@
                title="{{ decision.title|safe|striptags }}">{{ decision.title|safe }}</a>
           </h3>
           {% include 'short_display/decision.html' with result=decision %}
+        </dd>
+      </dl>
+    {% endfor %}
+
+    {% for legislation in document.legislations %}
+      <dl>
+        <dt>{% trans 'Legislation' %}</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ legislation.details_url }}?{{ query }}"
+               title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
+          </h3>
+          {% include 'short_display/legislation.html' with result=legislation %}
         </dd>
       </dl>
     {% endfor %}
