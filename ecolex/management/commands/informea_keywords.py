@@ -23,10 +23,17 @@ class Command(BaseCommand):
         ecolex.load('https://informea.org/sites/default/files/export/ecolex.rdf')
         preflabel_prop = rdflib.term.URIRef('http://www.w3.org/2008/05/skos-xl#prefLabel')
         literal_prop = rdflib.term.URIRef('http://www.w3.org/2008/05/skos-xl#literalForm')
+        match_props = [
+            rdflib.namespace.SKOS.relatedMatch,
+            rdflib.namespace.SKOS.broadMatch,
+            rdflib.namespace.SKOS.exactMatch,
+            rdflib.namespace.SKOS.narrowMatch,
+            rdflib.namespace.SKOS.closeMatch,
+        ]
 
         mappings = defaultdict(list)
-        for s, p, o in informea.triples((None, rdflib.namespace.SKOS.relatedMatch, None)):
-            if o.startswith('http://www.ecolex.org/keywords'):
+        for s, p, o in informea:
+            if p in match_props and o.startswith('http://www.ecolex.org/keywords'):
                 prefLabel_informea = informea.value(
                     subject=s,
                     predicate=preflabel_prop,
