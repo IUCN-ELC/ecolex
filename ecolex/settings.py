@@ -291,6 +291,8 @@ SOLR_IMPORT = {
         'regions_json': os.path.join(CONFIG_DIR, 'regions.json'),
         'subdivisions_json': os.path.join(CONFIG_DIR, 'subdivisions.json'),
         'keywords_json': os.path.join(CONFIG_DIR, 'keywords.json'),
+        'informea_keywords_json': os.path.join(
+            CONFIG_DIR, 'informea_ecolex_json.json'),
         'subjects_json': os.path.join(CONFIG_DIR, 'subjects.json'),
         'treaties_json': TREATIES,
         'informea_ecolex_json': os.path.join(CONFIG_DIR, 'informea_ecolex.json'),
