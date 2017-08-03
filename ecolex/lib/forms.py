@@ -36,8 +36,8 @@ class UrlencodingMixin(object):
 
                 # we skip any empty stuff (TODO: is this always ok?),
                 # as well as default data
-                if (v in forms.Field.empty_values
-                    or v == self.fields[k].initial):
+                if (v in forms.Field.empty_values or
+                        (k in self.fields and v == self.fields[k].initial)):
                     continue
 
                 # note that MultiValueDict transforms items to lists internally

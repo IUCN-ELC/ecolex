@@ -107,7 +107,7 @@
       {% if document.link_to_full_text %}
         <dt>{% trans 'Full text' %}</dt>
         {% for link in document.link_to_full_text %}
-          <dd><a target="_blank" href="{{ link }}" class="file-link" rel="nofollow">{{ link|extract_filename|safe }}</a></dd>
+          <dd><a target="_blank" href="{{ link|url_normalize }}" class="file-link" rel="nofollow">{{ link|extract_filename|safe }}</a></dd>
         {% endfor %}
       {% endif %}
 
