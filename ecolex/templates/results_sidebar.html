@@ -138,10 +138,8 @@ var _FACETS_PAGE_SIZE = {{ settings.FACETS_PAGE_SIZE }};
 {% trans "Add treaty filter" as tooltip %}
 {% include "bits/selection_facet.html" with title=title placeholder=placeholder viewname="api:dec-treaty-name-list" field=form.dec_treaty_name %}
 
-{% if facets.dec_type_of_document.results %}
 {% trans "Type of document" as title %}
-{% include 'bits/checkbox_facet.html' with title=title field=form.dec_type_of_document %}
-{% endif %}
+{% include 'bits/checkbox_facet.html' with title=title field=form.dec_type_of_document show_empty=True %}
 
 {% trans "Decision status" as title %}
 {% include 'bits/checkbox_facet.html' with title=title field=form.dec_status show_empty=True %}
