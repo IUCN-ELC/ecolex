@@ -291,8 +291,11 @@ SOLR_IMPORT = {
         'regions_json': os.path.join(CONFIG_DIR, 'regions.json'),
         'subdivisions_json': os.path.join(CONFIG_DIR, 'subdivisions.json'),
         'keywords_json': os.path.join(CONFIG_DIR, 'keywords.json'),
+        'informea_keywords_json': os.path.join(
+            CONFIG_DIR, 'informea_ecolex_json.json'),
         'subjects_json': os.path.join(CONFIG_DIR, 'subjects.json'),
         'treaties_json': TREATIES,
+        'informea_ecolex_json': os.path.join(CONFIG_DIR, 'informea_ecolex.json'),
     },
     'court_decision': {
         'test_input_file': os.path.join(TESTING_DIR, 'court_decision_in.json'),
@@ -320,7 +323,7 @@ SOLR_IMPORT = {
         'query_type': '&format_name=@xmlexp&lang=xmlf&page_header=@xmlh&sort_name=@SMOD',
         'per_page': 20,
     },
-    'decision': {
+    'decision_odata': {
         'cop_decision_url': 'http://odata.informea.org/informea.svc/Decisions',
         'query_skip': '$top=%d&$skip=%d',
         'query_filter': "$filter=updated gt datetime'%s'",
@@ -329,6 +332,11 @@ SOLR_IMPORT = {
         'query_order': '$orderby=updated asc',
         'per_page': 20,
         'days_ago': 30,
+    },
+    'decision': {
+        'decision_url': 'https://www.informea.org/ws/decisions',
+        'items_per_page': 50,
+        'node_url': 'https://www.informea.org/node',
     },
     'legislation': {},
 }

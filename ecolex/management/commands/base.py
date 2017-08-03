@@ -18,11 +18,13 @@ class BaseImporter(object):
         self.regions_json = config.get('regions_json')
         self.languages_json = config.get('languages_json')
         self.keywords_json = config.get('keywords_json')
+        self.informea_keywords_json = config.get('informea_ecolex_json')
         self.subjects_json = config.get('subjects_json')
 
         self.regions = self._get_regions()
         self.languages = self._get_languages()
         self.keywords = self._get_keywords()
+        self.informea_keywords = self._get_informea_keywords()
         self.subjects = self._get_subjects()
         self.treaties = get_dict_from_json(config.get('treaties_json'))
         self.solr = EcolexSolr(self.solr_timeout)
@@ -41,6 +43,11 @@ class BaseImporter(object):
 
     def _get_keywords(self):
         with open(self.keywords_json, encoding='utf-8') as f:
+            keywords = json.load(f)
+        return keywords
+
+    def _get_informea_keywords(self):
+        with open(self.informea_keywords_json, encoding='utf-8') as f:
             keywords = json.load(f)
         return keywords
 

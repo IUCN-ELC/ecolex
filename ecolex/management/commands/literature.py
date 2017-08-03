@@ -566,7 +566,7 @@ class LiteratureImporter(BaseImporter):
         return url
 
     def _get_languages(self):
-        with open(self.languages_json) as f:
+        with open(self.languages_json, encoding='utf-8') as f:
             languages_codes = json.load(f)
         langs = {}
         for k, v in languages_codes.items():

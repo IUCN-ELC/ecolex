@@ -10,6 +10,9 @@ import requests
 import hashlib
 import random
 
+from operator import itemgetter
+from itertools import chain
+
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.definitions import (
     COP_DECISION, COURT_DECISION, LEGISLATION, LITERATURE, TREATY, COPY_FIELDS,
@@ -182,3 +185,20 @@ class EcolexSolr(object):
                 logging.getLogger('solr').exception(e)
             return ''
         return response['contents']
+
+
+def keywords_informea_to_ecolex(informea_json, ecolex_json, values):
+    """ Convert informea keyword values to ecolex,
+        using provided json data.
+    """
+    tags = map(itemgetter('label'), values)
+    informea_tags = set(chain(*[informea_json.get(tag, []) for tag in tags]))
+    return filter(bool, map(ecolex_json.get, informea_tags))
+
+
+def keywords_ecolex(keywords, lang):
+    """ Extract keywords in specified language.
+        `keywords` would usually be the result of
+        keywords_informea_to_ecolex.
+    """
+    return tuple(map(itemgetter(lang), keywords))

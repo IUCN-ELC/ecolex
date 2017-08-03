@@ -12,6 +12,8 @@ from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.definitions import COURT_DECISION
 from ecolex.management.utils import EcolexSolr, get_json_from_url
 from ecolex.management.utils import get_file_from_url
+from ecolex.management.utils import keywords_informea_to_ecolex
+from ecolex.management.utils import keywords_ecolex
 
 
 logging.config.dictConfig(LOG_DICT)
@@ -197,18 +199,28 @@ def get_json_values(import_field, import_value, json_dict, subject, doc_id):
 
 class CourtDecision(object):
     def __init__(self, data, countries, languages, regions, subdivisions,
-                 keywords, subjects, solr, changed):
+                 keywords, informea_keywords, subjects, solr, changed):
         self.data = data
         self.countries = countries
         self.languages = languages
         self.regions = regions
         self.subdivisions = subdivisions
         self.keywords = keywords
+        self.informea_keywords = informea_keywords
         self.subjects = subjects
         self.solr = solr
         if changed and self.data['changed'] != changed:
             logger.error('Changed timestamp incosistency on {}'.format(
                 self.data['uuid']))
+
+    def informea_tags(self, lang):
+        to_ecolex = keywords_informea_to_ecolex(
+            self.informea_keywords,
+            self.keywords,
+            self.data.get('field_informea_tags', [])
+        )
+
+        return keywords_ecolex(to_ecolex, lang)
 
     def get_solr_format(self, leo_id, solr_id):
         solr_decision = {
@@ -346,6 +358,12 @@ class CourtDecision(object):
         solr_decision['updatedDate'] = (datetime.now()
                                         .strftime('%Y-%m-%dT%H:%M:%SZ'))
 
+        if 'cdKeyword_en' not in solr_decision:
+            solr_decision.update({
+                'cdKeyword_{}'.format(lang): self.informea_tags(lang)
+                for lang in LANGUAGES
+            })
+
         return solr_decision
 
 
@@ -430,8 +448,8 @@ class CourtDecisionImporter(BaseImporter):
         last_update = decision.get('last_update')
         new_decision = CourtDecision(data, self.countries, self.languages,
                                      self.regions, self.subdivisions,
-                                     self.keywords, self.subjects, self.solr,
-                                     last_update)
+                                     self.keywords, self.informea_keywords,
+                                     self.subjects, self.solr, last_update)
         solr_id = existing_decision['id'] if existing_decision else None
         return new_decision.get_solr_format(decision['uuid'], solr_id)
 
