@@ -532,10 +532,10 @@ class Literature(DocumentModel):
         'chapter',
         'chapter_of',
         'reference',
-        'referenced_by',
+        'cited_by',
     ]
     BACKREFERENCES = {
-        'referenced_by': 'reference',
+        'cited_by': 'reference',
         'chapter_of': 'chapter',
     }
     CROSSREFERENCES = {
