@@ -190,28 +190,13 @@
     </dl>
   </section>
 
-  {% if document.literatures or document.chapters_references %}
+  {% if document.references %}
   <section id="literature-references">
-    <h2 class="section-title">{% trans 'References' %}</h2>
-    {% if document.chapters_references %}
-      {% for chapter in document.chapters_references %}
-        <dl>
-          <dt>{% trans 'Chapter' %}</dt>
-          <dd>
-            <h3 class="search-result-title">
-              <a href="{{ chapter.details_url }}?{{ query }}"
-                 title="{{ chapter.title|safe|striptags }}">{{ chapter.title|safe }}</a>
-            </h3>
-            {% include 'short_display/literature.html' with result=chapter %}
-          </dd>
-        </dl>
-      {% endfor %}
-    {% endif %}
-
-    {% if document.literatures %}
-      {% for literature in document.literatures %}
-        <dl>
-          <dt>{% trans 'Literature' %}</dt>
+    <h2 class="section-title">{% trans 'References' %} - {% trans 'Literature' %}</h2>
+    {% for field, literatures in document.references.items %}
+      <dl class="dl-horizontal">
+        <dt>{% with relation=field|labelify %}{% trans relation %}{% endwith %}</dt>
+        {% for literature in literatures %}
           <dd>
             <h3 class="search-result-title">
               <a href="{{ literature.details_url }}?{{ query }}"
@@ -219,12 +204,11 @@
             </h3>
             {% include 'short_display/literature.html' with result=literature %}
           </dd>
-        </dl>
-      {% endfor %}
-    {% endif %}
+        {% endfor %}
+      </dl>
+    {% endfor %}
   </section>
   {% endif %}
-
 
   <section id="other-references">
   {% if document.treaties or document.legislations or document.court_decisions or document.cop_decisions %}

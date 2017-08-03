@@ -529,11 +529,14 @@ class Literature(DocumentModel):
     URL_NAME = 'literature_details'
 
     REFERENCES = [
-        'literature_reference',
+        'chapter',
+        'chapter_of',
+        'reference',
         'referenced_by',
     ]
     BACKREFERENCES = {
-        'referenced_by': 'literature_reference',
+        'referenced_by': 'reference',
+        'chapter_of': 'chapter',
     }
     CROSSREFERENCES = {
         'treaties': (
@@ -546,12 +549,6 @@ class Literature(DocumentModel):
             'decision.decision_id', 'cop_decision_reference'),
         'court_decisions': (
             'court_decision.original_id', 'court_decision_reference'),
-        #'literatures': (
-        #    'literature.document_id', 'literature_reference'),
-        #'references': (
-        #    'literature.literature_reference', 'document_id'),
-        'chapters_references': (
-            'literature.document_id', 'chapters'),
     }
 
     @property
@@ -636,15 +633,3 @@ class Literature(DocumentModel):
     @property
     def cop_decisions(self):
         return self._all_references['cop_decisions']
-
-    @property
-    def chapters_references(self):
-        return self._all_references['chapters_references']
-
-    @property
-    def literatures(self):
-        return self.references['literature_reference']
-
-    @property
-    def referenced_by(self):
-        return self.references['referenced_by']
