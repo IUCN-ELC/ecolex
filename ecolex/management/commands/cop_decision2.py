@@ -651,8 +651,8 @@ class CopDecisionImporter(BaseImporter):
 
         matched = [
             node for node in json_nodes if
-            (name and node['treaty'] == name) or
-            (uuid and node['treaty_uuid'] == uuid)
+            (name and node.get('treaty') == name) or
+            (uuid and node.get('treaty_uuid') == uuid)
         ]
 
         updateable = list(filter(bool, [
