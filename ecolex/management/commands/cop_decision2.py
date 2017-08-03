@@ -28,6 +28,8 @@ from django.template.defaultfilters import slugify
 from ecolex.management.commands.base import BaseImporter
 from ecolex.management.definitions import COP_DECISION
 from ecolex.management.utils import get_file_from_url
+from ecolex.management.utils import keywords_informea_to_ecolex
+from ecolex.management.utils import keywords_ecolex
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.models import DocumentText
 
@@ -132,16 +134,13 @@ class Decision(object):
         node_update = datetime.fromtimestamp(int(self.dec['changed']))
         return node_update.strftime(DATE_FORMAT)
 
-    def _decEcolexKeywords(self):
-        tags = map(itemgetter('label'), self.dec.get('field_informea_tags', []))
-
-        get_informea_tag = lambda tag: self.informea_keywords.get(tag, [])
-        informea_tags = set(itertools.chain(*map(get_informea_tag, tags)))
-
-        return filter(bool, map(self.keywords.get, informea_tags))
-
     def _decKeyword(self, lang):
-        return tuple(map(itemgetter(lang), self._decEcolexKeywords()))
+        to_ecolex = keywords_informea_to_ecolex(
+            self.informea_keywords,
+            self.keywords,
+            self.dec.get('field_informea_tags', [])
+        )
+        return keywords_ecolex(to_ecolex, lang)
 
     @Field
     def decKeyword_en(self):
