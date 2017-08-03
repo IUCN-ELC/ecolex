@@ -332,7 +332,7 @@ def request_json(url, *args, **kwargs):
         raise
 
 
-def request_page(url, per_page, page_num=1):
+def request_page(url, per_page, page_num=0):
     params = dict(
         items_per_page=per_page,
         page=page_num,
@@ -470,7 +470,7 @@ def extract_text(solr, dec_id, urls):
     return ''.join((text for _, text, _, _ in texts))
 
 
-def get_node(base_url, per_page, start=1):
+def get_node(base_url, per_page, start=0):
     for page_num in itertools.count(start=start, step=1):
         nodes = request_page(base_url, per_page, page_num)
         yield from nodes if nodes else [None]
@@ -602,7 +602,7 @@ class CopDecisionImporter(BaseImporter):
             'Found %s decisions needing update. %s new, %s existing!',
             total, new, existing)
 
-        for idx, json_node in enumerate(items, start=1):
+        for idx, json_node in enumerate(items, start=0):
             uuid = json_node['uuid']
             solr_id = json_node.get('solr_id')
 
@@ -637,7 +637,7 @@ class CopDecisionImporter(BaseImporter):
         logger.info('Failed: %s', failed)
         logger.info('Missing treaties: %s', missing_treaties)
 
-    def harvest_treaty(self, name=None, uuid=None, force=False, start=1):
+    def harvest_treaty(self, name=None, uuid=None, force=False, start=0):
         if force:
             logger.warning('Forcing update of all treaty decisions!')
 
@@ -660,7 +660,7 @@ class CopDecisionImporter(BaseImporter):
 
         self.harvest_list(updateable, force=force)
 
-    def harvest(self, start=1, force=False):
+    def harvest(self, start=0, force=False):
         # will fetch nodes until the remote server returns no results
         json_nodes = itertools.takewhile(
             bool, get_node(self.decision_url, self.per_page, start=start))

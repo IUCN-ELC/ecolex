@@ -67,7 +67,7 @@ class Command(BaseCommand):
         parser.add_argument('--decId', type=str)
         parser.add_argument('--treaty', type=str)
         parser.add_argument('--treaty_uuid', type=str)
-        parser.add_argument('--start_page', type=int, default=1)
+        parser.add_argument('--start_page', type=int, default=0)
         parser.set_defaults(test=False, batch_size=1, default=1)
         args = parser.parse_args()
 
