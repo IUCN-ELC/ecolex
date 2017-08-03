@@ -439,9 +439,9 @@ class LiteratureSchema(CommonSchema):
     link_to_abstract = fields.String(load_from='litLinkToAbstract')
     link_to_full_text = fields.List(fields.String(),
                                     load_from='litLinkToFullText')
-    literature_reference = fields.List(fields.String(),
-                                       load_from='litLiteratureReference',
-                                       missing=[])
+    reference = fields.List(fields.String(),
+                            load_from='litLiteratureReference',
+                            missing=[])
     location = fields.String(load_from='litLocation')
     long_title = fields.String(load_from='litLongTitle', multilingual=True,
                                missing='')
@@ -478,6 +478,9 @@ class LiteratureSchema(CommonSchema):
     cop_decision_reference = fields.List(fields.String(),
                                          load_from='litCopDecisionReference',
                                          missing=[])
+    chapter = fields.List(fields.String(),
+                          load_from='litChapterReference',
+                          missing=[])
     volume_no = fields.String(load_from='litVolumeNo', missing='')
 
     # Authors

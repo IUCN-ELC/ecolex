@@ -156,6 +156,7 @@ FIELD_MAP = {
     'referencetoeulegislation': 'litEULegislationReference',
     'referencetonationallegislation': 'litNationalLegislationReference',
     'informeacop': 'litCopDecisionReference',
+    'chapter': 'litChapterReference',
     # Remember: all keys should be lowercase
 }
 
@@ -184,6 +185,7 @@ MULTIVALUED_FIELDS = [
     'litLiteratureReference', 'litFaolexReference',
     'litNationalLegislationReference', 'litEULegislationReference',
     'litCopDecisionReference',
+    'litChapterReference',
 ]
 
 DOCUMENT_TYPE_MAP = {

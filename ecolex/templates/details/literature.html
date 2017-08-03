@@ -190,18 +190,21 @@
     </dl>
   </section>
 
-  {% if document.literatures %}
+  {% if document.references %}
   <section id="literature-references">
-    {% for literature in document.literatures %}
-      <dl>
-        <dt>{% trans 'Literature' %}</dt>
-        <dd>
-          <h3 class="search-result-title">
-            <a href="{{ literature.details_url }}?{{ query }}"
-               title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
-          </h3>
-          {% include 'short_display/literature.html' with result=literature %}
-        </dd>
+    <h2 class="section-title">{% trans 'References' %} - {% trans 'Literature' %}</h2>
+    {% for field, literatures in document.references.items %}
+      <dl class="dl-horizontal">
+        <dt>{% with relation=field|labelify %}{% trans relation %}{% endwith %}</dt>
+        {% for literature in literatures %}
+          <dd>
+            <h3 class="search-result-title">
+              <a href="{{ literature.details_url }}?{{ query }}"
+                 title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
+            </h3>
+            {% include 'short_display/literature.html' with result=literature %}
+          </dd>
+        {% endfor %}
       </dl>
     {% endfor %}
   </section>
@@ -223,19 +226,6 @@
       </dl>
     {% endfor %}
 
-    {% for legislation in document.legislations %}
-      <dl>
-        <dt>{% trans 'Legislation' %}</dt>
-        <dd>
-          <h3 class="search-result-title">
-            <a href="{{ legislation.details_url }}?{{ query }}"
-               title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
-          </h3>
-          {% include 'short_display/legislation.html' with result=legislation %}
-        </dd>
-      </dl>
-    {% endfor %}
-
     {% for decision in document.cop_decisions %}
       <dl>
         <dt>{% trans 'Treaty decisions' %}</dt>
@@ -245,6 +235,19 @@
                title="{{ decision.title|safe|striptags }}">{{ decision.title|safe }}</a>
           </h3>
           {% include 'short_display/decision.html' with result=decision %}
+        </dd>
+      </dl>
+    {% endfor %}
+
+    {% for legislation in document.legislations %}
+      <dl>
+        <dt>{% trans 'Legislation' %}</dt>
+        <dd>
+          <h3 class="search-result-title">
+            <a href="{{ legislation.details_url }}?{{ query }}"
+               title="{{ legislation.title|safe|striptags }}">{{ legislation.title|safe }}</a>
+          </h3>
+          {% include 'short_display/legislation.html' with result=legislation %}
         </dd>
       </dl>
     {% endfor %}
@@ -262,23 +265,6 @@
       </dl>
     {% endfor %}
   {% endif %}
-
-  {% if document.references %}
-    <h2 class="section-title">{% trans 'References from' %}</h2>
-    {% for literature in document.references %}
-      <dl>
-        <dt>{% trans 'Literature' %}</dt>
-        <dd>
-          <h3 class="search-result-title">
-            <a href="{{ literature.details_url }}?{{ query }}"
-               title="{{ literature.title|safe|striptags }}">{{ literature.title|safe }}</a>
-          </h3>
-          {% include 'short_display/literature.html' with result=literature %}
-        </dd>
-      </dl>
-    {% endfor %}
-  {% endif %}
-  </section>
 
 </article>
 {% endblock content %}
