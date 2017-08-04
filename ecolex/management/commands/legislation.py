@@ -23,9 +23,9 @@ class LegislationImporter(object):
     def __init__(self, config):
         self.solr_timeout = config.get('solr_timeout')
         self.solr = EcolexSolr(self.solr_timeout)
-        logger.info('Started legislation manager')
 
     def update_full_text(self):
+        logger.info('[Legislation] Update full text started.')
         while True:
             count = (DocumentText.objects.filter(
                      status=DocumentText.INDEXED, doc_type=LEGISLATION)
@@ -93,8 +93,10 @@ class LegislationImporter(object):
                 else:
                     logger.error('Failed doc extract %s %s' % (obj.url,
                                                                legislation['id']))
+        logger.info('[Legislation] Update full text finished.')
 
     def reindex_failed(self):
+        logger.info('[legislation] Reindex started.')
         objs = DocumentText.objects.filter(
             status=DocumentText.INDEX_FAIL, doc_type=LEGISLATION)
         if objs.count() > 0:
@@ -122,3 +124,4 @@ class LegislationImporter(object):
                     logger.info('Success indexing: %s' % (obj.doc_id,))
                 else:
                     logger.error('Failed to index: %s' % (obj.doc_id,))
+        logger.info('[legislation] Reindex finished.')

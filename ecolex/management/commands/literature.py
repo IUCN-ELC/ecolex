@@ -264,9 +264,9 @@ class LiteratureImporter(BaseImporter):
         if self.start_month == self.end_month and now.day == 1:
             self.start_month -= 1
         self.force_import_all = config.get('force_import_all', False)
-        logger.info('Started literature importer')
 
     def harvest(self, batch_size):
+        logger.info('[literature] Harvesting started.')
         total = 0
         year = self.end_year
         while year >= self.start_year:
@@ -283,9 +283,10 @@ class LiteratureImporter(BaseImporter):
 
                 total_docs = int(bs.find('result').attrs[TOTAL_DOCS])
                 presented_docs = int(bs.find('result').attrs[PRESENTED_DOCS])
-                if ( presented_docs < total_docs):
-                    logger.error('Incomplete results for %d/%d (%d out of %d)'
-                        % (month, year, presented_docs, total_docs))
+                if (presented_docs < total_docs):
+                    logger.error('Incomplete results for %d/%d (%d out of %d)' % (
+                        month, year, presented_docs, total_docs)
+                    )
                     total_docs = presented_docs
                 total += total_docs
                 found_docs = len(bs.findAll(DOCUMENT))
@@ -316,7 +317,7 @@ class LiteratureImporter(BaseImporter):
             except:
                 logger.exception('Error updating records, retrying')
 
-        logger.info('Finished harvesting literatures')
+        logger.info('[Literature] Harvesting started.')
 
     def _parse(self, raw_literatures):
         literatures = []
@@ -449,6 +450,7 @@ class LiteratureImporter(BaseImporter):
             literature['litText'] = lit_text
 
     def update_full_text(self):
+        logger.info('[Literature] Update full text started.')
         old_objs = []
         while True:
             count = (DocumentText.objects.filter(
@@ -512,6 +514,7 @@ class LiteratureImporter(BaseImporter):
                     logger.error('Failed doc extract %s %s' % (obj.url,
                                                                literature['id']))
             old_objs = objs
+        logger.info('[Literature] Update full text finished.')
 
     def _clean_text_date(self, value):
         date_formats = ['%Y', '%Y-00-00', '%Y-%m', '%Y-%m-00', '%Y-%m-%d',

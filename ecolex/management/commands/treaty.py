@@ -244,11 +244,10 @@ class TreatyImporter(BaseImporter):
         self.end_month = config.get('end_month', now.month)
         if self.start_month == self.end_month and now.day == 1:
             self.start_month -= 1
-            #TODO: When year changes (self.start_month == now.day == 1)
-
-        logger.info('Started treaty importer')
+            # TODO: When year changes (self.start_month == now.day == 1)
 
     def harvest(self, batch_size):
+        logger.info('[Treaty] Harvesting started.')
         year = self.end_year
         while year >= self.start_year:
             raw_treaties = []
@@ -268,9 +267,9 @@ class TreatyImporter(BaseImporter):
                 else:
                     total_docs = int(result.attrs[TOTAL_DOCS])
                     presented_docs = int(result.attrs[PRESENTED_DOCS])
-                    if ( presented_docs < total_docs):
-                        logger.error('Incomplete results for %d/%d (%d out of %d)'
-                            % (month, year, presented_docs, total_docs))
+                    if (presented_docs < total_docs):
+                        logger.error('Incomplete results for %d/%d (%d out of %d)' % (
+                            month, year, presented_docs, total_docs))
                         total_docs = presented_docs
                 found_docs = len(bs.findAll(DOCUMENT))
                 raw_treaties.append(content)
@@ -303,7 +302,7 @@ class TreatyImporter(BaseImporter):
             except:
                 logger.exception('Error updating records, retrying')
 
-        logger.info('Finished harvesting treaties')
+        logger.info('[Treaty] Harvesting finished.')
 
     def _parse(self, raw_treaties):
         treaties = {}
@@ -525,11 +524,11 @@ class TreatyImporter(BaseImporter):
         return langs
 
     def update_status(self):
+        logger.info('[Treaty] Update status started.')
         rows = 50
         index = 0
         treaties = []
         while True:
-            print(index)
             docs = self.solr.solr.search('type:treaty', rows=rows, start=index)
             for treaty in docs:
                 treaty = cleanup_copyfields(treaty)
@@ -554,8 +553,10 @@ class TreatyImporter(BaseImporter):
                 break
             index += rows
         self.solr.add_bulk(treaties)
+        logger.info('[Treaty] Update status finished.')
 
     def update_full_text(self):
+        logger.info('[Treaty] Update full text started.')
         objs = DocumentText.objects.filter(status=DocumentText.INDEXED,
                                            doc_type=TREATY)
         for obj in objs:
@@ -601,6 +602,7 @@ class TreatyImporter(BaseImporter):
                     obj.status = DocumentText.FULL_INDEXED
                     obj.parsed_data = ''
                     obj.save()
+        logger.info('[Treaty] Update full text finished.')
 
     def test(self):
         pass

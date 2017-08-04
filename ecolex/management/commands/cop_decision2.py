@@ -543,7 +543,6 @@ class CopDecisionImporter(BaseImporter):
         Decision.keywords = self.keywords
         Decision.informea_keywords = self.informea_keywords
 
-        logger.info('Started COP Decision importer')
 
         # wrap request_meeting in order to provide a caching dict
         # also pass the base_url, since it's the same at all times
@@ -661,6 +660,7 @@ class CopDecisionImporter(BaseImporter):
         self.harvest_list(updateable, force=force)
 
     def harvest(self, start=0, force=False):
+        logger.info('[COP decision] Harvesting started.')
         # will fetch nodes until the remote server returns no results
         json_nodes = itertools.takewhile(
             bool, get_node(self.decision_url, self.per_page, start=start))
@@ -674,3 +674,4 @@ class CopDecisionImporter(BaseImporter):
         ]))
 
         self.harvest_list(updateable, force=force)
+        logger.info('[COP decision] Harvesting finished.')

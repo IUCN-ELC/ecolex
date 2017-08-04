@@ -388,7 +388,6 @@ class CourtDecisionImporter(BaseImporter):
         self.data_url = config.get('data_url')
         if (self.uuid):
             self.data_url = self.data_url % (self.uuid,)
-        logger.info('Started Court Decision importer')
 
     def test(self):
         with open(self.test_input_file) as fi, open(self.test_output_file) as fo:
@@ -402,6 +401,7 @@ class CourtDecisionImporter(BaseImporter):
         return solr_decision == expected_decision
 
     def harvest(self, batch_size):
+        logger.info('[court decision] Harvesting started.')
         if self.uuid:
             logger.info('Adding court decision {}'.format(self.uuid))
             decision = {'data_url': self.data_url, 'uuid': self.uuid}
@@ -411,7 +411,9 @@ class CourtDecisionImporter(BaseImporter):
         decisions = self._get_decisions()
         if self.days_ago:
             time_point = datetime.now() - timedelta(self.days_ago)
-            decisions = filter(lambda x: datetime.fromtimestamp(int(x['last_update'])) > time_point, decisions)
+            decisions = filter(
+                lambda x: datetime.fromtimestamp(int(x['last_update'])) > time_point, decisions
+            )
             decisions = [x for x in decisions]
         start = 0
         while start < len(decisions):
@@ -422,6 +424,7 @@ class CourtDecisionImporter(BaseImporter):
             logger.info('Adding {} court decisions'.format(len(new_decisions)))
             self.solr.add_bulk(new_decisions)
             start = end
+        logger.info('[court decision] Harvesting finished.')
 
     def needs_update(self, decision, existing_decision):
         current_timestamp = decision.get('last_update')

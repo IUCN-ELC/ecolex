@@ -120,8 +120,11 @@ class BaseImporter(object):
             data[field] = new_values[field[-2:]]
 
     def reindex_failed(self):
+        self.logger.info('[%s] Reindex started.' % (self.doc_type,))
         objs = DocumentText.objects.filter(
-            status=DocumentText.INDEX_FAIL, doc_type=self.doc_type)
+            status=DocumentText.INDEX_FAIL,
+            doc_type=self.doc_type
+        )
         if objs.count() > 0:
             for obj in objs:
                 if not obj.parsed_data:
@@ -149,3 +152,4 @@ class BaseImporter(object):
                     self.logger.info('Success indexing: %s' % (obj.doc_id,))
                 else:
                     self.logger.error('Failed to index: %s' % (obj.doc_id,))
+        self.logger.info('[%s] Reindex finished.' % (self.doc_type,))
