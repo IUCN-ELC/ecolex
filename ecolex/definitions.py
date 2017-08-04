@@ -159,4 +159,6 @@ TRANSLATIONS = [
     _('Search results'),
     _('Related legislation'),
     _('Related literature'),
+    _('Chapter'),
+    _('Chapter of'),
 ]

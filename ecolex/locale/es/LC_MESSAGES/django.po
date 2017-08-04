@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-07 19:39+0300\n"
+"POT-Creation-Date: 2017-08-04 18:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,6 +146,14 @@ msgstr "Legislación relacionada"
 msgid "Related literature"
 msgstr "Literatura relacionada"
 
+#: .\definitions.py:162
+msgid "Chapter"
+msgstr "Capítulo"
+
+#: .\definitions.py:163
+msgid "Chapter of"
+msgstr "Capítulo de"
+
 #: .\settings.py:162
 msgid "English"
 msgstr ""
@@ -247,7 +255,7 @@ msgid "Withdrawal"
 msgstr "Retiro"
 
 #: .\templates\bits\participants_map.html:273
-#: .\templates\details\treaty.html:181
+#: .\templates\details\treaty.html:189
 msgid "Show Map"
 msgstr "Mostrar el mapa"
 
@@ -279,7 +287,7 @@ msgstr "Mostrar solo"
 msgid "treaties"
 msgstr "tratados"
 
-#: .\templates\bits\type_facet.html:23 .\templates\details\treaty.html:232
+#: .\templates\bits\type_facet.html:23 .\templates\details\treaty.html:240
 #: .\templates\layout.html:111 .\templates\results_main.html:33
 msgid "Treaties"
 msgstr "Tratados"
@@ -288,8 +296,9 @@ msgstr "Tratados"
 msgid "treaty decisions"
 msgstr "decisiones de los tratados"
 
-#: .\templates\bits\type_facet.html:42 .\templates\details\treaty.html:273
-#: .\templates\layout.html:117 .\templates\results_main.html:34
+#: .\templates\bits\type_facet.html:42 .\templates\details\literature.html:231
+#: .\templates\details\treaty.html:281 .\templates\layout.html:117
+#: .\templates\results_main.html:34
 msgid "Treaty decisions"
 msgstr "Decisiones de los tratados"
 
@@ -299,19 +308,19 @@ msgstr "legislación"
 
 #: .\templates\bits\type_facet.html:61 .\templates\details\legislation.html:30
 #: .\templates\details\legislation.html:127
-#: .\templates\details\literature.html:228 .\templates\details\treaty.html:261
+#: .\templates\details\literature.html:244 .\templates\details\treaty.html:269
 #: .\templates\layout.html:123 .\templates\results_main.html:35
 #: .\templates\short_display\legislation.html:5
 msgid "Legislation"
 msgstr "Legislación"
 
-#: .\templates\bits\type_facet.html:77 .\templates\details\treaty.html:297
+#: .\templates\bits\type_facet.html:77 .\templates\details\treaty.html:305
 msgid "jurisprudence"
 msgstr "jurisprudencia"
 
 #: .\templates\bits\type_facet.html:80
 #: .\templates\details\court_decision.html:31
-#: .\templates\details\literature.html:241 .\templates\details\treaty.html:295
+#: .\templates\details\literature.html:257 .\templates\details\treaty.html:303
 #: .\templates\layout.html:129 .\templates\results_main.html:36
 #: .\templates\short_display\court_decision.html:5
 msgid "Jurisprudence"
@@ -322,8 +331,7 @@ msgid "literature"
 msgstr "doctrina"
 
 #: .\templates\bits\type_facet.html:99 .\templates\details\literature.html:25
-#: .\templates\details\literature.html:197
-#: .\templates\details\literature.html:257 .\templates\details\treaty.html:283
+#: .\templates\details\literature.html:195 .\templates\details\treaty.html:291
 #: .\templates\layout.html:135 .\templates\results_main.html:37
 #: .\templates\short_display\literature.html:29
 msgid "Literature"
@@ -352,7 +360,7 @@ msgid "Country/Territory"
 msgstr "País/Territorio"
 
 #: .\templates\details\court_decision.html:42
-#: .\templates\results_sidebar.html:178
+#: .\templates\results_sidebar.html:176
 #: .\templates\short_display\court_decision.html:6
 msgid "Type of court"
 msgstr "Tipo de la corte"
@@ -362,7 +370,7 @@ msgstr "Tipo de la corte"
 #: .\templates\details\legislation.html:44
 #: .\templates\details\literature.html:56 .\templates\details\treaty.html:40
 #: .\templates\short_display\court_decision.html:13
-#: .\templates\short_display\decision.html:13
+#: .\templates\short_display\decision.html:16
 #: .\templates\short_display\treaty.html:11
 msgid "Date"
 msgstr "Fecha"
@@ -372,7 +380,7 @@ msgstr "Fecha"
 #: .\templates\details\legislation.html:51
 #: .\templates\details\literature.html:59 .\templates\details\treaty.html:42
 #: .\templates\short_display\court_decision.html:27
-#: .\templates\short_display\decision.html:25
+#: .\templates\short_display\decision.html:28
 #: .\templates\short_display\legislation.html:30
 #: .\templates\short_display\literature.html:38
 #: .\templates\short_display\treaty.html:22
@@ -416,7 +424,7 @@ msgstr "Materia"
 #: .\templates\details\literature.html:141 .\templates\details\treaty.html:95
 #: .\templates\results_sidebar.html:26
 #: .\templates\short_display\court_decision.html:21
-#: .\templates\short_display\decision.html:20
+#: .\templates\short_display\decision.html:23
 #: .\templates\short_display\legislation.html:24
 #: .\templates\short_display\literature.html:35
 #: .\templates\short_display\treaty.html:18
@@ -453,13 +461,9 @@ msgstr "Disponible en"
 msgid "Website"
 msgstr "Página web"
 
-#: .\templates\details\treaty.html:169
-msgid "Online course"
-msgstr "Curso por Internet"
-
 #: .\templates\details\court_decision.html:133
 #: .\templates\details\legislation.html:127
-#: .\templates\details\treaty.html:232
+#: .\templates\details\literature.html:195 .\templates\details\treaty.html:240
 msgid "References"
 msgstr "Referencias"
 
@@ -475,8 +479,8 @@ msgstr "Decisión del tratado"
 #: .\templates\details\decision.html:40
 #: .\templates\details\legislation.html:43
 #: .\templates\details\literature.html:107 .\templates\details\treaty.html:38
-#: .\templates\results_sidebar.html:104 .\templates\results_sidebar.html:159
-#: .\templates\results_sidebar.html:211
+#: .\templates\results_sidebar.html:104 .\templates\results_sidebar.html:157
+#: .\templates\results_sidebar.html:209
 #: .\templates\short_display\treaty.html:6
 msgid "Document type"
 msgstr "Tipo de documento"
@@ -488,8 +492,9 @@ msgid "Status"
 msgstr "Estado"
 
 #: .\templates\details\decision.html:66
-#: .\templates\details\literature.html:215 .\templates\details\treaty.html:32
+#: .\templates\details\literature.html:218 .\templates\details\treaty.html:32
 #: .\templates\results_sidebar.html:136
+#: .\templates\short_display\decision.html:13
 #: .\templates\short_display\treaty.html:5
 msgid "Treaty"
 msgstr "Tratado"
@@ -531,7 +536,7 @@ msgid "Entry into force notes"
 msgstr ""
 
 #: .\templates\details\legislation.html:147
-#: .\templates\details\literature.html:212 .\templates\details\treaty.html:257
+#: .\templates\details\literature.html:215 .\templates\details\treaty.html:265
 msgid "Other references"
 msgstr "Otras referencias"
 
@@ -548,7 +553,7 @@ msgstr "Cita tratados"
 msgid "Cited by"
 msgstr "Citada por"
 
-#: .\templates\details\literature.html:31 .\templates\results_sidebar.html:196
+#: .\templates\details\literature.html:31 .\templates\results_sidebar.html:194
 #: .\templates\short_display\literature.html:6
 msgid "Author"
 msgstr "Autor"
@@ -557,7 +562,7 @@ msgstr "Autor"
 msgid "Corporate author"
 msgstr "Autor corporativo"
 
-#: .\templates\details\literature.html:39 .\templates\results_sidebar.html:201
+#: .\templates\details\literature.html:39 .\templates\results_sidebar.html:199
 msgid "Journal/Series"
 msgstr "Título de serie"
 
@@ -569,7 +574,7 @@ msgstr "Monografía"
 msgid "Title"
 msgstr "Título"
 
-#: .\templates\details\literature.html:84 .\templates\results_sidebar.html:206
+#: .\templates\details\literature.html:84 .\templates\results_sidebar.html:204
 #: .\templates\short_display\literature.html:23
 msgid "Publisher"
 msgstr "Editor"
@@ -604,10 +609,6 @@ msgstr "Campo de aplicación"
 msgid "DOI"
 msgstr "DOI"
 
-#: .\templates\details\literature.html:254
-msgid "References from"
-msgstr "Las referencias de"
-
 #: .\templates\details\treaty.html:56
 msgid "Title abbreviation"
 msgstr "Título abreviado"
@@ -625,51 +626,55 @@ msgstr "Depositario"
 msgid "Comment"
 msgstr "Comentario"
 
-#: .\templates\details\treaty.html:174
+#: .\templates\details\treaty.html:169
+msgid "Online course"
+msgstr "Curso por Internet"
+
+#: .\templates\details\treaty.html:182
 msgid "Country/Territory/Participant"
 msgstr "País/Territorio/Participante"
 
-#: .\templates\details\treaty.html:177
+#: .\templates\details\treaty.html:185
 msgid "See Expanded View"
 msgstr "Vista ampliada"
 
-#: .\templates\details\treaty.html:186
+#: .\templates\details\treaty.html:194
 msgid "Countries"
 msgstr "Países"
 
-#: .\templates\details\treaty.html:208
+#: .\templates\details\treaty.html:216
 #: .\templates\details_participants.html:54
 msgid "Not available"
 msgstr "No disponible"
 
-#: .\templates\details\treaty.html:264 .\templates\details\treaty.html:286
+#: .\templates\details\treaty.html:272 .\templates\details\treaty.html:294
 msgid "record"
 msgid_plural "records"
 msgstr[0] "documento"
 msgstr[1] "documentos"
 
-#: .\templates\details\treaty.html:264 .\templates\details\treaty.html:275
-#: .\templates\details\treaty.html:286 .\templates\details\treaty.html:297
+#: .\templates\details\treaty.html:272 .\templates\details\treaty.html:283
+#: .\templates\details\treaty.html:294 .\templates\details\treaty.html:305
 msgid "related to this treaty."
 msgstr "relacionada con este tratado"
 
-#: .\templates\details\treaty.html:266
+#: .\templates\details\treaty.html:274
 msgid "View legislation"
 msgstr "Ver la legislación"
 
-#: .\templates\details\treaty.html:275
+#: .\templates\details\treaty.html:283
 msgid "decisions"
 msgstr "decisiones"
 
-#: .\templates\details\treaty.html:276
+#: .\templates\details\treaty.html:284
 msgid "View decisions"
 msgstr "Ver las decisiones"
 
-#: .\templates\details\treaty.html:288
+#: .\templates\details\treaty.html:296
 msgid "View literature"
 msgstr "Ver la literatura"
 
-#: .\templates\details\treaty.html:298
+#: .\templates\details\treaty.html:306
 msgid "View jurisprudence"
 msgstr "Ver la jurisprudencia"
 
@@ -763,7 +768,7 @@ msgstr[1] ""
 msgid "No matches found."
 msgstr "No existen resultados."
 
-#: .\templates\results_sidebar.html:5 .\templates\results_sidebar.html:224
+#: .\templates\results_sidebar.html:5 .\templates\results_sidebar.html:222
 msgid "Reset all filters"
 msgstr "Reajustar todos los filtros"
 
@@ -859,67 +864,67 @@ msgstr "Añadir tratado…"
 msgid "Add treaty filter"
 msgstr "Añadir tratado filtro"
 
-#: .\templates\results_sidebar.html:142
+#: .\templates\results_sidebar.html:141
 msgid "Type of document"
 msgstr "Tipo de documento"
 
-#: .\templates\results_sidebar.html:146
+#: .\templates\results_sidebar.html:144
 msgid "Decision status"
 msgstr "Estado de decisión"
 
-#: .\templates\results_sidebar.html:156
+#: .\templates\results_sidebar.html:154
 msgid "Legislation filters"
 msgstr "Filtros de legislación"
 
-#: .\templates\results_sidebar.html:162 .\templates\results_sidebar.html:181
+#: .\templates\results_sidebar.html:160 .\templates\results_sidebar.html:179
 msgid "Sub-national/state level"
 msgstr "Nivel sub-nacional / estatal"
 
-#: .\templates\results_sidebar.html:163 .\templates\results_sidebar.html:182
+#: .\templates\results_sidebar.html:161 .\templates\results_sidebar.html:180
 msgid "Add sub-national/state level…"
 msgstr "Añadir nivel sub-nacional / estatal…"
 
-#: .\templates\results_sidebar.html:164 .\templates\results_sidebar.html:183
+#: .\templates\results_sidebar.html:162 .\templates\results_sidebar.html:181
 msgid "Add sub-national/state level filter"
 msgstr "Añadir Nivel sub-nacional / estatal filtro"
 
-#: .\templates\results_sidebar.html:175
+#: .\templates\results_sidebar.html:173
 msgid "Jurisprudence filters"
 msgstr "Filtros de jurisprudencia"
 
-#: .\templates\results_sidebar.html:193
+#: .\templates\results_sidebar.html:191
 msgid "Literature filters"
 msgstr "Filtros de doctrina"
 
-#: .\templates\results_sidebar.html:197
+#: .\templates\results_sidebar.html:195
 msgid "Add author…"
 msgstr "Añadir autor…"
 
-#: .\templates\results_sidebar.html:198
+#: .\templates\results_sidebar.html:196
 msgid "Add author filter"
 msgstr "Añadir autor filtro"
 
-#: .\templates\results_sidebar.html:202
+#: .\templates\results_sidebar.html:200
 msgid "Add journal/series…"
 msgstr "Añadir título de serie…"
 
-#: .\templates\results_sidebar.html:203
+#: .\templates\results_sidebar.html:201
 msgid "Add journal/series filter"
 msgstr "Añadir título de serie filtro"
 
-#: .\templates\results_sidebar.html:207
+#: .\templates\results_sidebar.html:205
 msgid "Add publisher…"
 msgstr "Añadir editor…"
 
-#: .\templates\results_sidebar.html:208
+#: .\templates\results_sidebar.html:206
 msgid "Add publisher filter"
 msgstr "Añadir editor filtro"
 
-#: .\templates\results_sidebar.html:212
+#: .\templates\results_sidebar.html:210
 msgid "Add document type…"
 msgstr "Añadir tipo de documento"
 
-#: .\templates\results_sidebar.html:213
+#: .\templates\results_sidebar.html:211
 msgid "Add document type filter"
 msgstr "Añadir tipo de documento filtro"
 
@@ -1129,6 +1134,9 @@ msgstr "menos reciente"
 #: .\xforms.py:91
 msgid "relevance"
 msgstr "pertinencia"
+
+#~ msgid "References from"
+#~ msgstr "Las referencias de"
 
 #~ msgid "Related decisions"
 #~ msgstr "Decisiones relacionados"
