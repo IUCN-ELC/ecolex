@@ -300,7 +300,7 @@ SOLR_IMPORT = {
     'court_decision': {
         'test_input_file': os.path.join(TESTING_DIR, 'court_decision_in.json'),
         'test_output_file': os.path.join(TESTING_DIR, 'court_decision_out.json'),
-        'court_decisions_url': 'http://informea.org/ws/court-decisions',
+        'court_decisions_url': 'http://informea.org/ws/court-decisions?items_per_page=100',
         'days_ago': 30,
         'data_url': 'http://informea.org/node/%s/json',
         'update': True,
