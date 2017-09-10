@@ -336,6 +336,7 @@ SOLR_IMPORT = {
     'decision': {
         'decision_url': 'https://www.informea.org/ws/decisions',
         'items_per_page': 50,
+        'max_pages': 10,
         'node_url': 'https://www.informea.org/node',
     },
     'legislation': {},

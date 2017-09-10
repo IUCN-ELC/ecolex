@@ -332,12 +332,15 @@ def request_json(url, *args, **kwargs):
         raise
 
 
-def request_page(url, per_page, page_num=0):
+def request_page(url, per_page, page_num=0, max_pages=False):
     params = dict(
         items_per_page=per_page,
         page=page_num,
     )
     logger.info('Fetching page %s.', page_num)
+    if max_pages and page_num == max_pages:
+        logger.info('Forced stop at max_page %s.', page_num)
+        return None
     return request_json(url, params=params)
 
 
@@ -470,9 +473,9 @@ def extract_text(solr, dec_id, urls):
     return ''.join((text for _, text, _, _ in texts))
 
 
-def get_node(base_url, per_page, start=0):
+def get_node(base_url, per_page, start=0, max_pages=False):
     for page_num in itertools.count(start=start, step=1):
-        nodes = request_page(base_url, per_page, page_num)
+        nodes = request_page(base_url, per_page, page_num, max_pages)
         yield from nodes if nodes else [None]
 
 
@@ -480,7 +483,7 @@ def needs_update(solr, node, force):
     uuid = node['uuid']
     solr_decision = solr.search(COP_DECISION, uuid)
     if solr_decision:
-        logger.info('%s found in solr!', uuid)
+        logger.debug('%s found in solr!', uuid)
         solr_date = solr_decision['decUpdateDate']
         node_date = int(node['last_update'])
 
@@ -496,7 +499,7 @@ def needs_update(solr, node, force):
             return {**node, **dict(solr_id=solr_decision['id'])}
 
         else:
-            logger.info('%s is up to date.', uuid)
+            logger.debug('%s is up to date.', uuid)
 
     else:
         logger.info('%s not in solr, queuing.', uuid)
@@ -533,6 +536,7 @@ class CopDecisionImporter(BaseImporter):
 
         self.decision_url = config.get('decision_url')
         self.per_page = config.get('items_per_page')
+        self.max_pages = config.get('max_pages', False)
         self.node_url = config.get('node_url')
 
         self.report = Report()
@@ -663,7 +667,7 @@ class CopDecisionImporter(BaseImporter):
         logger.info('[COP decision] Harvesting started.')
         # will fetch nodes until the remote server returns no results
         json_nodes = itertools.takewhile(
-            bool, get_node(self.decision_url, self.per_page, start=start))
+            bool, get_node(self.decision_url, self.per_page, start=start, max_pages=self.max_pages))
 
         if force:
             logger.warning('Forcing update of all decisions!')
