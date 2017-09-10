@@ -45,21 +45,21 @@
     "emissions"
   ],
   "agricultural practice": [
-    "farming",
+    "ecological production/organic production",
     "contract farming",
     "smallholders/peasants",
-    "family farming",
-    "ecological production/organic production"
+    "farming",
+    "family farming"
   ],
   "agriculture": [
-    "agricultural commodities",
     "agricultural development",
     "agricultural land",
+    "agricultural commodities",
     "agriculture and environment"
   ],
   "agro-ecosystem": [
-    "agriculture and environment",
-    "agroecology"
+    "agroecology",
+    "agriculture and environment"
   ],
   "agrobiodiversity": [
     "biological diversity"
@@ -113,8 +113,8 @@
     "navigation"
   ],
   "best practice": [
-    "technology transfer",
-    "capacity building"
+    "capacity building",
+    "technology transfer"
   ],
   "biodiversity": [
     "biological diversity"
@@ -337,8 +337,8 @@
     "ecosystem preservation"
   ],
   "ecosystem service": [
-    "ecosystem preservation",
     "recreational water use",
+    "ecosystem preservation",
     "recreational forest"
   ],
   "effluent waste": [
@@ -387,13 +387,13 @@
     "environmental security"
   ],
   "environmental standard": [
-    "effluent waste standards",
-    "standards",
-    "environmental standards",
-    "MRL-maximum residue limit",
     "noise standards",
+    "effluent waste standards",
+    "MRL-maximum residue limit",
     "emission standards",
-    "water quality standards"
+    "water quality standards",
+    "standards",
+    "environmental standards"
   ],
   "equity": [
     "equity"
@@ -417,10 +417,10 @@
     "international agreement-text"
   ],
   "fee": [
-    "environmental fees/charges",
-    "logging fee/charge",
     "royalties/fees",
-    "water charges"
+    "water charges",
+    "environmental fees/charges",
+    "logging fee/charge"
   ],
   "fertilizer": [
     "fertilizers/nutrients"
@@ -447,10 +447,10 @@
     "flood"
   ],
   "food": [
-    "food additives",
     "food sovereignty",
+    "food waste",
     "nutrition",
-    "food waste"
+    "food additives"
   ],
   "food aid": [
     "food security/food shortage/food aid"
@@ -469,8 +469,8 @@
     "food security/food shortage/food aid"
   ],
   "forest biodiversity": [
-    "biological diversity",
-    "forest species"
+    "forest species",
+    "biological diversity"
   ],
   "forest conservation": [
     "forest management/forest conservation",
@@ -481,9 +481,9 @@
     "forest management/forest conservation"
   ],
   "forest management": [
+    "forestry protection measures",
     "social forestry/community forestry",
-    "forest management/forest conservation",
-    "forestry protection measures"
+    "forest management/forest conservation"
   ],
   "fracturing": [
     "natural gas"
@@ -554,8 +554,8 @@
     "hydropower generation"
   ],
   "illegal trade": [
-    "transboundary movement of waste",
-    "trade in species"
+    "trade in species",
+    "transboundary movement of waste"
   ],
   "implementation": [
     "international agreement-implementation",
@@ -584,21 +584,21 @@
     "institution"
   ],
   "institution building": [
-    "institution building",
+    "institutional profiles",
     "institution",
-    "institutional profiles"
+    "institution building"
   ],
   "integrated management": [
     "integrated pest management-IPM/pest management strategies",
     "integrated managment"
   ],
   "intellectual property right": [
-    "intellectual property rights",
-    "intellectual property rights/patents"
+    "intellectual property rights/patents",
+    "intellectual property rights"
   ],
   "intergenerational equity": [
-    "intergenerational equity",
-    "future generations"
+    "future generations",
+    "intergenerational equity"
   ],
   "international agreement": [
     "international agreement-text"
@@ -610,8 +610,8 @@
     "international organization"
   ],
   "international watercourse": [
-    "river basin institution",
-    "international basin institution"
+    "international basin institution",
+    "river basin institution"
   ],
   "intragenerational equity": [
     "equity"
@@ -633,12 +633,12 @@
     "international agreement-text"
   ],
   "jurisprudence": [
-    "court/tribunal",
-    "legal proceedings/administrative proceedings"
+    "legal proceedings/administrative proceedings",
+    "court/tribunal"
   ],
   "labelling": [
-    "marking/identification",
-    "packaging/labelling"
+    "packaging/labelling",
+    "marking/identification"
   ],
   "land reclamation": [
     "land clearing"
@@ -674,9 +674,9 @@
     "dispute settlement"
   ],
   "livestock farming": [
-    "grazing/transhumance",
+    "herd book",
     "cattle",
-    "herd book"
+    "grazing/transhumance"
   ],
   "living modified organism": [
     "gmo"
@@ -685,9 +685,9 @@
     "local government"
   ],
   "logging": [
-    "logging fee/charge",
     "timber",
-    "timber extraction/logging"
+    "timber extraction/logging",
+    "logging fee/charge"
   ],
   "long-range air pollution": [
     "long-range air pollution"
@@ -756,9 +756,9 @@
     "jurisdictional competence"
   ],
   "national law": [
+    "framework law",
     "sub-national agreement",
-    "basic legislation",
-    "framework law"
+    "basic legislation"
   ],
   "national park": [
     "national parks"
@@ -772,9 +772,9 @@
   "noise pollution": [
     "aircraft noise",
     "noise standards",
+    "noise emission",
     "vehicle noise",
-    "noise pollution",
-    "noise emission"
+    "noise pollution"
   ],
   "non-governmental organization": [
     "NGO"
@@ -832,11 +832,11 @@
     "hazardous substances"
   ],
   "permit": [
-    "authorization/permit",
     "hunting authorization/permit fee",
+    "fishing permit",
     "fishing permit fee",
     "hunting authorization/permit",
-    "fishing permit"
+    "authorization/permit"
   ],
   "pesticide": [
     "pesticides"
@@ -871,8 +871,8 @@
   "property right": [
     "property rights",
     "ownership",
-    "private forest",
-    "private land"
+    "private land",
+    "private forest"
   ],
   "protected area": [
     "protected area"
@@ -881,10 +881,10 @@
     "protection of habitats"
   ],
   "protection of species": [
-    "protection of species",
+    "protected plant species",
     "protected fish species",
     "protected animal species",
-    "protected plant species"
+    "protection of species"
   ],
   "protocol": [
     "international agreement-text"
@@ -1084,12 +1084,12 @@
     "ecosystem preservation"
   ],
   "waste": [
-    "waste non-domestic sources",
-    "organic waste",
     "solid waste",
     "waste domestic sources",
-    "waste disposal",
-    "food waste"
+    "food waste",
+    "waste non-domestic sources",
+    "organic waste",
+    "waste disposal"
   ],
   "waste collection": [
     "waste management"
@@ -1104,8 +1104,8 @@
     "waste management"
   ],
   "waste storage": [
-    "transport/storage",
-    "waste management"
+    "waste management",
+    "transport/storage"
   ],
   "waste treatment": [
     "waste management"
@@ -1120,8 +1120,8 @@
     "freshwater quality/freshwater pollution"
   ],
   "water quality": [
-    "water quality standards",
-    "freshwater quality/freshwater pollution"
+    "freshwater quality/freshwater pollution",
+    "water quality standards"
   ],
   "water quality standard": [
     "water quality standards"
@@ -1143,9 +1143,9 @@
     "water supply"
   ],
   "water use": [
-    "free water use",
+    "water users' associations",
     "industrial water use",
-    "water users' associations"
+    "free water use"
   ],
   "wetland": [
     "wetlands"

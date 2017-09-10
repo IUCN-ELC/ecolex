@@ -599,6 +599,11 @@
     "es": "presa",
     "fr": "barrage"
   },
+  "resource valuation/damage valuation": {
+    "en": "damage valuation/resource valuation",
+    "es": "valoración del recurso/valoración del daño",
+    "fr": "évaluation des dommages/évaluation des ressources"
+  },
   "damage valuation/resource valuation": {
     "en": "damage valuation/resource valuation",
     "es": "valoración del recurso/valoración del daño",
@@ -1029,6 +1034,11 @@
     "es": "zona de pesca",
     "fr": "zone de pêche"
   },
+  "fishery area": {
+    "en": "fishing area",
+    "es": "zona de pesca",
+    "fr": "zone de pêche"
+  },
   "fishing authorization": {
     "en": "fishing authorization",
     "es": "autorización de pesca",
@@ -1174,7 +1184,22 @@
     "es": "licencia/permiso forestal",
     "fr": "licence/permis forestier"
   },
+  "forestry licence": {
+    "en": "forestry licence/permit",
+    "es": "licencia/permiso forestal",
+    "fr": "licence/permis forestier"
+  },
+  "forestry license": {
+    "en": "forestry licence/permit",
+    "es": "licencia/permiso forestal",
+    "fr": "licence/permis forestier"
+  },
   "forestry protection measures": {
+    "en": "forestry protection measures",
+    "es": "medidas de protección forestal",
+    "fr": "mesures de protection des forêts"
+  },
+  "forest protection measures": {
     "en": "forestry protection measures",
     "es": "medidas de protección forestal",
     "fr": "mesures de protection des forêts"
@@ -1235,6 +1260,11 @@
     "fr": "droits de l’homme fondamentaux"
   },
   "future generations": {
+    "en": "future generations",
+    "es": "generaciones futuras",
+    "fr": "générations futures"
+  },
+  "future generation": {
     "en": "future generations",
     "es": "generaciones futuras",
     "fr": "générations futures"
@@ -1594,6 +1624,11 @@
     "es": "roza",
     "fr": "défrichement"
   },
+  "land cleaning": {
+    "en": "land clearing",
+    "es": "roza",
+    "fr": "défrichement"
+  },
   "land commission": {
     "en": "land commission",
     "es": "comisión de tierras",
@@ -1860,6 +1895,11 @@
     "fr": "mise en application au niveau national/transposition"
   },
   "national parks": {
+    "en": "national parks",
+    "es": "parques nacionales",
+    "fr": "parcs nationaux"
+  },
+  "national park": {
     "en": "national parks",
     "es": "parques nacionales",
     "fr": "parcs nationaux"

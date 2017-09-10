@@ -280,7 +280,6 @@ CONFIG_DIR = os.path.join(MANAGEMENT_DIR, 'config')
 PARTY_COUNTRIES = os.path.join(CONFIG_DIR, 'party_countries.json')
 INFORMEA_COURSES = os.path.join(CONFIG_DIR, 'informea_courses.json')
 TREATIES = os.path.join(CONFIG_DIR, 'treaties.json')
-TESTING_DIR = os.path.join(MANAGEMENT_DIR, 'testing')
 
 SOLR_IMPORT = {
     'common': {
@@ -298,12 +297,11 @@ SOLR_IMPORT = {
         'informea_ecolex_json': os.path.join(CONFIG_DIR, 'informea_ecolex.json'),
     },
     'court_decision': {
-        'test_input_file': os.path.join(TESTING_DIR, 'court_decision_in.json'),
-        'test_output_file': os.path.join(TESTING_DIR, 'court_decision_out.json'),
-        'court_decisions_url': 'http://informea.org/ws/court-decisions?items_per_page=100',
-        'days_ago': 30,
-        'data_url': 'http://informea.org/node/%s/json',
-        'update': True,
+        'base_url': 'https://informea.org/ws/court-decisions',
+        'items_per_page': 50,
+        'max_pages': 10,
+        'force_update': False,
+        # 'uuid': '3045a54a-38ed-4ba4-aa79-738e7d7824e1',
     },
     'treaty': {
         'treaties_url': 'http://www2.ecolex.org/elis_isis3w.php',

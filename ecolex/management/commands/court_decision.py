@@ -4,14 +4,16 @@ import json
 import logging
 import logging.config
 
+import requests
+from requests.adapters import HTTPAdapter
+
 from django.conf import settings
 from django.template.defaultfilters import slugify
 
 from ecolex.management.commands.base import BaseImporter
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.definitions import COURT_DECISION
-from ecolex.management.utils import EcolexSolr, get_json_from_url
-from ecolex.management.utils import get_file_from_url
+from ecolex.management.utils import get_file_from_url, get_dict_from_json
 from ecolex.management.utils import keywords_informea_to_ecolex
 from ecolex.management.utils import keywords_ecolex
 
@@ -197,9 +199,30 @@ def get_json_values(import_field, import_value, json_dict, subject, doc_id):
     return result
 
 
+def request_json(url, *args, **kwargs):
+    # needed to for retry
+    s = requests.Session()
+    s.mount(url, HTTPAdapter(max_retries=3))
+
+    try:
+        return s.get(url, *args, **kwargs).json()
+    except Exception:
+        logger.exception('Error fetching url: %s.', url)
+        raise
+
+
+def request_page(url, items_per_page, page=0):
+    params = dict(
+        items_per_page=items_per_page,
+        page=page,
+    )
+    logger.info('Fetching page %s.', page)
+    return request_json(url, params=params)
+
+
 class CourtDecision(object):
     def __init__(self, data, countries, languages, regions, subdivisions,
-                 keywords, informea_keywords, subjects, solr, changed):
+                 keywords, informea_keywords, subjects, solr):
         self.data = data
         self.countries = countries
         self.languages = languages
@@ -209,9 +232,6 @@ class CourtDecision(object):
         self.informea_keywords = informea_keywords
         self.subjects = subjects
         self.solr = solr
-        if changed and self.data['changed'] != changed:
-            logger.error('Changed timestamp incosistency on {}'.format(
-                self.data['uuid']))
 
     def informea_tags(self, lang):
         to_ecolex = keywords_informea_to_ecolex(
@@ -222,11 +242,11 @@ class CourtDecision(object):
 
         return keywords_ecolex(to_ecolex, lang)
 
-    def get_solr_format(self, leo_id, solr_id):
+    def get_solr_format(self, informea_id, solr_id):
         solr_decision = {
             'cdText': '',
             'type': COURT_DECISION,
-            'cdLeoId': leo_id,
+            'cdLeoId': informea_id,
             'id': solr_id,
             'cdCountry_en': [],
             'cdCountry_es': [],
@@ -274,7 +294,7 @@ class CourtDecision(object):
                 language_code = get_value(json_field, json_value['und'])
                 if language_code not in self.languages:
                     logger.warning('Language code missing from languages.json: '
-                                   '{} ({})'.format(language_code, leo_id))
+                                   '{} ({})'.format(language_code, informea_id))
                     continue
                 languages = self.languages[language_code]
                 for lang in LANGUAGES:
@@ -292,21 +312,21 @@ class CourtDecision(object):
                     solr_decision[solr_field + '_fr'] = values['fr']
                 else:
                     logger.warning('Subdivision missing from json: '
-                                   '{} ({})'.format(subdivision_en, leo_id))
+                                   '{} ({})'.format(subdivision_en, informea_id))
             elif json_field in REGION_FIELDS:
                 reg_dict = get_json_values(json_field, json_value, self.regions,
-                                           'regions', leo_id)
+                                           'regions', informea_id)
                 for lang, regions in reg_dict.items():
                     solr_decision['{}_{}'.format(solr_field, lang)] = regions
             elif json_field in KEYWORD_FIELDS:
                 kw_dict = get_json_values(json_field, json_value, self.keywords,
-                                          'keywords', leo_id)
+                                          'keywords', informea_id)
                 for lang, keywords in kw_dict.items():
                     keywords = list(set(keywords))
                     solr_decision['{}_{}'.format(solr_field, lang)] = keywords
             elif json_field in SUBJECT_FIELDS:
                 sbj_dict = get_json_values(json_field, json_value,
-                                           self.subjects, 'subjects', leo_id)
+                                           self.subjects, 'subjects', informea_id)
                 for lang, subjects in sbj_dict.items():
                     subjects = list(set(subjects))
                     solr_decision['{}_{}'.format(solr_field, lang)] = subjects
@@ -326,7 +346,7 @@ class CourtDecision(object):
             json_value = self.data.get(backup_field, None)
             if json_value:
                 reg_dict = get_json_values(backup_field, json_value,
-                                           self.regions, 'regions', leo_id)
+                                           self.regions, 'regions', informea_id)
                 for lang, regions in reg_dict.items():
                     solr_decision['{}_{}'.format(solr_field, lang)] = regions
 
@@ -352,8 +372,8 @@ class CourtDecision(object):
                  solr_decision.get('cdTitleOfText_es') or
                  solr_decision.get('cdTitleOfText_other') or '')
         if not title:
-            logger.warning('Title missing for {}'.format(leo_id))
-        slug = '{} {}'.format(title, leo_id)
+            logger.warning('Title missing for {}'.format(informea_id))
+        slug = '{} {}'.format(title, informea_id)
         solr_decision['slug'] = slugify(slug)
         solr_decision['updatedDate'] = (datetime.now()
                                         .strftime('%Y-%m-%dT%H:%M:%SZ'))
@@ -373,105 +393,91 @@ class CourtDecisionImporter(BaseImporter):
 
     def __init__(self, config):
         super().__init__(config, logger, COURT_DECISION)
-        self.days_ago = config.get('days_ago', None)
-        self.update = config.get('update')
+        self.base_url = config.get('base_url')
+        self.items_per_page = config.get('items_per_page', 10)
+        self.max_pages = config.get('max_pages', False)
+        self.force_update = config.get('force_update', False)
         self.countries_json = config.get('countries_json')
-        self.subdivisions_json = config.get('subdivisions_json')
-        self.court_decisions_url = config.get('court_decisions_url')
-        self.test_input_file = config.get('test_input_file')
-        self.test_output_file = config.get('test_output_file')
         self.countries = self._get_countries()
-        self.subdivisions = self._get_subdivisions()
+        self.subdivisions = get_dict_from_json(config.get('subdivisions_json'))
 
         # When we need to import only one decision
         self.uuid = config.get('uuid')
-        self.data_url = config.get('data_url')
-        if (self.uuid):
-            self.data_url = self.data_url % (self.uuid,)
-
-    def test(self):
-        with open(self.test_input_file) as fi, open(self.test_output_file) as fo:
-            init_decision = json.load(fi)
-            expected_decision = json.load(fo)
-
-        decision = CourtDecision(init_decision, self.countries, self.languages,
-                                 self.solr, '0')
-        solr_decision = decision.get_solr_format(None, None)
-
-        return solr_decision == expected_decision
 
     def harvest(self, batch_size):
-        logger.info('[court decision] Harvesting started.')
         if self.uuid:
             logger.info('Adding court decision {}'.format(self.uuid))
-            decision = {'data_url': self.data_url, 'uuid': self.uuid}
-            self.solr.add_bulk([self._get_solr_decision(decision)])
+            solr_decision = self.solr.search(COURT_DECISION, self.uuid)
+            node = {
+                'uuid': self.uuid,
+                'data_url': 'https://informea.org/node/%s/json' % self.uuid,
+            }
+            self._add_decision(node, solr_decision)
             return
 
-        decisions = self._get_decisions()
-        if self.days_ago:
-            time_point = datetime.now() - timedelta(self.days_ago)
-            decisions = filter(
-                lambda x: datetime.fromtimestamp(int(x['last_update'])) > time_point, decisions
-            )
-            decisions = [x for x in decisions]
-        start = 0
-        while start < len(decisions):
-            end = min(start + batch_size, len(decisions))
-            new_decisions = list(
-                filter(bool, [self._get_solr_decision(dec)
-                              for dec in decisions[start:end]]))
-            logger.info('Adding {} court decisions'.format(len(new_decisions)))
-            self.solr.add_bulk(new_decisions)
-            start = end
+        logger.info('[court decision] Harvesting started.')
+        page_num = 0
+        while (True):
+            if self.max_pages and page_num == self.max_pages:
+                logger.info('Forced stop at max_page %s.', page_num)
+                break
+
+            decisions = request_page(self.base_url, self.items_per_page, page_num)
+            page_num += 1
+            if not decisions:
+                break
+
+            for node in decisions:
+                # uuid, last_update, data_url
+                uuid = node['uuid']
+                solr_decision = self.solr.search(COURT_DECISION, uuid)
+                if solr_decision:
+                    logger.debug('%s found in solr!', uuid)
+                    solr_date = solr_decision['cdDateOfModification']
+                    solr_update = datetime.strptime(solr_date, SOLR_DATE_FORMAT)
+                    node_date = int(node['last_update'])
+                    node_update = datetime.fromtimestamp(node_date)
+
+                    if self.force_update:
+                        logger.info('Forced update: %s', uuid)
+                    elif node_update > solr_update:
+                        logger.info('%s outdated, updating.', uuid)
+                    else:
+                        logger.debug('%s is up to date.', uuid)
+                        continue
+                else:
+                    logger.info('%s not in solr, adding.', uuid)
+
+                self._add_decision(node, solr_decision)
+
         logger.info('[court decision] Harvesting finished.')
 
-    def needs_update(self, decision, existing_decision):
-        current_timestamp = decision.get('last_update')
-        if not current_timestamp:
-            return True
-        old_timestamp = existing_decision['cdDateOfModification']
-        current_date = datetime.fromtimestamp(float(current_timestamp))
-        old_date = datetime.strptime(old_timestamp, SOLR_DATE_FORMAT)
-        delta = current_date - old_date
-        if delta.total_seconds() == 0:
-            logger.info('Skip {} - no update'.format(decision['uuid']))
-            return False
-        return True
+    def _add_decision(self, node, solr_decision):
 
-    def _get_solr_decision(self, decision):
-        existing_decision = self.solr.search(COURT_DECISION, decision['uuid'])
-        if self.update and existing_decision:
-            if not self.needs_update(decision, existing_decision):
-                return
+        data = request_json(node['data_url'])
 
-        data = self._get_decision(decision['data_url'])
-        if not data:
-            return
-        last_update = decision.get('last_update')
-        new_decision = CourtDecision(data, self.countries, self.languages,
-                                     self.regions, self.subdivisions,
-                                     self.keywords, self.informea_keywords,
-                                     self.subjects, self.solr, last_update)
-        solr_id = existing_decision['id'] if existing_decision else None
-        return new_decision.get_solr_format(decision['uuid'], solr_id)
+        dec = CourtDecision(
+            data,
+            self.countries, self.languages,
+            self.regions, self.subdivisions,
+            self.keywords, self.informea_keywords,
+            self.subjects, self.solr
+        )
+        solr_id = solr_decision['id'] if solr_decision else None
+        solr_decision = dec.get_solr_format(node['uuid'], solr_id)
 
-    def _get_decision(self, url):
-        headers = {'Accept': 'application/json'}
-        return get_json_from_url(url, headers)
-
-    def _get_decisions(self):
-        return get_json_from_url(self.court_decisions_url)
+        try:
+            if self.solr.add(solr_decision):
+                logger.info('Solr succesfully updated!')
+            else:
+                logger.error('Error updating solr!')
+        except Exception:
+            logger.exception('Error updating solr!')
+            raise
 
     def _get_countries(self):
-        with open(self.countries_json, encoding='utf-8') as f:
-            codes_countries = json.load(f)
-        codes = codes_countries['code_corresp']
-        countries = codes_countries['official_names']
+        data = get_dict_from_json(self.countries_json)
+        codes = data['code_corresp']
+        countries = data['official_names']
         reverse_codes = {v: k for k, v in codes.items()}
         return {reverse_codes.get(k, k): v for k, v in countries.items()}
-
-    def _get_subdivisions(self):
-        with open(self.subdivisions_json, encoding='utf-8') as f:
-            subdivisions = json.load(f)
-        return subdivisions
