@@ -1,6 +1,5 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from html import unescape
-import json
 import logging
 import logging.config
 
@@ -180,8 +179,20 @@ def get_value(key, value):
 
 
 def get_value_from_dict(valdict):
-    return unescape(valdict.get('value', valdict.get('safe_value',
-                    valdict.get('label', valdict.get('url')))))
+    value = valdict.get(
+        'value',
+        valdict.get(
+            'safe_value',
+            valdict.get(
+                'label',
+                valdict.get('url')
+            )
+        )
+    )
+    if value:
+        return unescape(value)
+    else:
+        return None
 
 
 def get_json_values(import_field, import_value, json_dict, subject, doc_id):
@@ -395,7 +406,8 @@ class CourtDecisionImporter(BaseImporter):
         super().__init__(config, logger, COURT_DECISION)
         self.base_url = config.get('base_url')
         self.items_per_page = config.get('items_per_page', 10)
-        self.max_pages = config.get('max_pages', False)
+        self.start_page = config.get('start_page', 0)
+        self.max_page = config.get('max_page', False)
         self.force_update = config.get('force_update', False)
         self.countries_json = config.get('countries_json')
         self.countries = self._get_countries()
@@ -416,9 +428,9 @@ class CourtDecisionImporter(BaseImporter):
             return
 
         logger.info('[court decision] Harvesting started.')
-        page_num = 0
+        page_num = self.start_page
         while (True):
-            if self.max_pages and page_num == self.max_pages:
+            if self.max_page and page_num >= self.max_page:
                 logger.info('Forced stop at max_page %s.', page_num)
                 break
 
@@ -432,7 +444,7 @@ class CourtDecisionImporter(BaseImporter):
                 uuid = node['uuid']
                 solr_decision = self.solr.search(COURT_DECISION, uuid)
                 if solr_decision:
-                    logger.debug('%s found in solr!', uuid)
+                    # logger.debug('%s found in solr!', uuid)
                     solr_date = solr_decision['cdDateOfModification']
                     solr_update = datetime.strptime(solr_date, SOLR_DATE_FORMAT)
                     node_date = int(node['last_update'])

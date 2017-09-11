@@ -64,7 +64,8 @@ SOLR_IMPORT = {
     'court_decision': {
         'base_url': 'https://informea.org/ws/court-decisions',
         'items_per_page': 50,
-        'max_pages': 10,
+        'start_page': 0,
+        'max_page': 10,
         'force_update': False,
         # 'uuid': '3045a54a-38ed-4ba4-aa79-738e7d7824e1',
     },

@@ -299,9 +299,10 @@ SOLR_IMPORT = {
     'court_decision': {
         'base_url': 'https://informea.org/ws/court-decisions',
         'items_per_page': 50,
-        'max_pages': 10,
+        'start_page': 0,
+        'max_page': 10,
         'force_update': False,
-        # 'uuid': '3045a54a-38ed-4ba4-aa79-738e7d7824e1',
+        # 'uuid': 'e931b18e-81af-4df8-9a61-b3f7828474f9',
     },
     'treaty': {
         'treaties_url': 'http://www2.ecolex.org/elis_isis3w.php',
