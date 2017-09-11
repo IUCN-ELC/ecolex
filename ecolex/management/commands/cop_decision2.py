@@ -592,8 +592,10 @@ class CopDecisionImporter(BaseImporter):
             logger.exception('Failed text extraction for: %s.', uuid)
 
         try:
-            self.solr.add(fields)
-            logger.info('Solr succesfully updated!')
+            if self.solr.add(fields):
+                logger.info('Solr succesfully updated!')
+            else:
+                logger.error('Error updating solr!')
         except Exception:
             logger.exception('Error updating solr!')
             raise
