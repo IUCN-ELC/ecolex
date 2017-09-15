@@ -1,7 +1,7 @@
 Ecolex.org
 ================
 
-[![Docker Automated build](https://img.shields.io/docker/automated/iucn/ecolex_web.svg)](https://hub.docker.com/u/iucn/)
+[![Docker build](https://dockerbuildbadges.quelltext.eu/status.svg?organization=iucn&repository=ecolex_web)](https://hub.docker.com/r/iucn/ecolex_web/builds)
 
 ## Project Name
 
