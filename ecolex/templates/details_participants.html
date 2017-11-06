@@ -51,7 +51,7 @@
                     {% if event.index %}[{{ event.index }}]{% endif %}
                   </td>
                 {% else %}
-                  <td title="{% trans 'Not available' %}">-</td>
+                  <td data-order="0" title="{% trans 'Not available' %}">-</td>
                 {% endif %}
               {% endwith %}
             {% endfor %}
