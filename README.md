@@ -3,16 +3,6 @@ Ecolex.org
 
 [![Docker build](https://dockerbuildbadges.quelltext.eu/status.svg?organization=iucn&repository=ecolex_web)](https://hub.docker.com/r/iucn/ecolex_web/builds)
 
-## Project Name
-
-The Project Name is ECOLEX.
-
-### Requirements
-
-1. one or multiple servers running your choice of Linux flavor (the steps below were tested on CentOS Linux 7).
-2. JRE (at least 1.7) on each node.
-
-### Installation
 
 #### Install using Docker
  
