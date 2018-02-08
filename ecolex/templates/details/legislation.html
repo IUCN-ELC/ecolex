@@ -43,9 +43,11 @@
       <dt>{% trans 'Document type' %}</dt><dd>{% with type=document.type_of_document|capfirst %} {% trans type %}{% endwith %}</dd>
       <dt>{% trans 'Date' %}</dt>
       <dd>
-        <span class="sr-date sr-help" title="{% trans 'Original date' %}">{{ document.year }}
-        {% if document.consolidation_date %}
-          <span class="sr-date sr-help" title="{% trans 'Consolidation date' %}">({{ document.consolidation_date }})</span>
+        {% if document.original_year %}
+          <span class="sr-date sr-help" title="{% trans 'Original date' %}">{{ document.original_year }}
+          <span class="sr-date sr-help" title="{% trans 'Consolidation date' %}">({{ document.year }})</span>
+        {% else %}
+          <span class="sr-date sr-help" title="{% trans 'Date' %}">{{ document.year }}</span>
         {% endif %}
 
       <dt>{% trans 'Source' %}</dt>

@@ -5,9 +5,11 @@
     <strong class="sr-type">{% trans 'Legislation' %}</strong> {% if result.country %} |
     <span class="sr-jurisdiction sr-help" title="{% trans 'Country/Territory' %}">{{ result.country }}</span> {% endif %}
     {% if result.year %} |
-      <span class="sr-date sr-help" title="{% trans 'Original date' %}">{{ result.year }}
-        {% if result.consolidation_date %}
-          <span class="sr-date sr-help" title="{% trans 'Consolidation date' %}">({{ result.consolidation_date }})</span>
+        {% if result.original_year %}
+          <span class="sr-date sr-help" title="{% trans 'Original date' %}">{{ result.original_year }}
+          <span class="sr-date sr-help" title="{% trans 'Consolidation date' %}">({{ result.year }})</span>
+        {% else %}
+          <span class="sr-date sr-help" title="{% trans 'Date' %}">{{ result.year }}
         {% endif %}
       </span>
     {% endif %}

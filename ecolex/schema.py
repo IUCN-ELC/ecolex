@@ -587,7 +587,7 @@ class LegislationSchema(CommonSchema):
         ]
         solr_fetch = CommonSchema.Meta.solr_fetch + [
             'short_title', 'long_title', 'country',
-            'year', 'consolidation_date',  # "year" / "original year"
+            'year', 'original_year',  # "year" / "original year"
             'status', 'territorial_subdivision',
         ]
         solr_boost = dict(CommonSchema.Meta.solr_boost, **{
@@ -633,7 +633,7 @@ class LegislationSchema(CommonSchema):
     type_code = fields.String(load_from='legTypeCode')
     year = fields.String(load_from='legYear')
     date = fields.Date(load_from='legDate', missing=None)
-    consolidation_date = fields.String(load_from='legOriginalYear')
+    original_year = fields.String(load_from='legOriginalYear')
 
     # References
     amends = fields.List(fields.String(), load_from='legAmends')
