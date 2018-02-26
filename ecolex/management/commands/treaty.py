@@ -22,8 +22,6 @@ logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('treaty_import')
 
 DOCUMENT = 'document'
-PARTY = 'party'
-COUNTRY = 'country'
 TOTAL_DOCS = 'numberresultsfound'
 PRESENTED_DOCS = 'numberresultspresented'
 NULL_DATE = format_date('0000-00-00')
@@ -351,13 +349,15 @@ class TreatyImporter(BaseImporter):
                 self._set_values_from_dict(data, 'trKeyword', self.keywords)
                 self._set_values_from_dict(data, 'trSubject', self.subjects)
 
-                for party in document.findAll(PARTY):
-                    if not getattr(party, COUNTRY):
+                for party in document.findAll('party'):
+                    if not getattr(party, 'country'):
                         continue
                     for k, v in PARTICIPANT_FIELDS.items():
                         field = getattr(party, k)
                         if v not in data:
                             data[v] = []
+                        if not field and k in ('countryfr', 'countrysp'):
+                            field = getattr(party, 'country')
                         if field:
                             clean_field = self._clean_text(field.text)
                             data[v].append(self._party_format_date(clean_field)
@@ -388,7 +388,6 @@ class TreatyImporter(BaseImporter):
                 data['slug'] = slugify(slug)
                 data['updatedDate'] = (datetime.now()
                                        .strftime('%Y-%m-%dT%H:%M:%SZ'))
-
         return treaties
 
     def _apply_custom_rules(self, data):
@@ -502,10 +501,10 @@ class TreatyImporter(BaseImporter):
                                       if not isinstance(v, list) or any(v))
 
     def _create_url(self, year, month, skip):
-        query_year = self.query_format % (year, month, year, month)
+        query_year = self.query_format.format(year, month, year, month)
         query_hex = hexlify(str.encode(query_year)).decode()
-        query = self.query_filter % (query_hex)
-        page = self.query_skip % (skip)
+        query = self.query_filter.format(query_hex)
+        page = self.query_skip.format(skip)
 
         url = '%s%s%s%s%s' % (self.treaties_url, self.query_export, query,
                               self.query_type, page)
