@@ -104,6 +104,11 @@ def translate_absolute_url(url, language=''):
     return re.sub(r'(?=\b)\/', repl, url, count=1)
 
 
+@register.filter
+def remove_lang(url):
+    return re.sub(r'^(\/fr|\/es)', '', url, count=1)
+
+
 @register.simple_tag
 def breadcrumb(label, viewname='', query='', *args, **kwargs):
     if not viewname:
