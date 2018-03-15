@@ -59,6 +59,11 @@ def extract_filename(link):
 
 
 @register.filter
+def extract_path(link):
+    return urlparse.unquote(urlparse.urlparse(link).path)
+
+
+@register.filter
 def extract_hostname(link):
     return urlparse.urlparse(link).hostname
 
