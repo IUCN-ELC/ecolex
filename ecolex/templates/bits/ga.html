@@ -17,34 +17,32 @@
   ga('create', faolex_code, 'auto', {'name': 'faolex'});
   ga('create', faolex_code_2, 'auto', {'name': 'allSites'});
 
-  document.hostname = "www.ecolex.org";
+  document.source = "ecolex"
   if (document.informea_url) {
     document.referrer = document.location.href;
-    //document.hostname = "informea.org";
+    document.source = "informea";
     send_hit('informea', document.informea_url)
   } else if (document.faolex_url) {
     if (!document.referrer && document.referrer.indexOf('informea.org/') == -1) {
         document.referrer = document.location.href;
     }
-    //document.hostname = "faolex.fao.org";
+    document.source = "faolex";
     send_hit('faolex', document.faolex_url);
     send_hit('allSites', document.faolex_url);
   }
 
   function send_hit(tracker_name, url) {
     ga(tracker_name + '.set', 'referrer', document.referrer);
-    ga(tracker_name + '.set', 'hostname', document.hostname);
+    ga(tracker_name + '.set', 'hostname', "www.ecolex.org");
     ga(tracker_name + '.set', 'location', url);
     ga(tracker_name + '.send', 'pageview');
   }
 
-  function legislation_link() {
-    var url = this.href;
-    var eventAction = "OutboundPdfLink";
-    //Hit ecolex with outboundlink
-    ga('send', 'event', 'OutboundLink', eventAction, url);
+  function outbound_pdf_link() {
+    // category, action, label
+    ga('send', 'event', 'OutboundLink', document.source, this.href);
 
-    if (this.hostname == "faolex.fao.org") {
+    if (document.source == "faolex") {
       // Hit faolex
       send_hit('faolex', document.faolex_url);
     }
@@ -52,7 +50,7 @@
 
   window.addEventListener('load', function () {
     // setup handlers
-    $(".file-link").click(legislation_link);
+    $(".file-link").click(outbound_pdf_link);
   });
 </script>
 {% endif %}
