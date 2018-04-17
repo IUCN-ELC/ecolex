@@ -318,6 +318,7 @@ SOLR_IMPORT = {
     'literature': {
         'literature_url': 'http://www2.ecolex.org/elis_isis3w.php',
         'query_export': '?database=libcat&search_type=page_search&table=all',
+        #'query_export_one': '?database=libcat&search_type=query&table=all&format_name=@xmlexp&lang=xmlf&page_header=@xmlh&query=ID:MON-093143',
         'query_format': 'ES:I AND STAT:C AND (DE:%d%02d OR DM:%d%02d)',
         'query_filter': '&spage_query=%s',
         'query_skip': '&spage_first=%d',
