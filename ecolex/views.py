@@ -257,7 +257,7 @@ class LegislationRedirectView(RedirectView):
         if url:
             return HttpResponseRedirect(url)
         else:
-            return HttpResponse('Arguments missing or document is not indexed')
+            raise Http404
 
 
 class OldEcolexRedirectView(RedirectView):
