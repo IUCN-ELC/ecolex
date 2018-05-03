@@ -299,7 +299,55 @@ class OldEcolexRedirectView(RedirectView):
 
 
 class ExportView(View):
+    def check_errors(self, request):
+        errors = []
+        doctype = request.GET.get('type')
+        slug = request.GET.get('slug')
+        if not doctype and not slug:
+            raise Http404
+
+        solr = EcolexSolr()
+        if slug and not solr.search_all('slug', slug):
+            raise Http404
+
+        format = request.GET.get('format', 'json')
+        format = get_exporter(format)
+        if not format:
+            raise Http404
+
+        rows = request.GET.get('rows', UNLIMITED_ROWS_COUNT)
+
+        try:
+            int(rows)
+        except ValueError:
+            errors.append(
+                {"rows_errors": "The rows value must be a number."})
+
+        start = request.GET.get('start', 0)
+        try:
+            int(start)
+        except ValueError:
+            errors.append(
+                {"start_errors": "The start value must be a number."})
+
+        updated_after = request.GET.get('updated_after')
+        if updated_after:
+            try:
+                (datetime.strptime(updated_after, '%Y%m%d')
+                 .strftime('%Y-%m-%dT%H:%M:%SZ'))
+            except:
+                errors.append(
+                    {"updated_after": "The updated_after value must have the format'YearMonthDay'."})
+        if errors:
+            exporter = format(errors)
+            download = request.GET.get('download')
+            return exporter.get_response(download, True)
+
     def get(self, request, **kwargs):
+        result = self.check_errors(request)
+        if result:
+            return result
+
         doctype = request.GET.get('type')
         slug = request.GET.get('slug')
         format = request.GET.get('format', 'json')

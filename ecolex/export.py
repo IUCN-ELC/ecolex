@@ -27,7 +27,8 @@ class Exporter(object):
         export_url = request.build_absolute_uri(reverse('export'))
         qs = {'format': self.FORMAT}
         for doc in self.docs:
-            qs['slug'] = doc['slug']
+            if doc.get('slug'):
+                qs['slug'] = doc['slug']
             query = urllib.parse.urlencode(qs)
             doc['url'] = '?'.join((export_url, query))
 
@@ -35,10 +36,12 @@ class Exporter(object):
         current_date = date.today().strftime(self.DATE_FORMAT)
         return 'ecolex_{}.{}'.format(current_date, self.FORMAT)
 
-    def get_response(self, download=False):
+    def get_response(self, download=False, errors=False):
+        status = 200
+        if errors:
+            status = 400
         data = self.get_data()
-
-        resp = HttpResponse(data, content_type=self.CONTENT_TYPE)
+        resp = HttpResponse(data, status=status, content_type=self.CONTENT_TYPE)
         if download:
             filename = self.get_filename()
             content_disposition = 'attachment; filename="{}"'.format(filename)
