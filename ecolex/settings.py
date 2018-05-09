@@ -261,8 +261,10 @@ EXPORT_TYPES = ['legislation', 'treaty', 'decision', 'court_decision', 'literatu
 SOLR_UPDATE = {
     'replace': {
         'field': 'decTreatyId',
+        # 'field': 'decPublishDate',
         'from': None,
         'to': '545b2f90-10c6-402e-929b-635677f254b1'
+        # 'to': '2017-04-18T12:00:00Z'
     },
     'filters': [
         {
@@ -272,6 +274,8 @@ SOLR_UPDATE = {
         {
             'field': 'decTreaty',
             'value': 'land-based',
+            # 'field': 'docDate',
+            # 'value': '[2018-04-18T00:00:00Z TO 2018-04-18T23:59:59Z]',
         }
     ]
 }
