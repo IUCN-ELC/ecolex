@@ -66,6 +66,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     #'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'ecolex.middleware.CacheControlMiddleware',
+    'ecolex.middleware.SentryForwardedForMiddleware',
 )
 
 TEMPLATES = [{
