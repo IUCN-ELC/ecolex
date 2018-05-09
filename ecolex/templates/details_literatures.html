@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block meta %}
-  <title>Related literature - {{ document.title|striptags|html_unescape }}</title>
+  <title>{% trans 'Related literature' %} - {{ document.title|striptags|html_unescape }}</title>
 {% endblock %}
 
 {% block breadcrumbs %}

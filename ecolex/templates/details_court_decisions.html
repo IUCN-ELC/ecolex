@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block meta %}
-  <title>Related Jurisprudence - {{ document.title|striptags|html_unescape }}</title>
+  <title>{% trans 'Related jurisprudence' %} - {{ document.title|striptags|html_unescape }}</title>
 {% endblock %}
 
 {% block breadcrumbs %}

@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block meta %}
-  <title>Related decisions - {{ document.title|striptags|html_unescape }}</title>
+  <title>{% trans 'Treaty decisions' %} - {{ document.title|striptags|html_unescape }}</title>
 {% endblock %}
 
 {% block breadcrumbs %}
