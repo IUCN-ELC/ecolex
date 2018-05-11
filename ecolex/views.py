@@ -17,6 +17,7 @@ from ecolex.definitions import FIELD_TO_FACET_MAPPING, SELECT_FACETS, STATIC_PAG
 from ecolex.export import get_exporter
 from ecolex.legislation import harvest_file
 from ecolex.models import StaticContent
+from ecolex.mixins import ExportValidatorMixin
 from ecolex.search import SearchMixin, get_documents_by_field
 from ecolex.management.utils import EcolexSolr
 from ecolex.management.definitions import UNLIMITED_ROWS_COUNT
@@ -298,99 +299,81 @@ class OldEcolexRedirectView(RedirectView):
             return HttpResponseRedirect(reverse('results'))
 
 
-class ExportView(View):
-    def check_errors(self, request):
-        errors = []
-        doctype = request.GET.get('type')
-        slug = request.GET.get('slug')
-        if not doctype and not slug:
-            raise Http404
+class ExportView(View, ExportValidatorMixin):
 
-        solr = EcolexSolr()
-        if slug and not solr.search_all('slug', slug):
-            raise Http404
-
-        format = request.GET.get('format', 'json')
-        format = get_exporter(format)
-        if not format:
-            raise Http404
-
-        rows = request.GET.get('rows', UNLIMITED_ROWS_COUNT)
+    def clean_fields(self, fields):
+        if not get_exporter(fields['format']):
+            fields['format'] = 'json'
 
         try:
-            int(rows)
-        except ValueError:
-            errors.append(
-                {"rows_errors": "The rows value must be a number."})
+            fields['updated_after'] = (
+                datetime
+                .strptime(fields['updated_after'], '%Y%m%d')
+                .strftime('%Y-%m-%dT%H:%M:%SZ')
+            )
+        except:
+            fields['updated_after'] = None
 
-        start = request.GET.get('start', 0)
-        try:
-            int(start)
-        except ValueError:
-            errors.append(
-                {"start_errors": "The start value must be a number."})
+        return fields
 
-        updated_after = request.GET.get('updated_after')
-        if updated_after:
-            try:
-                (datetime.strptime(updated_after, '%Y%m%d')
-                 .strftime('%Y-%m-%dT%H:%M:%SZ'))
-            except:
-                errors.append(
-                    {"updated_after": "The updated_after value must have the format'YearMonthDay'."})
-        if errors:
-            exporter = format(errors)
-            download = request.GET.get('download')
-            return exporter.get_response(download, True)
+    def get_fields(self, request):
+        fields = {
+            'type': None,
+            'slug': None,
+            'format': 'json',
+            'rows': UNLIMITED_ROWS_COUNT,
+            'start': 0,
+            'count': None,
+            'download': None,
+            'updated_after': None,
+        }
+        for field in request.GET:
+            fields[field] = request.GET.get(field)
 
-    def get(self, request, **kwargs):
-        result = self.check_errors(request)
-        if result:
-            return result
+        return self.clean_fields(fields)
 
-        doctype = request.GET.get('type')
-        slug = request.GET.get('slug')
-        format = request.GET.get('format', 'json')
-        download = request.GET.get('download')
-        count = request.GET.get('count')
-        rows = request.GET.get('rows', UNLIMITED_ROWS_COUNT)
-        start = request.GET.get('start', 0)
-        updated_after = request.GET.get('updated_after')
-        if updated_after:
-            try:
-                updated_after = (datetime
-                                 .strptime(updated_after, '%Y%m%d')
-                                 .strftime('%Y-%m-%dT%H:%M:%SZ'))
-            except:
-                updated_after = None
-
-        if doctype and doctype not in settings.EXPORT_TYPES:
-            raise Http404()  # TODO Custom 404 template depending on format
-
+    def search_solr(self, fields):
         fq = ''
-        if doctype:
-            key, value = 'type', doctype
-            fields = [
+        fl = ''
+        if fields['type']:
+            key, value = 'type', fields['type']
+            params = [
                 'slug',
                 'updatedDate',
                 'docId',
             ]
-            fl = ','.join(fields)
-            if updated_after:
-                fq = 'updatedDate: [{} TO *]'.format(updated_after)
-        elif slug:
-            key, value = 'slug', slug
+            fl = ','.join(params)
+            if fields['updated_after']:
+                fq = 'updatedDate: [{} TO *]'.format(fields['updated_after'])
+        elif fields['slug']:
+            key, value = 'slug', fields['slug']
             fl = '*'
+        else:
+            key, value = '', ''
 
         solr = EcolexSolr()
-        resp = solr.search_all(key, value, fq=fq, fl=fl, start=start, rows=rows,
-                               sort='updatedDate desc')
+        resp = solr.search_all(key, value, fq=fq, fl=fl, start=fields['start'],
+                               rows=fields['rows'], sort='updatedDate desc')
+        return resp
+
+    def get(self, request, **kwargs):
+        fields = self.get_fields(request)
+        self.validate(fields)
+        if self.errors:
+            exporter = get_exporter(fields['format'])(self.errors)
+            return exporter.get_response(fields['download'], status=404)
+
+        resp = self.search_solr(fields)
+
         if not resp:
             resp = []
-        if count == 'yes':
+            exporter = get_exporter(fields['format'])(resp)
+            return exporter.get_response(fields['download'], status=400)
+
+        if fields['count'] == 'yes':
             resp = {'count': len(resp)}
 
-        exporter = get_exporter(format)(resp)
-        if doctype and not count:
+        exporter = get_exporter(fields['format'])(resp)
+        if fields['type'] and not fields['count']:
             exporter.attach_urls(request)
-        return exporter.get_response(download)
+        return exporter.get_response(fields['download'])

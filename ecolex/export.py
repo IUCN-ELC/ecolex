@@ -36,10 +36,7 @@ class Exporter(object):
         current_date = date.today().strftime(self.DATE_FORMAT)
         return 'ecolex_{}.{}'.format(current_date, self.FORMAT)
 
-    def get_response(self, download=False, errors=False):
-        status = 200
-        if errors:
-            status = 400
+    def get_response(self, download=False, status=200):
         data = self.get_data()
         resp = HttpResponse(data, status=status, content_type=self.CONTENT_TYPE)
         if download:
