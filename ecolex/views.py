@@ -361,14 +361,14 @@ class ExportView(View, ExportValidatorMixin):
         self.validate(fields)
         if self.errors:
             exporter = get_exporter(fields['format'])(self.errors)
-            return exporter.get_response(fields['download'], status=404)
+            return exporter.get_response(fields['download'], status=400)
 
         resp = self.search_solr(fields)
 
         if not resp:
             resp = []
             exporter = get_exporter(fields['format'])(resp)
-            return exporter.get_response(fields['download'], status=400)
+            return exporter.get_response(fields['download'], status=404)
 
         if fields['count'] == 'yes':
             resp = {'count': len(resp)}
