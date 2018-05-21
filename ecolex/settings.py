@@ -351,6 +351,9 @@ SOLR_IMPORT = {
 
 RAVEN_CONFIG = {
     'dsn': SENTRY_DSN,
+    'IGNORE_EXCEPTIONS': [
+        'Http404',
+    ]
 }
 
 # Local settings
