@@ -1,7 +1,7 @@
 Ecolex.org
 ================
 
-[![Docker build](https://dockerbuildbadges.quelltext.eu/status.svg?organization=iucn&repository=ecolex_web)](https://hub.docker.com/r/iucn/ecolex_web/builds)
+[![Docker build](https://img.shields.io/docker/build/iucn/ecolex_web.svg)](https://hub.docker.com/r/iucn/ecolex_web/builds) [![Updates](https://pyup.io/repos/github/IUCN-ELC/ecolex/shield.svg)](https://pyup.io/repos/github/IUCN-ELC/ecolex/)
 
 
 #### Install using Docker
