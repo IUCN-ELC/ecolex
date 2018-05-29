@@ -231,13 +231,14 @@ class DesignPlayground(TemplateView):
     template_name = 'playground.html'
 
 
-class LegislationRedirectView(RedirectView):
+class DetailPageRedirectView(RedirectView):
 
     doc_type_map = {
         'legislation': 'legId',
         'treaty': 'trElisId',
         'literature': 'litId',
         'court_decision': 'cdOriginalId',
+        'decision': 'decId',
     }
 
     def get_redirect_url(self, *args, **kwargs):
