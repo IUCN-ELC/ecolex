@@ -23,6 +23,8 @@ RUN apt-get -y update &&\
     curl \
     libyajl2 \
     sendmail \
+    gnupg \ 
+    dirmngr \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENV GNUPGHOME=/tmp/gnupghome \
