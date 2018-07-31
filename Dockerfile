@@ -3,14 +3,17 @@ FROM python:3.6-slim
 # roles:
 #   front - publishes ports to the world; this depends on run/docker-compose though...
 #   cron - runs cron daemon
-LABEL maintainer="daniel.baragan@eaudeweb.ro" \
+LABEL maintainer="ecolex@eaudeweb.ro" \
       roles="front,cron" \
       name="web"
+
+ENV ECOLEX_HOME=/home/web \
+    PATH=/home/web/bin:$PATH \
+    EDW_RUN_WEB_PORT=8000 
 
 RUN apt-get -y update &&\
     apt-get -y --no-install-recommends install \
     vim \
-    sudo \
     netcat-traditional \
     git \
     libmariadb-client-lgpl-dev \
@@ -23,70 +26,42 @@ RUN apt-get -y update &&\
     curl \
     libyajl2 \
     sendmail \
-    gnupg \ 
-    dirmngr \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ENV GNUPGHOME=/tmp/gnupghome \
-    GOSU_VERSION=1.10
+RUN ln -s /usr/bin/mariadb_config /usr/bin/mysql_config &&\
+    mkdir -p $ECOLEX_HOME/ecolex \
+             /www_static \
+             $ECOLEX_HOME/bin &&\
+    echo "ECOLEX_HOME=${ECOLEX_HOME}" >> /etc/environment 
+ 
 
-RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" && \
-    curl -o /usr/local/bin/gosu.asc -SL "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" && \
-    mkdir $GNUPGHOME && \
-    chmod og-rwx $GNUPGHOME && \
-    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 && \
-    gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu && \
-    pkill -9 gpg-agent && \
-    pkill -9 dirmngr && \
-    rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc && \
-    chmod +x /usr/local/bin/gosu && \
-    gosu nobody true
-
-RUN ln -s /usr/bin/mariadb_config /usr/bin/mysql_config
-
-RUN adduser --disabled-password --gecos '' --shell /bin/false web &&\
-    adduser web sudo &&\
-    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
-# need to consume this anyway
-ENV ECOLEX_HOME=/home/web \
-    PATH=/home/web/bin:$PATH \
-    EDW_RUN_WEB_PORT=8000 \
-    USER=web
-
-RUN mkdir -p $ECOLEX_HOME/ecolex &&\
-    mkdir -p /www_static &&\
-    mkdir -p $ECOLEX_HOME/bin
 
 # Add as few files of possible, we want to cache pip install step for good
-ADD docker/web/build/entrypoint.sh \
-    docker/web/build/root-entrypoint.sh \
-    docker/web/build/import_updater.sh \
-    docker/web/build/reprocess_from_db.sh \
+COPY docker/docker-entrypoint.sh \
+    docker/import_updater.sh \
+    docker/reprocess_from_db.sh \
     $ECOLEX_HOME/bin/
 
-ADD docker/web/build/ecolex.crontab \
+COPY docker/ecolex.crontab \
     $ECOLEX_HOME/
 
-ARG EDW_BUILD_SRC_DIR
 # Every time you change the value of this variable the cache will be skipped from the next RUN step further
 #ARG EDW_ECOLEX_VER
 #RUN echo $EDW_ECOLEX_VER
-ADD requirements.txt \
+COPY requirements.txt \
     requirements-dep.txt \
+    manage.py \
     $ECOLEX_HOME/ecolex/
 
 WORKDIR $ECOLEX_HOME/ecolex
 RUN pip install -r requirements-dep.txt
 
-ADD . $ECOLEX_HOME/ecolex
-RUN chown -R web:web $ECOLEX_HOME
-
-RUN touch $ECOLEX_HOME/.bashrc
-RUN chmod 777 $ECOLEX_HOME/.bashrc
+COPY ecolex $ECOLEX_HOME/ecolex/ecolex
 # no changes to volume are persistent after declaring it
+
+
 VOLUME ["/www_static", "${ECOLEX_HOME}/logs"]
 
 # USER web # use gosu in the entrypoint
-ENTRYPOINT ["root-entrypoint.sh"]
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["run"]

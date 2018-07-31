@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+/usr/sbin/cron
+
+service sendmail start&
+
 init() {
     ./manage.py migrate
     ./manage.py collectstatic --noinput
@@ -23,7 +27,8 @@ wait_solr() {
 install_crontab() {
     echo "Installing crontab"
     printenv | sed 's/^\(.*\)$/export \1/g' | grep -E "(EDW|MYSQL|ECOLEX)" &> $ECOLEX_HOME/.bashrc
-    crontab -u $USER $ECOLEX_HOME/ecolex.crontab
+    chmod 755 $ECOLEX_HOME/.bashrc
+    crontab $ECOLEX_HOME/ecolex.crontab
 }
 
 if [ "$1" == "run" ]; then
