@@ -1,0 +1,7 @@
+MAILTO=ecolex@eaudeweb.ro
+PYTHONPATH=/usr/local/bin
+SHELL=/bin/bash
+
+0 23 * * *  . /home/web/.bashrc; $ECOLEX_HOME/bin/import_updater.sh
+0 3 * * 0   . /home/web/.bashrc; $PYTHONPATH/python $ECOLEX_HOME/ecolex/manage.py refresh_sitemap
+0 1 * * * . /home/web/.bashrc; $ECOLEX_HOME/bin/reprocess_from_db.sh
