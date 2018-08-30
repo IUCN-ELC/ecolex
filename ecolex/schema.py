@@ -403,6 +403,10 @@ class LiteratureSchema(CommonSchema):
         fields.String(),
         load_from='litCourtDecisionReference',
         missing=[])
+    court_decision_reference_informea = fields.List(
+        fields.String(),
+        load_from='litCourtDecisionReference2',
+        missing=[])
     date_of_entry = fields.Date(load_from='litDateOfEntry')
     date_of_modification = fields.Date(load_from='litDateOfModification')
     date_of_text = fields.String(load_from='litDateOfText', missing=None)
@@ -555,6 +559,7 @@ class CourtDecisionSchema(CommonSchema):
                                        multilingual=True)
     leo_default_url = fields.String(load_from='cdLeoDefaultUrl')
     leo_english_url = fields.String(load_from='cdLeoEnglishUrl')
+    leo_id = fields.String(load_from='cdLeoId')
     link_to_full_text = fields.List(fields.String(),
                                     load_from='cdLinkToFullText')
     related_web_site = fields.String(load_from='cdRelatedUrl_en', missing=None)

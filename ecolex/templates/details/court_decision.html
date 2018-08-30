@@ -128,7 +128,7 @@
     </dl>
   </section>
 
-{% if document.references or document.treaties or document.legislation %}
+{% if document.references or document.treaties or document.legislation or document.literatures %}
   <section id="court-decision-references">
     <h2 class="section-title">{% trans 'References' %}</h2>
     {% if document.references %}
@@ -174,6 +174,20 @@
                  title="{{ leg.title|safe|striptags }}">{{ leg.title|safe }}</a>
             </h3>
             {% include 'short_display/legislation.html' with result=leg %}
+          </dd>
+        {% endfor %}
+      </dl>
+    {% endif %}
+    {% if document.literatures %}
+      <dl>
+        <dt>{% trans 'Literature' %}</dt>
+        {% for lit in document.literatures %}
+          <dd>
+            <h3 class="search-result-title">
+              <a href="{{ lit.details_url }}?{{ query }}"
+                 title="{{ lit.title|safe|striptags }}">{{ lit.title|safe }}</a>
+            </h3>
+            {% include 'short_display/literature.html' with result=lit %}
           </dd>
         {% endfor %}
       </dl>

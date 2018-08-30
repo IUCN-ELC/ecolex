@@ -32,6 +32,7 @@ def join_available_values(separator, *values):
 
 
 class BaseModel(object):
+
     @property
     def type(self):
         return camel_case_to__(self.__class__.__name__)
@@ -98,7 +99,8 @@ class DocumentModel(BaseModel):
                 try:
                     lookup = self.document_id
                 except AttributeError:
-                    # some newer court decisions may not have document_id (cdOriginalId)
+                    # some newer court decisions may not have document_id
+                    # (cdOriginalId)
                     continue
 
             fields.add(field)
@@ -507,6 +509,8 @@ class CourtDecision(DocumentModel):
             'treaty.document_id', 'treaty_reference'),
         'legislation': (
             'legislation.document_id', 'legislation_reference'),
+        'literatures': (
+            'literature.court_decision_reference_informea', 'leo_id'),
         #'cited_court_decisions': (
         #    'court_decision.document_id', 'cites'),
         #'cited_by_court_decisions': (
@@ -528,6 +532,10 @@ class CourtDecision(DocumentModel):
     @property
     def legislation(self):
         return self._all_references['legislation']
+
+    @property
+    def literatures(self):
+        return self._all_references['literatures']
 
 
 class Literature(DocumentModel):
@@ -554,6 +562,8 @@ class Literature(DocumentModel):
             'decision.decision_id', 'cop_decision_reference'),
         'court_decisions': (
             'court_decision.original_id', 'court_decision_reference'),
+        'court_decisions_informea': (
+            'court_decision.leo_id', 'court_decision_reference_informea'),
     }
 
     @property
@@ -633,7 +643,7 @@ class Literature(DocumentModel):
 
     @property
     def court_decisions(self):
-        return self._all_references['court_decisions']
+        return self._all_references['court_decisions'] + self._all_references['court_decisions_informea']
 
     @property
     def cop_decisions(self):
