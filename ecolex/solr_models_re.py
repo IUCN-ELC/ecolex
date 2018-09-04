@@ -511,6 +511,8 @@ class CourtDecision(DocumentModel):
             'legislation.document_id', 'legislation_reference'),
         'literatures': (
             'literature.court_decision_reference_informea', 'leo_id'),
+        'literatures_old': (
+            'literature.court_decision_reference', 'original_id'),
         #'cited_court_decisions': (
         #    'court_decision.document_id', 'cites'),
         #'cited_by_court_decisions': (
@@ -535,7 +537,7 @@ class CourtDecision(DocumentModel):
 
     @property
     def literatures(self):
-        return self._all_references['literatures']
+        return self._all_references['literatures'] + self._all_references['literatures_old']
 
 
 class Literature(DocumentModel):
