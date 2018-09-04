@@ -234,11 +234,11 @@ class DesignPlayground(TemplateView):
 class DetailPageRedirectView(RedirectView):
 
     doc_type_map = {
-        'legislation': 'legId',
-        'treaty': 'trElisId',
-        'literature': 'litId',
-        'court_decision': 'cdOriginalId',
-        'decision': 'decId',
+        'legislation': ('legId',),
+        'treaty': ('trElisId',),
+        'literature': ('litId',),
+        'court_decision': ('cdOriginalId', 'cdLeoId',),
+        'decision': ('decId',),
     }
 
     def get_redirect_url(self, *args, **kwargs):
@@ -246,13 +246,16 @@ class DetailPageRedirectView(RedirectView):
         doc_type = kwargs.pop('doc_type', None)
         if not doc_id or not doc_type:
             return None
-        search_field = self.doc_type_map.get(doc_type)
-        results = get_documents_by_field(search_field, [doc_id], rows=1)
+        search_fields = self.doc_type_map.get(doc_type)
+        for f in search_fields:
+            results = get_documents_by_field(f, [doc_id], rows=1)
+            if results:
+                break
         if not results:
             return None
-        leg = [x for x in results][0]
+        doc = [x for x in results][0]
         doc_details = doc_type + '_details'
-        return reverse(doc_details, kwargs={'slug': leg.slug})
+        return reverse(doc_details, kwargs={'slug': doc.slug})
 
     def get(self, request, *args, **kwargs):
         url = self.get_redirect_url(*args, **kwargs)
