@@ -3,6 +3,7 @@ import logging
 import logging.config
 from datetime import datetime
 
+from django.db.utils import OperationalError
 from django.conf import settings
 from pysolr import SolrError
 
@@ -89,7 +90,10 @@ class LegislationImporter(object):
                     obj.status = DocumentText.FULL_INDEXED
                     obj.doc_size = doc_size
                     obj.text = text
-                    obj.save()
+                    try:
+                        obj.save()
+                    except OperationalError as e:
+                        logger.error("DB insert error %s %s" % (obj.doc_id, e))
                 else:
                     logger.error('Failed doc extract %s %s' % (obj.url,
                                                                legislation['id']))
