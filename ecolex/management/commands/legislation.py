@@ -94,6 +94,10 @@ class LegislationImporter(object):
                         obj.save()
                     except OperationalError as e:
                         logger.error("DB insert error %s %s" % (obj.doc_id, e))
+                        obj.status = DocumentText.FULL_INDEX_FAIL
+                        obj.text = None
+                        obj.save()
+
                 else:
                     logger.error('Failed doc extract %s %s' % (obj.url,
                                                                legislation['id']))

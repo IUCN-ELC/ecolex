@@ -8,6 +8,7 @@ import logging.config
 import re
 
 from django.conf import settings
+from django.db.utils import OperationalError
 from django.template.defaultfilters import slugify
 from pysolr import SolrError
 
@@ -440,8 +441,14 @@ class LiteratureImporter(BaseImporter):
                         lit_text += doc.text
                         doc.status = DocumentText.FULL_INDEXED
                         doc.doc_size = file_obj.getbuffer().nbytes
-                        doc.save()
-                        logger.info('Success extracting %s' % litId)
+                        try:
+                          doc.save()
+                          logger.info('Success extracting %s' % litId)
+                        except OperationalError as e:
+                            logger.error("DB insert error %s %s" % (litId, e))
+                            doc.status = DocumentText.FULL_INDEX_FAIL
+                            doc.text = None
+                            doc.save()
                     else:
                         # Download failed
                         logger.error('Error on file download %s' % litId)
