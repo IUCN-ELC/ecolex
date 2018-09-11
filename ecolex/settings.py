@@ -351,8 +351,9 @@ SOLR_IMPORT = {
 
 RAVEN_CONFIG = {
     'dsn': SENTRY_DSN,
-    'IGNORE_EXCEPTIONS': [
+    'ignore_exceptions': [
         'Http404',
+        'django.http.Http404',
     ]
 }
 
