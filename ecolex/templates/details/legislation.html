@@ -12,7 +12,7 @@
 
 {% block scripts %}
   <script>
-    document.faolex_url = "http://www.fao.org/faolex/results/details/en/?details={{ document.document_id }}";
+    document.faolex_url = "http://www.fao.org/faolex/results/details/en/c/{{ document.document_id }}";
   </script>
 {% endblock %}
 
@@ -53,7 +53,7 @@
       <dt>{% trans 'Source' %}</dt>
       <dd>
         FAO,
-        <a target="_blank" href="http://www.fao.org/faolex/results/details/en/?details={{ document.document_id }}">FAOLEX</a>
+        <a target="_blank" href="http://www.fao.org/faolex/results/details/en/c/{{ document.document_id }}">FAOLEX</a>
       </dd>
 
       </dd>
