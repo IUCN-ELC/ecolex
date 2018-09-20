@@ -442,8 +442,8 @@ class LiteratureImporter(BaseImporter):
                         doc.status = DocumentText.FULL_INDEXED
                         doc.doc_size = file_obj.getbuffer().nbytes
                         try:
-                          doc.save()
-                          logger.info('Success extracting %s' % litId)
+                            doc.save()
+                            logger.info('Success extracting %s' % litId)
                         except OperationalError as e:
                             logger.error("DB insert error %s %s" % (litId, e))
                             doc.status = DocumentText.FULL_INDEX_FAIL
@@ -517,7 +517,13 @@ class LiteratureImporter(BaseImporter):
                     obj.status = DocumentText.FULL_INDEXED
                     obj.doc_size = doc_size
                     obj.text = text
-                    obj.save()
+                    try:
+                        obj.save()
+                    except OperationalError as e:
+                        logger.error("DB insert error %s %s" % (obj.doc_id, e))
+                        obj.status = DocumentText.FULL_INDEX_FAIL
+                        obj.text = None
+                        obj.save()
                 else:
                     logger.error('Failed doc extract %s %s' % (obj.url,
                                                                literature['id']))
