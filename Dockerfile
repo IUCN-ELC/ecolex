@@ -60,7 +60,7 @@ COPY ecolex $ECOLEX_HOME/ecolex/ecolex
 # no changes to volume are persistent after declaring it
 
 
-VOLUME ["/www_static", "${ECOLEX_HOME}/logs"]
+VOLUME ["/www_static", "${ECOLEX_HOME}/ecolex/logs"]
 
 # USER web # use gosu in the entrypoint
 ENTRYPOINT ["docker-entrypoint.sh"]
