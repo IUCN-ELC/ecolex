@@ -29,6 +29,7 @@ class StaticViewSitemap(Sitemap):
     sitemap_template = 'sitemaps/translated_sitemap.xml'
     priority = 0.5
     changefreq = 'yearly'
+    protocol = 'https'
 
     def items(self):
         return STATIC_PAGES
@@ -42,6 +43,7 @@ class DocumentSitemap(CustomSitemap):
     pritiority = 1
     changefreq = 'weekly'
     limit = 1000
+    protocol = 'https'
 
     def queryer(self):
         return Queryer({}, language='en')
