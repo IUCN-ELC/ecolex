@@ -197,11 +197,14 @@ class Treaty(object):
         self.elis_id = 'trElisId'
 
     def is_modified(self, old_treaty):
-        old_date = datetime.strptime(old_treaty[self.update_field],
-                                     self.date_format)
+        old_date = datetime.strptime(
+            old_treaty[self.update_field],
+            self.date_format
+        ) if self.update_field in old_treaty else None
+
         new_date = datetime.strptime(self.data[self.update_field][0],
                                      self.date_format)
-        if old_date < new_date:
+        if old_date and old_date < new_date:
             logger.info('Update on %s' % (self.data[self.elis_id]))
             return True
         logger.info('No update on %s' % (self.data[self.elis_id]))
