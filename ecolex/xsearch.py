@@ -531,7 +531,7 @@ class Searcher(Queryer):
 
         search = (
             self._search()
-            .stats_on(self.get_stats_fields())
+            .stats(self.get_stats_fields())
             .field_limit(self.get_fetch_fields())
             .highlight(self.get_highlight_fields())
             .spellcheck()

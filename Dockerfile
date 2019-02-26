@@ -25,15 +25,15 @@ RUN apt-get -y update &&\
     cron \
     curl \
     libyajl2 \
-    sendmail \
+    ssmtp \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN ln -s /usr/bin/mariadb_config /usr/bin/mysql_config &&\
     mkdir -p $ECOLEX_HOME/ecolex \
              /www_static \
              $ECOLEX_HOME/bin &&\
-    echo "ECOLEX_HOME=${ECOLEX_HOME}" >> /etc/environment 
- 
+    echo "ECOLEX_HOME=${ECOLEX_HOME}" >> /etc/environment
+
 
 
 # Add as few files of possible, we want to cache pip install step for good

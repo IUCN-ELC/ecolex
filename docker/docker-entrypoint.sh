@@ -2,8 +2,6 @@
 
 /usr/sbin/cron
 
-service sendmail start&
-
 init() {
     ./manage.py migrate
     ./manage.py collectstatic --noinput
