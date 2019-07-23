@@ -1,4 +1,4 @@
-FROM python:3.6-slim
+FROM python:3.6-slim-stretch
 
 # roles:
 #   front - publishes ports to the world; this depends on run/docker-compose though...
