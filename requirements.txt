@@ -5,7 +5,7 @@ djangorestframework>=3.3.3,<3.4
 django-static-sitemaps==4.1.1
 # TODO: remove me (after removing me form management commands)
 pysolr==3.3.0
-marshmallow>=2.6.1,<2.7
+marshmallow==3.0.0
 # git+https://github.com/iucn-elc/scorched.git@stats-support
 # TODO: switch to upstream once it supports stats
 scorched>=0.10,<0.11
