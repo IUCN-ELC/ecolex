@@ -84,6 +84,7 @@ TEMPLATES = [{
             "django.contrib.messages.context_processors.messages",
             "django.core.context_processors.request",
             "ecolex.global_config",
+            "ecolex.context_preprocessors.set_iframe"
         },
     },
 }]
