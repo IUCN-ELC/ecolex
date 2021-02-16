@@ -16,7 +16,7 @@ RUN apt-get -y update &&\
     vim \
     netcat-traditional \
     git \
-    libmariadb-client-lgpl-dev \
+    libmariadb-dev-compat \
     gcc \
     libc-dev-bin \
     libc6-dev \
@@ -25,11 +25,9 @@ RUN apt-get -y update &&\
     cron \
     curl \
     libyajl2 \
-    ssmtp \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN ln -s /usr/bin/mariadb_config /usr/bin/mysql_config &&\
-    mkdir -p $ECOLEX_HOME/ecolex \
+RUN mkdir -p $ECOLEX_HOME/ecolex \
              /www_static \
              $ECOLEX_HOME/bin &&\
     echo "ECOLEX_HOME=${ECOLEX_HOME}" >> /etc/environment
