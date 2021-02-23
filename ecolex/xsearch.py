@@ -54,7 +54,7 @@ class Queryer(object):
             pass
         else:
             if q:
-                self.qargs.append(DismaxString(q))
+                self.qargs.append(DismaxString(q[:300] ))
 
     def _execute(self, search, options=None):
         # set search options last or they'll get overwritten
@@ -238,6 +238,7 @@ class Searcher(Queryer):
             # all types requested are invalid
             self.valid = False
             return
+
 
         self.prepare_filters(data)
         self.prepare_stats()
