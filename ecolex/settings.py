@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 from collections import OrderedDict
 from django.utils.translation import ugettext_lazy as _
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -48,7 +50,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'raven.contrib.django.raven_compat',
     'rest_framework',
     'static_sitemaps',
     'ckeditor',
@@ -66,7 +67,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     #'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'ecolex.middleware.CacheControlMiddleware',
-    'ecolex.middleware.SentryForwardedForMiddleware',
 )
 
 TEMPLATES = [{
@@ -349,13 +349,12 @@ SOLR_IMPORT = {
     'legislation': {},
 }
 
-RAVEN_CONFIG = {
-    'dsn': SENTRY_DSN,
-    'ignore_exceptions': [
-        'Http404',
-        'django.http.Http404',
-    ]
-}
+sentry_sdk.init(
+    dsn=SENTRY_DSN,
+    integrations=[DjangoIntegration()],
+    send_default_pii=True,
+)
+
 
 # Local settings
 try:
