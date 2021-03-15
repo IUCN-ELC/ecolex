@@ -8,15 +8,15 @@ init() {
 }
 
 wait_sql() {
-    while ! nc -z maria 3306; do
-        echo "Waiting for MySQL server maria:3306 ..."
+    while ! nc -z $MYSQL_HOST 3306; do
+        echo "Waiting for MySQL server $MYSQL_HOST:3306 ..."
         sleep 1
     done
 }
 
 wait_solr() {
-    while ! nc -z solr 8983; do
-        echo "Waiting for Solr server solr:8983 ..."
+    while ! nc -z $SOLR_HOST $SOLR_PORT; do
+        echo "Waiting for Solr server $SOLR_HOST:$SOLR_PORT ..."
         sleep 1
     done
 
