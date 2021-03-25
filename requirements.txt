@@ -1,7 +1,7 @@
 dicttoxml==1.6.6
 Django>=1.9.4,<1.10
 django-ckeditor==5.0.3
-djangorestframework>=3.3.3,<3.4
+djangorestframework==3.12.3
 django-static-sitemaps==4.1.1
 # TODO: remove me (after removing me form management commands)
 pysolr==3.3.0
