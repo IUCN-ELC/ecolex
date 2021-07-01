@@ -40,7 +40,7 @@ class SearchView(TemplateView, SearchMixin):
         ctx['query'] = urlencode(self.request.GET)
 
         # A snippet of the about page should be included in Google search results
-        about_content = get_object_or_404(StaticContent, name='about')
+        about_content, created = StaticContent.objects.get_or_create(name='about')
         lang_code = get_language()
         about = getattr(about_content, 'body_{}'.format(lang_code))
         ctx['about'] = about
