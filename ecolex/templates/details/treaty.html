@@ -8,6 +8,7 @@
   {% if document.abstract %}
   <meta name="description" content="{{ document.abstract.0|html_unescape }}" />
   {% endif %}
+  <link rel="canonical" href="https://www.ecolex.org{{ request.build_absolute_uri | extract_path | remove_lang}}">
 {% endblock %}
 
 {% block scripts %}

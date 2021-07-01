@@ -8,6 +8,7 @@
   {% if document.abstract %}
   <meta name="description" content="{{ document.abstract|html_unescape }}" />
   {% endif %}
+  <link rel="canonical" href="{{ document.leo_english_url }}">
 {% endblock %}
 
 {% block scripts %}
