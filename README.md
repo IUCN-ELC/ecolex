@@ -6,13 +6,13 @@ Ecolex.org
 
 #### Install using Docker
  
-In order to install the project for development, you have to clone this repo, gain access to the [ecolex.docker](https://gitlab.com/ecolex/ecolex.docker) gitlab repo and follow the instruction from there.
+In order to install the project for development, you have to clone this repo, gain access to the [ecolex.docker](https://github.com/IUCN-ELC/ecolex.docker) github repo and follow the instruction from there.
 
-The project uses 3 docker images ( web, maria and solr) and a docker-compose file located in the gitlab repo.
+The project uses 3 docker images ( web, maria and solr) and a docker-compose file is located in the [ecx](https://github.com/IUCN-ELC/ecolex.docker/tree/master/ecx) directory of `ecolex.docker`.
 
-The web image is build and pushed automatically in the following dockerhub repo: [web](https://hub.docker.com/r/iucn/ecolex_web/). 
+~~The web image is build and pushed automatically in the following dockerhub repo: [web](https://hub.docker.com/r/iucn/ecolex_web/). The image is rebuild on every push on the master branch of this repo.~~
 
-The image is rebuild on every push on the master branch of this repo. It is build using [this](/Dockerfile) Dockerfile. In the [docker](/docker) directory you can find a sh file(`docker-entrypoint.sh`) used as entrypoint for docker image, `ecolex.crontab` file containing cron tasks and files used for those tasks (`import_updater.sh`, `reprocess_from_db.sh`) .
+The `web` image is build using [this](/Dockerfile) Dockerfile. In the [docker](/docker) directory you can find a sh file(`docker-entrypoint.sh`) used as entrypoint for docker image, `ecolex.crontab` file containing cron tasks and files used for those tasks (`import_updater.sh`, `reprocess_from_db.sh`) .
  
 ## Django application
 
