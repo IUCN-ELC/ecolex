@@ -2,6 +2,7 @@ import json
 import logging
 import logging.config
 import tempfile
+import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 from collections import OrderedDict
@@ -11,6 +12,7 @@ from django.conf import settings
 from django.template.defaultfilters import slugify
 
 from ecolex.management.commands.logging import LOG_DICT
+from ecolex.management.commands.legislation import LegislationImporter
 from ecolex.management.definitions import LEGISLATION
 from ecolex.management.utils import EcolexSolr
 from ecolex.models import DocumentText
@@ -18,24 +20,22 @@ from ecolex.models import DocumentText
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('legislation_import')
 
-DOCUMENT = 'record'
-META = 'meta'
-CONTENT = 'content'
+DOCUMENT = 'document'
 REPEALED = 'repealed'
 IN_FORCE = 'in force'
 
 FIELD_MAP = {
     'id': 'legId',
-    'faolexId': 'legId',
-    'titleOfText': 'legTitle',
-    'longTitleOfText': 'legLongTitle',
-    'serialImprint': 'legSource',
+    'FaolexId': 'legId',
+    'Title_of_Text': 'legTitle',
+    'Long_Title_of_Text': 'legLongTitle',
+    'Serial_Imprint': 'legSource',
 
     'year': 'legYear',
     'originalYear': 'legOriginalYear',
 
     'entryIntoForce': 'legEntryIntoForce',
-    'country_ISO3': 'legCountry_iso',
+    'country_ISO': 'legCountry_iso',
     'country_en': 'legCountry_en',
     'country_fr': 'legCountry_fr',
     'country_es': 'legCountry_es',
@@ -52,22 +52,19 @@ FIELD_MAP = {
     'typeOfText_fr': 'legType_fr',
     'typeOfText_es': 'legType_es',
 
-    'relatedWebSite': 'legRelatedWebSite',
+    'Related_Web_Site': 'legRelatedWebSite',
     'recordLanguage': 'legLanguage_code',
     'documentLanguage_en': 'legLanguage_en',
 
     'textAbstract': 'legAbstract',
-    'abstract': 'legAbstract',
+    'Abstract': 'legAbstract',
     'subjectSelectionCode': 'legSubject_code',
     'subjectSelection_en': 'legSubject_en',
     'subjectSelection_fr': 'legSubject_fr',
     'subjectSelection_es': 'legSubject_es',
-    'keywordCode': 'legKeyword_code',
-    'keyword_en': 'legKeyword_en',
-    'keyword_fr': 'legKeyword_fr',
-    'keyword_es': 'legKeyword_es',
+    'keyword': 'legKeyword_code',
 
-    'implement': 'legImplement',
+    'implements': 'legImplement',
     'amends': 'legAmends',
     'repeals': 'legRepeals',
 
@@ -89,19 +86,12 @@ LANGUAGE_FIELDS = ['legLanguage_en', 'legLanguage_fr', 'legLanguage_es']
 
 
 def get_content(values):
-    values = [v.get(CONTENT, None) for v in values]
+    values = [v.string for v in values]
     return values
 
 
 def harvest_file(upfile):
-    if settings.DEBUG:
-        with tempfile.NamedTemporaryFile(prefix=upfile.name, delete=False) as f:
-            logger.debug('Dumping data to %s' % (f.name))
-            for chunk in upfile.chunks():
-                f.write(chunk)
-            upfile.seek(0)
-
-    bs = BeautifulSoup(upfile)
+    bs = BeautifulSoup(upfile, 'xml')
     documents = bs.findAll(DOCUMENT)
     legislations = []
     count_ignored = 0
@@ -129,24 +119,39 @@ def harvest_file(upfile):
             key = v['en2'].lower()
             all_languages[key] = v
 
+    resp = requests.get('http://extwprlegs1.fao.org/cgi-bin/xml.exe?database=valid&' \
+                        'search_type=query&table=all&query=T:desext&format_name=@XECOLEX&' \
+                        'lang=xmlf&page_header=@EXMLH&page_footer=@EXMLF&sort_name=@SNAME')
+
+    bs = BeautifulSoup(resp.content.decode(), 'xml')
+    keywords = bs.findAll('dictionary_term')
+
     for document in documents:
         legislation = {
             'type': LEGISLATION,
             'legLanguage_es': set(),
             'legLanguage_fr': set(),
+            'legKeyword_en': [],
+            'legKeyword_fr': [],
+            'legKeyword_es': [],
         }
 
         for k, v in FIELD_MAP.items():
-            field_values = get_content(document.findAll(META, {'name': k}))
+            field_values = get_content(document.findAll(k))
 
             if field_values and v not in MULTIVALUED_FIELDS:
                 field_values = field_values[0]
 
-            # if v in DATE_FIELDS and field_values:
-            #    field_values = get_date_format(field_values)
-
             if field_values:
                 legislation[v] = field_values
+
+            if k == 'keyword':
+                for field_value in field_values:
+                    for keyword in keywords:
+                        if keyword.Code.string == field_value:
+                            legislation['legKeyword_en'].append(keyword.Name_en_US.string)
+                            legislation['legKeyword_fr'].append(keyword.Name_fr_FR.string)
+                            legislation['legKeyword_es'].append(keyword.Name_es_ES.string)
 
         #  remove duplicates
         for field_name in MULTIVALUED_FIELDS:
@@ -198,12 +203,19 @@ def harvest_file(upfile):
             except Exception:
                 logger.debug('Error parsing legYear %s' % (legYear))
 
-        url_value = document.attrs.get('url', None)
-        if url_value:
-            legislation['legLinkToFullText'] = url_value
+        filenames = get_content(document.findAll('link_to_full_text'))
+        url_values = []
+        for filename in filenames:
+            if filename.endswith('.doc'):
+                path = "http://extwprlegs1.fao.org/docs/texts/"
+            elif filename.endswith('.html'):
+                path = "http://extwprlegs1.fao.org/docs/html/"
+            else:
+                path = "http://extwprlegs1.fao.org/docs/pdf/"
+            url_values.append(path + filename)
 
         if (REPEALED.upper() in
-                get_content(document.findAll(META, {'name': REPEALED}))):
+                get_content(document.findAll(REPEALED))):
             legislation['legStatus'] = REPEALED
         else:
             legislation['legStatus'] = IN_FORCE
@@ -220,7 +232,10 @@ def harvest_file(upfile):
         slug = title + ' ' + legislation.get('legId')
         legislation['slug'] = slugify(slug)
 
-        legislations.append(legislation)
+        for i in range(len(url_values)):
+            legislation_copy = dict(legislation)
+            legislation_copy['legLinkToFullText'] = url_values[i]
+            legislations.append(legislation_copy)
 
     response = add_legislations(legislations, count_ignored)
     return response
@@ -234,11 +249,15 @@ def add_legislations(legislations, count_ignored):
     updated_legislations = []
     failed_docs = []
 
+    config = settings.SOLR_IMPORT
+    importer_config = config['common']
+    importer_config.update(config['legislation'])
+    importer = LegislationImporter(importer_config)
+
     for legislation in legislations:
         leg_id = legislation.get('legId')
         doc, _ = DocumentText.objects.get_or_create(doc_id=leg_id)
         doc.doc_type = LEGISLATION
-        doc.status = DocumentText.INDEX_FAIL
         legislation['updatedDate'] = (datetime.now()
                                       .strftime('%Y-%m-%dT%H:%M:%SZ'))
         try:
@@ -266,8 +285,15 @@ def add_legislations(legislations, count_ignored):
     # hoping that add_bulk has better performance than add
     count_new = index_and_log(solr, new_legislations, new_docs)
     count_updated = index_and_log(solr, updated_legislations, updated_docs)
+
+    for doc in failed_docs:
+        importer.reindex_failed(doc)
+
+    logger.info('[Legislation] Update full text started.')
     for doc in new_docs + updated_docs + failed_docs:
         doc.save()
+        importer.update_full_text(doc)
+    logger.info('[Legislation] Update full text finished.')
 
     response = 'Total %d. Added %d. Updated %d. Failed %d. Ignored %d' % (
         len(legislations) + count_ignored,
@@ -331,7 +357,6 @@ def index_and_log(solr, legislations, docs):
         if not solr.add_bulk(legislations):
             return 0
         for doc in docs:
-            doc.status = DocumentText.INDEXED
             # no need to store what is already indexed in Solr
             doc.parsed_data = ''
     return len(legislations)
