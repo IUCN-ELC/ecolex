@@ -8,7 +8,7 @@ from django.conf import settings
 from ecolex.legislation import harvest_file
 
 class Command(BaseCommand):
-    help = 'Get XML and import data'
+    help = 'Get XML and import parsed data'
 
     def add_arguments(self, parser):
         parser.add_argument('--input_url', type=str, required=True)
@@ -16,9 +16,9 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         input_url = kwargs['input_url']
         resp = requests.get(input_url)
-        z = zipfile.ZipFile(io.BytesIO(resp.content))
-        z.extractall(settings.BASE_DIR)
+        with zipfile.ZipFile(io.BytesIO(resp.content)) as z:
+            z.extractall(settings.BASE_DIR)
+            filename = z.namelist()[0]
 
-        with open("faolex202107.txt", "r") as legislation_file:
+        with open(filename, "r") as legislation_file:
             response = harvest_file(legislation_file.read())
-            print(response)

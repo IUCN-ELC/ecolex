@@ -119,12 +119,12 @@ def harvest_file(upfile):
             key = v['en2'].lower()
             all_languages[key] = v
 
-    resp = requests.get('http://extwprlegs1.fao.org/cgi-bin/xml.exe?database=valid&' \
-                        'search_type=query&table=all&query=T:desext&format_name=@XECOLEX&' \
-                        'lang=xmlf&page_header=@EXMLH&page_footer=@EXMLF&sort_name=@SNAME')
-
+    resp = requests.get(settings.KEYWORDS_URL)
     bs = BeautifulSoup(resp.content.decode(), 'xml')
     keywords = bs.findAll('dictionary_term')
+    keyword_dict = {keyword.Code.string:[keyword.Name_en_US.string,
+                    keyword.Name_fr_FR.string, keyword.Name_es_ES.string]
+                    for keyword in keywords}
 
     for document in documents:
         legislation = {
@@ -147,11 +147,10 @@ def harvest_file(upfile):
 
             if k == 'keyword':
                 for field_value in field_values:
-                    for keyword in keywords:
-                        if keyword.Code.string == field_value:
-                            legislation['legKeyword_en'].append(keyword.Name_en_US.string)
-                            legislation['legKeyword_fr'].append(keyword.Name_fr_FR.string)
-                            legislation['legKeyword_es'].append(keyword.Name_es_ES.string)
+                    if field_value in keyword_dict:
+                        legislation['legKeyword_en'].append(keyword_dict[field_value][0])
+                        legislation['legKeyword_fr'].append(keyword_dict[field_value][1])
+                        legislation['legKeyword_es'].append(keyword_dict[field_value][2])
 
         #  remove duplicates
         for field_name in MULTIVALUED_FIELDS:
@@ -170,7 +169,7 @@ def harvest_file(upfile):
             else:
                 for lang_field in LANGUAGE_FIELDS:
                     legislation[lang_field].add(lang)
-                logger.error('Language not found %s' % (lang))
+                logger.error(f'Language not found {lang}')
 
         for lang_field in LANGUAGE_FIELDS:
             legislation[lang_field] = list(legislation[lang_field])
@@ -178,7 +177,7 @@ def harvest_file(upfile):
         if ('legTypeCode' in legislation):
             if legislation['legTypeCode'] == 'A':
                 # Ignore International agreements
-                logger.debug('Ignoring {}'.format(legislation.get('legId')))
+                logger.debug(f"Ignoring {legislation.get('legId')}")
                 count_ignored += 1
                 continue
 
@@ -201,17 +200,17 @@ def harvest_file(upfile):
                 legDate = datetime.strptime(legYear, '%Y')
                 legislation['legDate'] = legDate.strftime('%Y-%m-%dT%H:%M:%SZ')
             except Exception:
-                logger.debug('Error parsing legYear %s' % (legYear))
+                logger.debug(f'Error parsing legYear {legYear}')
 
         filenames = get_content(document.findAll('link_to_full_text'))
         url_values = []
         for filename in filenames:
             if filename.endswith('.doc'):
-                path = "http://extwprlegs1.fao.org/docs/texts/"
+                path = settings.DOC_URL
             elif filename.endswith('.html'):
-                path = "http://extwprlegs1.fao.org/docs/html/"
+                path = settings.HTML_URL
             else:
-                path = "http://extwprlegs1.fao.org/docs/pdf/"
+                path = settings.PDF_URL
             url_values.append(path + filename)
 
         if (REPEALED.upper() in
@@ -232,13 +231,12 @@ def harvest_file(upfile):
         slug = title + ' ' + legislation.get('legId')
         legislation['slug'] = slugify(slug)
 
-        for i in range(len(url_values)):
-            legislation_copy = dict(legislation)
-            legislation_copy['legLinkToFullText'] = url_values[i]
+        for url_value in url_values:
+            legislation_copy = legislation.copy()
+            legislation_copy['legLinkToFullText'] = url_value
             legislations.append(legislation_copy)
 
-    response = add_legislations(legislations, count_ignored)
-    return response
+    add_legislations(legislations, count_ignored)
 
 
 def add_legislations(legislations, count_ignored):
@@ -270,7 +268,7 @@ def add_legislations(legislations, count_ignored):
                 new_legislations.append(legislation)
                 new_docs.append(doc)
         except SolrError as e:
-            logger.error('Error importing legislation %s' % (leg_id,))
+            logger.error(f'Error importing legislation {leg_id}')
             failed_docs.append(doc)
             if settings.DEBUG:
                 logger.exception(e)
@@ -289,21 +287,16 @@ def add_legislations(legislations, count_ignored):
     for doc in failed_docs:
         importer.reindex_failed(doc)
 
-    logger.info('[Legislation] Update full text started.')
+    logger.info(f'[Legislation] Update full text started.')
     for doc in new_docs + updated_docs + failed_docs:
         doc.save()
         importer.update_full_text(doc)
-    logger.info('[Legislation] Update full text finished.')
+    logger.info(f'[Legislation] Update full text finished.')
 
-    response = 'Total %d. Added %d. Updated %d. Failed %d. Ignored %d' % (
-        len(legislations) + count_ignored,
-        count_new,
-        count_updated,
-        len(legislations) - count_new - count_updated,
-        count_ignored
-    )
-    return response
-
+    logger.info(f'Total {len(legislations) + count_ignored}. '
+                f'Added {count_new}. Updated {count_updated}. '
+                f'Failed {len(legislations) - count_new - count_updated}. '
+                f'Ignored {count_ignored}')
 
 def _set_values_from_dict(data, field, local_dict):
     id_field = 'legId'
@@ -319,19 +312,16 @@ def _set_values_from_dict(data, field, local_dict):
                 dict_value_fr = dict_values['fr']
                 dict_value_es = dict_values['es']
                 if val_fr != dict_value_fr:
-                    logger.debug('{}_fr name different: {} {} {}'.format(
-                                 field, data[id_field], val_fr,
-                                 dict_value_fr))
+                    logger.debug(f'{field}_fr name different: {data[id_field]} '
+                                 f'{val_fr} {dict_value_fr}')
                 new_values['fr'].append(dict_value_fr)
                 if val_es != dict_value_es:
-                    logger.debug('{}_es name different: {} {} {}'.format(
-                                 field, data[id_field], val_es,
-                                 dict_value_es))
+                    logger.debug(f'{field}_es name different: {data[id_field]} '
+                                 f'{val_es} {dict_value_es}')
                 new_values['es'].append(dict_value_es)
             else:
-                logger.warning('New {} name: {} {} {} {}'.format(
-                               field, data[id_field], val_en,
-                               val_fr, val_es))
+                logger.warning(f'New {field} name: {data[id_field]} {val_en} '
+                               f'{val_fr} {val_es}')
                 new_values['en'].append(val_en)
                 new_values['fr'].append(val_fr)
                 new_values['es'].append(val_es)
@@ -343,8 +333,7 @@ def _set_values_from_dict(data, field, local_dict):
                 for lang in langs:
                     new_values[lang].append(dict_values[lang])
             else:
-                logger.warning('New {}_en name: {} {}'.format(
-                               field, data[id_field], val_en))
+                logger.warning(f'New {field}_en name: {data[id_field]} {val_en}')
                 new_values['en'].append(val_en)
     for field in fields:
         data[field] = new_values[field[-2:]]

@@ -31,28 +31,28 @@ class LegislationImporter(object):
         # Check if already parsed
         text = None
         if obj.doc_size and obj.text:
-            logger.info('Checking content length of %s (%s)' %
-                        (obj.doc_id, obj.url,))
+            logger.info(f'Checking content length of '
+                        f'{obj.doc_id} ({obj.url})')
             doc_size = get_content_length_from_url(obj.url)
             if doc_size == obj.doc_size:
                 # File not changed, reuse obj.text
-                logger.debug('Not changed: %s' % (obj.url,))
+                logger.debug(f'Not changed: {obj.url}')
                 text = obj.text
 
         # Download file
         if not text:
-            logger.info('Downloading: %s (%s)' % (obj.doc_id, obj.url,))
+            logger.info(f'Downloading: {obj.doc_id} ({obj.url})')
             file_obj = get_file_from_url(obj.url)
             if not file_obj:
-                logger.error('Failed downloading: %s' % (obj.url,))
+                logger.error(f'Failed downloading: {obj.url}')
                 return
             doc_size = file_obj.getbuffer().nbytes
 
             # Extract text
-            logger.debug('Indexing: %s' % (obj.url,))
+            logger.debug(f'Indexing: {obj.url}')
             text = self.solr.extract(file_obj)
             if not text:
-                logger.warn('Nothing to index for %s' % (obj.url,))
+                logger.warn(f'Nothing to index for {obj.url}')
 
         # Load record and store text
         try:
@@ -60,29 +60,29 @@ class LegislationImporter(object):
             if legislation:
                 legislation = cleanup_copyfields(legislation)
         except SolrError as e:
-            logger.error('Error reading legislation %s' % (obj.doc_id,))
+            logger.error(f'Error reading legislation {obj.doc_id}')
             if settings.DEBUG:
                 logging.getLogger('solr').exception(e)
             return
 
         if not legislation:
-            logger.error('Failed to find legislation %s' % (obj.doc_id))
+            logger.error(f'Failed to find legislation {obj.doc_id}')
             return
 
         legislation['legText'] = text
         result = self.solr.add(legislation)
         if result:
-            logger.info('Success download & indexed: %s' % (obj.doc_id,))
+            logger.info(f'Success download & indexed: {obj.doc_id}')
             obj.doc_size = doc_size
             obj.text = text
             try:
                 obj.save()
             except OperationalError as e:
-                logger.error("DB insert error %s %s" % (obj.doc_id, e))
+                logger.error(f'DB insert error {obj.doc_id} {e}')
                 obj.text = None
                 obj.save()
         else:
-            logger.error('Failed doc extract %s %s' % (obj.url, legislation['id']))
+            logger.error(f"Failed doc extract {obj.url} {legislation['id']}")
 
     def reindex_failed(self, obj):
         legislation = json.loads(obj.parsed_data)
@@ -96,7 +96,7 @@ class LegislationImporter(object):
                     legislation['id'] = old_legislation['id']
                     legislation = cleanup_copyfields(legislation)
             except SolrError as e:
-                logger.error('Error reading legislation %s' % (obj.doc_id,))
+                logger.error(f'Error reading legislation {obj.doc_id}')
                 if settings.DEBUG:
                     logging.getLogger('solr').exception(e)
                 return
@@ -104,6 +104,6 @@ class LegislationImporter(object):
         if result:
             obj.parsed_data = ''
             obj.save()
-            logger.info('Success indexing: %s' % (obj.doc_id,))
+            logger.info(f'Success indexing: {obj.doc_id}')
         else:
-            logger.error('Failed to index: %s' % (obj.doc_id,))
+            logger.error(f'Failed to index: {obj.doc_id}')

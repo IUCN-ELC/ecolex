@@ -37,6 +37,13 @@ ALLOWED_HOSTS = ['*']
 # Selenium
 #TEST_RUNNER = 'django_selenium.selenium_runner.SeleniumTestRunner'
 
+# URLs used for legislation import
+DOC_URL = os.environ.get('DOC_URL')
+HTML_URL = os.environ.get('HTML_URL')
+PDF_URL = os.environ.get('PDF_URL')
+KEYWORDS_URL='http://extwprlegs1.fao.org/cgi-bin/xml.exe?database=valid&' \
+             'search_type=query&table=all&query=T:desext&format_name=@XECOLEX&' \
+             'lang=xmlf&page_header=@EXMLH&page_footer=@EXMLF&sort_name=@SNAME'
 
 # Application definition
 
