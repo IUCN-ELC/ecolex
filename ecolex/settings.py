@@ -38,12 +38,19 @@ ALLOWED_HOSTS = ['*']
 #TEST_RUNNER = 'django_selenium.selenium_runner.SeleniumTestRunner'
 
 # URLs used for legislation import
-DOC_URL = os.environ.get('DOC_URL')
-HTML_URL = os.environ.get('HTML_URL')
-PDF_URL = os.environ.get('PDF_URL')
-KEYWORDS_URL='http://extwprlegs1.fao.org/cgi-bin/xml.exe?database=valid&' \
-             'search_type=query&table=all&query=T:desext&format_name=@XECOLEX&' \
-             'lang=xmlf&page_header=@EXMLH&page_footer=@EXMLF&sort_name=@SNAME'
+DOC_URL = (os.environ.get('DOC_URL') or
+            'http://extwprlegs1.fao.org/docs/texts/')
+HTML_URL = (os.environ.get('HTML_URL') or
+            'http://extwprlegs1.fao.org/docs/html/')
+PDF_URL = (os.environ.get('PDF_URL') or
+            'http://extwprlegs1.fao.org/docs/pdf/')
+FULL_TEXT_URLS = {
+    'doc': DOC_URL,
+    'docx': DOC_URL,
+    'htm': HTML_URL,
+    'html': HTML_URL,
+    'pdf': PDF_URL,
+}
 
 # Application definition
 
@@ -301,11 +308,14 @@ SOLR_IMPORT = {
         'fao_countries_json': os.path.join(CONFIG_DIR, 'fao_countries.json'),
         'languages_json': os.path.join(CONFIG_DIR, 'languages.json'),
         'regions_json': os.path.join(CONFIG_DIR, 'regions.json'),
+        'regions_xml': os.path.join(CONFIG_DIR, 'regions.xml'),
         'subdivisions_json': os.path.join(CONFIG_DIR, 'subdivisions.json'),
         'keywords_json': os.path.join(CONFIG_DIR, 'keywords.json'),
+        'keywords_xml': os.path.join(CONFIG_DIR, 'keywords.xml'),
         'informea_keywords_json': os.path.join(
             CONFIG_DIR, 'informea_ecolex_json.json'),
         'subjects_json': os.path.join(CONFIG_DIR, 'subjects.json'),
+        'subjects_xml': os.path.join(CONFIG_DIR, 'subjects.xml'),
         'treaties_json': TREATIES,
         'informea_ecolex_json': os.path.join(CONFIG_DIR, 'informea_ecolex.json'),
     },

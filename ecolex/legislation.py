@@ -9,6 +9,7 @@ from collections import OrderedDict
 from pysolr import SolrError
 
 from django.conf import settings
+from django.utils import timezone
 from django.template.defaultfilters import slugify
 
 from ecolex.management.commands.logging import LOG_DICT
@@ -28,40 +29,27 @@ FIELD_MAP = {
     'id': 'legId',
     'FaolexId': 'legId',
     'Title_of_Text': 'legTitle',
-    'Long_Title_of_Text': 'legLongTitle',
+    'Long_Title_of_text': 'legLongTitle',
     'Serial_Imprint': 'legSource',
 
-    'year': 'legYear',
-    'originalYear': 'legOriginalYear',
+    'Date_of_Text': 'legDate',
 
-    'entryIntoForce': 'legEntryIntoForce',
+    'Entry_into_Force': 'legEntryIntoForce',
     'country_ISO': 'legCountry_iso',
-    'country_en': 'legCountry_en',
-    'country_fr': 'legCountry_fr',
-    'country_es': 'legCountry_es',
-    'territorialSubdivision_en': 'legTerritorialSubdivision',
-    'geographicalArea_en': 'legGeoArea_en',
-    'geographicalArea_fr': 'legGeoArea_fr',
-    'geographicalArea_es': 'legGeoArea_es',
+    'Territorial_Subdivision': 'legTerritorialSubdivision',
+    'Sub_file_code': 'legSubject_code',
     'basin_en': 'legBasin_en',
     'basin_fr': 'legBasin_fr',
     'basin_es': 'legBasin_es',
 
-    'typeOfTextCode': 'legTypeCode',
-    'typeOfText_en': 'legType_en',
-    'typeOfText_fr': 'legType_fr',
-    'typeOfText_es': 'legType_es',
+    'Type_of_Text': 'legTypeCode',
 
     'Related_Web_Site': 'legRelatedWebSite',
-    'recordLanguage': 'legLanguage_code',
-    'documentLanguage_en': 'legLanguage_en',
+    'Record_Language': 'legLanguage_code',
+    'Doc_Language': 'legLanguage_en',
 
-    'textAbstract': 'legAbstract',
     'Abstract': 'legAbstract',
-    'subjectSelectionCode': 'legSubject_code',
-    'subjectSelection_en': 'legSubject_en',
-    'subjectSelection_fr': 'legSubject_fr',
-    'subjectSelection_es': 'legSubject_es',
+    'mainClassifyingKeyword': 'legMainKeyword_code',
     'keyword': 'legKeyword_code',
 
     'implements': 'legImplement',
@@ -74,12 +62,11 @@ FIELD_MAP = {
 
 MULTIVALUED_FIELDS = [
     'legLanguage_en',
-    'legKeyword_code', 'legKeyword_en', 'legKeyword_fr', 'legKeyword_es',
-    'legGeoArea_en', 'legGeoArea_fr', 'legGeoArea_es',
+    'legKeyword_code',
     'legBasin_en', 'legBasin_fr', 'legBasin_es',
     'legImplement', 'legAmends', 'legRepeals', 'legImplementTreaty',
     'legCitesTreaty',
-    'legSubject_code', 'legSubject_en', 'legSubject_fr', 'legSubject_es',
+    'legSubject_code',
 ]
 
 LANGUAGE_FIELDS = ['legLanguage_en', 'legLanguage_fr', 'legLanguage_es']
@@ -96,14 +83,17 @@ def harvest_file(upfile):
     legislations = []
     count_ignored = 0
 
+    with open(settings.SOLR_IMPORT['common']['subjects_xml'], encoding='utf-8') as f:
+        bs = BeautifulSoup(f.read(), 'xml')
+        subjects = {subject.Classification_Sec_Area.string: subject
+                    for subject in bs.findAll('dictionary_term')}
+
+    with open(settings.SOLR_IMPORT['common']['keywords_xml'], encoding='utf-8') as f:
+        bs = BeautifulSoup(f.read(), 'xml')
+        keywords = {keyword.Code.string: keyword for keyword in bs.findAll('dictionary_term')}
+
     with open(settings.SOLR_IMPORT['common']['regions_json'], encoding='utf-8') as f:
         json_regions = json.load(f)
-
-    with open(settings.SOLR_IMPORT['common']['keywords_json'], encoding='utf-8') as f:
-        json_keywords = json.load(f)
-
-    with open(settings.SOLR_IMPORT['common']['subjects_json'], encoding='utf-8') as f:
-        json_subjects = json.load(f)
 
     with open(settings.SOLR_IMPORT['common']['fao_countries_json'], encoding='utf-8') as f:
         json_countries = json.load(f)
@@ -119,13 +109,6 @@ def harvest_file(upfile):
             key = v['en2'].lower()
             all_languages[key] = v
 
-    resp = requests.get(settings.KEYWORDS_URL)
-    bs = BeautifulSoup(resp.content.decode(), 'xml')
-    keywords = bs.findAll('dictionary_term')
-    keyword_dict = {keyword.Code.string:[keyword.Name_en_US.string,
-                    keyword.Name_fr_FR.string, keyword.Name_es_ES.string]
-                    for keyword in keywords}
-
     for document in documents:
         legislation = {
             'type': LEGISLATION,
@@ -134,6 +117,9 @@ def harvest_file(upfile):
             'legKeyword_en': [],
             'legKeyword_fr': [],
             'legKeyword_es': [],
+            'legSubject_en': [],
+            'legSubject_fr': [],
+            'legSubject_es': [],
         }
 
         for k, v in FIELD_MAP.items():
@@ -143,14 +129,13 @@ def harvest_file(upfile):
                 field_values = field_values[0]
 
             if field_values:
+                if v == 'legKeyword_code':
+                    if ('legMainKeyword_code' in legislation and
+                            'legMainKeyword_code' in field_values):
+                        field_values.insert(0, field_values.pop(
+                                field_values.index(legislation.get('legMainKeyword_code'))))
+                        del legislation['legMainKeyword_code']
                 legislation[v] = field_values
-
-            if k == 'keyword':
-                for field_value in field_values:
-                    if field_value in keyword_dict:
-                        legislation['legKeyword_en'].append(keyword_dict[field_value][0])
-                        legislation['legKeyword_fr'].append(keyword_dict[field_value][1])
-                        legislation['legKeyword_es'].append(keyword_dict[field_value][2])
 
         #  remove duplicates
         for field_name in MULTIVALUED_FIELDS:
@@ -174,16 +159,15 @@ def harvest_file(upfile):
         for lang_field in LANGUAGE_FIELDS:
             legislation[lang_field] = list(legislation[lang_field])
 
-        if ('legTypeCode' in legislation):
+        if 'legTypeCode' in legislation:
             if legislation['legTypeCode'] == 'A':
                 # Ignore International agreements
                 logger.debug(f"Ignoring {legislation.get('legId')}")
                 count_ignored += 1
                 continue
 
-        _set_values_from_dict(legislation, 'legGeoArea', json_regions)
-        _set_values_from_dict(legislation, 'legSubject', json_subjects)
-        _set_values_from_dict(legislation, 'legKeyword', json_keywords)
+        _set_values_from_dict2(legislation, 'legSubject_', subjects)
+        _set_values_from_dict2(legislation, 'legKeyword_', keywords)
 
         # overwrite countries with names from the dictionary
         iso_country = legislation.get('legCountry_iso')
@@ -194,24 +178,29 @@ def harvest_file(upfile):
                 legislation['legCountry_es'] = fao_country.get('es')
                 legislation['legCountry_fr'] = fao_country.get('fr')
 
-        legYear = legislation.get('legYear')
-        if legYear:
+                region = json_regions.get(fao_country.get('en'))
+                if region:
+                    legislation['legGeoArea_en'] = region.get('en')
+                    legislation['legGeoArea_fr'] = region.get('fr')
+                    legislation['legGeoArea_es'] = region.get('es')
+
+        if 'legDate' in legislation:
             try:
-                legDate = datetime.strptime(legYear, '%Y')
+                legDate = datetime.strptime(legislation.get('legDate'), '%Y-%m-%d')
+                legislation['legYear'] = legDate.strftime('%Y')
                 legislation['legDate'] = legDate.strftime('%Y-%m-%dT%H:%M:%SZ')
             except Exception:
-                logger.debug(f'Error parsing legYear {legYear}')
+                logger.debug(f"Error parsing legDate {legislation['legDate']}")
 
         filenames = get_content(document.findAll('link_to_full_text'))
         url_values = []
         for filename in filenames:
-            if filename.endswith('.doc'):
-                path = settings.DOC_URL
-            elif filename.endswith('.html'):
-                path = settings.HTML_URL
+            extension = filename.rsplit('.')[-1]
+            url = settings.FULL_TEXT_URLS.get(extension.lower())
+            if url:
+                url_values.append(f'{url}{filename}')
             else:
-                path = settings.PDF_URL
-            url_values.append(path + filename)
+                logger.error(f'URL not found for {extension.lower()}')
 
         if (REPEALED.upper() in
                 get_content(document.findAll(REPEALED))):
@@ -251,10 +240,18 @@ def add_legislations(legislations, count_ignored):
     importer_config = config['common']
     importer_config.update(config['legislation'])
     importer = LegislationImporter(importer_config)
+    local_time = timezone.now()
 
     for legislation in legislations:
         leg_id = legislation.get('legId')
-        doc, _ = DocumentText.objects.get_or_create(doc_id=leg_id)
+        docs = DocumentText.objects.filter(doc_id=leg_id,
+                updated_datetime__lt=local_time).order_by('updated_datetime')
+
+        if not docs:
+            doc = DocumentText.objects.create(doc_id=leg_id)
+        else:
+            doc = docs[0]
+
         doc.doc_type = LEGISLATION
         legislation['updatedDate'] = (datetime.now()
                                       .strftime('%Y-%m-%dT%H:%M:%SZ'))
@@ -274,10 +271,11 @@ def add_legislations(legislations, count_ignored):
                 logger.exception(e)
 
         doc.parsed_data = json.dumps(legislation)
-        if (doc.url != legislation['legLinkToFullText']):
-            doc.url = legislation['legLinkToFullText']
+        if (doc.url != legislation.get('legLinkToFullText')):
+            doc.url = legislation.get('legLinkToFullText')
             # will not re-parse if same url and doc_size
             doc.doc_size = None
+        doc.save()
 
     # Mix of exceptions and True/False return status
     # hoping that add_bulk has better performance than add
@@ -297,6 +295,17 @@ def add_legislations(legislations, count_ignored):
                 f'Added {count_new}. Updated {count_updated}. '
                 f'Failed {len(legislations) - count_new - count_updated}. '
                 f'Ignored {count_ignored}')
+
+def _set_values_from_dict2(data, field, local_dict):
+    if (field + 'code') not in data:
+        return
+
+    for field_value in data[field + 'code']:
+        if field_value in local_dict:
+            data[field + 'en'].append(local_dict.get(field_value).Name_en_US.string)
+            data[field + 'fr'].append(local_dict.get(field_value).Name_fr_FR.string)
+            data[field + 'es'].append(local_dict.get(field_value).Name_es_ES.string)
+
 
 def _set_values_from_dict(data, field, local_dict):
     id_field = 'legId'
