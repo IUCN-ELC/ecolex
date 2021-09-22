@@ -92,7 +92,7 @@ def harvest_file(upfile):
         bs = BeautifulSoup(f.read(), 'xml')
         keywords = {keyword.Code.string: keyword for keyword in bs.findAll('dictionary_term')}
 
-    with open(settings.SOLR_IMPORT['common']['regions_json'], encoding='utf-8') as f:
+    with open(settings.SOLR_IMPORT['common']['leg_regions_json'], encoding='utf-8') as f:
         json_regions = json.load(f)
 
     with open(settings.SOLR_IMPORT['common']['fao_countries_json'], encoding='utf-8') as f:

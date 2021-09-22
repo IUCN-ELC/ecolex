@@ -26,6 +26,6 @@ class Command(BaseCommand):
                     regions_dict[country]['fr'].append(region.Name_fr_FR.string)
                     regions_dict[country]['es'].append(region.Name_es_ES.string)
 
-        with open(settings.SOLR_IMPORT['common']['regions_json'], "w",
+        with open(settings.SOLR_IMPORT['common']['leg_regions_json'], "w",
                                             encoding="utf-8") as f_out:
-            json.dump(regions_dict, f_out, indent=4, ensure_ascii=False)
+            json.dump(regions_dict, f_out, indent=2, ensure_ascii=False)

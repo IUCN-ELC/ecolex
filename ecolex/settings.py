@@ -308,6 +308,7 @@ SOLR_IMPORT = {
         'fao_countries_json': os.path.join(CONFIG_DIR, 'fao_countries.json'),
         'languages_json': os.path.join(CONFIG_DIR, 'languages.json'),
         'regions_json': os.path.join(CONFIG_DIR, 'regions.json'),
+        'leg_regions_json': os.path.join(CONFIG_DIR, 'leg_regions.json'),
         'regions_xml': os.path.join(CONFIG_DIR, 'regions.xml'),
         'subdivisions_json': os.path.join(CONFIG_DIR, 'subdivisions.json'),
         'keywords_json': os.path.join(CONFIG_DIR, 'keywords.json'),
