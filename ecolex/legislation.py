@@ -49,8 +49,8 @@ FIELD_MAP = {
     'Doc_Language': 'legLanguage_en',
 
     'Abstract': 'legAbstract',
-    'mainClassifyingKeyword': 'legMainKeyword_code',
     'keyword': 'legKeyword_code',
+    'mainClassifyingKeyword': 'legMainKeyword_code',
 
     'implements': 'legImplement',
     'amends': 'legAmends',
@@ -114,6 +114,7 @@ def harvest_file(upfile):
             'type': LEGISLATION,
             'legLanguage_es': set(),
             'legLanguage_fr': set(),
+            'legKeyword_code': [],
             'legKeyword_en': [],
             'legKeyword_fr': [],
             'legKeyword_es': [],
@@ -129,13 +130,12 @@ def harvest_file(upfile):
                 field_values = field_values[0]
 
             if field_values:
-                if v == 'legKeyword_code':
-                    if ('legMainKeyword_code' in legislation and
-                            'legMainKeyword_code' in field_values):
-                        field_values.insert(0, field_values.pop(
-                                field_values.index(legislation.get('legMainKeyword_code'))))
-                        del legislation['legMainKeyword_code']
-                legislation[v] = field_values
+                if v == 'legMainKeyword_code':
+                    if field_values in legislation['legKeyword_code']:
+                        legislation['legKeyword_code'].remove(field_values)
+                    legislation['legKeyword_code'].insert(0, field_values)
+                else:
+                    legislation[v] = field_values
 
         #  remove duplicates
         for field_name in MULTIVALUED_FIELDS:
@@ -166,23 +166,23 @@ def harvest_file(upfile):
                 count_ignored += 1
                 continue
 
-        _set_values_from_dict2(legislation, 'legSubject_', subjects)
-        _set_values_from_dict2(legislation, 'legKeyword_', keywords)
+        _set_language_fields(legislation, 'legSubject_', subjects)
+        _set_language_fields(legislation, 'legKeyword_', keywords)
 
         # overwrite countries with names from the dictionary
         iso_country = legislation.get('legCountry_iso')
         if iso_country:
             fao_country = json_countries.get(iso_country)
             if fao_country:
-                legislation['legCountry_en'] = fao_country.get('en')
-                legislation['legCountry_es'] = fao_country.get('es')
-                legislation['legCountry_fr'] = fao_country.get('fr')
+                legislation['legCountry_en'] = fao_country.get('en', [])
+                legislation['legCountry_es'] = fao_country.get('es', [])
+                legislation['legCountry_fr'] = fao_country.get('fr', [])
 
                 region = json_regions.get(fao_country.get('en'))
                 if region:
-                    legislation['legGeoArea_en'] = region.get('en')
-                    legislation['legGeoArea_fr'] = region.get('fr')
-                    legislation['legGeoArea_es'] = region.get('es')
+                    legislation['legGeoArea_en'] = region.get('en', [])
+                    legislation['legGeoArea_fr'] = region.get('fr', [])
+                    legislation['legGeoArea_es'] = region.get('es', [])
 
         if 'legDate' in legislation:
             try:
@@ -195,8 +195,8 @@ def harvest_file(upfile):
         filenames = get_content(document.findAll('link_to_full_text'))
         url_values = []
         for filename in filenames:
-            extension = filename.rsplit('.')[-1]
-            url = settings.FULL_TEXT_URLS.get(extension.lower())
+            extension = filename.rsplit('.')[-1].lower()
+            url = settings.FULL_TEXT_URLS.get(extension)
             if url:
                 url_values.append(f'{url}{filename}')
             else:
@@ -296,18 +296,26 @@ def add_legislations(legislations, count_ignored):
                 f'Failed {len(legislations) - count_new - count_updated}. '
                 f'Ignored {count_ignored}')
 
-def _set_values_from_dict2(data, field, local_dict):
-    if (field + 'code') not in data:
-        return
+def _set_language_fields(data, field, local_dict):
+    """
+    Set language fields (en, fr, es) for keywords and regions
+    from dictionary, searching by codes found in new format XML
+    """
 
-    for field_value in data[field + 'code']:
+    for field_value in data.get(f'{field}code', []):
         if field_value in local_dict:
-            data[field + 'en'].append(local_dict.get(field_value).Name_en_US.string)
-            data[field + 'fr'].append(local_dict.get(field_value).Name_fr_FR.string)
-            data[field + 'es'].append(local_dict.get(field_value).Name_es_ES.string)
+            data[f'{field}en'].append(local_dict.get(field_value).Name_en_US.string)
+            data[f'{field}fr'].append(local_dict.get(field_value).Name_fr_FR.string)
+            data[f'{field}es'].append(local_dict.get(field_value).Name_es_ES.string)
 
 
+# deprecated
 def _set_values_from_dict(data, field, local_dict):
+    """
+    Switch language fields (en, fr, es) given in old format XML
+    with updated values from internal dictionary
+    """
+
     id_field = 'legId'
     langs = ['en', 'fr', 'es']
     fields = ['{}_{}'.format(field, lang_code) for lang_code in langs]

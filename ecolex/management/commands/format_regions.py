@@ -13,7 +13,7 @@ class Command(BaseCommand):
                                             encoding="utf-8") as f_in:
             bs = BeautifulSoup(f_in.read(), 'xml')
             for region in bs.findAll('dictionary_term'):
-                countries = region.Region_Countries.string.rsplit('; \n')
+                countries = region.Region_Countries.string.split('; \n')
                 countries[-1] = countries[-1].strip('; ')
                 for country in countries:
                     if country not in regions_dict:
