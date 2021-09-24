@@ -174,9 +174,9 @@ def harvest_file(upfile):
         if iso_country:
             fao_country = json_countries.get(iso_country)
             if fao_country:
-                legislation['legCountry_en'] = fao_country.get('en', [])
-                legislation['legCountry_es'] = fao_country.get('es', [])
-                legislation['legCountry_fr'] = fao_country.get('fr', [])
+                legislation['legCountry_en'] = fao_country.get('en')
+                legislation['legCountry_es'] = fao_country.get('es')
+                legislation['legCountry_fr'] = fao_country.get('fr')
 
                 region = json_regions.get(fao_country.get('en'))
                 if region:
@@ -200,7 +200,7 @@ def harvest_file(upfile):
             if url:
                 url_values.append(f'{url}{filename}')
             else:
-                logger.error(f'URL not found for {extension.lower()}')
+                logger.error(f'URL not found for {extension}')
 
         if (REPEALED.upper() in
                 get_content(document.findAll(REPEALED))):
