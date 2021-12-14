@@ -3,8 +3,10 @@ import logging
 import logging.config
 import tempfile
 import requests
+import unicodedata
 from bs4 import BeautifulSoup
 from datetime import datetime
+from dateutil import parser
 from collections import OrderedDict
 from pysolr import SolrError
 
@@ -70,6 +72,11 @@ MULTIVALUED_FIELDS = [
 ]
 
 LANGUAGE_FIELDS = ['legLanguage_en', 'legLanguage_fr', 'legLanguage_es']
+
+
+def strip_accents(s):
+   return ''.join(c for c in unicodedata.normalize('NFD', s)
+                  if unicodedata.category(c) != 'Mn')
 
 
 def get_content(values):
@@ -147,14 +154,14 @@ def harvest_file(upfile):
         langs = legislation.get('legLanguage_en', [])
         legislation['legLanguage_en'] = set()
         for lang in langs:
-            key = lang.lower()
+            key = strip_accents(lang.lower().strip())
             if key in all_languages:
                 for lang_field in LANGUAGE_FIELDS:
                     legislation[lang_field].add(all_languages[key][lang_field[-2:]])
             else:
                 for lang_field in LANGUAGE_FIELDS:
                     legislation[lang_field].add(lang)
-                logger.error(f'Language not found {lang}')
+                logger.error(f"Language not found {lang} {legislation.get('legId')}")
 
         for lang_field in LANGUAGE_FIELDS:
             legislation[lang_field] = list(legislation[lang_field])
@@ -186,11 +193,12 @@ def harvest_file(upfile):
 
         if 'legDate' in legislation:
             try:
-                legDate = datetime.strptime(legislation.get('legDate'), '%Y-%m-%d')
+                legDate = parser.parse(legislation.get('legDate'))
                 legislation['legYear'] = legDate.strftime('%Y')
                 legislation['legDate'] = legDate.strftime('%Y-%m-%dT%H:%M:%SZ')
             except Exception:
-                logger.debug(f"Error parsing legDate {legislation['legDate']}")
+                logger.debug(f"Error parsing legDate {legislation.get('legDate')} "
+                             f"for legislation.get('legId')")
 
         filenames = get_content(document.findAll('link_to_full_text'))
         url_values = []
@@ -244,6 +252,7 @@ def add_legislations(legislations, count_ignored):
 
     for legislation in legislations:
         leg_id = legislation.get('legId')
+        logger.info(f"[Legislation] {leg_id}")
         docs = DocumentText.objects.filter(doc_id=leg_id,
                 updated_datetime__lt=local_time).order_by('updated_datetime')
 
@@ -275,7 +284,12 @@ def add_legislations(legislations, count_ignored):
             doc.url = legislation.get('legLinkToFullText')
             # will not re-parse if same url and doc_size
             doc.doc_size = None
-        doc.save()
+
+        try:
+            doc.save()
+        except Exception as e:
+            if settings.DEBUG:
+                logger.exception(e)
 
     # Mix of exceptions and True/False return status
     # hoping that add_bulk has better performance than add
