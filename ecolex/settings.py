@@ -301,7 +301,7 @@ TREATIES = os.path.join(CONFIG_DIR, 'treaties.json')
 
 SOLR_IMPORT = {
     'common': {
-        'solr_timeout': 100,
+        'solr_timeout': 1000,
         'countries_json': os.path.join(CONFIG_DIR, 'countries.json'),
         'fao_countries_json': os.path.join(CONFIG_DIR, 'fao_countries.json'),
         'languages_json': os.path.join(CONFIG_DIR, 'languages.json'),
