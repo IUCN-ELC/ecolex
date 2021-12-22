@@ -199,9 +199,9 @@ def harvest_file(upfile):
                 legislation["legYear"] = legDate.strftime("%Y")
                 legislation["legDate"] = legDate.strftime("%Y-%m-%dT%H:%M:%SZ")
             except Exception:
-                del legislation["legDate"]
                 logger.debug(f"Error parsing legDate {legislation.get('legDate')} "
-                             f"for legislation.get('legId')")
+                             f"for {legislation.get('legId')}")
+                del legislation["legDate"]
 
         filenames = get_content(document.findall("link_to_full_text"))
         url_values = []
