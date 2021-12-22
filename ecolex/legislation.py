@@ -4,6 +4,7 @@ import logging.config
 import tempfile
 import requests
 import unicodedata
+import lxml.etree as ET
 from bs4 import BeautifulSoup
 from datetime import datetime
 from dateutil import parser
@@ -81,14 +82,13 @@ def strip_accents(s):
 
 
 def get_content(values):
-    values = [v.string for v in values]
+    values = [v.text for v in values]
     return values
 
 
 def harvest_file(upfile):
     logger.info(f"[Legislation] Harvest file started.")
-    bs = BeautifulSoup(upfile, "xml")
-    documents = bs.findAll(DOCUMENT)
+    documents = ET.fromstring(upfile, parser=ET.XMLParser(recover=True))
     legislations = []
     count_ignored = 0
 
@@ -118,7 +118,7 @@ def harvest_file(upfile):
             key = v["en2"].lower()
             all_languages[key] = v
 
-    for document in documents:
+    for document in documents.iter("document"):
         legislation = {
             "type": LEGISLATION,
             "legLanguage_es": set(),
@@ -133,7 +133,7 @@ def harvest_file(upfile):
         }
 
         for k, v in FIELD_MAP.items():
-            field_values = get_content(document.findAll(k))
+            field_values = get_content(document.findall(k))
 
             if field_values and v not in MULTIVALUED_FIELDS:
                 field_values = field_values[0]
@@ -203,7 +203,7 @@ def harvest_file(upfile):
                 logger.debug(f"Error parsing legDate {legislation.get('legDate')} "
                              f"for legislation.get('legId')")
 
-        filenames = get_content(document.findAll("link_to_full_text"))
+        filenames = get_content(document.findall("link_to_full_text"))
         url_values = []
         for filename in filenames:
             extension = filename.rsplit(".")[-1].lower()
@@ -214,7 +214,7 @@ def harvest_file(upfile):
                 logger.error(f"URL not found for {extension}")
 
         if (REPEALED.upper() in
-                get_content(document.findAll(REPEALED))):
+                get_content(document.findall(REPEALED))):
             legislation["legStatus"] = REPEALED
         else:
             legislation["legStatus"] = IN_FORCE

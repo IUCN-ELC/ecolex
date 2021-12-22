@@ -20,5 +20,5 @@ class Command(BaseCommand):
             z.extractall(settings.BASE_DIR)
             filename = z.namelist()[0]
 
-        with open(filename, "r") as legislation_file:
-            response = harvest_file(legislation_file.read())
+        with open(filename, "rb") as legislation_file:
+            harvest_file(legislation_file.read())

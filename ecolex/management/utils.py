@@ -29,7 +29,7 @@ def get_content_length_from_url(url):
         url = 'http://' + url
     try:
         response = requests.head(url, timeout=10)
-        return int(response.headers['Content-Length'])
+        return int(response.headers.get('Content-Length', '0'))
     except:
         if settings.DEBUG:
             logger.exception('Error checking file {}'.format(url))
