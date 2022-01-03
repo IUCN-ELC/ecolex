@@ -50,6 +50,29 @@ FULL_TEXT_URLS = {
     'pdf': PDF_URL,
 }
 
+DOC_TYPES = {
+    'L': {
+        'en': 'Legislation',
+        'fr': 'Législation',
+        'es': 'Legislación',
+    },
+    'C': {
+        'en': 'Constitution',
+        'fr': 'Constitution',
+        'es': 'Constitución',
+    },
+    'M': {
+        'en': 'Miscellaneous',
+        'fr': 'Miscellaneous',
+        'es': 'Miscelanea',
+    },
+    'R': {
+        'en': 'Regulation',
+        'fr': 'Règlement',
+        'es': 'Reglamento',
+    },
+}
+
 # Application definition
 
 INSTALLED_APPS = (

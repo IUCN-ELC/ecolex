@@ -2,15 +2,15 @@ import json
 import logging
 import logging.config
 import tempfile
-import requests
 import unicodedata
+from datetime import datetime
+from collections import OrderedDict
+
+import requests
 import lxml.etree as ET
 from bs4 import BeautifulSoup
-from datetime import datetime
 from dateutil import parser
-from collections import OrderedDict
 from pysolr import SolrError
-
 from django.conf import settings
 from django.utils import timezone
 from django.template.defaultfilters import slugify
@@ -168,12 +168,16 @@ def harvest_file(upfile):
         for lang_field in LANGUAGE_FIELDS:
             legislation[lang_field] = list(legislation[lang_field])
 
-        if "legTypeCode" in legislation:
-            if legislation["legTypeCode"] == "A":
-                # Ignore International agreements
-                logger.debug(f"Ignoring {legislation.get('legId')}")
-                count_ignored += 1
-                continue
+        legTypeCode = legislation.get("legTypeCode")
+        if legTypeCode and legTypeCode == "A":
+            # Ignore International agreements
+            logger.debug(f"Ignoring {legislation.get('legId')}")
+            count_ignored += 1
+            continue
+        elif legTypeCode in settings.DOC_TYPES:
+            legislation["legType_en"] = settings.DOC_TYPES[legTypeCode].get("en")
+            legislation["legType_fr"] = settings.DOC_TYPES[legTypeCode].get("fr")
+            legislation["legType_es"] = settings.DOC_TYPES[legTypeCode].get("es")
 
         _set_language_fields(legislation, "legSubject_", subjects)
         _set_language_fields(legislation, "legKeyword_", keywords)
