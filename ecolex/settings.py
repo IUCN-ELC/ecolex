@@ -37,6 +37,41 @@ ALLOWED_HOSTS = ['*']
 # Selenium
 #TEST_RUNNER = 'django_selenium.selenium_runner.SeleniumTestRunner'
 
+# URLs used for legislation import
+DOC_URL = os.environ.get('DOC_URL', 'http://extwprlegs1.fao.org/docs/texts/')
+HTML_URL = os.environ.get('HTML_URL', 'http://extwprlegs1.fao.org/docs/html/')
+PDF_URL = os.environ.get('PDF_URL', 'http://extwprlegs1.fao.org/docs/pdf/')
+
+FULL_TEXT_URLS = {
+    'doc': DOC_URL,
+    'docx': DOC_URL,
+    'htm': HTML_URL,
+    'html': HTML_URL,
+    'pdf': PDF_URL,
+}
+
+DOC_TYPES = {
+    'L': {
+        'en': 'Legislation',
+        'fr': 'Législation',
+        'es': 'Legislación',
+    },
+    'C': {
+        'en': 'Constitution',
+        'fr': 'Constitution',
+        'es': 'Constitución',
+    },
+    'M': {
+        'en': 'Miscellaneous',
+        'fr': 'Miscellaneous',
+        'es': 'Miscelanea',
+    },
+    'R': {
+        'en': 'Regulation',
+        'fr': 'Règlement',
+        'es': 'Reglamento',
+    },
+}
 
 # Application definition
 
@@ -289,16 +324,20 @@ TREATIES = os.path.join(CONFIG_DIR, 'treaties.json')
 
 SOLR_IMPORT = {
     'common': {
-        'solr_timeout': 100,
+        'solr_timeout': 1000,
         'countries_json': os.path.join(CONFIG_DIR, 'countries.json'),
         'fao_countries_json': os.path.join(CONFIG_DIR, 'fao_countries.json'),
         'languages_json': os.path.join(CONFIG_DIR, 'languages.json'),
         'regions_json': os.path.join(CONFIG_DIR, 'regions.json'),
+        'leg_regions_json': os.path.join(CONFIG_DIR, 'leg_regions.json'),
+        'regions_xml': os.path.join(CONFIG_DIR, 'regions.xml'),
         'subdivisions_json': os.path.join(CONFIG_DIR, 'subdivisions.json'),
         'keywords_json': os.path.join(CONFIG_DIR, 'keywords.json'),
+        'keywords_xml': os.path.join(CONFIG_DIR, 'keywords.xml'),
         'informea_keywords_json': os.path.join(
             CONFIG_DIR, 'informea_ecolex_json.json'),
         'subjects_json': os.path.join(CONFIG_DIR, 'subjects.json'),
+        'subjects_xml': os.path.join(CONFIG_DIR, 'subjects.xml'),
         'treaties_json': TREATIES,
         'informea_ecolex_json': os.path.join(CONFIG_DIR, 'informea_ecolex.json'),
     },

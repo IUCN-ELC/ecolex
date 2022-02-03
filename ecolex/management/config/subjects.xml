@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<result db="valid">
+
+<dictionary_term>
+<ValID>CLA-FAOC001287</ValID>
+<Classification_Sec_Area>AG</Classification_Sec_Area>
+<Name_en_US><![CDATA[Agricultural & rural development]]></Name_en_US>
+<Name_fr_FR><![CDATA[Agriculture et développement rural]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Agricultura y desarrollo rural]]></Name_es_ES>
+<Name_ar_SA><![CDATA[التنمية الزراعية والريفية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[сельскохозяйственное развитие и развитие сельских районов]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[农业和农村发展]]></Name_zh_ZH>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC040151</ValID>
+<Classification_Sec_Area>AT</Classification_Sec_Area>
+<Name_en_US><![CDATA[Air & atmosphere]]></Name_en_US>
+<Name_fr_FR><![CDATA[Air et atmosphère]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Aire y atmósfera]]></Name_es_ES>
+<Name_ar_SA><![CDATA[الهواء والجو]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Воздух и атмосфера]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[空气及大气环境]]></Name_zh_ZH>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC001295</ValID>
+<Classification_Sec_Area>PL</Classification_Sec_Area>
+<Name_en_US><![CDATA[Cultivated plants]]></Name_en_US>
+<Name_fr_FR><![CDATA[Plantes cultivées]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Cultivos]]></Name_es_ES>
+<Name_ar_SA><![CDATA[النباتات المزروعة]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Культивируемые растения]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[种植植物]]></Name_zh_ZH>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC040152</ValID>
+<Classification_Sec_Area>EG</Classification_Sec_Area>
+<Name_en_US><![CDATA[Energy]]></Name_en_US>
+<Name_fr_FR><![CDATA[Énergie]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Energía]]></Name_es_ES>
+<Name_ar_SA><![CDATA[الطاقة]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Энергетика]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[能源]]></Name_zh_ZH>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC001294</ValID>
+<Classification_Sec_Area>EN</Classification_Sec_Area>
+<Name_en_US><![CDATA[Environment gen.]]></Name_en_US>
+<Name_fr_FR><![CDATA[Environnement gén.]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Medio ambiente gen.]]></Name_es_ES>
+<Name_ar_SA><![CDATA[البيئة بشكل عامّ]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Окружающая среда]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[环境]]></Name_zh_ZH>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC001291</ValID>
+<Classification_Sec_Area>FI</Classification_Sec_Area>
+<Name_en_US><![CDATA[Fisheries]]></Name_en_US>
+<Name_fr_FR><![CDATA[Pêche]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Pesca]]></Name_es_ES>
+<Name_ar_SA><![CDATA[مصايد الأسماك]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Рыболовство]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[渔业]]></Name_zh_ZH>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC001290</ValID>
+<Classification_Sec_Area>FD</Classification_Sec_Area>
+<Name_en_US><![CDATA[Food & nutrition]]></Name_en_US>
+<Name_fr_FR><![CDATA[Alimentation et nutrition]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Alimentación y nutrición]]></Name_es_ES>
+<Name_ar_SA><![CDATA[الغذاء والتغذية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Продовольствие и питание]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[食品与营养]]></Name_zh_ZH>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC001292</ValID>
+<Classification_Sec_Area>FO</Classification_Sec_Area>
+<Name_en_US><![CDATA[Forestry]]></Name_en_US>
+<Name_fr_FR><![CDATA[Forêts]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Bosques]]></Name_es_ES>
+<Name_ar_SA><![CDATA[الغابات]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Лесное хозяйство]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[林业]]></Name_zh_ZH>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC103673</ValID>
+<Classification_Sec_Area>GE</Classification_Sec_Area>
+<Name_en_US><![CDATA[General]]></Name_en_US>
+<Name_fr_FR><![CDATA[Général]]></Name_fr_FR>
+<Name_es_ES><![CDATA[General]]></Name_es_ES>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC001293</ValID>
+<Classification_Sec_Area>LA</Classification_Sec_Area>
+<Name_en_US><![CDATA[Land & soil]]></Name_en_US>
+<Name_fr_FR><![CDATA[Terre et sols]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Tierra y suelos]]></Name_es_ES>
+<Name_ar_SA><![CDATA[الأرض والتربة]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Земля и почва]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[土地和土壤]]></Name_zh_ZH>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC001289</ValID>
+<Classification_Sec_Area>AN</Classification_Sec_Area>
+<Name_en_US><![CDATA[Livestock]]></Name_en_US>
+<Name_fr_FR><![CDATA[Bétail]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Ganado]]></Name_es_ES>
+<Name_ar_SA><![CDATA[المواشي]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Животноводство]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[牲畜]]></Name_zh_ZH>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC040153</ValID>
+<Classification_Sec_Area>MR</Classification_Sec_Area>
+<Name_en_US><![CDATA[Mineral resources]]></Name_en_US>
+<Name_fr_FR><![CDATA[Ressources minérales]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Recursos minerales]]></Name_es_ES>
+<Name_ar_SA><![CDATA[الموارد المعدنية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Минеральные ресурсы]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[矿产资源]]></Name_zh_ZH>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC040154</ValID>
+<Classification_Sec_Area>SE</Classification_Sec_Area>
+<Name_en_US><![CDATA[Sea]]></Name_en_US>
+<Name_fr_FR><![CDATA[Mer]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Mar]]></Name_es_ES>
+<Name_ar_SA><![CDATA[البحر]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Море]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[海洋]]></Name_zh_ZH>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC040155</ValID>
+<Classification_Sec_Area>WT</Classification_Sec_Area>
+<Name_en_US><![CDATA[Waste & hazardous substances]]></Name_en_US>
+<Name_fr_FR><![CDATA[Déchets et substances dangereuses]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Desechos y sustancias peligrosas]]></Name_es_ES>
+<Name_ar_SA><![CDATA[النفايات والمواد الخطيرة]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Отходы и опасные вещества]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[废物及危险有害物质]]></Name_zh_ZH>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC001296</ValID>
+<Classification_Sec_Area>WA</Classification_Sec_Area>
+<Name_en_US><![CDATA[Water]]></Name_en_US>
+<Name_fr_FR><![CDATA[Eau]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Agua]]></Name_es_ES>
+<Name_ar_SA><![CDATA[المياه]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Вода]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[水资源]]></Name_zh_ZH>
+</dictionary_term>
+<dictionary_term>
+<ValID>CLA-FAOC001297</ValID>
+<Classification_Sec_Area>WB</Classification_Sec_Area>
+<Name_en_US><![CDATA[Wild species & ecosystems]]></Name_en_US>
+<Name_fr_FR><![CDATA[Espèces sauvages et écosystèmes]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Especies silvestres y ecosistemas]]></Name_es_ES>
+<Name_ar_SA><![CDATA[الأصناف البرية والنظم البيئية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Дикая природа и экосистемы]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[野生动植物和生态系统]]></Name_zh_ZH>
+</dictionary_term>
+
+
+
+
+
+
+ 
+
+
+
+
+  
+  
+ </result>
