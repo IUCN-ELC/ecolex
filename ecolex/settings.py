@@ -176,9 +176,11 @@ LOGGING = {
     'handlers': {
         # TODO dockerize this. use console.
         'logfile': {
-            'class': 'logging.handlers.WatchedFileHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs', 'django_errors.log'),
             'formatter': 'verbose',
+            'maxBytes': 10485760,
+            'backupCount': 10,
         }
     },
     'loggers': {
