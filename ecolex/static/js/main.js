@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-var S2U = $.fn.select2.amd.require('select2/utils');
+// var S2U = $.fn.select2.amd.require('select2/utils');
 
 var _DIACRITICS = $.fn.select2.amd.require('select2/diacritics');
 function _stripDiacritics (text) {
