@@ -8,12 +8,12 @@
   {% if document.abstract %}
   <meta name="description" content="{{ document.abstract|html_unescape }}" />
   {% endif %}
-  <link rel="canonical" href="http://www.fao.org/faolex/results/details/en/c/{{ document.document_id }}">
+  <link rel="canonical" href="https://www.fao.org/faolex/results/details/en/c/{{ document.document_id }}">
 {% endblock %}
 
 {% block scripts %}
   <script>
-    document.faolex_url = "http://www.fao.org/faolex/results/details/en/c/{{ document.document_id }}";
+    document.faolex_url = "https://www.fao.org/faolex/results/details/en/c/{{ document.document_id }}";
   </script>
 {% endblock %}
 
@@ -54,7 +54,7 @@
       <dt>{% trans 'Source' %}</dt>
       <dd>
         FAO,
-        <a target="_blank" href="http://www.fao.org/faolex/results/details/en/c/{{ document.document_id }}">FAOLEX</a>
+        <a target="_blank" href="https://www.fao.org/faolex/results/details/en/c/{{ document.document_id }}">FAOLEX</a>
       </dd>
 
       </dd>
