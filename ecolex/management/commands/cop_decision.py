@@ -289,7 +289,7 @@ class CopDecisionImporter(BaseImporter):
                     file_obj = get_file_from_url(url)
                     if file_obj:
                         logger.debug('Success downloading %s' % url)
-                        doc.text = self.solr.extract(file_obj)
+                        doc.text = self.solr.extract(file_obj) or ''
                         dec_text += doc.text
                         doc.status = DocumentText.FULL_INDEXED
                         doc.doc_size = file_obj.getbuffer().nbytes

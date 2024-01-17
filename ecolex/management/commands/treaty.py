@@ -424,7 +424,7 @@ class TreatyImporter(BaseImporter):
                     if file_obj:
                         # Download successful
                         try:
-                            treaty['trText'] += self.solr.extract(file_obj)
+                            treaty['trText'] += self.solr.extract(file_obj) or ''
                         except:
                             # SOLR error at pdf extraction
                             full_index = False
@@ -573,7 +573,7 @@ class TreatyImporter(BaseImporter):
                     if file_obj:
                         # Download successful
                         try:
-                            treaty_data['trText'] += self.solr.extract(file_obj)
+                            treaty_data['trText'] += self.solr.extract(file_obj) or ''
                         except:
                             # SOLR error at pdf extraction
                             full_index = False
