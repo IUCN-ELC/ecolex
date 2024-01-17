@@ -25,7 +25,7 @@ DOCUMENT = 'document'
 TOTAL_DOCS = 'numberresultsfound'
 PRESENTED_DOCS = 'numberresultspresented'
 NULL_DATE = format_date('0000-00-00')
-REMOTE_ID_FIELD = 'recid'
+REMOTE_ID_FIELD = 'Recid'
 B7 = 'International Environmental Law – Multilateral Agreements'
 URL_CHANGE_FROM = 'http://www.ecolex.org/server2.php/server2neu.php/'
 URL_CHANGE_TO = 'http://www.ecolex.org/server2neu.php/'
@@ -34,110 +34,109 @@ replace_url = lambda text: (URL_CHANGE_TO + text.split(URL_CHANGE_FROM)[-1]) if 
 FIELD_MAP = {
     REMOTE_ID_FIELD: 'trElisId',
     'informeauid': 'trInformeaId',
-    'dateofentry': 'trDateOfEntry',
-    'dateofmodification': 'trDateOfModification',
-    'dateoftext': 'trDateOfText',
-    'searchdate': 'trSearchDate',
+    'dateOfEntry': 'trDateOfEntry',
+    'dateOfModification': 'trDateOfModification',
+    'dateOfText': 'trDateOfText',
+    'dateOfText': 'trSearchDate',
 
-    'titleoftext': 'trTitleOfText_en',
-    'titleoftextsp': 'trTitleOfText_es',
-    'titleoftextfr': 'trTitleOfText_fr',
-    'titleoftextother': 'trTitleOfText_other',
+    'titleOfText': 'trTitleOfText_en',
+    'titleOfTextSp': 'trTitleOfText_es',
+    'titleOfTextFr': 'trTitleOfText_fr',
+    'titleOfTextOther': 'trTitleOfText_other',
 
-    'typeoftext': 'trTypeOfText_en',
-    'typeoftext_es_es': 'trTypeOfText_es',
-    'typeoftext_fr_fr': 'trTypeOfText_fr',
+    'typeOfText': 'trTypeOfText_en',
+    'typeOfText_es_ES': 'trTypeOfText_es',
+    'typeOfText_fr_FR': 'trTypeOfText_fr',
 
     'jurisdiction': 'trJurisdiction_en',
-    'jurisdiction_es_es': 'trJurisdiction_es',
-    'jurisdiction_fr_fr': 'trJurisdiction_fr',
+    'jurisdiction_es_ES': 'trJurisdiction_es',
+    'jurisdiction_fr_FR': 'trJurisdiction_fr',
 
-    'fieldofapplication': 'trFieldOfApplication_en',
-    'fieldofapplication_fr_fr': 'trFieldOfApplication_fr',
-    'fieldofapplication_es_es': 'trFieldOfApplication_es',
+    'fieldOfApplication': 'trFieldOfApplication_en',
+    'fieldOfApplication_fr_FR': 'trFieldOfApplication_fr',
+    'fieldOfApplication_es_ES': 'trFieldOfApplication_es',
 
     'subject': 'trSubject_en',
-    'subject_es_es': 'trSubject_es',
-    'subject_fr_fr': 'trSubject_fr',
+    'subject_es_ES': 'trSubject_es',
+    'subject_fr_FR': 'trSubject_fr',
 
-    'languageofdocument': 'trLanguageOfDocument_en',
+    'languageOfDocument': 'trLanguageOfDocument_en',
     'obsolete': 'trObsolete',
-    'enabledbytreaty': 'trEnabledByTreaty',
-    'placeofadoption': 'trPlaceOfAdoption',
+    'enabledByTreaty': 'trEnabledByTreaty',
+    'placeOfAdoption': 'trPlaceOfAdoption',
 
     'depository': 'trDepository_en',
-    'depository_fr_fr': 'trDepository_fr',
-    'depository_es_es': 'trDepository_es',
+    'depository_fr_FR': 'trDepository_fr',
+    'depository_es_ES': 'trDepository_es',
 
-    'entryintoforcedate': 'trEntryIntoForceDate',
+    'entryIntoForceDate': 'trEntryIntoForceDate',
     'keyword': 'trKeyword_en',
-    'keyword_es_es': 'trKeyword_es',
-    'keyword_fr_fr': 'trKeyword_fr',
+    'keyword_es_ES': 'trKeyword_es',
+    'keyword_fr_FR': 'trKeyword_fr',
 
     'abstract': 'trAbstract_en',
     'abstractEs': 'trAbstract_es',
     'abstractFr': 'trAbstract_fr',
 
     'comment': 'trComment',
-    'titleoftextshort': 'trTitleOfTextShort',
-    'titleabbreviation': 'trTitleAbbreviation',
+    'titleOfTextShort': 'trTitleOfTextShort',
+    'titleAbbreviation': 'trTitleAbbreviation',
 
     'basin': 'trBasin_en',
-    'basin_fr_fr': 'trBasin_fr',
-    'basin_es_es': 'trBasin_es',
+    'basin_fr_FR': 'trBasin_fr',
+    'basin_es_ES': 'trBasin_es',
 
-    'citiestreaty': 'trCitiesTreaty',
-    'confname': 'trConfName',
-    'courtname': 'trCourtName',
-    'dateoflastlegalaction': 'trDateOfLastLegalAction',
+    'confName': 'trConfName',
+    'courtName': 'trCourtName',
+    'dateOfLastLegalAction': 'trDateOfLastLegalAction',
 
-    'linktofulltext': 'trLinkToFullText_en',
-    'linktofulltextsp': 'trLinkToFullText_es',
-    'linktofulltextfr': 'trLinkToFullText_fr',
-    'linktofulltextother': 'trLinkToFullText_other',
-    'relatedwebsite': 'trRelatedWebSite',
-    'linktoabstract': 'trLinkToAbstract',
+    'linkToFullText': 'trLinkToFullText_en',
+    'linkToFullTextSp': 'trLinkToFullText_es',
+    'linkToFullTextFr': 'trLinkToFullText_fr',
+    'linkToFullTextOther': 'trLinkToFullText_other',
+    'relatedWebSite': 'trRelatedWebSite',
+    'linkToAbstract': 'trLinkToAbstract',
 
     'region': 'trRegion_en',
-    'region_fr_fr': 'trRegion_fr',
-    'region_es_es': 'trRegion_es',
-    'relevanttexttreaty': 'trRelevantTextTreaty',
-    'searchdate': 'trSearchDate',
-    'seatofcourt': 'trSeatOfCourt',
+    'region_fr_FR': 'trRegion_fr',
+    'region_es_ES': 'trRegion_es',
+    'relevantTextTreaty': 'trRelevantTextTreaty',
+    'searchDate': 'trSearchDate',
+    'seatOfCourt': 'trSeatOfCourt',
 
-    'supersedestreaty': 'trSupersedesTreaty',
-    'amendstreaty': 'trAmendsTreaty',
-    'citestreaty': 'trCitesTreaty',
+    'supersedesTreaty': 'trSupersedesTreaty',
+    'amendsTreaty': 'trAmendsTreaty',
+    'citesTreaty': 'trCitesTreaty',
 
-    'availablein': 'trAvailableIn',
-    'languageoftranslation': 'trLanguageOfTranslation',
-    'numberofpages': 'trNumberOfPages',
+    'availableIn': 'trAvailableIn',
+    'languageOfTranslation': 'trLanguageOfTranslation',
+    'numberOfPages': 'trNumberOfPages',
     'officialPublication': 'trOfficialPublication',
-    'InternetReference': 'trInternetReference_en',
-    'InternetReferenceFr': 'trInternetReference_fr',
-    'InternetReferenceEs': 'trInternetReference_es',
-    'InternetReferenceOther': 'trInternetReference_other',
+    'internetReference': 'trInternetReference_en',
+    'internetReferenceFr': 'trInternetReference_fr',
+    'internetReferenceEs': 'trInternetReference_es',
+    'internetReferenceOther': 'trInternetReference_other',
 
-    'dateofconsolidation': 'trDateOfConsolidation',
+    'dateOfConsolidation': 'trDateOfConsolidation',
 }
 
 PARTICIPANT_FIELDS = {
     'country': 'partyCountry_en',
-    'countryfr': 'partyCountry_fr',
-    'countrysp': 'partyCountry_es',
-    'entryintoforce': 'partyEntryIntoForce',
+    'countryFr': 'partyCountry_fr',
+    'countrySp': 'partyCountry_es',
+    'entryIntoForce': 'partyEntryIntoForce',
     'dateofratification': 'partyDateOfRatification',
-    'dateofaccessionapprobation': 'partyDateOfAccessionApprobation',
-    'dateofacceptanceapproval': 'partyDateOfAcceptanceApproval',
-    'dateofconsenttobebound': 'partyDateOfConsentToBeBound',
-    'dateofsuccession': 'partyDateOfSuccession',
-    'dateofdefinitesignature': 'partyDateOfDefiniteSignature',
-    'dateofsimplesignature': 'partyDateOfSimpleSignature',
-    'dateofprovisionalapplication': 'partyDateOfProvisionalApplication',
-    'dateofparticipation': 'partyDateOfParticipation',
-    'dateofdeclaration': 'partyDateOfDeclaration',
-    'dateofreservation': 'partyDateOfReservation',
-    'dateofwithdrawal': 'partyDateOfWithdrawal',
+    'dateOfAccessionApprobation': 'partyDateOfAccessionApprobation',
+    'dateOfAcceptanceApproval': 'partyDateOfAcceptanceApproval',
+    'dateOfConsentToBeBound': 'partyDateOfConsentToBeBound',
+    'dateOfSuccession': 'partyDateOfSuccession',
+    'dateOfDefiniteSignature': 'partyDateOfDefiniteSignature',
+    'dateOfSimpleSignature': 'partyDateOfSimpleSignature',
+    'dateOfProvisionalApplication': 'partyDateOfProvisionalApplication',
+    'dateOfParticipation': 'partyDateOfParticipation',
+    'dateOfDeclaration': 'partyDateOfDeclaration',
+    'dateOfReservation': 'partyDateOfReservation',
+    'dateOfWithdrawal': 'partyDateOfWithdrawal',
 }
 
 LANGUAGE_FIELDS = [
@@ -169,8 +168,8 @@ DATE_FIELDS = [
 ]
 
 URL_FIELDS = [
-    'linktofulltext', 'linktofulltextsp', 'linktofulltextfr',
-    'linktofulltextother'
+    'linkToFullText', 'linkToFullTextSp', 'linkToFullTextFr',
+    'linkToFullTextOther'
 ]
 
 FALSE_LIST_FIELDS = [
@@ -359,7 +358,7 @@ class TreatyImporter(BaseImporter):
                         field = getattr(party, k)
                         if v not in data:
                             data[v] = []
-                        if not field and k in ('countryfr', 'countrysp'):
+                        if not field and k in ('countryFr', 'countrySp'):
                             field = getattr(party, 'country')
                         if field:
                             clean_field = self._clean_text(field.text)
