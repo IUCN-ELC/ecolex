@@ -308,7 +308,7 @@ class TreatyImporter(BaseImporter):
     def _parse(self, raw_treaties):
         treaties = {}
         for raw_treaty in raw_treaties:
-            bs = BeautifulSoup(raw_treaty)
+            bs = BeautifulSoup(raw_treaty, 'xml')
             for document in bs.findAll(DOCUMENT):
                 data = {
                     'type': TREATY,

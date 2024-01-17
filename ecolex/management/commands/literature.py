@@ -325,7 +325,7 @@ class LiteratureImporter(BaseImporter):
         literatures = []
         unique_ids = set([])
         for raw_lit in raw_literatures:
-            bs = BeautifulSoup(raw_lit)
+            bs = BeautifulSoup(raw_lit, 'xml')
             for doc in bs.findAll(DOCUMENT):
                 data = {
                     'type': LITERATURE,
