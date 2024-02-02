@@ -1,5 +1,6 @@
 from datetime import datetime
 from html import unescape
+from urllib.parse import urlparse
 import logging
 import logging.config
 
@@ -29,7 +30,8 @@ def replace_url(text):
     return text
 
 
-JSON_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+# JSON_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+JSON_DATE_FORMAT = '%Y-%m-%d'
 SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 FIELD_MAP = {
     'title_field': 'cdTitleOfText',
@@ -91,7 +93,7 @@ FALSE_MULTILINGUAL_FIELDS = [
     'field_document_abstract',
     'field_court_name',
     'field_date_of_entry',
-    'field_sorting_date',
+    # 'field_sorting_date',
     'field_isis_number',
     'field_justices',
     'field_number_of_pages',
@@ -139,7 +141,10 @@ REFERENCE_FIELDS = {'field_ecolex_treaty_raw': 'value',
                     'field_faolex_reference_raw': 'value',
                     'field_court_decision_raw': 'value'}
 FILES_FIELDS = ['field_files', 'field_url']  # copy to cdLinkToFullText
-SOURCE_URL_FIELD = 'url'
+SOURCE_URL_FIELDS = [
+    'field_external_url_alt', # judicial portal
+    'url', # InforMEA
+]
 LANGUAGES = ['en', 'es', 'fr']
 
 
@@ -195,7 +200,8 @@ def get_value_from_dict(valdict):
         return None
 
 
-def get_json_values(import_field, import_value, json_dict, subject, doc_id):
+def get_json_values(import_field, import_value, json_dict, mapping_dict, doc_id):
+    print(f"field: {import_field}, value: {import_value}")
     values_en = get_value(import_field, import_value)
     result = {langcode: [] for langcode in LANGUAGES}
     for value in values_en:
@@ -203,7 +209,7 @@ def get_json_values(import_field, import_value, json_dict, subject, doc_id):
         if lower_value not in json_dict:
             result['en'].append(value)
             logger.warning('Key missing from {}.json: {} ({})'
-                           .format(subject, lower_value, doc_id))
+                           .format(mapping_dict, lower_value, doc_id))
             continue
         for k, v in result.items():
             v.append(json_dict[lower_value][k])
@@ -214,7 +220,7 @@ def request_json(url, *args, **kwargs):
     # needed to for retry
     s = requests.Session()
     s.mount(url, HTTPAdapter(max_retries=3))
-
+    print(f"request url {url}")
     try:
         return s.get(url, *args, **kwargs).json()
     except Exception:
@@ -266,6 +272,7 @@ class CourtDecision(object):
         }
         for json_field, solr_field in FIELD_MAP.items():
             json_value = self.data.get(json_field, None)
+            print(f"{json_field}={json_value}")
             if not json_value:
                 solr_decision[solr_field] = (None if solr_field
                                              not in solr_decision else
@@ -373,10 +380,12 @@ class CourtDecision(object):
                 solr_decision['cdText'] += '\n'.join(self.solr.extract(file_obj))
 
         # Get Leo URL
-        json_value = self.data.get(SOURCE_URL_FIELD, None)
-        if json_value:
-            solr_decision['cdLeoDefaultUrl'] = json_value.get('default', None)
-            solr_decision['cdLeoEnglishUrl'] = json_value.get('en', None)
+        for url_field in SOURCE_URL_FIELDS:
+            json_value = self.data.get(url_field, None)
+            if json_value:
+                solr_decision['cdLeoDefaultUrl'] = json_value.get('default', None)
+                solr_decision['cdLeoEnglishUrl'] = json_value.get('en', None)
+            break
 
         title = (solr_decision.get('cdTitleOfText_en') or
                  solr_decision.get('cdTitleOfText_fr') or
@@ -420,9 +429,10 @@ class CourtDecisionImporter(BaseImporter):
         if self.uuid:
             logger.info('Adding court decision {}'.format(self.uuid))
             solr_decision = self.solr.search(COURT_DECISION, self.uuid)
+            u = urlparse(self.base_url)
             node = {
                 'uuid': self.uuid,
-                'data_url': 'https://informea.org/node/%s/json' % self.uuid,
+                'data_url': f'{u.scheme}://{u.netloc}/node/{self.uuid}/json',
             }
             self._add_decision(node, solr_decision)
             return
@@ -467,6 +477,8 @@ class CourtDecisionImporter(BaseImporter):
     def _add_decision(self, node, solr_decision):
 
         data = request_json(node['data_url'])
+        if type(data) is list:
+            data = data[0]
 
         dec = CourtDecision(
             data,

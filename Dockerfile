@@ -25,6 +25,7 @@ RUN apt-get -y update &&\
     cron \
     curl \
     libyajl2 \
+    procps \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p $ECOLEX_HOME/ecolex \
