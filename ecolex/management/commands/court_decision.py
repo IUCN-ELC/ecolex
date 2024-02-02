@@ -39,7 +39,7 @@ FIELD_MAP = {
     'field_abstract_other': 'cdAbstract_other',
     'field_document_abstract': 'cdLinkToAbstract',
     'field_alternative_record_id': 'cdAlternativeRecordId',
-    'field_city': 'cdSeatOfCourt',
+    'field_seat_of_court': 'cdSeatOfCourt_en',
     'field_country': 'cdCountry',
     'field_court_decision_id_number': 'cdCourtDecisionIdNumber',
     'field_court_decision_subdivision': 'cdCourtDecisionSubdivision',
@@ -58,12 +58,11 @@ FIELD_MAP = {
     'field_number_of_pages': 'cdNumberOfPages',
     'field_original_id': 'cdOriginalId',
     'field_reference_number': 'cdReferenceNumber',
-    'field_related_url': 'cdRelatedUrl',  # relatedWebsite
+    'field_available_website': 'cdRelatedUrl',  # relatedWebsite
     'field_source_language': 'cdLanguageOfDocument',
     'field_territorial_subdivision': 'cdTerritorialSubdivision',
     'field_type_of_text': 'cdTypeOfText',
-    'field_url': 'cdLinkToFullText',
-    'field_url_other': 'cdLinkToFullText_other',
+    'field_external_url': 'cdLinkToFullText',
     'field_notes': 'cdNotes',
     'field_available_in': 'cdAvailableIn',
     'field_court_decision_raw': 'cdCourtDecisionReference',
@@ -82,18 +81,17 @@ MULTILINGUAL_FIELDS = [
     'field_abstract',
     'field_ecolex_url',
     'field_faolex_url',
-    'field_related_url',
-    'field_city',
+    'field_available_website',
 ]
 
-FIELD_URL = ['field_url', 'field_files']
+FILE_FIELDS = ['field_files', 'field_external_url']  # add to cdLinkToFullText
 
 FALSE_MULTILINGUAL_FIELDS = [
     'field_alternative_record_id',
     'field_document_abstract',
     'field_court_name',
+    'field_seat_of_court',
     'field_date_of_entry',
-    # 'field_sorting_date',
     'field_isis_number',
     'field_justices',
     'field_number_of_pages',
@@ -104,7 +102,7 @@ FALSE_MULTILINGUAL_FIELDS = [
     'field_title_of_text_short',
     'field_instance',
     'field_title_of_text_other',
-    'field_url_other',
+    'field_external_url_alt',
     'field_official_publication',
     'field_notes',
     'field_ecolex_treaty_raw',
@@ -140,10 +138,9 @@ SUBDIVISION_FIELDS = ['field_territorial_subdivision']
 REFERENCE_FIELDS = {'field_ecolex_treaty_raw': 'value',
                     'field_faolex_reference_raw': 'value',
                     'field_court_decision_raw': 'value'}
-FILES_FIELDS = ['field_files', 'field_url']  # copy to cdLinkToFullText
 SOURCE_URL_FIELDS = [
-    'field_external_url_alt', # judicial portal
-    'url', # InforMEA
+    'field_external_url_alt',  # judicial portal
+    'url',  # InforMEA
 ]
 LANGUAGES = ['en', 'es', 'fr']
 
@@ -161,6 +158,12 @@ def get_country_value(countries, value):
 def get_value(key, value):
     if not value:
         return
+
+    if type(value) is dict:
+        if key in FALSE_MULTILINGUAL_FIELDS and 'und' in value:
+            value = value.get('und')
+        elif key not in MULTILINGUAL_FIELDS and 'en' in value:
+            value = value.get('en')
 
     final_val = value
 
@@ -184,13 +187,18 @@ def get_value(key, value):
 
 
 def get_value_from_dict(valdict):
+    if 'und' in valdict or 'en' in valdict:
+        value = valdict.get('en') or valdict.get('und')
     value = valdict.get(
         'value',
         valdict.get(
             'safe_value',
             valdict.get(
                 'label',
-                valdict.get('url')
+                valdict.get(
+                    'url',
+                    valdict.get('uri')
+                )
             )
         )
     )
@@ -285,9 +293,12 @@ class CourtDecision(object):
             elif json_field in FALSE_MULTILINGUAL_FIELDS:
                 solr_decision[solr_field] = get_value(json_field,
                                                       json_value['und'])
-            elif json_field in FIELD_URL:
-                urls = [x.get('url') for x in json_value.get('en', [])
-                        if x.get('url')]
+            elif json_field in FILE_FIELDS:
+                urls = [
+                    x.get('uri') or x.get('url')
+                    for x in json_value.get('en', [])
+                    if x.get('uri') or x.get('url')
+                ]
                 if solr_decision['cdLinkToFullText'] is None:
                     solr_decision['cdLinkToFullText'] = []
                 for url in urls:
@@ -352,6 +363,7 @@ class CourtDecision(object):
                 solr_decision[solr_field] = get_value(json_field, json_value)
 
             if json_field in FULL_TEXT_FIELDS and json_value:
+                # Abstract is a file, should no longer happen
                 urls = [replace_url(d.get('url')) for val in json_value.values()
                         for d in val]
                 files = [get_file_from_url(url) for url in urls if url]
@@ -377,14 +389,16 @@ class CourtDecision(object):
         for url in full_text_urls:
             file_obj = get_file_from_url(url)
             if file_obj:
-                solr_decision['cdText'] += '\n'.join(self.solr.extract(file_obj))
+                text = self.solr.extract(file_obj) or ''
+                if type(text) is list:
+                    solr_decision['cdText'] += '\n'.join(text)
+                elif type(text) is str:
+                    solr_decision['cdText'] += '\n' + text
 
         # Get Leo URL
         for url_field in SOURCE_URL_FIELDS:
             json_value = self.data.get(url_field, None)
-            if json_value:
-                solr_decision['cdLeoDefaultUrl'] = json_value.get('default', None)
-                solr_decision['cdLeoEnglishUrl'] = json_value.get('en', None)
+            solr_decision['cdLeoEnglishUrl'] = get_value(url_field, json_value)
             break
 
         title = (solr_decision.get('cdTitleOfText_en') or
