@@ -12,6 +12,7 @@ import random
 
 from operator import itemgetter
 from itertools import chain
+from logging.config import dictConfig
 
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.definitions import (
@@ -19,7 +20,7 @@ from ecolex.management.definitions import (
 )
 
 
-logging.config.dictConfig(LOG_DICT)
+dictConfig(LOG_DICT)
 logger = logging.getLogger('import')
 HEADERS = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
@@ -179,11 +180,14 @@ class EcolexSolr(object):
             args.update({'stream.type': getattr(file, 'content_type', None)})
         try:
             response = self.solr.extract(file, **args)
+            # dict_keys(['responseHeader', 'file', 'file_metadata', 'contents', 'metadata'])
         except pysolr.SolrError as e:
             logger.error('Error extracting text from file %s' % (file.name,))
             if settings.DEBUG:
                 logging.getLogger('solr').exception(e)
             return ''
+        if response.get('file'):
+            return response['file']
         return response['contents']
 
 

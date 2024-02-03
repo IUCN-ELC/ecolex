@@ -209,7 +209,6 @@ def get_value_from_dict(valdict):
 
 
 def get_json_values(import_field, import_value, json_dict, mapping_dict, doc_id):
-    print(f"field: {import_field}, value: {import_value}")
     values_en = get_value(import_field, import_value)
     result = {langcode: [] for langcode in LANGUAGES}
     for value in values_en:
@@ -228,7 +227,6 @@ def request_json(url, *args, **kwargs):
     # needed to for retry
     s = requests.Session()
     s.mount(url, HTTPAdapter(max_retries=3))
-    print(f"request url {url}")
     try:
         return s.get(url, *args, **kwargs).json()
     except Exception:
@@ -280,7 +278,6 @@ class CourtDecision(object):
         }
         for json_field, solr_field in FIELD_MAP.items():
             json_value = self.data.get(json_field, None)
-            print(f"{json_field}={json_value}")
             if not json_value:
                 solr_decision[solr_field] = (None if solr_field
                                              not in solr_decision else
@@ -367,8 +364,12 @@ class CourtDecision(object):
                 urls = [replace_url(d.get('url')) for val in json_value.values()
                         for d in val]
                 files = [get_file_from_url(url) for url in urls if url]
-                solr_decision['cdText'] += '\n'.join(self.solr.extract(f)
-                                                     for f in files if f)
+                text = '\n'.join([
+                    self.solr.extract(f) or ''
+                    for f in files if f
+                ])
+                solr_decision['cdText'] += text
+
         # cdRegion fallback on field_ecolex_region
         if not solr_decision.get('cdRegion_en'):
             backup_field = 'field_ecolex_region'
@@ -390,10 +391,7 @@ class CourtDecision(object):
             file_obj = get_file_from_url(url)
             if file_obj:
                 text = self.solr.extract(file_obj) or ''
-                if type(text) is list:
-                    solr_decision['cdText'] += '\n'.join(text)
-                elif type(text) is str:
-                    solr_decision['cdText'] += '\n' + text
+                solr_decision['cdText'] += '\n' + text
 
         # Get Leo URL
         for url_field in SOURCE_URL_FIELDS:
