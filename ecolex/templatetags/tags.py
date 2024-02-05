@@ -55,7 +55,10 @@ def labelify(text):
 
 @register.filter
 def extract_filename(link):
-    return urlparse.unquote(basename(urlparse.urlparse(link).path))
+    filename = basename(urlparse.urlparse(link).path)
+    if not filename:
+        filename = urlparse.urlparse(link).hostname
+    return urlparse.unquote(filename)
 
 
 @register.filter

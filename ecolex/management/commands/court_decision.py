@@ -1,6 +1,9 @@
 from datetime import datetime
 from html import unescape
 from urllib.parse import urlparse
+
+from json.decoder import JSONDecodeError
+
 import logging
 import logging.config
 
@@ -104,7 +107,6 @@ FALSE_MULTILINGUAL_FIELDS = [
     'field_title_of_text_other',
     'field_external_url_alt',
     'field_official_publication',
-    'field_notes',
     'field_ecolex_treaty_raw',
     'field_faolex_reference_raw',
     'field_court_decision_raw',
@@ -139,8 +141,8 @@ REFERENCE_FIELDS = {'field_ecolex_treaty_raw': 'value',
                     'field_faolex_reference_raw': 'value',
                     'field_court_decision_raw': 'value'}
 SOURCE_URL_FIELDS = [
-    'field_external_url_alt',  # judicial portal
     'url',  # InforMEA
+    'field_external_url_alt',  # judicial portal
 ]
 LANGUAGES = ['en', 'es', 'fr']
 
@@ -278,6 +280,7 @@ class CourtDecision(object):
         }
         for json_field, solr_field in FIELD_MAP.items():
             json_value = self.data.get(json_field, None)
+            # print(f"field: {json_field}, value: {json_value}")
             if not json_value:
                 solr_decision[solr_field] = (None if solr_field
                                              not in solr_decision else
@@ -507,6 +510,8 @@ class CourtDecisionImporter(BaseImporter):
                 logger.info('Solr succesfully updated!')
             else:
                 logger.error('Error updating solr!')
+        except JSONDecodeError:
+            logger.error(f"Invalid JSON at {node['data_url']}")
         except Exception:
             logger.exception('Error updating solr!')
             raise
