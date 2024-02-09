@@ -1,0 +1,5 @@
+.env
+.git
+logs
+*.code-workspace
+*.sqlite3

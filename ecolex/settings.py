@@ -349,7 +349,7 @@ SOLR_IMPORT = {
         'start_page': 0,
         'max_page': 10,
         'force_update': False,
-        # 'uuid': 'f5af8a10-3118-45f5-b21d-8cf8c8b4d499',
+        # 'uuid': 'e7893fc1-e5e4-483d-a8ef-9a8f4512de39',
     },
     'treaty': {
         'treaties_url': 'http://www2.ecolex.org/elis_isis3w.php',

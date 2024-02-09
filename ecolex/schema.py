@@ -557,7 +557,6 @@ class CourtDecisionSchema(CommonSchema):
     language_of_document = fields.List(fields.String(),
                                        load_from='cdLanguageOfDocument',
                                        multilingual=True)
-    leo_default_url = fields.String(load_from='cdLeoDefaultUrl')
     leo_english_url = fields.String(load_from='cdLeoEnglishUrl')
     leo_id = fields.String(load_from='cdLeoId')
     link_to_full_text = fields.List(fields.String(),

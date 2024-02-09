@@ -119,7 +119,9 @@ class Decision(object):
 
         if files:
             uniq_on_url = functools.partial(uniq_on_key, 'url')
-            values = [f[0] for f in files.values()]
+            values = [
+                f for flist in files.values() for f in flist
+            ]
             unique_files = functools.reduce(uniq_on_url, values, [])
             return [f[name] for f in unique_files]
 
@@ -171,9 +173,9 @@ class Decision(object):
 
     @Field
     def decLink(self):
-        field_url = self.dec.get('field_url')
+        field_url = self.dec.get('field_external_url')
         if field_url:
-            return field_url['en'][0]['url']
+            return field_url['und'][0]['uri']
         else:
             return self.dec.get('url')['en']
 
@@ -205,8 +207,7 @@ class Decision(object):
     def decPublishDate(self):
         field = self.dec.get('field_sorting_date')
         if field:
-            date = field['und'][0]['value']
-            formatted = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            formatted = datetime.strptime(field, '%Y-%m-%d')
             return formatted.strftime(DATE_FORMAT)
 
     def _decShortTitle(self, lang):
@@ -235,7 +236,7 @@ class Decision(object):
     @Field
     def decStatus(self):
         status = self.dec.get('field_decision_status')
-        return status[0]['label'] if status else None
+        return status['und'][0]['value'] if status else None
 
     def _decSummary(self, lang):
         body = self.dec.get('body')
@@ -254,7 +255,7 @@ class Decision(object):
     @Field
     def decType(self):
         field = self.dec.get('field_decision_type')
-        return field[0]['label'] if field else None
+        return field['und'][0]['value'] if field else None
 
     @Field
     def decTreaty(self):

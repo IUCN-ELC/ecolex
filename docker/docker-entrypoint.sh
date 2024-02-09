@@ -34,7 +34,7 @@ if [ "$1" == "run" ]; then
     wait_solr
     install_crontab
     init
-    exec gunicorn -w1 --bind=0.0.0.0:$EDW_RUN_WEB_PORT --access-logfile=- --error-logfile=- ecolex.wsgi:application
+    exec gunicorn --bind=0.0.0.0:$EDW_RUN_WEB_PORT --access-logfile=- --error-logfile=- ecolex.wsgi:application
 elif [ "$1" == "init_dev" ]; then
     wait_sql
     wait_solr
