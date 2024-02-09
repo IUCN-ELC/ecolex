@@ -24,7 +24,7 @@ logger = logging.getLogger('treaty_import')
 DOCUMENT = 'document'
 TOTAL_DOCS = 'numberresultsfound'
 PRESENTED_DOCS = 'numberresultspresented'
-NULL_DATE = format_date('0000-00-00')
+NULL_DATE = format_date('0002-11-30')
 REMOTE_ID_FIELD = 'Recid'
 B7 = 'International Environmental Law – Multilateral Agreements'
 URL_CHANGE_FROM = 'http://www.ecolex.org/server2.php/server2neu.php/'
@@ -296,6 +296,7 @@ class TreatyImporter(BaseImporter):
                                        treaty in treaties.values()]))
             self._index_files(new_treaties)
             logger.debug('Adding treaties')
+
             try:
                 self.solr.add_bulk(new_treaties)
                 year -= 1
