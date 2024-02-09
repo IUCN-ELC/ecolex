@@ -24,6 +24,7 @@ Thumbs.db
 *.vi
 *~
 sqlite_dump*.json
-.env/
+.env
+.venv/
 *.code-workspace
 .vscode
