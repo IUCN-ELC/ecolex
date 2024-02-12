@@ -1,5 +1,8 @@
 .env
+.venv
 .git
 logs
 *.code-workspace
 *.sqlite3
+.data
+local_settings.py

@@ -2,7 +2,7 @@
 django-extensions>=1.7.7,<1.8
 meld3==1.0.0
 gunicorn>=19.5
-cffi==1.9.1
+cffi==1.15.1
 ijson==2.3
 ipdb
-sentry-sdk
+sentry-sdk==1.9.0

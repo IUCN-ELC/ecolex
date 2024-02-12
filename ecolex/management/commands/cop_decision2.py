@@ -96,8 +96,11 @@ class Decision(object):
         return self.dec['uuid']
 
     def _decBody(self, lang):
-        body = self.dec.get('body')
-        return body.get(lang, [dict(value=None)])[0]['value'] if body else None
+        body = self.dec.get('body', {}).get(lang)
+        if not body:
+            # Can be empty list or None
+            return None
+        return body[0]['value']
 
     @Field
     def decBody_en(self): return self._decBody('en')
@@ -367,21 +370,32 @@ def request_meeting(base_url, cache, json_decision):
             return cache[uuid]
 
 
-def request_treaty(solr, treaties, json_decision):
+def request_treaty(base_url, solr, treaties, json_decision):
     field = json_decision.get('field_treaty')
     dec_uuid = json_decision['uuid']
     if field:
         uuid = field[0].get('uuid')
-        identifer = field[0].get('odata_identifier')
-        treaty_id = uuid or treaties.get(identifer)
+        identifier = field[0].get('odata_identifier')
+        treaty_id = uuid or treaties[identifier]['uuid']
+        ecolex_id = treaties.get(identifier, {}).get('docId')
         if treaty_id:
-            logger.info('Requesting treaty from solr: %s', treaty_id)
-            treaty = solr.search_all('trInformeaId', treaty_id)
+            if not ecolex_id:
+                for treaty in treaties.values():
+                    if treaty["uuid"] == treaty_id:
+                        ecolex_id = treaty.get("docId")
+                        break
+            logger.info(f'Requesting treaty from solr: {ecolex_id} {treaty_id}')
+            treaty = None
+            if ecolex_id:
+                treaty = solr.search_all('docId', ecolex_id)
+            if not treaty:
+                # try loading by uuid
+                treaty = solr.search_all('trInformeaId', treaty_id)
             if treaty:
                 logger.info('Found treaty: %s!', treaty_id)
                 return treaty[0], treaty_id
             else:
-                logger.warn('Cannot find treaty: %s!', treaty_id)
+                logger.warn('Cannot find treaty by uuid: %s!', treaty_id)
                 return None, treaty_id
         else:
             logger.warn('Cannot find a treaty id for %s!', dec_uuid)
@@ -471,7 +485,7 @@ def extract_text(solr, dec_id, urls):
         if not exists:
             create_document(dec_id, url, text, size)
 
-    return ''.join((text for _, text, _, _ in texts))
+    return ''.join((text or '' for _, text, _, _ in texts))
 
 
 def get_node(base_url, per_page, start=0, max_pages=False):
@@ -565,7 +579,8 @@ class CopDecisionImporter(BaseImporter):
             json_decision = request_uuid(self.node_url, uuid)
             json_meeting = self.fetch_meeting(json_decision)
             json_treaty, treaty_id = request_treaty(
-                self.solr, self.treaties, json_decision)
+                self.node_url, self.solr, self.treaties, json_decision
+            )
 
             if treaty_id and not json_treaty:
                 self.report.missing_treaties += [treaty_id]
@@ -603,6 +618,7 @@ class CopDecisionImporter(BaseImporter):
 
     def harvest_list(self, items, force):
         total, existing, new = functools.reduce(count_nodes, items, [0, 0, 0])
+        seen = set()
 
         logger.info(
             'Found %s decisions needing update. %s new, %s existing!',
@@ -610,6 +626,8 @@ class CopDecisionImporter(BaseImporter):
 
         for idx, json_node in enumerate(items, start=0):
             uuid = json_node['uuid']
+            if uuid in seen:
+                continue
             solr_id = json_node.get('solr_id')
 
             action = 'Updating' if solr_id else 'Inserting'
@@ -617,6 +635,7 @@ class CopDecisionImporter(BaseImporter):
 
             try:
                 self.harvest_one(uuid, solr_id, force=force)
+                seen.add(uuid)
 
                 if solr_id:
                     self.report.updated += [uuid]
@@ -651,8 +670,8 @@ class CopDecisionImporter(BaseImporter):
 
         # will fetch nodes until the remote server returns no results
         json_nodes = itertools.takewhile(
-            bool, get_node(self.decision_url, self.per_page, start=start))
-
+            bool, get_node(self.decision_url, self.per_page, start=start)
+        )
         matched = [
             node for node in json_nodes if
             (name and node.get('treaty') == name) or

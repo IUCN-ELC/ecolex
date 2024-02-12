@@ -28,3 +28,4 @@ sqlite_dump*.json
 .venv/
 *.code-workspace
 .vscode
+.data

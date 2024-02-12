@@ -492,6 +492,11 @@ class TreatyImporter(BaseImporter):
     def _party_format_date(self, date):
         if date == '':
             return date
+        if date == '0000-00-00':
+            return NULL_DATE
+        if date == '2018-02-29':
+            # TRE-001200, State of Palestine
+            return format_date('2017-12-29')
         date_fields = date.split('-')
         for i in range(3 - len(date_fields)):
             date += "-01"
