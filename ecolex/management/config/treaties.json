@@ -368,17 +368,17 @@
   },
   "itto": {
     "uuid": "0f867365-5c6e-452e-9104-6532494859c1",
-    "short_name": "International Tropical Timber Agreement 2006",
+    "short_name": "International Tropical Timber Agreement",
     "docId": "TRE-002497"
   },
   "barcelona_pem": {
     "uuid": "dd858e93-e8cf-4b45-a455-0f97353b9825",
-    "short_name": "Prevention and Emergency Protocol, 1976",
+    "short_name": "Prevention and Emergency Protocol",
     "docId": "TRE-000541"
   },
   "saicm": {
     "uuid": "6efb8a9b-f1e3-449c-834e-8e2fd807d34c",
-    "short_name": "Strategic Approach to International Chemicals Management"
+    "short_name": "SAICM"
   },
   "whaling": {
     "uuid": "541ffdb5-551e-4de7-a2a8-75db7bc7ffa8",

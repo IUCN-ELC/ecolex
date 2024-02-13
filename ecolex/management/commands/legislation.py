@@ -25,9 +25,24 @@ class LegislationImporter(object):
         self.solr_timeout = config.get("solr_timeout")
         self.solr = EcolexSolr(self.solr_timeout)
 
-    def update_full_text(self, obj):
-        if not obj:
-            return
+    def update_full_text(self):
+        logger.info('[Legislation] Update full text started.')
+        while True:
+            count = (DocumentText.objects.filter(
+                     status=DocumentText.INDEXED, doc_type=LEGISLATION)
+                     .exclude(url__isnull=True)).count()
+            objs = (DocumentText.objects.filter(
+                    status=DocumentText.INDEXED, doc_type=LEGISLATION)
+                    .exclude(url__isnull=True))[:100]
+            logger.info('%s records remaining' % (count,))
+            if count == 0:
+                break
+            for obj in objs:
+                self.update_full_text_one(obj)
+
+        logger.info('[Legislation] Update full text finished.')
+
+    def update_full_text_one(self, obj):
         # Check if already parsed
         text = None
         if obj.doc_size and obj.text:
@@ -84,7 +99,16 @@ class LegislationImporter(object):
         else:
             logger.error(f"Failed doc extract {obj.url} {legislation['id']}")
 
-    def reindex_failed(self, obj):
+    def reindex_failed(self):
+        logger.info('[legislation] Reindex started.')
+        objs = DocumentText.objects.filter(
+            status=DocumentText.INDEX_FAIL, doc_type=LEGISLATION)
+        if objs.count() > 0:
+            for obj in objs:
+                self.reindex_one(obj)
+        logger.info('[legislation] Reindex finished.')
+
+    def reindex_one(self, obj):
         legislation = json.loads(obj.parsed_data)
         legislation["updatedDate"] = (datetime.now()
                                       .strftime("%Y-%m-%dT%H:%M:%SZ"))

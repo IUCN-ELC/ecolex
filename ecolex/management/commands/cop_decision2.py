@@ -269,7 +269,7 @@ class Decision(object):
             identifier = field[0].get('odata_identifier')
             if not identifier:
                 identifier = next(
-                    (key for key,item in self.treaties.item() if item["uuid"] == uuid),
+                    (key for key,item in self.treaties.items() if item["uuid"] == uuid),
                     None
                 )
             return identifier
@@ -342,10 +342,11 @@ def request_json(url, *args, **kwargs):
         raise
 
 
-def request_page(url, per_page, page_num=0, max_pages=False):
+def request_page(url, per_page, page_num=0, max_pages=False, treaty_uuid=None):
     params = dict(
         items_per_page=per_page,
         page=page_num,
+        treaty_uuid=treaty_uuid,
     )
     logger.info('Fetching page %s.', page_num)
     if max_pages and page_num == max_pages:
@@ -502,9 +503,9 @@ def extract_text(solr, dec_id, urls):
     return ''.join((text or '' for _, text, _, _ in texts))
 
 
-def get_node(base_url, per_page, start=0, max_pages=False):
+def get_node(base_url, per_page, start=0, max_pages=False, treaty_uuid=None):
     for page_num in itertools.count(start=start, step=1):
-        nodes = request_page(base_url, per_page, page_num, max_pages)
+        nodes = request_page(base_url, per_page, page_num, max_pages, treaty_uuid)
         yield from nodes if nodes else [None]
 
 
@@ -685,7 +686,7 @@ class CopDecisionImporter(BaseImporter):
 
         # will fetch nodes until the remote server returns no results
         json_nodes = itertools.takewhile(
-            bool, get_node(self.decision_url, self.per_page, start=start)
+            bool, get_node(self.decision_url, self.per_page, start=start, treaty_uuid=uuid)
         )
         matched = [
             node for node in json_nodes if

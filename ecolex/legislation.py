@@ -291,7 +291,7 @@ def add_legislations(legislations, count_ignored):
 
         try:
             doc.save()
-            importer.update_full_text(doc)
+            importer.update_full_text_one(doc)
         except Exception as e:
             if settings.DEBUG:
                 logger.exception(e)
