@@ -26,7 +26,7 @@ from requests.adapters import HTTPAdapter
 from django.template.defaultfilters import slugify
 
 from ecolex.management.commands.base import BaseImporter
-from ecolex.management.definitions import COP_DECISION
+from ecolex.management.definitions import COP_DECISION, TREATY
 from ecolex.management.utils import get_file_from_url
 from ecolex.management.utils import keywords_informea_to_ecolex
 from ecolex.management.utils import keywords_ecolex
@@ -262,16 +262,22 @@ class Decision(object):
 
     @Field
     def decTreaty(self):
-        field = self.dec.get('field_treaty')
-        return field[0].get('odata_identifier') if field else None
-
-    @Field
-    def decTreatyId(self):
+        # treaty_slug, used for Google Analytics
         field = self.dec.get('field_treaty')
         if field:
             uuid = field[0].get('uuid')
-            identifer = field[0].get('odata_identifier')
-            return uuid or self.treaties.get(identifer)
+            identifier = field[0].get('odata_identifier')
+            if not identifier:
+                identifier = next(
+                    (key for key,item in self.treaties.item() if item["uuid"] == uuid),
+                    None
+                )
+            return identifier
+
+    @Field
+    def decTreatyId(self):
+        if self.treaty:
+            return self.treaty.get('trInformeaId')
 
     def _partyCountry(self, lang):
         if self.treaty:
@@ -370,39 +376,47 @@ def request_meeting(base_url, cache, json_decision):
             return cache[uuid]
 
 
-def request_treaty(base_url, solr, treaties, json_decision):
-    field = json_decision.get('field_treaty')
-    dec_uuid = json_decision['uuid']
-    if field:
-        uuid = field[0].get('uuid')
-        identifier = field[0].get('odata_identifier')
-        treaty_id = uuid or treaties[identifier]['uuid']
-        ecolex_id = treaties.get(identifier, {}).get('docId')
-        if treaty_id:
-            if not ecolex_id:
-                for treaty in treaties.values():
-                    if treaty["uuid"] == treaty_id:
-                        ecolex_id = treaty.get("docId")
-                        break
-            logger.info(f'Requesting treaty from solr: {ecolex_id} {treaty_id}')
-            treaty = None
-            if ecolex_id:
-                treaty = solr.search_all('docId', ecolex_id)
-            if not treaty:
-                # try loading by uuid
-                treaty = solr.search_all('trInformeaId', treaty_id)
-            if treaty:
-                logger.info('Found treaty: %s!', treaty_id)
-                return treaty[0], treaty_id
-            else:
-                logger.warn('Cannot find treaty by uuid: %s!', treaty_id)
-                return None, treaty_id
-        else:
-            logger.warn('Cannot find a treaty id for %s!', dec_uuid)
-            return None, None
-    else:
-        logger.warn('Decision has no "field_treaty": %s', dec_uuid)
+def request_treaty(solr, treaties, cache, json_decision):
+    treaty_uuid = json_decision.get(
+        'field_treaty',
+        [{"uuid": None}]
+    )[0]["uuid"]
+    if not treaty_uuid:
+        logger.warn('Decision has no "field_treaty": %s', json_decision['uuid'])
         return None, None
+
+    cached = cache.get(treaty_uuid)
+    if cached:
+        logger.info('Treaty from cache: %s', treaty_uuid)
+        return cached
+
+    json_treaty = next(
+        (x for x in treaties.values() if x["uuid"] == treaty_uuid),
+        None
+    )
+    if not json_treaty:
+        logger.warn('Unknown treaty %s', treaty_uuid)
+        return None, None
+
+    ecolex_id = json_treaty.get('docId')
+    treaty = None
+    if ecolex_id:
+        logger.info(f'Loading treaty {treaty_uuid} from solr: {ecolex_id}')
+        treaty = solr.search(TREATY, ecolex_id)
+        if treaty:
+            logger.info('Found treaty: %s!', treaty.get("trInformeaId"))
+    if not treaty:
+        # return mock data, useful for faceted search
+        logger.info('Treaty %s not in ECOLEX', treaty_uuid)
+        treaty = {
+            'trTitleOfText_en': json_treaty.get('short_name'),
+            'trTitleOfText_fr': json_treaty.get('short_name'),
+            'trTitleOfText_es': json_treaty.get('short_name'),
+            'trInformeaId': treaty_uuid,
+        }
+    logger.info('Cached treaty %s', treaty_uuid)
+    cache[treaty_uuid] = (treaty, treaty_uuid)
+    return treaty, treaty_uuid
 
 
 def create_document(dec_id, url, text, size, retry=True):
@@ -568,6 +582,9 @@ class CopDecisionImporter(BaseImporter):
         self.fetch_meeting = functools.partial(
             request_meeting, self.node_url, {})
 
+        self.fetch_treaty = functools.partial(
+            request_treaty, self.solr, self.treaties, {})
+
     def harvest_one(self, uuid, solr_id='check', force=True):
         logger.info('Harvesting: %s', uuid)
 
@@ -578,11 +595,9 @@ class CopDecisionImporter(BaseImporter):
         try:
             json_decision = request_uuid(self.node_url, uuid)
             json_meeting = self.fetch_meeting(json_decision)
-            json_treaty, treaty_id = request_treaty(
-                self.node_url, self.solr, self.treaties, json_decision
-            )
+            json_treaty, treaty_id = self.fetch_treaty(json_decision)
 
-            if treaty_id and not json_treaty:
+            if treaty_id and 'id' not in json_treaty:
                 self.report.missing_treaties += [treaty_id]
 
         except Exception:

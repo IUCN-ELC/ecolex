@@ -445,11 +445,17 @@ class Decision(DocumentModel):
 
     @property
     def treaty_short_name(self):
-        if self.treaty_id:
-            treaties_dict = get_dict_from_json(settings.TREATIES)
-            for key, item in treaties_dict.items():
-                if item['uuid'] == self.treaty_id:
-                    return item['short_name']
+        if not self.treaty_slug and not self.treaty_id:
+            return None
+        treaties_dict = get_dict_from_json(settings.TREATIES)
+        result = None
+        if self.treaty_slug:
+            result = treaties_dict.get(self.treaty_slug, {}).get('short_name')
+            if result:
+                return result
+        for key, item in treaties_dict.items():
+            if item['uuid'] == self.treaty_id:
+                return item['short_name']
         return None
 
     @property

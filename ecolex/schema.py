@@ -286,7 +286,7 @@ class DecisionSchema(CommonSchema):
         ]
         solr_fetch = CommonSchema.Meta.solr_fetch + [
             'title_of_text', 'status', 'publish_date', 'update_date',
-            'treaty_name', 'short_title', 'treaty_id',
+            'treaty_name', 'short_title', 'treaty_id', 'treaty_slug',
             'meeting_id', 'meeting_title',
             'dec_number', 'decId'
         ]

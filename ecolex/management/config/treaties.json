@@ -114,6 +114,11 @@
     "short_name": "Barcelona Convention, 1976",
     "docId": "TRE-000543"
   },
+  "iczm-protocol": {
+    "uuid": "6c5f0cd7-757b-416c-b29a-8f48a908c7d5",
+    "short_name": "Protocol on Integrated Coastal Zone Management in the Mediterranean",
+    "docId": "TRE-000543"
+  },
   "dumping": {
     "uuid": "bde6dfe6-25ff-4061-91d7-be5cec7e8f6d",
     "short_name": "Barcelona Dumping Protocol",
