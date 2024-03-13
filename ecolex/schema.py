@@ -592,6 +592,7 @@ class LegislationSchema(CommonSchema):
         solr_fetch = CommonSchema.Meta.solr_fetch + [
             'short_title', 'long_title', 'country',
             'year', 'original_year',  # "year" / "original year"
+            'source',
             'status', 'territorial_subdivision',
         ]
         solr_boost = dict(CommonSchema.Meta.solr_boost, **{

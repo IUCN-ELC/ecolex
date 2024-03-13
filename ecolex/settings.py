@@ -38,9 +38,9 @@ ALLOWED_HOSTS = ['*']
 #TEST_RUNNER = 'django_selenium.selenium_runner.SeleniumTestRunner'
 
 # URLs used for legislation import
-DOC_URL = os.environ.get('DOC_URL', 'http://extwprlegs1.fao.org/docs/texts/')
-HTML_URL = os.environ.get('HTML_URL', 'http://extwprlegs1.fao.org/docs/html/')
-PDF_URL = os.environ.get('PDF_URL', 'http://extwprlegs1.fao.org/docs/pdf/')
+DOC_URL = os.environ.get('DOC_URL', 'https://faolex.fao.org/docs/texts/')
+HTML_URL = os.environ.get('HTML_URL', 'https://faolex.fao.org/docs/html/')
+PDF_URL = os.environ.get('PDF_URL', 'https://faolex.fao.org/docs/pdf/')
 
 FULL_TEXT_URLS = {
     'doc': DOC_URL,

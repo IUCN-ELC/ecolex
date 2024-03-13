@@ -173,6 +173,7 @@
   },
   "dv": {
     "en": "Divehi, Dhivehi, Maldivian",
+    "en2": "Dhivehi",
     "es": "Divehi",
     "fr": "Maldivien"
   },
@@ -221,6 +222,11 @@
     "en2": "Persian",
     "es": "Farsi",
     "fr": "Farsi"
+  },
+  "dari": {
+    "en": "Dari",
+    "fr": "Dari",
+    "es": "Dari"
   },
   "ff": {
     "en": "Fulah",
@@ -662,6 +668,7 @@
   },
   "ps": {
     "en": "Pashto, Pushto",
+    "en2": "Pashto",
     "es": "Pashto",
     "fr": "Pachto"
   },

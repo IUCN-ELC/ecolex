@@ -46,7 +46,9 @@
       <dd>
         {% if document.original_year %}
           <span class="sr-date sr-help" title="{% trans 'Original date' %}">{{ document.original_year }}
-          <span class="sr-date sr-help" title="{% trans 'Consolidation date' %}">({{ document.year }})</span>
+            {% if document.year %}
+            <span class="sr-date sr-help" title="{% trans 'Consolidation date' %}">({{ document.year }})</span>
+            {% endif %}
         {% else %}
           <span class="sr-date sr-help" title="{% trans 'Date' %}">{{ document.year }}</span>
         {% endif %}
@@ -56,6 +58,10 @@
         FAO,
         <a target="_blank" href="https://www.fao.org/faolex/results/details/en/c/{{ document.document_id }}">FAOLEX</a>
       </dd>
+      {% if document.source %}
+      <dt>{% trans 'Original source' %}</dt>
+      <dd>{{ document.source }}</dd>
+      {% endif %}
 
       </dd>
       {% if document.long_title %}

@@ -521,6 +521,10 @@ msgstr "Fecha de consolidación"
 msgid "Long title"
 msgstr "Título completo"
 
+#: .\templates\details\legislation.html:60
+msgid "Original source"
+msgstr "Fuente original"
+
 #: .\templates\details\legislation.html:81
 #: .\templates\details\literature.html:149 .\templates\details\treaty.html:104
 msgid "Geographical area"

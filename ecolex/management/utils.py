@@ -19,6 +19,7 @@ from ecolex.management.definitions import (
     COP_DECISION, COURT_DECISION, LEGISLATION, LITERATURE, TREATY, COPY_FIELDS,
 )
 
+SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
 dictConfig(LOG_DICT)
 logger = logging.getLogger('import')
@@ -70,7 +71,7 @@ def get_file_from_url(url):
 def get_date(text):
     datestr = re.findall("Date\((.*)\)", text)[0][:-3]
     dt = datetime.fromtimestamp(int(datestr))
-    return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+    return dt.strftime(SOLR_DATE_FORMAT)
 
 
 def valid_date(date):
@@ -206,3 +207,35 @@ def keywords_ecolex(keywords, lang):
         keywords_informea_to_ecolex.
     """
     return tuple(map(itemgetter(lang), keywords))
+
+def clean_text_date(value):
+
+    if value in ("0000", "0000-00", "0000-00-00", "0002-11-30"):
+        return value, None, None
+
+    date_formats = [
+        '%Y-%m-%d', '%Y--%m-%d', '%Y%m%d', '%Y-%d-%m',
+        '%Y', '%Y-0?-0?',
+        '%Y-00-00', '%Y-00-61', '%Y-00-32', '%Y-00-0',
+        '%Y-%m', '%Y-%m-00', '%Y-%m-0', '%Y-%m-??', '%Y-%m-0?', '%Y-%m-?0', '%Y%m00',
+        '%Y-%m-29',
+    ]
+
+    def parse(value, date_format):
+        date = datetime.strptime(value, date_format)
+        return value, date.strftime(SOLR_DATE_FORMAT), date
+
+    for date_format in date_formats:
+        try:
+            return parse(value, date_format)
+        except ValueError:
+            continue
+
+    # Year range check
+    regex = "(\d{4})-(\d{4})"
+    matches = re.search(regex, value)
+    if matches:
+        start_year, _ = matches.groups(0)
+        return parse(start_year, date_formats[0])
+
+    return value, None, None

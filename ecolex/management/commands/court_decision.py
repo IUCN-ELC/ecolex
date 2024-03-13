@@ -16,10 +16,13 @@ from django.template.defaultfilters import slugify
 from ecolex.management.commands.base import BaseImporter
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.definitions import COURT_DECISION
-from ecolex.management.utils import get_file_from_url, get_dict_from_json
-from ecolex.management.utils import keywords_informea_to_ecolex
-from ecolex.management.utils import keywords_ecolex
-
+from ecolex.management.utils import (
+    get_file_from_url,
+    get_dict_from_json,
+    keywords_informea_to_ecolex,
+    keywords_ecolex,
+    SOLR_DATE_FORMAT,
+)
 
 logging.config.dictConfig(LOG_DICT)
 logger = logging.getLogger('court_decision_import')
@@ -35,7 +38,7 @@ def replace_url(text):
 
 # JSON_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 JSON_DATE_FORMAT = '%Y-%m-%d'
-SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
+
 FIELD_MAP = {
     'title_field': 'cdTitleOfText',
     'field_abstract': 'cdAbstract',

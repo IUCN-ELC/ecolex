@@ -9,7 +9,6 @@ from collections import OrderedDict
 import requests
 import lxml.etree as ET
 from bs4 import BeautifulSoup
-from dateutil import parser
 from pysolr import SolrError
 from django.conf import settings
 from django.utils import timezone
@@ -18,7 +17,7 @@ from django.template.defaultfilters import slugify
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.commands.legislation import LegislationImporter
 from ecolex.management.definitions import LEGISLATION
-from ecolex.management.utils import EcolexSolr
+from ecolex.management.utils import EcolexSolr, clean_text_date
 from ecolex.models import DocumentText
 
 logging.config.dictConfig(LOG_DICT)
@@ -35,8 +34,9 @@ FIELD_MAP = {
     "Long_Title_of_text": "legLongTitle",
     "Serial_Imprint": "legSource",
 
-    "Date_of_original_Text": "legDate",
+    "Date_of_original_Text": "legOriginalYear",
     "Date_of_Text": "legDate",
+    "Date_of_Consolidation": "_legDateOfConsolidation", # not stored
 
     "Entry_into_Force": "legEntryIntoForce",
     "country_ISO": "legCountry_iso",
@@ -171,7 +171,7 @@ def harvest_file(upfile):
         legTypeCode = legislation.get("legTypeCode")
         if legTypeCode and legTypeCode == "A":
             # Ignore International agreements
-            logger.debug(f"Ignoring {legislation.get('legId')}")
+            logger.debug(f"Ignoring international agreement {legislation.get('legId')}")
             count_ignored += 1
             continue
         elif legTypeCode in settings.DOC_TYPES:
@@ -197,15 +197,40 @@ def harvest_file(upfile):
                     legislation["legGeoArea_fr"] = region.get("fr", [])
                     legislation["legGeoArea_es"] = region.get("es", [])
 
-        if "legDate" in legislation:
+        legDate = legislation.get("legDate") or legislation.get("_legDateOfConsolidation")
+        if "_legDateOfConsolidation" in legislation:
+            del legislation["_legDateOfConsolidation"]
+
+        if legDate:
             try:
-                legDate = parser.parse(legislation.get("legDate"))
-                legislation["legYear"] = legDate.strftime("%Y")
-                legislation["legDate"] = legDate.strftime("%Y-%m-%dT%H:%M:%SZ")
+                _, solr_format, dateValue = clean_text_date(legDate)
+                if not dateValue:
+                    if "legDate" in legislation:
+                        del legislation["legDate"]
+                else:
+                    legislation["legYear"] = dateValue.strftime("%Y")
+                    legislation["legDate"] = solr_format
+            except Exception as e:
+                logger.warn(
+                    f"Error parsing legDate {legDate} for {legislation.get('legId')}"
+                )
+                if "legDate" in legislation:
+                    # if check is for record with invalid _legDateOfConsolidation and no legDate
+                    del legislation["legDate"]
+
+        if "legOriginalYear" in legislation:
+            try:
+                _, solr_format, dateValue = clean_text_date(legislation["legOriginalYear"])
+                if not dateValue:
+                    del legislation["legOriginalYear"]
+                else:
+                    legislation["legOriginalYear"] = dateValue.strftime("%Y")
             except Exception:
-                logger.debug(f"Error parsing legDate {legislation.get('legDate')} "
-                             f"for {legislation.get('legId')}")
-                del legislation["legDate"]
+                logger.warn(
+                    f"Error parsing legOriginalYear {legislation.get('legOriginalYear')} "
+                    f"for {legislation.get('legId')}"
+                )
+                del legislation["legOriginalYear"]
 
         filenames = get_content(document.findall("link_to_full_text"))
         url_values = []
@@ -215,7 +240,7 @@ def harvest_file(upfile):
             if url:
                 url_values.append(f"{url}{filename}")
             else:
-                logger.error(f"URL not found for {extension}")
+                logger.error(f"URL not found for {filename} {legislation.get('legId')}")
 
         if (REPEALED.upper() in
                 get_content(document.findall(REPEALED))):
@@ -292,6 +317,8 @@ def add_legislations(legislations, count_ignored):
         try:
             doc.save()
             importer.update_full_text_one(doc)
+        except KeyboardInterrupt:
+            raise
         except Exception as e:
             if settings.DEBUG:
                 logger.exception(e)

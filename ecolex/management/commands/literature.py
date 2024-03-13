@@ -5,7 +5,6 @@ import json
 import html
 import logging
 import logging.config
-import re
 
 from django.conf import settings
 from django.db.utils import OperationalError
@@ -16,8 +15,12 @@ from ecolex.management.commands.base import BaseImporter
 from ecolex.management.commands.logging import LOG_DICT
 from ecolex.management.definitions import LITERATURE
 from ecolex.management.utils import format_date, valid_date, cleanup_copyfields
-from ecolex.management.utils import get_content_from_url, get_file_from_url
-from ecolex.management.utils import get_content_length_from_url
+from ecolex.management.utils import (
+    get_content_from_url,
+    get_file_from_url,
+    get_content_length_from_url,
+    clean_text_date,
+)
 from ecolex.models import DocumentText
 
 logging.config.dictConfig(LOG_DICT)
@@ -169,7 +172,6 @@ DATE_FIELDS = [
 ]
 
 TEXT_DATE_FIELDS = ['litDateOfTextSer', 'litYearOfText', 'litDateOfText']
-SOLR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
 MULTIVALUED_FIELDS = [
     'litId2',
@@ -372,7 +374,7 @@ class LiteratureImporter(BaseImporter):
 
                 for field in TEXT_DATE_FIELDS:
                     if field in data:
-                        data[field], temp_doc_date = self._clean_text_date(data[field])
+                        data[field], temp_doc_date = clean_text_date(data[field])
                         if temp_doc_date and 'litDate' not in data:
                             data['litDate'] = temp_doc_date
                 # litDateOfText parsing error log
@@ -529,29 +531,6 @@ class LiteratureImporter(BaseImporter):
                                                                literature['id']))
             old_objs = objs
         logger.info('[Literature] Update full text finished.')
-
-    def _clean_text_date(self, value):
-        date_formats = ['%Y', '%Y-00-00', '%Y-%m', '%Y-%m-00', '%Y-%m-%d',
-                        '%Y%m00', '%Y%m%d']
-
-        def parse(value, date_format):
-            date = datetime.strptime(value, date_format)
-            return value, date.strftime(SOLR_DATE_FORMAT)
-
-        for date_format in date_formats:
-            try:
-                return parse(value, date_format)
-            except ValueError:
-                continue
-
-        # Year range check
-        regex = "(\d{4})-(\d{4})"
-        matches = re.search(regex, value)
-        if matches:
-            start_year, _ = matches.groups(0)
-            return parse(start_year, date_formats[0])
-
-        return value, None
 
     def _get_solr_lit(self, lit_data):
         new_lit = Literature(lit_data, self.solr)

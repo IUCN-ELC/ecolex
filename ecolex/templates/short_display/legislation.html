@@ -12,6 +12,8 @@
           <span class="sr-date sr-help" title="{% trans 'Date' %}">{{ result.year }}
         {% endif %}
       </span>
+    {% elif result.original_year %}
+      | <span class="sr-date sr-help" title="{% trans 'Original date' %}">{{ result.original_year }}</span>
     {% endif %}
 
     {% if result.status and result.status != "in force" %} |
