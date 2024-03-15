@@ -1,0 +1,5468 @@
+{
+  "ABW": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "European Union Countries",
+      "Latin America and the Caribbean",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Pays de l'Union Européenne",
+      "Amérique latine et Caraïbes",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "Países de la Unión Europea",
+      "América Latina y el Caribe",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "AFG": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "Landlocked Developing Nations",
+      "Least Developed Countries",
+      "Southern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "Nations en développement sans littoral",
+      "Pays les moins avances",
+      "Asie du Sud"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados",
+      "Asia Meridional"
+    ]
+  },
+  "AGO": {
+    "en": [
+      "Africa",
+      "Central Africa",
+      "Least Developed Countries",
+      "South Atlantic"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Centrale",
+      "Pays les moins avances",
+      "Atlantique Sud"
+    ],
+    "es": [
+      "Africa",
+      "Africa Central",
+      "Países menos desarrollados",
+      "Atlántico Sur"
+    ]
+  },
+  "AIA": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "ALB": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "Mediterranean",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Méditerranée",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Mediterráneo",
+      "Europa Meridional"
+    ]
+  },
+  "AND": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Europa Meridional"
+    ]
+  },
+  "ANT": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "ARE": {
+    "en": [
+      "Middle East",
+      "Near East and North Africa",
+      "Persian Gulf"
+    ],
+    "fr": [
+      "Moyen-Orient",
+      "Afrique du Nord et Proche-Orient",
+      "Golfe Persique"
+    ],
+    "es": [
+      "Medio Oriente",
+      "Africa del Norte y Cercano Oriente",
+      "Golfo Pérsico"
+    ]
+  },
+  "ARG": {
+    "en": [
+      "Americas",
+      "Latin America and the Caribbean",
+      "South America",
+      "South Atlantic"
+    ],
+    "fr": [
+      "Amériques",
+      "Amérique latine et Caraïbes",
+      "Amérique du Sud",
+      "Atlantique Sud"
+    ],
+    "es": [
+      "Americas",
+      "América Latina y el Caribe",
+      "América del Sur",
+      "Atlántico Sur"
+    ]
+  },
+  "ARM": {
+    "en": [
+      "Asia",
+      "CIS (Commonwealth of Independent States)",
+      "Europe",
+      "Europe and Central Asia",
+      "Landlocked Developing Nations",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "CEI (Communauté des États indépendants)",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Nations en développement sans littoral",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "CEI (Comunidad de Estados Independientes)",
+      "Europa",
+      "Europa y Central Asia",
+      "Naciones en desarrollo sin litoral",
+      "Asia Occidental"
+    ]
+  },
+  "ASM": {
+    "en": [
+      "Asia and the Pacific",
+      "Oceania",
+      "Polynesia",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Océanie",
+      "Polinesie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Oceania",
+      "Polinesia",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "ATF": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "European Union Countries",
+      "Indian Ocean"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Pays de l'Union Européenne",
+      "Océan Indien"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Países de la Unión Europea",
+      "Océano Índico"
+    ]
+  },
+  "ATG": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "AUS": {
+    "en": [
+      "Asia and the Pacific",
+      "Australia and New Zealand",
+      "Indian Ocean",
+      "Oceania",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Australie et Nouvelle-Zélande",
+      "Océan Indien",
+      "Océanie",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Australia y Nueva Zelandia",
+      "Océano Índico",
+      "Oceania",
+      "Pacífico Sur"
+    ]
+  },
+  "AUT": {
+    "en": [
+      "Alps",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "Western Europe"
+    ],
+    "fr": [
+      "Alpes",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Europe du Ouest"
+    ],
+    "es": [
+      "Alpes",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Europa Occidental"
+    ]
+  },
+  "AZE": {
+    "en": [
+      "Asia",
+      "Caspian Sea",
+      "CIS (Commonwealth of Independent States)",
+      "Europe and Central Asia",
+      "Landlocked Developing Nations",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Mer Caspienne",
+      "CEI (Communauté des États indépendants)",
+      "Europe et Asie Centrale",
+      "Nations en développement sans littoral",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Mar Caspio",
+      "CEI (Comunidad de Estados Independientes)",
+      "Europa y Central Asia",
+      "Naciones en desarrollo sin litoral",
+      "Asia Occidental"
+    ]
+  },
+  "BDI": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Landlocked Developing Nations",
+      "Least Developed Countries"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Nations en développement sans littoral",
+      "Pays les moins avances"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados"
+    ]
+  },
+  "BEL": {
+    "en": [
+      "Benelux",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "North Atlantic",
+      "North Sea",
+      "North-East Atlantic",
+      "Western Europe"
+    ],
+    "fr": [
+      "Benelux",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Atlantique Nord",
+      "Mer du Nord",
+      "Atlantique du Nord-Est",
+      "Europe du Ouest"
+    ],
+    "es": [
+      "Benelux",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Atlántico Norte",
+      "Mar del Norte",
+      "Atlántico Nordeste",
+      "Europa Occidental"
+    ]
+  },
+  "BEN": {
+    "en": [
+      "Africa",
+      "Least Developed Countries",
+      "North Atlantic",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Pays les moins avances",
+      "Atlantique Nord",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Países menos desarrollados",
+      "Atlántico Norte",
+      "Africa Occidental"
+    ]
+  },
+  "BFA": {
+    "en": [
+      "Africa",
+      "Landlocked Developing Nations",
+      "Least Developed Countries",
+      "Sahel",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Nations en développement sans littoral",
+      "Pays les moins avances",
+      "Sahel",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados",
+      "Sahel",
+      "Africa Occidental"
+    ]
+  },
+  "BGD": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "Indian Ocean",
+      "Least Developed Countries",
+      "South Asian Seas",
+      "Southern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "Océan Indien",
+      "Pays les moins avances",
+      "Mer de l'Asie du Sud-Est",
+      "Asie du Sud"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Océano Índico",
+      "Países menos desarrollados",
+      "Mares del Asia Sudoriental",
+      "Asia Meridional"
+    ]
+  },
+  "BGR": {
+    "en": [
+      "Black Sea",
+      "Eastern Europe",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries"
+    ],
+    "fr": [
+      "Mer Noire",
+      "Europe de l'Est",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne"
+    ],
+    "es": [
+      "Mar Negro",
+      "Europa Oriental",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea"
+    ]
+  },
+  "BHR": {
+    "en": [
+      "Asia",
+      "Middle East",
+      "Near East and North Africa",
+      "Persian Gulf",
+      "Small Island Developing States",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Moyen-Orient",
+      "Afrique du Nord et Proche-Orient",
+      "Golfe Persique",
+      "Petits états insulaires en développement",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Medio Oriente",
+      "Africa del Norte y Cercano Oriente",
+      "Golfo Pérsico",
+      "Pequeños estados insulares en desarrollo",
+      "Asia Occidental"
+    ]
+  },
+  "BHS": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "BIH": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "Mediterranean",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Méditerranée",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Mediterráneo",
+      "Europa Meridional"
+    ]
+  },
+  "BIO": {
+    "en": [
+      "Indian Ocean"
+    ],
+    "fr": [
+      "Océan Indien"
+    ],
+    "es": [
+      "Océano Índico"
+    ]
+  },
+  "BLM": {
+    "en": [
+      "Caribbean"
+    ],
+    "fr": [
+      "Caraïbes"
+    ],
+    "es": [
+      "Caribe"
+    ]
+  },
+  "BLR": {
+    "en": [
+      "CIS (Commonwealth of Independent States)",
+      "Eastern Europe",
+      "Europe",
+      "Europe and Central Asia"
+    ],
+    "fr": [
+      "CEI (Communauté des États indépendants)",
+      "Europe de l'Est",
+      "Europe",
+      "Europe et Asie Centrale"
+    ],
+    "es": [
+      "CEI (Comunidad de Estados Independientes)",
+      "Europa Oriental",
+      "Europa",
+      "Europa y Central Asia"
+    ]
+  },
+  "BLZ": {
+    "en": [
+      "Americas",
+      "Central America",
+      "Latin America and the Caribbean",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Amérique Centrale",
+      "Amérique latine et Caraïbes",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "América Central",
+      "América Latina y el Caribe",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "BMU": {
+    "en": [
+      "Americas",
+      "Atlantic Ocean Islands",
+      "North America",
+      "North Atlantic"
+    ],
+    "fr": [
+      "Amériques",
+      "Îles de l'Océan Atlantique",
+      "Amérique du Nord",
+      "Atlantique Nord"
+    ],
+    "es": [
+      "Americas",
+      "Islas del Océano Atlántico",
+      "América del Norte",
+      "Atlántico Norte"
+    ]
+  },
+  "BOL": {
+    "en": [
+      "Amazonia",
+      "Americas",
+      "Andean States",
+      "Landlocked Developing Nations",
+      "Latin America and the Caribbean",
+      "South America"
+    ],
+    "fr": [
+      "Amazone",
+      "Amériques",
+      "États Andean",
+      "Nations en développement sans littoral",
+      "Amérique latine et Caraïbes",
+      "Amérique du Sud"
+    ],
+    "es": [
+      "Amazona",
+      "Americas",
+      "Estados Andinos",
+      "Naciones en desarrollo sin litoral",
+      "América Latina y el Caribe",
+      "América del Sur"
+    ]
+  },
+  "BRA": {
+    "en": [
+      "Amazonia",
+      "Americas",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "South America",
+      "South Atlantic"
+    ],
+    "fr": [
+      "Amazone",
+      "Amériques",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Amérique du Sud",
+      "Atlantique Sud"
+    ],
+    "es": [
+      "Amazona",
+      "Americas",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "América del Sur",
+      "Atlántico Sur"
+    ]
+  },
+  "BRB": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "BRN": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "South-Eastern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "Asie du Sud-Est"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Asia Sudoriental"
+    ]
+  },
+  "BTN": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "Landlocked Developing Nations",
+      "Least Developed Countries",
+      "Southern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "Nations en développement sans littoral",
+      "Pays les moins avances",
+      "Asie du Sud"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados",
+      "Asia Meridional"
+    ]
+  },
+  "BWA": {
+    "en": [
+      "Africa",
+      "Landlocked Developing Nations",
+      "Southern Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Nations en développement sans littoral",
+      "Afrique Méridionale"
+    ],
+    "es": [
+      "Africa",
+      "Naciones en desarrollo sin litoral",
+      "Africa Meridional"
+    ]
+  },
+  "CAF": {
+    "en": [
+      "Africa",
+      "Central Africa",
+      "Landlocked Developing Nations",
+      "Least Developed Countries"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Centrale",
+      "Nations en développement sans littoral",
+      "Pays les moins avances"
+    ],
+    "es": [
+      "Africa",
+      "Africa Central",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados"
+    ]
+  },
+  "CAN": {
+    "en": [
+      "Americas",
+      "Arctic",
+      "Asia and the Pacific",
+      "East Pacific",
+      "North America",
+      "North Atlantic"
+    ],
+    "fr": [
+      "Amériques",
+      "Arctique",
+      "Asie et Pacifique",
+      "Pacifique du Est",
+      "Amérique du Nord",
+      "Atlantique Nord"
+    ],
+    "es": [
+      "Americas",
+      "Ártico",
+      "Asia y Pacifico",
+      "Pacífico Oriental",
+      "América del Norte",
+      "Atlántico Norte"
+    ]
+  },
+  "CCK": {
+    "en": [
+      "East Pacific",
+      "North Pacific"
+    ],
+    "fr": [
+      "Pacifique du Est",
+      "Pacifique Nord"
+    ],
+    "es": [
+      "Pacífico Oriental",
+      "Pacífico Norte"
+    ]
+  },
+  "CHE": {
+    "en": [
+      "Alps",
+      "Europe",
+      "Europe and Central Asia",
+      "North-East Atlantic",
+      "Western Europe"
+    ],
+    "fr": [
+      "Alpes",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Atlantique du Nord-Est",
+      "Europe du Ouest"
+    ],
+    "es": [
+      "Alpes",
+      "Europa",
+      "Europa y Central Asia",
+      "Atlántico Nordeste",
+      "Europa Occidental"
+    ]
+  },
+  "CHL": {
+    "en": [
+      "Americas",
+      "East Pacific",
+      "Latin America and the Caribbean",
+      "South America",
+      "South Atlantic",
+      "South-Eastern Pacific"
+    ],
+    "fr": [
+      "Amériques",
+      "Pacifique du Est",
+      "Amérique latine et Caraïbes",
+      "Amérique du Sud",
+      "Atlantique Sud",
+      "Pacifique du Sud-Est"
+    ],
+    "es": [
+      "Americas",
+      "Pacífico Oriental",
+      "América Latina y el Caribe",
+      "América del Sur",
+      "Atlántico Sur",
+      "Pacífico Sudeste"
+    ]
+  },
+  "CHN": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "East Asian Seas",
+      "Eastern Asia",
+      "North Pacific",
+      "North-West Pacific"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "East Asian Seas",
+      "Asie Orientale",
+      "Pacifique Nord",
+      "Pacifique Nord Occidental"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Mares del Asia Oriental",
+      "Asia Oriental",
+      "Pacífico Norte",
+      "Pacífico Nordoeste"
+    ]
+  },
+  "CIV": {
+    "en": [
+      "Africa",
+      "North Atlantic",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Atlantique Nord",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Atlántico Norte",
+      "Africa Occidental"
+    ]
+  },
+  "CMR": {
+    "en": [
+      "Africa",
+      "Central Africa",
+      "North Atlantic"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Centrale",
+      "Atlantique Nord"
+    ],
+    "es": [
+      "Africa",
+      "Africa Central",
+      "Atlántico Norte"
+    ]
+  },
+  "COC": {
+    "en": [
+      "Indian Ocean"
+    ],
+    "fr": [
+      "Océan Indien"
+    ],
+    "es": [
+      "Océano Índico"
+    ]
+  },
+  "COD": {
+    "en": [
+      "Africa",
+      "Central Africa",
+      "Least Developed Countries",
+      "South Atlantic"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Centrale",
+      "Pays les moins avances",
+      "Atlantique Sud"
+    ],
+    "es": [
+      "Africa",
+      "Africa Central",
+      "Países menos desarrollados",
+      "Atlántico Sur"
+    ]
+  },
+  "COG": {
+    "en": [
+      "Africa",
+      "Central Africa",
+      "South Atlantic"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Centrale",
+      "Atlantique Sud"
+    ],
+    "es": [
+      "Africa",
+      "Africa Central",
+      "Atlántico Sur"
+    ]
+  },
+  "COK": {
+    "en": [
+      "Asia and the Pacific",
+      "Oceania",
+      "Polynesia",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Océanie",
+      "Polinesie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Oceania",
+      "Polinesia",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "COL": {
+    "en": [
+      "Amazonia",
+      "Americas",
+      "Andean States",
+      "East Pacific",
+      "Latin America and the Caribbean",
+      "North-East Pacific",
+      "South America",
+      "South-Eastern Pacific"
+    ],
+    "fr": [
+      "Amazone",
+      "Amériques",
+      "États Andean",
+      "Pacifique du Est",
+      "Amérique latine et Caraïbes",
+      "Pacifique du Nord-Est",
+      "Amérique du Sud",
+      "Pacifique du Sud-Est"
+    ],
+    "es": [
+      "Amazona",
+      "Americas",
+      "Estados Andinos",
+      "Pacífico Oriental",
+      "América Latina y el Caribe",
+      "Pacífico Nordeste",
+      "América del Sur",
+      "Pacífico Sudeste"
+    ]
+  },
+  "COM": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Indian Ocean",
+      "Least Developed Countries",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Océan Indien",
+      "Pays les moins avances",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Océano Índico",
+      "Países menos desarrollados",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "CPV": {
+    "en": [
+      "Africa",
+      "Atlantic Ocean Islands",
+      "North Atlantic",
+      "Sahel",
+      "Small Island Developing States",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Îles de l'Océan Atlantique",
+      "Atlantique Nord",
+      "Sahel",
+      "Petits états insulaires en développement",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Islas del Océano Atlántico",
+      "Atlántico Norte",
+      "Sahel",
+      "Pequeños estados insulares en desarrollo",
+      "Africa Occidental"
+    ]
+  },
+  "CRI": {
+    "en": [
+      "Americas",
+      "Central America",
+      "East Pacific",
+      "Latin America and the Caribbean",
+      "North-East Pacific"
+    ],
+    "fr": [
+      "Amériques",
+      "Amérique Centrale",
+      "Pacifique du Est",
+      "Amérique latine et Caraïbes",
+      "Pacifique du Nord-Est"
+    ],
+    "es": [
+      "Americas",
+      "América Central",
+      "Pacífico Oriental",
+      "América Latina y el Caribe",
+      "Pacífico Nordeste"
+    ]
+  },
+  "CUB": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "CUW": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe"
+    ]
+  },
+  "CYM": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe"
+    ]
+  },
+  "CYP": {
+    "en": [
+      "Asia",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "Mediterranean",
+      "Middle East",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Méditerranée",
+      "Moyen-Orient",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Mediterráneo",
+      "Medio Oriente",
+      "Asia Occidental"
+    ]
+  },
+  "CZE": {
+    "en": [
+      "Eastern Europe",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries"
+    ],
+    "fr": [
+      "Europe de l'Est",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne"
+    ],
+    "es": [
+      "Europa Oriental",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea"
+    ]
+  },
+  "DEU": {
+    "en": [
+      "Alps",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "North Sea",
+      "North-East Atlantic",
+      "Western Europe"
+    ],
+    "fr": [
+      "Alpes",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Mer du Nord",
+      "Atlantique du Nord-Est",
+      "Europe du Ouest"
+    ],
+    "es": [
+      "Alpes",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Mar del Norte",
+      "Atlántico Nordeste",
+      "Europa Occidental"
+    ]
+  },
+  "DJI": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Indian Ocean",
+      "Least Developed Countries",
+      "Red Sea & Gulf of Aden"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Océan Indien",
+      "Pays les moins avances",
+      "Mer Rouge et le Golfe d'Aden"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Océano Índico",
+      "Países menos desarrollados",
+      "Mar Rojo & Golfo de Adén"
+    ]
+  },
+  "DMA": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "DNK": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "North Sea",
+      "North-East Atlantic",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Mer du Nord",
+      "Atlantique du Nord-Est",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Mar del Norte",
+      "Atlántico Nordeste",
+      "Europa Septentrional"
+    ]
+  },
+  "DOM": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "DZA": {
+    "en": [
+      "Africa",
+      "Mediterranean",
+      "Near East and North Africa",
+      "Northern Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Méditerranée",
+      "Afrique du Nord et Proche-Orient",
+      "Afrique du Nord"
+    ],
+    "es": [
+      "Africa",
+      "Mediterráneo",
+      "Africa del Norte y Cercano Oriente",
+      "Africa del Norte"
+    ]
+  },
+  "ECU": {
+    "en": [
+      "Amazonia",
+      "Americas",
+      "Andean States",
+      "East Pacific",
+      "Latin America and the Caribbean",
+      "South America",
+      "South-Eastern Pacific"
+    ],
+    "fr": [
+      "Amazone",
+      "Amériques",
+      "États Andean",
+      "Pacifique du Est",
+      "Amérique latine et Caraïbes",
+      "Amérique du Sud",
+      "Pacifique du Sud-Est"
+    ],
+    "es": [
+      "Amazona",
+      "Americas",
+      "Estados Andinos",
+      "Pacífico Oriental",
+      "América Latina y el Caribe",
+      "América del Sur",
+      "Pacífico Sudeste"
+    ]
+  },
+  "EGY": {
+    "en": [
+      "Africa",
+      "Mediterranean",
+      "Middle East",
+      "Near East and North Africa",
+      "Northern Africa",
+      "Red Sea & Gulf of Aden"
+    ],
+    "fr": [
+      "Afrique",
+      "Méditerranée",
+      "Moyen-Orient",
+      "Afrique du Nord et Proche-Orient",
+      "Afrique du Nord",
+      "Mer Rouge et le Golfe d'Aden"
+    ],
+    "es": [
+      "Africa",
+      "Mediterráneo",
+      "Medio Oriente",
+      "Africa del Norte y Cercano Oriente",
+      "Africa del Norte",
+      "Mar Rojo & Golfo de Adén"
+    ]
+  },
+  "ERI": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Least Developed Countries",
+      "Red Sea & Gulf of Aden"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Pays les moins avances",
+      "Mer Rouge et le Golfe d'Aden"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Países menos desarrollados",
+      "Mar Rojo & Golfo de Adén"
+    ]
+  },
+  "ESP": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "Mediterranean",
+      "North Atlantic",
+      "North-East Atlantic",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Méditerranée",
+      "Atlantique Nord",
+      "Atlantique du Nord-Est",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Mediterráneo",
+      "Atlántico Norte",
+      "Atlántico Nordeste",
+      "Europa Meridional"
+    ]
+  },
+  "EST": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Europa Septentrional"
+    ]
+  },
+  "ETH": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Landlocked Developing Nations",
+      "Least Developed Countries",
+      "Sahel"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Nations en développement sans littoral",
+      "Pays les moins avances",
+      "Sahel"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados",
+      "Sahel"
+    ]
+  },
+  "FIN": {
+    "en": [
+      "Arctic",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "North-East Atlantic",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Arctique",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Atlantique du Nord-Est",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Ártico",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Atlántico Nordeste",
+      "Europa Septentrional"
+    ]
+  },
+  "FJI": {
+    "en": [
+      "Asia and the Pacific",
+      "Melanesia",
+      "Oceania",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Mélanésie",
+      "Océanie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Melanesia",
+      "Oceania",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "FLK": {
+    "en": [
+      "Americas",
+      "Atlantic Ocean Islands",
+      "Latin America and the Caribbean",
+      "South America",
+      "South Atlantic"
+    ],
+    "fr": [
+      "Amériques",
+      "Îles de l'Océan Atlantique",
+      "Amérique latine et Caraïbes",
+      "Amérique du Sud",
+      "Atlantique Sud"
+    ],
+    "es": [
+      "Americas",
+      "Islas del Océano Atlántico",
+      "América Latina y el Caribe",
+      "América del Sur",
+      "Atlántico Sur"
+    ]
+  },
+  "FRA": {
+    "en": [
+      "Alps",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "Mediterranean",
+      "North Atlantic",
+      "North Sea",
+      "North-East Atlantic",
+      "Western Europe"
+    ],
+    "fr": [
+      "Alpes",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Méditerranée",
+      "Atlantique Nord",
+      "Mer du Nord",
+      "Atlantique du Nord-Est",
+      "Europe du Ouest"
+    ],
+    "es": [
+      "Alpes",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Mediterráneo",
+      "Atlántico Norte",
+      "Mar del Norte",
+      "Atlántico Nordeste",
+      "Europa Occidental"
+    ]
+  },
+  "FRO": {
+    "en": [
+      "Europe",
+      "North Atlantic",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Atlantique Nord",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Europa",
+      "Atlántico Norte",
+      "Europa Septentrional"
+    ]
+  },
+  "FSM": {
+    "en": [
+      "Asia and the Pacific",
+      "Micronesia",
+      "Oceania",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Micronesie",
+      "Océanie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Micronesia",
+      "Oceania",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "GAB": {
+    "en": [
+      "Africa",
+      "Central Africa",
+      "North Atlantic",
+      "South Atlantic"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Centrale",
+      "Atlantique Nord",
+      "Atlantique Sud"
+    ],
+    "es": [
+      "Africa",
+      "Africa Central",
+      "Atlántico Norte",
+      "Atlántico Sur"
+    ]
+  },
+  "GBR": {
+    "en": [
+      "Atlantic Ocean Islands",
+      "Europe",
+      "Europe and Central Asia",
+      "North Atlantic",
+      "North Sea",
+      "North-East Atlantic",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Îles de l'Océan Atlantique",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Atlantique Nord",
+      "Mer du Nord",
+      "Atlantique du Nord-Est",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Islas del Océano Atlántico",
+      "Europa",
+      "Europa y Central Asia",
+      "Atlántico Norte",
+      "Mar del Norte",
+      "Atlántico Nordeste",
+      "Europa Septentrional"
+    ]
+  },
+  "GEO": {
+    "en": [
+      "Asia",
+      "Black Sea",
+      "Eastern Europe",
+      "Europe",
+      "Europe and Central Asia",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Mer Noire",
+      "Europe de l'Est",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Mar Negro",
+      "Europa Oriental",
+      "Europa",
+      "Europa y Central Asia",
+      "Asia Occidental"
+    ]
+  },
+  "GGY": {
+    "en": [
+      "Europe",
+      "North Atlantic",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Atlantique Nord",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Europa",
+      "Atlántico Norte",
+      "Europa Septentrional"
+    ]
+  },
+  "GHA": {
+    "en": [
+      "Africa",
+      "North Atlantic",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Atlantique Nord",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Atlántico Norte",
+      "Africa Occidental"
+    ]
+  },
+  "GIB": {
+    "en": [
+      "Europe",
+      "Mediterranean",
+      "North Atlantic",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Méditerranée",
+      "Atlantique Nord",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Europa",
+      "Mediterráneo",
+      "Atlántico Norte",
+      "Europa Meridional"
+    ]
+  },
+  "GIN": {
+    "en": [
+      "Africa",
+      "Least Developed Countries",
+      "North Atlantic",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Pays les moins avances",
+      "Atlantique Nord",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Países menos desarrollados",
+      "Atlántico Norte",
+      "Africa Occidental"
+    ]
+  },
+  "GLO": {
+    "en": [
+      "Africa",
+      "Indian Ocean"
+    ],
+    "fr": [
+      "Afrique",
+      "Océan Indien"
+    ],
+    "es": [
+      "Africa",
+      "Océano Índico"
+    ]
+  },
+  "GLP": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe"
+    ]
+  },
+  "GMB": {
+    "en": [
+      "Africa",
+      "Least Developed Countries",
+      "North Atlantic",
+      "Sahel",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Pays les moins avances",
+      "Atlantique Nord",
+      "Sahel",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Países menos desarrollados",
+      "Atlántico Norte",
+      "Sahel",
+      "Africa Occidental"
+    ]
+  },
+  "GNB": {
+    "en": [
+      "Africa",
+      "Least Developed Countries",
+      "North Atlantic",
+      "Sahel",
+      "Small Island Developing States",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Pays les moins avances",
+      "Atlantique Nord",
+      "Sahel",
+      "Petits états insulaires en développement",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Países menos desarrollados",
+      "Atlántico Norte",
+      "Sahel",
+      "Pequeños estados insulares en desarrollo",
+      "Africa Occidental"
+    ]
+  },
+  "GNQ": {
+    "en": [
+      "Africa",
+      "Central Africa",
+      "Least Developed Countries",
+      "North Atlantic"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Centrale",
+      "Pays les moins avances",
+      "Atlantique Nord"
+    ],
+    "es": [
+      "Africa",
+      "Africa Central",
+      "Países menos desarrollados",
+      "Atlántico Norte"
+    ]
+  },
+  "GRC": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "Mediterranean",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Méditerranée",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Mediterráneo",
+      "Europa Meridional"
+    ]
+  },
+  "GRD": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "GRL": {
+    "en": [
+      "Americas",
+      "Arctic",
+      "Atlantic Ocean Islands",
+      "European Union Countries",
+      "North America",
+      "North Atlantic"
+    ],
+    "fr": [
+      "Amériques",
+      "Arctique",
+      "Îles de l'Océan Atlantique",
+      "Pays de l'Union Européenne",
+      "Amérique du Nord",
+      "Atlantique Nord"
+    ],
+    "es": [
+      "Americas",
+      "Ártico",
+      "Islas del Océano Atlántico",
+      "Países de la Unión Europea",
+      "América del Norte",
+      "Atlántico Norte"
+    ]
+  },
+  "GTM": {
+    "en": [
+      "Americas",
+      "Central America",
+      "East Pacific",
+      "Latin America and the Caribbean",
+      "North-East Pacific"
+    ],
+    "fr": [
+      "Amériques",
+      "Amérique Centrale",
+      "Pacifique du Est",
+      "Amérique latine et Caraïbes",
+      "Pacifique du Nord-Est"
+    ],
+    "es": [
+      "Americas",
+      "América Central",
+      "Pacífico Oriental",
+      "América Latina y el Caribe",
+      "Pacífico Nordeste"
+    ]
+  },
+  "GUF": {
+    "en": [
+      "Americas",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "South America"
+    ],
+    "fr": [
+      "Amériques",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Amérique du Sud"
+    ],
+    "es": [
+      "Americas",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "América del Sur"
+    ]
+  },
+  "GUM": {
+    "en": [
+      "Micronesia",
+      "Oceania",
+      "South Pacific"
+    ],
+    "fr": [
+      "Micronesie",
+      "Océanie",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Micronesia",
+      "Oceania",
+      "Pacífico Sur"
+    ]
+  },
+  "GUY": {
+    "en": [
+      "Amazonia",
+      "Americas",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "Small Island Developing States",
+      "South America"
+    ],
+    "fr": [
+      "Amazone",
+      "Amériques",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Petits états insulaires en développement",
+      "Amérique du Sud"
+    ],
+    "es": [
+      "Amazona",
+      "Americas",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "Pequeños estados insulares en desarrollo",
+      "América del Sur"
+    ]
+  },
+  "HKG": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "East Asian Seas",
+      "Eastern Asia",
+      "North Pacific",
+      "North-West Pacific"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "East Asian Seas",
+      "Asie Orientale",
+      "Pacifique Nord",
+      "Pacifique Nord Occidental"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Mares del Asia Oriental",
+      "Asia Oriental",
+      "Pacífico Norte",
+      "Pacífico Nordoeste"
+    ]
+  },
+  "HND": {
+    "en": [
+      "Americas",
+      "Central America",
+      "Latin America and the Caribbean",
+      "North-East Pacific"
+    ],
+    "fr": [
+      "Amériques",
+      "Amérique Centrale",
+      "Amérique latine et Caraïbes",
+      "Pacifique du Nord-Est"
+    ],
+    "es": [
+      "Americas",
+      "América Central",
+      "América Latina y el Caribe",
+      "Pacífico Nordeste"
+    ]
+  },
+  "HRV": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "Mediterranean",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Méditerranée",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Mediterráneo",
+      "Europa Meridional"
+    ]
+  },
+  "HTI": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "Least Developed Countries",
+      "North Atlantic",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Pays les moins avances",
+      "Atlantique Nord",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Países menos desarrollados",
+      "Atlántico Norte",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "HUN": {
+    "en": [
+      "Eastern Europe",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries"
+    ],
+    "fr": [
+      "Europe de l'Est",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne"
+    ],
+    "es": [
+      "Europa Oriental",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea"
+    ]
+  },
+  "IDN": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "East Asian Seas",
+      "Indian Ocean",
+      "South-Eastern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "East Asian Seas",
+      "Océan Indien",
+      "Asie du Sud-Est"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Mares del Asia Oriental",
+      "Océano Índico",
+      "Asia Sudoriental"
+    ]
+  },
+  "IEU": {
+    "en": [
+      "Africa",
+      "Indian Ocean"
+    ],
+    "fr": [
+      "Afrique",
+      "Océan Indien"
+    ],
+    "es": [
+      "Africa",
+      "Océano Índico"
+    ]
+  },
+  "IND": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "Indian Ocean",
+      "South Asian Seas",
+      "Southern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "Océan Indien",
+      "Mer de l'Asie du Sud-Est",
+      "Asie du Sud"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Océano Índico",
+      "Mares del Asia Sudoriental",
+      "Asia Meridional"
+    ]
+  },
+  "IRL": {
+    "en": [
+      "Atlantic Ocean Islands",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "North Atlantic",
+      "North-East Atlantic",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Îles de l'Océan Atlantique",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Atlantique Nord",
+      "Atlantique du Nord-Est",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Islas del Océano Atlántico",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Atlántico Norte",
+      "Atlántico Nordeste",
+      "Europa Septentrional"
+    ]
+  },
+  "IRN": {
+    "en": [
+      "Asia",
+      "Caspian Sea",
+      "Middle East",
+      "Near East and North Africa",
+      "Persian Gulf",
+      "Southern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Mer Caspienne",
+      "Moyen-Orient",
+      "Afrique du Nord et Proche-Orient",
+      "Golfe Persique",
+      "Asie du Sud"
+    ],
+    "es": [
+      "Asia",
+      "Mar Caspio",
+      "Medio Oriente",
+      "Africa del Norte y Cercano Oriente",
+      "Golfo Pérsico",
+      "Asia Meridional"
+    ]
+  },
+  "IRQ": {
+    "en": [
+      "Asia",
+      "Middle East",
+      "Near East and North Africa",
+      "Persian Gulf",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Moyen-Orient",
+      "Afrique du Nord et Proche-Orient",
+      "Golfe Persique",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Medio Oriente",
+      "Africa del Norte y Cercano Oriente",
+      "Golfo Pérsico",
+      "Asia Occidental"
+    ]
+  },
+  "ISL": {
+    "en": [
+      "Arctic",
+      "Atlantic Ocean Islands",
+      "Europe",
+      "Europe and Central Asia",
+      "North Atlantic",
+      "North-East Atlantic",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Arctique",
+      "Îles de l'Océan Atlantique",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Atlantique Nord",
+      "Atlantique du Nord-Est",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Ártico",
+      "Islas del Océano Atlántico",
+      "Europa",
+      "Europa y Central Asia",
+      "Atlántico Norte",
+      "Atlántico Nordeste",
+      "Europa Septentrional"
+    ]
+  },
+  "ISR": {
+    "en": [
+      "Asia",
+      "Europe and Central Asia",
+      "Mediterranean",
+      "Middle East",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Europe et Asie Centrale",
+      "Méditerranée",
+      "Moyen-Orient",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Europa y Central Asia",
+      "Mediterráneo",
+      "Medio Oriente",
+      "Asia Occidental"
+    ]
+  },
+  "ITA": {
+    "en": [
+      "Alps",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "Mediterranean",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Alpes",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Méditerranée",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Alpes",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Mediterráneo",
+      "Europa Meridional"
+    ]
+  },
+  "JAM": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "JEY": {
+    "en": [
+      "Europe",
+      "North Atlantic",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Atlantique Nord",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Europa",
+      "Atlántico Norte",
+      "Europa Septentrional"
+    ]
+  },
+  "JMN": {
+    "en": [
+      "Arctic",
+      "Europe",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Arctique",
+      "Europe",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Ártico",
+      "Europa",
+      "Europa Septentrional"
+    ]
+  },
+  "JOH": {
+    "en": [
+      "North Pacific"
+    ],
+    "fr": [
+      "Pacifique Nord"
+    ],
+    "es": [
+      "Pacífico Norte"
+    ]
+  },
+  "JOR": {
+    "en": [
+      "Asia",
+      "Middle East",
+      "Near East and North Africa",
+      "Red Sea & Gulf of Aden",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Moyen-Orient",
+      "Afrique du Nord et Proche-Orient",
+      "Mer Rouge et le Golfe d'Aden",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Medio Oriente",
+      "Africa del Norte y Cercano Oriente",
+      "Mar Rojo & Golfo de Adén",
+      "Asia Occidental"
+    ]
+  },
+  "JPN": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "Eastern Asia",
+      "North Pacific",
+      "North-West Pacific"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "Asie Orientale",
+      "Pacifique Nord",
+      "Pacifique Nord Occidental"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Asia Oriental",
+      "Pacífico Norte",
+      "Pacífico Nordoeste"
+    ]
+  },
+  "JUA": {
+    "en": [
+      "Africa",
+      "Indian Ocean"
+    ],
+    "fr": [
+      "Afrique",
+      "Océan Indien"
+    ],
+    "es": [
+      "Africa",
+      "Océano Índico"
+    ]
+  },
+  "KAZ": {
+    "en": [
+      "Aral Sea",
+      "Asia",
+      "Caspian Sea",
+      "Central Asia",
+      "CIS (Commonwealth of Independent States)",
+      "Europe and Central Asia",
+      "Landlocked Developing Nations",
+      "North Asia"
+    ],
+    "fr": [
+      "Mer d’Aral",
+      "Asie",
+      "Mer Caspienne",
+      "Asie Centrale",
+      "CEI (Communauté des États indépendants)",
+      "Europe et Asie Centrale",
+      "Nations en développement sans littoral",
+      "Asie du Nord"
+    ],
+    "es": [
+      "Mar Aral",
+      "Asia",
+      "Mar Caspio",
+      "Asia Central",
+      "CEI (Comunidad de Estados Independientes)",
+      "Europa y Central Asia",
+      "Naciones en desarrollo sin litoral",
+      "Asia del Norte"
+    ]
+  },
+  "KEN": {
+    "en": [
+      "Africa",
+      "Eastern Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental"
+    ]
+  },
+  "KGZ": {
+    "en": [
+      "Asia",
+      "Central Asia",
+      "CIS (Commonwealth of Independent States)",
+      "Europe and Central Asia",
+      "Landlocked Developing Nations",
+      "North Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie Centrale",
+      "CEI (Communauté des États indépendants)",
+      "Europe et Asie Centrale",
+      "Nations en développement sans littoral",
+      "Asie du Nord"
+    ],
+    "es": [
+      "Asia",
+      "Asia Central",
+      "CEI (Comunidad de Estados Independientes)",
+      "Europa y Central Asia",
+      "Naciones en desarrollo sin litoral",
+      "Asia del Norte"
+    ]
+  },
+  "KHM": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "East Asian Seas",
+      "Least Developed Countries",
+      "South-Eastern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "East Asian Seas",
+      "Pays les moins avances",
+      "Asie du Sud-Est"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Mares del Asia Oriental",
+      "Países menos desarrollados",
+      "Asia Sudoriental"
+    ]
+  },
+  "KIR": {
+    "en": [
+      "Asia and the Pacific",
+      "Least Developed Countries",
+      "Micronesia",
+      "Oceania",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Pays les moins avances",
+      "Micronesie",
+      "Océanie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Países menos desarrollados",
+      "Micronesia",
+      "Oceania",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "KNA": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "KOR": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "East Asian Seas",
+      "Eastern Asia",
+      "North Pacific",
+      "North-West Pacific"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "East Asian Seas",
+      "Asie Orientale",
+      "Pacifique Nord",
+      "Pacifique Nord Occidental"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Mares del Asia Oriental",
+      "Asia Oriental",
+      "Pacífico Norte",
+      "Pacífico Nordoeste"
+    ]
+  },
+  "KWT": {
+    "en": [
+      "Asia",
+      "Middle East",
+      "Near East and North Africa",
+      "Persian Gulf",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Moyen-Orient",
+      "Afrique du Nord et Proche-Orient",
+      "Golfe Persique",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Medio Oriente",
+      "Africa del Norte y Cercano Oriente",
+      "Golfo Pérsico",
+      "Asia Occidental"
+    ]
+  },
+  "LAO": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "Landlocked Developing Nations",
+      "Least Developed Countries",
+      "South-Eastern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "Nations en développement sans littoral",
+      "Pays les moins avances",
+      "Asie du Sud-Est"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados",
+      "Asia Sudoriental"
+    ]
+  },
+  "LBN": {
+    "en": [
+      "Asia",
+      "Mediterranean",
+      "Middle East",
+      "Near East and North Africa",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Méditerranée",
+      "Moyen-Orient",
+      "Afrique du Nord et Proche-Orient",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Mediterráneo",
+      "Medio Oriente",
+      "Africa del Norte y Cercano Oriente",
+      "Asia Occidental"
+    ]
+  },
+  "LBR": {
+    "en": [
+      "Africa",
+      "Least Developed Countries",
+      "North Atlantic",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Pays les moins avances",
+      "Atlantique Nord",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Países menos desarrollados",
+      "Atlántico Norte",
+      "Africa Occidental"
+    ]
+  },
+  "LBY": {
+    "en": [
+      "Africa",
+      "Mediterranean",
+      "Near East and North Africa",
+      "Northern Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Méditerranée",
+      "Afrique du Nord et Proche-Orient",
+      "Afrique du Nord"
+    ],
+    "es": [
+      "Africa",
+      "Mediterráneo",
+      "Africa del Norte y Cercano Oriente",
+      "Africa del Norte"
+    ]
+  },
+  "LCA": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "LIE": {
+    "en": [
+      "Alps",
+      "Europe",
+      "Western Europe"
+    ],
+    "fr": [
+      "Alpes",
+      "Europe",
+      "Europe du Ouest"
+    ],
+    "es": [
+      "Alpes",
+      "Europa",
+      "Europa Occidental"
+    ]
+  },
+  "LKA": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "Indian Ocean",
+      "South Asian Seas",
+      "Southern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "Océan Indien",
+      "Mer de l'Asie du Sud-Est",
+      "Asie du Sud"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Océano Índico",
+      "Mares del Asia Sudoriental",
+      "Asia Meridional"
+    ]
+  },
+  "LSO": {
+    "en": [
+      "Africa",
+      "Landlocked Developing Nations",
+      "Least Developed Countries",
+      "Southern Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Nations en développement sans littoral",
+      "Pays les moins avances",
+      "Afrique Méridionale"
+    ],
+    "es": [
+      "Africa",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados",
+      "Africa Meridional"
+    ]
+  },
+  "LTU": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Europa Septentrional"
+    ]
+  },
+  "LUX": {
+    "en": [
+      "Benelux",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "North-East Atlantic",
+      "Western Europe"
+    ],
+    "fr": [
+      "Benelux",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Atlantique du Nord-Est",
+      "Europe du Ouest"
+    ],
+    "es": [
+      "Benelux",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Atlántico Nordeste",
+      "Europa Occidental"
+    ]
+  },
+  "LVA": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Europa Septentrional"
+    ]
+  },
+  "MAC": {
+    "en": [
+      "Asia",
+      "Eastern Asia",
+      "North Pacific",
+      "North-West Pacific"
+    ],
+    "fr": [
+      "Asie",
+      "Asie Orientale",
+      "Pacifique Nord",
+      "Pacifique Nord Occidental"
+    ],
+    "es": [
+      "Asia",
+      "Asia Oriental",
+      "Pacífico Norte",
+      "Pacífico Nordoeste"
+    ]
+  },
+  "MAR": {
+    "en": [
+      "Africa",
+      "Mediterranean",
+      "Near East and North Africa",
+      "North Atlantic",
+      "Northern Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Méditerranée",
+      "Afrique du Nord et Proche-Orient",
+      "Atlantique Nord",
+      "Afrique du Nord"
+    ],
+    "es": [
+      "Africa",
+      "Mediterráneo",
+      "Africa del Norte y Cercano Oriente",
+      "Atlántico Norte",
+      "Africa del Norte"
+    ]
+  },
+  "MCO": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "Mediterranean",
+      "Western Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Méditerranée",
+      "Europe du Ouest"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Mediterráneo",
+      "Europa Occidental"
+    ]
+  },
+  "MDA": {
+    "en": [
+      "CIS (Commonwealth of Independent States)",
+      "Eastern Europe",
+      "Europe",
+      "Europe and Central Asia",
+      "Landlocked Developing Nations"
+    ],
+    "fr": [
+      "CEI (Communauté des États indépendants)",
+      "Europe de l'Est",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Nations en développement sans littoral"
+    ],
+    "es": [
+      "CEI (Comunidad de Estados Independientes)",
+      "Europa Oriental",
+      "Europa",
+      "Europa y Central Asia",
+      "Naciones en desarrollo sin litoral"
+    ]
+  },
+  "MDG": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Indian Ocean",
+      "Least Developed Countries"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Océan Indien",
+      "Pays les moins avances"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Océano Índico",
+      "Países menos desarrollados"
+    ]
+  },
+  "MDV": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "Indian Ocean",
+      "Small Island Developing States",
+      "South Asian Seas",
+      "Southern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "Océan Indien",
+      "Petits états insulaires en développement",
+      "Mer de l'Asie du Sud-Est",
+      "Asie du Sud"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Océano Índico",
+      "Pequeños estados insulares en desarrollo",
+      "Mares del Asia Sudoriental",
+      "Asia Meridional"
+    ]
+  },
+  "MEX": {
+    "en": [
+      "Americas",
+      "Central America",
+      "East Pacific",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "North Pacific",
+      "North-East Pacific"
+    ],
+    "fr": [
+      "Amériques",
+      "Amérique Centrale",
+      "Pacifique du Est",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Pacifique Nord",
+      "Pacifique du Nord-Est"
+    ],
+    "es": [
+      "Americas",
+      "América Central",
+      "Pacífico Oriental",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "Pacífico Norte",
+      "Pacífico Nordeste"
+    ]
+  },
+  "MHL": {
+    "en": [
+      "Micronesia",
+      "Oceania",
+      "South Pacific"
+    ],
+    "fr": [
+      "Micronesie",
+      "Océanie",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Micronesia",
+      "Oceania",
+      "Pacífico Sur"
+    ]
+  },
+  "MID": {
+    "en": [
+      "North Pacific"
+    ],
+    "fr": [
+      "Pacifique Nord"
+    ],
+    "es": [
+      "Pacífico Norte"
+    ]
+  },
+  "MKD": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "Landlocked Developing Nations",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Nations en développement sans littoral",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Naciones en desarrollo sin litoral",
+      "Europa Meridional"
+    ]
+  },
+  "MLI": {
+    "en": [
+      "Africa",
+      "Least Developed Countries",
+      "Sahel",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Pays les moins avances",
+      "Sahel",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Países menos desarrollados",
+      "Sahel",
+      "Africa Occidental"
+    ]
+  },
+  "MLT": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "Mediterranean",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Méditerranée",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Mediterráneo",
+      "Europa Meridional"
+    ]
+  },
+  "MMR": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "Indian Ocean",
+      "Least Developed Countries",
+      "South-Eastern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "Océan Indien",
+      "Pays les moins avances",
+      "Asie du Sud-Est"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Océano Índico",
+      "Países menos desarrollados",
+      "Asia Sudoriental"
+    ]
+  },
+  "MNE": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "Mediterranean",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Méditerranée",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Mediterráneo",
+      "Europa Meridional"
+    ]
+  },
+  "MNG": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "Eastern Asia",
+      "Landlocked Developing Nations"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "Asie Orientale",
+      "Nations en développement sans littoral"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Asia Oriental",
+      "Naciones en desarrollo sin litoral"
+    ]
+  },
+  "MNP": {
+    "en": [
+      "Micronesia",
+      "Oceania",
+      "South Pacific"
+    ],
+    "fr": [
+      "Micronesie",
+      "Océanie",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Micronesia",
+      "Oceania",
+      "Pacífico Sur"
+    ]
+  },
+  "MOZ": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Indian Ocean",
+      "Least Developed Countries"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Océan Indien",
+      "Pays les moins avances"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Océano Índico",
+      "Países menos desarrollados"
+    ]
+  },
+  "MRT": {
+    "en": [
+      "Africa",
+      "Least Developed Countries",
+      "Near East and North Africa",
+      "North Atlantic",
+      "Sahel",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Pays les moins avances",
+      "Afrique du Nord et Proche-Orient",
+      "Atlantique Nord",
+      "Sahel",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Países menos desarrollados",
+      "Africa del Norte y Cercano Oriente",
+      "Atlántico Norte",
+      "Sahel",
+      "Africa Occidental"
+    ]
+  },
+  "MSR": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "MTQ": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe"
+    ]
+  },
+  "MUS": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Indian Ocean",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Océan Indien",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Océano Índico",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "MWI": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Landlocked Developing Nations",
+      "Least Developed Countries"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Nations en développement sans littoral",
+      "Pays les moins avances"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados"
+    ]
+  },
+  "MYS": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "East Asian Seas",
+      "South-Eastern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "East Asian Seas",
+      "Asie du Sud-Est"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Mares del Asia Oriental",
+      "Asia Sudoriental"
+    ]
+  },
+  "MYT": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "European Union Countries",
+      "Indian Ocean"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Pays de l'Union Européenne",
+      "Océan Indien"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Países de la Unión Europea",
+      "Océano Índico"
+    ]
+  },
+  "NAM": {
+    "en": [
+      "Africa",
+      "South Atlantic",
+      "Southern Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Atlantique Sud",
+      "Afrique Méridionale"
+    ],
+    "es": [
+      "Africa",
+      "Atlántico Sur",
+      "Africa Meridional"
+    ]
+  },
+  "NCL": {
+    "en": [
+      "Asia and the Pacific",
+      "European Union Countries",
+      "Melanesia",
+      "Oceania",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Pays de l'Union Européenne",
+      "Mélanésie",
+      "Océanie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Países de la Unión Europea",
+      "Melanesia",
+      "Oceania",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "NER": {
+    "en": [
+      "Africa",
+      "Sahel",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Sahel",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Sahel",
+      "Africa Occidental"
+    ]
+  },
+  "NFK": {
+    "en": [
+      "Asia and the Pacific",
+      "Australia and New Zealand",
+      "Oceania",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Australie et Nouvelle-Zélande",
+      "Océanie",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Australia y Nueva Zelandia",
+      "Oceania",
+      "Pacífico Sur"
+    ]
+  },
+  "NGA": {
+    "en": [
+      "Africa",
+      "North Atlantic",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Atlantique Nord",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Atlántico Norte",
+      "Africa Occidental"
+    ]
+  },
+  "NIC": {
+    "en": [
+      "Americas",
+      "Central America",
+      "East Pacific",
+      "Latin America and the Caribbean",
+      "North-East Pacific"
+    ],
+    "fr": [
+      "Amériques",
+      "Amérique Centrale",
+      "Pacifique du Est",
+      "Amérique latine et Caraïbes",
+      "Pacifique du Nord-Est"
+    ],
+    "es": [
+      "Americas",
+      "América Central",
+      "Pacífico Oriental",
+      "América Latina y el Caribe",
+      "Pacífico Nordeste"
+    ]
+  },
+  "NIU": {
+    "en": [
+      "Asia and the Pacific",
+      "Oceania",
+      "Polynesia",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Océanie",
+      "Polinesie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Oceania",
+      "Polinesia",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "NLD": {
+    "en": [
+      "Benelux",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "North Atlantic",
+      "North Sea",
+      "North-East Atlantic",
+      "Western Europe"
+    ],
+    "fr": [
+      "Benelux",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Atlantique Nord",
+      "Mer du Nord",
+      "Atlantique du Nord-Est",
+      "Europe du Ouest"
+    ],
+    "es": [
+      "Benelux",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Atlántico Norte",
+      "Mar del Norte",
+      "Atlántico Nordeste",
+      "Europa Occidental"
+    ]
+  },
+  "NOR": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "North Atlantic",
+      "North Sea",
+      "North-East Atlantic",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Atlantique Nord",
+      "Mer du Nord",
+      "Atlantique du Nord-Est",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Atlántico Norte",
+      "Mar del Norte",
+      "Atlántico Nordeste",
+      "Europa Septentrional"
+    ]
+  },
+  "NPL": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "Landlocked Developing Nations",
+      "Least Developed Countries",
+      "Southern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "Nations en développement sans littoral",
+      "Pays les moins avances",
+      "Asie du Sud"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados",
+      "Asia Meridional"
+    ]
+  },
+  "NRU": {
+    "en": [
+      "Asia and the Pacific",
+      "Micronesia",
+      "Oceania",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Micronesie",
+      "Océanie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Micronesia",
+      "Oceania",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "NZL": {
+    "en": [
+      "Asia and the Pacific",
+      "Australia and New Zealand",
+      "Oceania",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Australie et Nouvelle-Zélande",
+      "Océanie",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Australia y Nueva Zelandia",
+      "Oceania",
+      "Pacífico Sur"
+    ]
+  },
+  "OMN": {
+    "en": [
+      "Asia",
+      "Indian Ocean",
+      "Middle East",
+      "Near East and North Africa",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Océan Indien",
+      "Moyen-Orient",
+      "Afrique du Nord et Proche-Orient",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Océano Índico",
+      "Medio Oriente",
+      "Africa del Norte y Cercano Oriente",
+      "Asia Occidental"
+    ]
+  },
+  "PAK": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "Indian Ocean",
+      "South Asian Seas",
+      "Southern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "Océan Indien",
+      "Mer de l'Asie du Sud-Est",
+      "Asie du Sud"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Océano Índico",
+      "Mares del Asia Sudoriental",
+      "Asia Meridional"
+    ]
+  },
+  "PAN": {
+    "en": [
+      "Americas",
+      "Central America",
+      "East Pacific",
+      "Latin America and the Caribbean",
+      "North-East Pacific",
+      "South-Eastern Pacific"
+    ],
+    "fr": [
+      "Amériques",
+      "Amérique Centrale",
+      "Pacifique du Est",
+      "Amérique latine et Caraïbes",
+      "Pacifique du Nord-Est",
+      "Pacifique du Sud-Est"
+    ],
+    "es": [
+      "Americas",
+      "América Central",
+      "Pacífico Oriental",
+      "América Latina y el Caribe",
+      "Pacífico Nordeste",
+      "Pacífico Sudeste"
+    ]
+  },
+  "PCN": {
+    "en": [
+      "Oceania",
+      "Polynesia",
+      "South Pacific"
+    ],
+    "fr": [
+      "Océanie",
+      "Polinesie",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Oceania",
+      "Polinesia",
+      "Pacífico Sur"
+    ]
+  },
+  "PER": {
+    "en": [
+      "Amazonia",
+      "Americas",
+      "Andean States",
+      "East Pacific",
+      "Latin America and the Caribbean",
+      "South America",
+      "South-Eastern Pacific"
+    ],
+    "fr": [
+      "Amazone",
+      "Amériques",
+      "États Andean",
+      "Pacifique du Est",
+      "Amérique latine et Caraïbes",
+      "Amérique du Sud",
+      "Pacifique du Sud-Est"
+    ],
+    "es": [
+      "Amazona",
+      "Americas",
+      "Estados Andinos",
+      "Pacífico Oriental",
+      "América Latina y el Caribe",
+      "América del Sur",
+      "Pacífico Sudeste"
+    ]
+  },
+  "PHL": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "East Asian Seas",
+      "North Pacific",
+      "South-Eastern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "East Asian Seas",
+      "Pacifique Nord",
+      "Asie du Sud-Est"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Mares del Asia Oriental",
+      "Pacífico Norte",
+      "Asia Sudoriental"
+    ]
+  },
+  "PLW": {
+    "en": [
+      "Asia and the Pacific",
+      "Micronesia",
+      "Oceania",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Micronesie",
+      "Océanie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Micronesia",
+      "Oceania",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "PNG": {
+    "en": [
+      "Asia and the Pacific",
+      "Melanesia",
+      "Oceania",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Mélanésie",
+      "Océanie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Melanesia",
+      "Oceania",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "POL": {
+    "en": [
+      "Eastern Europe",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries"
+    ],
+    "fr": [
+      "Europe de l'Est",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne"
+    ],
+    "es": [
+      "Europa Oriental",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea"
+    ]
+  },
+  "PRI": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "PRK": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "East Asian Seas",
+      "Eastern Asia",
+      "North Pacific",
+      "North-West Pacific"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "East Asian Seas",
+      "Asie Orientale",
+      "Pacifique Nord",
+      "Pacifique Nord Occidental"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Mares del Asia Oriental",
+      "Asia Oriental",
+      "Pacífico Norte",
+      "Pacífico Nordoeste"
+    ]
+  },
+  "PRT": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "North Atlantic",
+      "North-East Atlantic",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Atlantique Nord",
+      "Atlantique du Nord-Est",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Atlántico Norte",
+      "Atlántico Nordeste",
+      "Europa Meridional"
+    ]
+  },
+  "PRY": {
+    "en": [
+      "Americas",
+      "Landlocked Developing Nations",
+      "Latin America and the Caribbean",
+      "South America"
+    ],
+    "fr": [
+      "Amériques",
+      "Nations en développement sans littoral",
+      "Amérique latine et Caraïbes",
+      "Amérique du Sud"
+    ],
+    "es": [
+      "Americas",
+      "Naciones en desarrollo sin litoral",
+      "América Latina y el Caribe",
+      "América del Sur"
+    ]
+  },
+  "PSE": {
+    "en": [
+      "Asia",
+      "Mediterranean",
+      "Middle East",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Méditerranée",
+      "Moyen-Orient",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Mediterráneo",
+      "Medio Oriente",
+      "Asia Occidental"
+    ]
+  },
+  "PYF": {
+    "en": [
+      "Asia and the Pacific",
+      "European Union Countries",
+      "Oceania",
+      "Polynesia",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Pays de l'Union Européenne",
+      "Océanie",
+      "Polinesie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Países de la Unión Europea",
+      "Oceania",
+      "Polinesia",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "QAT": {
+    "en": [
+      "Asia",
+      "Middle East",
+      "Near East and North Africa",
+      "Persian Gulf",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Moyen-Orient",
+      "Afrique du Nord et Proche-Orient",
+      "Golfe Persique",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Medio Oriente",
+      "Africa del Norte y Cercano Oriente",
+      "Golfo Pérsico",
+      "Asia Occidental"
+    ]
+  },
+  "REU": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Indian Ocean"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Océan Indien"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Océano Índico"
+    ]
+  },
+  "ROU": {
+    "en": [
+      "Black Sea",
+      "Eastern Europe",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries"
+    ],
+    "fr": [
+      "Mer Noire",
+      "Europe de l'Est",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne"
+    ],
+    "es": [
+      "Mar Negro",
+      "Europa Oriental",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea"
+    ]
+  },
+  "RUS": {
+    "en": [
+      "Arctic",
+      "Asia and the Pacific",
+      "Black Sea",
+      "Caspian Sea",
+      "CIS (Commonwealth of Independent States)",
+      "Eastern Europe",
+      "Europe",
+      "Europe and Central Asia",
+      "North Pacific",
+      "North-West Pacific"
+    ],
+    "fr": [
+      "Arctique",
+      "Asie et Pacifique",
+      "Mer Noire",
+      "Mer Caspienne",
+      "CEI (Communauté des États indépendants)",
+      "Europe de l'Est",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pacifique Nord",
+      "Pacifique Nord Occidental"
+    ],
+    "es": [
+      "Ártico",
+      "Asia y Pacifico",
+      "Mar Negro",
+      "Mar Caspio",
+      "CEI (Comunidad de Estados Independientes)",
+      "Europa Oriental",
+      "Europa",
+      "Europa y Central Asia",
+      "Pacífico Norte",
+      "Pacífico Nordoeste"
+    ]
+  },
+  "RWA": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Landlocked Developing Nations",
+      "Least Developed Countries"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Nations en développement sans littoral",
+      "Pays les moins avances"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados"
+    ]
+  },
+  "SAU": {
+    "en": [
+      "Asia",
+      "Middle East",
+      "Near East and North Africa",
+      "Persian Gulf",
+      "Red Sea & Gulf of Aden",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Moyen-Orient",
+      "Afrique du Nord et Proche-Orient",
+      "Golfe Persique",
+      "Mer Rouge et le Golfe d'Aden",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Medio Oriente",
+      "Africa del Norte y Cercano Oriente",
+      "Golfo Pérsico",
+      "Mar Rojo & Golfo de Adén",
+      "Asia Occidental"
+    ]
+  },
+  "SCG": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "Mediterranean"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Méditerranée"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Mediterráneo"
+    ]
+  },
+  "SDN": {
+    "en": [
+      "Africa",
+      "Landlocked Developing Nations",
+      "Least Developed Countries",
+      "Near East and North Africa",
+      "Northern Africa",
+      "Red Sea & Gulf of Aden",
+      "Sahel"
+    ],
+    "fr": [
+      "Afrique",
+      "Nations en développement sans littoral",
+      "Pays les moins avances",
+      "Afrique du Nord et Proche-Orient",
+      "Afrique du Nord",
+      "Mer Rouge et le Golfe d'Aden",
+      "Sahel"
+    ],
+    "es": [
+      "Africa",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados",
+      "Africa del Norte y Cercano Oriente",
+      "Africa del Norte",
+      "Mar Rojo & Golfo de Adén",
+      "Sahel"
+    ]
+  },
+  "SEN": {
+    "en": [
+      "Africa",
+      "Least Developed Countries",
+      "North Atlantic",
+      "Sahel",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Pays les moins avances",
+      "Atlantique Nord",
+      "Sahel",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Países menos desarrollados",
+      "Atlántico Norte",
+      "Sahel",
+      "Africa Occidental"
+    ]
+  },
+  "SGP": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "East Asian Seas",
+      "Small Island Developing States",
+      "South-Eastern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "East Asian Seas",
+      "Petits états insulaires en développement",
+      "Asie du Sud-Est"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Mares del Asia Oriental",
+      "Pequeños estados insulares en desarrollo",
+      "Asia Sudoriental"
+    ]
+  },
+  "SHN": {
+    "en": [
+      "Africa",
+      "Atlantic Ocean Islands",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Îles de l'Océan Atlantique",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Islas del Océano Atlántico",
+      "Africa Occidental"
+    ]
+  },
+  "SJM": {
+    "en": [
+      "Arctic",
+      "Atlantic Ocean Islands",
+      "Europe",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Arctique",
+      "Îles de l'Océan Atlantique",
+      "Europe",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Ártico",
+      "Islas del Océano Atlántico",
+      "Europa",
+      "Europa Septentrional"
+    ]
+  },
+  "SLB": {
+    "en": [
+      "Asia and the Pacific",
+      "Least Developed Countries",
+      "Melanesia",
+      "Oceania",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Pays les moins avances",
+      "Mélanésie",
+      "Océanie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Países menos desarrollados",
+      "Melanesia",
+      "Oceania",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "SLE": {
+    "en": [
+      "Africa",
+      "Least Developed Countries",
+      "North Atlantic",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Pays les moins avances",
+      "Atlantique Nord",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Países menos desarrollados",
+      "Atlántico Norte",
+      "Africa Occidental"
+    ]
+  },
+  "SLV": {
+    "en": [
+      "Americas",
+      "Central America",
+      "East Pacific",
+      "Latin America and the Caribbean",
+      "North-East Pacific"
+    ],
+    "fr": [
+      "Amériques",
+      "Amérique Centrale",
+      "Pacifique du Est",
+      "Amérique latine et Caraïbes",
+      "Pacifique du Nord-Est"
+    ],
+    "es": [
+      "Americas",
+      "América Central",
+      "Pacífico Oriental",
+      "América Latina y el Caribe",
+      "Pacífico Nordeste"
+    ]
+  },
+  "SMR": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia",
+      "Europa Meridional"
+    ]
+  },
+  "SOM": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Indian Ocean",
+      "Least Developed Countries",
+      "Red Sea & Gulf of Aden",
+      "Sahel"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Océan Indien",
+      "Pays les moins avances",
+      "Mer Rouge et le Golfe d'Aden",
+      "Sahel"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Océano Índico",
+      "Países menos desarrollados",
+      "Mar Rojo & Golfo de Adén",
+      "Sahel"
+    ]
+  },
+  "SPM": {
+    "en": [
+      "Americas",
+      "European Union Countries",
+      "North America",
+      "North Atlantic"
+    ],
+    "fr": [
+      "Amériques",
+      "Pays de l'Union Européenne",
+      "Amérique du Nord",
+      "Atlantique Nord"
+    ],
+    "es": [
+      "Americas",
+      "Países de la Unión Europea",
+      "América del Norte",
+      "Atlántico Norte"
+    ]
+  },
+  "SRB": {
+    "en": [
+      "Europe",
+      "Europe and Central Asia"
+    ],
+    "fr": [
+      "Europe",
+      "Europe et Asie Centrale"
+    ],
+    "es": [
+      "Europa",
+      "Europa y Central Asia"
+    ]
+  },
+  "SSD": {
+    "en": [
+      "Africa",
+      "Landlocked Developing Nations",
+      "Least Developed Countries",
+      "Northern Africa",
+      "Sahel"
+    ],
+    "fr": [
+      "Afrique",
+      "Nations en développement sans littoral",
+      "Pays les moins avances",
+      "Afrique du Nord",
+      "Sahel"
+    ],
+    "es": [
+      "Africa",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados",
+      "Africa del Norte",
+      "Sahel"
+    ]
+  },
+  "STP": {
+    "en": [
+      "Africa",
+      "Central Africa",
+      "Least Developed Countries",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Centrale",
+      "Pays les moins avances",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Africa",
+      "Africa Central",
+      "Países menos desarrollados",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "SUR": {
+    "en": [
+      "Amazonia",
+      "Americas",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "Small Island Developing States",
+      "South America"
+    ],
+    "fr": [
+      "Amazone",
+      "Amériques",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Petits états insulaires en développement",
+      "Amérique du Sud"
+    ],
+    "es": [
+      "Amazona",
+      "Americas",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "Pequeños estados insulares en desarrollo",
+      "América del Sur"
+    ]
+  },
+  "SVK": {
+    "en": [
+      "Eastern Europe",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries"
+    ],
+    "fr": [
+      "Europe de l'Est",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne"
+    ],
+    "es": [
+      "Europa Oriental",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea"
+    ]
+  },
+  "SVN": {
+    "en": [
+      "Alps",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "Mediterranean",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Alpes",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Méditerranée",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Alpes",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Mediterráneo",
+      "Europa Meridional"
+    ]
+  },
+  "SWE": {
+    "en": [
+      "Arctic",
+      "Europe",
+      "Europe and Central Asia",
+      "European Union Countries",
+      "North Atlantic",
+      "North Sea",
+      "North-East Atlantic",
+      "Northern Europe"
+    ],
+    "fr": [
+      "Arctique",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Pays de l'Union Européenne",
+      "Atlantique Nord",
+      "Mer du Nord",
+      "Atlantique du Nord-Est",
+      "Europe du Nord"
+    ],
+    "es": [
+      "Ártico",
+      "Europa",
+      "Europa y Central Asia",
+      "Países de la Unión Europea",
+      "Atlántico Norte",
+      "Mar del Norte",
+      "Atlántico Nordeste",
+      "Europa Septentrional"
+    ]
+  },
+  "SWZ": {
+    "en": [
+      "Africa",
+      "Landlocked Developing Nations",
+      "Southern Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Nations en développement sans littoral",
+      "Afrique Méridionale"
+    ],
+    "es": [
+      "Africa",
+      "Naciones en desarrollo sin litoral",
+      "Africa Meridional"
+    ]
+  },
+  "SXM": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe"
+    ]
+  },
+  "SYC": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Indian Ocean",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Océan Indien",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Océano Índico",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "SYR": {
+    "en": [
+      "Asia",
+      "Mediterranean",
+      "Middle East",
+      "Near East and North Africa",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Méditerranée",
+      "Moyen-Orient",
+      "Afrique du Nord et Proche-Orient",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Mediterráneo",
+      "Medio Oriente",
+      "Africa del Norte y Cercano Oriente",
+      "Asia Occidental"
+    ]
+  },
+  "TCA": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "North Atlantic"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Atlántico Norte"
+    ]
+  },
+  "TCD": {
+    "en": [
+      "Africa",
+      "Central Africa",
+      "Landlocked Developing Nations",
+      "Least Developed Countries",
+      "Sahel"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Centrale",
+      "Nations en développement sans littoral",
+      "Pays les moins avances",
+      "Sahel"
+    ],
+    "es": [
+      "Africa",
+      "Africa Central",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados",
+      "Sahel"
+    ]
+  },
+  "TGO": {
+    "en": [
+      "Africa",
+      "Least Developed Countries",
+      "North Atlantic",
+      "Western Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Pays les moins avances",
+      "Atlantique Nord",
+      "Afrique de l'Ouest"
+    ],
+    "es": [
+      "Africa",
+      "Países menos desarrollados",
+      "Atlántico Norte",
+      "Africa Occidental"
+    ]
+  },
+  "THA": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "East Asian Seas",
+      "Indian Ocean",
+      "South-Eastern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "East Asian Seas",
+      "Océan Indien",
+      "Asie du Sud-Est"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Mares del Asia Oriental",
+      "Océano Índico",
+      "Asia Sudoriental"
+    ]
+  },
+  "TJK": {
+    "en": [
+      "Asia",
+      "Central Asia",
+      "CIS (Commonwealth of Independent States)",
+      "Europe and Central Asia",
+      "Landlocked Developing Nations",
+      "North Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie Centrale",
+      "CEI (Communauté des États indépendants)",
+      "Europe et Asie Centrale",
+      "Nations en développement sans littoral",
+      "Asie du Nord"
+    ],
+    "es": [
+      "Asia",
+      "Asia Central",
+      "CEI (Comunidad de Estados Independientes)",
+      "Europa y Central Asia",
+      "Naciones en desarrollo sin litoral",
+      "Asia del Norte"
+    ]
+  },
+  "TKL": {
+    "en": [
+      "Asia and the Pacific",
+      "Oceania",
+      "Polynesia",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Océanie",
+      "Polinesie",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Oceania",
+      "Polinesia",
+      "Pacífico Sur"
+    ]
+  },
+  "TKM": {
+    "en": [
+      "Asia",
+      "Caspian Sea",
+      "Central Asia",
+      "CIS (Commonwealth of Independent States)",
+      "Europe and Central Asia",
+      "Landlocked Developing Nations",
+      "North Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Mer Caspienne",
+      "Asie Centrale",
+      "CEI (Communauté des États indépendants)",
+      "Europe et Asie Centrale",
+      "Nations en développement sans littoral",
+      "Asie du Nord"
+    ],
+    "es": [
+      "Asia",
+      "Mar Caspio",
+      "Asia Central",
+      "CEI (Comunidad de Estados Independientes)",
+      "Europa y Central Asia",
+      "Naciones en desarrollo sin litoral",
+      "Asia del Norte"
+    ]
+  },
+  "TLS": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "Indian Ocean",
+      "Least Developed Countries",
+      "Small Island Developing States",
+      "South-Eastern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "Océan Indien",
+      "Pays les moins avances",
+      "Petits états insulaires en développement",
+      "Asie du Sud-Est"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Océano Índico",
+      "Países menos desarrollados",
+      "Pequeños estados insulares en desarrollo",
+      "Asia Sudoriental"
+    ]
+  },
+  "TON": {
+    "en": [
+      "Asia and the Pacific",
+      "Oceania",
+      "Polynesia",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Océanie",
+      "Polinesie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Oceania",
+      "Polinesia",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "TRO": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Indian Ocean"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Océan Indien"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Océano Índico"
+    ]
+  },
+  "TTO": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "TUN": {
+    "en": [
+      "Africa",
+      "Mediterranean",
+      "Near East and North Africa",
+      "Northern Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Méditerranée",
+      "Afrique du Nord et Proche-Orient",
+      "Afrique du Nord"
+    ],
+    "es": [
+      "Africa",
+      "Mediterráneo",
+      "Africa del Norte y Cercano Oriente",
+      "Africa del Norte"
+    ]
+  },
+  "TUR": {
+    "en": [
+      "Asia",
+      "Black Sea",
+      "Europe",
+      "Europe and Central Asia",
+      "Mediterranean",
+      "Middle East",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Mer Noire",
+      "Europe",
+      "Europe et Asie Centrale",
+      "Méditerranée",
+      "Moyen-Orient",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Mar Negro",
+      "Europa",
+      "Europa y Central Asia",
+      "Mediterráneo",
+      "Medio Oriente",
+      "Asia Occidental"
+    ]
+  },
+  "TUV": {
+    "en": [
+      "Asia and the Pacific",
+      "Least Developed Countries",
+      "Oceania",
+      "Polynesia",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Pays les moins avances",
+      "Océanie",
+      "Polinesie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Países menos desarrollados",
+      "Oceania",
+      "Polinesia",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "TWN": {
+    "en": [
+      "Asia",
+      "Asia and the Pacific",
+      "East Asian Seas",
+      "Eastern Asia",
+      "North Pacific",
+      "North-West Pacific"
+    ],
+    "fr": [
+      "Asie",
+      "Asie et Pacifique",
+      "East Asian Seas",
+      "Asie Orientale",
+      "Pacifique Nord",
+      "Pacifique Nord Occidental"
+    ],
+    "es": [
+      "Asia",
+      "Asia y Pacifico",
+      "Mares del Asia Oriental",
+      "Asia Oriental",
+      "Pacífico Norte",
+      "Pacífico Nordoeste"
+    ]
+  },
+  "TZA": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Least Developed Countries"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Pays les moins avances"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Países menos desarrollados"
+    ]
+  },
+  "UGA": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Landlocked Developing Nations",
+      "Least Developed Countries"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Nations en développement sans littoral",
+      "Pays les moins avances"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados"
+    ]
+  },
+  "UKR": {
+    "en": [
+      "Black Sea",
+      "CIS (Commonwealth of Independent States)",
+      "Eastern Europe",
+      "Europe",
+      "Europe and Central Asia"
+    ],
+    "fr": [
+      "Mer Noire",
+      "CEI (Communauté des États indépendants)",
+      "Europe de l'Est",
+      "Europe",
+      "Europe et Asie Centrale"
+    ],
+    "es": [
+      "Mar Negro",
+      "CEI (Comunidad de Estados Independientes)",
+      "Europa Oriental",
+      "Europa",
+      "Europa y Central Asia"
+    ]
+  },
+  "URY": {
+    "en": [
+      "Americas",
+      "Latin America and the Caribbean",
+      "South America",
+      "South Atlantic"
+    ],
+    "fr": [
+      "Amériques",
+      "Amérique latine et Caraïbes",
+      "Amérique du Sud",
+      "Atlantique Sud"
+    ],
+    "es": [
+      "Americas",
+      "América Latina y el Caribe",
+      "América del Sur",
+      "Atlántico Sur"
+    ]
+  },
+  "USA": {
+    "en": [
+      "Americas",
+      "Arctic",
+      "East Pacific",
+      "North America",
+      "North Atlantic"
+    ],
+    "fr": [
+      "Amériques",
+      "Arctique",
+      "Pacifique du Est",
+      "Amérique du Nord",
+      "Atlantique Nord"
+    ],
+    "es": [
+      "Americas",
+      "Ártico",
+      "Pacífico Oriental",
+      "América del Norte",
+      "Atlántico Norte"
+    ]
+  },
+  "UZB": {
+    "en": [
+      "Aral Sea",
+      "Asia",
+      "Asia and the Pacific",
+      "Central Asia",
+      "CIS (Commonwealth of Independent States)",
+      "Europe and Central Asia",
+      "Landlocked Developing Nations",
+      "North Asia"
+    ],
+    "fr": [
+      "Mer d’Aral",
+      "Asie",
+      "Asie et Pacifique",
+      "Asie Centrale",
+      "CEI (Communauté des États indépendants)",
+      "Europe et Asie Centrale",
+      "Nations en développement sans littoral",
+      "Asie du Nord"
+    ],
+    "es": [
+      "Mar Aral",
+      "Asia",
+      "Asia y Pacifico",
+      "Asia Central",
+      "CEI (Comunidad de Estados Independientes)",
+      "Europa y Central Asia",
+      "Naciones en desarrollo sin litoral",
+      "Asia del Norte"
+    ]
+  },
+  "VAT": {
+    "en": [
+      "Europe",
+      "Southern Europe"
+    ],
+    "fr": [
+      "Europe",
+      "Europe du Sud"
+    ],
+    "es": [
+      "Europa",
+      "Europa Meridional"
+    ]
+  },
+  "VCT": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "VEN": {
+    "en": [
+      "Amazonia",
+      "Americas",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "South America"
+    ],
+    "fr": [
+      "Amazone",
+      "Amériques",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Amérique du Sud"
+    ],
+    "es": [
+      "Amazona",
+      "Americas",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "América del Sur"
+    ]
+  },
+  "VGB": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "VIR": {
+    "en": [
+      "Americas",
+      "Caribbean",
+      "Latin America and the Caribbean",
+      "North Atlantic",
+      "Small Island Developing States"
+    ],
+    "fr": [
+      "Amériques",
+      "Caraïbes",
+      "Amérique latine et Caraïbes",
+      "Atlantique Nord",
+      "Petits états insulaires en développement"
+    ],
+    "es": [
+      "Americas",
+      "Caribe",
+      "América Latina y el Caribe",
+      "Atlántico Norte",
+      "Pequeños estados insulares en desarrollo"
+    ]
+  },
+  "VNM": {
+    "en": [
+      "Asia",
+      "East Asian Seas",
+      "South-Eastern Asia"
+    ],
+    "fr": [
+      "Asie",
+      "East Asian Seas",
+      "Asie du Sud-Est"
+    ],
+    "es": [
+      "Asia",
+      "Mares del Asia Oriental",
+      "Asia Sudoriental"
+    ]
+  },
+  "VUT": {
+    "en": [
+      "Asia and the Pacific",
+      "Least Developed Countries",
+      "Melanesia",
+      "Oceania",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Pays les moins avances",
+      "Mélanésie",
+      "Océanie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Países menos desarrollados",
+      "Melanesia",
+      "Oceania",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "WAK": {
+    "en": [
+      "North Pacific"
+    ],
+    "fr": [
+      "Pacifique Nord"
+    ],
+    "es": [
+      "Pacífico Norte"
+    ]
+  },
+  "WLF": {
+    "en": [
+      "European Union Countries",
+      "Oceania",
+      "Polynesia",
+      "South Pacific"
+    ],
+    "fr": [
+      "Pays de l'Union Européenne",
+      "Océanie",
+      "Polinesie",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Países de la Unión Europea",
+      "Oceania",
+      "Polinesia",
+      "Pacífico Sur"
+    ]
+  },
+  "WSM": {
+    "en": [
+      "Asia and the Pacific",
+      "Oceania",
+      "Polynesia",
+      "Small Island Developing States",
+      "South Pacific"
+    ],
+    "fr": [
+      "Asie et Pacifique",
+      "Océanie",
+      "Polinesie",
+      "Petits états insulaires en développement",
+      "Pacifique Sud"
+    ],
+    "es": [
+      "Asia y Pacifico",
+      "Oceania",
+      "Polinesia",
+      "Pequeños estados insulares en desarrollo",
+      "Pacífico Sur"
+    ]
+  },
+  "YEM": {
+    "en": [
+      "Asia",
+      "Indian Ocean",
+      "Least Developed Countries",
+      "Middle East",
+      "Near East and North Africa",
+      "Western Asia"
+    ],
+    "fr": [
+      "Asie",
+      "Océan Indien",
+      "Pays les moins avances",
+      "Moyen-Orient",
+      "Afrique du Nord et Proche-Orient",
+      "Asie Occidentale"
+    ],
+    "es": [
+      "Asia",
+      "Océano Índico",
+      "Países menos desarrollados",
+      "Medio Oriente",
+      "Africa del Norte y Cercano Oriente",
+      "Asia Occidental"
+    ]
+  },
+  "ZAF": {
+    "en": [
+      "Africa",
+      "South Atlantic",
+      "Southern Africa"
+    ],
+    "fr": [
+      "Afrique",
+      "Atlantique Sud",
+      "Afrique Méridionale"
+    ],
+    "es": [
+      "Africa",
+      "Atlántico Sur",
+      "Africa Meridional"
+    ]
+  },
+  "ZMB": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Landlocked Developing Nations",
+      "Least Developed Countries"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Nations en développement sans littoral",
+      "Pays les moins avances"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Naciones en desarrollo sin litoral",
+      "Países menos desarrollados"
+    ]
+  },
+  "ZWE": {
+    "en": [
+      "Africa",
+      "Eastern Africa",
+      "Landlocked Developing Nations"
+    ],
+    "fr": [
+      "Afrique",
+      "Afrique Orientale",
+      "Nations en développement sans littoral"
+    ],
+    "es": [
+      "Africa",
+      "Africa Oriental",
+      "Naciones en desarrollo sin litoral"
+    ]
+  }
+}

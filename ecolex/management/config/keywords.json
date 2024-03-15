@@ -69,6 +69,11 @@
     "es": "desarrollo agrícola",
     "fr": "développement agricole"
   },
+  "agricultural extension": {
+    "en": "agricultural extension",
+    "es": "extensión agrícola",
+    "fr": "extension agricole"
+  },
   "agricultural land": {
     "en": "agricultural land",
     "es": "terrenos agrícolas",
@@ -3038,5 +3043,10 @@
     "en": "zoning",
     "es": "zonificación",
     "fr": "zonage"
+  },
+  "circular economy": {
+    "en": "circular economy",
+    "es": "economía circular",
+    "fr": "économie circulaire"
   }
 }

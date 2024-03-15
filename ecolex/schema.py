@@ -628,6 +628,7 @@ class LegislationSchema(CommonSchema):
     language_code = fields.List(fields.String(), load_from='legLanguage_code')
     language = fields.List(fields.String(), load_from='legLanguage',
                            multilingual=True)
+    # this should be multivalued, see LEX-FAOC207481
     link_to_full_text = fields.String(load_from='legLinkToFullText')
     related_web_site = fields.String(load_from='legRelatedWebSite')
     source = fields.String(load_from='legSource')

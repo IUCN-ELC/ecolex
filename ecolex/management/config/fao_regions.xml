@@ -1,0 +1,3112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<result db="valid">
+
+<dictionary_term>
+<ValID>REG-FAOC000007</ValID>
+<Name_en_US><![CDATA[Africa]]></Name_en_US>
+<Name_fr_FR><![CDATA[Afrique]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Africa]]></Name_es_ES>
+<Name_ar_SA><![CDATA[أفريقيا]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Африка]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[非洲]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Europa Island (France); 
+Glorioso Island (France); 
+Juan de Nova Island (France); 
+Algeria; 
+Botswana; 
+Cameroon; 
+Congo; 
+Côte d'Ivoire; 
+Ghana; 
+Kenya; 
+Libya; 
+Namibia; 
+Niger; 
+Nigeria; 
+Réunion (France); 
+Saint Helena, Ascension and Tristan da Cunha (UK); 
+South Africa; 
+Eswatini; 
+United Republic of Tanzania; 
+Tunisia; 
+Zimbabwe; 
+Mayotte (France); 
+Tromelin Island (France); 
+Angola; 
+Benin; 
+Burundi; 
+Central African Republic; 
+Equatorial Guinea; 
+Gabon; 
+Guinea; 
+Lesotho; 
+Liberia; 
+Madagascar; 
+Malawi; 
+Mali; 
+Mauritius; 
+Morocco; 
+Mozambique; 
+Rwanda; 
+Sao Tome and Principe; 
+Seychelles; 
+Sierra Leone; 
+Togo; 
+Uganda; 
+Democratic Republic of the Congo; 
+Zambia; 
+Eritrea; 
+Bassas da India (France); 
+Burkina Faso; 
+Cabo Verde; 
+Chad; 
+Comoros; 
+Djibouti; 
+Egypt; 
+Ethiopia; 
+Gambia; 
+Guinea-Bissau; 
+Mauritania; 
+Senegal; 
+Somalia; 
+Sudan; 
+South Sudan; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Benguela Current Commission  (BCC); 
+Central African Forest Commission (COMIFAC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+East African Community (EAC); 
+Economic and Monetary Community of Central Africa (CEMAC); 
+Economic Community of Central African States (ECCAS); 
+Economic Community Of West  African States (ECOWAS); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Fishery Committee for the West Central Gulf of Guinea (FCWC); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Intergovernmental Authority on Development (IGAD); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Lake Chad Basin Commission (LCBC); 
+Lake Tanganyika Authority (LTA); 
+Lake Victoria Fisheries Organization (LVFO); 
+Ministerial Conference on Fisheries Cooperation among African States bordering the Atlantic Ocean (ATLAFCO); 
+Nile Basin Initiative; 
+Organization for the Harmonization in Africa of Business Law (OHADA); 
+Permanent Interstate Committee for Drought Control in the Sahel (CILSS); 
+Regional Fisheries Commission for the Gulf of Guinea (COREP); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+Southern African Development Community (SADC); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Sub-Regional Fisheries Commission; 
+West African Economic and Monetary Union (UEMOA); 
+Western Central Atlantic Fishery Commission (WECAFC); 
+Zambezi Watercourse Commission (ZAMCOM); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC103259</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[AFRICA FAO]]></Name_en_US>
+<Name_fr_FR><![CDATA[AFRIQUE FAO]]></Name_fr_FR>
+<Name_es_ES><![CDATA[AFRICA FAO]]></Name_es_ES>
+<Region_Countries><![CDATA[Botswana; 
+Cameroon; 
+Congo; 
+Côte d'Ivoire; 
+Kenya; 
+Namibia; 
+Réunion (France); 
+South Africa; 
+Eswatini; 
+United Republic of Tanzania; 
+Zimbabwe; 
+Angola; 
+Benin; 
+Burundi; 
+Central African Republic; 
+Equatorial Guinea; 
+Gabon; 
+Guinea; 
+Lesotho; 
+Liberia; 
+Madagascar; 
+Malawi; 
+Mali; 
+Mauritius; 
+Mozambique; 
+Rwanda; 
+Sao Tome and Principe; 
+Seychelles; 
+Sierra Leone; 
+Togo; 
+Uganda; 
+Democratic Republic of the Congo; 
+Zambia; 
+Eritrea; 
+Bassas da India (France); 
+Burkina Faso; 
+Cabo Verde; 
+Chad; 
+Comoros; 
+Djibouti; 
+Ethiopia; 
+Gambia; 
+Guinea-Bissau; 
+Senegal; 
+Somalia; 
+South Sudan; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Benguela Current Commission  (BCC); 
+Central African Forest Commission (COMIFAC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+East African Community (EAC); 
+Economic and Monetary Community of Central Africa (CEMAC); 
+Economic Community of Central African States (ECCAS); 
+Economic Community Of West  African States (ECOWAS); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Fishery Committee for the West Central Gulf of Guinea (FCWC); 
+Indian Ocean Tuna Commission (IOTC); 
+Intergovernmental Authority on Development (IGAD); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Lake Chad Basin Commission (LCBC); 
+Lake Tanganyika Authority (LTA); 
+Lake Victoria Fisheries Organization (LVFO); 
+Ministerial Conference on Fisheries Cooperation among African States bordering the Atlantic Ocean (ATLAFCO); 
+Nile Basin Initiative; 
+Organization for the Harmonization in Africa of Business Law (OHADA); 
+Permanent Interstate Committee for Drought Control in the Sahel (CILSS); 
+Regional Fisheries Commission for the Gulf of Guinea (COREP); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+Southern African Development Community (SADC); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Sub-Regional Fisheries Commission; 
+West African Economic and Monetary Union (UEMOA); 
+Western Central Atlantic Fishery Commission (WECAFC); 
+Zambezi Watercourse Commission (ZAMCOM); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC074465</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Alps]]></Name_en_US>
+<Name_fr_FR><![CDATA[Alpes]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Alpes]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[阿尔卑斯山区]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Liechtenstein; 
+Austria; 
+Switzerland; 
+Germany; 
+Italy; 
+Slovenia; 
+France; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Agreement on the Conservation of Small Cetaceans of the Baltic, North East Atlantic, Irish and North Seas  (ASCOBANS); 
+Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Organization for the Development of Fisheries in Eastern and Central Europe (EUROFISH); 
+International Whaling Commission (IWC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Secretariat of the Pacific Community (SPC); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051678</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Amazonia]]></Name_en_US>
+<Name_fr_FR><![CDATA[Amazone]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Amazona]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[亚马逊流域]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Bolivia (Plurinational State of); 
+Guyana; 
+Suriname; 
+Venezuela (Bolivarian Republic of); 
+Colombia; 
+Ecuador; 
+Peru; 
+Brazil; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Andean Community; 
+Caribbean Community (CARICOM); 
+Caribbean Regional Fisheries Mechanism (CRFM); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Latin American Organization For Fisheries Development (Oldepesca); 
+MERCOSUR; 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC071003</ValID>
+<Name_en_US><![CDATA[Americas]]></Name_en_US>
+<Name_fr_FR><![CDATA[Amériques]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Americas]]></Name_es_ES>
+<Name_ar_SA><![CDATA[الأمريكتان]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Центральная и Южная Америка]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[美洲]]></Name_zh_ZH>
+<Region_Countries><![CDATA[MERCOSUR; 
+Bermuda (UK); 
+Cayman Islands (UK); 
+Guadeloupe (France); 
+Martinique (France); 
+Saint Pierre and Miquelon (France); 
+Turks and Caicos Islands (UK); 
+Andean Community; 
+Curaçao; 
+Sint Maarten (Netherlands); 
+Belize; 
+Dominica; 
+Falkland Islands (Malvinas); 
+French Guiana (France); 
+Honduras; 
+Jamaica; 
+Montserrat (UK); 
+Netherlands Antilles (Netherlands); 
+Saint Kitts and Nevis; 
+Saint Vincent and the Grenadines; 
+United States of America; 
+Aruba (Netherlands); 
+Anguilla (UK); 
+Antigua and Barbuda; 
+Argentina; 
+Bahamas; 
+Barbados; 
+Bolivia (Plurinational State of); 
+British Virgin Islands (UK); 
+Canada; 
+Chile; 
+Costa Rica; 
+Cuba; 
+Dominican Republic; 
+El Salvador; 
+Grenada; 
+Guatemala; 
+Guyana; 
+Haiti; 
+Nicaragua; 
+Panama; 
+Paraguay; 
+Puerto Rico (USA); 
+Saint Lucia; 
+Suriname; 
+Trinidad and Tobago; 
+United States Virgin Islands; 
+Uruguay; 
+Venezuela (Bolivarian Republic of); 
+Greenland (Denmark); 
+Colombia; 
+Ecuador; 
+Mexico; 
+Peru; 
+Brazil; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Andean Community; 
+Asia-Pacific Fishery Commission (APFIC); 
+Caribbean Community (CARICOM); 
+Caribbean Regional Fisheries Mechanism (CRFM); 
+Central America Fisheries and Aquaculture Organization (OSPESCA); 
+Central American Integration System (SICA); 
+Commission for the Argentina/Uruguay Maritime Front (CTMFM); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Great Lakes Fisheries Commission (GLFC); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Pacific Halibut Commission (IPHC); 
+International Whaling Commission (IWC); 
+Latin American Organization For Fisheries Development (Oldepesca); 
+MERCOSUR; 
+North Atlantic Marine Mammal Commission (NAMMCO); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Pacific Salmon Commission (PSC); 
+Rio de la Plata Administrative Commission; 
+Secretariat of the Pacific Community (SPC); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC103845</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Andean Community Countries]]></Name_en_US>
+<Name_fr_FR><![CDATA[Communauté andine]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Comunidad Andina]]></Name_es_ES>
+<Name_ar_SA><![CDATA[مجموعة دول الأنديز]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Андское сообщество]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[安第斯国家共同体]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Bolivia (Plurinational State of); 
+Colombia; 
+Ecuador; 
+Peru; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Andean Community; 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Whaling Commission (IWC); 
+Latin American Organization For Fisheries Development (Oldepesca); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC074467</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Antarctica]]></Name_en_US>
+<Name_fr_FR><![CDATA[Antarctique]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Antártida]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[南极洲]]></Name_zh_ZH>
+<Region_Countries><![CDATA[]]></Region_Countries>
+<Region_Organizations><![CDATA[]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051738</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Aral Sea]]></Name_en_US>
+<Name_fr_FR><![CDATA[Mer d’Aral]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Mar Aral]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[咸海地区]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Uzbekistan; 
+Kazakhstan; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Eurasian Economic Union; 
+Interstate Commission for Water Coordination of Central Asia; ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051739</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Arctic]]></Name_en_US>
+<Name_fr_FR><![CDATA[Arctique]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Ártico]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[北极地区]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Svalbard (Norway); 
+Jan Mayen (Norway); 
+United States of America; 
+Canada; 
+Finland; 
+Iceland; 
+Greenland (Denmark); 
+Russian Federation; 
+Sweden; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Agreement on the Conservation of Small Cetaceans of the Baltic, North East Atlantic, Irish and North Seas  (ASCOBANS); 
+Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Eurasian Economic Union; 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Great Lakes Fisheries Commission (GLFC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Pacific Halibut Commission (IPHC); 
+International Whaling Commission (IWC); 
+North Atlantic Marine Mammal Commission (NAMMCO); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Pacific Salmon Commission (PSC); 
+Secretariat of the Pacific Community (SPC); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000001</ValID>
+<Name_en_US><![CDATA[Asia]]></Name_en_US>
+<Name_fr_FR><![CDATA[Asie]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Asia]]></Name_es_ES>
+<Name_ar_SA><![CDATA[آسيا]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Азия]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[亚洲]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Brunei Darussalam; 
+Malaysia; 
+Mongolia; 
+Viet Nam; 
+Palestine; 
+China, Macao SAR; 
+Afghanistan; 
+Bhutan; 
+Cambodia; 
+India; 
+Indonesia; 
+Japan; 
+Lao People's Democratic Republic; 
+Myanmar; 
+Nepal; 
+Pakistan; 
+Philippines; 
+Singapore; 
+Sri Lanka; 
+Thailand; 
+Israel; 
+Iraq; 
+Jordan; 
+Kuwait; 
+Oman; 
+Qatar; 
+Syrian Arab Republic; 
+Lebanon; 
+Bangladesh; 
+Iran (Islamic Republic of); 
+Democratic People's Republic of Korea; 
+Republic of Korea; 
+Maldives; 
+China; 
+Timor-Leste; 
+Taiwan Province of China; 
+China, Hong Kong SAR; 
+Armenia; 
+Georgia; 
+Türkiye; 
+Tajikistan; 
+Turkmenistan; 
+Kyrgyzstan; 
+Azerbaijan; 
+Bahrain; 
+Cyprus; 
+Saudi Arabia; 
+Yemen; 
+Uzbekistan; 
+Kazakhstan; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Asia-Pacific Fishery Commission (APFIC); 
+Bay of Bengal Programme Inter-Governmental Organization; 
+Central Asian and Caucasus Regional Fisheries and Aquaculture Commission  ( CAC-Fish); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Cooperation Council for the Arab States of the Gulf; 
+Eurasian Economic Union; 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Organization for the Development of Fisheries in Eastern and Central Europe (EUROFISH); 
+International Whaling Commission (IWC); 
+Interstate Commission for Water Coordination of Central Asia; 
+Mekong River Commission (MRC); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Regional Commission for Fisheries (RECOFI); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southeast Asian Fisheries Development Center (SEAFDEC); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC103260</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[ASIA AND THE PACIFIC]]></Name_en_US>
+<Name_fr_FR><![CDATA[ASIE ET PACIFIQUE]]></Name_fr_FR>
+<Name_es_ES><![CDATA[ASIA Y PACIFICO]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[亚洲及太平洋]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Brunei Darussalam; 
+Malaysia; 
+Mongolia; 
+New Zealand; 
+Tokelau (New Zealand); 
+Norfolk Island (Australia); 
+Afghanistan; 
+American Samoa (USA); 
+Australia; 
+Bhutan; 
+Cambodia; 
+Cook Islands; 
+Fiji; 
+India; 
+Indonesia; 
+Japan; 
+Lao People's Democratic Republic; 
+Micronesia (Federated States of); 
+Myanmar; 
+Nauru; 
+Nepal; 
+Niue (New Zealand); 
+Pakistan; 
+Palau; 
+Papua New Guinea; 
+Philippines; 
+Samoa; 
+Singapore; 
+Sri Lanka; 
+Thailand; 
+Tonga; 
+Bangladesh; 
+Canada; 
+French Polynesia (France); 
+Kiribati; 
+Democratic People's Republic of Korea; 
+Republic of Korea; 
+Maldives; 
+New Caledonia (France); 
+Solomon Islands; 
+Tuvalu; 
+Vanuatu; 
+China; 
+Timor-Leste; 
+Taiwan Province of China; 
+China, Hong Kong SAR; 
+Russian Federation; 
+Uzbekistan; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Asia-Pacific Fishery Commission (APFIC); 
+Bay of Bengal Programme Inter-Governmental Organization; 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Eurasian Economic Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Great Lakes Fisheries Commission (GLFC); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Pacific Halibut Commission (IPHC); 
+International Whaling Commission (IWC); 
+Interstate Commission for Water Coordination of Central Asia; 
+Mekong River Commission (MRC); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Pacific Island Forum Fisheries Agency (FFA); 
+Pacific Salmon Commission (PSC); 
+Secretariat of the Pacific Community (SPC); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southeast Asian Fisheries Development Center (SEAFDEC); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051641</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Atlantic Ocean Islands]]></Name_en_US>
+<Name_fr_FR><![CDATA[Îles de l'océan Atlantique]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Islas del Océano Atlántico]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[大西洋群岛]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Bermuda (UK); 
+Saint Helena, Ascension and Tristan da Cunha (UK); 
+Svalbard (Norway); 
+Falkland Islands (Malvinas); 
+Cabo Verde; 
+Iceland; 
+Ireland; 
+Greenland (Denmark); 
+United Kingdom of Great Britain and Northern Ireland; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Agreement on the Conservation of Small Cetaceans of the Baltic, North East Atlantic, Irish and North Seas  (ASCOBANS); 
+Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Economic Community Of West  African States (ECOWAS); 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Indian Ocean Tuna Commission (IOTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Ministerial Conference on Fisheries Cooperation among African States bordering the Atlantic Ocean (ATLAFCO); 
+North Atlantic Marine Mammal Commission (NAMMCO); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Permanent Interstate Committee for Drought Control in the Sahel (CILSS); 
+Sub-Regional Fisheries Commission; 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC070998</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Australia and New Zealand]]></Name_en_US>
+<Name_fr_FR><![CDATA[Australie et Nouvelle-Zélande]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Australia y Nueva Zelandia]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[澳大利亚和新西兰]]></Name_zh_ZH>
+<Region_Countries><![CDATA[New Zealand; 
+Norfolk Island (Australia); 
+Australia; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Indian Ocean Tuna Commission (IOTC); 
+International Whaling Commission (IWC); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+Pacific Island Forum Fisheries Agency (FFA); 
+Secretariat of the Pacific Community (SPC); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Western and Central Pacific Fisheries Commission (WCPFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC074466</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Benelux]]></Name_en_US>
+<Name_fr_FR><![CDATA[Benelux]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Benelux]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[比荷卢经济联盟]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Luxembourg; 
+Belgium; 
+Netherlands (Kingdom of the); ]]></Region_Countries>
+<Region_Organizations><![CDATA[Agreement on the Conservation of Small Cetaceans of the Baltic, North East Atlantic, Irish and North Seas  (ASCOBANS); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+International Whaling Commission (IWC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051537</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Black Sea]]></Name_en_US>
+<Name_fr_FR><![CDATA[Mer Noire]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Mar Negro]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[黑海地区]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Bulgaria; 
+Romania; 
+Ukraine; 
+Georgia; 
+Türkiye; 
+Russian Federation; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Central Asian and Caucasus Regional Fisheries and Aquaculture Commission  ( CAC-Fish); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Eurasian Economic Union; 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for the Development of Fisheries in Eastern and Central Europe (EUROFISH); 
+International Whaling Commission (IWC); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000011</ValID>
+<Name_en_US><![CDATA[Caribbean]]></Name_en_US>
+<Name_fr_FR><![CDATA[Caraïbes]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Caribe]]></Name_es_ES>
+<Name_ar_SA><![CDATA[الكاريبي]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Карибский бассейн]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[加勒比地区]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Saint Barthélemy (FRA); 
+Cayman Islands (UK); 
+Guadeloupe (France); 
+Martinique (France); 
+Turks and Caicos Islands (UK); 
+Curaçao; 
+Sint Maarten (Netherlands); 
+Dominica; 
+Jamaica; 
+Montserrat (UK); 
+Netherlands Antilles (Netherlands); 
+Saint Kitts and Nevis; 
+Saint Vincent and the Grenadines; 
+Aruba (Netherlands); 
+Anguilla (UK); 
+Antigua and Barbuda; 
+Bahamas; 
+Barbados; 
+British Virgin Islands (UK); 
+Cuba; 
+Dominican Republic; 
+Grenada; 
+Haiti; 
+Puerto Rico (USA); 
+Saint Lucia; 
+Trinidad and Tobago; 
+United States Virgin Islands; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Caribbean Community (CARICOM); 
+Caribbean Regional Fisheries Mechanism (CRFM); 
+Central America Fisheries and Aquaculture Organization (OSPESCA); 
+Central American Integration System (SICA); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051538</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Caspian Sea]]></Name_en_US>
+<Name_fr_FR><![CDATA[Mer Caspienne]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Mar Caspio]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[里海地区]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Iran (Islamic Republic of); 
+Turkmenistan; 
+Azerbaijan; 
+Russian Federation; 
+Kazakhstan; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Central Asian and Caucasus Regional Fisheries and Aquaculture Commission  ( CAC-Fish); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Eurasian Economic Union; 
+Indian Ocean Tuna Commission (IOTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Interstate Commission for Water Coordination of Central Asia; 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Regional Commission for Fisheries (RECOFI); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000025</ValID>
+<Name_en_US><![CDATA[Central Africa]]></Name_en_US>
+<Name_fr_FR><![CDATA[Afrique centrale]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Africa Central]]></Name_es_ES>
+<Name_ar_SA><![CDATA[أفريقيا الوسطى]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Центральная Африка]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[中部非洲]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Cameroon; 
+Congo; 
+Angola; 
+Central African Republic; 
+Equatorial Guinea; 
+Gabon; 
+Sao Tome and Principe; 
+Democratic Republic of the Congo; 
+Chad; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Benguela Current Commission  (BCC); 
+Central African Forest Commission (COMIFAC); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+Economic and Monetary Community of Central Africa (CEMAC); 
+Economic Community of Central African States (ECCAS); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Lake Chad Basin Commission (LCBC); 
+Lake Tanganyika Authority (LTA); 
+Ministerial Conference on Fisheries Cooperation among African States bordering the Atlantic Ocean (ATLAFCO); 
+Nile Basin Initiative; 
+Organization for the Harmonization in Africa of Business Law (OHADA); 
+Permanent Interstate Committee for Drought Control in the Sahel (CILSS); 
+Regional Fisheries Commission for the Gulf of Guinea (COREP); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+Southern African Development Community (SADC); 
+Zambezi Watercourse Commission (ZAMCOM); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000018</ValID>
+<Name_en_US><![CDATA[Central America]]></Name_en_US>
+<Name_fr_FR><![CDATA[Amérique centrale]]></Name_fr_FR>
+<Name_es_ES><![CDATA[América Central]]></Name_es_ES>
+<Name_ar_SA><![CDATA[أمريكا الوسطى]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Центральная Америка]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[中美洲]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Belize; 
+Honduras; 
+Costa Rica; 
+El Salvador; 
+Guatemala; 
+Nicaragua; 
+Panama; 
+Mexico; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Caribbean Community (CARICOM); 
+Caribbean Regional Fisheries Mechanism (CRFM); 
+Central America Fisheries and Aquaculture Organization (OSPESCA); 
+Central American Integration System (SICA); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Latin American Organization For Fisheries Development (Oldepesca); 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000002</ValID>
+<Name_en_US><![CDATA[Central Asia]]></Name_en_US>
+<Name_fr_FR><![CDATA[Asie centrale]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Asia Central]]></Name_es_ES>
+<Name_ar_SA><![CDATA[آسيا الوسطى]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Центральная Азия]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[中亚]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Tajikistan; 
+Turkmenistan; 
+Kyrgyzstan; 
+Uzbekistan; 
+Kazakhstan; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Central Asian and Caucasus Regional Fisheries and Aquaculture Commission  ( CAC-Fish); 
+Eurasian Economic Union; 
+Interstate Commission for Water Coordination of Central Asia; ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000013</ValID>
+<Name_en_US><![CDATA[CIS (Commonwealth of Independent States)]]></Name_en_US>
+<Name_fr_FR><![CDATA[CEI (Communauté des États indépendants)]]></Name_fr_FR>
+<Name_es_ES><![CDATA[CEI (Comunidad de Estados Independientes)]]></Name_es_ES>
+<Name_ar_SA><![CDATA[رابطة الدول المستقلة]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[СНГ (Содружество Независимых Государств)]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[独联体]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Belarus; 
+Republic of Moldova; 
+Ukraine; 
+Armenia; 
+Tajikistan; 
+Turkmenistan; 
+Kyrgyzstan; 
+Azerbaijan; 
+Russian Federation; 
+Uzbekistan; 
+Kazakhstan; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Central Asian and Caucasus Regional Fisheries and Aquaculture Commission  ( CAC-Fish); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Eurasian Economic Union; 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Interstate Commission for Water Coordination of Central Asia; 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051546</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[East Asian Seas]]></Name_en_US>
+<Name_fr_FR><![CDATA[East Asian Seas]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Mares del Asia Oriental]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[东亚海]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Malaysia; 
+Viet Nam; 
+Cambodia; 
+Indonesia; 
+Philippines; 
+Singapore; 
+Thailand; 
+Democratic People's Republic of Korea; 
+Republic of Korea; 
+China; 
+Taiwan Province of China; 
+China, Hong Kong SAR; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Mekong River Commission (MRC); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southeast Asian Fisheries Development Center (SEAFDEC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000028</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[East Pacific]]></Name_en_US>
+<Name_fr_FR><![CDATA[Pacifique du est]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Pacífico Oriental]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[东太平洋]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Clipperton Island (France); 
+United States of America; 
+Canada; 
+Chile; 
+Costa Rica; 
+El Salvador; 
+Guatemala; 
+Nicaragua; 
+Panama; 
+Colombia; 
+Ecuador; 
+Mexico; 
+Peru; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Andean Community; 
+Asia-Pacific Fishery Commission (APFIC); 
+Central America Fisheries and Aquaculture Organization (OSPESCA); 
+Central American Integration System (SICA); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Great Lakes Fisheries Commission (GLFC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Pacific Halibut Commission (IPHC); 
+International Whaling Commission (IWC); 
+Latin American Organization For Fisheries Development (Oldepesca); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Pacific Salmon Commission (PSC); 
+Secretariat of the Pacific Community (SPC); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000029</ValID>
+<Name_en_US><![CDATA[Eastern Africa]]></Name_en_US>
+<Name_fr_FR><![CDATA[Afrique orientale]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Africa Oriental]]></Name_es_ES>
+<Name_ar_SA><![CDATA[أفريقيا الشرقية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Восточная Африка]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[东部非洲]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Kenya; 
+Réunion (France); 
+United Republic of Tanzania; 
+Zimbabwe; 
+Mayotte (France); 
+Tromelin Island (France); 
+Burundi; 
+Madagascar; 
+Malawi; 
+Mauritius; 
+Mozambique; 
+Rwanda; 
+Seychelles; 
+Uganda; 
+Zambia; 
+Eritrea; 
+Bassas da India (France); 
+Comoros; 
+Djibouti; 
+Ethiopia; 
+Somalia; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Central African Forest Commission (COMIFAC); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+East African Community (EAC); 
+Economic Community of Central African States (ECCAS); 
+Indian Ocean Tuna Commission (IOTC); 
+Intergovernmental Authority on Development (IGAD); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Whaling Commission (IWC); 
+Lake Tanganyika Authority (LTA); 
+Lake Victoria Fisheries Organization (LVFO); 
+Nile Basin Initiative; 
+Organization for the Harmonization in Africa of Business Law (OHADA); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+Southern African Development Community (SADC); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Zambezi Watercourse Commission (ZAMCOM); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051583</ValID>
+<Name_en_US><![CDATA[Eastern Asia]]></Name_en_US>
+<Name_fr_FR><![CDATA[Asie orientale]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Asia Oriental]]></Name_es_ES>
+<Name_ar_SA><![CDATA[آسيا الشرقية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Восточная Азия]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[东亚]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Mongolia; 
+China, Macao SAR; 
+Japan; 
+Democratic People's Republic of Korea; 
+Republic of Korea; 
+China; 
+Taiwan Province of China; 
+China, Hong Kong SAR; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southeast Asian Fisheries Development Center (SEAFDEC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000005</ValID>
+<Name_en_US><![CDATA[Eastern Europe]]></Name_en_US>
+<Name_fr_FR><![CDATA[Europe de l'est]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Europa Oriental]]></Name_es_ES>
+<Name_ar_SA><![CDATA[أوروبا الشرقية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Восточная Европа]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[东欧]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Belarus; 
+Czechia; 
+Hungary; 
+Poland; 
+Slovakia; 
+Bulgaria; 
+Republic of Moldova; 
+Romania; 
+Ukraine; 
+European Union; 
+Georgia; 
+Russian Federation; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Agreement on the Conservation of Small Cetaceans of the Baltic, North East Atlantic, Irish and North Seas  (ASCOBANS); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Eurasian Economic Union; 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for the Development of Fisheries in Eastern and Central Europe (EUROFISH); 
+International Whaling Commission (IWC); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000004</ValID>
+<Name_en_US><![CDATA[Europe]]></Name_en_US>
+<Name_fr_FR><![CDATA[Europe]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Europa]]></Name_es_ES>
+<Name_ar_SA><![CDATA[أوروبا]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Европа]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[欧洲]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Holy  See; 
+Serbia; 
+Albania; 
+Andorra; 
+Belarus; 
+Bosnia and Herzegovina; 
+Czechia; 
+Estonia; 
+Faroe Islands (Denmark); 
+Gibraltar (UK); 
+Hungary; 
+Latvia; 
+Liechtenstein; 
+Lithuania; 
+Monaco; 
+Poland; 
+San Marino; 
+Slovakia; 
+North Macedonia; 
+Serbia and Montenegro; 
+Svalbard (Norway); 
+Jan Mayen (Norway); 
+Guernsey (UK); 
+Montenegro; 
+Jersey  (UK); 
+Austria; 
+Bulgaria; 
+Croatia; 
+Greece; 
+Malta; 
+Republic of Moldova; 
+Romania; 
+Switzerland; 
+Ukraine; 
+Denmark; 
+Finland; 
+Germany; 
+Iceland; 
+Ireland; 
+Italy; 
+Luxembourg; 
+Norway; 
+Portugal; 
+Slovenia; 
+Spain; 
+European Union; 
+United Kingdom of Great Britain and Northern Ireland; 
+Armenia; 
+Georgia; 
+Türkiye; 
+Cyprus; 
+Belgium; 
+France; 
+Netherlands (Kingdom of the); 
+Russian Federation; 
+Sweden; ]]></Region_Countries>
+<Region_Organizations><![CDATA[European Union; ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC103261</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[EUROPE AND CENTRAL ASIA]]></Name_en_US>
+<Name_fr_FR><![CDATA[EUROPE ET ASIE CENTRALE]]></Name_fr_FR>
+<Name_es_ES><![CDATA[EUROPA Y CENTRAL ASIA]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[欧洲和中亚]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Serbia; 
+Albania; 
+Andorra; 
+Belarus; 
+Bosnia and Herzegovina; 
+Czechia; 
+Estonia; 
+Hungary; 
+Latvia; 
+Lithuania; 
+Monaco; 
+Poland; 
+San Marino; 
+Slovakia; 
+North Macedonia; 
+Serbia and Montenegro; 
+Montenegro; 
+Austria; 
+Bulgaria; 
+Croatia; 
+Greece; 
+Malta; 
+Republic of Moldova; 
+Romania; 
+Switzerland; 
+Ukraine; 
+Israel; 
+Denmark; 
+Finland; 
+Germany; 
+Iceland; 
+Ireland; 
+Italy; 
+Luxembourg; 
+Norway; 
+Portugal; 
+Slovenia; 
+Spain; 
+United Kingdom of Great Britain and Northern Ireland; 
+Armenia; 
+Georgia; 
+Türkiye; 
+Tajikistan; 
+Turkmenistan; 
+Kyrgyzstan; 
+Azerbaijan; 
+Cyprus; 
+Belgium; 
+France; 
+Netherlands (Kingdom of the); 
+Russian Federation; 
+Sweden; 
+Uzbekistan; 
+Kazakhstan; ]]></Region_Countries>
+<Region_Organizations><![CDATA[European Union; ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000014</ValID>
+<Name_en_US><![CDATA[European Union Countries]]></Name_en_US>
+<Name_fr_FR><![CDATA[Pays de l'union européenne]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Países de la Unión Europea]]></Name_es_ES>
+<Name_ar_SA><![CDATA[دول لإتحاد الأوروبي]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Страны Европейского союза]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[欧盟国家]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Czechia; 
+Estonia; 
+Hungary; 
+Latvia; 
+Lithuania; 
+Poland; 
+Saint Pierre and Miquelon (France); 
+Slovakia; 
+Wallis and Futuna Islands (France); 
+Mayotte (France); 
+Austria; 
+Bulgaria; 
+Croatia; 
+Greece; 
+Malta; 
+Romania; 
+Bassas da India (France); 
+Aruba (Netherlands); 
+Denmark; 
+Finland; 
+French Polynesia (France); 
+Germany; 
+Ireland; 
+Italy; 
+Luxembourg; 
+New Caledonia (France); 
+Portugal; 
+Slovenia; 
+Spain; 
+Greenland (Denmark); 
+Cyprus; 
+Belgium; 
+France; 
+Netherlands (Kingdom of the); 
+Sweden; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Agreement on the Conservation of Small Cetaceans of the Baltic, North East Atlantic, Irish and North Seas  (ASCOBANS); 
+Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Organization for the Development of Fisheries in Eastern and Central Europe (EUROFISH); 
+International Whaling Commission (IWC); 
+North Atlantic Marine Mammal Commission (NAMMCO); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Secretariat of the Pacific Community (SPC); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000003</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Indian Ocean]]></Name_en_US>
+<Name_fr_FR><![CDATA[Océan Indien]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Océano Índico]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[印度洋]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Cocos (Keeling) Islands (Australia); 
+Indian Ocean Territory (UK); 
+Europa Island (France); 
+Glorioso Island (France); 
+Juan de Nova Island (France); 
+Réunion (France); 
+Mayotte (France); 
+Tromelin Island (France); 
+Australia; 
+India; 
+Indonesia; 
+Madagascar; 
+Mauritius; 
+Mozambique; 
+Myanmar; 
+Pakistan; 
+Seychelles; 
+Sri Lanka; 
+Thailand; 
+Bassas da India (France); 
+Oman; 
+Bangladesh; 
+Comoros; 
+Djibouti; 
+Maldives; 
+Somalia; 
+Timor-Leste; 
+Yemen; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Asia-Pacific Fishery Commission (APFIC); 
+Bay of Bengal Programme Inter-Governmental Organization; 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+Cooperation Council for the Arab States of the Gulf; 
+Indian Ocean Tuna Commission (IOTC); 
+Intergovernmental Authority on Development (IGAD); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Mekong River Commission (MRC); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+Organization for the Harmonization in Africa of Business Law (OHADA); 
+Pacific Island Forum Fisheries Agency (FFA); 
+Regional Commission for Fisheries (RECOFI); 
+Secretariat of the Pacific Community (SPC); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southeast Asian Fisheries Development Center (SEAFDEC); 
+Southern African Development Community (SADC); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Zambezi Watercourse Commission (ZAMCOM); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC103265</ValID>
+<Name_en_US><![CDATA[Landlocked Developing Countries]]></Name_en_US>
+<Name_fr_FR><![CDATA[Pays en développement sans littoral]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Países en Desarrollo Sin Litoral]]></Name_es_ES>
+<Name_ar_SA><![CDATA[الدول النامية غير الساحلية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Развивающиеся страны, не имеющие выхода к морю]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[内陆发展中国家]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Botswana; 
+Mongolia; 
+Eswatini; 
+Zimbabwe; 
+North Macedonia; 
+Afghanistan; 
+Bhutan; 
+Burundi; 
+Central African Republic; 
+Lao People's Democratic Republic; 
+Lesotho; 
+Malawi; 
+Republic of Moldova; 
+Nepal; 
+Rwanda; 
+Uganda; 
+Zambia; 
+Bolivia (Plurinational State of); 
+Burkina Faso; 
+Chad; 
+Ethiopia; 
+Paraguay; 
+Sudan; 
+South Sudan; 
+Armenia; 
+Tajikistan; 
+Turkmenistan; 
+Kyrgyzstan; 
+Azerbaijan; 
+Uzbekistan; 
+Kazakhstan; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Andean Community; 
+Asia-Pacific Fishery Commission (APFIC); 
+Central African Forest Commission (COMIFAC); 
+Central Asian and Caucasus Regional Fisheries and Aquaculture Commission  ( CAC-Fish); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+East African Community (EAC); 
+Economic and Monetary Community of Central Africa (CEMAC); 
+Economic Community of Central African States (ECCAS); 
+Economic Community Of West  African States (ECOWAS); 
+Eurasian Economic Union; 
+Indian Ocean Tuna Commission (IOTC); 
+Intergovernmental Authority on Development (IGAD); 
+International Whaling Commission (IWC); 
+Interstate Commission for Water Coordination of Central Asia; 
+Lake Chad Basin Commission (LCBC); 
+Lake Tanganyika Authority (LTA); 
+Lake Victoria Fisheries Organization (LVFO); 
+Latin American Organization For Fisheries Development (Oldepesca); 
+Mekong River Commission (MRC); 
+MERCOSUR; 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+Nile Basin Initiative; 
+Organization for the Harmonization in Africa of Business Law (OHADA); 
+Permanent Interstate Committee for Drought Control in the Sahel (CILSS); 
+Southeast Asian Fisheries Development Center (SEAFDEC); 
+Southern African Development Community (SADC); 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+West African Economic and Monetary Union (UEMOA); 
+Zambezi Watercourse Commission (ZAMCOM); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC071004</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Latin America and the Caribbean]]></Name_en_US>
+<Name_fr_FR><![CDATA[Amérique latine et Caraïbes]]></Name_fr_FR>
+<Name_es_ES><![CDATA[América Latina y el Caribe]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[拉丁美洲和加勒比地区]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Cayman Islands (UK); 
+Guadeloupe (France); 
+Martinique (France); 
+Turks and Caicos Islands (UK); 
+Andean Community; 
+Curaçao; 
+Sint Maarten (Netherlands); 
+Belize; 
+Dominica; 
+Falkland Islands (Malvinas); 
+French Guiana (France); 
+Honduras; 
+Jamaica; 
+Montserrat (UK); 
+Netherlands Antilles (Netherlands); 
+Saint Kitts and Nevis; 
+Saint Vincent and the Grenadines; 
+Aruba (Netherlands); 
+Anguilla (UK); 
+Antigua and Barbuda; 
+Argentina; 
+Bahamas; 
+Barbados; 
+Bolivia (Plurinational State of); 
+British Virgin Islands (UK); 
+Chile; 
+Costa Rica; 
+Cuba; 
+Dominican Republic; 
+El Salvador; 
+Grenada; 
+Guatemala; 
+Guyana; 
+Haiti; 
+Nicaragua; 
+Panama; 
+Paraguay; 
+Puerto Rico (USA); 
+Saint Lucia; 
+Suriname; 
+Trinidad and Tobago; 
+United States Virgin Islands; 
+Uruguay; 
+Venezuela (Bolivarian Republic of); 
+Colombia; 
+Ecuador; 
+Mexico; 
+Peru; 
+Brazil; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Andean Community; 
+Caribbean Community (CARICOM); 
+Caribbean Regional Fisheries Mechanism (CRFM); 
+Central America Fisheries and Aquaculture Organization (OSPESCA); 
+Central American Integration System (SICA); 
+Commission for the Argentina/Uruguay Maritime Front (CTMFM); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Latin American Organization For Fisheries Development (Oldepesca); 
+MERCOSUR; 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Rio de la Plata Administrative Commission; 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC103262</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[LATIN AMERICA AND THE CARIBBEAN FAO]]></Name_en_US>
+<Name_fr_FR><![CDATA[AMERIQUE LATINE ET CARAIBES FAO]]></Name_fr_FR>
+<Name_es_ES><![CDATA[AMERICA LATINA Y EL CARIBE FAO]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[粮农组织驻拉丁美洲和加勒比地区代表处]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Martinique (France); 
+Sint Maarten (Netherlands); 
+Belize; 
+Dominica; 
+French Guiana (France); 
+Honduras; 
+Jamaica; 
+Montserrat (UK); 
+Netherlands Antilles (Netherlands); 
+Saint Kitts and Nevis; 
+Saint Vincent and the Grenadines; 
+Anguilla (UK); 
+Antigua and Barbuda; 
+Argentina; 
+Bahamas; 
+Barbados; 
+Bolivia (Plurinational State of); 
+British Virgin Islands (UK); 
+Chile; 
+Costa Rica; 
+Cuba; 
+Dominican Republic; 
+El Salvador; 
+Grenada; 
+Guatemala; 
+Guyana; 
+Haiti; 
+Nicaragua; 
+Panama; 
+Paraguay; 
+Puerto Rico (USA); 
+Saint Lucia; 
+Suriname; 
+Trinidad and Tobago; 
+United States Virgin Islands; 
+Uruguay; 
+Venezuela (Bolivarian Republic of); 
+Colombia; 
+Ecuador; 
+Mexico; 
+Peru; 
+Brazil; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Andean Community; 
+Caribbean Community (CARICOM); 
+Caribbean Regional Fisheries Mechanism (CRFM); 
+Central America Fisheries and Aquaculture Organization (OSPESCA); 
+Central American Integration System (SICA); 
+Commission for the Argentina/Uruguay Maritime Front (CTMFM); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Latin American Organization For Fisheries Development (Oldepesca); 
+MERCOSUR; 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Rio de la Plata Administrative Commission; 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC103264</ValID>
+<Name_en_US><![CDATA[Least Developed Countries]]></Name_en_US>
+<Name_fr_FR><![CDATA[Pays les moins avances]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Países menos Desarrollados]]></Name_es_ES>
+<Name_ar_SA><![CDATA[الدول الاقل تطورا]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Наименее развитые страны]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[最不发达国家]]></Name_zh_ZH>
+<Region_Countries><![CDATA[United Republic of Tanzania; 
+Afghanistan; 
+Angola; 
+Benin; 
+Bhutan; 
+Burundi; 
+Cambodia; 
+Central African Republic; 
+Equatorial Guinea; 
+Guinea; 
+Lao People's Democratic Republic; 
+Lesotho; 
+Liberia; 
+Madagascar; 
+Malawi; 
+Mali; 
+Mozambique; 
+Myanmar; 
+Nepal; 
+Rwanda; 
+Sao Tome and Principe; 
+Sierra Leone; 
+Togo; 
+Uganda; 
+Democratic Republic of the Congo; 
+Zambia; 
+Eritrea; 
+Bangladesh; 
+Burkina Faso; 
+Chad; 
+Comoros; 
+Djibouti; 
+Ethiopia; 
+Gambia; 
+Guinea-Bissau; 
+Haiti; 
+Kiribati; 
+Mauritania; 
+Senegal; 
+Solomon Islands; 
+Somalia; 
+Sudan; 
+Tuvalu; 
+Vanuatu; 
+Timor-Leste; 
+South Sudan; 
+Yemen; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Asia-Pacific Fishery Commission (APFIC); 
+Bay of Bengal Programme Inter-Governmental Organization; 
+Benguela Current Commission  (BCC); 
+Caribbean Community (CARICOM); 
+Caribbean Regional Fisheries Mechanism (CRFM); 
+Central African Forest Commission (COMIFAC); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+East African Community (EAC); 
+Economic and Monetary Community of Central Africa (CEMAC); 
+Economic Community of Central African States (ECCAS); 
+Economic Community Of West  African States (ECOWAS); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Fishery Committee for the West Central Gulf of Guinea (FCWC); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+Intergovernmental Authority on Development (IGAD); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Lake Chad Basin Commission (LCBC); 
+Lake Tanganyika Authority (LTA); 
+Lake Victoria Fisheries Organization (LVFO); 
+Mekong River Commission (MRC); 
+Ministerial Conference on Fisheries Cooperation among African States bordering the Atlantic Ocean (ATLAFCO); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+Nile Basin Initiative; 
+North Pacific Fisheries Commission (NPFC); 
+Organization for the Harmonization in Africa of Business Law (OHADA); 
+Pacific Island Forum Fisheries Agency (FFA); 
+Permanent Interstate Committee for Drought Control in the Sahel (CILSS); 
+Regional Fisheries Commission for the Gulf of Guinea (COREP); 
+Secretariat of the Pacific Community (SPC); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southeast Asian Fisheries Development Center (SEAFDEC); 
+Southern African Development Community (SADC); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Sub-Regional Fisheries Commission; 
+West African Economic and Monetary Union (UEMOA); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); 
+Zambezi Watercourse Commission (ZAMCOM); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000006</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Mediterranean]]></Name_en_US>
+<Name_fr_FR><![CDATA[Méditerranée]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Mediterráneo]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[地中海]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Albania; 
+Algeria; 
+Bosnia and Herzegovina; 
+Gibraltar (UK); 
+Libya; 
+Monaco; 
+Tunisia; 
+Palestine; 
+Serbia and Montenegro; 
+Montenegro; 
+Croatia; 
+Greece; 
+Malta; 
+Morocco; 
+Israel; 
+Syrian Arab Republic; 
+Lebanon; 
+Egypt; 
+Italy; 
+Slovenia; 
+Spain; 
+European Union; 
+Türkiye; 
+Cyprus; 
+France; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Agreement on the Conservation of Small Cetaceans of the Baltic, North East Atlantic, Irish and North Seas  (ASCOBANS); 
+Asia-Pacific Fishery Commission (APFIC); 
+Central Asian and Caucasus Regional Fisheries and Aquaculture Commission  ( CAC-Fish); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Organization for the Development of Fisheries in Eastern and Central Europe (EUROFISH); 
+International Whaling Commission (IWC); 
+Lake Chad Basin Commission (LCBC); 
+Ministerial Conference on Fisheries Cooperation among African States bordering the Atlantic Ocean (ATLAFCO); 
+Nile Basin Initiative; 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Fisheries Commission (NPFC); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Secretariat of the Pacific Community (SPC); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051740</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Melanesia]]></Name_en_US>
+<Name_fr_FR><![CDATA[Mélanésie]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Melanesia]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[美拉尼西亚]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Fiji; 
+Papua New Guinea; 
+New Caledonia (France); 
+Solomon Islands; 
+Vanuatu; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+North Pacific Fisheries Commission (NPFC); 
+Pacific Island Forum Fisheries Agency (FFA); 
+Secretariat of the Pacific Community (SPC); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Western and Central Pacific Fisheries Commission (WCPFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC103846</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[MERCOSUR Countries]]></Name_en_US>
+<Name_fr_FR><![CDATA[MERCOSUR]]></Name_fr_FR>
+<Name_es_ES><![CDATA[MERCOSUR]]></Name_es_ES>
+<Name_ar_SA><![CDATA[ميركوسور]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[МЕРКОСУР]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[南方共同市场]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Argentina; 
+Paraguay; 
+Uruguay; 
+Brazil; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Commission for the Argentina/Uruguay Maritime Front (CTMFM); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+MERCOSUR; 
+Rio de la Plata Administrative Commission; 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051741</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Micronesia]]></Name_en_US>
+<Name_fr_FR><![CDATA[Micronesie]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Micronesia]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[密克罗尼西亚]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Guam (USA); 
+Marshall Islands; 
+Northern Mariana Islands (USA); 
+Micronesia (Federated States of); 
+Nauru; 
+Palau; 
+Kiribati; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Inter-American Tropical Tuna Commission (IATTC); 
+International Whaling Commission (IWC); 
+Pacific Island Forum Fisheries Agency (FFA); 
+Secretariat of the Pacific Community (SPC); 
+Western and Central Pacific Fisheries Commission (WCPFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000016</ValID>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Middle East]]></Name_en_US>
+<Name_fr_FR><![CDATA[Moyen-Orient]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Medio Oriente]]></Name_es_ES>
+<Name_ar_SA><![CDATA[الشرق الأوسط]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Ближний Восток]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[中东]]></Name_zh_ZH>
+<Region_Countries><![CDATA[United Arab Emirates; 
+Palestine; 
+Israel; 
+Iraq; 
+Jordan; 
+Kuwait; 
+Oman; 
+Qatar; 
+Syrian Arab Republic; 
+Lebanon; 
+Egypt; 
+Iran (Islamic Republic of); 
+Türkiye; 
+Bahrain; 
+Cyprus; 
+Saudi Arabia; 
+Yemen; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Central Asian and Caucasus Regional Fisheries and Aquaculture Commission  ( CAC-Fish); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+Cooperation Council for the Arab States of the Gulf; 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Organization for the Development of Fisheries in Eastern and Central Europe (EUROFISH); 
+International Whaling Commission (IWC); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+Nile Basin Initiative; 
+Regional Commission for Fisheries (RECOFI); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC103263</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[NEAR EAST AND NORTH AFRICA]]></Name_en_US>
+<Name_fr_FR><![CDATA[AFRIQUE DU NORD ET PROCHE-ORIENT]]></Name_fr_FR>
+<Name_es_ES><![CDATA[AFRICA DEL NORTE Y CERCANO ORIENTE]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[近东和北非]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Algeria; 
+Libya; 
+Tunisia; 
+United Arab Emirates; 
+Morocco; 
+Iraq; 
+Jordan; 
+Kuwait; 
+Oman; 
+Qatar; 
+Syrian Arab Republic; 
+Lebanon; 
+Egypt; 
+Iran (Islamic Republic of); 
+Mauritania; 
+Sudan; 
+Bahrain; 
+Saudi Arabia; 
+Yemen; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+Cooperation Council for the Arab States of the Gulf; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Intergovernmental Authority on Development (IGAD); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Lake Chad Basin Commission (LCBC); 
+Ministerial Conference on Fisheries Cooperation among African States bordering the Atlantic Ocean (ATLAFCO); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+Nile Basin Initiative; 
+Permanent Interstate Committee for Drought Control in the Sahel (CILSS); 
+Regional Commission for Fisheries (RECOFI); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Sub-Regional Fisheries Commission; ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000027</ValID>
+<Name_en_US><![CDATA[North America]]></Name_en_US>
+<Name_fr_FR><![CDATA[Amérique du Nord]]></Name_fr_FR>
+<Name_es_ES><![CDATA[América del Norte]]></Name_es_ES>
+<Name_ar_SA><![CDATA[أمريكا الشمالية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Северная Америка]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[北美]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Bermuda (UK); 
+Saint Pierre and Miquelon (France); 
+United States of America; 
+Canada; 
+Greenland (Denmark); ]]></Region_Countries>
+<Region_Organizations><![CDATA[Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Great Lakes Fisheries Commission (GLFC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Pacific Halibut Commission (IPHC); 
+International Whaling Commission (IWC); 
+North Atlantic Marine Mammal Commission (NAMMCO); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Pacific Salmon Commission (PSC); 
+Secretariat of the Pacific Community (SPC); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051581</ValID>
+<Name_en_US><![CDATA[North Asia]]></Name_en_US>
+<Name_fr_FR><![CDATA[Asie du nord]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Asia del Norte]]></Name_es_ES>
+<Name_ar_SA><![CDATA[آسيا الشمالية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Северная Азия]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[北亚]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Tajikistan; 
+Turkmenistan; 
+Kyrgyzstan; 
+Uzbekistan; 
+Kazakhstan; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Central Asian and Caucasus Regional Fisheries and Aquaculture Commission  ( CAC-Fish); 
+Eurasian Economic Union; 
+Interstate Commission for Water Coordination of Central Asia; ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC074462</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[North Atlantic]]></Name_en_US>
+<Name_fr_FR><![CDATA[Atlantique nord]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Atlántico Norte]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[北大西洋]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Bermuda (UK); 
+Cameroon; 
+Côte d'Ivoire; 
+Faroe Islands (Denmark); 
+Ghana; 
+Gibraltar (UK); 
+Nigeria; 
+Saint Pierre and Miquelon (France); 
+Turks and Caicos Islands (UK); 
+Guernsey (UK); 
+Jersey  (UK); 
+Benin; 
+Equatorial Guinea; 
+French Guiana (France); 
+Gabon; 
+Guinea; 
+Liberia; 
+Morocco; 
+Sierra Leone; 
+Togo; 
+United States of America; 
+Antigua and Barbuda; 
+Bahamas; 
+Barbados; 
+British Virgin Islands (UK); 
+Canada; 
+Cabo Verde; 
+Cuba; 
+Dominican Republic; 
+Gambia; 
+Grenada; 
+Guinea-Bissau; 
+Guyana; 
+Haiti; 
+Iceland; 
+Ireland; 
+Mauritania; 
+Norway; 
+Portugal; 
+Puerto Rico (USA); 
+Saint Lucia; 
+Senegal; 
+Spain; 
+Suriname; 
+Trinidad and Tobago; 
+United States Virgin Islands; 
+Venezuela (Bolivarian Republic of); 
+European Union; 
+Greenland (Denmark); 
+United Kingdom of Great Britain and Northern Ireland; 
+Belgium; 
+France; 
+Mexico; 
+Netherlands (Kingdom of the); 
+Sweden; 
+Brazil; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Agreement on the Conservation of Small Cetaceans of the Baltic, North East Atlantic, Irish and North Seas  (ASCOBANS); 
+Asia-Pacific Fishery Commission (APFIC); 
+Caribbean Community (CARICOM); 
+Caribbean Regional Fisheries Mechanism (CRFM); 
+Central African Forest Commission (COMIFAC); 
+Central America Fisheries and Aquaculture Organization (OSPESCA); 
+Central American Integration System (SICA); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Economic and Monetary Community of Central Africa (CEMAC); 
+Economic Community of Central African States (ECCAS); 
+Economic Community Of West  African States (ECOWAS); 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Fishery Committee for the West Central Gulf of Guinea (FCWC); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Great Lakes Fisheries Commission (GLFC); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Organization for the Development of Fisheries in Eastern and Central Europe (EUROFISH); 
+International Pacific Halibut Commission (IPHC); 
+International Whaling Commission (IWC); 
+Lake Chad Basin Commission (LCBC); 
+Latin American Organization For Fisheries Development (Oldepesca); 
+MERCOSUR; 
+Ministerial Conference on Fisheries Cooperation among African States bordering the Atlantic Ocean (ATLAFCO); 
+North Atlantic Marine Mammal Commission (NAMMCO); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Organization for the Harmonization in Africa of Business Law (OHADA); 
+Pacific Salmon Commission (PSC); 
+Permanent Interstate Committee for Drought Control in the Sahel (CILSS); 
+Regional Fisheries Commission for the Gulf of Guinea (COREP); 
+Secretariat of the Pacific Community (SPC); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Sub-Regional Fisheries Commission; 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+West African Economic and Monetary Union (UEMOA); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000030</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[North Pacific]]></Name_en_US>
+<Name_fr_FR><![CDATA[Pacifique nord]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Pacífico Norte]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[北太平洋]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Midway Islands (USA); 
+Johnston Island (USA); 
+Wake Island (USA); 
+Clipperton Island (France); 
+China, Macao SAR; 
+Japan; 
+Philippines; 
+Democratic People's Republic of Korea; 
+Republic of Korea; 
+China; 
+Taiwan Province of China; 
+China, Hong Kong SAR; 
+Mexico; 
+Russian Federation; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Eurasian Economic Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Latin American Organization For Fisheries Development (Oldepesca); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southeast Asian Fisheries Development Center (SEAFDEC); 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC074464</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[North Sea]]></Name_en_US>
+<Name_fr_FR><![CDATA[Mer du Nord]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Mar del Norte]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[北海]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Denmark; 
+Germany; 
+Norway; 
+United Kingdom of Great Britain and Northern Ireland; 
+Belgium; 
+France; 
+Netherlands (Kingdom of the); 
+Sweden; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Agreement on the Conservation of Small Cetaceans of the Baltic, North East Atlantic, Irish and North Seas  (ASCOBANS); 
+Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Organization for the Development of Fisheries in Eastern and Central Europe (EUROFISH); 
+International Whaling Commission (IWC); 
+North Atlantic Marine Mammal Commission (NAMMCO); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Secretariat of the Pacific Community (SPC); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051550</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[North-East Atlantic]]></Name_en_US>
+<Name_fr_FR><![CDATA[Atlantique du nord-est]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Atlántico Nordeste]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[东北大西洋]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Switzerland; 
+Denmark; 
+Finland; 
+Germany; 
+Iceland; 
+Ireland; 
+Luxembourg; 
+Norway; 
+Portugal; 
+Spain; 
+European Union; 
+United Kingdom of Great Britain and Northern Ireland; 
+Belgium; 
+France; 
+Netherlands (Kingdom of the); 
+Sweden; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Agreement on the Conservation of Small Cetaceans of the Baltic, North East Atlantic, Irish and North Seas  (ASCOBANS); 
+Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Organization for the Development of Fisheries in Eastern and Central Europe (EUROFISH); 
+International Whaling Commission (IWC); 
+North Atlantic Marine Mammal Commission (NAMMCO); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Fisheries Commission (NPFC); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Secretariat of the Pacific Community (SPC); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051541</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[North-East Pacific]]></Name_en_US>
+<Name_fr_FR><![CDATA[Pacifique du nord-est]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Pacífico Nordeste]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[东北太平洋]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Honduras; 
+Costa Rica; 
+El Salvador; 
+Guatemala; 
+Nicaragua; 
+Panama; 
+Colombia; 
+Mexico; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Andean Community; 
+Central America Fisheries and Aquaculture Organization (OSPESCA); 
+Central American Integration System (SICA); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Latin American Organization For Fisheries Development (Oldepesca); 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051544</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[North-West Pacific]]></Name_en_US>
+<Name_fr_FR><![CDATA[Pacifique nord occidental]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Pacífico Nordoeste]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[西北太平洋]]></Name_zh_ZH>
+<Region_Countries><![CDATA[China, Macao SAR; 
+Japan; 
+Democratic People's Republic of Korea; 
+Republic of Korea; 
+China; 
+Taiwan Province of China; 
+China, Hong Kong SAR; 
+Russian Federation; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Convention on the Conservation and Management of Pollock Resources in the Central Bering Sea (CCBSP); 
+Eurasian Economic Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Anadromous Fisheries Commission (NPAFC); 
+North Pacific Fisheries Commission (NPFC); 
+North Pacific Marine Science Organization (PICES); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southeast Asian Fisheries Development Center (SEAFDEC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051534</ValID>
+<Name_en_US><![CDATA[Northern Africa]]></Name_en_US>
+<Name_fr_FR><![CDATA[Afrique du nord]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Africa del Norte]]></Name_es_ES>
+<Name_ar_SA><![CDATA[أفريقيا الشمالية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Северная Африка]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[北非]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Algeria; 
+Libya; 
+Tunisia; 
+Morocco; 
+Egypt; 
+Sudan; 
+South Sudan; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Intergovernmental Authority on Development (IGAD); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Lake Chad Basin Commission (LCBC); 
+Ministerial Conference on Fisheries Cooperation among African States bordering the Atlantic Ocean (ATLAFCO); 
+Nile Basin Initiative; ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051590</ValID>
+<Name_en_US><![CDATA[Northern Europe]]></Name_en_US>
+<Name_fr_FR><![CDATA[Europe du nord]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Europa Septentrional]]></Name_es_ES>
+<Name_ar_SA><![CDATA[أوروبا الشمالية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Северная Европа]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[北欧]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Estonia; 
+Faroe Islands (Denmark); 
+Latvia; 
+Lithuania; 
+Svalbard (Norway); 
+Jan Mayen (Norway); 
+Guernsey (UK); 
+Jersey  (UK); 
+Denmark; 
+Finland; 
+Iceland; 
+Ireland; 
+Norway; 
+European Union; 
+United Kingdom of Great Britain and Northern Ireland; 
+Sweden; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Agreement on the Conservation of Small Cetaceans of the Baltic, North East Atlantic, Irish and North Seas  (ASCOBANS); 
+Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for the Development of Fisheries in Eastern and Central Europe (EUROFISH); 
+International Whaling Commission (IWC); 
+North Atlantic Marine Mammal Commission (NAMMCO); 
+North Atlantic Salmon Conservation Organization (NASCO); 
+North Pacific Fisheries Commission (NPFC); 
+North-East Atlantic Fisheries Commission (NEAFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051535</ValID>
+<Name_en_US><![CDATA[Oceania]]></Name_en_US>
+<Name_fr_FR><![CDATA[Océanie]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Oceania]]></Name_es_ES>
+<Name_ar_SA><![CDATA[أوسيانيا]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Океания]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[大洋洲]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Guam (USA); 
+Marshall Islands; 
+New Zealand; 
+Tokelau (New Zealand); 
+Wallis and Futuna Islands (France); 
+Norfolk Island (Australia); 
+Northern Mariana Islands (USA); 
+Pitcairn (UK); 
+American Samoa (USA); 
+Australia; 
+Cook Islands; 
+Fiji; 
+Micronesia (Federated States of); 
+Nauru; 
+Niue (New Zealand); 
+Palau; 
+Papua New Guinea; 
+Samoa; 
+Tonga; 
+French Polynesia (France); 
+Kiribati; 
+New Caledonia (France); 
+Solomon Islands; 
+Tuvalu; 
+Vanuatu; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+North Pacific Fisheries Commission (NPFC); 
+Pacific Island Forum Fisheries Agency (FFA); 
+Secretariat of the Pacific Community (SPC); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Western and Central Pacific Fisheries Commission (WCPFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051645</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Persian Gulf]]></Name_en_US>
+<Name_fr_FR><![CDATA[Golfe Persique]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Golfo Pérsico]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[波斯湾地区]]></Name_zh_ZH>
+<Region_Countries><![CDATA[United Arab Emirates; 
+Iraq; 
+Kuwait; 
+Qatar; 
+Iran (Islamic Republic of); 
+Bahrain; 
+Saudi Arabia; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Cooperation Council for the Arab States of the Gulf; 
+Indian Ocean Tuna Commission (IOTC); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+Regional Commission for Fisheries (RECOFI); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051742</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Polynesia]]></Name_en_US>
+<Name_fr_FR><![CDATA[Polinesie]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Polinesia]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[波利尼西亚地区]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Tokelau (New Zealand); 
+Wallis and Futuna Islands (France); 
+Pitcairn (UK); 
+American Samoa (USA); 
+Cook Islands; 
+Niue (New Zealand); 
+Samoa; 
+Tonga; 
+French Polynesia (France); 
+Tuvalu; ]]></Region_Countries>
+<Region_Organizations><![CDATA[International Whaling Commission (IWC); 
+Pacific Island Forum Fisheries Agency (FFA); 
+Secretariat of the Pacific Community (SPC); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Western and Central Pacific Fisheries Commission (WCPFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051643</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Red Sea  Gulf of Aden]]></Name_en_US>
+<Name_fr_FR><![CDATA[Mer Rouge et le golfe d'Aden]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Mar Rojo  Golfo de Adén]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[红海和亚丁湾]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Eritrea; 
+Jordan; 
+Djibouti; 
+Egypt; 
+Somalia; 
+Sudan; 
+Saudi Arabia; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+Cooperation Council for the Arab States of the Gulf; 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Intergovernmental Authority on Development (IGAD); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Nile Basin Initiative; 
+Regional Commission for Fisheries (RECOFI); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000024</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[Sahel]]></Name_en_US>
+<Name_fr_FR><![CDATA[Sahel]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Sahel]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[萨赫勒地区]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Niger; 
+Mali; 
+Burkina Faso; 
+Cabo Verde; 
+Chad; 
+Ethiopia; 
+Gambia; 
+Guinea-Bissau; 
+Mauritania; 
+Senegal; 
+Somalia; 
+Sudan; 
+South Sudan; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Central African Forest Commission (COMIFAC); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+Economic and Monetary Community of Central Africa (CEMAC); 
+Economic Community of Central African States (ECCAS); 
+Economic Community Of West  African States (ECOWAS); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Indian Ocean Tuna Commission (IOTC); 
+Intergovernmental Authority on Development (IGAD); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Lake Chad Basin Commission (LCBC); 
+Ministerial Conference on Fisheries Cooperation among African States bordering the Atlantic Ocean (ATLAFCO); 
+Nile Basin Initiative; 
+Organization for the Harmonization in Africa of Business Law (OHADA); 
+Permanent Interstate Committee for Drought Control in the Sahel (CILSS); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Sub-Regional Fisheries Commission; 
+West African Economic and Monetary Union (UEMOA); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC103266</ValID>
+<Name_en_US><![CDATA[Small Island Developing States]]></Name_en_US>
+<Name_fr_FR><![CDATA[Petits États insulaires en développement]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Pequeños estados insulares en desarrollo]]></Name_es_ES>
+<Name_ar_SA><![CDATA[دولة جزرية صغيرة نامية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Малые островные развивающиеся государства]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[小岛屿发展中国家]]></Name_zh_ZH>
+<Region_Countries><![CDATA[American Samoa (USA); 
+Belize; 
+Cook Islands; 
+Dominica; 
+Fiji; 
+Jamaica; 
+Mauritius; 
+Micronesia (Federated States of); 
+Montserrat (UK); 
+Nauru; 
+Netherlands Antilles (Netherlands); 
+Niue (New Zealand); 
+Palau; 
+Papua New Guinea; 
+Saint Kitts and Nevis; 
+Saint Vincent and the Grenadines; 
+Samoa; 
+Sao Tome and Principe; 
+Seychelles; 
+Singapore; 
+Tonga; 
+Aruba (Netherlands); 
+Anguilla (UK); 
+Antigua and Barbuda; 
+Bahamas; 
+Barbados; 
+British Virgin Islands (UK); 
+Cabo Verde; 
+Comoros; 
+Cuba; 
+Dominican Republic; 
+French Polynesia (France); 
+Grenada; 
+Guinea-Bissau; 
+Guyana; 
+Haiti; 
+Kiribati; 
+Maldives; 
+New Caledonia (France); 
+Puerto Rico (USA); 
+Saint Lucia; 
+Solomon Islands; 
+Suriname; 
+Trinidad and Tobago; 
+Tuvalu; 
+United States Virgin Islands; 
+Vanuatu; 
+Timor-Leste; 
+Bahrain; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Asia-Pacific Fishery Commission (APFIC); 
+Bay of Bengal Programme Inter-Governmental Organization; 
+Caribbean Community (CARICOM); 
+Caribbean Regional Fisheries Mechanism (CRFM); 
+Central African Forest Commission (COMIFAC); 
+Central America Fisheries and Aquaculture Organization (OSPESCA); 
+Central American Integration System (SICA); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+Cooperation Council for the Arab States of the Gulf; 
+Economic Community of Central African States (ECCAS); 
+Economic Community Of West  African States (ECOWAS); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Latin American Organization For Fisheries Development (Oldepesca); 
+Ministerial Conference on Fisheries Cooperation among African States bordering the Atlantic Ocean (ATLAFCO); 
+North Pacific Fisheries Commission (NPFC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Organization for the Harmonization in Africa of Business Law (OHADA); 
+Pacific Island Forum Fisheries Agency (FFA); 
+Permanent Interstate Committee for Drought Control in the Sahel (CILSS); 
+Regional Commission for Fisheries (RECOFI); 
+Regional Fisheries Commission for the Gulf of Guinea (COREP); 
+Secretariat of the Pacific Community (SPC); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southeast Asian Fisheries Development Center (SEAFDEC); 
+Southern African Development Community (SADC); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Sub-Regional Fisheries Commission; 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+West African Economic and Monetary Union (UEMOA); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000012</ValID>
+<Name_en_US><![CDATA[South America]]></Name_en_US>
+<Name_fr_FR><![CDATA[Amérique du Sud]]></Name_fr_FR>
+<Name_es_ES><![CDATA[América del Sur]]></Name_es_ES>
+<Name_ar_SA><![CDATA[أمريكا الجنوبية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Южная Америка]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[南美]]></Name_zh_ZH>
+<Region_Countries><![CDATA[MERCOSUR; 
+Andean Community; 
+Falkland Islands (Malvinas); 
+French Guiana (France); 
+Argentina; 
+Bolivia (Plurinational State of); 
+Chile; 
+Guyana; 
+Paraguay; 
+Suriname; 
+Uruguay; 
+Venezuela (Bolivarian Republic of); 
+Colombia; 
+Ecuador; 
+Peru; 
+Brazil; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Andean Community; 
+Caribbean Community (CARICOM); 
+Caribbean Regional Fisheries Mechanism (CRFM); 
+Commission for the Argentina/Uruguay Maritime Front (CTMFM); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Latin American Organization For Fisheries Development (Oldepesca); 
+MERCOSUR; 
+Rio de la Plata Administrative Commission; 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051548</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[South Asian Seas]]></Name_en_US>
+<Name_fr_FR><![CDATA[Mer de l'Asie du Sud-Est]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Mares del Asia Sudoriental]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[南亚海]]></Name_zh_ZH>
+<Region_Countries><![CDATA[India; 
+Pakistan; 
+Sri Lanka; 
+Bangladesh; 
+Maldives; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Asia-Pacific Fishery Commission (APFIC); 
+Bay of Bengal Programme Inter-Governmental Organization; 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Indian Ocean Tuna Commission (IOTC); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC074463</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[South Atlantic]]></Name_en_US>
+<Name_fr_FR><![CDATA[Atlantique sud]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Atlántico Sur]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[南大西洋]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Congo; 
+Namibia; 
+South Africa; 
+Angola; 
+Falkland Islands (Malvinas); 
+Gabon; 
+Democratic Republic of the Congo; 
+Argentina; 
+Chile; 
+Uruguay; 
+Brazil; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Benguela Current Commission  (BCC); 
+Central African Forest Commission (COMIFAC); 
+Commission for the Argentina/Uruguay Maritime Front (CTMFM); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+Economic and Monetary Community of Central Africa (CEMAC); 
+Economic Community of Central African States (ECCAS); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Indian Ocean Tuna Commission (IOTC); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Lake Tanganyika Authority (LTA); 
+MERCOSUR; 
+Ministerial Conference on Fisheries Cooperation among African States bordering the Atlantic Ocean (ATLAFCO); 
+Nile Basin Initiative; 
+Organization for the Harmonization in Africa of Business Law (OHADA); 
+Regional Fisheries Commission for the Gulf of Guinea (COREP); 
+Rio de la Plata Administrative Commission; 
+South East Atlantic Fisheries Organisation (SEAFO); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Southern African Development Community (SADC); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+Western Central Atlantic Fishery Commission (WECAFC); 
+Zambezi Watercourse Commission (ZAMCOM); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000009</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[South Pacific]]></Name_en_US>
+<Name_fr_FR><![CDATA[Pacifique sud]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Pacífico Sur]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[南太平洋]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Guam (USA); 
+Marshall Islands; 
+New Zealand; 
+Tokelau (New Zealand); 
+Wallis and Futuna Islands (France); 
+Norfolk Island (Australia); 
+Northern Mariana Islands (USA); 
+Pitcairn (UK); 
+American Samoa (USA); 
+Australia; 
+Cook Islands; 
+Fiji; 
+Micronesia (Federated States of); 
+Nauru; 
+Niue (New Zealand); 
+Palau; 
+Papua New Guinea; 
+Samoa; 
+Tonga; 
+French Polynesia (France); 
+Kiribati; 
+New Caledonia (France); 
+Solomon Islands; 
+Tuvalu; 
+Vanuatu; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+North Pacific Fisheries Commission (NPFC); 
+Pacific Island Forum Fisheries Agency (FFA); 
+Secretariat of the Pacific Community (SPC); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+Western and Central Pacific Fisheries Commission (WCPFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000022</ValID>
+<Name_en_US><![CDATA[South-Eastern Asia]]></Name_en_US>
+<Name_fr_FR><![CDATA[Asie du sud-est]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Asia Sudoriental]]></Name_es_ES>
+<Name_ar_SA><![CDATA[جنوب شرقي آسيا]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Юго-Восточная Азия]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[东南亚]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Brunei Darussalam; 
+Malaysia; 
+Viet Nam; 
+Cambodia; 
+Indonesia; 
+Lao People's Democratic Republic; 
+Myanmar; 
+Philippines; 
+Singapore; 
+Thailand; 
+Timor-Leste; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Indian Ocean Tuna Commission (IOTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Mekong River Commission (MRC); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+Southeast Asian Fisheries Development Center (SEAFDEC); 
+Western and Central Pacific Fisheries Commission (WCPFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051549</ValID>
+<Exclude_from_External_Faolex>Y</Exclude_from_External_Faolex>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[South-Eastern Pacific]]></Name_en_US>
+<Name_fr_FR><![CDATA[Pacifique du sud-est]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Pacífico Sudeste]]></Name_es_ES>
+<Name_zh_ZH><![CDATA[东南太平洋]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Chile; 
+Panama; 
+Colombia; 
+Ecuador; 
+Peru; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Andean Community; 
+Central America Fisheries and Aquaculture Organization (OSPESCA); 
+Central American Integration System (SICA); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Latin American Organization For Fisheries Development (Oldepesca); 
+South Pacific Regional Fisheries Management Organisation (SPRFMO); 
+The Commission for Small-Scale, Artisanal Fisheries and Aquaculture of Latin America and the Caribbean (COPPESSAALC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000010</ValID>
+<Name_en_US><![CDATA[Southern Africa]]></Name_en_US>
+<Name_fr_FR><![CDATA[Afrique méridionale]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Africa Meridional]]></Name_es_ES>
+<Name_ar_SA><![CDATA[الجنوب الأفريقيى]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Южная Африка]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[南部非洲]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Botswana; 
+Namibia; 
+South Africa; 
+Eswatini; 
+Lesotho; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Benguela Current Commission  (BCC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Commission for the Conservation of Southern Bluefin Tuna (CCSBT); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Common Market for Eastern and Southern Africa (COMESA); 
+Indian Ocean Tuna Commission (IOTC); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Ministerial Conference on Fisheries Cooperation among African States bordering the Atlantic Ocean (ATLAFCO); 
+South East Atlantic Fisheries Organisation (SEAFO); 
+Southern African Development Community (SADC); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Zambezi Watercourse Commission (ZAMCOM); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000017</ValID>
+<Name_en_US><![CDATA[Southern Asia]]></Name_en_US>
+<Name_fr_FR><![CDATA[Asie du sud]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Asia Meridional]]></Name_es_ES>
+<Name_ar_SA><![CDATA[آسيا الجنوبية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Южная Азия]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[南亚]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Afghanistan; 
+Bhutan; 
+India; 
+Nepal; 
+Pakistan; 
+Sri Lanka; 
+Bangladesh; 
+Iran (Islamic Republic of); 
+Maldives; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Asia-Pacific Fishery Commission (APFIC); 
+Bay of Bengal Programme Inter-Governmental Organization; 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+Indian Ocean Tuna Commission (IOTC); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Network of Aquaculture Centers in Asia-Pacific (NACA); 
+Regional Commission for Fisheries (RECOFI); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051592</ValID>
+<Name_en_US><![CDATA[Southern Europe]]></Name_en_US>
+<Name_fr_FR><![CDATA[Europe du sud]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Europa Meridional]]></Name_es_ES>
+<Name_ar_SA><![CDATA[أوروبا الجنوبية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Южная Европа]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[南欧]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Holy  See; 
+Albania; 
+Andorra; 
+Bosnia and Herzegovina; 
+Gibraltar (UK); 
+San Marino; 
+North Macedonia; 
+Montenegro; 
+Croatia; 
+Greece; 
+Malta; 
+Italy; 
+Portugal; 
+Slovenia; 
+Spain; ]]></Region_Countries>
+<Region_Organizations><![CDATA[European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC000019</ValID>
+<Name_en_US><![CDATA[Western Africa]]></Name_en_US>
+<Name_fr_FR><![CDATA[Afrique de l'ouest]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Africa Occidental]]></Name_es_ES>
+<Name_ar_SA><![CDATA[فريقيا الغربية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Западная Африка]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[西非]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Côte d'Ivoire; 
+Ghana; 
+Niger; 
+Nigeria; 
+Saint Helena, Ascension and Tristan da Cunha (UK); 
+Benin; 
+Guinea; 
+Liberia; 
+Mali; 
+Sierra Leone; 
+Togo; 
+Burkina Faso; 
+Cabo Verde; 
+Gambia; 
+Guinea-Bissau; 
+Mauritania; 
+Senegal; ]]></Region_Countries>
+<Region_Organizations><![CDATA[African Union (AU); 
+Committee for Inland Fisheries and Aquaculture of Africa (CIFAA); 
+Economic Community Of West  African States (ECOWAS); 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+Fishery Committee for the West Central Gulf of Guinea (FCWC); 
+Indian Ocean Tuna Commission (IOTC); 
+Intergovernmental Organization for Marketing Information and Cooperation Service for Fishery Products in Africa (INFOPECHE); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Whaling Commission (IWC); 
+Lake Chad Basin Commission (LCBC); 
+Ministerial Conference on Fisheries Cooperation among African States bordering the Atlantic Ocean (ATLAFCO); 
+Organization for the Harmonization in Africa of Business Law (OHADA); 
+Permanent Interstate Committee for Drought Control in the Sahel (CILSS); 
+Sub-Regional Fisheries Commission; 
+West African Economic and Monetary Union (UEMOA); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC070904</ValID>
+<Name_en_US><![CDATA[Western Asia]]></Name_en_US>
+<Name_fr_FR><![CDATA[Asie occidentale]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Asia Occidental]]></Name_es_ES>
+<Name_ar_SA><![CDATA[آسيا الغربية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Западная Азия]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[西亚]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Palestine; 
+Israel; 
+Iraq; 
+Jordan; 
+Kuwait; 
+Oman; 
+Qatar; 
+Syrian Arab Republic; 
+Lebanon; 
+Armenia; 
+Georgia; 
+Türkiye; 
+Azerbaijan; 
+Bahrain; 
+Cyprus; 
+Saudi Arabia; 
+Yemen; ]]></Region_Countries>
+<Region_Organizations><![CDATA[Central Asian and Caucasus Regional Fisheries and Aquaculture Commission  ( CAC-Fish); 
+Cooperation Council for the Arab States of the Gulf; 
+Eurasian Economic Union; 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for the Development of Fisheries in Eastern and Central Europe (EUROFISH); 
+International Whaling Commission (IWC); 
+Regional Commission for Fisheries (RECOFI); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); ]]></Region_Organizations>
+</dictionary_term>
+<dictionary_term>
+<ValID>REG-FAOC051613</ValID>
+<Name_en_US><![CDATA[Western Europe]]></Name_en_US>
+<Name_fr_FR><![CDATA[Europe du ouest]]></Name_fr_FR>
+<Name_es_ES><![CDATA[Europa Occidental]]></Name_es_ES>
+<Name_ar_SA><![CDATA[أوروبا الغربية]]></Name_ar_SA>
+<Name_ar_RU><![CDATA[Западная Европа]]></Name_ar_RU>
+<Name_zh_ZH><![CDATA[西欧]]></Name_zh_ZH>
+<Region_Countries><![CDATA[Liechtenstein; 
+Monaco; 
+Austria; 
+Switzerland; 
+Germany; 
+Luxembourg; 
+Belgium; 
+France; 
+Netherlands (Kingdom of the); ]]></Region_Countries>
+<Region_Organizations><![CDATA[Agreement on the Conservation of Small Cetaceans of the Baltic, North East Atlantic, Irish and North Seas  (ASCOBANS); 
+Asia-Pacific Fishery Commission (APFIC); 
+Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR); 
+European Inland Fisheries and Aquaculture Advisory Commission (EIFAAC); 
+European Union; 
+Fishery Committee for the Eastern Central Atlantic (CECAF); 
+General Fisheries Commission for the Mediterranean (GFCM); 
+Indian Ocean Tuna Commission (IOTC); 
+Inter-American Tropical Tuna Commission (IATTC); 
+International Commission for the Conservation of Atlantic Tunas (ICCAT); 
+International Organization for Marketing Information and Technical Advisory Services for Fishery Products in the Asia and Pacific Region (INFOFISH); 
+International Whaling Commission (IWC); 
+Northwest Atlantic Fisheries Organization (NAFO); 
+Secretariat of the Pacific Community (SPC); 
+South Indian Ocean Fisheries Agreement (SIOFA); 
+Southwest Indian Ocean Fisheries Commission (SWIOFC); 
+Western and Central Pacific Fisheries Commission (WCPFC); 
+Western Central Atlantic Fishery Commission (WECAFC); ]]></Region_Organizations>
+</dictionary_term>
+
+
+
+
+
+
+ 
+
+
+
+
+  
+  
+ </result>

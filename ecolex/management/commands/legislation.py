@@ -64,7 +64,7 @@ class LegislationImporter(object):
             doc_size = file_obj.getbuffer().nbytes
 
             # Extract text
-            logger.debug(f"Indexing: {obj.url}")
+            logger.debug(f"Extracting text from: {obj.url}")
             text = self.solr.extract(file_obj)
             if not text:
                 logger.warn(f"Nothing to index for {obj.url}")
@@ -90,19 +90,21 @@ class LegislationImporter(object):
             logger.info(f"Success download & indexed: {obj.doc_id}")
             obj.doc_size = doc_size
             obj.text = text
+            obj.status = DocumentText.FULL_INDEXED
             try:
                 obj.save()
             except OperationalError as e:
                 logger.error(f"DB insert error {obj.doc_id} {e}")
-                obj.text = None
-                obj.save()
         else:
             logger.error(f"Failed doc extract {obj.url} {legislation['id']}")
 
     def reindex_failed(self):
+        # should no longer be needed
         logger.info('[legislation] Reindex started.')
         objs = DocumentText.objects.filter(
-            status=DocumentText.INDEX_FAIL, doc_type=LEGISLATION)
+            doc_type=LEGISLATION,
+            status=DocumentText.INDEX_FAIL,
+        )
         if objs.count() > 0:
             for obj in objs:
                 self.reindex_one(obj)

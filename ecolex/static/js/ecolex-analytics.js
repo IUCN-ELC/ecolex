@@ -1,5 +1,5 @@
-// ecolex ga tracking
-// This is used for google analytics on www.ecolex.org
+// outdated ecolex ga tracking
+// see templates/bits/ga.html for new tracking code
 window.addEventListener('load', function () {
   // your code here
   console.log('loading: google-analytics-eaudeweb.');

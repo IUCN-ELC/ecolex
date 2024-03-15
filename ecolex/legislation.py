@@ -11,11 +11,9 @@ import lxml.etree as ET
 from bs4 import BeautifulSoup
 from pysolr import SolrError
 from django.conf import settings
-from django.utils import timezone
 from django.template.defaultfilters import slugify
 
 from ecolex.management.commands.logging import LOG_DICT
-from ecolex.management.commands.legislation import LegislationImporter
 from ecolex.management.definitions import LEGISLATION
 from ecolex.management.utils import EcolexSolr, clean_text_date
 from ecolex.models import DocumentText
@@ -34,12 +32,18 @@ FIELD_MAP = {
     "Long_Title_of_text": "legLongTitle",
     "Serial_Imprint": "legSource",
 
-    "Date_of_original_Text": "legOriginalYear",
+    "Date_of_original_Text": "_legOriginalDate",
     "Date_of_Text": "legDate",
     "Date_of_Consolidation": "_legDateOfConsolidation", # not stored
 
     "Entry_into_Force": "legEntryIntoForce",
+
     "country_ISO": "legCountry_iso",
+    "country": "_countryCodeAlt",
+    "organization": "_organization_en",
+    "organization_fr": "_organization_fr",
+    "organization_es": "_organization_es",
+
     "Territorial_Subdivision": "legTerritorialSubdivision",
     "Sub_file_code": "legSubject_code",
     "basin_en": "legBasin_en",
@@ -49,6 +53,8 @@ FIELD_MAP = {
     "Type_of_Text": "legTypeCode",
 
     "Related_Web_Site": "legRelatedWebSite",
+    "link_to_full_text": "legLinkToFullText", # TODO: handle multiple files
+
     "Record_Language": "legLanguage_code",
     "Doc_Language": "legLanguage_en",
 
@@ -66,11 +72,11 @@ FIELD_MAP = {
 
 MULTIVALUED_FIELDS = [
     "legLanguage_en",
+    "legSubject_code",
     "legKeyword_code",
     "legBasin_en", "legBasin_fr", "legBasin_es",
-    "legImplement", "legAmends", "legRepeals", "legImplementTreaty",
-    "legCitesTreaty",
-    "legSubject_code",
+    "legImplement", "legAmends", "legRepeals",
+    "legImplementTreaty", "legCitesTreaty",
 ]
 
 LANGUAGE_FIELDS = ["legLanguage_en", "legLanguage_fr", "legLanguage_es"]
@@ -92,16 +98,16 @@ def harvest_file(upfile):
     legislations = []
     count_ignored = 0
 
-    with open(settings.SOLR_IMPORT["common"]["subjects_xml"], encoding="utf-8") as f:
+    with open(settings.SOLR_IMPORT["common"]["fao_subjects_xml"], encoding="utf-8") as f:
         bs = BeautifulSoup(f.read(), "xml")
         subjects = {subject.Classification_Sec_Area.string: subject
                     for subject in bs.findAll("dictionary_term")}
 
-    with open(settings.SOLR_IMPORT["common"]["keywords_xml"], encoding="utf-8") as f:
+    with open(settings.SOLR_IMPORT["common"]["fao_keywords_xml"], encoding="utf-8") as f:
         bs = BeautifulSoup(f.read(), "xml")
         keywords = {keyword.Code.string: keyword for keyword in bs.findAll("dictionary_term")}
 
-    with open(settings.SOLR_IMPORT["common"]["leg_regions_json"], encoding="utf-8") as f:
+    with open(settings.SOLR_IMPORT["common"]["fao_regions_json"], encoding="utf-8") as f:
         json_regions = json.load(f)
 
     with open(settings.SOLR_IMPORT["common"]["fao_countries_json"], encoding="utf-8") as f:
@@ -183,7 +189,10 @@ def harvest_file(upfile):
         _set_language_fields(legislation, "legKeyword_", keywords)
 
         # overwrite countries with names from the dictionary
-        iso_country = legislation.get("legCountry_iso")
+        iso_country = (
+            legislation.get("legCountry_iso") or
+            legislation.get("_countryCodeAlt")
+        )
         if iso_country:
             fao_country = json_countries.get(iso_country)
             if fao_country:
@@ -191,60 +200,55 @@ def harvest_file(upfile):
                 legislation["legCountry_es"] = fao_country.get("es")
                 legislation["legCountry_fr"] = fao_country.get("fr")
 
-                region = json_regions.get(fao_country.get("en"))
+                region = json_regions.get(iso_country)
                 if region:
                     legislation["legGeoArea_en"] = region.get("en", [])
                     legislation["legGeoArea_fr"] = region.get("fr", [])
                     legislation["legGeoArea_es"] = region.get("es", [])
+                else:
+                    logger.warning(f"No regions for country {iso_country}")
+            else:
+                logger.warning(f"Country not found: {iso_country}")
+        else:
+            # exception for the European Union
+            if legislation.get("_organization_en") == "European Union":
+                legislation["legCountry_en"] = "European Union"
+                legislation["legCountry_fr"] = "Union européenne"
+                legislation["legCountry_es"] = "Unión Europea"
+                legislation["legGeoArea_en"] = "European Union Countries"
+                legislation["legGeoArea_fr"] = "Países de la Unión Europea"
+                legislation["legGeoArea_es"] = "Pays de l'Union Européenne"
 
         legDate = legislation.get("legDate") or legislation.get("_legDateOfConsolidation")
-        if "_legDateOfConsolidation" in legislation:
-            del legislation["_legDateOfConsolidation"]
 
         if legDate:
-            try:
-                _, solr_format, dateValue = clean_text_date(legDate)
-                if not dateValue:
-                    if "legDate" in legislation:
-                        del legislation["legDate"]
-                else:
-                    legislation["legYear"] = dateValue.strftime("%Y")
-                    legislation["legDate"] = solr_format
-            except Exception as e:
-                logger.warn(
-                    f"Error parsing legDate {legDate} for {legislation.get('legId')}"
-                )
+            _, solr_format, dateValue = clean_text_date(legDate)
+            if not dateValue or dateValue.year < 1700:
                 if "legDate" in legislation:
-                    # if check is for record with invalid _legDateOfConsolidation and no legDate
                     del legislation["legDate"]
+            else:
+                legislation["legYear"] = dateValue.strftime("%Y")
+                legislation["legDate"] = solr_format
 
-        if "legOriginalYear" in legislation:
-            try:
-                _, solr_format, dateValue = clean_text_date(legislation["legOriginalYear"])
-                if not dateValue:
-                    del legislation["legOriginalYear"]
-                else:
-                    legislation["legOriginalYear"] = dateValue.strftime("%Y")
-            except Exception:
-                logger.warn(
-                    f"Error parsing legOriginalYear {legislation.get('legOriginalYear')} "
-                    f"for {legislation.get('legId')}"
-                )
-                del legislation["legOriginalYear"]
+        if "_legOriginalDate" in legislation:
+            _, solr_format, dateValue = clean_text_date(legislation["_legOriginalDate"])
+            if dateValue:
+                legislation["legOriginalYear"] = dateValue.strftime("%Y")
 
-        filenames = get_content(document.findall("link_to_full_text"))
-        url_values = []
-        for filename in filenames:
+        # XML may contain multiple files, but in ECOLEX it's single valued
+        if "legLinkToFullText" in legislation:
+            filename = legislation["legLinkToFullText"]
             extension = filename.rsplit(".")[-1].lower()
             url = settings.FULL_TEXT_URLS.get(extension)
             if url:
-                url_values.append(f"{url}{filename}")
+                legislation["legLinkToFullText"] = f"{url}{filename}"
             else:
                 logger.error(f"URL not found for {filename} {legislation.get('legId')}")
 
         if (REPEALED.upper() in
                 get_content(document.findall(REPEALED))):
             legislation["legStatus"] = REPEALED
+            import ipdb; ipdb.set_trace()
         else:
             legislation["legStatus"] = IN_FORCE
 
@@ -260,10 +264,12 @@ def harvest_file(upfile):
         slug = title + " " + legislation.get("legId")
         legislation["slug"] = slugify(slug)
 
-        for url_value in url_values:
-            legislation_copy = legislation.copy()
-            legislation_copy["legLinkToFullText"] = url_value
-            legislations.append(legislation_copy)
+        # remove internal attributes
+        legislations.append({
+            key: value
+            for key, value in legislation.items()
+            if not key.startswith("_")
+        })
 
     logger.info(f"[Legislation] Harvest file finished.")
     add_legislations(legislations, count_ignored)
@@ -271,55 +277,36 @@ def harvest_file(upfile):
 
 def add_legislations(legislations, count_ignored):
     solr = EcolexSolr()
-    leg_result = None
     count_updated = 0
     count_new = 0
-    config = settings.SOLR_IMPORT
-    importer_config = config["common"]
-    importer_config.update(config["legislation"])
-    importer = LegislationImporter(importer_config)
-    local_time = timezone.now()
 
     for legislation in legislations:
         leg_id = legislation.get("legId")
-        logger.info(f"[Legislation] {leg_id}")
-        docs = DocumentText.objects.filter(doc_id=leg_id,
-                updated_datetime__lt=local_time).order_by("updated_datetime")
-
-        if not docs:
-            doc = DocumentText.objects.create(doc_id=leg_id)
-        else:
-            doc = docs[0]
-
+        logger.info(f"[Legislation] Adding {leg_id}")
+        doc, _ = DocumentText.objects.get_or_create(
+            doc_id=leg_id,
+            url=legislation.get("legLinkToFullText")
+        )
         doc.doc_type = LEGISLATION
+        doc.status = DocumentText.INDEXED
         legislation["updatedDate"] = (datetime.now()
                                       .strftime("%Y-%m-%dT%H:%M:%SZ"))
         try:
-            leg_result = solr.search(LEGISLATION, leg_id)
-            if leg_result:
-                legislation["id"] = leg_result["id"]
-        except SolrError as e:
-            logger.error(f"Error importing legislation {leg_id}")
-            if settings.DEBUG:
-                logger.exception(e)
-
-        doc.parsed_data = json.dumps(legislation)
-        if (doc.url != legislation.get("legLinkToFullText")):
-            doc.url = legislation.get("legLinkToFullText")
-            # will not re-parse if same url and doc_size
-            doc.doc_size = None
-
-        if leg_result:
-            count_updated += index_and_log(solr, legislation, doc)
-        else:
-            count_new += index_and_log(solr, legislation, doc)
-
-        try:
+            leg_existing = solr.search(LEGISLATION, leg_id)
+            if leg_existing:
+                legislation["id"] = leg_existing["id"]
+            solr.add(legislation)
+            # full-text extraction is done separately
+            # see LegislationImporter.update_full_text
             doc.save()
-            importer.update_full_text_one(doc)
+            if leg_existing:
+                count_updated += 1
+            else:
+                count_new += 1
         except KeyboardInterrupt:
             raise
         except Exception as e:
+            logger.error(f"Error importing legislation {leg_id}")
             if settings.DEBUG:
                 logger.exception(e)
 
@@ -387,12 +374,3 @@ def _set_values_from_dict(data, field, local_dict):
                 new_values["en"].append(val_en)
     for field in fields:
         data[field] = new_values[field[-2:]]
-
-
-def index_and_log(solr, legislation, doc):
-    faolex_enabled = getattr(settings, "FAOLEX_ENABLED", False)
-    if faolex_enabled:
-        if not solr.add(legislation):
-            return 0
-        doc.parsed_data = ""
-    return 1

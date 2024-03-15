@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-$PYTHONPATH/python $ECOLEX_HOME/ecolex/manage.py import legislation --reindex
-$PYTHONPATH/python $ECOLEX_HOME/ecolex/manage.py import legislation --update-text
+# outdated, only for manual execution
+# $PYTHONPATH/python $ECOLEX_HOME/ecolex/manage.py import legislation --reindex
+# $PYTHONPATH/python $ECOLEX_HOME/ecolex/manage.py import legislation --update-text
 
 $PYTHONPATH/python $ECOLEX_HOME/ecolex/manage.py import literature --reindex
 $PYTHONPATH/python $ECOLEX_HOME/ecolex/manage.py import literature --update-text

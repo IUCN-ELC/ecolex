@@ -363,5 +363,10 @@
     "en": "Western Europe",
     "es": "Europa Occidental",
     "fr": "Europe du Ouest"
+  },
+  "near east and north africa": {
+    "en": "Near East and North Africa",
+    "es": "Africa del Norte y Cercano Oriente",
+    "fr": "Afrique du Nord et Proche-Orient"
   }
 }

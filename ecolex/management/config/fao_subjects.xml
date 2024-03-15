@@ -119,6 +119,14 @@
 <Name_zh_ZH><![CDATA[矿产资源]]></Name_zh_ZH>
 </dictionary_term>
 <dictionary_term>
+<ValID>CLA-FAOC103926</ValID>
+<Classification_Sec_Area>AG; AN; AT; EG; EN; FI; FD; FO; LA; MR; PL; SE; WA; WB; WT</Classification_Sec_Area>
+<Exclude_from_Ecolex>Y</Exclude_from_Ecolex>
+<Name_en_US><![CDATA[model law]]></Name_en_US>
+<Name_fr_FR><![CDATA[loi type]]></Name_fr_FR>
+<Name_es_ES><![CDATA[ley modelo]]></Name_es_ES>
+</dictionary_term>
+<dictionary_term>
 <ValID>CLA-FAOC040154</ValID>
 <Classification_Sec_Area>SE</Classification_Sec_Area>
 <Name_en_US><![CDATA[Sea]]></Name_en_US>
