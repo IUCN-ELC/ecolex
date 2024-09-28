@@ -28,7 +28,7 @@
 
 <body {% if page_type == "homepage" %}class="body-colored"{% endif %}>
 
-
+  {% if not iframe %}
   <header id="site-header">
 
     <div class="navbar navbar-default">
@@ -76,6 +76,7 @@
       </div>
     </div>
   </header>
+  {% endif %}
 
   <div id="site-body">
     {# form is now page-wide, until someone decides to have fun with the template #}
@@ -191,6 +192,7 @@
     {% block extra_content %}{% endblock %}
   </div>
 
+  {%if not iframe %}
   <footer id="site-footer">
     <div class="container">
       <div class="footer-inner">
@@ -216,6 +218,7 @@
       </div>
     </div>
   </footer>
+  {% endif %}
 
   <div id="backdrop"></div>
 
