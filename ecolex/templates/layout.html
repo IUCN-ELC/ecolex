@@ -263,34 +263,48 @@
 
 </script>
 
+<script type="text/javascript">
+ (function() {
+    if ($.cookie('ivisited') != "true") {
+      var setCookie = function () {
+        $.cookie('ivisited', 'true');
+        cookieDisclaimer.parentNode.removeChild(cookieDisclaimer);
+        window.removeEventListener('scroll', setCookie, false);
+      };
+      var cookieDisclaimer = document.createElement('DIV');
+      cookieDisclaimer.classList.add ('cookie-message');
+      cookieDisclaimer.innerHTML = '<p>In order to understand how people use our site generally, and to create more valuable experiences for you, we may collect data about your use of this site (both directly and through our partners).<br>By using this Website you agree to the use of cookies.</p>' +
+                                   '<a class="btn btn-blue" href> OK </a>';
+      cookieDisclaimer.addEventListener('click', setCookie, false);
+      window.addEventListener('scroll', setCookie, false);
+      document.body.appendChild(cookieDisclaimer);
+    }
 
-    <script type="text/javascript">
-  
-        (function() {
+    if($.cookie('analyticsState') == null) {
+      var setCookie = function (event) {
+        if(event.data.okay == true){
+          $.cookie('analyticsState', 'true');       }
+        else{
+          $.cookie('analyticsState', 'false');
+        }
+    };
 
-          if ($.cookie('ivisited') != "true") {
-            var setCookie = function () {
-           $.cookie('ivisited', 'true');
-              cookieDisclaimer.parentNode.removeChild(cookieDisclaimer);
-              window.removeEventListener('scroll', setCookie, false);
-            };
-            var cookieDisclaimer = document.createElement('DIV');
-            cookieDisclaimer.classList.add ('cookie-message');
-            cookieDisclaimer.innerHTML =
-              '<p>In order to understand how people use our site generally, and to create more valuable experiences for you, we may collect data about your use of this site (both directly and through our partners).<br>By using this Website you agree to the use of cookies.</p>' +
-              '<a class="btn btn-blue" href> OK </a>'
-            ;
-            cookieDisclaimer.addEventListener('click', setCookie, false);
-            window.addEventListener('scroll', setCookie, false);
-            document.body.appendChild(cookieDisclaimer);
-          }
-           $.cookie('ivisited', 'true');
-        }())
-      
-  </script>
+    var cookieDisclaimer = $("body").prepend(
+      '<div class="cookie-message" id="analytics-state">' +
+      '<p>Due to The General Data Protection Regulation (GDPR), the user is now in control of the data collected. Ecolex uses Google Analytics, a tool designed to collect user data, analyze it and provide statistics that help the development of a better User Experience. Click "Okay" if you want to allow your data to be processed by Google Analytics.</p>' +
+      '</div>');
+    var okButton = $('<a class="btn btn-blue analytics-cookie-btn" href>OK</a>');
+    var cancelButton = $('<a class="btn btn-blue analytics-cookie-btn" href>Cancel</a>');
+    cancelButton.click({okay: false}, setCookie);
+    okButton.click({okay: true}, setCookie);
+    $('#analytics-state').append(cancelButton);
+    $('#analytics-state').append(okButton);
+    }
+}())
 
+</script>
 
-  <script src="{{ STATIC_URL }}{% version 'js/bootstrap-tour.min.js' %}"></script>
+<script src="{{ STATIC_URL }}{% version 'js/bootstrap-tour.min.js' %}"></script>
   {% include 'bits/ga.html' %}
   {% include 'tour.html' %}
   {% block endscripts %}

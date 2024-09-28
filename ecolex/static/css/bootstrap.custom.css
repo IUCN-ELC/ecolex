@@ -6966,6 +6966,20 @@ ul.select2-selection__rendered {
 .comment {
   margin-bottom: 0;
 }
+
+.analytics-cookie {
+  position: fixed;
+  top: 25%;
+  left: 40% !important;
+  max-width:400px;
+  display: block;
+}
+
+.analytics-cookie-btn {
+
+    margin-right: 5px;
+}
+
 .summary + .summary,
 .summary + .abstract,
 .summary + .comment,
